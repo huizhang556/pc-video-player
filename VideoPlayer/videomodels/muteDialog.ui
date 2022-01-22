@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>muteDialog</class>
+ <widget class="QWidget" name="muteDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>40</width>
+    <height>170</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>40</width>
+    <height>130</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>42</width>
+    <height>170</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget
+{
+background-color: rgb(75, 75, 75);
+border:5px bolid black;
+
+}
+</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="label_mute">
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: transparent;
+text-align:center;
+color: rgb(255, 95, 21);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="verticalSlider">
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>120</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>120</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QSlider::groove:vertical {
+border: 1px solid #4A708B;
+background: #C0C0C0;
+width: 5px;
+border-radius: 1px;
+padding-left:-1px;
+padding-right:-1px;
+padding-top:-1px;
+padding-bottom:-1px;
+}
+
+QSlider::sub-page:vertical {
+background: #575757;
+border: 1px solid #4A708B;
+border-radius: 2px;
+}
+
+QSlider::add-page:vertical {
+background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
+    stop:0 #c4c4c4, stop:1 #B1B1B1);
+background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,
+    stop: 0 #5DCCFF, stop: 1 #1874CD);
+border: 0px solid #777;
+width: 10px;
+border-radius: 2px;
+}
+
+QSlider::handle:vertical 
+{
+	background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+
+    height: 11px;
+    margin-left: -3px;
+    margin-right: -3px;
+    border-radius: 5px;
+}
+
+QSlider::sub-page:vertical:disabled {
+background: #00009C;
+border-color: #999;
+}
+
+QSlider::add-page:vertical:disabled {
+background: #eee;
+border-color: #999;
+}
+
+QSlider::handle:vertical:disabled {
+background: #eee;
+border: 1px solid #aaa;
+border-radius: 4px;
+}</string>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>10</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

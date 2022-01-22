@@ -1,0 +1,82 @@
+﻿#ifndef MAINWIDGET_H
+#define MAINWIDGET_H
+#define MARGIN 5 //窗口边距
+
+#include "titleBar/TitleBar.h"
+#include "slidebar/LeftSideBar.h"
+#include "customer/CusTabWidget.h"
+#include "browser/CusWebBrowser.h"
+#include "mainwidget/MainWindow.h"
+#include "musicmodels/MusicPlaylist.h"
+#include "musicmodels/MusicPlayShow.h"
+#include "videomodels/CusVideoWidget.h"
+
+#include <QPoint>
+#include <QLayout>
+#include <QWidget>
+#include <QShowEvent>
+#include <QMouseEvent>
+#include <QApplication>
+#include <QStackedWidget>
+
+namespace Ui {
+class MainWidget;
+}
+
+class MainWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit MainWidget(QWidget *parent = nullptr);
+    ~MainWidget();
+
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
+
+    void mouseMoveEvent(QMouseEvent *event) override;
+
+    void mouseReleaseEvent(QMouseEvent *event) override;
+
+    void changeEvent(QEvent *event) override;
+
+    void showEvent(QShowEvent *event) override;
+
+private:
+    void initOtherWidgetUi();
+    void setStackedWidgetPage();
+    void chandleSignalAndSlots();
+
+private slots:
+    void chandleRestoreWindow();
+    void chandleCenterWinShowUi(int index);
+
+    //界面拉伸私有成员函数
+    int   countRow(QPoint p);             //获取光标在窗口所在区域的 行   返回行数
+    int   countFlag(QPoint p,int row);    //获取光标在窗口所在区域的 列  返回行列坐标
+    void  setCursorType(int flag);        //根据传入的坐标，设置光标样式
+private:
+    QStackedWidget      *m_stackWidget  = nullptr;
+    QVBoxLayout         *m_vblayout     = nullptr;
+    QHBoxLayout         *m_hblayout     = nullptr;
+    TitleBar            *m_titleBar     = nullptr;
+    MainWindow          *m_mainWin      = nullptr;
+    LeftSideBar         *m_leftSideBar  = nullptr;
+    MusicPlaylist       *m_musicList    = nullptr;
+    MusicPlayShow       *m_musicShow    = nullptr;
+    CusTabWidget        *m_tabWidget    = nullptr;
+    CusVideoWidget      *m_videoWidget  = nullptr;
+    CusWebBrowser       *m_webBrowser   = nullptr;
+
+    bool                 m_winMax;        //默认非最大化
+
+    //界面拉伸所用
+    bool     _isleftpressed = false;      //判断是否是左键点击
+    int      _curpos = 0;                 //鼠标左键按下时光标所在区域
+    QPoint   _plast;                      //获取鼠标左键按下时光标在全局(屏幕而非窗口)的位置
+
+signals:
+    void sig_winStatus(bool);
+};
+
+#endif // MAINWIDGET_H

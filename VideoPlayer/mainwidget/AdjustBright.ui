@@ -1,0 +1,1083 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AdjustBright</class>
+ <widget class="QDialog" name="AdjustBright">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>390</width>
+    <height>335</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/*background-color: rgb(61, 61, 61);*/
+</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>10</y>
+     <width>80</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font:bold normal 15px &quot;微软雅黑&quot;;
+color: rgb(85, 255, 0);</string>
+   </property>
+   <property name="text">
+    <string>设   置</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_playRate">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>50</y>
+     <width>50</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(85, 255, 0);</string>
+   </property>
+   <property name="text">
+    <string>播放倍速</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="BtnRate_1">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>50</y>
+     <width>60</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>27</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>27</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"> QPushButton
+{
+	border:1px solid white;
+    background-color:gray;
+    color: rgb(0, 0, 2);
+}
+ QPushButton:hover 
+{
+    background-color:rgb(14, 220, 0);
+    color: rgb(0, 0, 0);
+}
+ 
+/*checked设置为checkable为true生效*/
+QPushButton:checked 
+{
+    border:2px solid #f85a37;
+    background-color:rgb(14, 170, 79);
+    color: rgb(255, 255, 0);
+}
+ 
+ </string>
+   </property>
+   <property name="text">
+    <string>0.5x</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="BtnRate_2">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>50</y>
+     <width>60</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>27</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>27</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"> QPushButton
+{
+	border:1px solid white;
+    background-color:gray;
+    color: rgb(0, 0, 2);
+}
+ QPushButton:hover 
+{
+    background-color:rgb(14, 220, 0);
+    color: rgb(0, 0, 0);
+}
+ 
+/*checked设置为checkable为true生效*/
+QPushButton:checked 
+{
+    border:2px solid #f85a37;
+    background-color:rgb(14, 170, 79);
+    color: rgb(255, 255, 0);
+}
+ 
+ </string>
+   </property>
+   <property name="text">
+    <string>正常</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="BtnRate_3">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>50</y>
+     <width>60</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>27</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>27</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"> QPushButton
+{
+	border:1px solid white;
+    background-color:gray;
+    color: rgb(0, 0, 2);
+}
+ QPushButton:hover 
+{
+    background-color:rgb(14, 220, 0);
+    color: rgb(0, 0, 0);
+}
+ 
+/*checked设置为checkable为true生效*/
+QPushButton:checked 
+{
+    border:2px solid #f85a37;
+    background-color:rgb(14, 170, 79);
+    color: rgb(255, 255, 0);
+}
+ 
+ </string>
+   </property>
+   <property name="text">
+    <string>1.25x</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="BtnRate_4">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>50</y>
+     <width>60</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>27</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>27</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"> QPushButton
+{
+	border:1px solid white;
+    background-color:gray;
+    color: rgb(0, 0, 2);
+}
+ QPushButton:hover 
+{
+    background-color:rgb(14, 220, 0);
+    color: rgb(0, 0, 0);
+}
+ 
+/*checked设置为checkable为true生效*/
+QPushButton:checked 
+{
+    border:2px solid #f85a37;
+    background-color:rgb(14, 170, 79);
+    color: rgb(255, 255, 0);
+}
+ 
+ </string>
+   </property>
+   <property name="text">
+    <string>2x</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_playSelect">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>100</y>
+     <width>50</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(85, 255, 0);</string>
+   </property>
+   <property name="text">
+    <string>播放选择</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_ld">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>140</y>
+     <width>50</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(85, 255, 0);</string>
+   </property>
+   <property name="text">
+    <string>亮    度</string>
+   </property>
+  </widget>
+  <widget class="QSlider" name="horizontalSlider_liangdu">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>140</y>
+     <width>270</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">/*整个进度条*/
+QSlider::groove:horizontal 
+{
+background:transparent;
+height: 8px;
+border-radius:4px;
+}
+
+/*J拖动按钮*/
+QSlider::handle:horizontal 
+{
+background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
+stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+width: 8px;
+height:8px;
+margin-top: -2px;
+margin-bottom: -2px;
+padding-right:1px;
+border-radius: 4px;
+border:1px solid white;
+}
+
+/*J拖动按钮-hover*/
+QSlider::handle:horizontal:hover 
+{
+border-radius: 4px;
+background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 #2A8BDA,stop:0.778409 rgba(255, 255, 255, 255));
+}
+
+/*未划过的区域，右边界线*/
+QSlider::add-page:horizontal,QSlider::add-line:horizontal
+{
+background-color: rgb(87, 97, 106); 
+border-radius:4px;
+}
+
+/*已划过的区域，右边界线*/
+QSlider::sub-page:horizontal,QSlider::sub-line:horizontal
+{
+/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));*/
+background-color:rgb(255, 94, 30);
+border-radius:4px;
+}
+</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_liangdu">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>140</y>
+     <width>30</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: #f85a37;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_duibidu">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>180</y>
+     <width>30</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: #f85a37;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_dbd">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>180</y>
+     <width>50</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(85, 255, 0);</string>
+   </property>
+   <property name="text">
+    <string>对 比 度</string>
+   </property>
+  </widget>
+  <widget class="QSlider" name="horizontalSlider_duibidu">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>180</y>
+     <width>270</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">/*整个进度条*/
+QSlider::groove:horizontal 
+{
+background:transparent;
+height: 8px;
+border-radius:4px;
+}
+
+/*J拖动按钮*/
+QSlider::handle:horizontal 
+{
+background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
+stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+width: 8px;
+height:8px;
+margin-top: -2px;
+margin-bottom: -2px;
+padding-right:1px;
+border-radius: 4px;
+border:1px solid white;
+}
+
+/*J拖动按钮-hover*/
+QSlider::handle:horizontal:hover 
+{
+border-radius: 4px;
+background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 #2A8BDA,stop:0.778409 rgba(255, 255, 255, 255));
+}
+
+/*未划过的区域，右边界线*/
+QSlider::add-page:horizontal,QSlider::add-line:horizontal
+{
+background-color: rgb(87, 97, 106); 
+border-radius:4px;
+}
+
+/*已划过的区域，右边界线*/
+QSlider::sub-page:horizontal,QSlider::sub-line:horizontal
+{
+/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));*/
+background-color:rgb(255, 94, 30);
+border-radius:4px;
+}
+</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_bhd">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>220</y>
+     <width>50</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(85, 255, 0);</string>
+   </property>
+   <property name="text">
+    <string>饱 和 度</string>
+   </property>
+  </widget>
+  <widget class="QSlider" name="horizontalSlider_baohedu">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>220</y>
+     <width>270</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">/*整个进度条*/
+QSlider::groove:horizontal 
+{
+background:transparent;
+height: 8px;
+border-radius:4px;
+}
+
+/*J拖动按钮*/
+QSlider::handle:horizontal 
+{
+background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
+stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+width: 8px;
+height:8px;
+margin-top: -2px;
+margin-bottom: -2px;
+padding-right:1px;
+border-radius: 4px;
+border:1px solid white;
+}
+
+/*J拖动按钮-hover*/
+QSlider::handle:horizontal:hover 
+{
+border-radius: 4px;
+background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 #2A8BDA,stop:0.778409 rgba(255, 255, 255, 255));
+}
+
+/*未划过的区域，右边界线*/
+QSlider::add-page:horizontal,QSlider::add-line:horizontal
+{
+background-color: rgb(87, 97, 106); 
+border-radius:4px;
+}
+
+/*已划过的区域，右边界线*/
+QSlider::sub-page:horizontal,QSlider::sub-line:horizontal
+{
+/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));*/
+background-color:rgb(255, 94, 30);
+border-radius:4px;
+}
+</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_baohedu">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>220</y>
+     <width>30</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: #f85a37;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="Line" name="line">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>30</y>
+     <width>370</width>
+     <height>3</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));</string>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="line_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>290</y>
+     <width>370</width>
+     <height>3</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));</string>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="line_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>80</y>
+     <width>370</width>
+     <height>3</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));</string>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioButton_dcxh">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>100</y>
+     <width>71</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">/*未选中的样式*/
+QRadioButton::indicator:unchecked
+{
+width:16px;
+height:16px;
+border-image: url(:/images/radio_normal.png);
+}
+
+QRadioButton::indicator:unchecked:hover
+{
+width:16px;
+height:16px;
+border-image: url(:/images/radio_hover.png);
+}
+
+/*选中时的样式*/
+QRadioButton::indicator:checked
+{
+width:16px;
+height:16px;
+border-image: url(:/images/radio_selected.png);
+}
+
+QRadioButton
+{
+color: rgb(42, 167, 247);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>单次循环</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioButton_lbxh">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>100</y>
+     <width>71</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">/*未选中的样式*/
+QRadioButton::indicator:unchecked
+{
+width:16px;
+height:16px;
+border-image: url(:/images/radio_normal.png);
+}
+
+QRadioButton::indicator:unchecked:hover
+{
+width:16px;
+height:16px;
+border-image: url(:/images/radio_hover.png);
+}
+
+/*选中时的样式*/
+QRadioButton::indicator:checked
+{
+width:16px;
+height:16px;
+border-image: url(:/images/radio_selected.png);
+}
+
+QRadioButton
+{
+color: rgb(42, 167, 247);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>列表循环</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioButton_sjbf">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>100</y>
+     <width>71</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">/*未选中的样式*/
+QRadioButton::indicator:unchecked
+{
+width:16px;
+height:16px;
+border-image: url(:/images/radio_normal.png);
+}
+
+QRadioButton::indicator:unchecked:hover
+{
+width:16px;
+height:16px;
+border-image: url(:/images/radio_hover.png);
+}
+
+/*选中时的样式*/
+QRadioButton::indicator:checked
+{
+width:16px;
+height:16px;
+border-image: url(:/images/radio_selected.png);
+}
+
+QRadioButton
+{
+color: rgb(42, 167, 247);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>随机播放</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioButton_sxbf">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>100</y>
+     <width>71</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">/*未选中的样式*/
+QRadioButton::indicator:unchecked
+{
+width:16px;
+height:16px;
+border-image: url(:/images/radio_normal.png);
+}
+
+QRadioButton::indicator:unchecked:hover
+{
+width:16px;
+height:16px;
+border-image: url(:/images/radio_hover.png);
+}
+
+/*选中时的样式*/
+QRadioButton::indicator:checked
+{
+width:16px;
+height:16px;
+border-image: url(:/images/radio_selected.png);
+}
+
+QRadioButton
+{
+color: rgb(42, 167, 247);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>顺序播放</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_hmbl">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>300</y>
+     <width>50</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(85, 255, 0);</string>
+   </property>
+   <property name="text">
+    <string>画面比例</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_1">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>300</y>
+     <width>50</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox::indicator 
+{
+width: 15px;
+height: 15px;
+}
+
+QCheckBox
+{
+/*font:11pt &quot;微软雅黑&quot;;*/
+color: rgb(42, 167, 247);
+}
+
+/*	
+QCheckBox:hover
+{
+color: rgb(85, 255, 0);
+}
+*/
+
+/*未选中的样式*/
+QCheckBox::indicator:unchecked
+{
+image: url(:/images/checkhover.png);
+}
+
+QCheckBox::indicator:unchecked:hover
+{
+
+}
+
+/*选中时的样式*/
+QCheckBox::indicator:checked
+{
+image: url(:/images/checked.png);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>4:3</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_2">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>300</y>
+     <width>50</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox::indicator 
+{
+width: 15px;
+height: 15px;
+}
+
+QCheckBox
+{
+/*font:11pt &quot;微软雅黑&quot;;
+color: rgb(0, 0, 0);*/
+color: rgb(42, 167, 247);
+}
+
+/*	
+QCheckBox:hover
+{
+color: rgb(85, 255, 0);
+}
+*/
+
+/*未选中的样式*/
+QCheckBox::indicator:unchecked
+{
+image: url(:/images/checkhover.png);
+}
+
+QCheckBox::indicator:unchecked:hover
+{
+
+}
+
+/*选中时的样式*/
+QCheckBox::indicator:checked
+{
+image: url(:/images/checked.png);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>16:9</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_3">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>300</y>
+     <width>50</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox::indicator 
+{
+width: 15px;
+height: 15px;
+}
+
+QCheckBox
+{
+/*font:11pt &quot;微软雅黑&quot;;
+color: rgb(0, 0, 0);*/
+color: rgb(42, 167, 247);
+}
+
+/*	
+QCheckBox:hover
+{
+color: rgb(85, 255, 0);
+}
+*/
+
+/*未选中的样式*/
+QCheckBox::indicator:unchecked
+{
+image: url(:/images/checkhover.png);
+}
+
+QCheckBox::indicator:unchecked:hover
+{
+
+}
+
+/*选中时的样式*/
+QCheckBox::indicator:checked
+{
+image: url(:/images/checked.png);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>原始</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_4">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>300</y>
+     <width>50</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox::indicator 
+{
+width: 15px;
+height: 15px;
+}
+
+QCheckBox
+{
+/*font:11pt &quot;微软雅黑&quot;;
+color: rgb(0, 0, 0);*/
+color: rgb(42, 167, 247);
+}
+
+/*	
+QCheckBox:hover
+{
+color: rgb(85, 255, 0);
+}
+*/
+
+/*未选中的样式*/
+QCheckBox::indicator:unchecked
+{
+image: url(:/images/checkhover.png);
+}
+
+QCheckBox::indicator:unchecked:hover
+{
+
+}
+
+/*选中时的样式*/
+QCheckBox::indicator:checked
+{
+image: url(:/images/checked.png);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>铺满</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_sediao">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>260</y>
+     <width>30</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: #f85a37;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QSlider" name="horizontalSlider_sediao">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>260</y>
+     <width>270</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">/*整个进度条*/
+QSlider::groove:horizontal 
+{
+background:transparent;
+height: 8px;
+border-radius:4px;
+}
+
+/*J拖动按钮*/
+QSlider::handle:horizontal 
+{
+background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
+stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+width: 8px;
+height:8px;
+margin-top: -2px;
+margin-bottom: -2px;
+padding-right:1px;
+border-radius: 4px;
+border:1px solid white;
+}
+
+/*J拖动按钮-hover*/
+QSlider::handle:horizontal:hover 
+{
+border-radius: 4px;
+background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 #2A8BDA,stop:0.778409 rgba(255, 255, 255, 255));
+}
+
+/*未划过的区域，右边界线*/
+QSlider::add-page:horizontal,QSlider::add-line:horizontal
+{
+background-color: rgb(87, 97, 106); 
+border-radius:4px;
+}
+
+/*已划过的区域，右边界线*/
+QSlider::sub-page:horizontal,QSlider::sub-line:horizontal
+{
+/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));*/
+background-color:rgb(255, 94, 30);
+border-radius:4px;
+}
+</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_sd">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>260</y>
+     <width>50</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(85, 255, 0);</string>
+   </property>
+   <property name="text">
+    <string>色    调</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,2368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1233</width>
+    <height>649</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">MainWindow
+{
+/*border-image: url(:/images/logonbk.png);*/
+}
+</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="styleSheet">
+    <string notr="true">/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));*/</string>
+   </property>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>1</y>
+      <width>1091</width>
+      <height>471</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="0,5">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="Btn_logo">
+         <property name="minimumSize">
+          <size>
+           <width>170</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton
+{
+border-image: url(:/images/label_logo.png);
+}
+
+QToolTip
+{
+background-color: rgb(255, 255, 255);
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QListWidget" name="listWidget_playlist">
+         <property name="minimumSize">
+          <size>
+           <width>170</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">/*QListWidget节目列表*/
+QListWidget 
+{
+/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0,
+stop:0 rgba(231,80,229, 255), 
+stop:1 rgba(7,208,255, 255));*/
+background-color: rgb(43, 43, 43);
+font-family:&quot;微软雅黑&quot;;
+border:none;/*去掉边框线*/
+icon-size:50px;
+font-size:14px;
+text-align:center;
+}
+
+QListWidget::item
+{
+color:#cccccc;
+background-color: rgb(43, 43, 43);
+min-height:50px;/*有效设置item高度*/
+}
+
+QListWidget QLabel
+{
+/*icon-size:25px;*/
+/*font:bold italic 18px &quot;微软雅黑&quot;;*/
+font-family:&quot;微软雅黑&quot;;
+font-size:15px;
+color:#cccccc;
+background-color:#3a3a3a;
+min-height:50px;
+}
+
+
+QListWidget::item:hover
+{
+show-decoration-selected:5;
+/*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
+ stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
+border-style:outset;
+color:#FF7F24;
+background-color: rgb(33, 33, 33);
+}
+
+QListWidget QLabel:hover
+{
+    show-decoration-selected:5;
+    /*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
+       stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
+    background-color:transparent;
+    border-style:outset;
+    color:#FF7F24;	
+}
+
+
+QListWidget::item:selected
+{
+ /*border:0px;*/
+    /*border:1px solid #55ff00;*/
+    background:#382e15;
+    padding:0px;
+    margin:0px;
+    color:#ff5c38;
+}
+
+QListWidget QLabel:selected
+{
+    /*border:0px;*/
+    /*border:1px solid #55ff00;*/
+    background:#382e15;
+    padding:0px;
+    margin:0px;
+    color:#ff5c38;
+}
+
+/*上次选择后保留的状态，鼠标离开后显示*/
+QListWidget::item:selected:!active
+{
+    border-width:0px;
+    background:#382e15;
+    padding:0px;
+    margin:0px;
+    color: rgb(85, 255, 0);
+}</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="moreBtn">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton
+{
+background-color: rgb(97, 97, 97);
+text-align:left;
+icon-size:35px;
+font-family:&quot;微软雅黑&quot;;
+font-size:14px;
+color:#cccccc;
+}
+
+QPushButton:hover
+{
+background-color:#3d3d3d;
+color:rgb(255, 94, 30);
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QWidget" name="widget_title" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">/*background-color:#1a72af;*/
+background-color:#2a2a31;
+color: rgb(85, 255, 0);</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLCDNumber" name="lcdNumber"/>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_19">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Minimum</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>35</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEditSearch">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>36</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>36</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">/*搜索框*/
+QLineEdit
+{
+color:#cccccc;
+font-family:&quot;微软雅黑&quot;;
+font-size:18px;
+background-color: rgb(81, 81, 81);
+selection-background-color: #D1DBCB;
+border-right:transparent;
+border:1px solid #ff5c38;
+border-top-left-radius:18;
+border-top-right-radius:0;
+border-bottom-right-radius:0;
+border-bottom-left-radius:18;
+padding-right:-2px;
+padding-left:15px;
+}
+
+/*
+QLineEdit:hover
+{
+background-color: rgb(33, 33, 33);
+border-right:-2px;
+border:1px solid #ff5c38;
+}
+*/
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="BtnSearch">
+              <property name="minimumSize">
+               <size>
+                <width>65</width>
+                <height>36</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>85</width>
+                <height>36</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">/*搜索按钮*/ 
+#BtnSearch
+{
+color:white;
+border:1px solid #ff5c38;
+border-left:transparent;
+background-color: #ff5246;
+border-top-left-radius:0;
+border-top-right-radius:18;
+border-bottom-right-radius:18;
+border-bottom-left-radius:0;
+
+}
+
+/*搜索按钮-按下*/
+#BtnSearch:pressed
+{
+border-style: inset;
+background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
+stop:0.494318 rgba(134, 198, 233, 255), stop:0.5 rgba(206, 234, 248, 255));
+border: 1px solid #5F92B2;
+}
+
+/*
+#BtnSearch:hover
+{
+color:white;
+background-color:#ff5246;
+border: 1px solid transparent;
+padding:-1px;
+
+}
+*/</string>
+              </property>
+              <property name="text">
+               <string>搜 索</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_18">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Minimum</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>80</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="BtnScreen">
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton
+{
+border-image: url(:/images/create.png);
+}
+
+QPushButton:hover
+{
+border-image: url(:/images/createhover.png);
+}
+
+QPushButton::item:selected
+{
+
+}
+
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_17">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>25</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="BtnHistory">
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton
+{
+border-image: url(:/images/history.png);
+}
+
+QPushButton:hover
+{
+border-image: url(:/images/historyhover.png);
+}
+
+QPushButton::item:selected
+{
+
+}
+
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_16">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>25</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="BtnDownload">
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton
+{
+border-image: url(:/images/download.png);
+}
+
+QPushButton:hover
+{
+border-image: url(:/images/downloadhover.png);
+}
+
+QPushButton::item:selected
+{
+
+}
+
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_10">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>25</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="Btnskin">
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton
+{
+border-image: url(:/images/skin.png);
+}
+
+QPushButton:hover
+{
+border-image: url(:/images/skin_hover.png);
+}
+
+QPushButton::item:selected
+{
+
+}
+
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_13">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>25</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="Btnlogin">
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#Btnlogin
+{
+border-image: url(:/images/login.png);
+}
+
+#Btnlogin:hover
+{
+border-image: url(:/images/login_hover.png);
+}
+
+#Btnlogin::item:selected
+{
+border-image: url(:/images/logined.png);
+}
+
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_12">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>25</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="Btnhelp">
+              <property name="minimumSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::ClickFocus</enum>
+              </property>
+              <property name="contextMenuPolicy">
+               <enum>Qt::CustomContextMenu</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton
+{
+border-image: url(:/images/help.png);
+}
+
+QPushButton:hover
+{
+border-image: url(:/images/help_hover.png);
+}
+
+QPushButton:selected
+{
+border-image: url(:/images/help.png);
+}
+
+QPushButton::menu-indicator
+{
+	image: none;
+}
+
+/*
+QPushButton::menu-indicator:image
+{
+	subcontrol-origin: margin;
+	subcontrol-position: bottom center;
+	margin-top: 5px;
+}
+*/
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_11">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>50</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_min">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton
+{
+background-color: transparent;
+	border-image: url(:/images/min2.png);
+}
+
+QPushButton:hover{
+/*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
+	stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
+	border-image: url(:/images/minhover.png);
+border: 1px solid #3C80B1;
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_8">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>15</width>
+                <height>26</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_normal">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton
+{
+border-image: url(:/images/normalmax.png);
+background-color: transparent;;
+}
+
+QPushButton:hover
+{
+border-image: url(:/images/normalmaxhover.png);
+border: 1px solid #3C80B1;
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_9">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>15</width>
+                <height>26</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_close">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton
+{
+background-color: transparent;
+	border-image: url(:/images/close3.png);
+}
+
+QPushButton:hover{
+/*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
+	stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
+	border-image: url(:/images/closehover.png);
+border: 1px solid #3C80B1;
+
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_7">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>15</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QStackedWidget" name="stackedWidget">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QStackedWidget
+{
+background-color:#2a2a31;
+margin:0px;
+}
+
+QStackedWidget::tab
+{
+margin:0px;
+}
+</string>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="page_1">
+          <layout class="QGridLayout" name="gridLayout_2">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QWidget" name="widget_2" native="true">
+             <property name="styleSheet">
+              <string notr="true">background-color: #3d3d3d;
+</string>
+             </property>
+             <widget class="QPushButton" name="pushButton_17">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>101</width>
+                <height>41</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>少儿动漫</string>
+              </property>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_2">
+          <layout class="QGridLayout" name="gridLayout_3">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QWidget" name="widget_3" native="true">
+             <property name="styleSheet">
+              <string notr="true">background-color: #3d3d3d;
+</string>
+             </property>
+             <widget class="QPushButton" name="pushButton_18">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>81</width>
+                <height>41</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>世界记录</string>
+              </property>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_3">
+          <layout class="QGridLayout" name="gridLayout_4">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QWidget" name="widget_4" native="true">
+             <property name="styleSheet">
+              <string notr="true">background-color: #3d3d3d;
+</string>
+             </property>
+             <widget class="QPushButton" name="pushButton_19">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>111</width>
+                <height>41</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>教育课堂</string>
+              </property>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_4">
+          <layout class="QGridLayout" name="gridLayout_5">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QWidget" name="widget_5" native="true">
+             <property name="styleSheet">
+              <string notr="true">background-color: #3d3d3d;
+</string>
+             </property>
+             <widget class="QPushButton" name="pushButton_20">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>91</width>
+                <height>41</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>游戏直播</string>
+              </property>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_5">
+          <layout class="QGridLayout" name="gridLayout_6">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QWidget" name="widget_6" native="true">
+             <property name="styleSheet">
+              <string notr="true">background-color: #3d3d3d;
+</string>
+             </property>
+             <widget class="QPushButton" name="pushButton_21">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>91</width>
+                <height>41</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>建党百年</string>
+              </property>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_6">
+          <layout class="QGridLayout" name="gridLayout_7">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QWidget" name="widget_7" native="true">
+             <property name="styleSheet">
+              <string notr="true">background-color: #3d3d3d;
+</string>
+             </property>
+             <widget class="QPushButton" name="pushButton_22">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>91</width>
+                <height>41</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>王者荣耀</string>
+              </property>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_7">
+          <layout class="QGridLayout" name="gridLayout_8">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QWidget" name="widget_8" native="true">
+             <property name="styleSheet">
+              <string notr="true">background-color: #3d3d3d;
+</string>
+             </property>
+             <widget class="QPushButton" name="pushButton_23">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>91</width>
+                <height>41</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>健康养生</string>
+              </property>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_8">
+          <layout class="QGridLayout" name="gridLayout_9">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QWidget" name="widget_9" native="true">
+             <property name="styleSheet">
+              <string notr="true">background-color: #3d3d3d;
+</string>
+             </property>
+             <widget class="QPushButton" name="pushButton_24">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>81</width>
+                <height>41</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>资讯快递</string>
+              </property>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_9">
+          <layout class="QGridLayout" name="gridLayout_10">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QWidget" name="widget_10" native="true">
+             <property name="styleSheet">
+              <string notr="true">background-color: #3d3d3d;
+</string>
+             </property>
+             <widget class="QPushButton" name="pushButton_25">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>101</width>
+                <height>41</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>生活解密</string>
+              </property>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_10">
+          <widget class="QPushButton" name="pushButton">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>101</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>世界地理</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="page_11">
+          <widget class="QPushButton" name="pushButton_3">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>101</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>人文艺术</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="page_12">
+          <widget class="QPushButton" name="pushButton_10">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>101</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>今日影院</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="page_13">
+          <widget class="QPushButton" name="pushButton_11">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>101</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>影视排行</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="page_14">
+          <widget class="QPushButton" name="pushButton_12">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>101</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>最新上架</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="page_15">
+          <widget class="QPushButton" name="pushButton_13">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>101</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>评分最高</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="page_16">
+          <widget class="QPushButton" name="pushButton_14">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>101</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>热门点播</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="page_17">
+          <widget class="QPushButton" name="pushButton_15">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>101</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>明星娱乐</string>
+           </property>
+          </widget>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget_splider" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QWidget
+{
+background-color: rgb(26, 26, 26);
+}
+
+QWidget:hover
+{
+
+}
+</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label">
+                <property name="maximumSize">
+                 <size>
+                  <width>40</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color:rgb(255, 94, 30);</string>
+                </property>
+                <property name="text">
+                 <string>进度：</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSlider" name="horizontalSlider">
+                <property name="minimumSize">
+                 <size>
+                  <width>760</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">/*整个进度条*/
+QSlider::groove:horizontal 
+{
+background:transparent;
+height: 6px;
+border-radius:3px;
+}
+
+
+/*整个进度条-hover*/
+QSlider::groove:horizontal:hover
+{
+background:transparent;
+height: 6px;
+border-radius:3px;
+}
+
+/*J拖动按钮*/
+QSlider::handle:horizontal 
+{
+
+background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
+stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+height:8px;
+width:8px;
+margin-top: -2px;
+margin-bottom: -2px;
+padding-right:1px;
+border-radius:4px;
+border:1px solid white;
+
+/*
+border-image: url(:/images/Slider.png);
+width: 20px;          
+height:20px;           
+margin-top: -4px;      
+margin-bottom: -4px;
+border-radius: 10px;  
+*/
+}
+
+/*J拖动按钮-hover,只跟groove的hover时高度影响*/
+QSlider::handle:horizontal:hover 
+{
+
+}
+
+/*未划过的区域，右边界线*/
+QSlider::add-page:horizontal,QSlider::add-line:horizontal
+{
+border-radius:2px;
+background-color: rgb(87, 97, 106); 
+}
+
+/*已划过的区域，右边界线*/
+QSlider::sub-page:horizontal,QSlider::sub-line:horizontal
+{
+border-radius:2px;
+background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));
+}
+</string>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>5</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_time">
+                <property name="minimumSize">
+                 <size>
+                  <width>110</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>110</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color:rgb(255, 94, 30);</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget_player" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(26, 26, 26);</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="pushButton_5">
+            <property name="minimumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+background-repeat:no-repeat;
+background-color:transparent;
+border: 1px solid transparent;
+margin-top:0px;
+margin-bottom:0px;
+/*border-radius:15px;*/
+}
+
+
+QPushButton:pressed
+{
+border: 1px solid transparent;;
+}
+
+QPushButton:hover
+{
+border-image: url(:/images/openfilehover.png);
+border: 1px solid transparent;
+}
+
+QToolTip
+{
+border:1px solid rgb(118, 118, 118); 
+background-color: #ffffff;
+color:#484848; font-size:12px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_7">
+            <property name="minimumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+background-repeat:no-repeat;
+background-color:transparent;
+border: 1px solid transparent;
+/*border-radius:15px;*/
+}
+
+
+QPushButton:pressed
+{
+border: 1px solid transparent;
+}
+
+QPushButton:hover
+{
+
+border: 1px solid transparent;
+}
+
+QToolTip
+{
+border:1px solid rgb(118, 118, 118); 
+background-color: #ffffff;
+color:#484848; font-size:12px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_4">
+            <property name="minimumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+background-color:transparent;
+border: 1px solid transparent;
+/*border-radius:15px;*/
+}
+
+
+QPushButton:pressed
+{
+border: 1px solid transparent;
+}
+
+QPushButton:hover
+{
+border: 1px solid transparent;
+}
+
+QToolTip
+{
+border:1px solid rgb(118, 118, 118); 
+background-color: #ffffff;
+color:#484848; font-size:12px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_8">
+            <property name="minimumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+background-color:transparent;
+border: 1px solid transparent;
+/*border-radius:15px;*/
+}
+
+
+QPushButton:pressed
+{
+
+border: 1px solid transparent;
+}
+
+QPushButton:hover
+{
+
+border: 1px solid transparent;
+}
+
+QToolTip
+{
+border:1px solid rgb(118, 118, 118); 
+background-color: #ffffff;
+color:#484848; font-size:12px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_2">
+            <property name="minimumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>75</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+background-color:transparent;
+border: 1px solid transparent;
+/*border-radius:15px;*/
+}
+
+
+QPushButton:pressed
+{
+border: 1px solid transparent;
+}
+
+QPushButton:hover
+{
+
+border: 1px solid transparent;
+}
+
+QToolTip
+{
+border:1px solid rgb(118, 118, 118); 
+background-color: #ffffff;
+color:#484848; font-size:12px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_6">
+            <property name="minimumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+margin-bottom:-2px;
+background-image: url(:/images/fullscrhover.png);
+background-repeat:no-repeat;
+background-color:transparent;
+border: 1px solid transparent;
+/*border-radius:15px;*/
+}
+
+
+QPushButton:pressed
+{
+border: 1px solid transparent;
+}
+
+QPushButton:hover
+{
+
+border: 1px solid transparent;
+}
+
+QToolTip
+{
+border:1px solid rgb(118, 118, 118); 
+background-color: #ffffff;
+color:#484848; font-size:12px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_20">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Btn_eyes">
+            <property name="minimumSize">
+             <size>
+              <width>35</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>35</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+margin-bottom:-2px;
+background-image: url(:/images/eyes_open_normal.png);
+background-repeat:no-repeat;
+background-color:transparent;
+border: 1px solid transparent;
+/*border-radius:15px;*/
+}
+
+
+QPushButton:pressed
+{
+border: 1px solid transparent;
+}
+
+QPushButton:hover
+{
+background-image: url(:/images/eyes_open_hover.png);
+border: 1px solid transparent;
+}
+
+QToolTip
+{
+border:1px solid rgb(118, 118, 118); 
+background-color: #ffffff;
+color:#484848; font-size:12px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_22">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Btn_lyric">
+            <property name="minimumSize">
+             <size>
+              <width>35</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>35</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+margin-bottom:-2px;
+background-image: url(:/images/lyric_normal.png);
+background-repeat:no-repeat;
+background-color:transparent;
+border: 1px solid transparent;
+/*border-radius:15px;*/
+}
+
+
+QPushButton:pressed
+{
+border: 1px solid transparent;
+}
+
+QPushButton:hover
+{
+background-image: url(:/images/lyric_hover.png);
+border: 1px solid transparent;
+}
+
+QToolTip
+{
+border:1px solid rgb(118, 118, 118); 
+background-color: #ffffff;
+color:#484848; font-size:12px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_23">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit_danmu">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">/*搜索框*/
+QLineEdit
+{
+color:#cccccc;
+font-family:&quot;微软雅黑&quot;;
+font-size:14px;
+background-color: rgb(81, 81, 81);
+selection-background-color: #D1DBCB;
+border:1px solid #ff5c38;
+border-top-left-radius:13;
+border-top-right-radius:13;
+border-bottom-right-radius:13;
+border-bottom-left-radius:13;
+padding-right:10px;
+padding-left:10px;
+}
+
+
+QLineEdit:hover
+{
+color:#cccccc;
+font-family:&quot;微软雅黑&quot;;
+font-size:14px;
+selection-background-color: #D1DBCB;
+border:1px solid #ff5c38;
+border-top-left-radius:13;
+border-top-right-radius:13;
+border-bottom-right-radius:13;
+border-bottom-left-radius:13;
+padding-right:10px;
+padding-left:10px;
+}
+
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="placeholderText">
+             <string>参与弹幕讨论~~</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_danmu">
+            <property name="minimumSize">
+             <size>
+              <width>60</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>60</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+border-image: url(:/images/tanmuClose.png);
+}
+QPushButton:checked
+{
+border-image: url(:/images/tanmuOpen.png);
+border: 1px solid #5F92B2;
+}
+QPushButton:hover
+{
+/*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
+	stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
+border: 1px solid #3C80B1;
+border:none;
+}
+
+QToolTip
+{
+border:1px solid rgb(118, 118, 118); 
+background-color: #ffffff;
+color:#484848; font-size:12px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_15">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Btn_adjust">
+            <property name="minimumSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+border-image: url(:/images/set.png);
+}
+
+QPushButton:hover
+{
+border-image: url(:/images/set_hover.png);
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_14">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_1">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+
+	/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));*/
+background-color: transparent;
+	border:none;
+
+}
+QPushButton:pressed
+{
+	border: 1px solid #5F92B2;
+}
+QPushButton:hover{
+/*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
+	stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
+border: 1px solid #3C80B1;
+border:none;
+}
+
+QToolTip
+{
+border:1px solid rgb(118, 118, 118); 
+background-color: #ffffff;
+color:#484848; font-size:12px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_21">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_curlist">
+            <property name="minimumSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+	
+	/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));*/
+background-color: transparent;
+	border-image: url(:/images/curplaylist_normal.png);
+	border:none;
+
+}
+QPushButton:pressed
+{
+	border: 1px solid #5F92B2;
+}
+QPushButton:hover{
+/*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
+	stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
+border: 1px solid #3C80B1;
+border-image: url(:/images/curplaylist_hover.png);
+border:none;
+}
+
+QToolTip
+{
+border:1px solid rgb(118, 118, 118); 
+background-color: #ffffff;
+color:#484848; font-size:12px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_24">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1233</width>
+     <height>23</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

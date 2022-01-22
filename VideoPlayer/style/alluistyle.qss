@@ -1,0 +1,354 @@
+MainWidget
+{
+background-color:#2a2a31;
+color: rgb(85, 255, 0);
+}
+
+/*全局通过用样式*/
+* {
+outline:none;
+}
+
+/*去白边*/
+QTabWidget::pane 
+{
+border-right: 0;
+}
+
+/*---侧边栏列表---*/
+#listWidget_playlist
+{
+background-color: rgb(43, 43, 43);
+font-family:"微软雅黑";
+border:none;/*去掉边框线*/
+icon-size:50px;
+font-size:14px;
+text-align:center;
+}
+
+/*侧边栏列表item*/
+#listWidget_playlist::item
+{
+color:#cccccc;
+background-color: rgb(43, 43, 43);
+min-height:50px;/*有效设置item高度*/
+}
+
+#listWidget_playlist::item:hover
+{
+show-decoration-selected:5;
+/*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
+stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
+border-style:outset;
+color:#FF7F24;
+background-color: rgb(33, 33, 33);
+}
+
+#listWidget_playlist::item:selected
+{
+/*border:0px;*/
+/*border:1px solid #55ff00;*/
+background:#382e15;
+padding:0px;
+margin:0px;
+color:#ff5c38;
+}
+
+/*上次选择后保留的状态，鼠标离开后显示*/
+#listWidget_playlist::item:selected:!active
+{
+border-width:0px;
+background:#382e15;
+padding:0px;
+margin:0px;
+color: rgb(85, 255, 0);
+}
+
+/*侧边栏底部--按钮*/
+#m_expandBtn
+{
+background-color: rgb(43, 43, 43);
+text-align:left;
+icon-size:35px;
+font-family:"微软雅黑";
+font-size:14px;
+color:#cccccc;
+padding-left:38px;
+}
+
+#m_expandBtn:hover
+{
+background-color: rgb(33, 33, 33);
+color:rgb(255, 94, 30);
+}
+
+/*去掉dockwidget边界空白*/
+QMainWindow::separator 
+{
+outline:0;
+width:0px;
+height:0px;
+margin:0px;
+padding:0px;
+}
+
+QDockWidget
+{
+outline:0;
+}
+
+QDockWidget#m_dockWidget::title
+{
+text-align: center; 
+background-color:rgb(101,210,105);
+padding-left: 5px;
+}
+
+/*通过icon-size来撑大item的高度*/
+QToolBox
+{
+border-right:2px;
+background-color:#3d3d3d;
+ icon-size: 25px; 
+}
+
+/*抽屉控件,有效*/
+QToolBox::tab
+{
+/*border: 2px groove transparent; */
+border-bottom:2px groove blue; 
+border-radius:2px;
+background-color:#3d3d3d;
+text-align: center; 
+}
+
+/*tab样式-hover*/
+QToolBox::tab:hover
+{
+background-color:rgb(101,210,105);
+color:lightgreen;
+}
+
+/*tab样式-selected*/
+QToolBox::tab:selected
+{
+background-color:#7f7f7f;
+/*color:lightgreen;*/
+}
+
+/*
+QToolTip
+{
+     border: 1px solid black;
+     background-color: #D1DBCB;
+     padding: 1px;
+     border-radius: 3px;
+     opacity: 100;
+}
+*/
+
+/*菜单样式-通用样式*/
+
+QLCDNumber
+{
+border:none;
+/*font:bold italic 18px "微软雅黑";*/
+}
+
+/*视频显示widget1*/
+QWidget #widget1
+{
+background-color:#3d3d3d;
+}
+
+/*QDockWidget上的widget2*/
+QDockWidget QWidget#widget2
+{
+background-color:#3d3d3d;
+}
+
+/*搜索框*/
+QToolBox QWidget QLineEdit
+{
+color:#cccccc;
+font-family:"微软雅黑";
+font-size:14px;
+background-color: rgb(81, 81, 81);
+selection-background-color: #D1DBCB;
+/*border:2px solid #76797C;*/
+border:transparent;
+border-top-left-radius:0;
+border-top-right-radius:0;
+border-bottom-right-radius:0;
+border-bottom-left-radius:0;
+border-right:-1px;
+padding-right:-1px;
+padding-left:15px;
+}
+
+QToolBox QWidget QLineEdit:hover
+{
+background-color: rgb(33, 33, 33);;
+border-right:-2px;
+border:1px solid #ff5c38;
+}
+
+/*搜索按钮*/
+QToolBox QWidget QPushButton
+{
+color:#ff5c38;
+border:1px solid transparent;
+background-color: rgb(75, 75, 75);
+border-top-left-radius:0;
+border-top-right-radius:0;
+border-bottom-right-radius:0;
+border-bottom-left-radius:0;
+}
+
+/*搜索按钮-按下*/
+QToolBox QWidget QPushButton:pressed
+{
+border-style: inset;
+background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
+stop:0.494318 rgba(134, 198, 233, 255), stop:0.5 rgba(206, 234, 248, 255));
+border: 1px solid #5F92B2;
+}
+
+/*搜索按钮-鼠标滑过*/
+QToolBox QWidget QPushButton:hover
+{
+color:white;
+/*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
+stop:0.494318 rgba(181, 225, 250, 255), 
+stop:0.5 rgba(222, 242, 251, 255));*/
+background-color:#535353;
+/*border: 1px solid #D1DBCB;*/
+padding:-1px;
+}
+
+/*listwidget-每个item上的按钮*/
+QToolBox QWidget QListWidget QPushButton
+{
+color:#cccccc;
+background-color:#3a3a3a;
+/*
+min-height:30px;
+max-height:30px;
+*/
+} 
+
+/*QListWidget播放列表*/
+QToolBox QListWidget
+{
+/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0,
+stop:0 rgba(231,80,229, 255), 
+stop:1 rgba(7,208,255, 255));*/
+background-color:#3d3d3d;
+font-family:"Mircrosoft YaHei";
+border:none;/*去掉边框线*/
+
+}
+
+QToolBox QListWidget::item
+{
+color:#cccccc;
+background-color:#3a3a3a;
+min-height:30px;
+}
+
+QToolBox QListWidget::item:hover
+{
+    show-decoration-selected:5;
+    /*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
+       stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
+    background-color:#707070;
+    border-style:outset;
+    color:#FF7F24;	
+}
+
+QToolBox QListWidget::item:selected
+{
+    /*border:0px;*/
+    /*border:1px solid #55ff00;*/
+    background:#382e15;
+    padding:0px;
+    margin:0px;
+    color:#ff5c38;
+}
+
+/*上次选择后保留的状态，鼠标离开后显示*/
+QToolBox QListWidget::item:selected:!active
+{
+    border-width:0px;
+    background:#382e15;
+    padding:0px;
+    margin:0px;
+    color: rgb(85, 255, 0);
+}
+
+/*滚动条-垂直*/
+QScrollBar:vertical,QScrollBar:horizontal
+{
+background:skyblue;
+width:8px; 
+height:8px;
+ }
+
+QScrollBar::handle:vertical,QScrollBar::handle:horizontal
+{
+/*顶部留出10px给箭头*/
+/*padding-top:10px;*/
+/*padding-bottom:10px;*/
+/*background:#008B8B;*/
+background:#3f3f48;
+ border:2px solid #3f3f48;
+ border-radius:5px;
+ width:4px;
+min-height:4px;
+ }
+
+QScrollBar::handle:vertical:hover,QScrollBar::handle:horizontal:hover
+{
+/*background:#00BFFF; */
+background:#3f3f48;
+border:2px solid #3f3f48;
+ border-radius:5px;
+ width:4px;
+min-height:4px;
+}
+
+/*
+QScrollBar::handle:vertical:pressed
+{
+background:#00BFFF;
+border:2px solid transparent;
+ border-radius:5px;
+width:4px;
+min-height:8px;
+}
+*/
+
+/*page属于移动的区域*/
+QScrollBar::add-page:vertical,QScrollBar::add-page:horizontal
+{    
+        background-color: rgb(87, 97, 106);
+}
+
+QScrollBar::sub-page:vertical,QScrollBar::sub-page:horizontal
+{
+        background-color: rgb(87, 97, 106);
+}
+
+/*
+QScrollBar::sub-line:vertical
+{
+background-image: url(:/images/arrowdown.png);
+subcontrol-position:top;
+}
+
+QScrollBar::add-line:vertical
+{
+background-image: url(:/images/arrowup.png);
+subcontrol-position:bottom;
+}
+*/

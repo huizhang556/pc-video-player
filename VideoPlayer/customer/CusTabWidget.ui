@@ -1,0 +1,834 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CusTabWidget</class>
+ <widget class="QWidget" name="CusTabWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1173</width>
+    <height>613</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="styleSheet">
+        <string notr="true">QTabWidget{
+}
+QTabWidget&gt;QWidget&gt;QWidget{/*tab页*/
+background-color: rgb(80, 80, 80);
+}
+QTabWidget::tab-bar{
+alignment:left;/*tab位置*/
+}
+QTabWidget::pane { /*内容区域*/
+background-color: rgb(80, 80, 80);/*背景色-空隙颜色*/
+border:1px solid rgb(128, 128, 128);
+} 
+QTabBar{
+color:white;
+background-color:transparent;
+}
+QTabBar::tab{/*页签*/
+min-height:28px;
+width:120px;
+color: rgb(230, 230, 230);
+margin-right:1px;
+margin-bottom:1px;
+border-top-left-radius:16px 24px;
+border:1px solid rgb(128, 128, 128);
+border-bottom:0;
+background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(60, 60, 60, 255), stop:0.238636 rgba(40, 40, 40, 255), stop:0.909091 rgba(87, 87, 87, 255));
+}
+QTabBar::tab:hover{
+color:black;
+background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(255, 177, 21, 255), stop:0.295455 rgba(245, 163, 0, 255), stop:0.909091 rgba(255, 201, 93, 255));
+}
+QTabBar::tab:selected{
+color:rgb(255, 170, 0);
+border-bottom:1px solid rgb(0, 170, 255);
+}
+QTabBar::tab:selected:hover{
+color:black;
+}
+QTabBar::tear{/*选项过多时的。。。*/
+imag:;
+}
+QTabBar::scroller{
+width:60px;
+}</string>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="tab_2">
+        <attribute name="title">
+         <string>优秀电影</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QTableWidget" name="tableWidget_2">
+           <property name="styleSheet">
+            <string notr="true">QHeaderView{
+font: 15px &quot;宋体&quot;;
+color:rgb(230, 230, 230);
+background-color: rgb(80, 80, 80);
+}
+QHeaderView::section:horizontal{/*横表头*/
+min-height:30px;
+border:0;
+border-bottom:1px solid rgb(0, 170, 255);
+background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(60, 60, 60, 255), stop:0.301136 rgba(40, 40, 40, 255), stop:0.909091 rgba(68, 68, 68, 255));
+}
+QHeaderView::section:vertical{/*竖表头*/
+min-width:60px;
+padding-left:15px;
+border:1px solid rgb(128, 128, 128);
+border-top:0;
+border-left:0;
+background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(60, 60, 60, 255), stop:0.301136 rgba(40, 40, 40, 255), stop:0.909091 rgba(68, 68, 68, 255));
+}
+QHeaderView::section{
+font: 15px &quot;宋体&quot;;
+}
+QHeaderView::section:hover{
+color:black;
+background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(255, 177, 21, 255), stop:0.335227 rgba(245, 163, 0, 255), stop:0.909091 rgba(255, 192, 66, 255));
+}
+QHeaderView::section:checked{/*不取消高亮*/
+font: 15px &quot;宋体&quot;;
+color: rgb(255, 170, 0);
+}
+QHeaderView::section:selected{
+font: 15px &quot;宋体&quot;;
+color: rgb(255, 170, 0);
+}
+QHeaderView::section:checked:hover{
+color: rgb(230, 230, 230);
+}
+QHeaderView::section:first{/*表头第一个位置*/
+}
+QHeaderView::down-arrow{/*图标用来排序的*/
+}
+QHeaderView::up-arrow{
+}
+/*表格*/
+QTableWidget{/*对齐方式代码设置*/
+border:1px solid rgb(128, 128, 128);
+gridline-color: rgb(128, 128, 128);/*网格线颜色*/
+background-color: rgb(80, 80, 80);
+}
+QTableWidget QTableCornerButton::section{/*表头左上*/
+border:0;
+border-bottom:1px solid rgb(0, 170, 255);
+background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(60, 60, 60, 255), stop:0.301136 rgba(40, 40, 40, 255), stop:0.909091 rgba(68, 68, 68, 255));
+}
+QTableWidget::item{/*表内容*/
+font: 15px &quot;宋体&quot;;
+color: rgb(230, 230, 230);
+background-color: rgb(80, 80, 80);
+}
+QTableWidget::item:selected{
+color:black;
+background-color: rgb(255, 170, 0);
+}
+QTableWidget::indicator{
+width: 20px;
+height: 20px;
+}
+QTableWidget::indicator:enabled:checked{
+image: ;
+}
+QTableWidget::indicator:enabled:unchecked{
+image: ;
+}
+</string>
+           </property>
+           <row>
+            <property name="text">
+             <string>数据访问量</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>流水交易</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>明日预播</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>今日观众</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>新建行</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>网络时代</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>终止时间</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>修改时间</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>每日更新</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>热点统计</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>实时资讯</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>最近变化</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>持续时间</string>
+            </property>
+           </row>
+           <column>
+            <property name="text">
+             <string>新闻板块</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>游戏主播</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>相声小品</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>经典国粹</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>国外网站</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>健康养生</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>生活揭秘</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>地理发现</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>今日快讯</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>焦点聚集</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>旅游时刻</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>外国风情</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>报纸板块</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>建党百年</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>经典影视</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>儿童动漫</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>娱乐板块</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>游戏板块</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tab_4">
+        <attribute name="title">
+         <string>  年度热剧</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="tab_5">
+        <attribute name="title">
+         <string>   口碑好剧</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="tab_7">
+        <attribute name="title">
+         <string>军旅抗战</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="tab_8">
+        <attribute name="title">
+         <string>古装历史</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="tab_9">
+        <attribute name="title">
+         <string>   玄幻史诗</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="tab_10">
+        <attribute name="title">
+         <string>罪案谍战</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="tab_14">
+        <attribute name="title">
+         <string>   武侠江湖</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="tab_15">
+        <attribute name="title">
+         <string>  青春校园</string>
+        </attribute>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="maximumSize">
+          <size>
+           <width>30</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: transparent;
+color:black;</string>
+         </property>
+         <property name="text">
+          <string>&lt;&lt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>10</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="maximumSize">
+          <size>
+           <width>30</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: transparent;
+color:black;</string>
+         </property>
+         <property name="text">
+          <string>&gt;&gt;</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QStackedWidget" name="stackedWidget">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="page">
+        <layout class="QGridLayout" name="gridLayout">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QTableWidget" name="tableWidget_3">
+           <property name="styleSheet">
+            <string notr="true">QHeaderView{
+font: 15px &quot;宋体&quot;;
+color:rgb(230, 230, 230);
+background-color: rgb(80, 80, 80);
+}
+QHeaderView::section:horizontal{/*横表头*/
+min-height:30px;
+border:0;
+border-bottom:1px solid rgb(0, 170, 255);
+background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(60, 60, 60, 255), stop:0.301136 rgba(40, 40, 40, 255), stop:0.909091 rgba(68, 68, 68, 255));
+}
+QHeaderView::section:vertical{/*竖表头*/
+min-width:60px;
+padding-left:15px;
+border:1px solid rgb(128, 128, 128);
+border-top:0;
+border-left:0;
+background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(60, 60, 60, 255), stop:0.301136 rgba(40, 40, 40, 255), stop:0.909091 rgba(68, 68, 68, 255));
+}
+QHeaderView::section{
+font: 15px &quot;宋体&quot;;
+}
+QHeaderView::section:hover{
+color:black;
+background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(255, 177, 21, 255), stop:0.335227 rgba(245, 163, 0, 255), stop:0.909091 rgba(255, 192, 66, 255));
+}
+QHeaderView::section:checked{/*不取消高亮*/
+font: 15px &quot;宋体&quot;;
+color: rgb(255, 170, 0);
+}
+QHeaderView::section:selected{
+font: 15px &quot;宋体&quot;;
+color: rgb(255, 170, 0);
+}
+QHeaderView::section:checked:hover{
+color: rgb(230, 230, 230);
+}
+QHeaderView::section:first{/*表头第一个位置*/
+}
+QHeaderView::down-arrow{/*图标用来排序的*/
+}
+QHeaderView::up-arrow{
+}
+/*表格*/
+QTableWidget{/*对齐方式代码设置*/
+border:1px solid rgb(128, 128, 128);
+gridline-color: rgb(128, 128, 128);/*网格线颜色*/
+background-color: rgb(80, 80, 80);
+}
+QTableWidget QTableCornerButton::section{/*表头左上*/
+border:0;
+border-bottom:1px solid rgb(0, 170, 255);
+background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(60, 60, 60, 255), stop:0.301136 rgba(40, 40, 40, 255), stop:0.909091 rgba(68, 68, 68, 255));
+}
+QTableWidget::item{/*表内容*/
+font: 15px &quot;宋体&quot;;
+color: rgb(230, 230, 230);
+background-color: rgb(80, 80, 80);
+}
+QTableWidget::item:selected{
+color:black;
+background-color: rgb(255, 170, 0);
+}
+QTableWidget::indicator{
+width: 20px;
+height: 20px;
+}
+QTableWidget::indicator:enabled:checked{
+image: ;
+}
+QTableWidget::indicator:enabled:unchecked{
+image: ;
+}
+</string>
+           </property>
+           <row>
+            <property name="text">
+             <string>数据访问量</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>流水交易</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>明日预播</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>今日观众</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>新建行</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>网络时代</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>终止时间</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>修改时间</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>每日更新</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>热点统计</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>实时资讯</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>最近变化</string>
+            </property>
+           </row>
+           <row>
+            <property name="text">
+             <string>持续时间</string>
+            </property>
+           </row>
+           <column>
+            <property name="text">
+             <string>新闻板块</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>游戏主播</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>相声小品</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>经典国粹</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>国外网站</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>健康养生</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>生活揭秘</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>地理发现</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>今日快讯</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>焦点聚集</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>旅游时刻</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>外国风情</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>报纸板块</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>建党百年</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>经典影视</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>儿童动漫</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>娱乐板块</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>游戏板块</string>
+            </property>
+           </column>
+           <item row="2" column="0">
+            <property name="text">
+             <string>融会贯通</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_2">
+        <layout class="QGridLayout" name="gridLayout_2">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QTreeWidget" name="treeWidget">
+           <column>
+            <property name="text">
+             <string>1</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>新建列</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>2</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>3</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>5</string>
+            </property>
+           </column>
+           <item>
+            <property name="text">
+             <string>aa</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>gg</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>gg</string>
+              </property>
+             </item>
+            </item>
+           </item>
+           <item>
+            <property name="text">
+             <string>ss</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>ff</string>
+             </property>
+            </item>
+           </item>
+           <item>
+            <property name="text">
+             <string>dd</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>ff</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>rer</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>ss</string>
+              </property>
+             </item>
+            </item>
+           </item>
+           <item>
+            <property name="text">
+             <string>gg</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>gg</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>gg</string>
+              </property>
+             </item>
+            </item>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
