@@ -1,7 +1,7 @@
 ﻿#include "TitleBar.h"
 #include "ui_TitleBar.h"
 #include <QDateTime>
-
+#include <QDesktopServices>
 #include <QDebug>
 
 TitleBar::TitleBar(QWidget *parent) :
@@ -31,7 +31,7 @@ void TitleBar::initWorker()
     m_timer2 = new QTimer(this);
     m_timer3 = new QTimer(this);
     m_timer3->start(100);//0.1s更新发送一次时间,放在下面合适
-
+    ui->Btnhelp->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->pushButton_close->setFlat(true);
     setShowToolTip();//增加提示
 }
@@ -85,7 +85,14 @@ void TitleBar::chandleSignalAndSLots()
     connect(ui->pushButton_min,&QPushButton::clicked,[=](){emit sig_winMinimum();});
     //更新时间
     connect(m_timer3,&QTimer::timeout,this,&TitleBar::getSystemTimeShow);
-    //登录按钮触发
+    //调用登录提示板
+    connect(ui->Btnlogin,&QPushButton::clicked,[=](){emit sig_callLogin();});
+    //历史记录
+    connect(ui->BtnHistory,&QPushButton::clicked,[=](){emit sig_historyDownload();});
+    //帮助设置
+    connect(ui->Btnhelp,&QPushButton::clicked,[=](){emit sig_settingHelp();});
+    //腾讯主页
+    connect(ui->Btn_logo,&QPushButton::clicked,[=](){QDesktopServices::openUrl(QUrl(QString("https://v.qq.com/")));});
 }
 
 /*设置tooltip*/

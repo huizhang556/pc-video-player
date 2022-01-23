@@ -129,5 +129,6 @@
         <file>images/yingling_1.png</file>
         <file>images/yingling2.png</file>
         <file>style/alluistyle.qss</file>
+        <file>images/openfile.png</file>
     </qresource>
 </RCC>

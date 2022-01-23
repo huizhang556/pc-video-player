@@ -4,6 +4,12 @@ background-color:#2a2a31;
 color: rgb(85, 255, 0);
 }
 
+MainWindow
+{
+background-color:#2a2a31;
+color: rgb(85, 255, 0);
+}
+
 /*全局通过用样式*/
 * {
 outline:none;

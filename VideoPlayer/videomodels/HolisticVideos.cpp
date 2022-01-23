@@ -1,6 +1,6 @@
 ﻿//#pragma execution_character_set("utf-8")
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
+#include "HolisticVideos.h"
+#include "ui_HolisticVideos.h"
 
 #include <QFile>
 #include <QMenu>
@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setMinimumSize(1240,800);//1400,800
+    initMainWindow();//初始化界面
 //    this->setMaximumSize(1920,1040);
 //    showMaximized();
 //    setFixedSize(1280,750);//给个固定大小
@@ -42,57 +43,36 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setWindowFlags(Qt::FramelessWindowHint);//去掉标题栏
     this->setWindowTitle(QString::fromLocal8Bit("Qt简易视频播放器"));
 
-    ui->Btn_adjust->installEventFilter(this);
+//    ui->Btn_adjust->installEventFilter(this);
 
     ui->pushButton_danmu->setCheckable(true);
 
     //LCD数字显示
-    ui->lcdNumber->setDigitCount(20);//显示数量（个数）
-    ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);
-    ui->lcdNumber->setPalette(Qt::red);//显示文字颜色，不怎么生效
+//    ui->lcdNumber->setDigitCount(20);//显示数量（个数）
+//    ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);
+//    ui->lcdNumber->setPalette(Qt::red);//显示文字颜色，不怎么生效
     //顶层搜索按钮和搜索框
-    ui->lineEditSearch->installEventFilter(this);
-    ui->BtnSearch->installEventFilter(this);
-    QIcon icon_clear(":/images/clear.png");
-    clearAction = new QAction(icon_clear,"");
-    clearAction->setObjectName(QString::fromLocal8Bit("clearAction"));
-    ui->lineEditSearch->addAction(clearAction, QLineEdit::TrailingPosition);// 右侧显示
-    clearAction->setVisible(false);
-    connect(clearAction,&QAction::triggered,[=](){ui->lineEditSearch->clear();});
-    connect(ui->lineEditSearch,&QLineEdit::textChanged,[=]()
-    {
-        if(ui->lineEditSearch->text().isEmpty())
-        {
-            clearAction->setVisible(false);
-        }
-        else
-        {
-            clearAction->setVisible(true);
-        }
+//    ui->lineEditSearch->installEventFilter(this);
+//    ui->BtnSearch->installEventFilter(this);
+//    QIcon icon_clear(":/images/clear.png");
+//    clearAction = new QAction(icon_clear,"");
+//    clearAction->setObjectName(QString::fromLocal8Bit("clearAction"));
+//    ui->lineEditSearch->addAction(clearAction, QLineEdit::TrailingPosition);// 右侧显示
+//    clearAction->setVisible(false);
+//    connect(clearAction,&QAction::triggered,[=](){ui->lineEditSearch->clear();});
+//    connect(ui->lineEditSearch,&QLineEdit::textChanged,[=]()
+//    {
+//        if(ui->lineEditSearch->text().isEmpty())
+//        {
+//            clearAction->setVisible(false);
+//        }
+//        else
+//        {
+//            clearAction->setVisible(true);
+//        }
 
-    });
+//    });
 
-//    ui->comboBoxRate->addItem(QString::fromLocal8Bit("0.5倍速"), QVariant(0.5));
-//    ui->comboBoxRate->addItem(QString::fromLocal8Bit("1.0倍速"), QVariant(1.0));
-//    ui->comboBoxRate->addItem(QString::fromLocal8Bit("1.5倍速"), QVariant(1.5));
-//    ui->comboBoxRate->addItem(QString::fromLocal8Bit("2.0倍速"), QVariant(2.0));
-//    ui->comboBoxRate->addItem(QString::fromLocal8Bit("4.0倍速"), QVariant(4.0));
-//    ui->comboBoxRate->setCurrentIndex(1);
-//    ui->comboBoxRate->setView(new QListView);
-//    ui->comboBoxRate->setEnabled(false);
-//    connect(ui->comboBoxRate,SIGNAL(currentIndexChanged(int)),this,SLOT(setVideoRate(int)));// 明确指明类型，需注意同名函数的重载
-
-    //加载节目列表
-    addFileToPlayList();
-    ui->listWidget_playlist->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//关闭滚动条可见
-    ui->listWidget_playlist->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->listWidget_playlist->setFocusPolicy(Qt::NoFocus);//作用是点击item去掉虚线边框
-
-    //托盘
-    QIcon icno(":/images/tray.png");
-    m_tray = new QSystemTrayIcon(icno,this);
-    m_tray->setToolTip(QString::fromLocal8Bit("播放器"));
-    createTrayMenu();//托盘菜单
 
     m_times = 0;
     m_voice = 10;
@@ -127,37 +107,36 @@ MainWindow::MainWindow(QWidget *parent) :
 //      delete palette;
 
 //      videoWidget->installEventFilter(this);//这句话很关键,装了过滤器按ESC键成才有效果，注意布局对过滤器影响
-//      ui->pushButton_1->installEventFilter(this);
+//      ui->pushButton_sound->installEventFilter(this);
       player->setVideoOutput(videoWidget);
       widget1 = new QWidget;//视频显示
       widget1->setObjectName(QString::fromUtf8("widget1"));
       widget2 = new QWidget;//listwidget显示（暂时不用）
       widget2->setObjectName(QString::fromUtf8("widget2"));
 
-      m_cusWebBrowser = new CusWebBrowser(ui->stackedWidget);
+      m_cusWebBrowser = new CusWebBrowser();
       m_cusWebBrowser->setObjectName(QString::fromLocal8Bit("m_cusWebBrowser"));
 
-      m_cusTabWidget = new CusTabWidget(ui->stackedWidget);
+      m_cusTabWidget = new CusTabWidget();
       m_cusTabWidget->setObjectName(QString::fromLocal8Bit("m_cusTabWidget"));
 
-      m_cusVideoWidget = new CusVideoWidget(ui->stackedWidget);
-      m_cusVideoWidget->setObjectName(QString::fromLocal8Bit("m_cusVideoWidget"));
+      m_videoBlank = new VideoBlank();
+      m_videoBlank->setObjectName(QString::fromLocal8Bit("m_videoBlank"));
 
-      m_musicUi = new MusicPlayShow(ui->stackedWidget);
+      m_musicUi = new MusicPlayShow();
       m_musicUi->setObjectName(QString::fromLocal8Bit("m_musicUi"));
 
-      m_musicShowList = new MusicPlaylist(ui->stackedWidget);
+      m_musicShowList = new MusicPlaylist();
       m_musicShowList->setObjectName(QString::fromLocal8Bit("m_musicShowList"));
 
       m_systemSetting = new SystemSetting();
       m_systemSetting->setObjectName(QString::fromLocal8Bit("m_systemSetting"));
 
-      ui->stackedWidget->insertWidget(0,m_cusTabWidget);//自定义1
-      ui->stackedWidget->insertWidget(1,m_cusVideoWidget);//自定义2
-      ui->stackedWidget->insertWidget(2,videoWidget);//视频
-      ui->stackedWidget->insertWidget(3,m_musicUi);//音乐歌词显示
-      ui->stackedWidget->insertWidget(4,m_musicShowList);//音乐列表显示
-      ui->stackedWidget->insertWidget(5,m_cusWebBrowser);//浏览器
+      m_videoTitleBar = new VideoTitleBar();
+      m_videoTitleBar->setObjectName(QString::fromLocal8Bit("m_videoTitleBar"));
+
+      ui->stackedWidget->insertWidget(0,m_videoBlank);
+      ui->stackedWidget->insertWidget(1,videoWidget);
       ui->stackedWidget->setCurrentIndex(0);//默认显示音乐界面
       //用户信息（暂时）
 
@@ -235,7 +214,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //      m_dockWidget->setWidget(widget2);
 //      m_dockWidget->setWidget(m_toolBox);
 //      m_dockWidget->setMinimumWidth(260);
-//      m_dockWidget->setContentsMargins(0,0,0,0);//左 上 右 下
+//      m_dockWidget->setContentsMARWIDTHs(0,0,0,0);//左 上 右 下
 //      m_dockWidget->hide();
 //      addDockWidget(Qt::LeftDockWidgetArea, m_dockWidget);//指定加载默认停靠区域
       hboxlayout_rlist = new QHBoxLayout;
@@ -246,7 +225,7 @@ MainWindow::MainWindow(QWidget *parent) :
       hboxlayout_rlist->setStretch(1,3);
       m_toolBox->setHidden(true);
 
-      ui->verticalLayout_5->insertWidget(0,ui->widget_title);
+      ui->verticalLayout_5->insertWidget(0,m_videoTitleBar);//标题栏
       ui->verticalLayout_5->insertLayout(1,hboxlayout_rlist);
 //      ui->verticalLayout_5->insertWidget(1,ui->stackedWidget);//刚开始显示的是ui->stackedWidget,resize之后，videowidget在widget上显示
       ui->verticalLayout_5->insertWidget(2,ui->widget_splider);
@@ -278,54 +257,40 @@ MainWindow::MainWindow(QWidget *parent) :
 //      ui->label_vol->setText(QString::number(val)+QString::fromLocal8Bit("%"));
 //      });
 
-      m_pExitDlg = new ExitDialog();
+//      m_pExitDlg = new ExitDialog();
       //收到关闭主窗口信号
-      connect(m_pExitDlg,&ExitDialog::sig_SendcloseMain,[=](){
-          m_isClose = true;
-      });
+//      connect(m_pExitDlg,&ExitDialog::sig_SendcloseMain,[=](){
+//          m_isClose = true;
+//      });
 
       //收到不关闭主窗口信号
-      connect(m_pExitDlg,&ExitDialog::sig_SendNotcloseMain,[=](){
-          m_isClose = false;
-      });
+//      connect(m_pExitDlg,&ExitDialog::sig_SendNotcloseMain,[=](){
+//          m_isClose = false;
+//      });
 
-      //窗口关闭按钮
-      connect(ui->pushButton_close,SIGNAL(clicked()),this,SLOT(close()));
+      //标题栏双击最大化
+      connect(m_videoTitleBar,&VideoTitleBar::sig_doubleClick,this,&MainWindow::showMaximized);
+//      //窗口关闭按钮
+      connect(m_videoTitleBar,&VideoTitleBar::sig_winVClose,this,&MainWindow::close);
 
+//      //窗口最小化按钮
+      connect(m_videoTitleBar,&VideoTitleBar::sig_winVMinimum,this,&MainWindow::showMinimized);
 
-      //窗口最小化按钮
-      connect(ui->pushButton_min,SIGNAL(clicked()),this,SLOT(showMinimized()));
-
-      //窗口还原按钮
-      connect(ui->pushButton_normal,&QPushButton::clicked,[=]()
+//      //窗口还原按钮
+      connect(this,SIGNAL(sig_winVStatus(bool)),m_videoTitleBar,SLOT(chandleVMainWinStatus(bool)));
+      connect(m_videoTitleBar,&VideoTitleBar::sig_winVRestore,[=]()
       {
           if(!m_winMax)//非最大化
           {
-              qDebug()<<"win not is max";
               this->showMaximized();
-              ui->pushButton_normal->setStyleSheet("QPushButton{"
-                                                   "background-color: transparent;"
-                                                   "border-image: url(:/images/normal.png);}"
-                                                   "QPushButton:hover{"
-                                                   "border: 1px solid #3C80B1;"
-                                                   "border-image: url(:/images/normalhover.png);}");
-
+                emit sig_winVStatus(m_winMax);
           }
           else
           {
-
-
-              qDebug()<<"win is max";
               this->showNormal();
-              ui->pushButton_normal->setStyleSheet("QPushButton{"
-                                                   "background-color: transparent;"
-                                                   "border-image: url(:/images/normalmax.png);}"
-                                                   "QPushButton:hover{"
-                                                   "border: 1px solid #3C80B1;"
-                                                   "border-image: url(:/images/normalmaxhover.png);}");
+              emit sig_winVStatus(m_winMax);
           }
           m_winMax = !m_winMax;
-
       });
 
 
@@ -341,10 +306,6 @@ MainWindow::MainWindow(QWidget *parent) :
           m_times = player->duration()/1000;//持续时间,毫秒为单位，转化为秒为单位
           ui->horizontalSlider->setRange(0,m_times);
       });
-
-      m_pTimer3 = new QTimer(this);
-//      connect(m_pTimer3,&QTimer::timeout,[=](){getAndShowCurTime();});
-      m_pTimer3->start(100);//0.1s更新发送一次时间,放在下面合适
 
 //      connect(videoWidget,&MyVideoWidget::mouseEnter,[=](){on_enterShowFrame();});
 //      connect(videoWidget,&MyVideoWidget::mouseLeave,[=](){on_frameHidden();});
@@ -379,7 +340,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
         m_muteDlg = new muteDialog(this);
         m_muteDlg->setHidden(true);
-        connect(ui->pushButton_1,&QPushButton::clicked,[=]()
+        connect(ui->pushButton_sound,&QPushButton::clicked,[=]()
         {
             if(m_muteDlg)
             {
@@ -403,12 +364,12 @@ MainWindow::MainWindow(QWidget *parent) :
          if(value != 0)
          {
              qDebug() << "value != 0";
-             ui->pushButton_1->setIcon(QIcon(":/images/yingling.png"));
+             ui->pushButton_sound->setIcon(QIcon(":/images/yingling.png"));
          }
          else
          {
              qDebug() << "value == 0";
-             ui->pushButton_1->setIcon(QIcon(":/images/jingyin.png"));
+             ui->pushButton_sound->setIcon(QIcon(":/images/jingyin.png"));
          }
       });
 
@@ -432,7 +393,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //          qDebug()<<"current row = "<<row;
 //          ui->playerListWidget->setCurrentRow(row);
           m_playerState = QMediaPlayer::PlayingState;
-          ui->pushButton_4->setIcon(QIcon(":/images/pausehover.png"));//播放
+          ui->pushButton_pauseStart->setIcon(QIcon(":/images/pausehover.png"));//播放
           playlist->setCurrentIndex(row);
           fileType(row);
           player->play();
@@ -445,7 +406,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //          int row = ui->playerListWidget->row(item);
 //          m_listWisget2->setCurrentRow(row);
 //          m_playerState = QMediaPlayer::PlayingState;
-//          ui->pushButton_4->setIcon(QIcon(":/images/pausehover.png"));//播放
+//          ui->pushButton_pauseStart->setIcon(QIcon(":/images/pausehover.png"));//播放
 //          playlist->setCurrentIndex(row);
 //          fileType(row);
 //          player->play();
@@ -466,25 +427,25 @@ MainWindow::MainWindow(QWidget *parent) :
       connect(m_lineEdit,&QLineEdit::textChanged,[=](QString str){findFileFromLineEdit(str);});
 
       //点击节目列表转换页面
-      connect(ui->listWidget_playlist,&QListWidget::itemClicked,[=](QListWidgetItem *item)
-      {
-          int row = ui->listWidget_playlist->row(item);
-          switchListPage(row);
-      });
+//      connect(ui->listWidget_playlist,&QListWidget::itemClicked,[=](QListWidgetItem *item)
+//      {
+//          int row = ui->listWidget_playlist->row(item);
+//          switchListPage(row);
+//      });
 
       //帮助
-      connect(ui->Btnhelp,&QPushButton::clicked,[=](){createHelpMenu();});
+//      connect(ui->Btnhelp,&QPushButton::clicked,[=](){createHelpMenu();});
 
       //向音乐界面发送名字,带参数 QString name,注意跨线程的问题,QTimer类不是线程安全的类型，注意第五个参数问题
       connect(this,SIGNAL(sig_sendSwitchToMusicPage(QString)),m_musicUi,SLOT(receiveMainWinData(QString)));
 
-      m_login = new Login(this);//不带this界面显示不出来，空白；问题是界面出现定位不准确
-      m_login->setObjectName(QString::fromLocal8Bit("m_login"));
-      ui->Btnlogin->installEventFilter(this);
-      m_login->setHidden(true);//界面运行起来弹出界面bug
-     connect(ui->Btnlogin,SIGNAL(clicked(bool)),this,SLOT(set_adjustLogin()));
+//      m_login = new Login(this);//不带this界面显示不出来，空白；问题是界面出现定位不准确
+//      m_login->setObjectName(QString::fromLocal8Bit("m_login"));
+//      ui->Btnlogin->installEventFilter(this);
+//      m_login->setHidden(true);//界面运行起来弹出界面bug
+//     connect(ui->Btnlogin,SIGNAL(clicked(bool)),this,SLOT(set_adjustLogin()));
       //通知关闭程序
-      connect(this,&MainWindow::sig_startCloseAppliction,m_login,&Login::receiveMainWinCloseAppSignal);
+//      connect(this,&MainWindow::sig_startCloseAppliction,m_login,&Login::receiveMainWinCloseAppSignal);
 
       //通知播放列表加载信息
       connect(this,&MainWindow::sig_sendToMusicList,m_musicShowList,&MusicPlaylist::addFileInfoToListView);
@@ -496,16 +457,16 @@ MainWindow::MainWindow(QWidget *parent) :
       });
 
       //历史记录
-      connect(ui->BtnHistory,&QPushButton::clicked,[=]()
-      {
-          ui->stackedWidget->setCurrentIndex(4);
-      });
+//      connect(ui->BtnHistory,&QPushButton::clicked,[=]()
+//      {
+//          ui->stackedWidget->setCurrentIndex(4);
+//      });
 
       //调用截图程序
-      connect(ui->BtnScreen,&QPushButton::clicked,[=]()
-      {
-          showCaptureScreen();
-      });
+//      connect(ui->BtnScreen,&QPushButton::clicked,[=]()
+//      {
+////          showCaptureScreen();
+//      });
 
       connect(ui->Btn_adjust,&QPushButton::clicked,[=](){set_adjustBright();});
 
@@ -531,15 +492,19 @@ MainWindow::MainWindow(QWidget *parent) :
       connect(m_adjustBright,SIGNAL(valueChange_baohedu(int)),videoWidget,SLOT(setSaturation(int)));
       connect(m_adjustBright,SIGNAL(valueChange_sediao(int)),videoWidget,SLOT(setHue(int)));
 
-      //腾讯主页
-      connect(ui->Btn_logo,&QPushButton::clicked,[=]()
-      {
-//          QMessageBox::information(this,"home page","there is show tencent home page!");
-          QDesktopServices::openUrl(QUrl(QString("https://v.qq.com/")));//下载页面
-      });
+//      //腾讯主页
+//      connect(ui->Btn_logo,&QPushButton::clicked,[=]()
+//      {
+////          QMessageBox::information(this,"home page","there is show tencent home page!");
+//          QDesktopServices::openUrl(QUrl(QString("https://v.qq.com/")));//下载页面
+//      });
 
       //控制节目列表显示影藏
-      connect(ui->Btn_eyes,&QPushButton::clicked,this,&MainWindow::showJieMuListWidget);
+//      connect(ui->Btn_eyes,&QPushButton::clicked,this,&MainWindow::showJieMuListWidget);
+
+      connect(m_videoBlank,&VideoBlank::sig_openLocalFile,this,&MainWindow::openLocalFile);
+
+      chandleSignalAndSLots();
 
 /***********************************信号与槽函数******************************************/
 
@@ -576,123 +541,82 @@ MainWindow::~MainWindow()
     //没有指定父亲的需要手动释放
     //有父级对象的，系统自动释放
     delete ui;
-    delete clearAction;
-    delete m_tray;
+
     delete player;
     delete playlist;
     delete videoWidget;
     delete widget1;
     delete widget2;
-    delete m_cusTabWidget;
-    delete m_cusVideoWidget;
-    delete m_musicUi;
     delete m_listWisget1;
     delete m_listWisget3;
     delete m_listWisget4;
     delete m_toolBox;
-//    delete m_dockWidget;
-    delete m_pExitDlg;
     delete m_pTimer;
     delete m_pTimer2;
-    delete m_pTimer3;
     delete m_muteDlg;
-    delete m_login;
-//    delete m_cusWebBrowser;
+}
+
+/*初始化界面*/
+void MainWindow::initMainWindow()
+{
+
+}
+
+/*处理信号与槽函数*/
+void MainWindow::chandleSignalAndSLots()
+{
+
 }
 
 /*加载默认图标*/
 void MainWindow::loadDefaultLogo()
 {
-
-//    widget1->setStyleSheet("border-image:url(:/images/background.png)");
-//    ui->pushButton_close->setIcon(QIcon(":/images/close2.png"));
-//    ui->pushButton_close->setIconSize(QSize(30,30));
     ui->pushButton_curlist->setToolTip(QString::fromLocal8Bit("显示列表"));
-
     m_lineEdit->setPlaceholderText(QString::fromLocal8Bit("输入点内容吧^_^"));
     m_lineEdit->setEnabled(false);
     m_searchBtn->setText(QString::fromLocal8Bit("搜索"));
-    ui->pushButton_close->setFlat(true);
 
-    ui->moreBtn->setIcon(QIcon(":/images/allexpand.png"));
-    ui->moreBtn->setText(QString::fromLocal8Bit("展开全部"));
-//    ui->moreBtn->setFlat(true);
+    ui->pushButton_sound->setIcon(QIcon(":/images/yingling.png"));//图标是正常音量
+    ui->pushButton_sound->setIconSize(QSize(26,26));//以后所有显示图片都是此大小
+    ui->pushButton_sound->setFlat(true);
 
+//    ui->pushButton_5->setIcon(QIcon(":/images/openhover.png"));//打开
+//    ui->pushButton_5->setFlat(true);
+//    ui->pushButton_5->setIconSize(QSize(50,50));
+//    ui->pushButton_5->setToolTip(QString::fromLocal8Bit("添加文件"));
 
-//    ui->pushButton_min->setIcon(QIcon(":/images/min.png"));
-//    ui->pushButton_min->setIconSize(QSize(33,26));
-    ui->pushButton_min->setFlat(true);
+    ui->pushButton_pauseStart->setIcon(QIcon(":/images/playhover.png"));//播放
+    ui->pushButton_pauseStart->setFlat(true);
+    ui->pushButton_pauseStart->setIconSize(QSize(45,45));
+    ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
 
-    ui->pushButton_1->setIcon(QIcon(":/images/yingling.png"));//图标是正常音量
-    ui->pushButton_1->setIconSize(QSize(26,26));//以后所有显示图片都是此大小
-    ui->pushButton_1->setFlat(true);
+//    ui->pushButton_2->setIcon(QIcon(":/images/stophover.png"));//停止
+//    ui->pushButton_2->setFlat(true);
+//    ui->pushButton_2->setIconSize(QSize(50,50));
+//    ui->pushButton_2->setToolTip(QString::fromLocal8Bit("停止"));
 
-    ui->pushButton_5->setIcon(QIcon(":/images/openhover.png"));//打开
-    ui->pushButton_5->setFlat(true);
-    ui->pushButton_5->setIconSize(QSize(50,50));
-    ui->pushButton_5->setToolTip(QString::fromLocal8Bit("添加文件"));
+//    ui->pushButton_6->setIcon(QIcon(":/images/fullscr.png"));//全屏
+//    ui->pushButton_6->setFlat(true);
+//    ui->pushButton_6->setIconSize(QSize(50,50));
+//    ui->pushButton_6->setToolTip(QString::fromLocal8Bit("播放新文件"));
 
-    ui->pushButton_4->setIcon(QIcon(":/images/playhover.png"));//播放
-    ui->pushButton_4->setFlat(true);
-    ui->pushButton_4->setIconSize(QSize(50,50));
-    ui->pushButton_4->setToolTip(QString::fromLocal8Bit("播放"));
+    ui->pushButton_previous->setIcon(QIcon(":/images/previoushover.png"));//上一首
+    ui->pushButton_previous->setFlat(true);
+    ui->pushButton_previous->setIconSize(QSize(40,40));
+    ui->pushButton_previous->setToolTip(QString::fromLocal8Bit("上一个"));
 
-    ui->pushButton_2->setIcon(QIcon(":/images/stophover.png"));//停止
-    ui->pushButton_2->setFlat(true);
-    ui->pushButton_2->setIconSize(QSize(50,50));
-    ui->pushButton_2->setToolTip(QString::fromLocal8Bit("停止"));
+    ui->pushButton_next->setIcon(QIcon(":/images/nexthover.png"));//下一首
+    ui->pushButton_next->setFlat(true);
+    ui->pushButton_next->setIconSize(QSize(40,40));
+    ui->pushButton_next->setToolTip(QString::fromLocal8Bit("下一个"));
 
-    ui->pushButton_6->setIcon(QIcon(":/images/fullscr.png"));//全屏
-    ui->pushButton_6->setFlat(true);
-    ui->pushButton_6->setIconSize(QSize(50,50));
-    ui->pushButton_6->setToolTip(QString::fromLocal8Bit("播放新文件"));
-
-    ui->pushButton_7->setIcon(QIcon(":/images/previoushover.png"));//上一首
-    ui->pushButton_7->setFlat(true);
-    ui->pushButton_7->setIconSize(QSize(50,50));
-    ui->pushButton_7->setToolTip(QString::fromLocal8Bit("上一个"));
-
-    ui->pushButton_8->setIcon(QIcon(":/images/nexthover.png"));//下一首
-    ui->pushButton_8->setFlat(true);
-    ui->pushButton_8->setIconSize(QSize(50,50));
-    ui->pushButton_8->setToolTip(QString::fromLocal8Bit("下一个"));
-
-    ui->Btn_logo->setToolTip(QString::fromLocal8Bit("转至网页"));
-    ui->Btnhelp->setToolTip(QString::fromLocal8Bit("帮助"));
-    ui->Btnlogin->setToolTip(QString::fromLocal8Bit("登录"));
-    ui->Btnskin->setToolTip(QString::fromLocal8Bit("皮肤"));
-    ui->BtnDownload->setToolTip(QString::fromLocal8Bit("云端"));
-    ui->BtnHistory->setToolTip(QString::fromLocal8Bit("历史记录"));
-    ui->BtnScreen->setToolTip(QString::fromLocal8Bit("截屏"));
-
-//    ui->label_time->setText(QString::fromLocal8Bit("00:00:00/00:00:00"));//计时器只要程序已启动，就一直再更新
-
-    m_tray->show();
-//    QPalette* palette = new QPalette();
-//    palette->setBrush(QPalette::Background, Qt::black);
-//    videoWidget->setPalette(*palette);
-//    videoWidget->setAutoFillBackground(true);
+    //    QPalette* palette = new QPalette();
+    //    palette->setBrush(QPalette::Background, Qt::black);
+    //    videoWidget->setPalette(*palette);
+    //    videoWidget->setAutoFillBackground(true);
     //    delete palette;
 }
 
-/*加载所有界面样式表*/
-//void MainWindow::loadAllUIQss()
-//{
-//    QFile file(":/style/alluistyle.qss");
-//    file.open(QFile::ReadOnly | QFile::Text);
-//    if(!file.isOpen())
-//    {
-//        qDebug()<<"the style qss is unload!";
-//        return;
-//    }
-//    else
-//    {
-//        QString style = tr(file.readAll());
-//        qApp->setStyleSheet(style);
-//        qDebug()<<"the style is load successfull!";
-//    }
-//    file.close();
-//}
 
 /*添加进播放列表*/
 void MainWindow::addToPlaylist(const QStringList &fileNames)
@@ -723,63 +647,6 @@ void MainWindow::addToPlaylist(const QStringList &fileNames)
     }
 }
 
-/*托盘菜单*/
-void MainWindow::createTrayMenu()
-{
-    QMenu *pmenu = new QMenu(this);
-    pmenu->setStyleSheet("font-size:12px;"
-                         "background-color:#3d3d3d;"
-                         "color:green;");//font:bold italic 18px "微软雅黑";
-    pmenu->addAction(QString::fromLocal8Bit("显示主界面"),this,SLOT(showPlayerUi()));
-    pmenu->addSeparator();
-    pmenu->addAction(QString::fromLocal8Bit("显示播放列表"),this,SLOT(showPlayerList()));
-    pmenu->addSeparator();
-    pmenu->addAction(QString::fromLocal8Bit("上一首"),this,SLOT(on_pushButton_7_clicked()));
-    pmenu->addSeparator();
-    pmenu->addAction(QString::fromLocal8Bit("下一首"),this,SLOT(on_pushButton_8_clicked()));
-    pmenu->addSeparator();
-    pmenu->addAction(QString::fromLocal8Bit("暂停/播放"),this,SLOT(on_pushButton_4_clicked()));
-    pmenu->addSeparator();
-    pmenu->addAction(QString::fromLocal8Bit("退出"),this,SLOT(close()));//注意消息阻塞
-    m_tray->setContextMenu(pmenu);
-}
-
-/*帮助菜单*/
-void MainWindow::createHelpMenu()
-{
-    QMenu *pmenu2 = new QMenu(this);
-    pmenu2->setObjectName(QString::fromLocal8Bit("pmenu2"));//样式表中设置样式必须设置对象名称才能生效
-    pmenu2->setStyleSheet("QMenu"
-                          "{"
-                          "font-size:12px;"
-                          "background-color:#3d3d3d;"
-                          "color:green;"
-//                        "padding:15px 15px;"//调整文字间距
-                          "}"
-                          "QMenu::item:selected"
-                          "{"
-                          "color:red;"
-                          "}");//font:bold italic 18px "微软雅黑";
-    pmenu2->addAction(QString::fromLocal8Bit("系统设置"),this,SLOT(help_stemAboutSetting()));
-    pmenu2->addSeparator();
-    pmenu2->addAction(QString::fromLocal8Bit("网络资源"),this,SLOT(playHttpRequireRecourse(QString)));
-    pmenu2->addSeparator();
-    pmenu2->addAction(QString::fromLocal8Bit("问题帮助"),this,SLOT(help_questionAnswer()));
-    pmenu2->addSeparator();
-    pmenu2->addAction(QString::fromLocal8Bit("本地文件"),this,SLOT(help_aboutLocalFile()));
-    pmenu2->addSeparator();
-    pmenu2->addAction(QString::fromLocal8Bit("软件下载"),this,SLOT(help_openWebSite()));
-    pmenu2->addSeparator();
-    pmenu2->addAction(QString::fromLocal8Bit("软件退出"),this,SLOT(close()));
-    ui->Btnhelp->setContextMenuPolicy(Qt::CustomContextMenu);
-//    ui->Btnhelp->setMenu(pmenu2);
-//    pmenu2->show();
-
-    QPoint point4 = QPoint(QCursor::pos().x()-70,QCursor::pos().y()+25);
-    pmenu2->exec(point4);
-//    pmenu2->exec(QCursor::pos());
-    delete pmenu2;
-}
 
 /*登录菜单*/
 void MainWindow::createLoginMenu()
@@ -867,77 +734,77 @@ bool MainWindow::fileType(int index)
 
 
 /*节目列表*/
-void MainWindow::addFileToPlayList()
-{
-    //节目列表
-    QStringList strPlayList;
-    strPlayList<<QString::fromLocal8Bit("最新视剧")
-               <<QString::fromLocal8Bit("热播电影")
-               <<QString::fromLocal8Bit("当前视频")
-               <<QString::fromLocal8Bit("当前音乐")
-               <<QString::fromLocal8Bit("播放列表")
-               <<QString::fromLocal8Bit("少儿动漫")
-               <<QString::fromLocal8Bit("世界纪录")
-               <<QString::fromLocal8Bit("教育课堂")
-               <<QString::fromLocal8Bit("游戏直播")
-               <<QString::fromLocal8Bit("建党百年")
-               <<QString::fromLocal8Bit("王者荣耀")
-               <<QString::fromLocal8Bit("健康养生")
-               <<QString::fromLocal8Bit("资讯速递")
-               <<QString::fromLocal8Bit("生活解密")
-               <<QString::fromLocal8Bit("世界地理")
-               <<QString::fromLocal8Bit("人文艺术")
-               <<QString::fromLocal8Bit("今日影院")
-               <<QString::fromLocal8Bit("影视排行")
-               <<QString::fromLocal8Bit("最新上架")
-               <<QString::fromLocal8Bit("评分最高")
-               <<QString::fromLocal8Bit("热门点播")
-               <<QString::fromLocal8Bit("明星娱乐");//21项目
-    //传统方法
-    for(int i = 0;i<strPlayList.size();i++)
-    {
-        QIcon strIcon = QIcon(QString(":/images/hot%1.png").arg(i));
-        QString name = strPlayList.at(i);
-        QListWidgetItem *ppItem = new QListWidgetItem(strIcon,name);
-        ppItem->setTextAlignment(Qt::AlignVCenter);
-//        ppItem->setSizeHint(QSize(150,50));
-        ui->listWidget_playlist->addItem(ppItem);
-    }
+//void MainWindow::addFileToPlayList()
+//{
+//    //节目列表
+//    QStringList strPlayList;
+//    strPlayList<<QString::fromLocal8Bit("最新视剧")
+//               <<QString::fromLocal8Bit("热播电影")
+//               <<QString::fromLocal8Bit("当前视频")
+//               <<QString::fromLocal8Bit("当前音乐")
+//               <<QString::fromLocal8Bit("播放列表")
+//               <<QString::fromLocal8Bit("少儿动漫")
+//               <<QString::fromLocal8Bit("世界纪录")
+//               <<QString::fromLocal8Bit("教育课堂")
+//               <<QString::fromLocal8Bit("游戏直播")
+//               <<QString::fromLocal8Bit("建党百年")
+//               <<QString::fromLocal8Bit("王者荣耀")
+//               <<QString::fromLocal8Bit("健康养生")
+//               <<QString::fromLocal8Bit("资讯速递")
+//               <<QString::fromLocal8Bit("生活解密")
+//               <<QString::fromLocal8Bit("世界地理")
+//               <<QString::fromLocal8Bit("人文艺术")
+//               <<QString::fromLocal8Bit("今日影院")
+//               <<QString::fromLocal8Bit("影视排行")
+//               <<QString::fromLocal8Bit("最新上架")
+//               <<QString::fromLocal8Bit("评分最高")
+//               <<QString::fromLocal8Bit("热门点播")
+//               <<QString::fromLocal8Bit("明星娱乐");//21项目
+//    //传统方法
+//    for(int i = 0;i<strPlayList.size();i++)
+//    {
+//        QIcon strIcon = QIcon(QString(":/images/hot%1.png").arg(i));
+//        QString name = strPlayList.at(i);
+//        QListWidgetItem *ppItem = new QListWidgetItem(strIcon,name);
+//        ppItem->setTextAlignment(Qt::AlignVCenter);
+////        ppItem->setSizeHint(QSize(150,50));
+//        ui->listWidget_playlist->addItem(ppItem);
+//    }
 
 //    QFont font;
 //    font.setFamily(QString::fromLocal8Bit("微软雅黑"));
 //    font.setBold(true);
 //    font.setPointSize(25);
 //    font.setWeight(50);
-    ui->listWidget_playlist->setIconSize(QSize(50,50));//item的图标的大小
+//    ui->listWidget_playlist->setIconSize(QSize(50,50));//item的图标的大小
 //    ui->listWidget_playlist->setFont(font);
 
 
     //自定义方法
-/*    for(int i = 0; i < strPlayList.size(); i++)
-    {
-        QWidget *itemWidget = new QWidget(ui->listWidget_playlist);
-        QHBoxLayout *itemContentLayout = new QHBoxLayout;
-        QString strIcon = QString(":/images/hot%1.png").arg(i);
-        QPixmap icon_list(strIcon);
-        QLabel *lblPicture = new QLabel("");
-        lblPicture->setPixmap(icon_list);
+//  for(int i = 0; i < strPlayList.size(); i++)
+//    {
+//        QWidget *itemWidget = new QWidget(ui->listWidget_playlist);
+//        QHBoxLayout *itemContentLayout = new QHBoxLayout;
+//        QString strIcon = QString(":/images/hot%1.png").arg(i);
+//        QPixmap icon_list(strIcon);
+//        QLabel *lblPicture = new QLabel("");
+//        lblPicture->setPixmap(icon_list);
 
-         QString name = strPlayList.at(i);
-        QLabel *lblContent = new QLabel(name);
-        itemContentLayout->addWidget(lblPicture,1);//图片控件占1列
-        itemContentLayout->addStretch(1);
-        itemContentLayout->addWidget(lblContent,4);//文字占4列
-//        itemContentLayout->setSpacing(0);
-        itemWidget->setLayout(itemContentLayout);
-//        qDebug()<<name;
-        QListWidgetItem *p_Item = new  QListWidgetItem(ui->listWidget_playlist);
-//        p_Item->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-        p_Item->setSizeHint(QSize(150,50));
-        ui->listWidget_playlist->setItemWidget(p_Item,itemWidget);
-    }
-*/
-}
+//         QString name = strPlayList.at(i);
+//        QLabel *lblContent = new QLabel(name);
+//        itemContentLayout->addWidget(lblPicture,1);//图片控件占1列
+//        itemContentLayout->addStretch(1);
+//        itemContentLayout->addWidget(lblContent,4);//文字占4列
+////        itemContentLayout->setSpacing(0);
+//        itemWidget->setLayout(itemContentLayout);
+////        qDebug()<<name;
+//        QListWidgetItem *p_Item = new  QListWidgetItem(ui->listWidget_playlist);
+////        p_Item->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+//        p_Item->setSizeHint(QSize(150,50));
+//        ui->listWidget_playlist->setItemWidget(p_Item,itemWidget);
+//    }
+
+//}
 
 /*文件路径放进容器，将名称显示在列表*/
 void MainWindow::addFileToList(const QStringList &strList)
@@ -1117,59 +984,66 @@ void MainWindow::loadFileInfoToWinTitle(int index)
 //}
 
 /*打开文件*/
-void MainWindow::on_pushButton_5_clicked()
-{
-    if(!m_newStart)
-    {
-        m_fileNames =  QFileDialog::getOpenFileNames(this,
-                                                               "Open Files","C:\\Users\\24939\\Desktop",
-                                                               "Videos(*avi *mp4 *flv *mp3)");
+//void MainWindow::on_pushButton_5_clicked()
+//{
+//    if(!m_newStart)
+//    {
+//        m_fileNames =  QFileDialog::getOpenFileNames(this,
+//                                                               "Open Files","C:\\Users\\24939\\Desktop",
+//                                                               "Videos(*avi *mp4 *flv *mp3)");
 
-        //测试功能
-        m_fileNames = list_temp;
-        ui->pushButton_5->setFocusPolicy(Qt::NoFocus);//点击按钮后去掉虚线框
-        //多文件打开
-        if(!m_fileNames.isEmpty())
-        {
-            addToPlaylist(m_fileNames);//1.添加进播放列表playlist
-            addFileToList(m_fileNames);//2.媒体界面显示
-            fileType(m_fileNames,0);//3.判断文件类型并作出界面反应
-            loadFileInfoToWinTitle(0);//显示第1首歌的title
-            ui->horizontalSlider->setEnabled(true);//滚动条
-            m_lineEdit->setEnabled(true);//浮动输入框
-            m_pTimer2->start(80);//加定时器给界面一个缓冲
-            connect(m_pTimer2,&QTimer::timeout,[=](){
-            //这里必须加一个定时器，以解决界面缓冲，是的界面来得及反应（主要是标题栏反应不过来）
-//                ui->stackedWidget->setCurrentIndex(2);//索引2,界面显示视频
-//              ui->verticalLayout_5->replaceWidget(ui->stackedWidget,videoWidget);//widget1在索引为0的dockwidget上
-                m_playerState = QMediaPlayer::PlayingState;
-                ui->pushButton_4->setIcon(QIcon(":/images/pausehover.png"));
-                ui->pushButton_4->setToolTip(QString::fromLocal8Bit("暂停"));
-                m_newStart = true;
-            });
-            player->play();
-        }
-    }
-    else
-    {
-//        on_pushButton_6_clicked();
+//        //测试功能
+//        m_fileNames = list_temp;
+//        ui->pushButton_5->setFocusPolicy(Qt::NoFocus);//点击按钮后去掉虚线框
+//        //多文件打开
+//        if(!m_fileNames.isEmpty())
+//        {
+//            addToPlaylist(m_fileNames);//1.添加进播放列表playlist
+//            addFileToList(m_fileNames);//2.媒体界面显示
+//            fileType(m_fileNames,0);//3.判断文件类型并作出界面反应
+//            loadFileInfoToWinTitle(0);//显示第1首歌的title
+//            ui->horizontalSlider->setEnabled(true);//滚动条
+//            m_lineEdit->setEnabled(true);//浮动输入框
+//            m_pTimer2->start(80);//加定时器给界面一个缓冲
+//            connect(m_pTimer2,&QTimer::timeout,[=](){
+//            //这里必须加一个定时器，以解决界面缓冲，是的界面来得及反应（主要是标题栏反应不过来）
+////                ui->stackedWidget->setCurrentIndex(2);//索引2,界面显示视频
+////              ui->verticalLayout_5->replaceWidget(ui->stackedWidget,videoWidget);//widget1在索引为0的dockwidget上
+//                m_playerState = QMediaPlayer::PlayingState;
+//                ui->pushButton_pauseStart->setIcon(QIcon(":/images/pausehover.png"));
+//                ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("暂停"));
+//                m_newStart = true;
+//            });
+//            player->play();
+//        }
+//    }
+//    else
+//    {
+////        on_pushButton_6_clicked();
 
-    }
-//    m_pTimer2->stop();
-}
+//    }
+////    m_pTimer2->stop();
+//}
 
 /*重新打开播放新文件*/
-void MainWindow::on_pushButton_6_clicked()
+//void MainWindow::on_pushButton_6_clicked()
+//{
+
+//}
+
+/*打开本地文件*/
+bool MainWindow::openLocalFile()
 {
+    qDebug() <<"open file start!";
     if(!m_newStart)
     {
-        return;
+        return 0;
     }
     else
     {
         player->pause();
-        ui->pushButton_4->setIcon(QIcon(":/images/playhover.png"));//播放
-        ui->pushButton_4->setToolTip(QString::fromLocal8Bit("播放"));
+        ui->pushButton_pauseStart->setIcon(QIcon(":/images/playhover.png"));//播放
+        ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
         m_fileNames =  QFileDialog::getOpenFileNames(this,
                                                    "Open Files","C:\\Users\\24939\\Desktop",
                                                    "Videos(*avi *mp4 *flv *mp3)");
@@ -1187,8 +1061,8 @@ void MainWindow::on_pushButton_6_clicked()
             fileType(m_fileNames,0);//判断文件类型并作出界面反应
             player->play();
             m_playerState = QMediaPlayer::PlayingState;
-            ui->pushButton_4->setIcon(QIcon(":/images/pausehover.png"));
-            ui->pushButton_4->setToolTip(QString::fromLocal8Bit("暂停"));
+            ui->pushButton_pauseStart->setIcon(QIcon(":/images/pausehover.png"));
+            ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("暂停"));
         }
         else
         {
@@ -1224,7 +1098,7 @@ void MainWindow::setVideoRate(int value)
 void MainWindow::updateRateTypeUiLayout(int str)
 {
     Q_UNUSED(str);
-    ui->pushButton_4->setIcon(QIcon(":/images/pausehover.png"));//播放
+    ui->pushButton_pauseStart->setIcon(QIcon(":/images/pausehover.png"));//播放
     player->setPlaybackRate(1.0);//速率恢复正常
 
 }
@@ -1238,23 +1112,23 @@ void MainWindow::updateRateTypeUiLayout(int str)
 
 
 /*播放and暂停*/
-void MainWindow::on_pushButton_4_clicked()
+void MainWindow::on_pushButton_pauseStart_clicked()
 {
 //    qDebug()<<m_playerState;
-    ui->pushButton_4->setFocusPolicy(Qt::NoFocus);//点击按钮后去掉虚线框
+    ui->pushButton_pauseStart->setFocusPolicy(Qt::NoFocus);//点击按钮后去掉虚线框
     if(m_playerState == QMediaPlayer::PlayingState)
     {
         player->pause();
         m_playerState = QMediaPlayer::PausedState;
-        ui->pushButton_4->setIcon(QIcon(":/images/playhover.png"));
-        ui->pushButton_4->setToolTip(QString::fromLocal8Bit("播放"));
+        ui->pushButton_pauseStart->setIcon(QIcon(":/images/playhover.png"));
+        ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
     }
     else if(m_playerState == QMediaPlayer::PausedState)
     {
         player->play();
         m_playerState = QMediaPlayer::PlayingState;
-        ui->pushButton_4->setIcon(QIcon(":/images/pausehover.png"));
-        ui->pushButton_4->setToolTip(QString::fromLocal8Bit("暂停"));
+        ui->pushButton_pauseStart->setIcon(QIcon(":/images/pausehover.png"));
+        ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("暂停"));
     }
 //    playlist->setCurrentIndex(1);
 //    player->play();
@@ -1262,30 +1136,30 @@ void MainWindow::on_pushButton_4_clicked()
 
 
 /*停止*/
-void MainWindow::on_pushButton_2_clicked()
-{
-    ui->pushButton_2->setFocusPolicy(Qt::NoFocus);//点击按钮后去掉虚线框
-    player->stop();
-    m_playerState = QMediaPlayer::PausedState;
-    ui->pushButton_4->setIcon(QIcon(":/images/playhover.png"));
-    ui->pushButton_4->setToolTip(QString::fromLocal8Bit("播放"));
+//void MainWindow::on_pushButton_2_clicked()
+//{
+//    ui->pushButton_2->setFocusPolicy(Qt::NoFocus);//点击按钮后去掉虚线框
+//    player->stop();
+//    m_playerState = QMediaPlayer::PausedState;
+//    ui->pushButton_pauseStart->setIcon(QIcon(":/images/playhover.png"));
+//    ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
 
-}
+//}
 
 /*静音*/
-//void MainWindow::on_pushButton_1_clicked()
+//void MainWindow::on_pushButton_sound_clicked()
 //{
-//    ui->pushButton_1->setFocusPolicy(Qt::NoFocus);//点击按钮后去掉虚线框
+//    ui->pushButton_sound->setFocusPolicy(Qt::NoFocus);//点击按钮后去掉虚线框
 ////    if(player->isMuted())//如果静音
 ////    {
 ////        player->setMuted(false);
-////        ui->pushButton_1->setIcon(QIcon(":/images/yingling.png"));
+////        ui->pushButton_sound->setIcon(QIcon(":/images/yingling.png"));
 ////    }
 ////    else
 ////    {
 ////        m_voice = player->volume();
 ////        player->setMuted(true);
-////        ui->pushButton_1->setIcon(QIcon(":/images/jingyin.png"));
+////        ui->pushButton_sound->setIcon(QIcon(":/images/jingyin.png"));
 ////    }
 //    if(m_muteDlg->isHidden())
 //    {
@@ -1340,12 +1214,12 @@ void MainWindow::showPlayerUi()
 //    {
 //        m_winMax = true;
         this->showMinimized();
-        ui->pushButton_normal->setStyleSheet("QPushButton{"
-                                             "background-color: transparent;"
-                                             "border-image: url(:/images/normal.png);}"
-                                             "QPushButton:hover{"
-                                             "border: 1px solid #3C80B1;"
-                                             "border-image: url(:/images/normalhover.png);}");
+//        ui->pushButton_normal->setStyleSheet("QPushButton{"
+//                                             "background-color: transparent;"
+//                                             "border-image: url(:/images/normal.png);}"
+//                                             "QPushButton:hover{"
+//                                             "border: 1px solid #3C80B1;"
+//                                             "border-image: url(:/images/normalhover.png);}");
         qDebug()<<"show ui to the central";
 //    }
 }
@@ -1357,7 +1231,7 @@ void MainWindow::showPlayerList()
 }
 
 /*上一首*/
-void MainWindow::on_pushButton_7_clicked()
+void MainWindow::on_pushButton_previous_clicked()
 {
 //    int row = playlist->mediaCount();
     int current = playlist->currentIndex();
@@ -1371,7 +1245,7 @@ void MainWindow::on_pushButton_7_clicked()
 }
 
 /*下一首*/
-void MainWindow::on_pushButton_8_clicked()
+void MainWindow::on_pushButton_next_clicked()
 {
     int row = playlist->mediaCount();
     int current = playlist->currentIndex();
@@ -1395,223 +1269,182 @@ void MainWindow::on_pushButton_8_clicked()
 //}
 
 /*解决接收不到键盘事件问题*/
-bool MainWindow::eventFilter(QObject *watched, QEvent *event)
-{
-    QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-    //顶层搜索框鼠标进入离开
-//    searchMouseEnterLeaveShow(watched,event);
-    if(watched == ui->lineEditSearch)//监控对象每次只能监控一个，也就是说各自在各自的监控对象范围内去执行操作，不能同时监控两个
-    {
-        /*搜索框，搜索按钮鼠标离开*/
-        if(mouseEvent->type() == QEvent::Leave)
-        {
-            ui->BtnSearch->setStyleSheet(
-                        "QPushButton"
-                        "{"
-                        "color:white;"
-                        "background-color:#ff5246;"
-                        "border: 1px solid #ff5c38;"
-                        "border-left:transparent;"
-                        "border-top-right-radius:18px;"
-                        "border-bottom-right-radius:18px;"
-                        "border-bottom-left-radius:0px;"
-                        "border-top-left-radius:0px;"
-                        "}"
-                         );
-
-            ui->lineEditSearch->setStyleSheet(
-                        "QLineEdit"
-                        "{"
-                        "color:#cccccc;"
-                        "font-size:14px;"
-                        "background-color: rgb(81, 81, 81);"
-                        "selection-background-color: #D1DBCB;"
-                        "border: 1px solid #ff5c38;"
-                        "border-right:transparent;"
-                        "border-top-left-radius:18px;"
-                        "border-bottom-left-radius:18px;"
-                        "border-bottom-right-radius:0px;"
-                        "border-top-right-radius:0px;"
-                        "padding-left:15px;"
-                        "}"
-                        );
-        }
-
-        /*搜索框，搜索按钮鼠标进入*/
-        if(mouseEvent->type() == QEvent::Enter)
-        {
-            ui->BtnSearch->setStyleSheet(
-                        "QPushButton"
-                        "{"
-                        "color:white;"
-                        "background-color:#ff5246;"
-                        "border: 1px solid #ff5c38;"
-                        "border-top-right-radius:18px;"
-                        "border-bottom-right-radius:18;px;"
-                        "border-bottom-left-radius:0px;"
-                        "border-top-left-radius:0px;"
-                        "}"
-                        );
-
-            ui->lineEditSearch->setStyleSheet(
-                        "QLineEdit"
-                        "{"
-                        "color:#cccccc;"
-                        "font-size:14px;"
-                        "background-color: rgb(33, 33, 33);"
-                        "border:1px solid #ff5c38;"
-                        "border-right:transparnet;"
-                        "border-top-left-radius:18px;"
-                        "border-bottom-left-radius:18px;"
-                        "border-bottom-right-radius:0px;"
-                        "border-top-right-radius:0px;"
-                        "padding-left:15px;"
-                        "}"
-                        );
-        }
-    }
-
-    if(watched == ui->BtnSearch)//监控对象每次只能监控一个，也就是说各自在各自的监控对象范围内去执行操作，不能同时监控两个
-    {
-        /*搜索框，搜索按钮鼠标离开*/
-        if(mouseEvent->type() == QEvent::Leave)
-        {
-            ui->BtnSearch->setStyleSheet(
-                        "QPushButton"
-                        "{"
-                        "color:white;"
-                        "background-color:#ff5246;"
-                        "border: 1px solid #ff5c38;"
-                        "border-left:transparent;"
-                        "border-top-right-radius:18px;"
-                        "border-bottom-right-radius:18px;"
-                        "border-bottom-left-radius:0px;"
-                        "border-top-left-radius:0px;"
-                        "}"
-                         );
-
-            ui->lineEditSearch->setStyleSheet(
-                        "QLineEdit"
-                        "{"
-                        "color:#cccccc;"
-                        "font-size:14px;"
-                        "background-color: rgb(81, 81, 81);"
-                        "selection-background-color: #D1DBCB;"
-                        "border: 1px solid #ff5c38;"
-                        "border-right:transparent;"
-                        "border-top-left-radius:18px;"
-                        "border-bottom-left-radius:18px;"
-                        "border-bottom-right-radius:0px;"
-                        "border-top-right-radius:0px;"
-                        "padding-left:15px;"
-                        "}"
-                        );
-        }
-
-        /*搜索框，搜索按钮鼠标进入*/
-        if(mouseEvent->type() == QEvent::Enter)
-        {
-            ui->BtnSearch->setStyleSheet(
-                        "QPushButton"
-                        "{"
-                        "color:white;"
-                        "background-color:#ff5246;"
-                        "border: 1px solid #ff5c38;"
-                        "border-top-right-radius:18px;"
-                        "border-bottom-right-radius:18;px;"
-                        "border-bottom-left-radius:0px;"
-                        "border-top-left-radius:0px;"
-                        "}"
-                        );
-
-            ui->lineEditSearch->setStyleSheet(
-                        "QLineEdit"
-                        "{"
-                        "color:#cccccc;"
-                        "font-size:14px;"
-                        "background-color: rgb(33, 33, 33);"
-                        "border:1px solid #ff5c38;"
-                        "border-right:transparnet;"
-                        "border-top-left-radius:18px;"
-                        "border-bottom-left-radius:18px;"
-                        "border-bottom-right-radius:0px;"
-                        "border-top-right-radius:0px;"
-                        "padding-left:15px;"
-                        "}"
-                        );
-        }
-    }
-
-
-    //播放列表鼠标进入离开
-//    playlistMouseEnterLeave(watched,event);
-    //音量显示隐藏
-//    volumeAdjustShowUi(watched,mouseEvent);
-    //视屏退出全屏
-//    videoDouleExit(watched,event);
-    //登录提示窗口
-//        if(watched == ui->Btnlogin && mouseEvent->type() == QEvent::Enter)
+//bool MainWindow::eventFilter(QObject *watched, QEvent *event)
+//{
+//    QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+//    //顶层搜索框鼠标进入离开
+////    searchMouseEnterLeaveShow(watched,event);
+//    if(watched == ui->lineEditSearch)//监控对象每次只能监控一个，也就是说各自在各自的监控对象范围内去执行操作，不能同时监控两个
+//    {
+//        /*搜索框，搜索按钮鼠标离开*/
+//        if(mouseEvent->type() == QEvent::Leave)
 //        {
-//             if(m_login)
-//             {
-//                 if(!m_login->isHidden())
-//                 {
-//                     m_login->hide();
-//                 }
-//             else
-//                 {
-//                     m_login->move(QCursor::pos().x()-155,QCursor::pos().y()+15);
-//                     m_login->raise();
-//                     m_login->show();
-//                 }
-//             }
-//            set_adjustLogin();
+//            ui->BtnSearch->setStyleSheet(
+//                        "QPushButton"
+//                        "{"
+//                        "color:white;"
+//                        "background-color:#ff5246;"
+//                        "border: 1px solid #ff5c38;"
+//                        "border-left:transparent;"
+//                        "border-top-right-radius:18px;"
+//                        "border-bottom-right-radius:18px;"
+//                        "border-bottom-left-radius:0px;"
+//                        "border-top-left-radius:0px;"
+//                        "}"
+//                         );
+
+//            ui->lineEditSearch->setStyleSheet(
+//                        "QLineEdit"
+//                        "{"
+//                        "color:#cccccc;"
+//                        "font-size:14px;"
+//                        "background-color: rgb(81, 81, 81);"
+//                        "selection-background-color: #D1DBCB;"
+//                        "border: 1px solid #ff5c38;"
+//                        "border-right:transparent;"
+//                        "border-top-left-radius:18px;"
+//                        "border-bottom-left-radius:18px;"
+//                        "border-bottom-right-radius:0px;"
+//                        "border-top-right-radius:0px;"
+//                        "padding-left:15px;"
+//                        "}"
+//                        );
 //        }
 
-    return QMainWindow::eventFilter(watched,event);
-}
+//        /*搜索框，搜索按钮鼠标进入*/
+//        if(mouseEvent->type() == QEvent::Enter)
+//        {
+//            ui->BtnSearch->setStyleSheet(
+//                        "QPushButton"
+//                        "{"
+//                        "color:white;"
+//                        "background-color:#ff5246;"
+//                        "border: 1px solid #ff5c38;"
+//                        "border-top-right-radius:18px;"
+//                        "border-bottom-right-radius:18;px;"
+//                        "border-bottom-left-radius:0px;"
+//                        "border-top-left-radius:0px;"
+//                        "}"
+//                        );
 
-/*重写窗口关闭事件*/
-//void MainWindow::closeEvent(QCloseEvent *event)
-//{
-////    QMessageBox::StandardButton button;
-////        button = QMessageBox::question(this,QString::fromLocal8Bit(" "),
-////                                       QString::fromLocal8Bit("确认退出程序?"),
-////                                       QMessageBox::Yes|QMessageBox::No);
-////        if(button==QMessageBox::No)
+//            ui->lineEditSearch->setStyleSheet(
+//                        "QLineEdit"
+//                        "{"
+//                        "color:#cccccc;"
+//                        "font-size:14px;"
+//                        "background-color: rgb(33, 33, 33);"
+//                        "border:1px solid #ff5c38;"
+//                        "border-right:transparnet;"
+//                        "border-top-left-radius:18px;"
+//                        "border-bottom-left-radius:18px;"
+//                        "border-bottom-right-radius:0px;"
+//                        "border-top-right-radius:0px;"
+//                        "padding-left:15px;"
+//                        "}"
+//                        );
+//        }
+//    }
+
+//    if(watched == ui->BtnSearch)//监控对象每次只能监控一个，也就是说各自在各自的监控对象范围内去执行操作，不能同时监控两个
+//    {
+//        /*搜索框，搜索按钮鼠标离开*/
+//        if(mouseEvent->type() == QEvent::Leave)
+//        {
+//            ui->BtnSearch->setStyleSheet(
+//                        "QPushButton"
+//                        "{"
+//                        "color:white;"
+//                        "background-color:#ff5246;"
+//                        "border: 1px solid #ff5c38;"
+//                        "border-left:transparent;"
+//                        "border-top-right-radius:18px;"
+//                        "border-bottom-right-radius:18px;"
+//                        "border-bottom-left-radius:0px;"
+//                        "border-top-left-radius:0px;"
+//                        "}"
+//                         );
+
+//            ui->lineEditSearch->setStyleSheet(
+//                        "QLineEdit"
+//                        "{"
+//                        "color:#cccccc;"
+//                        "font-size:14px;"
+//                        "background-color: rgb(81, 81, 81);"
+//                        "selection-background-color: #D1DBCB;"
+//                        "border: 1px solid #ff5c38;"
+//                        "border-right:transparent;"
+//                        "border-top-left-radius:18px;"
+//                        "border-bottom-left-radius:18px;"
+//                        "border-bottom-right-radius:0px;"
+//                        "border-top-right-radius:0px;"
+//                        "padding-left:15px;"
+//                        "}"
+//                        );
+//        }
+
+//        /*搜索框，搜索按钮鼠标进入*/
+//        if(mouseEvent->type() == QEvent::Enter)
+//        {
+//            ui->BtnSearch->setStyleSheet(
+//                        "QPushButton"
+//                        "{"
+//                        "color:white;"
+//                        "background-color:#ff5246;"
+//                        "border: 1px solid #ff5c38;"
+//                        "border-top-right-radius:18px;"
+//                        "border-bottom-right-radius:18;px;"
+//                        "border-bottom-left-radius:0px;"
+//                        "border-top-left-radius:0px;"
+//                        "}"
+//                        );
+
+//            ui->lineEditSearch->setStyleSheet(
+//                        "QLineEdit"
+//                        "{"
+//                        "color:#cccccc;"
+//                        "font-size:14px;"
+//                        "background-color: rgb(33, 33, 33);"
+//                        "border:1px solid #ff5c38;"
+//                        "border-right:transparnet;"
+//                        "border-top-left-radius:18px;"
+//                        "border-bottom-left-radius:18px;"
+//                        "border-bottom-right-radius:0px;"
+//                        "border-top-right-radius:0px;"
+//                        "padding-left:15px;"
+//                        "}"
+//                        );
+//        }
+//    }
+
+
+//    //播放列表鼠标进入离开
+////    playlistMouseEnterLeave(watched,event);
+//    //音量显示隐藏
+////    volumeAdjustShowUi(watched,mouseEvent);
+//    //视屏退出全屏
+////    videoDouleExit(watched,event);
+//    //登录提示窗口
+////        if(watched == ui->Btnlogin && mouseEvent->type() == QEvent::Enter)
 ////        {
-////            event->ignore(); // 忽略退出信号，程序继续进行
+////             if(m_login)
+////             {
+////                 if(!m_login->isHidden())
+////                 {
+////                     m_login->hide();
+////                 }
+////             else
+////                 {
+////                     m_login->move(QCursor::pos().x()-155,QCursor::pos().y()+15);
+////                     m_login->raise();
+////                     m_login->show();
+////                 }
+////             }
+////            set_adjustLogin();
 ////        }
-////        else if(button==QMessageBox::Yes)
-////        {
-////            event->accept(); // 接受退出信号，程序退出
-////            QSqlQuery query;
-////            query.exec("delete from LocalMusic");
-////            qDebug()<<"LocalMusic data is clear";
-////        }
 
-//    if(m_pExitDlg->isShow)
-//        m_pExitDlg->exec();
-//     if(!m_isClose)
-//     {
-//         event->ignore();
-//     }
-//     else
-//     {
-//         /*做一些数据保存*/
-//         emit sig_startCloseAppliction();
-//         m_pExitDlg->setIni();
-//         m_tray->hide();
-//         m_login->close();
-//         QSqlQuery query;
-//         query.exec("DROP TABLE IF EXISTS 'LocalMusic'");
-//         query.exec("DROP TABLE IF EXISTS 'LoginInfo'");
-//         qDebug()<<"LocalMusic,LoginInfo tables is drop!";
-
-//         event->accept();
-//     }
-
+//    return QMainWindow::eventFilter(watched,event);
 //}
+
 
 /*双击事件，这是指针全局的，不能指定某个空间，范围太大*/
 //void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
@@ -1631,6 +1464,7 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 //    }
 //}
 
+//旧的
 //void MainWindow::mousePressEvent(QMouseEvent *event)
 //{
 //    QPoint winPos = this->pos();//主窗口相对于电脑屏幕的左上角（x = 0, y =0）
@@ -1642,16 +1476,12 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 //    qDebug()<<"firrerent = "<<m_mvPos;
 //}
 
+//旧的
 //void MainWindow::mouseMoveEvent(QMouseEvent *event)
 //{
 //    this->move(event->globalPos() - m_mvPos);//重新计算pos值，即鼠标拖动后位置值-差值
 //}
 
-/*鼠标释放*/
-//void MainWindow::mouseReleaseEvent(QMouseEvent *event)
-//{
-
-//}
 
 /*窗口伸缩-此法不灵，只适用于windows下*/
 //bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *result)
@@ -1700,17 +1530,17 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
  *2.获取光标在屏幕中的位置 _plast
  *3.左键按下时光标所在区域 _curpos
  */
-//void MainWindow::mousePressEvent(QMouseEvent *event)
-//{
-//    Q_UNUSED(event);
-//    if (event->button() == Qt::LeftButton)
-//    {
-//        this->_isleftpressed = true;
-//        QPoint temp = event->globalPos();
-//        _plast = temp;
-//        _curpos = countFlag(event->pos(), countRow(event->pos()));
-//    }
-//}
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    Q_UNUSED(event);
+    if (event->button() == Qt::LeftButton)
+    {
+        this->_isleftpressed = true;
+        QPoint temp = event->globalPos();
+        _plast = temp;
+        _curpos = countFlag(event->pos(), countRow(event->pos()));
+    }
+}
 
 //鼠标释放事件
 /*
@@ -1718,114 +1548,119 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
  *1.将_isleftpressed 设为false
  *2.将光标样式恢复原样式  setCursor(Qt::ArrowCursor);
  */
-//void MainWindow::mouseReleaseEvent(QMouseEvent *event)
-//{
-//    Q_UNUSED(event);
-//    if (_isleftpressed)
-//        _isleftpressed = false;
-//    setCursor(Qt::ArrowCursor);
-//}
+void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+    Q_UNUSED(event);
+    if (_isleftpressed)
+        _isleftpressed = false;
+    setCursor(Qt::ArrowCursor);
+}
 
-//void MainWindow::changeEvent(QEvent *event)
-//{
-//    switch (event->type())
-//        {
-//        case QEvent::WindowStateChange:
-//            {
-//                this->update();
-//                this->repaint();
-//                event->ignore();
-//                break;
-//            }
-//        default:
-//            break;
-//    }
-//}
+void MainWindow::changeEvent(QEvent *event)
+{
+    switch (event->type())
+        {
+        case QEvent::WindowStateChange:
+            {
+                this->update();
+                this->repaint();
+                event->ignore();
+                break;
+            }
+        default:
+            break;
+    }
+}
 
 /*界面卡顿*/
-//void MainWindow::showEvent(QShowEvent *event)
-//{
-//    this->setAttribute(Qt::WA_Mapped);
-//       QWidget::showEvent(event);
-//}
+void MainWindow::showEvent(QShowEvent *event)
+{
+    this->setAttribute(Qt::WA_Mapped);
+       QWidget::showEvent(event);
+}
 
 //鼠标移动事件
-//void MainWindow::mouseMoveEvent(QMouseEvent *event)
-//{
-//    Q_UNUSED(event);
-//    if(this->isFullScreen()) return;	//窗口铺满全屏，直接返回，不做任何操作
-//    int poss = countFlag(event->pos(), countRow(event->pos()));
-//    setCursorType(poss);
-//    if (_isleftpressed)//是否左击
-//    {
-//        QPoint ptemp = event->globalPos();
-//        ptemp = ptemp - _plast;
-//        if (_curpos == 22)//移动窗口
-//        {
-//            ptemp = ptemp + pos();
-//            move(ptemp);
-//        }
-//        else
-//        {
-//            QRect wid = geometry();
-//            switch (_curpos)//改变窗口的大小
-//            {
-//            case 11:wid.setTopLeft(wid.topLeft() + ptemp); break;//左上角
-//            case 13:wid.setTopRight(wid.topRight() + ptemp); break;//右上角
-//            case 31:wid.setBottomLeft(wid.bottomLeft() + ptemp); break;//左下角
-//            case 33:wid.setBottomRight(wid.bottomRight() + ptemp); break;//右下角
-//            case 12:wid.setTop(wid.top() + ptemp.y()); break;//中上角
-//            case 21:wid.setLeft(wid.left() + ptemp.x()); break;//中左角
-//            case 23:wid.setRight(wid.right() + ptemp.x()); break;//中右角
-//            case 32:wid.setBottom(wid.bottom() + ptemp.y()); break;//中下角
-//            }
-//            setGeometry(wid);
-//        }
-//        _plast = event->globalPos();//更新位置
-//    }
-//}
+void MainWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    //拖动之前判断是否串口处于最大化
+    if(this->isMaximized())
+    {
+        return;
+    }
+    Q_UNUSED(event);
+    if(this->isFullScreen()) return;	//窗口铺满全屏，直接返回，不做任何操作
+    int poss = countFlag(event->pos(), countRow(event->pos()));
+    setCursorType(poss);
+    if (_isleftpressed)//是否左击
+    {
+        QPoint ptemp = event->globalPos();
+        ptemp = ptemp - _plast;
+        if (_curpos == 22)//移动窗口
+        {
+            ptemp = ptemp + pos();
+            move(ptemp);
+        }
+        else
+        {
+            QRect wid = geometry();
+            switch (_curpos)//改变窗口的大小
+            {
+            case 11:wid.setTopLeft(wid.topLeft() + ptemp); break;//左上角
+            case 13:wid.setTopRight(wid.topRight() + ptemp); break;//右上角
+            case 31:wid.setBottomLeft(wid.bottomLeft() + ptemp); break;//左下角
+            case 33:wid.setBottomRight(wid.bottomRight() + ptemp); break;//右下角
+            case 12:wid.setTop(wid.top() + ptemp.y()); break;//中上角
+            case 21:wid.setLeft(wid.left() + ptemp.x()); break;//中左角
+            case 23:wid.setRight(wid.right() + ptemp.x()); break;//中右角
+            case 32:wid.setBottom(wid.bottom() + ptemp.y()); break;//中下角
+            }
+            setGeometry(wid);
+        }
+        _plast = event->globalPos();//更新位置
+    }
+}
 
 //获取光标在窗口所在区域的 列  返回行列坐标
-//int MainWindow::countFlag(QPoint p,int row)//计算鼠标在哪一列和哪一行
-//{
-//    if(p.y()<MARGIN)
-//        return 10+row;
-//    else if(p.y()>this->height()-MARGIN)
-//        return 30+row;
-//    else
-//        return 20+row;
-//}
+int MainWindow::countFlag(QPoint p,int row)//计算鼠标在哪一列和哪一行
+{
+    if(p.y()<MARWIDTH)
+        return 10+row;
+    else if(p.y()>this->height()-MARWIDTH)
+        return 30+row;
+    else
+        return 20+row;
+}
 
 //获取光标在窗口所在区域的 行   返回行数
-//int MainWindow::countRow(QPoint p)
-//{
-//    return (p.x()<MARGIN) ? 1 : (p.x()>(this->width() - MARGIN) ? 3 : 2);
-//}
+int MainWindow::countRow(QPoint p)
+{
+    return (p.x()<MARWIDTH) ? 1 : (p.x()>(this->width() - MARWIDTH) ? 3 : 2);
+}
 
 //根据鼠标所在位置改变鼠标指针形状
-//void MainWindow::setCursorType(int flag)
-//{
-//    switch(flag)
-//    {
-//    case 11:
-//    case 33:
-//        setCursor(Qt::SizeFDiagCursor);
-//        break;
-//    case 13:
-//    case 31:
-//        setCursor(Qt::SizeBDiagCursor);break;
-//    case 21:
-//    case 23:
-//        setCursor(Qt::SizeHorCursor);break;
-//    case 12:
-//    case 32:
-//        setCursor(Qt::SizeVerCursor);break;
-//    case 22:
-//        setCursor(Qt::ArrowCursor);
-//        QApplication::restoreOverrideCursor();//恢复鼠标指针性状
-//        break;
-//    }
-//}
+void MainWindow::setCursorType(int flag)
+{
+    switch(flag)
+    {
+    case 11:
+    case 33:
+        setCursor(Qt::SizeFDiagCursor);
+        break;
+    case 13:
+    case 31:
+        setCursor(Qt::SizeBDiagCursor);break;
+    case 21:
+    case 23:
+        setCursor(Qt::SizeHorCursor);break;
+    case 12:
+    case 32:
+        setCursor(Qt::SizeVerCursor);break;
+    case 22:
+        setCursor(Qt::ArrowCursor);
+        QApplication::restoreOverrideCursor();//恢复鼠标指针性状
+        break;
+    }
+}
 
 /*展开更多*/
 void MainWindow::on_moreBtn_clicked()
@@ -1921,12 +1756,12 @@ bool MainWindow::videoDouleExit(QObject *watched, QEvent *event)
                      videoWidget->showNormal();
                      this->move(m_videoPos);
  //                    m_winMax = true;
-                     ui->pushButton_normal->setStyleSheet("QPushButton{"
-                                                          "background-color: transparent;"
-                                                          "border-image: url(:/images/normalmax.png);}"
-                                                          "QPushButton:hover{"
-                                                          "border: 1px solid #3C80B1;"
-                                                          "border-image: url(:/images/normalmaxhover.png);}");
+//                     ui->pushButton_normal->setStyleSheet("QPushButton{"
+//                                                          "background-color: transparent;"
+//                                                          "border-image: url(:/images/normalmax.png);}"
+//                                                          "QPushButton:hover{"
+//                                                          "border: 1px solid #3C80B1;"
+//                                                          "border-image: url(:/images/normalmaxhover.png);}");
                  }
              }
              else if(event->type() == QEvent::MouseButtonDblClick)
@@ -1948,12 +1783,12 @@ bool MainWindow::videoDouleExit(QObject *watched, QEvent *event)
  //                        videoWidget->adjustSize();
  //                        this->setWindowState(Qt::WindowMaximized);
  //                        m_winMax = false;
-                         ui->pushButton_normal->setStyleSheet("QPushButton{"
-                                                              "background-color: transparent;"
-                                                              "border-image: url(:/images/normal.png);}"
-                                                              "QPushButton:hover{"
-                                                              "border: 1px solid #3C80B1;"
-                                                              "border-image: url(:/images/normalhover.png);}");
+//                         ui->pushButton_normal->setStyleSheet("QPushButton{"
+//                                                              "background-color: transparent;"
+//                                                              "border-image: url(:/images/normal.png);}"
+//                                                              "QPushButton:hover{"
+//                                                              "border: 1px solid #3C80B1;"
+//                                                              "border-image: url(:/images/normalhover.png);}");
                      }
                  }
              }
@@ -1967,9 +1802,9 @@ bool MainWindow::videoDouleExit(QObject *watched, QEvent *event)
 void MainWindow::volumeAdjustShowUi(QObject *watched, QEvent *event)
 {
         /*音量调节显示*/
-    if(watched == ui->pushButton_1)
+    if(watched == ui->pushButton_sound)
     {
-        qDebug()<<"pushbutton_1 enter";
+        qDebug()<<"pushButton_sound enter";
         if(event->type() == QEvent::Enter)
         {
             if(m_muteDlg)
@@ -1980,7 +1815,7 @@ void MainWindow::volumeAdjustShowUi(QObject *watched, QEvent *event)
                 }
                 else
                 {
-                    m_muteDlg->move(ui->pushButton_1->pos());
+                    m_muteDlg->move(ui->pushButton_sound->pos());
                     m_muteDlg->show();
                 }
             }
@@ -2057,55 +1892,55 @@ void MainWindow::playlistMouseEnterLeave(QObject *watched, QEvent *event)
 }
 
 /*外部功能-截图*/
-void MainWindow::showCaptureScreen()
-{
-    //思路
-    //[static] bool QDir::setCurrent(const QString &path),[static] QString QDir::currentPath()
-    //applicationpath().可以设置path,根据path回退路径
-    QProcess *pProcess = new QProcess(this);
-    pProcess->start("E:\\software\\FastStoneCapturePortable\\FSCapture.exe");//为了方便演示，使用了绝对路径，release时，使用相对路径
-    bool isOk = pProcess->waitForStarted(3000);
-    if(isOk)
-    {
-        qDebug()<<"invoke ok";
-    }
-    else
-    {
-        qDebug()<<"invoke failed";
-    }
-    //    delete pProcess;
-}
+//void MainWindow::showCaptureScreen()
+//{
+//    //思路
+//    //[static] bool QDir::setCurrent(const QString &path),[static] QString QDir::currentPath()
+//    //applicationpath().可以设置path,根据path回退路径
+//    QProcess *pProcess = new QProcess(this);
+//    pProcess->start("E:\\software\\FastStoneCapturePortable\\FSCapture.exe");//为了方便演示，使用了绝对路径，release时，使用相对路径
+//    bool isOk = pProcess->waitForStarted(3000);
+//    if(isOk)
+//    {
+//        qDebug()<<"invoke ok";
+//    }
+//    else
+//    {
+//        qDebug()<<"invoke failed";
+//    }
+//    //    delete pProcess;
+//}
 
 /*控制节目列表显示隐藏*/
-void MainWindow::showJieMuListWidget()
-{
-//    qDebug()<<"show jie mu lie biao";
-    if(!m_jiemuShow)
-    {
-        ui->listWidget_playlist->setHidden(true);
-        ui->moreBtn->setHidden(true);
-        ui->Btn_logo->setHidden(true);
-    }
-    else
-    {
-        ui->listWidget_playlist->setHidden(false);
-        ui->moreBtn->setHidden(false);
-        ui->Btn_logo->setHidden(false);
-    }
-    m_jiemuShow = !m_jiemuShow;
-}
+//void MainWindow::showJieMuListWidget()
+//{
+////    qDebug()<<"show jie mu lie biao";
+//    if(!m_jiemuShow)
+//    {
+//        ui->listWidget_playlist->setHidden(true);
+//        ui->moreBtn->setHidden(true);
+//        ui->Btn_logo->setHidden(true);
+//    }
+//    else
+//    {
+//        ui->listWidget_playlist->setHidden(false);
+//        ui->moreBtn->setHidden(false);
+//        ui->Btn_logo->setHidden(false);
+//    }
+//    m_jiemuShow = !m_jiemuShow;
+//}
 
 /*系统设置*/
 void MainWindow::help_stemAboutSetting()
 {
-    if(m_systemSetting->isHidden())
-    {
-        m_systemSetting->exec();
-    }
-    else
-    {
-        m_systemSetting->hide();
-    }
+//    if(m_systemSetting->isHidden())
+//    {
+//        m_systemSetting->exec();
+//    }
+//    else
+//    {
+//        m_systemSetting->hide();
+//    }
 }
 
 /*问题帮助*/
@@ -2118,7 +1953,7 @@ void MainWindow::help_questionAnswer()
 void MainWindow::help_aboutLocalFile()
 {
 //    QMessageBox::information(this,QString::fromLocal8Bit("本地文件"),QString::fromLocal8Bit("选择本地文件进行播放。"));
-    on_pushButton_6_clicked();
+     openLocalFile();
 }
 
 /*打开门户网站*/
@@ -2167,35 +2002,35 @@ void MainWindow::set_adjustBright()
 
 }
 
-void MainWindow::set_adjustLogin()
-{
-//    QMenu *menu = new QMenu(this);
-//    menu->setFixedSize(310,200);
-//    QWidgetAction *a = new QWidgetAction(menu);
-//    a->setDefaultWidget(m_login);
-//    QPoint  point = QPoint(QCursor::pos().x()-155,QCursor::pos().y()+25);
-//    menu->exec(point);
-    if(m_login)
-    {
-        if(!m_login->isHidden())
-        {
-            m_login->hide();
-        }
-        else
-        {
-            m_login->move(QCursor::pos().x()-155,QCursor::pos().y()+25);
-            m_login->raise();
-            m_login->show();
-        }
-    }
-    else
-    {
-        m_login = new Login(this);
-        m_login->move(QCursor::pos().x()-155,QCursor::pos().y()+25);
-        m_login->raise();
-        m_login->show();
-    }
-}
+//void MainWindow::set_adjustLogin()
+//{
+////    QMenu *menu = new QMenu(this);
+////    menu->setFixedSize(310,200);
+////    QWidgetAction *a = new QWidgetAction(menu);
+////    a->setDefaultWidget(m_login);
+////    QPoint  point = QPoint(QCursor::pos().x()-155,QCursor::pos().y()+25);
+////    menu->exec(point);
+//    if(m_login)
+//    {
+//        if(!m_login->isHidden())
+//        {
+//            m_login->hide();
+//        }
+//        else
+//        {
+//            m_login->move(QCursor::pos().x()-155,QCursor::pos().y()+25);
+//            m_login->raise();
+//            m_login->show();
+//        }
+//    }
+//    else
+//    {
+//        m_login = new Login(this);
+//        m_login->move(QCursor::pos().x()-155,QCursor::pos().y()+25);
+//        m_login->raise();
+//        m_login->show();
+//    }
+//}
 
 /*调节播放模式*/
 void MainWindow::adjust_playBackMode(int index)

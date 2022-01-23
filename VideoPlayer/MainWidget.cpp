@@ -1,4 +1,5 @@
 ﻿#include "MainWidget.h"
+#include <QDebug>
 #include <QMenu>
 #include <QSqlQuery>
 
@@ -41,7 +42,7 @@ void MainWidget::initOtherWidgetUi()
     m_tabWidget = new CusTabWidget(m_stackWidget);
     m_tabWidget->setObjectName(QString::fromLatin1("m_tabWidget"));
 
-    m_videoWidget = new CusVideoWidget(m_stackWidget);
+    m_videoWidget = new VideoBlank(m_stackWidget);
     m_videoWidget->setObjectName(QString::fromLatin1("m_videoWidget"));
 
     m_webBrowser = new CusWebBrowser(m_stackWidget);
@@ -54,6 +55,14 @@ void MainWidget::initOtherWidgetUi()
     m_login = new Login(this);
     m_login->setObjectName(QString::fromLatin1("m_login"));
     m_login->setHidden(true);//首次应该隐藏，否则弹出界面
+
+    //托盘
+    QIcon icno(":/images/tray.png");
+    m_tray = new QSystemTrayIcon(icno,this);
+    m_tray->setToolTip(QString::fromLocal8Bit("播放器"));
+    m_tray->show();
+    createTrayMenu();
+
 
     m_vblayout = new QVBoxLayout(this);
     m_hblayout = new QHBoxLayout(this);
@@ -79,15 +88,26 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_titleBar,&TitleBar::sig_winNormal,this,&MainWidget::chandleRestoreWindow);//根据不同状态处理窗口
     connect(m_titleBar,&TitleBar::sig_winMinimum,[=](){this->showMinimized();});
     connect(m_titleBar,&TitleBar::sig_doubleClick,[=](){chandleRestoreWindow();});
+    //响应标题栏发送的调用登录提示板信号,弹出提示板
+    connect(m_titleBar,&TitleBar::sig_callLogin,this,&MainWidget::set_adjustLogin);
+    //响应标题栏调用历史记录信号
+    connect(m_titleBar,&TitleBar::sig_historyDownload,[=](){m_stackWidget->setCurrentIndex(1);});
+    //响应标题栏帮助设置发来信号，弹出右键菜单
+    connect(m_titleBar,&TitleBar::sig_settingHelp,this,&MainWidget::createHelpMenu);
     //收到主窗口关闭信号
     connect(m_pExitDlg,&ExitDialog::sig_SendcloseMain,[=](){m_isClose = true;});
     //没收到主窗口关闭信号
     connect(m_pExitDlg,&ExitDialog::sig_SendNotcloseMain,[=](){m_isClose = false;});
 
+
     //关闭主窗口，通知登录窗口也关闭
     connect(this,&MainWidget::sig_startCloseAppliction,m_login,&Login::receiveMainWinCloseAppSignal);
     //侧边栏有关信号与槽函数处理
-    connect(m_leftSideBar,SIGNAL(sig_sidebarItemChange(int)),this,SLOT(chandleCenterWinShowUi(int)));
+    connect(m_leftSideBar,&LeftSideBar::sig_sidebarItemChange,[=](int index)
+    {
+        m_stackWidget->setCurrentIndex(index);
+        qDebug() << index;
+    });
     connect(this,SIGNAL(sig_winStatus(bool)),m_titleBar,SLOT(chandleMainWinStatus(bool)));//标题栏处理不同状态下样式
 
 }
@@ -114,13 +134,12 @@ void MainWidget::loadAllUIQss()
 //设置StackedWidget布局每个page界面
 void MainWidget::setStackedWidgetPage()
 {
-//    m_stackWidget->insertWidget(0,m_musicList);
-//    m_stackWidget->insertWidget(1,m_musicList);
-//    m_stackWidget->insertWidget(2,m_musicList);
+//    m_stackWidget->insertWidget(0,m_webBrowser);
+//    m_stackWidget->insertWidget(1,m_tabWidget);
+//    m_stackWidget->insertWidget(2,m_videoWidget);
 //    m_stackWidget->insertWidget(3,m_musicShow);
-//    m_stackWidget->insertWidget(4,m_tabWidget);
+//    m_stackWidget->insertWidget(4,m_musicShow);
 //    m_stackWidget->insertWidget(5,m_videoWidget);
-//    m_stackWidget->insertWidget(6,m_webBrowser);
 }
 
 
@@ -145,6 +164,43 @@ void MainWidget::createTrayMenu()
     m_tray->setContextMenu(pmenu);
 }
 
+/*帮助菜单*/
+void MainWidget::createHelpMenu()
+{
+    QMenu *pmenu2 = new QMenu(this);
+    pmenu2->setObjectName(QString::fromLocal8Bit("pmenu2"));//样式表中设置样式必须设置对象名称才能生效
+    pmenu2->setStyleSheet("QMenu"
+                          "{"
+                          "font-size:12px;"
+                          "background-color:#3d3d3d;"
+                          "color:green;"
+//                        "padding:15px 15px;"//调整文字间距
+                          "}"
+                          "QMenu::item:selected"
+                          "{"
+                          "color:red;"
+                          "}");//font:bold italic 18px "微软雅黑";
+    pmenu2->addAction(QString::fromLocal8Bit("系统设置"),this,SLOT(help_stemAboutSetting()));
+    pmenu2->addSeparator();
+    pmenu2->addAction(QString::fromLocal8Bit("网络资源"),this,SLOT(playHttpRequireRecourse(QString)));
+    pmenu2->addSeparator();
+    pmenu2->addAction(QString::fromLocal8Bit("问题帮助"),this,SLOT(help_questionAnswer()));
+    pmenu2->addSeparator();
+    pmenu2->addAction(QString::fromLocal8Bit("本地文件"),this,SLOT(help_aboutLocalFile()));
+    pmenu2->addSeparator();
+    pmenu2->addAction(QString::fromLocal8Bit("软件下载"),this,SLOT(help_openWebSite()));
+    pmenu2->addSeparator();
+    pmenu2->addAction(QString::fromLocal8Bit("软件退出"),this,SLOT(close()));
+
+//    ui->Btnhelp->setMenu(pmenu2);
+//    pmenu2->show();
+
+    QPoint point4 = QPoint(QCursor::pos().x()-70,QCursor::pos().y()+25);
+    pmenu2->exec(point4);
+//    pmenu2->exec(QCursor::pos());
+    delete pmenu2;
+}
+
 /*设置全局tooltip*/
 void MainWidget::setGlobalToolTip()
 {
@@ -158,22 +214,38 @@ void MainWidget::chandleRestoreWindow()
         {
             this->showMaximized();
             emit sig_winStatus(m_winMax);//向标题栏发送最大化状态信号
-
-
         }
         else
         {
             this->showNormal();
             emit sig_winStatus(m_winMax);//向窗口发送正常状态信号
-
         }
         m_winMax = !m_winMax;
 }
 
-/*槽函数 --- 处理中心显示内容*/
-void MainWidget::chandleCenterWinShowUi(int index)
+/*槽函数 -- 调用登录界面*/
+void MainWidget::set_adjustLogin()
 {
-    m_stackWidget->setCurrentIndex(index);
+    if(m_login)
+    {
+        if(!m_login->isHidden())
+        {
+            m_login->hide();
+        }
+        else
+        {
+            m_login->move(QCursor::pos().x()-155,QCursor::pos().y()+25);
+            m_login->raise();
+            m_login->show();
+        }
+    }
+    else
+    {
+        m_login = new Login(this);
+        m_login->move(QCursor::pos().x()-155,QCursor::pos().y()+25);
+        m_login->raise();
+        m_login->show();
+    }
 }
 
 MainWidget::~MainWidget()
@@ -282,11 +354,11 @@ void MainWidget::closeEvent(QCloseEvent *event)
          //此处最好做一个全局的通知信号
 //         m_tray->hide();
 //         m_login->close();
-//         QSqlQuery query;
+         QSqlQuery query;
          //此处应该在数据库提供接口
-//         query.exec("DROP TABLE IF EXISTS 'LocalMusic'");
-//         query.exec("DROP TABLE IF EXISTS 'LoginInfo'");
-//         qDebug()<<"LocalMusic,LoginInfo tables is drop!";
+         query.exec("DROP TABLE IF EXISTS 'LocalMusic'");
+         query.exec("DROP TABLE IF EXISTS 'LoginInfo'");
+         qDebug()<<"LocalMusic,LoginInfo tables is drop!";
          event->accept();
      }
 }

@@ -33,15 +33,16 @@ HEADERS += \
         MainWidget.h
 
 #此处添加模块
-include($$PWD/footer/footer.pri)
+include($$PWD/skin/skin.pri)
+include($$PWD/login/login.pri)
 include($$PWD/network/network.pri)
 include($$PWD/browser/browser.pri)
-include($$PWD/login/loginmodel.pri)
-include($$PWD/delegate/delegate.pri)
 include($$PWD/database/database.pri)
+include($$PWD/delegate/delegate.pri)
 include($$PWD/slidebar/slidebar.pri)
 include($$PWD/titlebar/titlebar.pri)
 include($$PWD/customer/customer.pri)
+include($$PWD/messagebox/messagebox.pri)
 include($$PWD/mainwidget/mainwidget.pri)
 include($$PWD/musicmodels/musicmodels.pri)
 include($$PWD/videomodels/videomodels.pri)

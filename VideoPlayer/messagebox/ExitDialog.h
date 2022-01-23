@@ -14,9 +14,11 @@ class ExitDialog : public QDialog
 
 public:
     explicit ExitDialog(QWidget *parent = nullptr);
+
+
     ~ExitDialog();
 
-    QString readIni();
+    QString readIni() const;
 
     void setIni(); 
 
@@ -30,11 +32,11 @@ signals:
 
     void sig_SendcloseMain();
 private:
-    Ui::ExitDialog *ui;
-    QPoint       m_mvPoint;
-    QString      m_iniPath;
-    QPoint       winPos;
-    QPoint       nowPos;
+    Ui::ExitDialog      *ui;
+    QPoint              m_mvPoint;
+    QString             m_iniPath;
+    QPoint              winPos;
+    QPoint              nowPos;
 
 };
 

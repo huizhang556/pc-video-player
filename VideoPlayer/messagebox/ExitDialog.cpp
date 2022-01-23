@@ -78,7 +78,7 @@ ExitDialog::~ExitDialog()
 }
 
 /*读取配置文件值*/
-QString ExitDialog::readIni()
+QString ExitDialog::readIni() const
 {
     QSettings *pSet = new QSettings(m_iniPath,QSettings::IniFormat);
     QString statusValue = pSet->value("/check_status/status").toString();

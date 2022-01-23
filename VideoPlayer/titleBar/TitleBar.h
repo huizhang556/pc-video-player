@@ -41,6 +41,9 @@ signals:
     void sig_winNormal();
     void sig_winMinimum();
     void sig_doubleClick();
+    void sig_callLogin();
+    void sig_historyDownload();
+    void sig_settingHelp();
 };
 
 #endif // TITLEBAR_H

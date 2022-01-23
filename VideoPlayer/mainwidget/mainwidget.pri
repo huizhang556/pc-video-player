@@ -1,16 +1,11 @@
 SOURCES += \
-    $$PWD/MainWindow.cpp \
-    $$PWD/AdjustBright.cpp \
-    $$PWD/SystemSetting.cpp
-
+    $$PWD/Slideshow.cpp \
+    $$PWD/PictureItem.cpp
 
 HEADERS += \
-    $$PWD/MainWindow.h \
-    $$PWD/AdjustBright.h \
-    $$PWD/SystemSetting.h
-
+    $$PWD/Slideshow.h \
+    $$PWD/PictureItem.h
 
 FORMS += \
-    $$PWD/MainWindow.ui \
-    $$PWD/AdjustBright.ui \
-    $$PWD/SystemSetting.ui
+    $$PWD/Slideshow.ui
+

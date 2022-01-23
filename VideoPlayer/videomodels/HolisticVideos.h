@@ -1,20 +1,21 @@
 ﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-//#define MARGIN 10 //窗口边距
+#define MARWIDTH 2 //窗口边距
 
 #include "login/Login.h"
-#include "AdjustBright.h"
-#include "SystemSetting.h"
 #include "network/MyHttp.h"
-#include "footer/ExitDialog.h"
+#include "messagebox/ExitDialog.h"
 #include "customer/CusTabWidget.h"
 #include "browser/CusWebBrowser.h"
+#include "videomodels/VideoBlank.h"
 #include "videomodels/muteDialog.h"
+#include "videomodels/AdjustBright.h"
+#include "messagebox/SystemSetting.h"
 #include "musicmodels/MusicPlayShow.h"
 #include "videomodels/MyVideoWidget.h"
 #include "musicmodels/MusicPlaylist.h"
-#include "videomodels/CusVideoWidget.h"
+#include "videomodels/VideoTitleBar.h"
 
 #include <QMap>
 #include <QPoint>
@@ -55,19 +56,17 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void initMainWindow();
+
+    void chandleSignalAndSLots();
+
     void addToPlaylist(const QStringList& fileNames);
-
-    void createTrayMenu();//托盘菜单
-
-    void createHelpMenu();//帮助菜单
 
     void createLoginMenu();//登录菜单
 
     void createSwitchSkinMenu();//切换皮肤
 
     void addFileToList(const QStringList &strList);//浮动歌曲列表
-
-    void addFileToPlayList();//节目列表
 
     bool fileType(int index);// 重载函数1
 
@@ -80,30 +79,28 @@ public:
 //    bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
 
 public slots:
-    void loadFileInfoToWinTitle(int index);
+    void loadFileInfoToWinTitle(int index);//标题栏显示视频名称
 
     void findFileFromLineEdit( QString name);//浮动曲库查找搜索内容
-
-//    void getAndShowCurTime();
 
     void itemDoubleClick(QListWidgetItem *item);
 protected:
 //    void keyPressEvent(QKeyEvent *event) override;
-    bool eventFilter(QObject *watched, QEvent *event) override;
+//    bool eventFilter(QObject *watched, QEvent *event) override;
 
 //    void closeEvent(QCloseEvent *event) override;
 
 //    void mouseDoubleClickEvent(QMouseEvent *event) override;
 
-//    void mousePressEvent(QMouseEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
 
-//    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
 
-//    void mouseReleaseEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
-//    void changeEvent(QEvent *event) override;
+    void changeEvent(QEvent *event) override;
 
-//    void showEvent(QShowEvent *event) override;
+    void showEvent(QShowEvent *event) override;
 
 private slots:
 //    void on_pushButton_clicked();
@@ -118,21 +115,19 @@ private slots:
 
     void loadDefaultLogo();//加载默认图标
 
-//    void loadAllUIQss();//加载UI样式文件
+//    void on_pushButton_2_clicked();//停止
 
-    void on_pushButton_2_clicked();//停止
+    void on_pushButton_pauseStart_clicked();//暂停、播放
 
-//    void on_pushButton_1_clicked();//静音
+//    void on_pushButton_5_clicked();//打开文件
 
-    void on_pushButton_4_clicked();//暂停、播放
+    void on_pushButton_previous_clicked();//上一首
 
-    void on_pushButton_5_clicked();//打开文件
+    void on_pushButton_next_clicked();//下一首
 
-    void on_pushButton_7_clicked();//上一首
+//    void on_pushButton_6_clicked();//重新打开
 
-    void on_pushButton_8_clicked();//下一首
-
-    void on_pushButton_6_clicked();//重新打开
+    bool openLocalFile();
 
     void on_frameHidden();
 
@@ -146,6 +141,8 @@ private slots:
 
     void on_moreBtn_clicked();
 
+    void set_adjustBright();
+
     void searchMouseEnterLeaveShow(QObject *watched, QEvent *event);
 
     bool videoDouleExit(QObject *watched, QEvent *event);
@@ -154,9 +151,9 @@ private slots:
 
     void playlistMouseEnterLeave(QObject *watched, QEvent *event);
 
-    void showCaptureScreen();
+//    void showCaptureScreen();
 
-    void showJieMuListWidget();
+//    void showJieMuListWidget();
 
 
     //帮助菜单槽函数
@@ -168,9 +165,7 @@ private slots:
 
     void help_openWebSite();//门户网站
 
-    void set_adjustBright();
-
-    void set_adjustLogin();
+//    void set_adjustLogin();
 
     void adjust_playBackMode(int index);//调节播放模式
 
@@ -191,6 +186,8 @@ signals:
 
     void sig_sendToMusicList();
 
+    void sig_winVStatus(bool);
+
 
 private:
     Ui::MainWindow *ui;
@@ -200,10 +197,11 @@ private:
     CusTabWidget                *m_cusTabWidget = nullptr;
     AdjustBright                *m_adjustBright = nullptr;
     CusWebBrowser               *m_cusWebBrowser = nullptr;//网页显示
-    CusVideoWidget              *m_cusVideoWidget = nullptr;
-    MusicPlayShow               *m_musicUi = nullptr;
+    VideoBlank                  *m_videoBlank    = nullptr;
+    MusicPlayShow               *m_musicUi       = nullptr;
     MusicPlaylist               *m_musicShowList = nullptr;
     SystemSetting               *m_systemSetting = nullptr;
+    VideoTitleBar               *m_videoTitleBar = nullptr;
     int                         m_voice;//静音之前的值
     bool                        m_winMax;//默认非最大化
     bool                        m_isClose;
@@ -215,7 +213,6 @@ private:
     bool                        m_danmuStatus = false;//默认不显示
     QTimer                      *m_pTimer = nullptr;//进度滚动条更新
     QTimer                      *m_pTimer2 = nullptr;//延迟ui界面
-    QTimer                      *m_pTimer3 = nullptr;//实时获取系统时间
     qint64                      m_times;//文件长度
     QPoint                      m_mvPos;
     QPoint                      m_videoPos;
@@ -244,13 +241,12 @@ private:
     QStringList                 list_temp;
 
 //界面拉伸所用
-//    bool                        _isleftpressed = false; //判断是否是左键点击
-//    int                         _curpos = 0;    //鼠标左键按下时光标所在区域
-//    QPoint                      _plast;      //获取鼠标左键按下时光标在全局(屏幕而非窗口)的位置
-//    int                         countRow(QPoint p);            //获取光标在窗口所在区域的 行   返回行数
-//    int                         countFlag(QPoint p,int row);    //获取光标在窗口所在区域的 列  返回行列坐标
-//    void                        setCursorType(int flag);          //根据传入的坐标，设置光标样式
-
+    bool                        _isleftpressed = false; //判断是否是左键点击
+    int                         _curpos = 0;    //鼠标左键按下时光标所在区域
+    QPoint                      _plast;      //获取鼠标左键按下时光标在全局(屏幕而非窗口)的位置
+    int                         countRow(QPoint p);            //获取光标在窗口所在区域的 行   返回行数
+    int                         countFlag(QPoint p,int row);    //获取光标在窗口所在区域的 列  返回行列坐标
+    void                        setCursorType(int flag);          //根据传入的坐标，设置光标样式
 };
 
 #endif // MAINWINDOW_H

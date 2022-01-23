@@ -26,9 +26,9 @@ private:
     void initWidgetUi();
     void chandleSignalAndSlots();
 private:
-    QVBoxLayout         *m_vbayout = nullptr;
-    QPushButton         *m_expandBtn = nullptr;     //底部展开按钮
-    QListWidget         *m_listWidget = nullptr;    //侧边栏节目列表
+    QVBoxLayout         *m_vbayout      = nullptr;
+    QPushButton         *m_expandBtn    = nullptr;     //底部展开按钮
+    QListWidget         *m_listWidget   = nullptr;    //侧边栏节目列表
 
 signals:
     void sig_sidebarItemChange(int index);

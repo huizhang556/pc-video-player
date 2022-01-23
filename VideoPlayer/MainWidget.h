@@ -4,15 +4,15 @@
 
 #include "login/Login.h"
 #include "titleBar/TitleBar.h"
-#include "footer/ExitDialog.h"
 #include "slidebar/LeftSideBar.h"
 #include "customer/CusTabWidget.h"
+#include "messagebox/ExitDialog.h"
 #include "browser/CusWebBrowser.h"
 #include "login/LoginPersonInfo.h"
-#include "mainwidget/MainWindow.h"
+#include "videomodels/HolisticVideos.h"
 #include "musicmodels/MusicPlaylist.h"
 #include "musicmodels/MusicPlayShow.h"
-#include "videomodels/CusVideoWidget.h"
+#include "videomodels/VideoBlank.h"
 
 #include <QPoint>
 #include <QLayout>
@@ -35,6 +35,8 @@ class MainWidget : public QWidget
 public:
     explicit MainWidget(QWidget *parent = nullptr);
     ~MainWidget();
+
+
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -60,11 +62,16 @@ private:
 
     void createTrayMenu();//托盘菜单
 
+
+
     void setGlobalToolTip();
 
 private slots:
     void chandleRestoreWindow();
-    void chandleCenterWinShowUi(int index);
+    void set_adjustLogin();
+    void createHelpMenu();//帮助菜单
+
+
 
     //界面拉伸私有成员函数
     int   countRow(QPoint p);             //获取光标在窗口所在区域的 行   返回行数
@@ -82,7 +89,7 @@ private:
     MusicPlaylist       *m_musicList    = nullptr;
     MusicPlayShow       *m_musicShow    = nullptr;
     CusTabWidget        *m_tabWidget    = nullptr;
-    CusVideoWidget      *m_videoWidget  = nullptr;
+    VideoBlank          *m_videoWidget  = nullptr;
     CusWebBrowser       *m_webBrowser   = nullptr;
     QSystemTrayIcon     *m_tray         = nullptr;
     bool                 m_winMax;        //默认非最大化
