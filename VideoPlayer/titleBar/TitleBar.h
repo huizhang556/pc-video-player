@@ -1,6 +1,7 @@
 ﻿#ifndef TITLEBAR_H
 #define TITLEBAR_H
 
+#include <QTimer>
 #include <QWidget>
 #include <QMouseEvent>
 
@@ -15,15 +16,25 @@ class TitleBar : public QWidget
 public:
     explicit TitleBar(QWidget *parent = nullptr);
     ~TitleBar();
+    void initWorker();
+
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 private slots:
     void chandleMainWinStatus(bool status);
+    void getSystemTimeShow();
 
 private:
-    Ui::TitleBar *ui;
+    void chandleSignalAndSLots();
+    void setShowToolTip();
+
+private:
+    QTimer          *m_timer1 = nullptr;
+    QTimer          *m_timer2 = nullptr;
+    QTimer          *m_timer3 = nullptr;
+    Ui::TitleBar     *ui;
 
 signals:
     void sig_winClose();

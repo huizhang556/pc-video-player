@@ -1,4 +1,6 @@
 ﻿#include "MainWidget.h"
+#include <QMenu>
+#include <QSqlQuery>
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
@@ -45,6 +47,14 @@ void MainWidget::initOtherWidgetUi()
     m_webBrowser = new CusWebBrowser(m_stackWidget);
     m_webBrowser->setObjectName(QString::fromLatin1("m_webBrowser"));
 
+    //弹出对话框
+    m_pExitDlg = new ExitDialog(this);
+    m_pExitDlg->setObjectName(QString::fromLatin1("m_pExitDlg"));
+    //登录
+    m_login = new Login(this);
+    m_login->setObjectName(QString::fromLatin1("m_login"));
+    m_login->setHidden(true);//首次应该隐藏，否则弹出界面
+
     m_vblayout = new QVBoxLayout(this);
     m_hblayout = new QHBoxLayout(this);
     //侧边栏+QStackedWidget--->水平布局
@@ -55,34 +65,89 @@ void MainWidget::initOtherWidgetUi()
     //标题栏+水平布局--->垂直布局
     m_vblayout->addWidget(m_titleBar,0,Qt::AlignTop);
     m_vblayout->addLayout(m_hblayout,1);
-    m_vblayout->setContentsMargins(5,5,5,5);//左 上 右 下
+    m_vblayout->setContentsMargins(3,3,3,3);//左 上 右 下
     m_vblayout->setSpacing(0);
     this->setLayout(m_vblayout);
-}
-
-//设置StackedWidget布局每个page界面
-void MainWidget::setStackedWidgetPage()
-{
-    m_stackWidget->insertWidget(0,m_musicList);
-    m_stackWidget->insertWidget(1,m_mainWin);
-    m_stackWidget->insertWidget(2,m_musicList);
-    m_stackWidget->insertWidget(3,m_musicShow);
-    m_stackWidget->insertWidget(4,m_tabWidget);
-    m_stackWidget->insertWidget(5,m_videoWidget);
-    m_stackWidget->insertWidget(6,m_webBrowser);
+    loadAllUIQss();//加载界面样式
 }
 
 //处理信号与槽函数
 void MainWidget::chandleSignalAndSlots()
 {
     //标题栏有关信号与槽函数处理
-    connect(m_titleBar,&TitleBar::sig_winClose,this,&MainWidget::close);
+    connect(m_titleBar,&TitleBar::sig_winClose,this,&MainWidget::close);//转到重写事件
     connect(m_titleBar,&TitleBar::sig_winNormal,this,&MainWidget::chandleRestoreWindow);//根据不同状态处理窗口
     connect(m_titleBar,&TitleBar::sig_winMinimum,[=](){this->showMinimized();});
     connect(m_titleBar,&TitleBar::sig_doubleClick,[=](){chandleRestoreWindow();});
+    //收到主窗口关闭信号
+    connect(m_pExitDlg,&ExitDialog::sig_SendcloseMain,[=](){m_isClose = true;});
+    //没收到主窗口关闭信号
+    connect(m_pExitDlg,&ExitDialog::sig_SendNotcloseMain,[=](){m_isClose = false;});
+
+    //关闭主窗口，通知登录窗口也关闭
+    connect(this,&MainWidget::sig_startCloseAppliction,m_login,&Login::receiveMainWinCloseAppSignal);
     //侧边栏有关信号与槽函数处理
     connect(m_leftSideBar,SIGNAL(sig_sidebarItemChange(int)),this,SLOT(chandleCenterWinShowUi(int)));
     connect(this,SIGNAL(sig_winStatus(bool)),m_titleBar,SLOT(chandleMainWinStatus(bool)));//标题栏处理不同状态下样式
+
+}
+
+/*加载界面样式*/
+void MainWidget::loadAllUIQss()
+{
+    QFile file(":/style/alluistyle.qss");
+    file.open(QFile::ReadOnly | QFile::Text);
+    if(!file.isOpen())
+    {
+        qDebug()<<"the style qss is unload!";
+        return;
+    }
+    else
+    {
+        QString style = tr(file.readAll());
+        qApp->setStyleSheet(style);
+        qDebug()<<"the style is load successfull!";
+    }
+    file.close();
+}
+
+//设置StackedWidget布局每个page界面
+void MainWidget::setStackedWidgetPage()
+{
+//    m_stackWidget->insertWidget(0,m_musicList);
+//    m_stackWidget->insertWidget(1,m_musicList);
+//    m_stackWidget->insertWidget(2,m_musicList);
+//    m_stackWidget->insertWidget(3,m_musicShow);
+//    m_stackWidget->insertWidget(4,m_tabWidget);
+//    m_stackWidget->insertWidget(5,m_videoWidget);
+//    m_stackWidget->insertWidget(6,m_webBrowser);
+}
+
+
+/*托盘菜单*/
+void MainWidget::createTrayMenu()
+{
+    QMenu *pmenu = new QMenu(this);
+    pmenu->setStyleSheet("font-size:12px;"
+                         "background-color:#3d3d3d;"
+                         "color:green;");//font:bold italic 18px "微软雅黑";
+    pmenu->addAction(QString::fromLocal8Bit("显示主界面"),this,SLOT(showPlayerUi()));
+    pmenu->addSeparator();
+    pmenu->addAction(QString::fromLocal8Bit("显示播放列表"),this,SLOT(showPlayerList()));
+    pmenu->addSeparator();
+    pmenu->addAction(QString::fromLocal8Bit("上一首"),this,SLOT(on_pushButton_7_clicked()));
+    pmenu->addSeparator();
+    pmenu->addAction(QString::fromLocal8Bit("下一首"),this,SLOT(on_pushButton_8_clicked()));
+    pmenu->addSeparator();
+    pmenu->addAction(QString::fromLocal8Bit("暂停/播放"),this,SLOT(on_pushButton_4_clicked()));
+    pmenu->addSeparator();
+    pmenu->addAction(QString::fromLocal8Bit("退出"),this,SLOT(close()));//注意消息阻塞
+    m_tray->setContextMenu(pmenu);
+}
+
+/*设置全局tooltip*/
+void MainWidget::setGlobalToolTip()
+{
 
 }
 
@@ -192,19 +257,47 @@ void MainWidget::changeEvent(QEvent *event)
     }
 }
 
+/*界面卡顿*/
 void MainWidget::showEvent(QShowEvent *event)
 {
     this->setAttribute(Qt::WA_Mapped);
     QWidget::showEvent(event);
 }
 
+/*重写关闭事件---弹窗询问*/
+void MainWidget::closeEvent(QCloseEvent *event)
+{
+    //重写关闭事件，就不需要关闭按钮的操作
+    if(m_pExitDlg->isShow)
+        m_pExitDlg->exec();
+     if(!m_isClose)
+     {
+         event->ignore();
+     }
+     else
+     {
+         /*做一些数据保存*/
+         emit sig_startCloseAppliction();
+         m_pExitDlg->setIni();
+         //此处最好做一个全局的通知信号
+//         m_tray->hide();
+//         m_login->close();
+//         QSqlQuery query;
+         //此处应该在数据库提供接口
+//         query.exec("DROP TABLE IF EXISTS 'LocalMusic'");
+//         query.exec("DROP TABLE IF EXISTS 'LoginInfo'");
+//         qDebug()<<"LocalMusic,LoginInfo tables is drop!";
+         event->accept();
+     }
+}
 
-
+/*获取光标在窗口所在区域的 行   返回行数*/
 int MainWidget::countRow(QPoint p)
 {
     return (p.x()<MARGIN) ? 1 : (p.x()>(this->width() - MARGIN) ? 3 : 2);
 }
 
+/*获取光标在窗口所在区域的 列  返回行列坐标*/
 int MainWidget::countFlag(QPoint p, int row)
 {
     if(p.y()<MARGIN)
@@ -215,6 +308,7 @@ int MainWidget::countFlag(QPoint p, int row)
         return 20+row;
 }
 
+/*根据传入的坐标，设置光标样式*/
 void MainWidget::setCursorType(int flag)
 {
     switch(flag)

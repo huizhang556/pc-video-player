@@ -1,11 +1,14 @@
 ﻿#ifndef MAINWIDGET_H
 #define MAINWIDGET_H
-#define MARGIN 5 //窗口边距
+#define MARGIN 3 //窗口边距
 
+#include "login/Login.h"
 #include "titleBar/TitleBar.h"
+#include "footer/ExitDialog.h"
 #include "slidebar/LeftSideBar.h"
 #include "customer/CusTabWidget.h"
 #include "browser/CusWebBrowser.h"
+#include "login/LoginPersonInfo.h"
 #include "mainwidget/MainWindow.h"
 #include "musicmodels/MusicPlaylist.h"
 #include "musicmodels/MusicPlayShow.h"
@@ -16,8 +19,10 @@
 #include <QWidget>
 #include <QShowEvent>
 #include <QMouseEvent>
+#include <QCloseEvent>
 #include <QApplication>
 #include <QStackedWidget>
+#include <QSystemTrayIcon>
 
 namespace Ui {
 class MainWidget;
@@ -42,10 +47,20 @@ protected:
 
     void showEvent(QShowEvent *event) override;
 
+    void closeEvent(QCloseEvent *event) override;//重写关闭事件
+
 private:
     void initOtherWidgetUi();
-    void setStackedWidgetPage();
+
     void chandleSignalAndSlots();
+
+    void loadAllUIQss();//加载UI样式文件
+
+    void setStackedWidgetPage();
+
+    void createTrayMenu();//托盘菜单
+
+    void setGlobalToolTip();
 
 private slots:
     void chandleRestoreWindow();
@@ -59,7 +74,9 @@ private:
     QStackedWidget      *m_stackWidget  = nullptr;
     QVBoxLayout         *m_vblayout     = nullptr;
     QHBoxLayout         *m_hblayout     = nullptr;
+    ExitDialog          *m_pExitDlg     = nullptr;
     TitleBar            *m_titleBar     = nullptr;
+    Login               *m_login        = nullptr;
     MainWindow          *m_mainWin      = nullptr;
     LeftSideBar         *m_leftSideBar  = nullptr;
     MusicPlaylist       *m_musicList    = nullptr;
@@ -67,8 +84,9 @@ private:
     CusTabWidget        *m_tabWidget    = nullptr;
     CusVideoWidget      *m_videoWidget  = nullptr;
     CusWebBrowser       *m_webBrowser   = nullptr;
-
+    QSystemTrayIcon     *m_tray         = nullptr;
     bool                 m_winMax;        //默认非最大化
+    bool                 m_isClose;
 
     //界面拉伸所用
     bool     _isleftpressed = false;      //判断是否是左键点击
@@ -77,6 +95,7 @@ private:
 
 signals:
     void sig_winStatus(bool);
+    void sig_startCloseAppliction();//主窗口关闭信号
 };
 
 #endif // MAINWIDGET_H

@@ -257,9 +257,9 @@ MainWindow::MainWindow(QWidget *parent) :
       ui->verticalLayout_5->setStretch(2,1);
       ui->verticalLayout_5->setStretch(3,1);
 
-      getAndShowCurTime();//获取当前系统时间并显示
+//      getAndShowCurTime();//获取当前系统时间并显示
       loadDefaultLogo();//加载默认图标
-      loadAllUIQss();//加载界面样式
+//      loadAllUIQss();//加载界面样式
       this->centralWidget()->setLayout(ui->horizontalLayout_5);
 
 //      playlist->setCurrentIndex(1);
@@ -343,7 +343,7 @@ MainWindow::MainWindow(QWidget *parent) :
       });
 
       m_pTimer3 = new QTimer(this);
-      connect(m_pTimer3,&QTimer::timeout,[=](){getAndShowCurTime();});
+//      connect(m_pTimer3,&QTimer::timeout,[=](){getAndShowCurTime();});
       m_pTimer3->start(100);//0.1s更新发送一次时间,放在下面合适
 
 //      connect(videoWidget,&MyVideoWidget::mouseEnter,[=](){on_enterShowFrame();});
@@ -676,23 +676,23 @@ void MainWindow::loadDefaultLogo()
 }
 
 /*加载所有界面样式表*/
-void MainWindow::loadAllUIQss()
-{
-    QFile file(":/style/alluistyle.qss");
-    file.open(QFile::ReadOnly | QFile::Text);
-    if(!file.isOpen())
-    {
-        qDebug()<<"the style qss is unload!";
-        return;
-    }
-    else
-    {
-        QString style = tr(file.readAll());
-        qApp->setStyleSheet(style);
-        qDebug()<<"the style is load successfull!";
-    }
-    file.close();
-}
+//void MainWindow::loadAllUIQss()
+//{
+//    QFile file(":/style/alluistyle.qss");
+//    file.open(QFile::ReadOnly | QFile::Text);
+//    if(!file.isOpen())
+//    {
+//        qDebug()<<"the style qss is unload!";
+//        return;
+//    }
+//    else
+//    {
+//        QString style = tr(file.readAll());
+//        qApp->setStyleSheet(style);
+//        qDebug()<<"the style is load successfull!";
+//    }
+//    file.close();
+//}
 
 /*添加进播放列表*/
 void MainWindow::addToPlaylist(const QStringList &fileNames)
@@ -1060,39 +1060,39 @@ void MainWindow::findFileFromLineEdit(QString name)
 
 
 /*获取系统事件并显示*/
-void MainWindow::getAndShowCurTime()
-{
-    QDateTime curtime = QDateTime::currentDateTime();
-    QString strTime = curtime.toString("yyyy-MM-dd hh:mm:ss");
-    ui->lcdNumber->display(strTime);
+//void MainWindow::getAndShowCurTime()
+//{
+//    QDateTime curtime = QDateTime::currentDateTime();
+//    QString strTime = curtime.toString("yyyy-MM-dd hh:mm:ss");
+//    ui->lcdNumber->display(strTime);
 
-//    QDate currentdate = QDate::currentDate();
-//    QString str1 = currentdate.toString("yyyy-MM-dd");
-//    QString year = str1.mid(0,4);//从0开始，截取2个字符，包括0本身
-//    QString month = str1.mid(5,2);
-//    QString date = str1.mid(8,2);
-//    QByteArray ba = str1.toLatin1();//将QString 转换为 char *类型
-//    char *dateStr = ba.data();//将QString 转换为 char *类型
-//    char *year = strtok(dateStr,"-");
-//    char *month = strtok(NULL,"-");
-//    char *date = strtok(NULL,"-");
+////    QDate currentdate = QDate::currentDate();
+////    QString str1 = currentdate.toString("yyyy-MM-dd");
+////    QString year = str1.mid(0,4);//从0开始，截取2个字符，包括0本身
+////    QString month = str1.mid(5,2);
+////    QString date = str1.mid(8,2);
+////    QByteArray ba = str1.toLatin1();//将QString 转换为 char *类型
+////    char *dateStr = ba.data();//将QString 转换为 char *类型
+////    char *year = strtok(dateStr,"-");
+////    char *month = strtok(NULL,"-");
+////    char *date = strtok(NULL,"-");
 
-//    QTime currenttime = QTime::currentTime();
-//    QString str2 = currenttime.toString("hh:mm:ss");
-//    QString hour = str2.mid(0,2);//从0开始，截取2个字符，包括0本身
-//    QString min = str2.mid(3,2);
-//    QString sec = str2.mid(6,2);
+////    QTime currenttime = QTime::currentTime();
+////    QString str2 = currenttime.toString("hh:mm:ss");
+////    QString hour = str2.mid(0,2);//从0开始，截取2个字符，包括0本身
+////    QString min = str2.mid(3,2);
+////    QString sec = str2.mid(6,2);
 
-//    QByteArray bt = str2.toLatin1();//将QString 转换为 char *类型
-//    char *timeStr = bt.data();//将QString 转换为 char *类型
-//    char *hour = strtok(timeStr,":");
-//    char *min = strtok(NULL,":");
-//    char *sec = strtok(NULL,":");
+////    QByteArray bt = str2.toLatin1();//将QString 转换为 char *类型
+////    char *timeStr = bt.data();//将QString 转换为 char *类型
+////    char *hour = strtok(timeStr,":");
+////    char *min = strtok(NULL,":");
+////    char *sec = strtok(NULL,":");
 
-//  QString datetime = year + QString::fromLocal8Bit("年")+ month + QString::fromLocal8Bit("月") + date + QString::fromLocal8Bit("日")
-//                    + "-" +hour + QString::fromLocal8Bit("时") + min + QString::fromLocal8Bit("分") + sec + QString::fromLocal8Bit("秒");
-    //  ui->label_datetime->setText(datetime);
-}
+////  QString datetime = year + QString::fromLocal8Bit("年")+ month + QString::fromLocal8Bit("月") + date + QString::fromLocal8Bit("日")
+////                    + "-" +hour + QString::fromLocal8Bit("时") + min + QString::fromLocal8Bit("分") + sec + QString::fromLocal8Bit("秒");
+//    //  ui->label_datetime->setText(datetime);
+//}
 
 void MainWindow::itemDoubleClick(QListWidgetItem *item)
 {
@@ -1572,46 +1572,46 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 }
 
 /*重写窗口关闭事件*/
-void MainWindow::closeEvent(QCloseEvent *event)
-{
-//    QMessageBox::StandardButton button;
-//        button = QMessageBox::question(this,QString::fromLocal8Bit(" "),
-//                                       QString::fromLocal8Bit("确认退出程序?"),
-//                                       QMessageBox::Yes|QMessageBox::No);
-//        if(button==QMessageBox::No)
-//        {
-//            event->ignore(); // 忽略退出信号，程序继续进行
-//        }
-//        else if(button==QMessageBox::Yes)
-//        {
-//            event->accept(); // 接受退出信号，程序退出
-//            QSqlQuery query;
-//            query.exec("delete from LocalMusic");
-//            qDebug()<<"LocalMusic data is clear";
-//        }
+//void MainWindow::closeEvent(QCloseEvent *event)
+//{
+////    QMessageBox::StandardButton button;
+////        button = QMessageBox::question(this,QString::fromLocal8Bit(" "),
+////                                       QString::fromLocal8Bit("确认退出程序?"),
+////                                       QMessageBox::Yes|QMessageBox::No);
+////        if(button==QMessageBox::No)
+////        {
+////            event->ignore(); // 忽略退出信号，程序继续进行
+////        }
+////        else if(button==QMessageBox::Yes)
+////        {
+////            event->accept(); // 接受退出信号，程序退出
+////            QSqlQuery query;
+////            query.exec("delete from LocalMusic");
+////            qDebug()<<"LocalMusic data is clear";
+////        }
 
-    if(m_pExitDlg->isShow)
-        m_pExitDlg->exec();
-     if(!m_isClose)
-     {
-         event->ignore();
-     }
-     else
-     {
-         /*做一些数据保存*/
-         emit sig_startCloseAppliction();
-         m_pExitDlg->setIni();
-         m_tray->hide();
-         m_login->close();
-         QSqlQuery query;
-         query.exec("DROP TABLE IF EXISTS 'LocalMusic'");
-         query.exec("DROP TABLE IF EXISTS 'LoginInfo'");
-         qDebug()<<"LocalMusic,LoginInfo tables is drop!";
+//    if(m_pExitDlg->isShow)
+//        m_pExitDlg->exec();
+//     if(!m_isClose)
+//     {
+//         event->ignore();
+//     }
+//     else
+//     {
+//         /*做一些数据保存*/
+//         emit sig_startCloseAppliction();
+//         m_pExitDlg->setIni();
+//         m_tray->hide();
+//         m_login->close();
+//         QSqlQuery query;
+//         query.exec("DROP TABLE IF EXISTS 'LocalMusic'");
+//         query.exec("DROP TABLE IF EXISTS 'LoginInfo'");
+//         qDebug()<<"LocalMusic,LoginInfo tables is drop!";
 
-         event->accept();
-     }
+//         event->accept();
+//     }
 
-}
+//}
 
 /*双击事件，这是指针全局的，不能指定某个空间，范围太大*/
 //void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
@@ -1700,17 +1700,17 @@ void MainWindow::closeEvent(QCloseEvent *event)
  *2.获取光标在屏幕中的位置 _plast
  *3.左键按下时光标所在区域 _curpos
  */
-void MainWindow::mousePressEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event);
-    if (event->button() == Qt::LeftButton)
-    {
-        this->_isleftpressed = true;
-        QPoint temp = event->globalPos();
-        _plast = temp;
-        _curpos = countFlag(event->pos(), countRow(event->pos()));
-    }
-}
+//void MainWindow::mousePressEvent(QMouseEvent *event)
+//{
+//    Q_UNUSED(event);
+//    if (event->button() == Qt::LeftButton)
+//    {
+//        this->_isleftpressed = true;
+//        QPoint temp = event->globalPos();
+//        _plast = temp;
+//        _curpos = countFlag(event->pos(), countRow(event->pos()));
+//    }
+//}
 
 //鼠标释放事件
 /*
@@ -1718,114 +1718,114 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
  *1.将_isleftpressed 设为false
  *2.将光标样式恢复原样式  setCursor(Qt::ArrowCursor);
  */
-void MainWindow::mouseReleaseEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event);
-    if (_isleftpressed)
-        _isleftpressed = false;
-    setCursor(Qt::ArrowCursor);
-}
+//void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+//{
+//    Q_UNUSED(event);
+//    if (_isleftpressed)
+//        _isleftpressed = false;
+//    setCursor(Qt::ArrowCursor);
+//}
 
-void MainWindow::changeEvent(QEvent *event)
-{
-    switch (event->type())
-        {
-        case QEvent::WindowStateChange:
-            {
-                this->update();
-                this->repaint();
-                event->ignore();
-                break;
-            }
-        default:
-            break;
-    }
-}
+//void MainWindow::changeEvent(QEvent *event)
+//{
+//    switch (event->type())
+//        {
+//        case QEvent::WindowStateChange:
+//            {
+//                this->update();
+//                this->repaint();
+//                event->ignore();
+//                break;
+//            }
+//        default:
+//            break;
+//    }
+//}
 
 /*界面卡顿*/
-void MainWindow::showEvent(QShowEvent *event)
-{
-    this->setAttribute(Qt::WA_Mapped);
-       QWidget::showEvent(event);
-}
+//void MainWindow::showEvent(QShowEvent *event)
+//{
+//    this->setAttribute(Qt::WA_Mapped);
+//       QWidget::showEvent(event);
+//}
 
 //鼠标移动事件
-void MainWindow::mouseMoveEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event);
-    if(this->isFullScreen()) return;	//窗口铺满全屏，直接返回，不做任何操作
-    int poss = countFlag(event->pos(), countRow(event->pos()));
-    setCursorType(poss);
-    if (_isleftpressed)//是否左击
-    {
-        QPoint ptemp = event->globalPos();
-        ptemp = ptemp - _plast;
-        if (_curpos == 22)//移动窗口
-        {
-            ptemp = ptemp + pos();
-            move(ptemp);
-        }
-        else
-        {
-            QRect wid = geometry();
-            switch (_curpos)//改变窗口的大小
-            {
-            case 11:wid.setTopLeft(wid.topLeft() + ptemp); break;//左上角
-            case 13:wid.setTopRight(wid.topRight() + ptemp); break;//右上角
-            case 31:wid.setBottomLeft(wid.bottomLeft() + ptemp); break;//左下角
-            case 33:wid.setBottomRight(wid.bottomRight() + ptemp); break;//右下角
-            case 12:wid.setTop(wid.top() + ptemp.y()); break;//中上角
-            case 21:wid.setLeft(wid.left() + ptemp.x()); break;//中左角
-            case 23:wid.setRight(wid.right() + ptemp.x()); break;//中右角
-            case 32:wid.setBottom(wid.bottom() + ptemp.y()); break;//中下角
-            }
-            setGeometry(wid);
-        }
-        _plast = event->globalPos();//更新位置
-    }
-}
+//void MainWindow::mouseMoveEvent(QMouseEvent *event)
+//{
+//    Q_UNUSED(event);
+//    if(this->isFullScreen()) return;	//窗口铺满全屏，直接返回，不做任何操作
+//    int poss = countFlag(event->pos(), countRow(event->pos()));
+//    setCursorType(poss);
+//    if (_isleftpressed)//是否左击
+//    {
+//        QPoint ptemp = event->globalPos();
+//        ptemp = ptemp - _plast;
+//        if (_curpos == 22)//移动窗口
+//        {
+//            ptemp = ptemp + pos();
+//            move(ptemp);
+//        }
+//        else
+//        {
+//            QRect wid = geometry();
+//            switch (_curpos)//改变窗口的大小
+//            {
+//            case 11:wid.setTopLeft(wid.topLeft() + ptemp); break;//左上角
+//            case 13:wid.setTopRight(wid.topRight() + ptemp); break;//右上角
+//            case 31:wid.setBottomLeft(wid.bottomLeft() + ptemp); break;//左下角
+//            case 33:wid.setBottomRight(wid.bottomRight() + ptemp); break;//右下角
+//            case 12:wid.setTop(wid.top() + ptemp.y()); break;//中上角
+//            case 21:wid.setLeft(wid.left() + ptemp.x()); break;//中左角
+//            case 23:wid.setRight(wid.right() + ptemp.x()); break;//中右角
+//            case 32:wid.setBottom(wid.bottom() + ptemp.y()); break;//中下角
+//            }
+//            setGeometry(wid);
+//        }
+//        _plast = event->globalPos();//更新位置
+//    }
+//}
 
 //获取光标在窗口所在区域的 列  返回行列坐标
-int MainWindow::countFlag(QPoint p,int row)//计算鼠标在哪一列和哪一行
-{
-    if(p.y()<MARGIN)
-        return 10+row;
-    else if(p.y()>this->height()-MARGIN)
-        return 30+row;
-    else
-        return 20+row;
-}
+//int MainWindow::countFlag(QPoint p,int row)//计算鼠标在哪一列和哪一行
+//{
+//    if(p.y()<MARGIN)
+//        return 10+row;
+//    else if(p.y()>this->height()-MARGIN)
+//        return 30+row;
+//    else
+//        return 20+row;
+//}
 
 //获取光标在窗口所在区域的 行   返回行数
-int MainWindow::countRow(QPoint p)
-{
-    return (p.x()<MARGIN) ? 1 : (p.x()>(this->width() - MARGIN) ? 3 : 2);
-}
+//int MainWindow::countRow(QPoint p)
+//{
+//    return (p.x()<MARGIN) ? 1 : (p.x()>(this->width() - MARGIN) ? 3 : 2);
+//}
 
 //根据鼠标所在位置改变鼠标指针形状
-void MainWindow::setCursorType(int flag)
-{
-    switch(flag)
-    {
-    case 11:
-    case 33:
-        setCursor(Qt::SizeFDiagCursor);
-        break;
-    case 13:
-    case 31:
-        setCursor(Qt::SizeBDiagCursor);break;
-    case 21:
-    case 23:
-        setCursor(Qt::SizeHorCursor);break;
-    case 12:
-    case 32:
-        setCursor(Qt::SizeVerCursor);break;
-    case 22:
-        setCursor(Qt::ArrowCursor);
-        QApplication::restoreOverrideCursor();//恢复鼠标指针性状
-        break;
-    }
-}
+//void MainWindow::setCursorType(int flag)
+//{
+//    switch(flag)
+//    {
+//    case 11:
+//    case 33:
+//        setCursor(Qt::SizeFDiagCursor);
+//        break;
+//    case 13:
+//    case 31:
+//        setCursor(Qt::SizeBDiagCursor);break;
+//    case 21:
+//    case 23:
+//        setCursor(Qt::SizeHorCursor);break;
+//    case 12:
+//    case 32:
+//        setCursor(Qt::SizeVerCursor);break;
+//    case 22:
+//        setCursor(Qt::ArrowCursor);
+//        QApplication::restoreOverrideCursor();//恢复鼠标指针性状
+//        break;
+//    }
+//}
 
 /*展开更多*/
 void MainWindow::on_moreBtn_clicked()

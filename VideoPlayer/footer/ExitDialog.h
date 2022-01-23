@@ -20,7 +20,7 @@ public:
 
     void setIni(); 
 
-    bool   isShow;//必须为公有成员，对象在其太类中会调用
+    bool   isShow;//必须为公有成员
 protected:
     void mousePressEvent(QMouseEvent *event) override;
 

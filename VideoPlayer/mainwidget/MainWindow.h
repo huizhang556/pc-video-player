@@ -1,7 +1,7 @@
 ﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#define MARGIN 10 //窗口边距
+//#define MARGIN 10 //窗口边距
 
 #include "login/Login.h"
 #include "AdjustBright.h"
@@ -84,26 +84,26 @@ public slots:
 
     void findFileFromLineEdit( QString name);//浮动曲库查找搜索内容
 
-    void getAndShowCurTime();
+//    void getAndShowCurTime();
 
     void itemDoubleClick(QListWidgetItem *item);
 protected:
 //    void keyPressEvent(QKeyEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
 
-    void closeEvent(QCloseEvent *event) override;
+//    void closeEvent(QCloseEvent *event) override;
 
 //    void mouseDoubleClickEvent(QMouseEvent *event) override;
 
-    void mousePressEvent(QMouseEvent *event) override;
+//    void mousePressEvent(QMouseEvent *event) override;
 
-    void mouseMoveEvent(QMouseEvent *event) override;
+//    void mouseMoveEvent(QMouseEvent *event) override;
 
-    void mouseReleaseEvent(QMouseEvent *event) override;
+//    void mouseReleaseEvent(QMouseEvent *event) override;
 
-    void changeEvent(QEvent *event) override;
+//    void changeEvent(QEvent *event) override;
 
-    void showEvent(QShowEvent *event) override;
+//    void showEvent(QShowEvent *event) override;
 
 private slots:
 //    void on_pushButton_clicked();
@@ -118,7 +118,7 @@ private slots:
 
     void loadDefaultLogo();//加载默认图标
 
-    void loadAllUIQss();//加载UI样式文件
+//    void loadAllUIQss();//加载UI样式文件
 
     void on_pushButton_2_clicked();//停止
 
@@ -244,12 +244,12 @@ private:
     QStringList                 list_temp;
 
 //界面拉伸所用
-    bool                        _isleftpressed = false; //判断是否是左键点击
-    int                         _curpos = 0;    //鼠标左键按下时光标所在区域
-    QPoint                      _plast;      //获取鼠标左键按下时光标在全局(屏幕而非窗口)的位置
-    int                         countRow(QPoint p);            //获取光标在窗口所在区域的 行   返回行数
-    int                         countFlag(QPoint p,int row);    //获取光标在窗口所在区域的 列  返回行列坐标
-    void                        setCursorType(int flag);          //根据传入的坐标，设置光标样式
+//    bool                        _isleftpressed = false; //判断是否是左键点击
+//    int                         _curpos = 0;    //鼠标左键按下时光标所在区域
+//    QPoint                      _plast;      //获取鼠标左键按下时光标在全局(屏幕而非窗口)的位置
+//    int                         countRow(QPoint p);            //获取光标在窗口所在区域的 行   返回行数
+//    int                         countFlag(QPoint p,int row);    //获取光标在窗口所在区域的 列  返回行列坐标
+//    void                        setCursorType(int flag);          //根据传入的坐标，设置光标样式
 
 };
 
