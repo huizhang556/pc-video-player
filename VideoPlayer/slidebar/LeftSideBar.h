@@ -18,7 +18,8 @@ class LeftSideBar : public QWidget
 public:
     explicit LeftSideBar(QWidget *parent = nullptr);
     ~LeftSideBar();
-    void setSlideBarListText();
+    void setSlideBarListText(QStringList strList);
+    void setLeftSliderFixedWidth(int width);
 
 
 private:
@@ -31,7 +32,7 @@ private:
     QListWidget         *m_listWidget   = nullptr;    //侧边栏节目列表
 
 signals:
-    void sig_sidebarItemChange(int index);
+    void sig_sidebarItemChange(int index);//item发生改变是发出的信号
 
 };
 

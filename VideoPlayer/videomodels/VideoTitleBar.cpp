@@ -9,10 +9,14 @@ VideoTitleBar::VideoTitleBar(QWidget *parent) :
     this->setFixedHeight(58);
     ui->pushButton_close->setFlat(true);
     ui->pushButton_min->setFlat(true);
-
-    connect(ui->pushButton_close,&QPushButton::clicked,this,&VideoTitleBar::sig_winVClose);
-    connect(ui->pushButton_normal,&QPushButton::clicked,this,&VideoTitleBar::sig_winVRestore);
-    connect(ui->pushButton_min,&QPushButton::clicked,this,&VideoTitleBar::sig_winVMinimum);
+    //关闭按钮
+    connect(ui->pushButton_close,&QPushButton::clicked,[=](){emit sig_winVClose();});
+    //还原按钮
+    connect(ui->pushButton_normal,&QPushButton::clicked,[=](){emit sig_winVRestore();});
+    //最小化按钮
+    connect(ui->pushButton_min,&QPushButton::clicked,[=](){emit sig_winVMinimum();});
+    //返回主界面按钮
+    connect(ui->pushButton_return,&QPushButton::clicked,[=](){emit sig_winVMinimum();});
 }
 
 VideoTitleBar::~VideoTitleBar()

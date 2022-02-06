@@ -21,7 +21,7 @@ public:
     void changeTimeCout();
 
 public slots:
-    //共有参函数可以再类外访问，私有只能在类内
+    //公共函数可以再类外访问，私有只能在类内
     void receiveMainWinData(QString name);
 signals:
 

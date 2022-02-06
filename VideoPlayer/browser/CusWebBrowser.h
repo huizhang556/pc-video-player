@@ -1,9 +1,9 @@
 ﻿#ifndef CUSWEBBROWSER_H
 #define CUSWEBBROWSER_H
 
+#include <QUrl>
 #include <QWidget>
 #include <QWebEngineView>
-#include <QUrl>
 
 class CusWebBrowser : public QWebEngineView
 {
@@ -16,10 +16,17 @@ public:
 protected:
     QWebEngineView *createWindow(QWebEnginePage::WebWindowType type) override;
 
-private slots:
+public slots:
     void slots_createNewWindows(const QUrl url);
+    void slots_loadNewUrl(QString path);
+    void slots_back();
+    void slots_refreshen();
+    void slots_advance();
+
+signals:
+
 private:
-    QUrl        newUrl;
+    QUrl     newUrl;
 };
 
 #endif // CUSWEBBROWSER_H

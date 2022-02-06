@@ -6,13 +6,14 @@
 #include "titleBar/TitleBar.h"
 #include "slidebar/LeftSideBar.h"
 #include "customer/CusTabWidget.h"
-#include "messagebox/ExitDialog.h"
 #include "browser/CusWebBrowser.h"
+#include "messagebox/ExitDialog.h"
 #include "login/LoginPersonInfo.h"
+#include "videomodels/VideoBlank.h"
 #include "videomodels/HolisticVideos.h"
 #include "musicmodels/MusicPlaylist.h"
 #include "musicmodels/MusicPlayShow.h"
-#include "videomodels/VideoBlank.h"
+#include "videomodels/VideoTitleBar.h"
 
 #include <QPoint>
 #include <QLayout>
@@ -62,15 +63,14 @@ private:
 
     void createTrayMenu();//托盘菜单
 
-
-
     void setGlobalToolTip();
 
 private slots:
     void chandleRestoreWindow();
-    void set_adjustLogin();
-    void createHelpMenu();//帮助菜单
 
+    void set_adjustLogin();
+
+    void createHelpMenu();//帮助菜单
 
 
     //界面拉伸私有成员函数
@@ -91,6 +91,7 @@ private:
     CusTabWidget        *m_tabWidget    = nullptr;
     VideoBlank          *m_videoWidget  = nullptr;
     CusWebBrowser       *m_webBrowser   = nullptr;
+    VideoTitleBar       *m_videoTitle   = nullptr;
     QSystemTrayIcon     *m_tray         = nullptr;
     bool                 m_winMax;        //默认非最大化
     bool                 m_isClose;

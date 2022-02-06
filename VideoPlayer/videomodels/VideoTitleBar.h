@@ -31,6 +31,7 @@ signals:
     void sig_winVMinimum();
     void sig_winVRestore();
     void sig_doubleClick();
+    void sig_returnMainUi();
 };
 
 #endif // VIDEOTITLEBAR_H

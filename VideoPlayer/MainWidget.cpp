@@ -25,27 +25,52 @@ void MainWidget::initOtherWidgetUi()
 
     m_leftSideBar = new LeftSideBar(this);
     m_leftSideBar->setObjectName(QString::fromLatin1("m_leftSideBar"));
+    QStringList list;
+    list << QString::fromLocal8Bit("主界面1")
+         << QString::fromLocal8Bit("浏览器2")
+         << QString::fromLocal8Bit("视频页3")
+         << QString::fromLocal8Bit("主界面4")
+         << QString::fromLocal8Bit("主界面5")
+         << QString::fromLocal8Bit("主界面6")
+         << QString::fromLocal8Bit("主界面7")
+         << QString::fromLocal8Bit("主界面8")
+         << QString::fromLocal8Bit("主界面9")
+         << QString::fromLocal8Bit("主界面10")
+         << QString::fromLocal8Bit("主界面11")
+         << QString::fromLocal8Bit("主界面12")
+         << QString::fromLocal8Bit("主界面13")
+         << QString::fromLocal8Bit("主界面14")
+         << QString::fromLocal8Bit("主界面15")
+         << QString::fromLocal8Bit("主界面16")
+         << QString::fromLocal8Bit("主界面17")
+         << QString::fromLocal8Bit("主界面18")
+         << QString::fromLocal8Bit("主界面19")
+         << QString::fromLocal8Bit("主界面20")
+         << QString::fromLocal8Bit("主界面21");
+    m_leftSideBar->setSlideBarListText(list);
+    m_leftSideBar->setFixedWidth(150);
 
     m_stackWidget = new QStackedWidget(this);
     m_stackWidget->setCurrentIndex(0);//默认显示第一个page页
     m_stackWidget->setObjectName(QString::fromLatin1("m_stackWidget"));
 
-    m_mainWin = new MainWindow(m_stackWidget);
-    m_mainWin->setObjectName(QString::fromLatin1("m_mainWin"));
+    //QStackedWidget此处不能指定父参数，否则界面会出问题
+//    m_mainWin = new MainWindow();
+//    m_mainWin->setObjectName(QString::fromLatin1("m_mainWin"));
 
-    m_musicList = new MusicPlaylist(m_stackWidget);
+    m_musicList = new MusicPlaylist();
     m_musicList->setObjectName(QString::fromLatin1("m_musicList"));
 
-    m_musicShow = new MusicPlayShow(m_stackWidget);
+    m_musicShow = new MusicPlayShow();
     m_musicShow->setObjectName(QString::fromLatin1("m_musicShow"));
 
-    m_tabWidget = new CusTabWidget(m_stackWidget);
+    m_tabWidget = new CusTabWidget();
     m_tabWidget->setObjectName(QString::fromLatin1("m_tabWidget"));
 
-    m_videoWidget = new VideoBlank(m_stackWidget);
+    m_videoWidget = new VideoBlank();
     m_videoWidget->setObjectName(QString::fromLatin1("m_videoWidget"));
 
-    m_webBrowser = new CusWebBrowser(m_stackWidget);
+    m_webBrowser = new CusWebBrowser();
     m_webBrowser->setObjectName(QString::fromLatin1("m_webBrowser"));
 
     //弹出对话框
@@ -68,7 +93,8 @@ void MainWidget::initOtherWidgetUi()
     m_hblayout = new QHBoxLayout(this);
     //侧边栏+QStackedWidget--->水平布局
     m_hblayout->addWidget(m_leftSideBar,0,Qt::AlignLeft);
-    m_hblayout->addWidget(m_stackWidget,1,Qt::AlignCenter);
+//    m_hblayout->addWidget(m_stackWidget,1,Qt::AlignCenter);//此处不能添加布局，否则导致界面错乱
+    m_hblayout->addWidget(m_stackWidget);
     m_hblayout->setSpacing(0);
     m_hblayout->setContentsMargins(0,0,0,0);
     //标题栏+水平布局--->垂直布局
@@ -83,22 +109,42 @@ void MainWidget::initOtherWidgetUi()
 //处理信号与槽函数
 void MainWidget::chandleSignalAndSlots()
 {
-    //标题栏有关信号与槽函数处理
+    //标题栏 有关信号与槽函数处理
     connect(m_titleBar,&TitleBar::sig_winClose,this,&MainWidget::close);//转到重写事件
     connect(m_titleBar,&TitleBar::sig_winNormal,this,&MainWidget::chandleRestoreWindow);//根据不同状态处理窗口
     connect(m_titleBar,&TitleBar::sig_winMinimum,[=](){this->showMinimized();});
     connect(m_titleBar,&TitleBar::sig_doubleClick,[=](){chandleRestoreWindow();});
-    //响应标题栏发送的调用登录提示板信号,弹出提示板
+    //响应 标题栏 发送的调用登录提示板信号,弹出提示板
     connect(m_titleBar,&TitleBar::sig_callLogin,this,&MainWidget::set_adjustLogin);
-    //响应标题栏调用历史记录信号
+    //响应 标题栏 调用历史记录信号
     connect(m_titleBar,&TitleBar::sig_historyDownload,[=](){m_stackWidget->setCurrentIndex(1);});
-    //响应标题栏帮助设置发来信号，弹出右键菜单
+    //响应 标题栏 帮助设置发来信号，弹出右键菜单
     connect(m_titleBar,&TitleBar::sig_settingHelp,this,&MainWidget::createHelpMenu);
+
+    //处理标题栏信号与浏览器槽函数
+    //回车
+    connect(m_titleBar,SIGNAL(sig_sendNewUrl(QString)),m_webBrowser,SLOT(slots_loadNewUrl(QString)));
+    //后退
+    connect(m_titleBar,SIGNAL(sig_sendUrlBack()),m_webBrowser,SLOT(slots_back()));
+    //刷新
+    connect(m_titleBar,SIGNAL(sig_sendUrlRefreshen()),m_webBrowser,SLOT(slots_refreshen()));
+    //前进
+    connect(m_titleBar,SIGNAL(sig_sendUrlAdvance()),m_webBrowser,SLOT(slots_advance()));
+    //显示当前页面的地址
+    connect(m_webBrowser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(setLineEditAddress(QUrl)));
+
     //收到主窗口关闭信号
     connect(m_pExitDlg,&ExitDialog::sig_SendcloseMain,[=](){m_isClose = true;});
     //没收到主窗口关闭信号
     connect(m_pExitDlg,&ExitDialog::sig_SendNotcloseMain,[=](){m_isClose = false;});
 
+    //接收 播放界面 返回主界面信号
+    m_videoTitle = new VideoTitleBar();
+    connect(m_videoTitle,&VideoTitleBar::sig_returnMainUi,[=]()
+    {
+        qDebug() << "receive return main ui signal";
+        show();
+    });
 
     //关闭主窗口，通知登录窗口也关闭
     connect(this,&MainWidget::sig_startCloseAppliction,m_login,&Login::receiveMainWinCloseAppSignal);
@@ -106,10 +152,9 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_leftSideBar,&LeftSideBar::sig_sidebarItemChange,[=](int index)
     {
         m_stackWidget->setCurrentIndex(index);
-        qDebug() << index;
+        m_titleBar->isNecessaryShowSearch(index);
     });
     connect(this,SIGNAL(sig_winStatus(bool)),m_titleBar,SLOT(chandleMainWinStatus(bool)));//标题栏处理不同状态下样式
-
 }
 
 /*加载界面样式*/
@@ -134,12 +179,11 @@ void MainWidget::loadAllUIQss()
 //设置StackedWidget布局每个page界面
 void MainWidget::setStackedWidgetPage()
 {
-//    m_stackWidget->insertWidget(0,m_webBrowser);
-//    m_stackWidget->insertWidget(1,m_tabWidget);
-//    m_stackWidget->insertWidget(2,m_videoWidget);
-//    m_stackWidget->insertWidget(3,m_musicShow);
-//    m_stackWidget->insertWidget(4,m_musicShow);
-//    m_stackWidget->insertWidget(5,m_videoWidget);
+    m_stackWidget->insertWidget(0,m_tabWidget);
+    m_stackWidget->insertWidget(1,m_webBrowser);
+    m_stackWidget->insertWidget(2,m_videoWidget);
+    m_stackWidget->insertWidget(3,m_musicShow);
+//    m_stackWidget->insertWidget(4,m_mainWin);
 }
 
 
@@ -248,9 +292,15 @@ void MainWidget::set_adjustLogin()
     }
 }
 
+/*析构函数*/
 MainWidget::~MainWidget()
 {
-
+  delete m_musicList;
+  delete m_musicShow;
+  delete m_tabWidget;
+  delete m_webBrowser;
+  delete m_videoTitle;
+  delete m_videoWidget;
 }
 
 void MainWidget::mousePressEvent(QMouseEvent *event)

@@ -6,15 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>963</width>
-    <height>59</height>
+    <width>1194</width>
+    <height>55</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">color: rgb(85, 255, 0);</string>
+   <string notr="true">color: rgb(85, 255, 0);
+background-color: rgb(42, 42, 49);</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -44,13 +45,13 @@
       <widget class="QPushButton" name="Btn_logo">
        <property name="minimumSize">
         <size>
-         <width>170</width>
+         <width>150</width>
          <height>50</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>170</width>
+         <width>150</width>
          <height>50</height>
         </size>
        </property>
@@ -76,7 +77,7 @@ background-color: rgb(255, 255, 255);
         <enum>Qt::Horizontal</enum>
        </property>
        <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
+        <enum>QSizePolicy::Minimum</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -97,13 +98,16 @@ background-color: rgb(255, 255, 255);
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_3">
+      <spacer name="horizontalSpacer_4">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>40</width>
+         <width>50</width>
          <height>20</height>
         </size>
        </property>
@@ -113,7 +117,7 @@ background-color: rgb(255, 255, 255);
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>300</width>
          <height>50</height>
         </size>
        </property>
@@ -123,21 +127,423 @@ background-color: rgb(255, 255, 255);
          <height>50</height>
         </size>
        </property>
-       <widget class="QWidget" name="page"/>
-       <widget class="QWidget" name="page_2"/>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="page">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QFrame" name="frame_serarch">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLineEdit" name="lineEditSearch">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>36</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>36</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">/*搜索框*/
+QLineEdit
+{
+color:#cccccc;
+font-family:&quot;微软雅黑&quot;;
+font-size:18px;
+background-color: rgb(81, 81, 81);
+selection-background-color: #D1DBCB;
+border-right:transparent;
+border:1px solid #ff5c38;
+border-top-left-radius:18;
+border-top-right-radius:0;
+border-bottom-right-radius:0;
+border-bottom-left-radius:18;
+padding-right:-2px;
+padding-left:15px;
+}
+
+/*
+QLineEdit:hover
+{
+background-color: rgb(33, 33, 33);
+border-right:-2px;
+border:1px solid #ff5c38;
+}
+*/
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="BtnSearch">
+              <property name="minimumSize">
+               <size>
+                <width>75</width>
+                <height>36</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>90</width>
+                <height>36</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">/*搜索按钮*/ 
+#BtnSearch
+{
+color:white;
+border:1px solid #ff5c38;
+border-left:transparent;
+background-color: #ff5246;
+border-top-left-radius:0;
+border-top-right-radius:18;
+border-bottom-right-radius:18;
+border-bottom-left-radius:0;
+
+}
+
+/*搜索按钮-按下*/
+#BtnSearch:pressed
+{
+border-style: inset;
+background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
+stop:0.494318 rgba(134, 198, 233, 255), stop:0.5 rgba(206, 234, 248, 255));
+border: 1px solid #5F92B2;
+}
+
+/*
+#BtnSearch:hover
+{
+color:white;
+background-color:#ff5246;
+border: 1px solid transparent;
+padding:-1px;
+
+}
+*/</string>
+              </property>
+              <property name="text">
+               <string>搜 索</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_2">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <spacer name="horizontalSpacer_7">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>10</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_back">
+             <property name="minimumSize">
+              <size>
+               <width>18</width>
+               <height>18</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>18</width>
+               <height>18</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+border-image: url(:/images/back.png);
+}
+
+QPushButton:hover
+{
+border-image: url(:/images/back_hover.png);
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_5">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_freshen">
+             <property name="minimumSize">
+              <size>
+               <width>18</width>
+               <height>18</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>18</width>
+               <height>18</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+border-image: url(:/images/refreshen.png);
+}
+QPushButton:hover
+{
+border-image: url(:/images/refreshen_hover.png);
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_advance">
+             <property name="minimumSize">
+              <size>
+               <width>18</width>
+               <height>18</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>18</width>
+               <height>18</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+border-image: url(:/images/advance.png);
+}
+QPushButton:hover
+{
+border-image: url(:/images/advance_hover.png);
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_14">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>30</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_webSearch">
+             <property name="minimumSize">
+              <size>
+               <width>205</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">/*搜索框*/
+QLineEdit
+{
+color:#cccccc;
+font-family:&quot;微软雅黑&quot;;
+font-size:15px;
+background-color: rgb(81, 81, 81);
+selection-background-color: #D1DBCB;
+border-right:transparent;
+border:1px solid #bbbbbb;
+border-top-left-radius:5;
+border-top-right-radius:0;
+border-bottom-right-radius:0;
+border-bottom-left-radius:5;
+padding-right:2px;
+padding-left:2px;
+}
+
+/*
+QLineEdit:hover
+{
+background-color: rgb(33, 33, 33);
+border-right:-2px;
+border:1px solid #ff5c38;
+}
+*/
+</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Btn_expand">
+             <property name="minimumSize">
+              <size>
+               <width>30</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>30</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">/*搜索按钮*/ 
+#Btn_expand
+{
+color:white;
+border:1px solid #bbbbbb;
+border-left:transparent;
+background-color: rgb(81, 81, 81);
+border-top-left-radius:0;
+border-top-right-radius:5;
+border-bottom-right-radius:5;
+border-bottom-left-radius:0;
+}
+
+/*搜索按钮-按下*/
+#Btn_expand:pressed
+{
+}
+
+
+#Btn_expand:hover
+{
+color:#1afa29;
+}</string>
+             </property>
+             <property name="text">
+              <string>∨</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_3"/>
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_18">
+      <spacer name="horizontalSpacer_3">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
        <property name="sizeType">
-        <enum>QSizePolicy::Expanding</enum>
+        <enum>QSizePolicy::Maximum</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>80</width>
+         <width>75</width>
          <height>20</height>
         </size>
        </property>
@@ -180,7 +586,7 @@ QPushButton::item:selected
         <enum>Qt::Horizontal</enum>
        </property>
        <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
+        <enum>QSizePolicy::Minimum</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -444,7 +850,7 @@ QPushButton::menu-indicator:image
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>50</width>
+         <width>40</width>
          <height>20</height>
         </size>
        </property>
