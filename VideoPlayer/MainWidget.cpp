@@ -95,7 +95,7 @@ void MainWidget::initOtherWidgetUi()
 //处理信号与槽函数
 void MainWidget::chandleSignalAndSlots()
 {
-    //标题栏 有关信号与槽函数处理
+    connect(this,&MainWidget::sig_startCloseAppliction,m_mainPlayer,&MultipPlayer::closeCurrentWindow);//转到重写事件
     connect(m_titleBar,&TitleBar::sig_winClose,this,&MainWidget::close);//转到重写事件
     connect(m_titleBar,&TitleBar::sig_winNormal,this,&MainWidget::chandleRestoreWindow);//根据不同状态处理窗口
     connect(m_titleBar,&TitleBar::sig_winMinimum,[=](){this->showMinimized();});

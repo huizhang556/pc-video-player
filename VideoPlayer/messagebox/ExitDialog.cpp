@@ -1,11 +1,11 @@
 ﻿#include "ExitDialog.h"
 #include "ui_ExitDialog.h"
-#include <QDebug>
-#include <QSettings>
-#include <QMouseEvent>
 #include <QDir>
+#include <QDebug>
 #include <QPixmap>
 #include <QCursor>
+#include <QSettings>
+#include <QMouseEvent>
 
 ExitDialog::ExitDialog(QWidget *parent) :
     QDialog(parent),

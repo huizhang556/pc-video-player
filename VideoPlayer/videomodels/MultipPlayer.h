@@ -83,6 +83,8 @@ public slots:
 
     void setMainCurrentIndex(const int index);
 
+    void closeCurrentWindow();
+
 protected:
     void mousePressEvent(QMouseEvent *event) override;
 

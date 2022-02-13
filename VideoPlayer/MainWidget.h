@@ -83,21 +83,21 @@ private slots:
     int   countFlag(QPoint p,int row);    //获取光标在窗口所在区域的 列  返回行列坐标
     void  setCursorType(int flag);        //根据传入的坐标，设置光标样式
 private:
-    QStackedWidget      *m_stackWidget  = nullptr;
-    QVBoxLayout         *m_vblayout     = nullptr;
-    QHBoxLayout         *m_hblayout     = nullptr;
-    ExitDialog          *m_pExitDlg     = nullptr;
-    TitleBar            *m_titleBar     = nullptr;
-    Login               *m_login        = nullptr;
-    MultipPlayer          *m_mainPlayer   = nullptr;
-    LeftSideBar         *m_leftSideBar  = nullptr;
-    MusicPlaylist       *m_musicList    = nullptr;
-    MusicPlayShow       *m_musicShow    = nullptr;
-    CusTabWidget        *m_tabWidget    = nullptr;
-    VideoBlank          *m_videoBlank  = nullptr;
-    CusWebBrowser       *m_webBrowser   = nullptr;
-    VideoTitleBar       *m_videoTitle   = nullptr;
-    QSystemTrayIcon     *m_tray         = nullptr;
+    QStackedWidget      *m_stackWidget      = nullptr;
+    QVBoxLayout         *m_vblayout         = nullptr;
+    QHBoxLayout         *m_hblayout         = nullptr;
+    ExitDialog          *m_pExitDlg         = nullptr;
+    TitleBar            *m_titleBar         = nullptr;
+    Login               *m_login            = nullptr;
+    MultipPlayer          *m_mainPlayer       = nullptr;
+    LeftSideBar         *m_leftSideBar      = nullptr;
+    MusicPlaylist       *m_musicList        = nullptr;
+    MusicPlayShow       *m_musicShow        = nullptr;
+    CusTabWidget        *m_tabWidget        = nullptr;
+    VideoBlank          *m_videoBlank       = nullptr;
+    CusWebBrowser       *m_webBrowser       = nullptr;
+    VideoTitleBar       *m_videoTitle       = nullptr;
+    QSystemTrayIcon     *m_tray             = nullptr;
     bool                 m_winMax;        //默认非最大化
     bool                 m_isClose;
 
@@ -108,6 +108,7 @@ private:
 
 signals:
     void sig_winStatus(bool);
+
     void sig_startCloseAppliction();//主窗口关闭信号
 };
 

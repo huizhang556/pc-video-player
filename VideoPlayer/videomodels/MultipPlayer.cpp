@@ -301,10 +301,7 @@ void MultipPlayer::chandleSignalAndSLots()
     //窗口关闭按钮
     connect(m_videoTitleBar,&VideoTitleBar::sig_winVClose,[=]()
     {
-        player->stop();//暂停播放
-        m_mapList.clear();//清空容器
-        m_mapList2.clear();//清空容器
-        this->close();
+        closeCurrentWindow();
     });
 
     //窗口最小化按钮
@@ -371,7 +368,18 @@ void MultipPlayer::chandleSignalAndSLots()
     connect(m_adjustBright,SIGNAL(valueChange_sediao(int)),videoWidget,SLOT(setHue(int)));
 
     //打开文件
-    connect(m_searchBtn,&QPushButton::clicked,[=](){on_pushButton_6_clicked();});
+    connect(m_searchBtn,&QPushButton::clicked,[=]()
+    {
+        if(!m_newStart)
+        {
+            on_pushButton_5_clicked();
+        }
+        else
+        {
+
+            on_pushButton_6_clicked();
+        }
+    });
 }
 
 /*加载默认图标*/
@@ -1352,6 +1360,14 @@ void MultipPlayer::chandleRestoreWindow()
         emit sig_winVStatus(m_winMax);//向窗口发送正常状态信号
     }
     m_winMax = !m_winMax;
+}
+
+void MultipPlayer::closeCurrentWindow()
+{
+    player->stop();//暂停播放
+    m_mapList.clear();//清空容器
+    m_mapList2.clear();//清空容器
+    this->close();
 }
 
 
