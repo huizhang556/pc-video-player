@@ -29,24 +29,11 @@ void MainWidget::initOtherWidgetUi()
     list << QString::fromLocal8Bit("主界面1")
          << QString::fromLocal8Bit("浏览器2")
          << QString::fromLocal8Bit("视频页3")
-         << QString::fromLocal8Bit("主界面4")
-         << QString::fromLocal8Bit("主界面5")
+         << QString::fromLocal8Bit("视频页4")
+         << QString::fromLocal8Bit("图片页5")
          << QString::fromLocal8Bit("主界面6")
          << QString::fromLocal8Bit("主界面7")
-         << QString::fromLocal8Bit("主界面8")
-         << QString::fromLocal8Bit("主界面9")
-         << QString::fromLocal8Bit("主界面10")
-         << QString::fromLocal8Bit("主界面11")
-         << QString::fromLocal8Bit("主界面12")
-         << QString::fromLocal8Bit("主界面13")
-         << QString::fromLocal8Bit("主界面14")
-         << QString::fromLocal8Bit("主界面15")
-         << QString::fromLocal8Bit("主界面16")
-         << QString::fromLocal8Bit("主界面17")
-         << QString::fromLocal8Bit("主界面18")
-         << QString::fromLocal8Bit("主界面19")
-         << QString::fromLocal8Bit("主界面20")
-         << QString::fromLocal8Bit("主界面21");
+         << QString::fromLocal8Bit("主界面8");
     m_leftSideBar->setSlideBarListText(list);
     m_leftSideBar->setFixedWidth(150);
 
@@ -55,8 +42,8 @@ void MainWidget::initOtherWidgetUi()
     m_stackWidget->setObjectName(QString::fromLatin1("m_stackWidget"));
 
     //QStackedWidget此处不能指定父参数，否则界面会出问题
-//    m_mainWin = new MainWindow();
-//    m_mainWin->setObjectName(QString::fromLatin1("m_mainWin"));
+    m_mainPlayer = new MultipPlayer();
+    m_mainPlayer->setObjectName(QString::fromLatin1("m_mainPlayer"));
 
     m_musicList = new MusicPlaylist();
     m_musicList->setObjectName(QString::fromLatin1("m_musicList"));
@@ -67,8 +54,8 @@ void MainWidget::initOtherWidgetUi()
     m_tabWidget = new CusTabWidget();
     m_tabWidget->setObjectName(QString::fromLatin1("m_tabWidget"));
 
-    m_videoWidget = new VideoBlank();
-    m_videoWidget->setObjectName(QString::fromLatin1("m_videoWidget"));
+    m_videoBlank = new VideoBlank();
+    m_videoBlank->setObjectName(QString::fromLatin1("m_videoBlank"));
 
     m_webBrowser = new CusWebBrowser();
     m_webBrowser->setObjectName(QString::fromLatin1("m_webBrowser"));
@@ -88,7 +75,6 @@ void MainWidget::initOtherWidgetUi()
     m_tray->show();
     createTrayMenu();
 
-
     m_vblayout = new QVBoxLayout(this);
     m_hblayout = new QHBoxLayout(this);
     //侧边栏+QStackedWidget--->水平布局
@@ -100,7 +86,7 @@ void MainWidget::initOtherWidgetUi()
     //标题栏+水平布局--->垂直布局
     m_vblayout->addWidget(m_titleBar,0,Qt::AlignTop);
     m_vblayout->addLayout(m_hblayout,1);
-    m_vblayout->setContentsMargins(3,3,3,3);//左 上 右 下
+    m_vblayout->setContentsMargins(2,2,2,2);//左 上 右 下
     m_vblayout->setSpacing(0);
     this->setLayout(m_vblayout);
     loadAllUIQss();//加载界面样式
@@ -130,6 +116,8 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_titleBar,SIGNAL(sig_sendUrlRefreshen()),m_webBrowser,SLOT(slots_refreshen()));
     //前进
     connect(m_titleBar,SIGNAL(sig_sendUrlAdvance()),m_webBrowser,SLOT(slots_advance()));
+    //返回主页
+    connect(m_titleBar,SIGNAL(sig_sendUrlHome()),m_webBrowser,SLOT(slots_home()));
     //显示当前页面的地址
     connect(m_webBrowser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(setLineEditAddress(QUrl)));
 
@@ -143,6 +131,7 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_videoTitle,&VideoTitleBar::sig_returnMainUi,[=]()
     {
         qDebug() << "receive return main ui signal";
+        this->raise();
         show();
     });
 
@@ -155,6 +144,14 @@ void MainWidget::chandleSignalAndSlots()
         m_titleBar->isNecessaryShowSearch(index);
     });
     connect(this,SIGNAL(sig_winStatus(bool)),m_titleBar,SLOT(chandleMainWinStatus(bool)));//标题栏处理不同状态下样式
+    //空白页---打开文件
+    connect(m_videoBlank,&VideoBlank::sig_openLocalFile,[=]()
+    {
+        m_mainPlayer->openLocalFile();
+        m_mainPlayer->setMainCurrentIndex(1);
+        m_mainPlayer->show();
+    });
+
 }
 
 /*加载界面样式*/
@@ -181,9 +178,10 @@ void MainWidget::setStackedWidgetPage()
 {
     m_stackWidget->insertWidget(0,m_tabWidget);
     m_stackWidget->insertWidget(1,m_webBrowser);
-    m_stackWidget->insertWidget(2,m_videoWidget);
+    m_stackWidget->insertWidget(2,m_videoBlank);
     m_stackWidget->insertWidget(3,m_musicShow);
-//    m_stackWidget->insertWidget(4,m_mainWin);
+    m_stackWidget->insertWidget(4,m_musicList);
+    m_stackWidget->insertWidget(5,m_musicShow);
 }
 
 
@@ -230,7 +228,7 @@ void MainWidget::createHelpMenu()
     pmenu2->addSeparator();
     pmenu2->addAction(QString::fromLocal8Bit("问题帮助"),this,SLOT(help_questionAnswer()));
     pmenu2->addSeparator();
-    pmenu2->addAction(QString::fromLocal8Bit("本地文件"),this,SLOT(help_aboutLocalFile()));
+    pmenu2->addAction(QString::fromLocal8Bit("播放文件"),this,SLOT(help_aboutLocalFile()));
     pmenu2->addSeparator();
     pmenu2->addAction(QString::fromLocal8Bit("软件下载"),this,SLOT(help_openWebSite()));
     pmenu2->addSeparator();
@@ -243,6 +241,13 @@ void MainWidget::createHelpMenu()
     pmenu2->exec(point4);
 //    pmenu2->exec(QCursor::pos());
     delete pmenu2;
+}
+
+void MainWidget::help_aboutLocalFile()
+{
+    m_mainPlayer->openLocalFile();
+    m_mainPlayer->setMainCurrentIndex(1);
+    m_mainPlayer->show();
 }
 
 /*设置全局tooltip*/
@@ -300,7 +305,8 @@ MainWidget::~MainWidget()
   delete m_tabWidget;
   delete m_webBrowser;
   delete m_videoTitle;
-  delete m_videoWidget;
+  delete m_videoBlank;
+  delete m_mainPlayer;
 }
 
 void MainWidget::mousePressEvent(QMouseEvent *event)
@@ -411,6 +417,13 @@ void MainWidget::closeEvent(QCloseEvent *event)
          qDebug()<<"LocalMusic,LoginInfo tables is drop!";
          event->accept();
      }
+}
+
+/*界面缩放调整事件*/
+void MainWidget::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event);
+    m_webBrowser->resize(this->size());
 }
 
 /*获取光标在窗口所在区域的 行   返回行数*/

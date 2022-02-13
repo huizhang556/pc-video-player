@@ -72,3 +72,10 @@ void CusWebBrowser::slots_advance()
     qDebug() << "received slots_advance signal!";
     this->forward();
 }
+
+/*返回主页*/
+void CusWebBrowser::slots_home()
+{
+    this->load(QUrl("https://www.baidu.com/"));
+    newUrl = QUrl("https://www.baidu.com/");
+}

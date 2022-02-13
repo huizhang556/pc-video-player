@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1194</width>
-    <height>55</height>
+    <width>1265</width>
+    <height>59</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -128,7 +128,7 @@ background-color: rgb(255, 255, 255);
         </size>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="page">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -299,6 +299,51 @@ padding:-1px;
             </spacer>
            </item>
            <item>
+            <widget class="QPushButton" name="pushButton_home">
+             <property name="minimumSize">
+              <size>
+               <width>18</width>
+               <height>18</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>18</width>
+               <height>18</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+border-image: url(:/images/returnhome.png);
+}
+QPushButton:hover
+{
+border-image: url(:/images/returnhome_hover.png);
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_15">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
             <widget class="QPushButton" name="pushButton_back">
              <property name="minimumSize">
               <size>
@@ -428,7 +473,7 @@ border-image: url(:/images/advance_hover.png);
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>30</width>
+               <width>15</width>
                <height>20</height>
               </size>
              </property>

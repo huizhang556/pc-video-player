@@ -21,6 +21,8 @@ public:
     ~MusicPlaylist();
 
 public slots:
+    bool playerListIsNull();//判断播放列表是否为空
+
     void addFileInfoToListView();
 
     void selectTableAboutSongName(QString name);
@@ -45,6 +47,8 @@ signals:
     void hoverIndexChanged(QModelIndex);
 
     void sig_selectRowIndex(QModelIndex);
+
+    void sig_containerIsNull(bool isnull);//判断列表容器是否为空
 
 private slots:
     void on_tableView_songList_entered(const QModelIndex &index);

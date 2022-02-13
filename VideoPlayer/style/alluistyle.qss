@@ -138,7 +138,8 @@ color:lightgreen;
 /*tab样式-selected*/
 QToolBox::tab:selected
 {
-background-color:#7f7f7f;
+/*background-color:#7f7f7f;*/
+background-color:rgb(101,210,105);
 /*color:lightgreen;*/
 }
 
@@ -196,7 +197,7 @@ QToolBox QWidget QLineEdit:hover
 {
 background-color: rgb(33, 33, 33);;
 border-right:-2px;
-border:1px solid #ff5c38;
+border:1px solid transparent;
 }
 
 /*搜索按钮*/
@@ -209,6 +210,8 @@ border-top-left-radius:0;
 border-top-right-radius:0;
 border-bottom-right-radius:0;
 border-bottom-left-radius:0;
+image: url(:/images/file_open.png);
+padding:2px;
 }
 
 /*搜索按钮-按下*/
@@ -224,12 +227,9 @@ border: 1px solid #5F92B2;
 QToolBox QWidget QPushButton:hover
 {
 color:white;
-/*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
-stop:0.494318 rgba(181, 225, 250, 255), 
-stop:0.5 rgba(222, 242, 251, 255));*/
-background-color:#535353;
 /*border: 1px solid #D1DBCB;*/
-padding:-1px;
+padding:2px;
+image: url(:/images/file_open_hover.png);
 }
 
 /*listwidget-每个item上的按钮*/

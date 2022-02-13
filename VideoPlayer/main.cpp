@@ -2,16 +2,16 @@
 #include <QApplication>
 #include "database/dataBase.h"
 #include "titleBar/TitleBar.h"
-#include "videomodels/HolisticVideos.h"
+#include "videomodels/MultipPlayer.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-//    dataBase::creatConnection();
+    dataBase::creatConnection();
     MainWidget w1;
     w1.show();
 
-//    MainWindow w;
+//    MultipPlayer w;
 //    w.show();
 
 //    TitleBar t;

@@ -6,7 +6,7 @@ VideoTitleBar::VideoTitleBar(QWidget *parent) :
     ui(new Ui::VideoTitleBar)
 {
     ui->setupUi(this);
-    this->setFixedHeight(58);
+    this->setFixedHeight(55);
     ui->pushButton_close->setFlat(true);
     ui->pushButton_min->setFlat(true);
     //关闭按钮

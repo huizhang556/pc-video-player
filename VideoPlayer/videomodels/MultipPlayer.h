@@ -1,11 +1,7 @@
-﻿#ifndef MainWindow_H
-#define MainWindow_H
-
+﻿#ifndef MULTIPPLAYER_H
+#define MULTIPPLAYER_H
 #define MARWIDTH 2 //窗口边距
-
-#include "login/Login.h"
 #include "network/MyHttp.h"
-#include "messagebox/ExitDialog.h"
 #include "customer/CusTabWidget.h"
 #include "browser/CusWebBrowser.h"
 #include "videomodels/VideoBlank.h"
@@ -44,17 +40,17 @@
 
 
 namespace Ui {
-class MainWindow;
+class MultipPlayer;
 }
 
 
-class MainWindow : public QMainWindow
+class MultipPlayer : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    explicit MultipPlayer(QWidget *parent = nullptr);
+    ~MultipPlayer();
 
     void initMainWindow();
 
@@ -76,8 +72,6 @@ public:
 
     void set_fileTolistWidget(QString item);//将服务器获取到的文件列表显示
 
-//    bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
-
 public slots:
     void loadFileInfoToWinTitle(int index);//标题栏显示视频名称
 
@@ -90,13 +84,6 @@ public slots:
     void setMainCurrentIndex(const int index);
 
 protected:
-//    void keyPressEvent(QKeyEvent *event) override;
-//    bool eventFilter(QObject *watched, QEvent *event) override;
-
-//    void closeEvent(QCloseEvent *event) override;
-
-//    void mouseDoubleClickEvent(QMouseEvent *event) override;
-
     void mousePressEvent(QMouseEvent *event) override;
 
     void mouseMoveEvent(QMouseEvent *event) override;
@@ -108,10 +95,6 @@ protected:
     void showEvent(QShowEvent *event) override;
 
 private slots:
-//    void on_pushButton_clicked();
-
-//    void on_openfile(QStringList fileNames);
-
     void on_time();
 
     void showPlayerUi();//显示播放器界面
@@ -119,8 +102,6 @@ private slots:
     void showPlayerList();//显示播放列表
 
     void loadDefaultLogo();//加载默认图标
-
-//    void on_pushButton_2_clicked();//停止
 
     void on_pushButton_pauseStart_clicked();//暂停、播放
 
@@ -154,11 +135,6 @@ private slots:
 
     void playlistMouseEnterLeave(QObject *watched, QEvent *event);
 
-//    void showCaptureScreen();
-
-//    void showJieMuListWidget();
-
-
     //帮助菜单槽函数
     void help_stemAboutSetting();//系统设置
 
@@ -167,8 +143,6 @@ private slots:
     void help_aboutLocalFile();//本地文件
 
     void help_openWebSite();//门户网站
-
-//    void set_adjustLogin();
 
     void adjust_playBackMode(int index);//调节播放模式
 
@@ -193,63 +167,55 @@ signals:
 
     void sig_winVStatus(bool);
 private:
-    Ui::MainWindow *ui;
-    ExitDialog                  *m_pExitDlg = nullptr;
-    Login                       *m_login = nullptr;
-    muteDialog                  *m_muteDlg = nullptr;
-    CusTabWidget                *m_cusTabWidget = nullptr;
-    AdjustBright                *m_adjustBright = nullptr;
-    CusWebBrowser               *m_cusWebBrowser = nullptr;//网页显示
-    VideoBlank                  *m_videoBlank    = nullptr;
-    MusicPlayShow               *m_musicUi       = nullptr;
-    MusicPlaylist               *m_musicShowList = nullptr;
-    SystemSetting               *m_systemSetting = nullptr;
-    VideoTitleBar               *m_videoTitleBar = nullptr;
-    int                         m_voice;//静音之前的值
-    bool                        m_winMax;//默认非最大化
+    Ui::MultipPlayer *ui;
+    QTimer                      *m_pTimer           = nullptr;//进度滚动条更新
+    QTimer                      *m_pTimer2          = nullptr;//延迟ui界面
+    QWidget                     *m_widget1          = nullptr;
+    QWidget                     *m_widget2          = nullptr;//暂时不用
+    QToolBox                    *m_toolBox          = nullptr;
+    QLineEdit                   *m_lineEdit         = nullptr;
+    muteDialog                  *m_muteDlg          = nullptr;
+    VideoBlank                  *m_videoBlank       = nullptr;
+    QListWidget                 *m_listWisget1      = nullptr;
+    QListWidget                 *m_listWisget2      = nullptr;
+    QListWidget                 *m_listWisget3      = nullptr;
+    QListWidget                 *m_listWisget4      = nullptr;
+    QHBoxLayout                 *m_hLayout          = nullptr;//搜索按钮和搜索框布局
+    QHBoxLayout                 *m_hboxlayout_rlist = nullptr;//右侧播放列表
+    QVBoxLayout                 *m_vHlayout         = nullptr;//布局listwidget和m_hLayout
+    QPushButton                 *m_searchBtn        = nullptr;
+    QMediaPlayer                *player             = nullptr;
+    AdjustBright                *m_adjustBright     = nullptr;
+    MusicPlayShow               *m_musicUi          = nullptr;
+    MusicPlaylist               *m_musicShowList    = nullptr;
+    SystemSetting               *m_systemSetting    = nullptr;
+    VideoTitleBar               *m_videoTitleBar    = nullptr;
+    MyVideoWidget               *videoWidget        = nullptr;
+    QMediaPlaylist              *playlist           = nullptr;
+    int                         m_voice;                        //静音之前的值
+    bool                        m_winMax;                       //默认非最大化
     bool                        m_isClose;
     bool                        m_isEnter = false;
-    bool                        m_newStart = false;//可以打开新文件按钮标识
+    bool                        m_newStart = false;             //可以打开新文件按钮标识
     bool                        m_bPress = false;
-    bool                        m_muteShow = false;//默认不显示
-    bool                        m_jiemuShow = false;//默认不显示
-    bool                        m_danmuStatus = false;//默认不显示
-    QTimer                      *m_pTimer = nullptr;//进度滚动条更新
-    QTimer                      *m_pTimer2 = nullptr;//延迟ui界面
-    qint64                      m_times;//文件长度
+    bool                        m_muteShow = false;             //默认不显示
+    bool                        m_jiemuShow = false;            //默认不显示
+    bool                        m_danmuStatus = false;          //默认不显示
+    qint64                      m_times;                        //文件长度
     QPoint                      m_mvPos;
     QPoint                      m_videoPos;
-    QAction                     *clearAction;
-    QWidget                     *widget1 = nullptr;
-    QWidget                     *widget2 = nullptr;//暂时不用
-    QToolBox                    *m_toolBox = nullptr;
-    QLineEdit                   *m_lineEdit = nullptr;
-    QDockWidget                 *m_dockWidget = nullptr;
-    QListWidget                 *m_listWisget1 = nullptr;
-    QListWidget                 *m_listWisget2 = nullptr;
-    QListWidget                 *m_listWisget3 = nullptr;
-    QListWidget                 *m_listWisget4 = nullptr;
-    QHBoxLayout                 *m_hLayout = nullptr;//搜索按钮和搜索框布局
-    QHBoxLayout                 *hboxlayout_rlist = nullptr;//右侧播放列表
-    QVBoxLayout                 *m_vHlayout = nullptr;//布局listwidget和m_hLayout
-    QPushButton                 *m_searchBtn = nullptr;
-    QStringList                 m_fileNames;//文件名称列表
-    QMediaPlayer                *player = nullptr;
-    MyVideoWidget               *videoWidget = nullptr;
-    QMediaPlaylist              *playlist = nullptr;
-    QSystemTrayIcon             *m_tray = nullptr;
-    QMap<int,QString>           m_mapList;//声明为指针记得分配空间！！！否则，虽然可以以指针方式调用，却会报错。
+    QStringList                 m_fileNames;                    //文件名称列表
+    QMap<int,QString>           m_mapList;
     QMap<int,QString>           m_mapList2;
     QMediaPlayer::State         m_playerState;
     QStringList                 list_temp;
-
-//界面拉伸所用
-    bool                        _isleftpressed = false; //判断是否是左键点击
-    int                         _curpos = 0;    //鼠标左键按下时光标所在区域
-    QPoint                      _plast;      //获取鼠标左键按下时光标在全局(屏幕而非窗口)的位置
-    int                         countRow(QPoint p);            //获取光标在窗口所在区域的 行   返回行数
+/*以下为界面拉伸所用*/
+    bool                        _isleftpressed = false;         //判断是否是左键点击
+    int                         _curpos = 0;                    //鼠标左键按下时光标所在区域
+    QPoint                      _plast;                         //获取鼠标左键按下时光标在全局(屏幕而非窗口)的位置
+    int                         countRow(QPoint p);             //获取光标在窗口所在区域的 行   返回行数
     int                         countFlag(QPoint p,int row);    //获取光标在窗口所在区域的 列  返回行列坐标
-    void                        setCursorType(int flag);          //根据传入的坐标，设置光标样式
+    void                        setCursorType(int flag);        //根据传入的坐标，设置光标样式
 };
 
-#endif // MainWindow_H
+#endif // MULTIPPLAYER_H

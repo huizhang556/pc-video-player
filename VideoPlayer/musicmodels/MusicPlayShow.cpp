@@ -8,7 +8,7 @@ MusicPlayShow::MusicPlayShow(QWidget *parent) :
 {
 
     ui->setupUi(this);
-    ui->labelSong->setAlignment(Qt::AlignCenter);
+//    ui->labelSong->setAlignment(Qt::AlignCenter);
     photo = new QPixmap;
     //    photo->load("./pictures");
     time = new QTimer(this);
@@ -50,8 +50,8 @@ void MusicPlayShow::changeTimeCout()
 
 void MusicPlayShow::receiveMainWinData(QString name)
 {
-    ui->label_title->clear();
-    ui->labelSong->clear();
-    ui->label_title->setText(QString::fromLocal8Bit("正在播放："));
-    ui->labelSong->setText(name);
+//    ui->label_title->clear();
+//    ui->labelSong->clear();
+//    ui->label_title->setText(QString::fromLocal8Bit(""));
+//    ui->labelSong->setText(name);
 }

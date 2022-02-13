@@ -15,7 +15,15 @@ public:
     explicit MyVideoWidget(QWidget *parent = nullptr);
     ~MyVideoWidget();
 
+    //视频类接口
+
 public slots:
+
+private:
+
+
+
+private slots:
 
 
 };

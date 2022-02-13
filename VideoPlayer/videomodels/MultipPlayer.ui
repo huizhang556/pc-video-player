@@ -1,39 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>MultipPlayer</class>
+ <widget class="QMainWindow" name="MultipPlayer">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1125</width>
-    <height>523</height>
+    <width>1115</width>
+    <height>483</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">MainWindow
-{
-/*border-image: url(:/images/logonbk.png);*/
-}
-</string>
-  </property>
-  <widget class="QWidget" name="centralWidget">
-   <property name="styleSheet">
-    <string notr="true">/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));*/</string>
-   </property>
+  <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>10</y>
-      <width>1095</width>
-      <height>471</height>
+      <width>1090</width>
+      <height>410</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="5">
+    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -792,7 +782,6 @@ color:#484848; font-size:12px;
    </widget>
   </widget>
  </widget>
- <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
 </ui>

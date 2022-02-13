@@ -38,25 +38,30 @@ void TitleBar::initWorker()
     ui->pushButton_close->setFlat(true);
     ui->stackedWidget->setCurrentIndex(0);//默认显示第一个page
     setShowToolTip();//增加提示
-    ui->pushButton_back->setFixedSize(18,18);
+    //home
+    ui->pushButton_home->setFixedSize(20,20);
+    ui->pushButton_home->setFlat(true);
+    ui->pushButton_home->setToolTip(QString::fromLocal8Bit("主页"));
+    //后退
+    ui->pushButton_back->setFixedSize(20,20);
     ui->pushButton_back->setFlat(true);
     ui->pushButton_back->setToolTip(QString::fromLocal8Bit("后退"));
-
-    ui->pushButton_freshen->setFixedSize(18,18);
+    //刷新
+    ui->pushButton_freshen->setFixedSize(20,20);
     ui->pushButton_freshen->setFlat(true);
     ui->pushButton_freshen->setToolTip(QString::fromLocal8Bit("刷新"));
-
-    ui->pushButton_advance->setFixedSize(18,18);
+    //前进
+    ui->pushButton_advance->setFixedSize(20,20);
     ui->pushButton_advance->setFlat(true);
     ui->pushButton_advance->setToolTip(QString::fromLocal8Bit("前进"));
 
-    ui->lineEdit_webSearch->setFixedHeight(26);
+    ui->lineEdit_webSearch->setFixedHeight(28);
     ui->lineEdit_webSearch->setPlaceholderText(QString::fromLocal8Bit("请输入网址"));
     //正则校验  url校验
 //    QRegExp regExp("^[a-zA-z]+://(\w+(-\w+)*)(\.(\w+(-\w+)*))*(\?\S*)?$");
 //    QRegExpValidator *expval = new QRegExpValidator(regExp,this);
 //    ui->lineEdit_webSearch->setValidator(expval);
-    ui->Btn_expand->setFixedSize(30,26);
+    ui->Btn_expand->setFixedSize(30,28);
 
     ui->Btn_expand->setFlat(true);
     ui->Btn_expand->setToolTip(QString::fromLatin1("点击查看历史记录"));
@@ -83,7 +88,9 @@ void TitleBar::chandleSignalAndSLots()
     connect(ui->Btnhelp,&QPushButton::clicked,[=](){emit sig_settingHelp();});
     //腾讯主页
     connect(ui->Btn_logo,&QPushButton::clicked,[=](){QDesktopServices::openUrl(QUrl(QString("https://v.qq.com/")));});
-
+\
+    //返回主页
+    connect(ui->pushButton_home,&QPushButton::clicked,[=](){emit sig_sendUrlHome();});
     //后退 浏览器处理
     connect(ui->pushButton_back,&QPushButton::clicked,[=](){emit sig_sendUrlBack();});
     //刷新 浏览器处理
@@ -179,7 +186,7 @@ void TitleBar::getSystemTimeShow()
 /*槽函数 --- 地址栏显示当前url*/
 void TitleBar::setLineEditAddress(const QUrl url)
 {
-    ui->lineEdit_webSearch->clear();
+//    ui->lineEdit_webSearch->clear();
 //    QString text = url.toLocalFile();
 //    ui->lineEdit_webSearch->setText(text);
 }

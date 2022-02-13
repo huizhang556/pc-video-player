@@ -22,6 +22,7 @@ AdjustBright::AdjustBright(QWidget *parent) :
     ui->BtnRate_2->setCheckable(true);
     ui->BtnRate_3->setCheckable(true);
     ui->BtnRate_4->setCheckable(true);
+    ui->BtnRate_5->setCheckable(true);
 
     ui->BtnRate_2->setChecked(true);
     ui->radioButton_lbxh->setChecked(true);
@@ -72,10 +73,13 @@ AdjustBright::AdjustBright(QWidget *parent) :
     connect(ui->BtnRate_2,SIGNAL(clicked(bool)),this,SLOT(setPlayRate()));
     connect(ui->BtnRate_3,SIGNAL(clicked(bool)),this,SLOT(setPlayRate()));
     connect(ui->BtnRate_4,SIGNAL(clicked(bool)),this,SLOT(setPlayRate()));
+    connect(ui->BtnRate_5,SIGNAL(clicked(bool)),this,SLOT(setPlayRate()));
+
     connect(ui->BtnRate_1,SIGNAL(clicked(bool)),this,SLOT(selectPlayRate()));
     connect(ui->BtnRate_2,SIGNAL(clicked(bool)),this,SLOT(selectPlayRate()));
     connect(ui->BtnRate_3,SIGNAL(clicked(bool)),this,SLOT(selectPlayRate()));
     connect(ui->BtnRate_4,SIGNAL(clicked(bool)),this,SLOT(selectPlayRate()));
+    connect(ui->BtnRate_5,SIGNAL(clicked(bool)),this,SLOT(selectPlayRate()));
 
     //播放模式
     connect(ui->radioButton_dcxh,SIGNAL(clicked(bool)),this,SLOT(selectPlaybackMode()));
@@ -121,6 +125,7 @@ void AdjustBright::clearAllRateButtonChecked()
     ui->BtnRate_2->setChecked(false);
     ui->BtnRate_3->setChecked(false);
     ui->BtnRate_4->setChecked(false);
+    ui->BtnRate_5->setChecked(false);
 }
 
 void AdjustBright::clearAllCheckBoxChecked()
@@ -168,6 +173,10 @@ void AdjustBright::selectPlayRate()
     else if(pButton->objectName() == "BtnRate_4")
     {
         rate = 2.0;
+    }
+    else if(pButton->objectName() == "BtnRate_5")
+    {
+        rate = 0.75;
     }
     emit valueChange_playRate(rate);
     qDebug()<<"valueChange_playRate ="<<rate;

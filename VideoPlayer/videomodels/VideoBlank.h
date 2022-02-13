@@ -16,7 +16,7 @@ public:
     ~VideoBlank();
 
 private slots:
-    void on_Btn_blank_clicked();
+
 
 private:
     Ui::VideoBlank *ui;

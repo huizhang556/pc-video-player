@@ -138,5 +138,9 @@
         <file>images/refreshen_hover.png</file>
         <file>images/downwards.png</file>
         <file>images/downwards_hover.png</file>
+        <file>images/returnhome.png</file>
+        <file>images/returnhome_hover.png</file>
+        <file>images/file_open.png</file>
+        <file>images/file_open_hover.png</file>
     </qresource>
 </RCC>

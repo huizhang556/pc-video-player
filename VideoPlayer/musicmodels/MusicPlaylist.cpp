@@ -44,6 +44,12 @@ MusicPlaylist::~MusicPlaylist()
     //    delete m_songAction;
 }
 
+/*判断播放列表是否为空*/
+bool MusicPlaylist::playerListIsNull()
+{
+    return 0;
+}
+
 void MusicPlaylist::addFileInfoToListView()
 {
 //    model_songInfo->clear();//加载前先清空上次模型中存放的内容,交给数据库
@@ -148,6 +154,7 @@ void MusicPlaylist::slots_btnSortCustomMenu()
 
 void MusicPlaylist::slots_btnSortAscOrder()
 {
+    //模型需要有数据，否则报错
     model_songInfo->setSort(0,Qt::AscendingOrder);
     model_songInfo->select();
 }

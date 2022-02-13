@@ -32,7 +32,7 @@ ExitDialog::ExitDialog(QWidget *parent) :
 
     /***********debug时候用这行代码****************/
     m_iniPath = "E:\\QtProjects\\000QtDemo_51ctodemo\\04_20SubVideoPlayer\\VideoPlayer\\config\\config.ini";//windows(只读不能写)下放在资源文件下，永远不会因为路径改变而不生效；Linux下就写成./形式
-\
+
 //    qDebug()<<"config  file path:"<<m_iniPath;
 //    qDebug()<<"currentPath:"<<QDir::currentPath();
 //    qDebug()<<"dir path = "<<QApplication::applicationDirPath();

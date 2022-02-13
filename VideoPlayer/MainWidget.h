@@ -1,6 +1,6 @@
 ﻿#ifndef MAINWIDGET_H
 #define MAINWIDGET_H
-#define MARGIN 3 //窗口边距
+#define MARGIN 2 //窗口边距
 
 #include "login/Login.h"
 #include "titleBar/TitleBar.h"
@@ -10,7 +10,7 @@
 #include "messagebox/ExitDialog.h"
 #include "login/LoginPersonInfo.h"
 #include "videomodels/VideoBlank.h"
-#include "videomodels/HolisticVideos.h"
+#include "videomodels/MultipPlayer.h"
 #include "musicmodels/MusicPlaylist.h"
 #include "musicmodels/MusicPlayShow.h"
 #include "videomodels/VideoTitleBar.h"
@@ -21,6 +21,7 @@
 #include <QShowEvent>
 #include <QMouseEvent>
 #include <QCloseEvent>
+#include <QResizeEvent>
 #include <QApplication>
 #include <QStackedWidget>
 #include <QSystemTrayIcon>
@@ -52,6 +53,8 @@ protected:
 
     void closeEvent(QCloseEvent *event) override;//重写关闭事件
 
+    void resizeEvent(QResizeEvent *event) override;
+
 private:
     void initOtherWidgetUi();
 
@@ -59,7 +62,7 @@ private:
 
     void loadAllUIQss();//加载UI样式文件
 
-    void setStackedWidgetPage();
+    void setStackedWidgetPage();//添加界面
 
     void createTrayMenu();//托盘菜单
 
@@ -71,6 +74,8 @@ private slots:
     void set_adjustLogin();
 
     void createHelpMenu();//帮助菜单
+
+    void help_aboutLocalFile();
 
 
     //界面拉伸私有成员函数
@@ -84,12 +89,12 @@ private:
     ExitDialog          *m_pExitDlg     = nullptr;
     TitleBar            *m_titleBar     = nullptr;
     Login               *m_login        = nullptr;
-    MainWindow          *m_mainWin      = nullptr;
+    MultipPlayer          *m_mainPlayer   = nullptr;
     LeftSideBar         *m_leftSideBar  = nullptr;
     MusicPlaylist       *m_musicList    = nullptr;
     MusicPlayShow       *m_musicShow    = nullptr;
     CusTabWidget        *m_tabWidget    = nullptr;
-    VideoBlank          *m_videoWidget  = nullptr;
+    VideoBlank          *m_videoBlank  = nullptr;
     CusWebBrowser       *m_webBrowser   = nullptr;
     VideoTitleBar       *m_videoTitle   = nullptr;
     QSystemTrayIcon     *m_tray         = nullptr;

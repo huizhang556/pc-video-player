@@ -137,9 +137,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
       ui->stackedWidget->insertWidget(0,m_videoBlank);
       ui->stackedWidget->insertWidget(1,videoWidget);
+      ui->stackedWidget->insertWidget(2,m_musicUi);
       ui->stackedWidget->setCurrentIndex(0);//默认显示音乐界面
-      //用户信息（暂时）
 
+      //用户信息（暂时）
       m_listWisget1 = new QListWidget;
       m_listWisget1->setObjectName(QString::fromUtf8("m_listWisget1"));
       m_listWisget1->setMinimumWidth(260);
@@ -170,15 +171,14 @@ MainWindow::MainWindow(QWidget *parent) :
       m_lineEdit->setFixedHeight(30);
       m_searchBtn = new QPushButton;//曲库列表搜索按钮
       m_searchBtn->setObjectName(QString::fromUtf8("m_searchBtn"));
-      m_searchBtn->setFixedWidth(60);
-      m_searchBtn->setFixedHeight(30);
+      m_searchBtn->setFixedSize(33,30);
 
       m_hLayout = new QHBoxLayout;
       m_hLayout->insertWidget(0,m_lineEdit);
       m_hLayout->insertWidget(1,m_searchBtn);
       m_hLayout->setSpacing(0);
       m_hLayout->setStretch(0,4);
-      m_hLayout->setStretch(1,1);
+//      m_hLayout->setStretch(1,1);
 
 
       m_vHlayout = new QVBoxLayout;
@@ -235,15 +235,8 @@ MainWindow::MainWindow(QWidget *parent) :
       ui->verticalLayout_5->setStretch(1,7);
       ui->verticalLayout_5->setStretch(2,1);
       ui->verticalLayout_5->setStretch(3,1);
-
-//      getAndShowCurTime();//获取当前系统时间并显示
       loadDefaultLogo();//加载默认图标
-//      loadAllUIQss();//加载界面样式
       this->centralWidget()->setLayout(ui->horizontalLayout_5);
-
-//      playlist->setCurrentIndex(1);
-//      player->play();
-
 /***********************************信号与槽函数**********************************/
       //音量滑条
 //      ui->horizontalSlider_vol->setRange(0,100);
@@ -268,30 +261,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //          m_isClose = false;
 //      });
 
-      //标题栏双击最大化
-      connect(m_videoTitleBar,&VideoTitleBar::sig_doubleClick,this,&MainWindow::showMaximized);
-//      //窗口关闭按钮
-      connect(m_videoTitleBar,&VideoTitleBar::sig_winVClose,this,&MainWindow::close);
 
-//      //窗口最小化按钮
-      connect(m_videoTitleBar,&VideoTitleBar::sig_winVMinimum,this,&MainWindow::showMinimized);
-
-//      //窗口还原按钮
-      connect(this,SIGNAL(sig_winVStatus(bool)),m_videoTitleBar,SLOT(chandleVMainWinStatus(bool)));
-      connect(m_videoTitleBar,&VideoTitleBar::sig_winVRestore,[=]()
-      {
-          if(!m_winMax)//非最大化
-          {
-              this->showMaximized();
-                emit sig_winVStatus(m_winMax);
-          }
-          else
-          {
-              this->showNormal();
-              emit sig_winVStatus(m_winMax);
-          }
-          m_winMax = !m_winMax;
-      });
 
 
       m_pTimer = new QTimer(this);
@@ -390,119 +360,12 @@ MainWindow::MainWindow(QWidget *parent) :
       connect(m_listWisget2,&QListWidget::itemDoubleClicked,[=](QListWidgetItem *item)
       {
           int row = m_listWisget2->row(item);
-//          qDebug()<<"current row = "<<row;
-//          ui->playerListWidget->setCurrentRow(row);
           m_playerState = QMediaPlayer::PlayingState;
           ui->pushButton_pauseStart->setIcon(QIcon(":/images/pausehover.png"));//播放
           playlist->setCurrentIndex(row);
           fileType(row);
           player->play();
-//          loadFileInfoToWinTitle(row);
       });
-
-      /*当前播放列表双击改变项*/
-//      connect(ui->playerListWidget,&QListWidget::itemDoubleClicked,[=](QListWidgetItem *item)
-//      {
-//          int row = ui->playerListWidget->row(item);
-//          m_listWisget2->setCurrentRow(row);
-//          m_playerState = QMediaPlayer::PlayingState;
-//          ui->pushButton_pauseStart->setIcon(QIcon(":/images/pausehover.png"));//播放
-//          playlist->setCurrentIndex(row);
-//          fileType(row);
-//          player->play();
-//      });
-
-       /*上一首，下一首，对应m_listwidget项的变化*/
-      connect(playlist,&QMediaPlaylist::currentIndexChanged,[=](int index)
-      {
-          fileType(index);
-          m_listWisget2->setCurrentRow(index);
-//          ui->playerListWidget->setCurrentRow(index);
-          loadFileInfoToWinTitle(index);
-          updateRateTypeUiLayout(index);
-      });
-
-
-      /*浮动窗口-曲库歌曲搜索*/
-      connect(m_lineEdit,&QLineEdit::textChanged,[=](QString str){findFileFromLineEdit(str);});
-
-      //点击节目列表转换页面
-//      connect(ui->listWidget_playlist,&QListWidget::itemClicked,[=](QListWidgetItem *item)
-//      {
-//          int row = ui->listWidget_playlist->row(item);
-//          switchListPage(row);
-//      });
-
-      //帮助
-//      connect(ui->Btnhelp,&QPushButton::clicked,[=](){createHelpMenu();});
-
-      //向音乐界面发送名字,带参数 QString name,注意跨线程的问题,QTimer类不是线程安全的类型，注意第五个参数问题
-      connect(this,SIGNAL(sig_sendSwitchToMusicPage(QString)),m_musicUi,SLOT(receiveMainWinData(QString)));
-
-//      m_login = new Login(this);//不带this界面显示不出来，空白；问题是界面出现定位不准确
-//      m_login->setObjectName(QString::fromLocal8Bit("m_login"));
-//      ui->Btnlogin->installEventFilter(this);
-//      m_login->setHidden(true);//界面运行起来弹出界面bug
-//     connect(ui->Btnlogin,SIGNAL(clicked(bool)),this,SLOT(set_adjustLogin()));
-      //通知关闭程序
-//      connect(this,&MainWindow::sig_startCloseAppliction,m_login,&Login::receiveMainWinCloseAppSignal);
-
-      //通知播放列表加载信息
-      connect(this,&MainWindow::sig_sendToMusicList,m_musicShowList,&MusicPlaylist::addFileInfoToListView);
-      //播放列表界面传来播放歌曲的信息
-      connect(m_musicShowList,&MusicPlaylist::sig_selectRowIndex,[=](QModelIndex index)
-      {
-          QString name_song = index.data().toString();
-          qDebug()<<name_song;
-      });
-
-      //历史记录
-//      connect(ui->BtnHistory,&QPushButton::clicked,[=]()
-//      {
-//          ui->stackedWidget->setCurrentIndex(4);
-//      });
-
-      //调用截图程序
-//      connect(ui->BtnScreen,&QPushButton::clicked,[=]()
-//      {
-////          showCaptureScreen();
-//      });
-
-      connect(ui->Btn_adjust,&QPushButton::clicked,[=](){set_adjustBright();});
-
-      //调节列表发来的信号处理
-      m_adjustBright = new AdjustBright(this);//必须先new出来，再使用，否则无用
-      m_adjustBright->setObjectName(QString::fromLocal8Bit("m_adjustBright"));
-      m_adjustBright->setHidden(true);//界面运行起来弹出界面bug
-      connect(playlist,SIGNAL(currentIndexChanged(int)),m_adjustBright,SLOT(updatePlayRate()));//倍速恢复正常选项状态
-      connect(playlist,SIGNAL(currentIndexChanged(int)),this,SLOT(update_adjustBright()));//亮度，饱和度，色调，对比度恢复原值
-      //调节倍速
-      connect(m_adjustBright,SIGNAL(valueChange_playRate(qreal)),player,SLOT(setPlaybackRate(qreal)));
-      //调节播放模式
-      connect(m_adjustBright,SIGNAL(valueChange_playBackMode(int)),this,SLOT(adjust_playBackMode(int)));
-      //调节屏幕占比
-      connect(m_adjustBright,SIGNAL(valueChange_aspectRatio(int)),this,SLOT(adjust_aspectRatioMode(int)));
-//      connect(m_adjustBright,&AdjustBright::valueChange_liangdu,[=](int value)
-//      {
-//          qDebug()<<"received:valueChange_liangdu ="<<value;
-//      });
-
-      connect(m_adjustBright,SIGNAL(valueChange_liangdu(int)),videoWidget,SLOT(setBrightness(int)));
-      connect(m_adjustBright,SIGNAL(valueChange_duibidu(int)),videoWidget,SLOT(setContrast(int)));
-      connect(m_adjustBright,SIGNAL(valueChange_baohedu(int)),videoWidget,SLOT(setSaturation(int)));
-      connect(m_adjustBright,SIGNAL(valueChange_sediao(int)),videoWidget,SLOT(setHue(int)));
-
-//      //腾讯主页
-//      connect(ui->Btn_logo,&QPushButton::clicked,[=]()
-//      {
-////          QMessageBox::information(this,"home page","there is show tencent home page!");
-//          QDesktopServices::openUrl(QUrl(QString("https://v.qq.com/")));//下载页面
-//      });
-
-      //控制节目列表显示影藏
-//      connect(ui->Btn_eyes,&QPushButton::clicked,this,&MainWindow::showJieMuListWidget);
-
-      connect(m_videoBlank,&VideoBlank::sig_openLocalFile,this,&MainWindow::openLocalFile);
 
       chandleSignalAndSLots();
 
@@ -565,16 +428,87 @@ void MainWindow::initMainWindow()
 /*处理信号与槽函数*/
 void MainWindow::chandleSignalAndSLots()
 {
+    //标题栏显示当前播放文件名
+    connect(this,SIGNAL(sig_sendSwitchToMusicPage(QString)),m_videoTitleBar,SLOT(setTitleText(QString)));
+   //窗口关闭按钮
+    connect(m_videoTitleBar,&VideoTitleBar::sig_winVClose,this,&MainWindow::close);
 
+   //窗口最小化按钮
+    connect(m_videoTitleBar,&VideoTitleBar::sig_winVMinimum,this,&MainWindow::showMinimized);
+
+   //窗口还原按钮
+    connect(this,SIGNAL(sig_winVStatus(bool)),m_videoTitleBar,SLOT(chandleVMainWinStatus(bool)));
+    connect(m_videoTitleBar,&VideoTitleBar::sig_winVRestore,[=]()
+    {
+        if(!m_winMax)//非最大化
+        {
+            this->showMaximized();
+              emit sig_winVStatus(m_winMax);
+        }
+        else
+        {
+            this->showNormal();
+            emit sig_winVStatus(m_winMax);
+        }
+        m_winMax = !m_winMax;
+    });
+
+    connect(ui->Btn_adjust,&QPushButton::clicked,[=](){set_adjustBright();});
+    //通知播放列表加载信息
+    connect(this,&MainWindow::sig_sendToMusicList,m_musicShowList,&MusicPlaylist::addFileInfoToListView);
+    //播放列表界面传来播放歌曲的信息
+    connect(m_musicShowList,&MusicPlaylist::sig_selectRowIndex,[=](QModelIndex index)
+    {
+        QString name_song = index.data().toString();
+        qDebug()<<name_song;
+    });
+
+    /*上一首，下一首，对应m_listwidget项的变化*/
+   connect(playlist,&QMediaPlaylist::currentIndexChanged,[=](int index)
+   {
+       fileType(index);
+       m_listWisget2->setCurrentRow(index);
+//          ui->playerListWidget->setCurrentRow(index);
+       loadFileInfoToWinTitle(index);
+       updateRateTypeUiLayout(index);
+   });
+
+    /*浮动窗口-曲库歌曲搜索*/
+    connect(m_lineEdit,&QLineEdit::textChanged,[=](QString str){findFileFromLineEdit(str);});
+
+    //向音乐界面发送名字,带参数 QString name,注意跨线程的问题,QTimer类不是线程安全的类型，注意第五个参数问题
+//    connect(this,SIGNAL(sig_sendSwitchToMusicPage(QString)),m_musicUi,SLOT(receiveMainWinData(QString)));
+
+    //调节列表发来的信号处理
+    m_adjustBright = new AdjustBright(this);//必须先new出来，再使用，否则无用
+    m_adjustBright->setObjectName(QString::fromLocal8Bit("m_adjustBright"));
+    m_adjustBright->setHidden(true);//界面运行起来弹出界面bug
+    connect(playlist,SIGNAL(currentIndexChanged(int)),m_adjustBright,SLOT(updatePlayRate()));//倍速恢复正常选项状态
+    connect(playlist,SIGNAL(currentIndexChanged(int)),this,SLOT(update_adjustBright()));//亮度，饱和度，色调，对比度恢复原值
+    //调节倍速
+    connect(m_adjustBright,SIGNAL(valueChange_playRate(qreal)),player,SLOT(setPlaybackRate(qreal)));
+    //调节播放模式
+    connect(m_adjustBright,SIGNAL(valueChange_playBackMode(int)),this,SLOT(adjust_playBackMode(int)));
+    //调节屏幕占比
+    connect(m_adjustBright,SIGNAL(valueChange_aspectRatio(int)),this,SLOT(adjust_aspectRatioMode(int)));
+    connect(m_adjustBright,SIGNAL(valueChange_liangdu(int)),videoWidget,SLOT(setBrightness(int)));
+    connect(m_adjustBright,SIGNAL(valueChange_duibidu(int)),videoWidget,SLOT(setContrast(int)));
+    connect(m_adjustBright,SIGNAL(valueChange_baohedu(int)),videoWidget,SLOT(setSaturation(int)));
+    connect(m_adjustBright,SIGNAL(valueChange_sediao(int)),videoWidget,SLOT(setHue(int)));
+
+    //打开文件
+    connect(m_searchBtn,&QPushButton::clicked,[=](){on_pushButton_6_clicked();});
 }
 
 /*加载默认图标*/
 void MainWindow::loadDefaultLogo()
 {
     ui->pushButton_curlist->setToolTip(QString::fromLocal8Bit("显示列表"));
-    m_lineEdit->setPlaceholderText(QString::fromLocal8Bit("输入点内容吧^_^"));
+    m_lineEdit->setPlaceholderText(QString::fromLocal8Bit("输入要搜索的内容^_^"));
     m_lineEdit->setEnabled(false);
-    m_searchBtn->setText(QString::fromLocal8Bit("搜索"));
+
+    m_searchBtn->setText(QString::fromLocal8Bit(""));
+    m_searchBtn->setToolTip(QString::fromLocal8Bit("打开文件"));
 
     ui->pushButton_sound->setIcon(QIcon(":/images/yingling.png"));//图标是正常音量
     ui->pushButton_sound->setIconSize(QSize(26,26));//以后所有显示图片都是此大小
@@ -679,6 +613,27 @@ bool MainWindow::fileType(QStringList &filenames, int index)
     }
 }
 
+/*判断文件类型2*/
+bool MainWindow::fileType(int index)
+{
+    QString filename = m_mapList2[index];
+    bool mp3 = filename.endsWith(QString::fromLocal8Bit(".mp3"),Qt::CaseInsensitive);//判断是否以.mp3结尾，去除大小写敏感
+    if(mp3)
+    {
+        //音乐显示3，音乐界面
+        emit sig_sendSwitchToMusicPage(filename);
+        ui->stackedWidget->setCurrentIndex(2);
+        return true;//这里true代表以.mp3结尾的文件
+    }
+    else
+    {
+        //视屏显示4，视屏界面
+        emit sig_sendSwitchToMusicPage(filename);
+        ui->stackedWidget->setCurrentIndex(1);
+        return false;//这里false代表非.mp3结尾的文件，默认为视频文件
+    }
+}
+
 /*共服务端获取文件列表*/
 void MainWindow::get_fileFromServer()
 {
@@ -708,30 +663,6 @@ void MainWindow::set_fileTolistWidget(QString item)
     pitem->setTextAlignment(Qt::AlignLeft);//item文字向左对齐
     m_listWisget2->addItem(pitem);
 }
-
-
-
-/*判断文件类型2*/
-bool MainWindow::fileType(int index)
-{
-    QString filename = m_mapList2[index];
-    bool mp3 = filename.endsWith(QString::fromLocal8Bit(".mp3"),Qt::CaseInsensitive);//判断是否以.mp3结尾，去除大小写敏感
-    if(mp3)
-    {
-        //音乐显示3，音乐界面
-        emit sig_sendSwitchToMusicPage(filename);
-        ui->stackedWidget->setCurrentIndex(3);
-        return true;//这里true代表以.mp3结尾的文件
-    }
-    else
-    {
-        //视屏显示4，视屏界面
-        emit sig_sendSwitchToMusicPage(filename);
-        ui->stackedWidget->setCurrentIndex(2);
-        return false;//这里false代表非.mp3结尾的文件，默认为视频文件
-    }
-}
-
 
 /*节目列表*/
 //void MainWindow::addFileToPlayList()
@@ -983,61 +914,48 @@ void MainWindow::loadFileInfoToWinTitle(int index)
 
 //}
 
-/*打开文件*/
-//void MainWindow::on_pushButton_5_clicked()
-//{
-//    if(!m_newStart)
-//    {
-//        m_fileNames =  QFileDialog::getOpenFileNames(this,
-//                                                               "Open Files","C:\\Users\\24939\\Desktop",
-//                                                               "Videos(*avi *mp4 *flv *mp3)");
-
-//        //测试功能
-//        m_fileNames = list_temp;
-//        ui->pushButton_5->setFocusPolicy(Qt::NoFocus);//点击按钮后去掉虚线框
-//        //多文件打开
-//        if(!m_fileNames.isEmpty())
-//        {
-//            addToPlaylist(m_fileNames);//1.添加进播放列表playlist
-//            addFileToList(m_fileNames);//2.媒体界面显示
-//            fileType(m_fileNames,0);//3.判断文件类型并作出界面反应
-//            loadFileInfoToWinTitle(0);//显示第1首歌的title
-//            ui->horizontalSlider->setEnabled(true);//滚动条
-//            m_lineEdit->setEnabled(true);//浮动输入框
-//            m_pTimer2->start(80);//加定时器给界面一个缓冲
-//            connect(m_pTimer2,&QTimer::timeout,[=](){
-//            //这里必须加一个定时器，以解决界面缓冲，是的界面来得及反应（主要是标题栏反应不过来）
-////                ui->stackedWidget->setCurrentIndex(2);//索引2,界面显示视频
-////              ui->verticalLayout_5->replaceWidget(ui->stackedWidget,videoWidget);//widget1在索引为0的dockwidget上
-//                m_playerState = QMediaPlayer::PlayingState;
-//                ui->pushButton_pauseStart->setIcon(QIcon(":/images/pausehover.png"));
-//                ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("暂停"));
-//                m_newStart = true;
-//            });
-//            player->play();
-//        }
-//    }
-//    else
-//    {
-////        on_pushButton_6_clicked();
-
-//    }
-////    m_pTimer2->stop();
-//}
-
-/*重新打开播放新文件*/
-//void MainWindow::on_pushButton_6_clicked()
-//{
-
-//}
-
-/*打开本地文件*/
-bool MainWindow::openLocalFile()
+/*第一次打开文件*/
+void MainWindow::on_pushButton_5_clicked()
 {
-    qDebug() <<"open file start!";
     if(!m_newStart)
     {
-        return 0;
+        m_fileNames =  QFileDialog::getOpenFileNames(this,
+                                                               "Open Files","C:\\Users\\24939\\Desktop",
+                                                               "Videos(*avi *mp4 *flv *mp3)");
+
+        //测试功能
+        m_fileNames = list_temp;
+//        ui->pushButton_5->setFocusPolicy(Qt::NoFocus);//点击按钮后去掉虚线框
+        //多文件打开
+        if(!m_fileNames.isEmpty())
+        {
+            addToPlaylist(m_fileNames);//1.添加进播放列表playlist
+            addFileToList(m_fileNames);//2.媒体界面显示
+            fileType(m_fileNames,0);//3.判断文件类型并作出界面反应
+            loadFileInfoToWinTitle(0);//显示第1首歌的title
+            ui->horizontalSlider->setEnabled(true);//滚动条
+            m_lineEdit->setEnabled(true);//浮动输入框
+            m_pTimer2->start(80);//加定时器给界面一个缓冲
+            connect(m_pTimer2,&QTimer::timeout,[=](){
+            //这里必须加一个定时器，以解决界面缓冲，是的界面来得及反应（主要是标题栏反应不过来）
+//                ui->stackedWidget->setCurrentIndex(2);//索引2,界面显示视频
+//              ui->verticalLayout_5->replaceWidget(ui->stackedWidget,videoWidget);//widget1在索引为0的dockwidget上
+                m_playerState = QMediaPlayer::PlayingState;
+                ui->pushButton_pauseStart->setIcon(QIcon(":/images/pausehover.png"));
+                ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("暂停"));
+                m_newStart = true;
+            });
+            player->play();
+        }
+    }
+}
+
+/*重新打开播放新文件*/
+void MainWindow::on_pushButton_6_clicked()
+{
+    if(!m_newStart)
+    {
+        return;
     }
     else
     {
@@ -1068,6 +986,29 @@ bool MainWindow::openLocalFile()
         {
             m_playerState = QMediaPlayer::PausedState;
         }
+    }
+}
+
+/*打开本地文件*/
+void MainWindow::openLocalFile()
+{
+    on_pushButton_5_clicked();
+}
+
+/*切换stackwidget*/
+void MainWindow::setMainCurrentIndex(const int index)
+{
+    if(index == 0)
+    {
+        ui->stackedWidget->setCurrentIndex(0);
+    }
+    else if(index == 1)
+    {
+        ui->stackedWidget->setCurrentIndex(1);
+    }
+    else
+    {
+
     }
 }
 
@@ -1954,6 +1895,7 @@ void MainWindow::help_aboutLocalFile()
 {
 //    QMessageBox::information(this,QString::fromLocal8Bit("本地文件"),QString::fromLocal8Bit("选择本地文件进行播放。"));
      openLocalFile();
+     this->show();
 }
 
 /*打开门户网站*/
@@ -2110,4 +2052,19 @@ void MainWindow::on_pushButton_danmu_clicked()
         ui->lineEdit_danmu->setEnabled(false);
     }
     m_danmuStatus = !m_danmuStatus;
+}
+
+void MainWindow::chandleRestoreWindow()
+{
+    if(!m_winMax)//非最大化
+    {
+        this->showMaximized();
+        emit sig_winVStatus(m_winMax);//向标题栏发送最大化状态信号
+    }
+    else
+    {
+        this->showNormal();
+        emit sig_winVStatus(m_winMax);//向窗口发送正常状态信号
+    }
+    m_winMax = !m_winMax;
 }

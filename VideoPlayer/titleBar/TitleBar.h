@@ -56,6 +56,7 @@ signals:
     void sig_sendUrlBack();
     void sig_sendUrlAdvance();
     void sig_sendUrlRefreshen();
+    void sig_sendUrlHome();
 };
 
 #endif // TITLEBAR_H

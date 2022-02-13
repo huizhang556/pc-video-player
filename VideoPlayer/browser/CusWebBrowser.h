@@ -22,6 +22,7 @@ public slots:
     void slots_back();
     void slots_refreshen();
     void slots_advance();
+    void slots_home();
 
 signals:
 
