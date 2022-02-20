@@ -385,7 +385,7 @@ void MultipPlayer::chandleSignalAndSLots()
 /*加载默认图标*/
 void MultipPlayer::loadDefaultLogo()
 {
-    ui->pushButton_curlist->setToolTip(QString::fromLocal8Bit("显示列表"));
+    ui->pushButton_curlist->setToolTip(QString::fromLocal8Bit("当前列表"));
     m_lineEdit->setPlaceholderText(QString::fromLocal8Bit("输入要搜索的内容^_^"));
     m_lineEdit->setEnabled(false);
 
@@ -684,7 +684,7 @@ void MultipPlayer::on_pushButton_5_clicked()
     {
         m_fileNames =  QFileDialog::getOpenFileNames(this,
                                                                "Open Files","C:\\Users\\24939\\Desktop",
-                                                               "Videos(*avi *mp4 *flv *mp3)");
+                                                               "Videos(*avi *mp4 *flv *mp3 *wmv)");
 
         //测试功能
         m_fileNames = list_temp;
@@ -727,7 +727,7 @@ void MultipPlayer::on_pushButton_6_clicked()
         ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
         m_fileNames =  QFileDialog::getOpenFileNames(this,
                                                    "Open Files","C:\\Users\\24939\\Desktop",
-                                                   "Videos(*avi *mp4 *flv *mp3)");
+                                                   "Videos(*avi *mp4 *flv *mp3 *wmv)");
         if(!m_fileNames.isEmpty())
         {
             QSqlQuery query;

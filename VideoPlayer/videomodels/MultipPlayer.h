@@ -170,10 +170,10 @@ signals:
     void sig_winVStatus(bool);
 private:
     Ui::MultipPlayer *ui;
-    QTimer                      *m_pTimer           = nullptr;//进度滚动条更新
-    QTimer                      *m_pTimer2          = nullptr;//延迟ui界面
+    QTimer                      *m_pTimer           = nullptr; //进度滚动条更新
+    QTimer                      *m_pTimer2          = nullptr; //延迟ui界面
     QWidget                     *m_widget1          = nullptr;
-    QWidget                     *m_widget2          = nullptr;//暂时不用
+    QWidget                     *m_widget2          = nullptr; //暂时不用
     QToolBox                    *m_toolBox          = nullptr;
     QLineEdit                   *m_lineEdit         = nullptr;
     muteDialog                  *m_muteDlg          = nullptr;
@@ -182,9 +182,9 @@ private:
     QListWidget                 *m_listWisget2      = nullptr;
     QListWidget                 *m_listWisget3      = nullptr;
     QListWidget                 *m_listWisget4      = nullptr;
-    QHBoxLayout                 *m_hLayout          = nullptr;//搜索按钮和搜索框布局
-    QHBoxLayout                 *m_hboxlayout_rlist = nullptr;//右侧播放列表
-    QVBoxLayout                 *m_vHlayout         = nullptr;//布局listwidget和m_hLayout
+    QHBoxLayout                 *m_hLayout          = nullptr; //搜索按钮和搜索框布局
+    QHBoxLayout                 *m_hboxlayout_rlist = nullptr; //右侧播放列表
+    QVBoxLayout                 *m_vHlayout         = nullptr; //布局listwidget和m_hLayout
     QPushButton                 *m_searchBtn        = nullptr;
     QMediaPlayer                *player             = nullptr;
     AdjustBright                *m_adjustBright     = nullptr;
@@ -197,12 +197,12 @@ private:
     int                         m_voice;                        //静音之前的值
     bool                        m_winMax;                       //默认非最大化
     bool                        m_isClose;
-    bool                        m_isEnter = false;
-    bool                        m_newStart = false;             //可以打开新文件按钮标识
-    bool                        m_bPress = false;
-    bool                        m_muteShow = false;             //默认不显示
-    bool                        m_jiemuShow = false;            //默认不显示
-    bool                        m_danmuStatus = false;          //默认不显示
+    bool                        m_isEnter           = false;
+    bool                        m_newStart          = false;    //可以打开新文件按钮标识
+    bool                        m_bPress            = false;
+    bool                        m_muteShow          = false;    //默认不显示
+    bool                        m_jiemuShow         = false;    //默认不显示
+    bool                        m_danmuStatus       = false;    //默认不显示
     qint64                      m_times;                        //文件长度
     QPoint                      m_mvPos;
     QPoint                      m_videoPos;
@@ -212,7 +212,7 @@ private:
     QMediaPlayer::State         m_playerState;
     QStringList                 list_temp;
 /*以下为界面拉伸所用*/
-    bool                        _isleftpressed = false;         //判断是否是左键点击
+    bool                        _isleftpressed      = false;    //判断是否是左键点击
     int                         _curpos = 0;                    //鼠标左键按下时光标所在区域
     QPoint                      _plast;                         //获取鼠标左键按下时光标在全局(屏幕而非窗口)的位置
     int                         countRow(QPoint p);             //获取光标在窗口所在区域的 行   返回行数

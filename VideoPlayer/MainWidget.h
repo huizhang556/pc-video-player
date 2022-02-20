@@ -51,7 +51,7 @@ protected:
 
     void showEvent(QShowEvent *event) override;
 
-    void closeEvent(QCloseEvent *event) override;//重写关闭事件
+    void closeEvent(QCloseEvent *event) override;
 
     void resizeEvent(QResizeEvent *event) override;
 
@@ -101,7 +101,7 @@ private:
     bool                 m_winMax;        //默认非最大化
     bool                 m_isClose;
 
-    //界面拉伸所用
+    //界面拉伸私有成员变量
     bool     _isleftpressed = false;      //判断是否是左键点击
     int      _curpos = 0;                 //鼠标左键按下时光标所在区域
     QPoint   _plast;                      //获取鼠标左键按下时光标在全局(屏幕而非窗口)的位置
