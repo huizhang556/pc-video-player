@@ -257,6 +257,7 @@ void LoginPersonInfo::receiveLoginAppClose()
 /*按下事件*/
 void LoginPersonInfo::mousePressEvent(QMouseEvent *event)
 {
+    Q_UNUSED(event);
 //   QPoint winPos = this->pos();//界面位置
 //    QPoint nowPos = event->globalPos();//鼠标位置
 //    m_mvPos = nowPos - winPos;
@@ -264,6 +265,7 @@ void LoginPersonInfo::mousePressEvent(QMouseEvent *event)
 /*移动事件*/
 void LoginPersonInfo::mouseMoveEvent(QMouseEvent *event)
 {
+    Q_UNUSED(event);
 //    this->move(event->globalPos() - m_mvPos);
 }
 

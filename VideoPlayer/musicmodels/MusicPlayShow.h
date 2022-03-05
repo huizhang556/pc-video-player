@@ -30,8 +30,7 @@ private:
     QTimer      *time;
     QPixmap     *photo;
     QString     fileName;
-    int i = 1;
-
+    int         i = 1;
 };
 
 #endif // MUSICPLAYSHOW_H

@@ -10,11 +10,29 @@ Login::Login(QWidget *parent) :
     installEventFilter(this);
     this->setFixedSize(310,200);
     setWindowFlags(Qt::FramelessWindowHint);
-    m_loginMain = new LoginPersonInfo;
+
     connect(ui->BtnLogin,&QPushButton::clicked,[=]()
     {
-        this->hide();
-        m_loginMain->showLoginWindow();
+        if(m_loginMain)
+        {
+            if(!m_loginMain->isHidden())//正常显示
+            {
+                m_loginMain->hide();
+            }
+            else//隐藏
+            {
+//                m_loginMain->showNormal();
+                m_loginMain->raise();
+                m_loginMain->show();
+            }
+        }
+        else
+        {
+            m_loginMain = new LoginPersonInfo;
+            m_loginMain->raise();
+            m_loginMain->show();
+        }
+
     });
 
     connect(this,&Login::sig_LoginWinClose,m_loginMain,&LoginPersonInfo::receiveLoginAppClose);
@@ -24,6 +42,7 @@ Login::Login(QWidget *parent) :
 Login::~Login()
 {
     delete ui;
+    delete m_loginMain;
 }
 
 void Login::leaveEvent(QEvent *event)

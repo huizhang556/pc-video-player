@@ -1,7 +1,7 @@
 ﻿#include "CusWebBrowser.h"
 #include <QHBoxLayout>
-#include <QWebEngineSettings>
 #include <QWebEnginePage>
+#include <QWebEngineSettings>
 #include <QDebug>
 
 CusWebBrowser::CusWebBrowser(QWidget *parent) :

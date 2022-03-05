@@ -1,16 +1,8 @@
 SOURCES += \
-    $$PWD/dataBase.cpp \
-    $$PWD/FileChandle.cpp \
-    $$PWD/UploadFile.cpp \
-    $$PWD/DownLoadFile.cpp
+    $$PWD/dataBase.cpp
 
 
 HEADERS += \
-    $$PWD/dataBase.h \
-    $$PWD/FileChandle.h \
-    $$PWD/UploadFile.h \
-    $$PWD/DownLoadFile.h
+    $$PWD/dataBase.h
 
-FORMS += \
-    $$PWD/UploadFile.ui \
-    $$PWD/DownLoadFile.ui
+FORMS +=

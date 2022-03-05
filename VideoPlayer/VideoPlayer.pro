@@ -46,6 +46,7 @@ include($$PWD/messagebox/messagebox.pri)
 include($$PWD/mainwidget/mainwidget.pri)
 include($$PWD/musicmodels/musicmodels.pri)
 include($$PWD/videomodels/videomodels.pri)
+include($$PWD/fileshandle/fileshandle.pri)
 
 
 # Default rules for deployment.

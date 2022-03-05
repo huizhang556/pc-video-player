@@ -2,8 +2,8 @@
  <author/>
  <comment/>
  <exportmacro/>
- <class>DownLoadFile</class>
- <widget name="DownLoadFile" class="QWidget">
+ <class>UploadFile</class>
+ <widget class="QWidget" name="UploadFile">
   <property name="geometry">
    <rect>
     <x>0</x>

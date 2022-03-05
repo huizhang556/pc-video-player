@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(64, 66, 68);</string>
+   <string notr="true"/>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
@@ -47,7 +47,7 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(64, 66, 68);
+      <string notr="true">background-color: rgb(42, 38, 46);
 color: rgb(85, 255, 0);</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">

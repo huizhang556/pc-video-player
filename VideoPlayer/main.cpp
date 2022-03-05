@@ -2,6 +2,7 @@
 #include <QApplication>
 #include "database/dataBase.h"
 #include "titleBar/TitleBar.h"
+#include "customer/CusLineEdit.h"
 #include "videomodels/MultipPlayer.h"
 
 int main(int argc, char *argv[])
@@ -10,6 +11,9 @@ int main(int argc, char *argv[])
     dataBase::creatConnection();
     MainWidget w1;
     w1.show();
+
+//    CusLineEdit c;
+//    c.show();
 
 //    MultipPlayer w;
 //    w.show();

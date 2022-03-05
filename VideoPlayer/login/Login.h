@@ -30,7 +30,7 @@ signals:
 
 private:
     Ui::Login *ui;
-    LoginPersonInfo *m_loginMain;
+    LoginPersonInfo     *m_loginMain    =   nullptr;
 };
 
 #endif // LOGIN_H
