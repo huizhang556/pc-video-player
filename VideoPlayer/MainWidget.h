@@ -4,6 +4,7 @@
 
 #include "login/Login.h"
 #include "titleBar/TitleBar.h"
+#include "customer/FirstShow.h"
 #include "slidebar/LeftSideBar.h"
 #include "customer/CusTabWidget.h"
 #include "browser/CusWebBrowser.h"
@@ -14,7 +15,6 @@
 #include "musicmodels/MusicPlaylist.h"
 #include "musicmodels/MusicPlayShow.h"
 #include "videomodels/VideoTitleBar.h"
-
 #include <QPoint>
 #include <QLayout>
 #include <QWidget>
@@ -60,7 +60,7 @@ private:
 
     void chandleSignalAndSlots();
 
-    void loadAllUIQss();//加载UI样式文件
+//    void loadAllUIQss();//加载UI样式文件
 
     void setStackedWidgetPage();//添加界面
 
@@ -75,7 +75,9 @@ private slots:
 
     void createHelpMenu();//帮助菜单
 
-    void help_aboutLocalFile();
+    void help_aboutLocalFile();//播放本地资源
+
+    void help_aboutNetworklFile();//播放网络资源
 
 
     //界面拉伸私有成员函数
@@ -89,7 +91,8 @@ private:
     ExitDialog          *m_pExitDlg         = nullptr;
     TitleBar            *m_titleBar         = nullptr;
     Login               *m_login            = nullptr;
-    MultipPlayer          *m_mainPlayer       = nullptr;
+    FirstShow           *m_firstShow        = nullptr;
+    MultipPlayer        *m_mainPlayer       = nullptr;
     LeftSideBar         *m_leftSideBar      = nullptr;
     MusicPlaylist       *m_musicList        = nullptr;
     MusicPlayShow       *m_musicShow        = nullptr;
@@ -98,9 +101,11 @@ private:
     CusWebBrowser       *m_webBrowser       = nullptr;
     VideoTitleBar       *m_videoTitle       = nullptr;
     QSystemTrayIcon     *m_tray             = nullptr;
+    QMenu               *pmenu2             = nullptr;
+    QMenu               *pmenu3             = nullptr;
     bool                 m_winMax;        //默认非最大化
     bool                 m_isClose;
-
+    bool                 m_firstOpen;     //第一次打开文件
     //界面拉伸私有成员变量
     bool     _isleftpressed = false;      //判断是否是左键点击
     int      _curpos = 0;                 //鼠标左键按下时光标所在区域

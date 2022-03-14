@@ -7,8 +7,10 @@ VideoTitleBar::VideoTitleBar(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setFixedHeight(55);
+    setTitleStackWidgetPage(0);
     ui->pushButton_close->setFlat(true);
     ui->pushButton_min->setFlat(true);
+    ui->lineEdit_url->setPlaceholderText(QString::fromLocal8Bit("请输入网络资源地址"));
     //关闭按钮
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){emit sig_winVClose();});
     //还原按钮
@@ -17,6 +19,14 @@ VideoTitleBar::VideoTitleBar(QWidget *parent) :
     connect(ui->pushButton_min,&QPushButton::clicked,[=](){emit sig_winVMinimum();});
     //返回主界面按钮
     connect(ui->pushButton_return,&QPushButton::clicked,[=](){emit sig_winVMinimum();});
+    //清除标题文字
+    connect(this,&VideoTitleBar::sig_winVClose,this,&VideoTitleBar::clearTitleText);
+    //发送输入的视频地址
+    connect(ui->lineEdit_url,&QLineEdit::returnPressed,[=]()
+    {
+        QString input = ui->lineEdit_url->text().trimmed();//去除两端的空格
+        emit sig_inputSourceUrl(input);
+    });
 }
 
 VideoTitleBar::~VideoTitleBar()
@@ -24,10 +34,29 @@ VideoTitleBar::~VideoTitleBar()
     delete ui;
 }
 
+/*设置标题栏*/
+void VideoTitleBar::setTitleStackWidgetPage(int index)
+{
+    if(index == 0)
+    {
+        ui->stackedWidget->setCurrentIndex(0);
+    }
+    else if(index == 1)
+    {
+        ui->stackedWidget->setCurrentIndex(1);
+    }
+}
+
 /*设置当前标题*/
 void VideoTitleBar::setTitleText(const QString &text)
 {
     ui->label_title->setText(text);
+}
+
+/*清除标题栏*/
+void VideoTitleBar::clearTitleText()
+{
+    ui->label_title->clear();
 }
 
 void VideoTitleBar::mouseDoubleClickEvent(QMouseEvent *event)

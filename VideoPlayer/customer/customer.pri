@@ -11,6 +11,5 @@ HEADERS += \
     $$PWD/CusMenu.h
 
 FORMS += \
-    $$PWD/FirstShow.ui \
     $$PWD/CusTabWidget.ui
 

@@ -2,15 +2,26 @@
 #include <QApplication>
 #include "database/dataBase.h"
 #include "titleBar/TitleBar.h"
+#include "customer/FirstShow.h"
+#include "style/loadGlobalQss.h"
 #include "customer/CusLineEdit.h"
 #include "videomodels/MultipPlayer.h"
+#include "mainwidget/Slideshow.h"
+
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    dataBase::creatConnection();
+    loadGlobalQss::loadAllUIQss();//加载全局样式
+    dataBase::creatConnection();//连接数据库
     MainWidget w1;
     w1.show();
+
+//    FirstShow f;
+//    f.show();
+
+//    Slideshow s;
+//    s.show();
 
 //    CusLineEdit c;
 //    c.show();

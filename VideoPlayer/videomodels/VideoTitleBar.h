@@ -15,6 +15,8 @@ class VideoTitleBar : public QWidget
 public:
     explicit VideoTitleBar(QWidget *parent = nullptr);
     ~VideoTitleBar();
+public slots:
+    void setTitleStackWidgetPage(int index);
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
@@ -22,6 +24,7 @@ protected:
 private slots:
     void chandleVMainWinStatus(bool status);
     void setTitleText(const QString & text);
+    void clearTitleText();
 
 private:
     Ui::VideoTitleBar *ui;
@@ -32,6 +35,7 @@ signals:
     void sig_winVRestore();
     void sig_doubleClick();
     void sig_returnMainUi();
+    void sig_inputSourceUrl(QString url);
 };
 
 #endif // VIDEOTITLEBAR_H

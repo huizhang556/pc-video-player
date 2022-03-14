@@ -34,6 +34,7 @@ HEADERS += \
 
 #此处添加模块
 include($$PWD/skin/skin.pri)
+include($$PWD/style/style.pri)
 include($$PWD/login/login.pri)
 include($$PWD/network/network.pri)
 include($$PWD/browser/browser.pri)

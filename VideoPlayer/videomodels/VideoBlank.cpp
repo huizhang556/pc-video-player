@@ -19,3 +19,16 @@ VideoBlank::~VideoBlank()
     delete ui;
 }
 
+void VideoBlank::setHideOpenButton(bool hide)
+{
+    if(hide)
+    {
+        ui->Btn_blank->setHidden(true);
+    }
+    else
+    {
+        ui->Btn_blank->setHidden(false);
+    }
+}
+
+

@@ -12,6 +12,7 @@
 #include "videomodels/MyVideoWidget.h"
 #include "musicmodels/MusicPlaylist.h"
 #include "videomodels/VideoTitleBar.h"
+#include "videomodels/RecomVideoTab.h"
 
 #include <QMap>
 #include <QPoint>
@@ -85,6 +86,16 @@ public slots:
 
     void closeCurrentWindow();
 
+    void clearListWidgetList_user();//清空用户信息
+
+    void clearListWidgetList_playlist();//清空播放列表
+
+    void clearListWidgetList_collection();//清空收藏列表
+
+    void clearListWidgetList_history();//清空历史记录
+
+    void clearUserInputSearchInfo();//清空用户输入的搜索字
+
 protected:
     void mousePressEvent(QMouseEvent *event) override;
 
@@ -98,6 +109,10 @@ protected:
 
 private slots:
     void on_time();
+
+    void checkChandleMediaPlayerStatus();//监测处理媒体播放状态
+
+    void checkChandleMediaStatus();//监测处理媒体状态
 
     void showPlayerUi();//显示播放器界面
 
@@ -178,6 +193,7 @@ private:
     QLineEdit                   *m_lineEdit         = nullptr;
     muteDialog                  *m_muteDlg          = nullptr;
     VideoBlank                  *m_videoBlank       = nullptr;
+    QTabWidget                  *m_tabWidget1        = nullptr; //节目列表选项
     QListWidget                 *m_listWisget1      = nullptr;
     QListWidget                 *m_listWisget2      = nullptr;
     QListWidget                 *m_listWisget3      = nullptr;
@@ -192,6 +208,7 @@ private:
     MusicPlaylist               *m_musicShowList    = nullptr;
     SystemSetting               *m_systemSetting    = nullptr;
     VideoTitleBar               *m_videoTitleBar    = nullptr;
+    RecomVideoTab               *m_recomTab         = nullptr;
     MyVideoWidget               *videoWidget        = nullptr;
     QMediaPlaylist              *playlist           = nullptr;
     int                         m_voice;                        //静音之前的值

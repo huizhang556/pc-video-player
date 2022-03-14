@@ -142,5 +142,7 @@
         <file>images/returnhome_hover.png</file>
         <file>images/file_open.png</file>
         <file>images/file_open_hover.png</file>
+        <file>images/turn_off.png</file>
+        <file>images/turn_on.png</file>
     </qresource>
 </RCC>

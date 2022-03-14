@@ -5,7 +5,8 @@
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
-    m_winMax(false)
+    m_winMax(false),
+    m_firstOpen(true)
 {
     setMinimumSize(1240,800);
     setMouseTracking(true);
@@ -54,7 +55,11 @@ void MainWidget::initOtherWidgetUi()
     m_tabWidget = new CusTabWidget();
     m_tabWidget->setObjectName(QString::fromLatin1("m_tabWidget"));
 
+    m_firstShow = new FirstShow();
+    m_firstShow->setObjectName(QString::fromLocal8Bit("m_firstShow"));
+
     m_videoBlank = new VideoBlank();
+    m_videoBlank->setHideOpenButton(true);
     m_videoBlank->setObjectName(QString::fromLatin1("m_videoBlank"));
 
     m_webBrowser = new CusWebBrowser();
@@ -89,7 +94,6 @@ void MainWidget::initOtherWidgetUi()
     m_vblayout->setContentsMargins(2,2,2,2);//左 上 右 下
     m_vblayout->setSpacing(0);
     this->setLayout(m_vblayout);
-    loadAllUIQss();//加载界面样式
 }
 
 //处理信号与槽函数
@@ -148,30 +152,29 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_videoBlank,&VideoBlank::sig_openLocalFile,[=]()
     {
         m_mainPlayer->openLocalFile();
-        m_mainPlayer->setMainCurrentIndex(1);
         m_mainPlayer->show();
     });
 
 }
 
 /*加载界面样式*/
-void MainWidget::loadAllUIQss()
-{
-    QFile file(":/style/alluistyle.qss");
-    file.open(QFile::ReadOnly | QFile::Text);
-    if(!file.isOpen())
-    {
-        qDebug()<<"the style qss is unload!";
-        return;
-    }
-    else
-    {
-        QString style = tr(file.readAll());
-        qApp->setStyleSheet(style);
-        qDebug()<<"the style is load successfull!";
-    }
-    file.close();
-}
+//void MainWidget::loadAllUIQss()
+//{
+//    QFile file(":/style/alluistyle.qss");
+//    file.open(QFile::ReadOnly | QFile::Text);
+//    if(!file.isOpen())
+//    {
+//        qDebug()<<"the style qss is unload!";
+//        return;
+//    }
+//    else
+//    {
+//        QString style = tr(file.readAll());
+//        qApp->setStyleSheet(style);
+//        qDebug()<<"the style is load successfull!";
+//    }
+//    file.close();
+//}
 
 //设置StackedWidget布局每个page界面
 void MainWidget::setStackedWidgetPage()
@@ -209,26 +212,31 @@ void MainWidget::createTrayMenu()
 /*帮助菜单*/
 void MainWidget::createHelpMenu()
 {
-    QMenu *pmenu2 = new QMenu(this);
+    pmenu2 = new QMenu(this);
     pmenu2->setObjectName(QString::fromLocal8Bit("pmenu2"));//样式表中设置样式必须设置对象名称才能生效
-    pmenu2->setStyleSheet("QMenu"
-                          "{"
-                          "font-size:12px;"
-                          "background-color:#3d3d3d;"
-                          "color:green;"
-//                        "padding:15px 15px;"//调整文字间距
-                          "}"
-                          "QMenu::item:selected"
-                          "{"
-                          "color:red;"
-                          "}");//font:bold italic 18px "微软雅黑";
+//    pmenu2->setStyleSheet("#pmenu2"
+//                          "{"
+//                          "font-size:12px;"
+//                          "background-color:#3d3d3d;"
+//                          "color:green;"
+//                          "width:90px;"
+////                        "padding:15px 15px;"//调整文字间距
+//                          "}"
+//                          "#pmenu2::item:selected"
+//                          "{"
+//                          "color:red;"
+//                          "}");//font:bold italic 18px "微软雅黑";
     pmenu2->addAction(QString::fromLocal8Bit("系统设置"),this,SLOT(help_stemAboutSetting()));
     pmenu2->addSeparator();
     pmenu2->addAction(QString::fromLocal8Bit("网络资源"),this,SLOT(playHttpRequireRecourse(QString)));
     pmenu2->addSeparator();
     pmenu2->addAction(QString::fromLocal8Bit("问题帮助"),this,SLOT(help_questionAnswer()));
     pmenu2->addSeparator();
-    pmenu2->addAction(QString::fromLocal8Bit("播放文件"),this,SLOT(help_aboutLocalFile()));
+    pmenu3 = new QMenu(QString::fromLocal8Bit("播放视频"),this);
+    pmenu3->setObjectName(QString::fromLocal8Bit("pmenu3"));
+    pmenu3->addAction(QString::fromLocal8Bit("本地视频"),this,SLOT(help_aboutLocalFile()));
+    pmenu3->addAction(QString::fromLocal8Bit("网络视频"),this,SLOT(help_aboutNetworklFile()));
+    pmenu2->addMenu(pmenu3);
     pmenu2->addSeparator();
     pmenu2->addAction(QString::fromLocal8Bit("软件下载"),this,SLOT(help_openWebSite()));
     pmenu2->addSeparator();
@@ -243,10 +251,19 @@ void MainWidget::createHelpMenu()
     delete pmenu2;
 }
 
+/*播放本地文件*/
 void MainWidget::help_aboutLocalFile()
 {
     m_mainPlayer->openLocalFile();
     m_mainPlayer->setMainCurrentIndex(1);
+    m_mainPlayer->show();
+}
+
+/*播放网络资源*/
+void MainWidget::help_aboutNetworklFile()
+{
+    qDebug() <<"PLAY NETWORK RESOURCE";
+    m_videoTitle->setTitleStackWidgetPage(1);
     m_mainPlayer->show();
 }
 

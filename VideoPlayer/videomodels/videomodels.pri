@@ -4,7 +4,8 @@ SOURCES += \
     $$PWD/AdjustBright.cpp \
     $$PWD/VideoTitleBar.cpp \
     $$PWD/VideoBlank.cpp \
-    $$PWD/MultipPlayer.cpp
+    $$PWD/MultipPlayer.cpp \
+    $$PWD/RecomVideoTab.cpp
 
 
 HEADERS += \
@@ -13,7 +14,8 @@ HEADERS += \
     $$PWD/AdjustBright.h \
     $$PWD/VideoTitleBar.h \
     $$PWD/VideoBlank.h \
-    $$PWD/MultipPlayer.h
+    $$PWD/MultipPlayer.h \
+    $$PWD/RecomVideoTab.h
 
 
 FORMS += \
@@ -21,5 +23,6 @@ FORMS += \
     $$PWD/AdjustBright.ui \
     $$PWD/VideoTitleBar.ui \
     $$PWD/VideoBlank.ui \
-    $$PWD/MultipPlayer.ui
+    $$PWD/MultipPlayer.ui \
+    $$PWD/RecomVideoTab.ui
 

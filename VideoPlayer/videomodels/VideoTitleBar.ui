@@ -47,7 +47,7 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(42, 38, 46);
+      <string notr="true">background-color: #1a1a1a;
 color: rgb(85, 255, 0);</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -138,36 +138,74 @@ color: rgb(255, 85, 0);
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="label_title">
-          <property name="minimumSize">
-           <size>
-            <width>800</width>
-            <height>0</height>
-           </size>
+         <widget class="QStackedWidget" name="stackedWidget">
+          <property name="currentIndex">
+           <number>0</number>
           </property>
-          <property name="font">
-           <font>
-            <family>Microsoft YaHei</family>
-            <pointsize>15</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel
+          <widget class="QWidget" name="page">
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLabel" name="label_title">
+              <property name="font">
+               <font>
+                <family>黑体</family>
+                <pointsize>14</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="page_2">
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QLineEdit" name="lineEdit_url">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>36</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">/*搜索框*/
+QLineEdit
 {
-
+color:#cccccc;
+font-family:&quot;微软雅黑&quot;;
+font-size:18px;
+background-color: #3c3842;
+selection-background-color: #D1DBCB;
+border-right:transparent;
+/*border:1px solid #ff5c38;*/
+border-top-left-radius:18;
+border-top-right-radius:18;
+border-bottom-right-radius:18;
+border-bottom-left-radius:18;
+padding-left:15px;
 }
 
-QLabel:hover
+QLineEdit:hover
 {
+background-color: #3a2f36;
+padding-left:15px;
+border:1px solid #ff5c38;
+}
 
-}</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
+</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
         <item>

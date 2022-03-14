@@ -3,6 +3,8 @@
 #include "browser/CusWebBrowser.h"
 #include <QTimer>
 #include <QWidget>
+#include <QLineEdit>
+#include <QPushButton>
 #include <QMouseEvent>
 
 namespace Ui {
@@ -26,6 +28,8 @@ protected:
 //公有槽函数以公共接口的形式暴露在外面，外部任何客户可以直接访问
 public slots:
     void isNecessaryShowSearch(int index);
+    //处理鼠标进入离开输入框
+    void mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event);
 
 //私有槽函数，外部不能直接访问
 private slots:

@@ -4,6 +4,55 @@ background-color:#2a2a31;
 color: rgb(85, 255, 0);
 }
 
+/*大标题栏---右键菜单*/
+#pmenu2
+{
+font-size:12px;
+background-color:#3d3d3d;
+color:green;
+}
+
+
+#pmenu2::item
+{
+text-align:center;
+}
+
+#pmenu2::item::indicator
+{
+/*magin-right:20px;*/
+}
+
+#pmenu2::item::right-arrow
+{
+/*magin-left:20px;*/
+}
+
+/*menu-hover*/
+#pmenu2::item:selected
+{
+color:red;
+}
+
+#pmenu3
+{
+font-size:12px;
+background-color:#3d3d3d;
+color:green;
+
+}
+
+#pmenu3::item
+{
+
+}
+
+/*menu-hover*/
+#pmenu3::item:selected
+{
+color:red;
+}
+
 MainWindow
 {
 background-color:#2a2a31;
@@ -116,6 +165,40 @@ QToolBox
 border-right:2px;
 background-color:#3d3d3d;
  icon-size: 25px; 
+}
+
+/*节目列表tabwidget*/
+#m_tabWidget1
+{
+outline:none;
+background-color:#3d3d3d;
+color:black;
+}
+
+#m_tabWidget1 QTabBar::tab
+{
+width:130px;
+height:35px;
+color: white;
+background-color:#3f3f48;
+}
+
+#m_tabWidget1 QTabBar::tab:first
+{
+/*border-right:1px solid #ff5c38;*/
+}
+
+#m_tabWidget1 QTabBar::tab:!selected
+{
+margin-top: 0px;
+}
+
+#m_tabWidget1 QTabBar::tab:selected
+{
+color:#ff5c38;
+font-size:14px;
+font-weight:bold;
+border-bottom:2px solid #ff5c38;
 }
 
 /*抽屉控件,有效*/

@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1115</width>
-    <height>483</height>
+    <width>1206</width>
+    <height>482</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:#2a2a31;</string>
   </property>
   <property name="tabShape">
    <enum>QTabWidget::Rounded</enum>
@@ -31,16 +34,16 @@
       <number>0</number>
      </property>
      <property name="leftMargin">
-      <number>0</number>
+      <number>2</number>
      </property>
      <property name="topMargin">
-      <number>0</number>
+      <number>2</number>
      </property>
      <property name="rightMargin">
-      <number>0</number>
+      <number>2</number>
      </property>
      <property name="bottomMargin">
-      <number>0</number>
+      <number>2</number>
      </property>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_5">

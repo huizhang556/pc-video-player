@@ -15,6 +15,8 @@ public:
     explicit VideoBlank(QWidget *parent = nullptr);
     ~VideoBlank();
 
+    void setHideOpenButton(bool hide);//隐藏打开按钮
+
 private slots:
 
 

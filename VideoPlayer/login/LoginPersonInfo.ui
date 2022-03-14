@@ -44,7 +44,7 @@ background-color: rgb(6, 40, 54);
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="page">
       <property name="styleSheet">

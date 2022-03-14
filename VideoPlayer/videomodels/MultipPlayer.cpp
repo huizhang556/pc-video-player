@@ -116,6 +116,7 @@ void MultipPlayer::initMainWindow()
     m_videoTitleBar->setObjectName(QString::fromLocal8Bit("m_videoTitleBar"));
 
     ui->stackedWidget->insertWidget(0,m_videoBlank);
+    m_videoBlank->setHideOpenButton(true);
     ui->stackedWidget->insertWidget(1,videoWidget);
     ui->stackedWidget->insertWidget(2,m_musicUi);
     ui->stackedWidget->setCurrentIndex(0);//默认显示音乐界面
@@ -180,16 +181,25 @@ void MultipPlayer::initMainWindow()
     m_toolBox->addItem(m_listWisget1,icon_user,QString::fromLocal8Bit("用户信息"));
     m_toolBox->addItem(m_widget2,icon_playlist,QString::fromLocal8Bit("播放列表"));
     m_toolBox->addItem(m_listWisget3,icon_collect,QString::fromLocal8Bit("我的收藏"));
-    m_toolBox->addItem(m_listWisget4,icon_internet,QString::fromLocal8Bit("网络曲库"));
+    m_toolBox->addItem(m_listWisget4,icon_internet,QString::fromLocal8Bit("播放记录"));
     m_toolBox->layout()->setSpacing(3);//item之间的间距
 
+    m_recomTab = new RecomVideoTab;
+    m_recomTab->setObjectName(QString::fromLocal8Bit("m_recomTab"));
+    m_recomTab->setFixedWidth(260);
+    //节目列表分块
+    m_tabWidget1 = new QTabWidget;//不用手动释放，有包含关系
+    m_tabWidget1->setObjectName(QString::fromLocal8Bit("m_tabWidget1"));
+    m_tabWidget1->setFixedWidth(260);//固定宽度
+    m_tabWidget1->insertTab(0,m_toolBox,QString::fromLocal8Bit("播放列表"));
+    m_tabWidget1->insertTab(1,m_recomTab,QString::fromLocal8Bit("推荐视频"));
+    m_tabWidget1->setCurrentIndex(0);
     m_hboxlayout_rlist = new QHBoxLayout;
     m_hboxlayout_rlist->addWidget(ui->stackedWidget);
-    m_hboxlayout_rlist->addWidget(m_toolBox);
+    m_hboxlayout_rlist->addWidget(m_tabWidget1);
     m_hboxlayout_rlist->setSpacing(0);
     m_hboxlayout_rlist->setStretch(0,7);
     m_hboxlayout_rlist->setStretch(1,3);
-    m_toolBox->setHidden(true);
 
     ui->verticalLayout_5->insertWidget(0,m_videoTitleBar);//标题栏
     ui->verticalLayout_5->insertLayout(1,m_hboxlayout_rlist);
@@ -217,6 +227,10 @@ void MultipPlayer::chandleSignalAndSLots()
 {
     //应该在有影片播放的时候，执行定时器，否则就是无效；1s更新一次进度
     connect(m_pTimer,&QTimer::timeout,this,&MultipPlayer::on_time);
+    //监测媒体播放状态 StoppedState PlayingState PausedState
+    connect(player,&QMediaPlayer::stateChanged,this,&MultipPlayer::checkChandleMediaPlayerStatus);
+    //监测媒体本身状态,所带参数为新的媒体状态，比如缓冲状态 BufferingMedia BufferedMedia
+    connect(player,&QMediaPlayer::mediaStatusChanged,this,&MultipPlayer::checkChandleMediaStatus);
     connect(player,&QMediaPlayer::durationChanged,[=](){
         m_times = player->duration()/1000;//持续时间,毫秒为单位，转化为秒为单位
         ui->horizontalSlider->setRange(0,m_times);
@@ -275,13 +289,13 @@ void MultipPlayer::chandleSignalAndSLots()
     //右侧播放列表显示,[=]代表以传值的方式捕获当前所有能捕获的数据对象
     connect(ui->pushButton_curlist,&QPushButton::clicked,[=]()
     {
-        if(m_toolBox->isHidden())
+        if(m_tabWidget1->isHidden())
         {
-            m_toolBox->show();
+            m_tabWidget1->show();
         }
         else
         {
-            m_toolBox->hide();
+            m_tabWidget1->hide();
         }
     });
 
@@ -379,6 +393,15 @@ void MultipPlayer::chandleSignalAndSLots()
 
             on_pushButton_6_clicked();
         }
+    });
+
+    //接受发过来的网络资源链接
+    connect(m_videoTitleBar,&VideoTitleBar::sig_inputSourceUrl,[=](QString newurl)
+    {
+//        QFileInfo info(newurl);
+        QUrl url = QUrl::fromLocalFile(newurl);
+        player->setMedia(url);
+        player->play();
     });
 }
 
@@ -702,7 +725,6 @@ void MultipPlayer::on_pushButton_5_clicked()
             connect(m_pTimer2,&QTimer::timeout,[=](){
             //这里必须加一个定时器，以解决界面缓冲，是的界面来得及反应（主要是标题栏反应不过来）
 //                ui->stackedWidget->setCurrentIndex(2);//索引2,界面显示视频
-//              ui->verticalLayout_5->replaceWidget(ui->stackedWidget,videoWidget);//m_widget1在索引为0的dockwidget上
                 m_playerState = QMediaPlayer::PlayingState;
                 ui->pushButton_pauseStart->setIcon(QIcon(":/images/pausehover.png"));
                 ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("暂停"));
@@ -856,7 +878,78 @@ void MultipPlayer::on_time()
 
 //        //qDebug() << "minute:" << min << "second" << sec << "ms" << msec <<endl;
 
-//        return hou + ":" + min + ":" + sec ;
+    //        return hou + ":" + min + ":" + sec ;
+}
+
+//监测处理媒体播放状态
+void MultipPlayer::checkChandleMediaPlayerStatus()
+{
+    if(player->media().isNull())
+        return;
+    if(player->state() == QMediaPlayer::PausedState)
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::PausedState");
+    }
+    else if(player->state() == QMediaPlayer::PlayingState)
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::PlayingState");
+    }
+    else if(player->state() == QMediaPlayer::StoppedState)
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::StoppedState");
+    }
+    else
+    {
+        qDebug() << QString::fromLocal8Bit("other state!");
+    }
+}
+
+//监测处理媒体本身状态，加载完毕，正在加载，缓冲结束，正在缓冲，未知，有效等
+void MultipPlayer::checkChandleMediaStatus()
+{
+    if(player->media().isNull())
+        return;
+    if(player->mediaStatus() == QMediaPlayer::UnknownMediaStatus)//未知媒体状态
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::UnknownMediaStatus");
+    }
+    else if(player->mediaStatus() == QMediaPlayer::NoMedia)//无媒体状态
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::NoMedia");
+        ui->stackedWidget->setCurrentIndex(0);
+    }
+    else if(player->mediaStatus() == QMediaPlayer::LoadingMedia)//加载媒体中
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::LoadingMedia");
+    }
+    else if(player->mediaStatus() == QMediaPlayer::LoadedMedia)//媒体加载完毕
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::LoadedMedia");
+    }
+    else if(player->mediaStatus() == QMediaPlayer::StalledMedia)//媒体停顿
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::StalledMedia");
+    }
+    else if(player->mediaStatus() == QMediaPlayer::BufferingMedia)//媒体正在缓冲
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::BufferingMedia");
+    }
+    else if(player->mediaStatus() == QMediaPlayer::BufferedMedia)//媒体缓冲完毕
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::BufferedMedia");
+    }
+    else if(player->mediaStatus() == QMediaPlayer::EndOfMedia)//媒体结束
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::EndOfMedia");
+    }
+    else if(player->mediaStatus() == QMediaPlayer::InvalidMedia)//媒体无效
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::InvalidMedia");
+    }
+    else
+    {
+        qDebug() << QString::fromLocal8Bit("other unknow problem!");
+    }
 }
 
 /*显示播放器界面*/
@@ -1367,8 +1460,47 @@ void MultipPlayer::closeCurrentWindow()
     player->stop();//暂停播放
     m_mapList.clear();//清空容器
     m_mapList2.clear();//清空容器
-    this->close();
+    ui->stackedWidget->setCurrentIndex(0);//空白页
+    clearListWidgetList_user();
+    clearListWidgetList_playlist();
+    clearListWidgetList_collection();
+    clearListWidgetList_history();
+    clearUserInputSearchInfo();
+    this->hide();//隐藏界面
+
 }
+
+//清空用户信息
+void MultipPlayer::clearListWidgetList_user()
+{
+    m_listWisget1->clear();
+}
+
+//清空播放列表
+void MultipPlayer::clearListWidgetList_playlist()
+{
+    m_listWisget2->clear();
+}
+
+//清空收藏列表
+void MultipPlayer::clearListWidgetList_collection()
+{
+    m_listWisget3->clear();
+}
+
+//清空历史记录
+void MultipPlayer::clearListWidgetList_history()
+{
+    m_listWisget4->clear();
+}
+
+//清空用户输入的搜索字
+void MultipPlayer::clearUserInputSearchInfo()
+{
+    m_lineEdit->clear();
+}
+
+
 
 
 

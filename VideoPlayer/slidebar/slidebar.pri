@@ -4,3 +4,5 @@ SOURCES += \
 
 HEADERS += \
     $$PWD/LeftSideBar.h
+
+FORMS +=

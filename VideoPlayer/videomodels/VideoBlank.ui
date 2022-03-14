@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #404244;</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
@@ -95,7 +98,8 @@
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">border-image: url(:/images/openfile.png);</string>
+        <string notr="true">border-image: url(:/images/openfile.png);
+background-color: #404244;</string>
        </property>
        <property name="text">
         <string/>

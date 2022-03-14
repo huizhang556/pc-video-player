@@ -189,7 +189,6 @@ LoginPersonInfo::LoginPersonInfo(QWidget *parent) :
         close();
     });
 
-
     /*注册---注册邮箱按钮*/
     clearAction5 = new QAction(icon_clear,"");
     clearAction5->setObjectName(QString::fromLocal8Bit("clearAction5"));
@@ -208,7 +207,6 @@ LoginPersonInfo::LoginPersonInfo(QWidget *parent) :
             clearAction5->setEnabled(false);
          }
     });
-
 
 
     /*登录---登录按钮*/

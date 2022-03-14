@@ -65,7 +65,8 @@ void TitleBar::initWorker()
 
     ui->Btn_expand->setFlat(true);
     ui->Btn_expand->setToolTip(QString::fromLatin1("点击查看历史记录"));
-
+    ui->lineEditSearch->installEventFilter(this);
+    ui->BtnSearch->installEventFilter(this);
     ui->lineEdit_webSearch->installEventFilter(this);//设置监听
 }
 
@@ -121,6 +122,9 @@ void TitleBar::mouseDoubleClickEvent(QMouseEvent *event)
 /*监听事件*/
 bool TitleBar::eventFilter(QObject *watched, QEvent *event)
 {
+    QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);//转换为鼠标事件
+    mouseIsEnterLeaveLineEdit(watched,mouseEvent);//搜索框鼠标事件监听
+
     if(watched == ui->lineEdit_webSearch)
     {
         if(event->type() == QEvent::Enter)
@@ -129,6 +133,8 @@ bool TitleBar::eventFilter(QObject *watched, QEvent *event)
                 QString url = ui->lineEdit_webSearch->text().trimmed();
                 emit sig_sendNewUrl(url);
                 //处理其他事件
+                //鼠标进入样式改变
+
             });
         }
     }
@@ -172,6 +178,97 @@ void TitleBar::isNecessaryShowSearch(int index)
     else
     {
         ui->stackedWidget->setCurrentIndex(2);
+    }
+}
+
+/*槽函数 --public 处理鼠标进入离开的样式*/
+void TitleBar::mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event)
+{
+    if(watched == ui->lineEditSearch)
+    {
+        if(event->type() == QEvent::Leave)
+        {
+            ui->lineEditSearch->setStyleSheet("QLineEdit{"
+                                              "color:#cccccc;"
+                                              "font-size:18px;"
+                                              "margin-right:-3px;"
+                                              "padding-left:15px;"
+                                              "background-color: #3c3842;"
+                                              "border:1px solid transparent;"
+                                              "border-top-left-radius:18;"
+                                              "border-bottom-left-radius:18;"
+                                              "}");
+            ui->BtnSearch->setStyleSheet("QPushButton{"
+                                         "background-color:#44444f;"
+                                         "color:#ff5c38;"
+                                         "border-top-right-radius:18;"
+                                         "border-bottom-right-radius:18;"
+                                         "}");
+        }
+        else if(event->type() == QEvent::Enter)
+        {
+            ui->lineEditSearch->setStyleSheet("QLineEdit{"
+                                              "color:#aeada7;"
+                                              "font-size:18px;"
+                                              "padding-left:15px;"
+                                              "margin-right:-3px;"
+                                              "border-right:-2px;"
+                                              "background-color: #3a2f36;"
+                                              "border:1px solid #ff5c38;"
+                                              "border-top-left-radius:18;"
+                                              "border-bottom-left-radius:18;"
+                                              "}");
+            ui->BtnSearch->setStyleSheet("QPushButton{"
+                                         "background-color:#ff5246;"
+                                         "color:white;"
+                                         "padding:-1px;"
+                                         "border-top-right-radius:18;"
+                                         "border-bottom-right-radius:18;"
+                                         "}");
+        }
+    }
+
+    if(watched == ui->BtnSearch)
+    {
+        if(event->type() == QEvent::Leave)
+        {
+            ui->lineEditSearch->setStyleSheet("QLineEdit{"
+                                              "color:#cccccc;"
+                                              "font-size:18px;"
+                                              "margin-right:-3px;"
+                                              "padding-left:15px;"
+                                              "background-color: #3c3842;"
+                                              "border:1px solid transparent;"
+                                              "border-top-left-radius:18;"
+                                              "border-bottom-left-radius:18;"
+                                              "}");
+            ui->BtnSearch->setStyleSheet("QPushButton{"
+                                         "background-color:#44444f;"
+                                         "color:#aeada7;"
+                                         "border-top-right-radius:18;"
+                                         "border-bottom-right-radius:18;"
+                                         "}");
+        }
+        else if(event->type() == QEvent::Enter)
+        {
+            ui->lineEditSearch->setStyleSheet("QLineEdit{"
+                                              "font-size:18px;"
+                                              "margin-right:-3px;"
+                                              "padding-left:15px;"
+                                              "border-right:-2px;"
+                                              "background-color: #3a2f36;"
+                                              "border:1px solid #ff5c38;"
+                                              "border-top-left-radius:18;"
+                                              "border-bottom-left-radius:18;"
+                                              "}");
+            ui->BtnSearch->setStyleSheet("QPushButton{"
+                                         "background-color:#ff5246;"
+                                         "color:white;"
+                                         "padding:-1px;"
+                                         "border-top-right-radius:18;"
+                                         "border-bottom-right-radius:18;"
+                                         "}");
+        }
     }
 }
 
