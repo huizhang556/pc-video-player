@@ -268,14 +268,15 @@ void MultipPlayer::chandleSignalAndSLots()
 //                qDebug()<<"mutePos = "<<mutePos;
 //                m_muteDlg->move(mutePos);
 //                m_muteDlg->show();
-                this->updateGeometry();
+//                this->updateGeometry();
                 qDebug() << ui->pushButton_sound->pos();
                 // widget_player-->stackedWidget_player
                 int x = this->mapToGlobal(ui->pushButton_sound->pos()+ui->stackedWidget_player->pos()+m_videoTitleBar->pos()+this->pos()).x();
                 int y = this->mapToGlobal(ui->pushButton_sound->pos()+ui->stackedWidget_player->pos()+m_videoTitleBar->pos()+this->pos()).y();
                 int h = m_muteDlg->height();
                 qDebug() << "QPont_g(" << x << "," << y << ")";
-                m_muteDlg->setGeometry(x-6,y-h-6,m_muteDlg->width(),m_muteDlg->height());
+//                m_muteDlg->setGeometry(x-6,y-h-6,m_muteDlg->width(),m_muteDlg->height());
+                m_muteDlg->move(ui->pushButton_sound->pos());
                 m_muteDlg->raise();
                 m_muteDlg->show();
             }
