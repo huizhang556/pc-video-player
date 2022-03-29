@@ -2,7 +2,6 @@
 #define MAINWIDGET_H
 #define MARGIN 2 //窗口边距
 
-#include "login/Login.h"
 #include "titleBar/TitleBar.h"
 #include "customer/FirstShow.h"
 #include "slidebar/LeftSideBar.h"
@@ -71,8 +70,6 @@ private:
 private slots:
     void chandleRestoreWindow();
 
-    void set_adjustLogin();
-
     void createHelpMenu();//帮助菜单
 
     void help_aboutLocalFile();//播放本地资源
@@ -90,7 +87,6 @@ private:
     QHBoxLayout         *m_hblayout         = nullptr;
     ExitDialog          *m_pExitDlg         = nullptr;
     TitleBar            *m_titleBar         = nullptr;
-    Login               *m_login            = nullptr;
     FirstShow           *m_firstShow        = nullptr;
     MultipPlayer        *m_mainPlayer       = nullptr;
     LeftSideBar         *m_leftSideBar      = nullptr;

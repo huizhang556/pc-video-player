@@ -7,6 +7,8 @@ SearchForm::SearchForm(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowFlag(Qt::FramelessWindowHint);
+    ui->btn_his_delete->setFlat(true);
+    ui->btn_hot_more->setFlat(true);
 }
 
 SearchForm::~SearchForm()

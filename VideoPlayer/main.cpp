@@ -6,6 +6,7 @@
 #include "style/loadGlobalQss.h"
 #include "customer/CusLineEdit.h"
 #include "videomodels/MultipPlayer.h"
+#include "videomodels/ControlForm.h"
 #include "mainwidget/Slideshow.h"
 
 
@@ -16,6 +17,9 @@ int main(int argc, char *argv[])
     dataBase::creatConnection();//连接数据库
     MainWidget w1;
     w1.show();
+
+//    ControlForm v;
+//    v.show();
 
 //    FirstShow f;
 //    f.show();

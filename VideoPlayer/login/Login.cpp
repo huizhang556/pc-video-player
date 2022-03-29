@@ -45,6 +45,7 @@ Login::~Login()
     delete m_loginMain;
 }
 
+
 void Login::leaveEvent(QEvent *event)
 {
     Q_UNUSED(event);
@@ -63,8 +64,7 @@ void Login::leaveEvent(QEvent *event)
 
 void Login::receiveMainWinCloseAppSignal()
 {
-    this->close();
-    emit sig_LoginWinClose();
+    emit sig_LoginWinClose();//向登录信息窗口发送信号
 }
 
 void Login::paintEvent(QPaintEvent *event)

@@ -144,5 +144,8 @@
         <file>images/file_open_hover.png</file>
         <file>images/turn_off.png</file>
         <file>images/turn_on.png</file>
+        <file>images/his_delete.png</file>
+        <file>images/his_hot.png</file>
+        <file>images/his_pic.png</file>
     </qresource>
 </RCC>

@@ -263,20 +263,10 @@ void MultipPlayer::chandleSignalAndSLots()
         {
             if(m_muteDlg->isHidden())
             {
-                //这是全局坐标
-//                QPoint mutePos = QPoint(QCursor::pos().x()-20,QCursor::pos().y()-190);
-//                qDebug()<<"mutePos = "<<mutePos;
-//                m_muteDlg->move(mutePos);
-//                m_muteDlg->show();
-//                this->updateGeometry();
-                qDebug() << ui->pushButton_sound->pos();
-                // widget_player-->stackedWidget_player
-                int x = this->mapToGlobal(ui->pushButton_sound->pos()+ui->stackedWidget_player->pos()+m_videoTitleBar->pos()+this->pos()).x();
-                int y = this->mapToGlobal(ui->pushButton_sound->pos()+ui->stackedWidget_player->pos()+m_videoTitleBar->pos()+this->pos()).y();
+                int x = ui->pushButton_sound->parentWidget()->mapToGlobal(ui->pushButton_sound->pos()).x();
+                int y = ui->pushButton_sound->parentWidget()->mapToGlobal(ui->pushButton_sound->pos()).y();
                 int h = m_muteDlg->height();
-                qDebug() << "QPont_g(" << x << "," << y << ")";
-//                m_muteDlg->setGeometry(x-6,y-h-6,m_muteDlg->width(),m_muteDlg->height());
-                m_muteDlg->move(ui->pushButton_sound->pos());
+                m_muteDlg->setGeometry(x-6,y-h-6,m_muteDlg->width(),m_muteDlg->height());
                 m_muteDlg->raise();
                 m_muteDlg->show();
             }
@@ -381,7 +371,7 @@ void MultipPlayer::chandleSignalAndSLots()
     //    connect(this,SIGNAL(sig_sendSwitchToMusicPage(QString)),m_musicUi,SLOT(receiveMainWinData(QString)));
 
     //调节列表发来的信号处理
-    m_adjustBright = new AdjustBright(this);//必须先new出来，再使用，否则无用
+    m_adjustBright = new AdjustBright();//必须先new出来，再使用，否则无用
     m_adjustBright->setObjectName(QString::fromLocal8Bit("m_adjustBright"));
     m_adjustBright->setHidden(true);//界面运行起来弹出界面bug
     connect(playlist,SIGNAL(currentIndexChanged(int)),m_adjustBright,SLOT(updatePlayRate()));//倍速恢复正常选项状态
@@ -1264,14 +1254,13 @@ void MultipPlayer::volumeAdjustShowUi(QObject *watched, QEvent *event)
                 }
                 else
                 {
-                    m_muteDlg->move(ui->pushButton_sound->pos());
-                    //widget_player-->stackedWidget_player
-//                    int x = this->mapToGlobal(ui->pushButton_sound->pos()+ui->stackedWidget_player->pos()+this->pos()).x();
-//                    int y = this->mapToGlobal(ui->pushButton_sound->pos()+ui->stackedWidget_player->pos()+this->pos()).y();
-//                    int h = m_muteDlg->height();
-//                    m_muteDlg->setGeometry(x-6,y-h-6,m_muteDlg->width(),m_muteDlg->height());
-//                    m_muteDlg->raise();
-//                    m_muteDlg->show();
+                    int x = ui->pushButton_sound->parentWidget()->mapToGlobal(ui->pushButton_sound->pos()).x();
+                    int y = ui->pushButton_sound->parentWidget()->mapToGlobal(ui->pushButton_sound->pos()).y();
+                    int h = m_muteDlg->height();
+                    qDebug() << "QPont_g(" << x << "," << y << ")";
+                    m_muteDlg->setGeometry(x-6,y-h-6,m_muteDlg->width(),m_muteDlg->height());
+                    m_muteDlg->raise();
+                    m_muteDlg->show();
                 }
             }
         }
@@ -1394,18 +1383,23 @@ void MultipPlayer::set_adjustBright()
 //            menu_adj->move(QCursor::pos().x()-200,QCursor::pos().y()-370);
 //            ui->Btn_adjust->setMenu(menu_adj);
 //            m_adjustBright->move(point.x()-200,point.y()-370);
-            m_adjustBright->move(QCursor::pos().x()-300,QCursor::pos().y()-370);
-//            m_adjustBright->move(event->globalPos());
+            int x = ui->Btn_adjust->parentWidget()->mapToGlobal(ui->Btn_adjust->pos()).x();
+            int y = ui->Btn_adjust->parentWidget()->mapToGlobal(ui->Btn_adjust->pos()).y();
+            int w = m_adjustBright->width();
+            int h = m_adjustBright->height();
+            m_adjustBright->setGeometry(x-w/2-50,y-h-9,m_adjustBright->width(),m_adjustBright->height());
             m_adjustBright->raise();
             m_adjustBright->show();
         }
     }
     else
     {
-        m_adjustBright = new AdjustBright(this);
-//        m_adjustBright->move(point.x()-200,point.y()-370);
-        m_adjustBright->move(QCursor::pos().x()-300,QCursor::pos().y()-370);
-//        m_adjustBright->move(event->globalPos());
+        m_adjustBright = new AdjustBright();
+        int x = ui->Btn_adjust->parentWidget()->mapToGlobal(ui->Btn_adjust->pos()).x();
+        int y = ui->Btn_adjust->parentWidget()->mapToGlobal(ui->Btn_adjust->pos()).y();
+        int w = m_adjustBright->width();
+        int h = m_adjustBright->height();
+        m_adjustBright->setGeometry(x-w/2-50,y-h-9,m_adjustBright->width(),m_adjustBright->height());
         m_adjustBright->raise();
         m_adjustBright->show();
     }
@@ -1555,7 +1549,7 @@ void MultipPlayer::clearUserInputSearchInfo()
 /*监听事件*/
 bool MultipPlayer::eventFilter(QObject *watched, QEvent *event)
 {
-    QMouseEvent *mousevent = static_cast<QMouseEvent*>(event);
+//    QMouseEvent *mousevent = static_cast<QMouseEvent*>(event);
 //    volumeAdjustShowUi(watched,mousevent);
     return QWidget::eventFilter(watched,event);
 }

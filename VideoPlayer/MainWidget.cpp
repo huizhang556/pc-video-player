@@ -68,10 +68,6 @@ void MainWidget::initOtherWidgetUi()
     //弹出对话框
     m_pExitDlg = new ExitDialog(this);
     m_pExitDlg->setObjectName(QString::fromLatin1("m_pExitDlg"));
-    //登录
-    m_login = new Login(this);
-    m_login->setObjectName(QString::fromLatin1("m_login"));
-    m_login->setHidden(true);//首次应该隐藏，否则弹出界面
 
     //托盘
     QIcon icno(":/images/tray.png");
@@ -104,8 +100,6 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_titleBar,&TitleBar::sig_winNormal,this,&MainWidget::chandleRestoreWindow);//根据不同状态处理窗口
     connect(m_titleBar,&TitleBar::sig_winMinimum,[=](){this->showMinimized();});
     connect(m_titleBar,&TitleBar::sig_doubleClick,[=](){chandleRestoreWindow();});
-    //响应 标题栏 发送的调用登录提示板信号,弹出提示板
-    connect(m_titleBar,&TitleBar::sig_callLogin,this,&MainWidget::set_adjustLogin);
     //响应 标题栏 调用历史记录信号
     connect(m_titleBar,&TitleBar::sig_historyDownload,[=](){m_stackWidget->setCurrentIndex(1);});
     //响应 标题栏 帮助设置发来信号，弹出右键菜单
@@ -139,8 +133,8 @@ void MainWidget::chandleSignalAndSlots()
         show();
     });
 
-    //关闭主窗口，通知登录窗口也关闭
-    connect(this,&MainWidget::sig_startCloseAppliction,m_login,&Login::receiveMainWinCloseAppSignal);
+    //关闭主窗口，先通知标题栏，再转发登录窗口关闭
+    connect(this,&MainWidget::sig_startCloseAppliction,m_titleBar,&TitleBar::receiveMainFormClose);
     //侧边栏有关信号与槽函数处理
     connect(m_leftSideBar,&LeftSideBar::sig_sidebarItemChange,[=](int index)
     {
@@ -289,30 +283,6 @@ void MainWidget::chandleRestoreWindow()
         m_winMax = !m_winMax;
 }
 
-/*槽函数 -- 调用登录界面*/
-void MainWidget::set_adjustLogin()
-{
-    if(m_login)
-    {
-        if(!m_login->isHidden())
-        {
-            m_login->hide();
-        }
-        else
-        {
-            m_login->move(QCursor::pos().x()-155,QCursor::pos().y()+25);
-            m_login->raise();
-            m_login->show();
-        }
-    }
-    else
-    {
-        m_login = new Login(this);
-        m_login->move(QCursor::pos().x()-155,QCursor::pos().y()+25);
-        m_login->raise();
-        m_login->show();
-    }
-}
 
 /*析构函数*/
 MainWidget::~MainWidget()
@@ -426,7 +396,6 @@ void MainWidget::closeEvent(QCloseEvent *event)
          m_pExitDlg->setIni();
          //此处最好做一个全局的通知信号
 //         m_tray->hide();
-//         m_login->close();
          QSqlQuery query;
          //此处应该在数据库提供接口
          query.exec("DROP TABLE IF EXISTS 'LocalMusic'");

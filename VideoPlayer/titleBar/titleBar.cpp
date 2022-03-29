@@ -20,6 +20,8 @@ TitleBar::TitleBar(QWidget *parent) :
 TitleBar::~TitleBar()
 {
     delete ui;
+    delete m_loginForm;
+    delete m_searchForm;
 }
 
 /*初始化工作*/
@@ -69,9 +71,13 @@ void TitleBar::initWorker()
     ui->BtnSearch->installEventFilter(this);
     ui->lineEdit_webSearch->installEventFilter(this);//输入网址
 
-    m_searchForm = new SearchForm();
+    m_searchForm = new SearchForm();//不指定父控件，也不加布局，需要手动删除
     m_searchForm->setObjectName(QString::fromLocal8Bit("m_searchForm"));
+
+    m_loginForm = new Login();
+    m_loginForm->setObjectName(QString::fromLocal8Bit("m_loginForm"));
 }
+
 
 /*处理信号与槽函数*/
 void TitleBar::chandleSignalAndSLots()
@@ -101,6 +107,8 @@ void TitleBar::chandleSignalAndSLots()
     connect(ui->pushButton_freshen,&QPushButton::clicked,[=](){emit sig_sendUrlRefreshen();});
     //前进 浏览器处理
     connect(ui->pushButton_advance,&QPushButton::clicked,[=](){emit sig_sendUrlAdvance();});
+    //显示登录窗口
+    connect(ui->Btnlogin,&QPushButton::clicked,[=](){qDebug() << "login clicked!"; showLoginForm();});
 }
 
 /*设置tooltip*/
@@ -305,7 +313,44 @@ void TitleBar::setLineEditAddress(const QUrl url)
 {
 //    ui->lineEdit_webSearch->clear();
 //    QString text = url.toLocalFile();
-//    ui->lineEdit_webSearch->setText(text);
+    //    ui->lineEdit_webSearch->setText(text);
+}
+
+void TitleBar::showLoginForm()
+{
+    qDebug() << "show login form";
+    if(m_loginForm)
+    {
+        if(!m_loginForm->isHidden())
+        {
+            m_loginForm->hide();
+        }
+        else
+        {
+            int x = ui->Btnlogin->parentWidget()->mapToGlobal(ui->Btnlogin->pos()).x();
+            int y = ui->Btnlogin->parentWidget()->mapToGlobal(ui->Btnlogin->pos()).y();
+            int h = ui->Btnlogin->height();
+            m_loginForm->setGeometry(x-310/2,y+h+10,m_loginForm->width(),m_loginForm->height());
+            m_loginForm->raise();
+            m_loginForm->show();
+        }
+    }
+    else
+    {
+        m_loginForm = new Login();
+        int x = ui->Btnlogin->parentWidget()->mapToGlobal(ui->Btnlogin->pos()).x();
+        int y = ui->Btnlogin->parentWidget()->mapToGlobal(ui->Btnlogin->pos()).y();
+        int h = ui->Btnlogin->height();
+        m_loginForm->setGeometry(x-310/2,y+h+10,m_loginForm->width(),m_loginForm->height());
+        m_loginForm->raise();
+        m_loginForm->show();
+    }
+}
+
+void TitleBar::receiveMainFormClose()
+{
+    m_loginForm->close();
+    m_loginForm->receiveMainWinCloseAppSignal();
 }
 
 

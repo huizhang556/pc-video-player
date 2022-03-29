@@ -1,7 +1,9 @@
 ﻿#ifndef TITLEBAR_H
 #define TITLEBAR_H
+#include "login/Login.h"
 #include "browser/CusWebBrowser.h"
 #include "mainwidget/SearchForm.h"
+#include <QPoint>
 #include <QTimer>
 #include <QWidget>
 #include <QLineEdit>
@@ -31,7 +33,7 @@ public slots:
     void isNecessaryShowSearch(int index);
     //处理鼠标进入离开输入框
     void mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event);
-
+    void receiveMainFormClose();
     void mouseIsPressReleaseLineEdit(QObject *watched, QEvent *event);//搜索框点击事件
 
 //私有槽函数，外部不能直接访问
@@ -39,6 +41,7 @@ private slots:
     void chandleMainWinStatus(bool status);
     void getSystemTimeShow();
     void setLineEditAddress(const QUrl url);
+    void showLoginForm();//显示登录窗口
 
 private:
     void chandleSignalAndSLots();
@@ -50,6 +53,7 @@ private:
     QTimer          *m_timer3       = nullptr;
     CusWebBrowser   *m_webrowser    = nullptr;
     SearchForm      *m_searchForm   = nullptr;
+    Login           *m_loginForm     = nullptr;
     Ui::TitleBar    *ui;
 
 signals:

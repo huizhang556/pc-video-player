@@ -7,21 +7,21 @@
     <x>0</x>
     <y>0</y>
     <width>390</width>
-    <height>335</height>
+    <height>376</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">/*background-color: rgb(61, 61, 61);*/
+   <string notr="true">background-color: #2a2a31;
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,0,1,1,1,1,1">
      <property name="spacing">
-      <number>10</number>
+      <number>5</number>
      </property>
      <item>
       <widget class="QLabel" name="label">
@@ -39,7 +39,8 @@
        </property>
        <property name="styleSheet">
         <string notr="true">font:bold normal 15px &quot;微软雅黑&quot;;
-color: rgb(85, 255, 0);</string>
+color: rgb(85, 255, 0);
+background-color: #2a2a31;</string>
        </property>
        <property name="text">
         <string>设   置</string>
@@ -67,7 +68,8 @@ color: rgb(85, 255, 0);</string>
        <item>
         <widget class="QLabel" name="label_playRate">
          <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 0);</string>
+          <string notr="true">color: rgb(85, 255, 0);
+background-color: #2a2a31;</string>
          </property>
          <property name="text">
           <string>播放倍速</string>
@@ -284,22 +286,6 @@ QPushButton:checked
          </property>
         </widget>
        </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>10</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </item>
      <item>
@@ -317,10 +303,14 @@ QPushButton:checked
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>10</number>
+       </property>
        <item>
         <widget class="QLabel" name="label_playSelect">
          <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 0);</string>
+          <string notr="true">color: rgb(85, 255, 0);
+background-color: #2a2a31;</string>
          </property>
          <property name="text">
           <string>播放选择</string>
@@ -331,13 +321,13 @@ QPushButton:checked
         <widget class="QRadioButton" name="radioButton_dcxh">
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>70</width>
            <height>30</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>70</width>
            <height>30</height>
           </size>
          </property>
@@ -380,13 +370,13 @@ color: rgb(42, 167, 247);
         <widget class="QRadioButton" name="radioButton_lbxh">
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>70</width>
            <height>30</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>70</width>
            <height>30</height>
           </size>
          </property>
@@ -429,13 +419,13 @@ color: rgb(42, 167, 247);
         <widget class="QRadioButton" name="radioButton_sjbf">
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>70</width>
            <height>30</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>70</width>
            <height>30</height>
           </size>
          </property>
@@ -478,13 +468,13 @@ color: rgb(42, 167, 247);
         <widget class="QRadioButton" name="radioButton_sxbf">
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>70</width>
            <height>30</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>70</width>
            <height>30</height>
           </size>
          </property>
@@ -515,6 +505,7 @@ border-image: url(:/images/radio_selected.png);
 QRadioButton
 {
 color: rgb(42, 167, 247);
+background-color: #2a2a31;
 }
 </string>
          </property>
@@ -538,8 +529,21 @@ color: rgb(42, 167, 247);
        </property>
        <item row="0" column="0">
         <widget class="QLabel" name="label_ld">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 0);</string>
+          <string notr="true">color: rgb(85, 255, 0);
+background-color: #2a2a31;</string>
          </property>
          <property name="text">
           <string>亮    度</string>
@@ -548,8 +552,24 @@ color: rgb(42, 167, 247);
        </item>
        <item row="0" column="1">
         <widget class="QSlider" name="horizontalSlider_liangdu">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="styleSheet">
-          <string notr="true">/*整个进度条*/
+          <string notr="true">QSlider
+{
+background-color:#2a2a31;
+}
+/*整个进度条*/
 QSlider::groove:horizontal 
 {
 background:transparent;
@@ -604,11 +624,12 @@ border-radius:4px;
          <property name="minimumSize">
           <size>
            <width>35</width>
-           <height>0</height>
+           <height>20</height>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: #f85a37;</string>
+          <string notr="true">color: #f85a37;
+background-color:#2a2a31;</string>
          </property>
          <property name="text">
           <string/>
@@ -617,8 +638,21 @@ border-radius:4px;
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="label_dbd">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 0);</string>
+          <string notr="true">color: rgb(85, 255, 0);
+background-color: #2a2a31;</string>
          </property>
          <property name="text">
           <string>对 比 度</string>
@@ -627,8 +661,24 @@ border-radius:4px;
        </item>
        <item row="1" column="1">
         <widget class="QSlider" name="horizontalSlider_duibidu">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="styleSheet">
-          <string notr="true">/*整个进度条*/
+          <string notr="true">QSlider
+{
+background-color:#2a2a31;
+}
+/*整个进度条*/
 QSlider::groove:horizontal 
 {
 background:transparent;
@@ -683,11 +733,12 @@ border-radius:4px;
          <property name="minimumSize">
           <size>
            <width>35</width>
-           <height>0</height>
+           <height>20</height>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: #f85a37;</string>
+          <string notr="true">color: #f85a37;
+background-color:#2a2a31;</string>
          </property>
          <property name="text">
           <string/>
@@ -696,8 +747,21 @@ border-radius:4px;
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="label_bhd">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 0);</string>
+          <string notr="true">color: rgb(85, 255, 0);
+background-color: #2a2a31;</string>
          </property>
          <property name="text">
           <string>饱 和 度</string>
@@ -706,8 +770,24 @@ border-radius:4px;
        </item>
        <item row="2" column="1">
         <widget class="QSlider" name="horizontalSlider_baohedu">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="styleSheet">
-          <string notr="true">/*整个进度条*/
+          <string notr="true">QSlider
+{
+background-color:#2a2a31;
+}
+/*整个进度条*/
 QSlider::groove:horizontal 
 {
 background:transparent;
@@ -762,11 +842,12 @@ border-radius:4px;
          <property name="minimumSize">
           <size>
            <width>35</width>
-           <height>0</height>
+           <height>20</height>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: #f85a37;</string>
+          <string notr="true">color: #f85a37;
+background-color:#2a2a31;</string>
          </property>
          <property name="text">
           <string/>
@@ -775,8 +856,21 @@ border-radius:4px;
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_sd">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 0);</string>
+          <string notr="true">color: rgb(85, 255, 0);
+background-color: #2a2a31;</string>
          </property>
          <property name="text">
           <string>色    调</string>
@@ -785,8 +879,24 @@ border-radius:4px;
        </item>
        <item row="3" column="1">
         <widget class="QSlider" name="horizontalSlider_sediao">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="styleSheet">
-          <string notr="true">/*整个进度条*/
+          <string notr="true">QSlider
+{
+background-color:#2a2a31;
+}
+/*整个进度条*/
 QSlider::groove:horizontal 
 {
 background:transparent;
@@ -841,11 +951,13 @@ border-radius:4px;
          <property name="minimumSize">
           <size>
            <width>35</width>
-           <height>0</height>
+           <height>20</height>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: #f85a37;</string>
+          <string notr="true">color: #f85a37;
+background-color:#2a2a31;
+</string>
          </property>
          <property name="text">
           <string/>
@@ -872,7 +984,8 @@ border-radius:4px;
        <item>
         <widget class="QLabel" name="label_hmbl">
          <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 0);</string>
+          <string notr="true">color: rgb(85, 255, 0);
+background-color: #2a2a31;</string>
          </property>
          <property name="text">
           <string>画面比例</string>
@@ -883,13 +996,13 @@ border-radius:4px;
         <widget class="QCheckBox" name="checkBox_1">
          <property name="minimumSize">
           <size>
-           <width>31</width>
+           <width>70</width>
            <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>70</width>
            <height>31</height>
           </size>
          </property>
@@ -904,6 +1017,7 @@ QCheckBox
 {
 /*font:11pt &quot;微软雅黑&quot;;*/
 color: rgb(42, 167, 247);
+background-color:#2a2a31;
 }
 
 /*	
@@ -940,13 +1054,13 @@ image: url(:/images/checked.png);
         <widget class="QCheckBox" name="checkBox_2">
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>70</width>
            <height>31</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>70</width>
            <height>31</height>
           </size>
          </property>
@@ -962,6 +1076,7 @@ QCheckBox
 /*font:11pt &quot;微软雅黑&quot;;
 color: rgb(0, 0, 0);*/
 color: rgb(42, 167, 247);
+background-color:#2a2a31;
 }
 
 /*	
@@ -998,13 +1113,13 @@ image: url(:/images/checked.png);
         <widget class="QCheckBox" name="checkBox_3">
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>70</width>
            <height>31</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>70</width>
            <height>31</height>
           </size>
          </property>
@@ -1020,6 +1135,7 @@ QCheckBox
 /*font:11pt &quot;微软雅黑&quot;;
 color: rgb(0, 0, 0);*/
 color: rgb(42, 167, 247);
+background-color:#2a2a31;
 }
 
 /*	
@@ -1056,13 +1172,13 @@ image: url(:/images/checked.png);
         <widget class="QCheckBox" name="checkBox_4">
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>70</width>
            <height>31</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>70</width>
            <height>31</height>
           </size>
          </property>
@@ -1078,6 +1194,7 @@ QCheckBox
 /*font:11pt &quot;微软雅黑&quot;;
 color: rgb(0, 0, 0);*/
 color: rgb(42, 167, 247);
+background-color:#2a2a31;
 }
 
 /*	
@@ -1109,22 +1226,6 @@ image: url(:/images/checked.png);
           <string>铺满</string>
          </property>
         </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>10</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </item>
