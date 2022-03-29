@@ -65,9 +65,12 @@ void TitleBar::initWorker()
 
     ui->Btn_expand->setFlat(true);
     ui->Btn_expand->setToolTip(QString::fromLatin1("点击查看历史记录"));
-    ui->lineEditSearch->installEventFilter(this);
+    ui->lineEditSearch->installEventFilter(this);//输入检索字
     ui->BtnSearch->installEventFilter(this);
-    ui->lineEdit_webSearch->installEventFilter(this);//设置监听
+    ui->lineEdit_webSearch->installEventFilter(this);//输入网址
+
+    m_searchForm = new SearchForm();
+    m_searchForm->setObjectName(QString::fromLocal8Bit("m_searchForm"));
 }
 
 /*处理信号与槽函数*/
@@ -123,8 +126,8 @@ void TitleBar::mouseDoubleClickEvent(QMouseEvent *event)
 bool TitleBar::eventFilter(QObject *watched, QEvent *event)
 {
     QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);//转换为鼠标事件
-    mouseIsEnterLeaveLineEdit(watched,mouseEvent);//搜索框鼠标事件监听
-
+    mouseIsEnterLeaveLineEdit(watched,mouseEvent);//搜索框鼠标进入离开
+    mouseIsPressReleaseLineEdit(watched,mouseEvent);//搜索框鼠标按下释放
     if(watched == ui->lineEdit_webSearch)
     {
         if(event->type() == QEvent::Enter)
@@ -268,6 +271,23 @@ void TitleBar::mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event)
                                          "border-top-right-radius:18;"
                                          "border-bottom-right-radius:18;"
                                          "}");
+        }
+    }
+}
+
+/*搜索框按下释放*/
+void TitleBar::mouseIsPressReleaseLineEdit(QObject *watched, QEvent *event)
+{
+    if(watched == ui->lineEditSearch)
+    {
+        if(event->type() == QEvent::MouseButtonPress)
+        {
+                int x = this->mapToGlobal(ui->lineEditSearch->pos()+ui->stackedWidget->pos()+this->pos()).x();
+                int y = this->mapToGlobal(ui->lineEditSearch->pos()+ui->stackedWidget->pos()+this->pos()).y();
+                int height = ui->lineEditSearch->height();
+                m_searchForm->setGeometry(x+16,y+height-2,ui->lineEditSearch->width()+ui->BtnSearch->width()-36,m_searchForm->height());
+                m_searchForm->raise();//必须提升界面所处层次
+                m_searchForm->show();
         }
     }
 }

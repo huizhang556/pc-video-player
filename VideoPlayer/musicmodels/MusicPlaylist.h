@@ -23,7 +23,7 @@ public:
 public slots:
     bool playerListIsNull();//判断播放列表是否为空
 
-    void addFileInfoToListView();
+    void addFileInfoToListView();//从数据库加载歌曲数据
 
     void selectTableAboutSongName(QString name);
 

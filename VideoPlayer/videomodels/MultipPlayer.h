@@ -73,6 +73,19 @@ public:
 
     void set_fileTolistWidget(QString item);//将服务器获取到的文件列表显示
 
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
+    void mousePressEvent(QMouseEvent *event) override;
+
+    void mouseMoveEvent(QMouseEvent *event) override;
+
+    void mouseReleaseEvent(QMouseEvent *event) override;
+
+    void changeEvent(QEvent *event) override;
+
+    void showEvent(QShowEvent *event) override;
+
 public slots:
     void loadFileInfoToWinTitle(int index);//标题栏显示视频名称
 
@@ -95,17 +108,6 @@ public slots:
     void clearListWidgetList_history();//清空历史记录
 
     void clearUserInputSearchInfo();//清空用户输入的搜索字
-
-protected:
-    void mousePressEvent(QMouseEvent *event) override;
-
-    void mouseMoveEvent(QMouseEvent *event) override;
-
-    void mouseReleaseEvent(QMouseEvent *event) override;
-
-    void changeEvent(QEvent *event) override;
-
-    void showEvent(QShowEvent *event) override;
 
 private slots:
     void on_time();

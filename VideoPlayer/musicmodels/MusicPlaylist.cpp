@@ -155,14 +155,20 @@ void MusicPlaylist::slots_btnSortCustomMenu()
 void MusicPlaylist::slots_btnSortAscOrder()
 {
     //模型需要有数据，否则报错
-    model_songInfo->setSort(0,Qt::AscendingOrder);
-    model_songInfo->select();
+    if(model_songInfo->rowCount() != 0)
+    {
+        model_songInfo->setSort(0,Qt::AscendingOrder);
+        model_songInfo->select();
+    }
 }
 
 void MusicPlaylist::slots_btnSortDescOrder()
 {
-    model_songInfo->setSort(1,Qt::DescendingOrder);
-    model_songInfo->select();
+    if(model_songInfo->rowCount() != 0)
+    {
+        model_songInfo->setSort(1,Qt::DescendingOrder);
+        model_songInfo->select();
+    }
 }
 
 void MusicPlaylist::slots_btnBatchToNewUi()

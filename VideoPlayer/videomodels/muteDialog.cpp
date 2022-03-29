@@ -1,5 +1,6 @@
 ﻿#include "muteDialog.h"
 #include "ui_muteDialog.h"
+#include <QDebug>
 
 muteDialog::muteDialog(QWidget *parent) :
     QDialog(parent),
@@ -38,6 +39,8 @@ int muteDialog::getSpliderValue()
 void muteDialog::leaveEvent(QEvent *event)
 {
     Q_UNUSED(event);
+    qDebug() << "voice ui leave";
     this->close();
+
 }
 

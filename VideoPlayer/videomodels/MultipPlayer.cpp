@@ -30,6 +30,8 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
     this->setMouseTracking(true);//开启鼠标跟踪，适应捕捉屏幕
     this->setWindowFlags(Qt::FramelessWindowHint);//去掉标题栏
     this->setWindowTitle(QString::fromLocal8Bit("Qt简易视频播放器"));
+    //设置监听
+    ui->pushButton_sound->installEventFilter(this);//音量调节按钮设置监听
     initMainWindow();//初始化界面
     chandleSignalAndSLots();//处理信号与槽函数
   //测试功能
@@ -204,7 +206,7 @@ void MultipPlayer::initMainWindow()
     ui->verticalLayout_5->insertWidget(0,m_videoTitleBar);//标题栏
     ui->verticalLayout_5->insertLayout(1,m_hboxlayout_rlist);
     ui->verticalLayout_5->insertWidget(2,ui->widget_splider);
-    ui->verticalLayout_5->insertWidget(3,ui->widget_player);
+    ui->verticalLayout_5->insertWidget(3,ui->stackedWidget_player);
     ui->verticalLayout_5->setSpacing(0);
     ui->verticalLayout_5->setStretch(0,1);
     ui->verticalLayout_5->setStretch(1,7);
@@ -213,12 +215,13 @@ void MultipPlayer::initMainWindow()
     loadDefaultLogo();//加载默认图标
     this->centralWidget()->setLayout(ui->verticalLayout_2);
 
+
     m_pTimer  = new QTimer(this);
     m_pTimer2 = new QTimer(this);
     m_pTimer2->setSingleShot(true);//只执行一次定时器
     m_pTimer->start(1000);
 
-    m_muteDlg = new muteDialog(this);
+    m_muteDlg = new muteDialog();//不加this
     m_muteDlg->setHidden(true);
 }
 
@@ -253,6 +256,7 @@ void MultipPlayer::chandleSignalAndSLots()
         m_bPress = false;
     });
 
+    /*音量显示*/
     connect(ui->pushButton_sound,&QPushButton::clicked,[=]()
     {
         if(m_muteDlg)
@@ -260,9 +264,19 @@ void MultipPlayer::chandleSignalAndSLots()
             if(m_muteDlg->isHidden())
             {
                 //这是全局坐标
-                QPoint mutePos = QPoint(QCursor::pos().x()-20,QCursor::pos().y()-190);
-                qDebug()<<"mutePos = "<<mutePos;
-                m_muteDlg->move(mutePos);
+//                QPoint mutePos = QPoint(QCursor::pos().x()-20,QCursor::pos().y()-190);
+//                qDebug()<<"mutePos = "<<mutePos;
+//                m_muteDlg->move(mutePos);
+//                m_muteDlg->show();
+                this->updateGeometry();
+                qDebug() << ui->pushButton_sound->pos();
+                // widget_player-->stackedWidget_player
+                int x = this->mapToGlobal(ui->pushButton_sound->pos()+ui->stackedWidget_player->pos()+m_videoTitleBar->pos()+this->pos()).x();
+                int y = this->mapToGlobal(ui->pushButton_sound->pos()+ui->stackedWidget_player->pos()+m_videoTitleBar->pos()+this->pos()).y();
+                int h = m_muteDlg->height();
+                qDebug() << "QPont_g(" << x << "," << y << ")";
+                m_muteDlg->setGeometry(x-6,y-h-6,m_muteDlg->width(),m_muteDlg->height());
+                m_muteDlg->raise();
                 m_muteDlg->show();
             }
             else
@@ -271,6 +285,7 @@ void MultipPlayer::chandleSignalAndSLots()
             }
         }
     });
+
     /*音量值调节显示数值*/
     connect(m_muteDlg,&muteDialog::sig_SpliderValueChange,[=](int value){
         player->setVolume(value);
@@ -1249,7 +1264,13 @@ void MultipPlayer::volumeAdjustShowUi(QObject *watched, QEvent *event)
                 else
                 {
                     m_muteDlg->move(ui->pushButton_sound->pos());
-                    m_muteDlg->show();
+                    //widget_player-->stackedWidget_player
+//                    int x = this->mapToGlobal(ui->pushButton_sound->pos()+ui->stackedWidget_player->pos()+this->pos()).x();
+//                    int y = this->mapToGlobal(ui->pushButton_sound->pos()+ui->stackedWidget_player->pos()+this->pos()).y();
+//                    int h = m_muteDlg->height();
+//                    m_muteDlg->setGeometry(x-6,y-h-6,m_muteDlg->width(),m_muteDlg->height());
+//                    m_muteDlg->raise();
+//                    m_muteDlg->show();
                 }
             }
         }
@@ -1528,6 +1549,14 @@ void MultipPlayer::clearListWidgetList_history()
 void MultipPlayer::clearUserInputSearchInfo()
 {
     m_lineEdit->clear();
+}
+
+/*监听事件*/
+bool MultipPlayer::eventFilter(QObject *watched, QEvent *event)
+{
+    QMouseEvent *mousevent = static_cast<QMouseEvent*>(event);
+//    volumeAdjustShowUi(watched,mousevent);
+    return QWidget::eventFilter(watched,event);
 }
 
 
