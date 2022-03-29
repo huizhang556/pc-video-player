@@ -851,15 +851,45 @@ void MultipPlayer::on_pushButton_pauseStart_clicked()
 /*每秒更新一次函数*/
 void MultipPlayer::on_time()
 {
+    //方法1
+    int pos  = player->position()/1000;//最新的进度
+    ui->horizontalSlider->setValue(pos);//设置进度显示
+//    QDateTime dt1 = QDateTime::fromSecsSinceEpoch(m_times);
+//    QString str = dt1.toString("hh:mm:ss");
+//    int min = pos/60;
+//    int sec = pos%60;
+//    QString str2 = QString::asprintf("%d:%d",min,sec);
+//    QDateTime dt2 = QDateTime::fromSecsSinceEpoch(pos);
+//    QString str2 = dt2.toString("hh:mm:ss");
+//    ui->label_time->setText(str2+ "/" +str);
+    //方法2
+    //将总进度（duration）转换为时分秒
+    int H1 = m_times / (60*60);
+    int M1 = (m_times- (H1 * 60 * 60)) / 60;
+    int S1 = (m_times - (H1 * 60 * 60)) - M1 * 60;
+    QString hour1 = QString::number(H1);
+    if (hour1.length() == 1) hour1 = "0" + hour1;
+    QString min1 = QString::number(M1);
+    if (min1.length() == 1) min1 = "0" + min1;
+    QString sec1 = QString::number(S1);
+    if (sec1.length() == 1) sec1 = "0" + sec1;
+    QString qTZ = hour1 + ":" + min1 + ":" + sec1;
+//    qDebug() <<QString::fromLocal8Bit("总的 时间：")<< qTZ;
+    //将进度（position）秒数转化为时分秒格式
+    int H = pos / (60*60);
+    int M = (pos- (H * 60 * 60)) / 60;
+    int S = (pos - (H * 60 * 60)) - M * 60;
+    QString hour = QString::number(H);
+    if (hour.length() == 1) hour = "0" + hour;
+    QString min = QString::number(M);
+    if (min.length() == 1) min = "0" + min;
+    QString sec = QString::number(S);
+    if (sec.length() == 1) sec = "0" + sec;
+    QString qTime = hour + ":" + min + ":" + sec;
+//    qDebug() <<QString::fromLocal8Bit("进度时间：")<< qTime;
+    ui->label_time->setText(qTime+ "/" +qTZ);
 
-    int pos  = player->position()/1000;
-    ui->horizontalSlider->setValue(pos);
-    QDateTime dt1 = QDateTime::fromSecsSinceEpoch(m_times);
-    QDateTime dt2 = QDateTime::fromSecsSinceEpoch(pos);
-    QString str = dt1.toString("hh:mm:ss");//转换的时间不对
-    QString str2 = dt2.toString("hh:mm:ss");
-    ui->label_time->setText(str2+ "/" +str);
-
+    //方法3
 //    int ss = 1000;
 //        int mi = ss * 60;
 //        int hh = mi * 60;
