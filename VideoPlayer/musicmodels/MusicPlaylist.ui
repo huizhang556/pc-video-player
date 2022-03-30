@@ -133,7 +133,7 @@ font-weight:bold;
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">border-image: url(:/images/collect_title.png);</string>
+                 <string notr="true">border-image: url(:/images/icon/collect_title.png);</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -204,11 +204,11 @@ font-size:15px;</string>
                      <string notr="true">QPushButton
 {
 background-color:#3d3d3d;
-image: url(:/images/download.png);
+image: url(:/images/icon/download.png);
 }
 QPushButton:hover
 {
-image: url(:/images/downloadhover.png);
+image: url(:/images/icon/downloadhover.png);
 }</string>
                     </property>
                     <property name="text">

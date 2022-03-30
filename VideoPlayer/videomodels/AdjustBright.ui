@@ -337,14 +337,14 @@ QRadioButton::indicator:unchecked
 {
 width:16px;
 height:16px;
-border-image: url(:/images/radio_normal.png);
+border-image: url(:/images/icon/radio_normal.png);
 }
 
 QRadioButton::indicator:unchecked:hover
 {
 width:16px;
 height:16px;
-border-image: url(:/images/radio_hover.png);
+border-image: url(:/images/icon/radio_hover.png);
 }
 
 /*选中时的样式*/
@@ -352,7 +352,7 @@ QRadioButton::indicator:checked
 {
 width:16px;
 height:16px;
-border-image: url(:/images/radio_selected.png);
+border-image: url(:/images/icon/radio_selected.png);
 }
 
 QRadioButton
@@ -386,14 +386,14 @@ QRadioButton::indicator:unchecked
 {
 width:16px;
 height:16px;
-border-image: url(:/images/radio_normal.png);
+border-image: url(:/images/icon/radio_normal.png);
 }
 
 QRadioButton::indicator:unchecked:hover
 {
 width:16px;
 height:16px;
-border-image: url(:/images/radio_hover.png);
+border-image: url(:/images/icon/radio_hover.png);
 }
 
 /*选中时的样式*/
@@ -401,7 +401,7 @@ QRadioButton::indicator:checked
 {
 width:16px;
 height:16px;
-border-image: url(:/images/radio_selected.png);
+border-image: url(:/images/icon/radio_selected.png);
 }
 
 QRadioButton
@@ -435,14 +435,14 @@ QRadioButton::indicator:unchecked
 {
 width:16px;
 height:16px;
-border-image: url(:/images/radio_normal.png);
+border-image: url(:/images/icon/radio_normal.png);
 }
 
 QRadioButton::indicator:unchecked:hover
 {
 width:16px;
 height:16px;
-border-image: url(:/images/radio_hover.png);
+border-image: url(:/images/icon/radio_hover.png);
 }
 
 /*选中时的样式*/
@@ -450,7 +450,7 @@ QRadioButton::indicator:checked
 {
 width:16px;
 height:16px;
-border-image: url(:/images/radio_selected.png);
+border-image: url(:/images/icon/radio_selected.png);
 }
 
 QRadioButton
@@ -484,14 +484,14 @@ QRadioButton::indicator:unchecked
 {
 width:16px;
 height:16px;
-border-image: url(:/images/radio_normal.png);
+border-image: url(:/images/icon/radio_normal.png);
 }
 
 QRadioButton::indicator:unchecked:hover
 {
 width:16px;
 height:16px;
-border-image: url(:/images/radio_hover.png);
+border-image: url(:/images/icon/radio_hover.png);
 }
 
 /*选中时的样式*/
@@ -499,7 +499,7 @@ QRadioButton::indicator:checked
 {
 width:16px;
 height:16px;
-border-image: url(:/images/radio_selected.png);
+border-image: url(:/images/icon/radio_selected.png);
 }
 
 QRadioButton
@@ -1030,7 +1030,7 @@ color: rgb(85, 255, 0);
 /*未选中的样式*/
 QCheckBox::indicator:unchecked
 {
-image: url(:/images/checkhover.png);
+image: url(:/images/icon/checkhover.png);
 }
 
 QCheckBox::indicator:unchecked:hover
@@ -1041,7 +1041,7 @@ QCheckBox::indicator:unchecked:hover
 /*选中时的样式*/
 QCheckBox::indicator:checked
 {
-image: url(:/images/checked.png);
+image: url(:/images/icon/checked.png);
 }
 </string>
          </property>
@@ -1089,7 +1089,7 @@ color: rgb(85, 255, 0);
 /*未选中的样式*/
 QCheckBox::indicator:unchecked
 {
-image: url(:/images/checkhover.png);
+image: url(:/images/icon/checkhover.png);
 }
 
 QCheckBox::indicator:unchecked:hover
@@ -1100,7 +1100,7 @@ QCheckBox::indicator:unchecked:hover
 /*选中时的样式*/
 QCheckBox::indicator:checked
 {
-image: url(:/images/checked.png);
+image: url(:/images/icon/checked.png);
 }
 </string>
          </property>
@@ -1148,7 +1148,7 @@ color: rgb(85, 255, 0);
 /*未选中的样式*/
 QCheckBox::indicator:unchecked
 {
-image: url(:/images/checkhover.png);
+image: url(:/images/icon/checkhover.png);
 }
 
 QCheckBox::indicator:unchecked:hover
@@ -1159,7 +1159,7 @@ QCheckBox::indicator:unchecked:hover
 /*选中时的样式*/
 QCheckBox::indicator:checked
 {
-image: url(:/images/checked.png);
+image: url(:/images/icon/checked.png);
 }
 </string>
          </property>
@@ -1207,7 +1207,7 @@ color: rgb(85, 255, 0);
 /*未选中的样式*/
 QCheckBox::indicator:unchecked
 {
-image: url(:/images/checkhover.png);
+image: url(:/images/icon/checkhover.png);
 }
 
 QCheckBox::indicator:unchecked:hover
@@ -1218,7 +1218,7 @@ QCheckBox::indicator:unchecked:hover
 /*选中时的样式*/
 QCheckBox::indicator:checked
 {
-image: url(:/images/checked.png);
+image: url(:/images/icon/checked.png);
 }
 </string>
          </property>

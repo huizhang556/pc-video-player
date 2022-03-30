@@ -98,7 +98,7 @@
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">border-image: url(:/images/openfile.png);
+        <string notr="true">border-image: url(:/images/icon/openfile.png);
 background-color: #404244;</string>
        </property>
        <property name="text">

@@ -195,13 +195,13 @@ QListWidget::item:selected:!active
                <string notr="true">QPushButton
 {
 background-color: transparent;
-	border-image: url(:/images/close3.png);
+	border-image: url(:/images/icon/close3.png);
 }
 
 QPushButton:hover{
 /*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
 	stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
-	border-image: url(:/images/closehover.png);
+	border-image: url(:/images/icon/closehover.png);
 border: 1px solid #3C80B1;
 
 }</string>

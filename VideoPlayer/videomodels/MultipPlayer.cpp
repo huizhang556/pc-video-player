@@ -176,10 +176,10 @@ void MultipPlayer::initMainWindow()
     m_toolBox = new QToolBox;
     m_toolBox->setFixedWidth(260);
     m_toolBox->setObjectName(QString::fromLatin1("m_toolBox"));
-    QIcon icon_user(":/images/user.png");
-    QIcon icon_playlist(":/images/playerlist.png");
-    QIcon icon_collect(":/images/playercollect.png");
-    QIcon icon_internet(":/images/playerinternet.png");
+    QIcon icon_user(":/images/icon/user.png");
+    QIcon icon_playlist(":/images/icon/playerlist.png");
+    QIcon icon_collect(":/images/icon/playercollect.png");
+    QIcon icon_internet(":/images/icon/playerinternet.png");
     m_toolBox->addItem(m_listWisget1,icon_user,QString::fromLocal8Bit("用户信息"));
     m_toolBox->addItem(m_widget2,icon_playlist,QString::fromLocal8Bit("播放列表"));
     m_toolBox->addItem(m_listWisget3,icon_collect,QString::fromLocal8Bit("我的收藏"));
@@ -283,12 +283,12 @@ void MultipPlayer::chandleSignalAndSLots()
         if(value != 0)
         {
             qDebug() << "value != 0";
-            ui->pushButton_sound->setIcon(QIcon(":/images/yingling.png"));
+            ui->pushButton_sound->setIcon(QIcon(":/images/icon/yingling.png"));
         }
         else
         {
             qDebug() << "value == 0";
-            ui->pushButton_sound->setIcon(QIcon(":/images/jingyin.png"));
+            ui->pushButton_sound->setIcon(QIcon(":/images/icon/jingyin.png"));
         }
     });
 
@@ -310,7 +310,7 @@ void MultipPlayer::chandleSignalAndSLots()
     {
         int row = m_listWisget2->row(item);
         m_playerState = QMediaPlayer::PlayingState;
-        ui->pushButton_pauseStart->setIcon(QIcon(":/images/pausehover.png"));//播放
+        ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/pausehover.png"));//播放
         playlist->setCurrentIndex(row);
         fileType(row);
         player->play();
@@ -421,36 +421,36 @@ void MultipPlayer::loadDefaultLogo()
     m_searchBtn->setText(QString::fromLocal8Bit(""));
     m_searchBtn->setToolTip(QString::fromLocal8Bit("打开文件"));
 
-    ui->pushButton_sound->setIcon(QIcon(":/images/yingling.png"));//图标是正常音量
+    ui->pushButton_sound->setIcon(QIcon(":/images/icon/yingling.png"));//图标是正常音量
     ui->pushButton_sound->setIconSize(QSize(26,26));//以后所有显示图片都是此大小
     ui->pushButton_sound->setFlat(true);
 
-//    ui->pushButton_5->setIcon(QIcon(":/images/openhover.png"));//打开
+//    ui->pushButton_5->setIcon(QIcon(":/images/icon/openhover.png"));//打开
 //    ui->pushButton_5->setFlat(true);
 //    ui->pushButton_5->setIconSize(QSize(50,50));
 //    ui->pushButton_5->setToolTip(QString::fromLocal8Bit("添加文件"));
 
-    ui->pushButton_pauseStart->setIcon(QIcon(":/images/playhover.png"));//播放
+    ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/playhover.png"));//播放
     ui->pushButton_pauseStart->setFlat(true);
     ui->pushButton_pauseStart->setIconSize(QSize(45,45));
     ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
 
-//    ui->pushButton_2->setIcon(QIcon(":/images/stophover.png"));//停止
+//    ui->pushButton_2->setIcon(QIcon(":/images/icon/stophover.png"));//停止
 //    ui->pushButton_2->setFlat(true);
 //    ui->pushButton_2->setIconSize(QSize(50,50));
 //    ui->pushButton_2->setToolTip(QString::fromLocal8Bit("停止"));
 
-//    ui->pushButton_6->setIcon(QIcon(":/images/fullscr.png"));//全屏
+//    ui->pushButton_6->setIcon(QIcon(":/images/icon/fullscr.png"));//全屏
 //    ui->pushButton_6->setFlat(true);
 //    ui->pushButton_6->setIconSize(QSize(50,50));
 //    ui->pushButton_6->setToolTip(QString::fromLocal8Bit("播放新文件"));
 
-    ui->pushButton_previous->setIcon(QIcon(":/images/previoushover.png"));//上一首
+    ui->pushButton_previous->setIcon(QIcon(":/images/icon/previoushover.png"));//上一首
     ui->pushButton_previous->setFlat(true);
     ui->pushButton_previous->setIconSize(QSize(40,40));
     ui->pushButton_previous->setToolTip(QString::fromLocal8Bit("上一个"));
 
-    ui->pushButton_next->setIcon(QIcon(":/images/nexthover.png"));//下一首
+    ui->pushButton_next->setIcon(QIcon(":/images/icon/nexthover.png"));//下一首
     ui->pushButton_next->setFlat(true);
     ui->pushButton_next->setIconSize(QSize(40,40));
     ui->pushButton_next->setToolTip(QString::fromLocal8Bit("下一个"));
@@ -589,8 +589,8 @@ void MultipPlayer::addFileToList(const QStringList &strList)
         m_mapList2.insert(i,name);
         emit sig_sendToMusicList();//通知音乐列表可以加载信息了
 
-        QIcon btnIcon1(":/images/video.png");//视频
-        QIcon btnIcon2(":/images/mp3.png");//音乐
+        QIcon btnIcon1(":/images/icon/video.png");//视频
+        QIcon btnIcon2(":/images/icon/mp3.png");//音乐
 
         QListWidgetItem *pItem = nullptr;
 
@@ -624,11 +624,11 @@ void MultipPlayer::addFileToList(const QStringList &strList)
 //        pushButton1->setFixedWidth(170);
 //        pushButton1->setAttribute(Qt::WA_TransparentForMouseEvents,true);//设置鼠标穿透
 //        pushButton1->setFixedWidth(30);
-//        QIcon btnIcondelete(":/images/itemdelete.png");
+//        QIcon btnIcondelete(":/images/icon/itemdelete.png");
 //        QPushButton *pushButton2 = new QPushButton(btnIcondelete,QString::fromLocal8Bit("删除"),w);
 //        pushButton2->setFixedHeight(30);
 //        pushButton2->setFixedWidth(30);
-//        QIcon btnIcon3(":/images/selection.png");
+//        QIcon btnIcon3(":/images/icon/selection.png");
 //        QPushButton *pushButton3 = new QPushButton(btnIcon3,QString::fromLocal8Bit("收藏"),w);
 //        pushButton3->setFixedHeight(30);
 //        pushButton3->setFixedWidth(30);
@@ -732,7 +732,7 @@ void MultipPlayer::on_pushButton_5_clicked()
             //这里必须加一个定时器，以解决界面缓冲，是的界面来得及反应（主要是标题栏反应不过来）
 //                ui->stackedWidget->setCurrentIndex(2);//索引2,界面显示视频
                 m_playerState = QMediaPlayer::PlayingState;
-                ui->pushButton_pauseStart->setIcon(QIcon(":/images/pausehover.png"));
+                ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/pausehover.png"));
                 ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("暂停"));
                 m_newStart = true;
             });
@@ -751,7 +751,7 @@ void MultipPlayer::on_pushButton_6_clicked()
     else
     {
         player->pause();
-        ui->pushButton_pauseStart->setIcon(QIcon(":/images/playhover.png"));//播放
+        ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/playhover.png"));//播放
         ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
         m_fileNames =  QFileDialog::getOpenFileNames(this,
                                                    "Open Files","C:\\Users\\24939\\Desktop",
@@ -770,7 +770,7 @@ void MultipPlayer::on_pushButton_6_clicked()
             fileType(m_fileNames,0);//判断文件类型并作出界面反应
             player->play();
             m_playerState = QMediaPlayer::PlayingState;
-            ui->pushButton_pauseStart->setIcon(QIcon(":/images/pausehover.png"));
+            ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/pausehover.png"));
             ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("暂停"));
         }
         else
@@ -830,7 +830,7 @@ void MultipPlayer::setVideoRate(int value)
 void MultipPlayer::updateRateTypeUiLayout(int str)
 {
     Q_UNUSED(str);
-    ui->pushButton_pauseStart->setIcon(QIcon(":/images/pausehover.png"));//播放
+    ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/pausehover.png"));//播放
     player->setPlaybackRate(1.0);//速率恢复正常
 }
 
@@ -842,14 +842,14 @@ void MultipPlayer::on_pushButton_pauseStart_clicked()
     {
         player->pause();
         m_playerState = QMediaPlayer::PausedState;
-        ui->pushButton_pauseStart->setIcon(QIcon(":/images/playhover.png"));
+        ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/playhover.png"));
         ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
     }
     else if(m_playerState == QMediaPlayer::PausedState)
     {
         player->play();
         m_playerState = QMediaPlayer::PlayingState;
-        ui->pushButton_pauseStart->setIcon(QIcon(":/images/pausehover.png"));
+        ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/pausehover.png"));
         ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("暂停"));
     }
 }
@@ -1000,10 +1000,10 @@ void MultipPlayer::showPlayerUi()
         this->showMinimized();
 //        ui->pushButton_normal->setStyleSheet("QPushButton{"
 //                                             "background-color: transparent;"
-//                                             "border-image: url(:/images/normal.png);}"
+//                                             "border-image: url(:/images/icon/normal.png);}"
 //                                             "QPushButton:hover{"
 //                                             "border: 1px solid #3C80B1;"
-//                                             "border-image: url(:/images/normalhover.png);}");
+//                                             "border-image: url(:/images/icon/normalhover.png);}");
         qDebug()<<"show ui to the central";
 //    }
 }

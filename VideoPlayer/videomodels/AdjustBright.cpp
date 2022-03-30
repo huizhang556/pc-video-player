@@ -111,7 +111,7 @@ void AdjustBright::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
     QPainter painter(this);
-    painter.drawPixmap(0,0,this->width(),this->height(),QPixmap(":/images/mainback1.png"));
+    painter.drawPixmap(0,0,this->width(),this->height(),QPixmap(":/images/icon/mainback1.png"));
 }
 
 void AdjustBright::leaveEvent(QEvent *event)

@@ -96,7 +96,10 @@
              <enum>Qt::StrongFocus</enum>
             </property>
             <property name="styleSheet">
-             <string notr="true">border-image: url(:/images/his_pic.png);</string>
+             <string notr="true">QPushButton
+{
+border-image: url(:/images/icon/his_pic.png);
+}</string>
             </property>
             <property name="text">
              <string/>
@@ -147,11 +150,11 @@ font: 11pt &quot;楷体&quot;;
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
-border-image: url(:/images/his_delete.png);
+border-image: url(:/images/icon/his_delete.png);
 }
 QPushButton:hover
 {
-border-image: url(:/images/his_delete_hover.png);
+border-image: url(:/images/icon/his_delete_hover.png);
 }</string>
             </property>
             <property name="text">
@@ -333,7 +336,10 @@ color: rgb(11, 11, 11);
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">border-image: url(:/images/his_hot.png);</string>
+             <string notr="true">QPushButton
+{
+border-image: url(:/images/icon/his_hot.png);
+}</string>
             </property>
             <property name="text">
              <string/>

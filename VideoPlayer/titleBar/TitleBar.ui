@@ -58,7 +58,7 @@ background-color: #2a2a31;</string>
        <property name="styleSheet">
         <string notr="true">QPushButton
 {
-border-image: url(:/images/label_logo.png);
+border-image: url(:/images/icon/label_logo.png);
 }
 
 QToolTip
@@ -315,11 +315,11 @@ padding:-1px;
              <property name="styleSheet">
               <string notr="true">QPushButton
 {
-border-image: url(:/images/returnhome.png);
+border-image: url(:/images/icon/returnhome.png);
 }
 QPushButton:hover
 {
-border-image: url(:/images/returnhome_hover.png);
+border-image: url(:/images/icon/returnhome_hover.png);
 }</string>
              </property>
              <property name="text">
@@ -360,12 +360,12 @@ border-image: url(:/images/returnhome_hover.png);
              <property name="styleSheet">
               <string notr="true">QPushButton
 {
-border-image: url(:/images/back.png);
+border-image: url(:/images/icon/back.png);
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/back_hover.png);
+border-image: url(:/images/icon/back_hover.png);
 }</string>
              </property>
              <property name="text">
@@ -406,11 +406,11 @@ border-image: url(:/images/back_hover.png);
              <property name="styleSheet">
               <string notr="true">QPushButton
 {
-border-image: url(:/images/refreshen.png);
+border-image: url(:/images/icon/refreshen.png);
 }
 QPushButton:hover
 {
-border-image: url(:/images/refreshen_hover.png);
+border-image: url(:/images/icon/refreshen_hover.png);
 }</string>
              </property>
              <property name="text">
@@ -451,11 +451,11 @@ border-image: url(:/images/refreshen_hover.png);
              <property name="styleSheet">
               <string notr="true">QPushButton
 {
-border-image: url(:/images/advance.png);
+border-image: url(:/images/icon/advance.png);
 }
 QPushButton:hover
 {
-border-image: url(:/images/advance_hover.png);
+border-image: url(:/images/icon/advance_hover.png);
 }</string>
              </property>
              <property name="text">
@@ -604,11 +604,11 @@ color:#1afa29;
              <property name="styleSheet">
               <string notr="true">QPushButton
 {
-border-image: url(:/images/url_collection.png);
+border-image: url(:/images/icon/url_collection.png);
 }
 QPushButton:hover
 {
-border-image: url(:/images/url_collect_hover.png);
+border-image: url(:/images/icon/url_collect_hover.png);
 }</string>
              </property>
              <property name="text">
@@ -650,12 +650,12 @@ border-image: url(:/images/url_collect_hover.png);
        <property name="styleSheet">
         <string notr="true">QPushButton
 {
-border-image: url(:/images/create.png);
+border-image: url(:/images/icon/create.png);
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/createhover.png);
+border-image: url(:/images/icon/createhover.png);
 }
 
 QPushButton::item:selected
@@ -697,12 +697,12 @@ QPushButton::item:selected
        <property name="styleSheet">
         <string notr="true">QPushButton
 {
-border-image: url(:/images/history.png);
+border-image: url(:/images/icon/history.png);
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/historyhover.png);
+border-image: url(:/images/icon/historyhover.png);
 }
 
 QPushButton::item:selected
@@ -744,12 +744,12 @@ QPushButton::item:selected
        <property name="styleSheet">
         <string notr="true">QPushButton
 {
-border-image: url(:/images/download.png);
+border-image: url(:/images/icon/download.png);
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/downloadhover.png);
+border-image: url(:/images/icon/downloadhover.png);
 }
 
 QPushButton::item:selected
@@ -791,12 +791,12 @@ QPushButton::item:selected
        <property name="styleSheet">
         <string notr="true">QPushButton
 {
-border-image: url(:/images/skin.png);
+border-image: url(:/images/icon/skin.png);
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/skin_hover.png);
+border-image: url(:/images/icon/skin_hover.png);
 }
 
 QPushButton::item:selected
@@ -838,17 +838,17 @@ QPushButton::item:selected
        <property name="styleSheet">
         <string notr="true">#Btnlogin
 {
-border-image: url(:/images/login.png);
+border-image: url(:/images/icon/login.png);
 }
 
 #Btnlogin:hover
 {
-border-image: url(:/images/login_hover.png);
+border-image: url(:/images/icon/login_hover.png);
 }
 
 #Btnlogin::item:selected
 {
-border-image: url(:/images/logined.png);
+border-image: url(:/images/icon/logined.png);
 }
 
 </string>
@@ -897,17 +897,17 @@ border-image: url(:/images/logined.png);
        <property name="styleSheet">
         <string notr="true">QPushButton
 {
-border-image: url(:/images/help.png);
+border-image: url(:/images/icon/help.png);
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/help_hover.png);
+border-image: url(:/images/icon/help_hover.png);
 }
 
 QPushButton::item:selected
 {
-/*border-image: url(:/images/help_hover.png);*/
+/*border-image: url(:/images/icon/help_hover.png);*/
 }
 
 QPushButton::menu-indicator
@@ -964,13 +964,13 @@ QPushButton::menu-indicator:image
         <string notr="true">QPushButton
 {
 background-color: transparent;
-	border-image: url(:/images/min2.png);
+border-image: url(:/images/icon/min2.png);
 }
 
 QPushButton:hover{
 /*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
 	stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
-	border-image: url(:/images/minhover.png);
+border-image: url(:/images/icon/minhover.png);
 border: 1px solid #3C80B1;
 }</string>
        </property>
@@ -1012,13 +1012,13 @@ border: 1px solid #3C80B1;
        <property name="styleSheet">
         <string notr="true">QPushButton
 {
-border-image: url(:/images/normalmax.png);
+border-image: url(:/images/icon/normalmax.png);
 background-color: transparent;;
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/normalmaxhover.png);
+border-image: url(:/images/icon/normalmaxhover.png);
 border: 1px solid #3C80B1;
 }</string>
        </property>
@@ -1061,13 +1061,13 @@ border: 1px solid #3C80B1;
         <string notr="true">QPushButton
 {
 background-color: transparent;
-	border-image: url(:/images/close3.png);
+border-image: url(:/images/icon/close3.png);
 }
 
 QPushButton:hover{
 /*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
 	stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
-	border-image: url(:/images/closehover.png);
+border-image: url(:/images/icon/closehover.png);
 border: 1px solid #3C80B1;
 
 }</string>

@@ -246,11 +246,11 @@ color:#e6e9f0;</string>
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
-border-image: url(:/images/turn_off.png);
+border-image: url(:/images/icon/turn_off.png);
 }
 QPushButton:checked
 {
-border-image: url(:/images/turn_on.png);
+border-image: url(:/images/icon/turn_on.png);
 border: 1px solid #5F92B2;
 }
 QPushButton:hover

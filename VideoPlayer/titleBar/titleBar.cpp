@@ -203,19 +203,19 @@ void TitleBar::chandleMainWinStatus(bool status)
     {
         ui->pushButton_normal->setStyleSheet("QPushButton{"
                                              "background-color: transparent;"
-                                             "border-image: url(:/images/normal.png);}"
+                                             "border-image: url(:/images/icon/normal.png);}"
                                              "QPushButton:hover{"
                                              "border: 1px solid #3C80B1;"
-                                             "border-image: url(:/images/normalhover.png);}");
+                                             "border-image: url(:/images/icon/normalhover.png);}");
     }
     else
     {
         ui->pushButton_normal->setStyleSheet("QPushButton{"
                                              "background-color: transparent;"
-                                             "border-image: url(:/images/normalmax.png);}"
+                                             "border-image: url(:/images/icon/normalmax.png);}"
                                              "QPushButton:hover{"
                                              "border: 1px solid #3C80B1;"
-                                             "border-image: url(:/images/normalmaxhover.png);}");
+                                             "border-image: url(:/images/icon/normalmaxhover.png);}");
     }
 }
 

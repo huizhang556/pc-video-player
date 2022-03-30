@@ -16,7 +16,7 @@ ExitDialog::ExitDialog(QWidget *parent) :
     this->setWindowFlag(Qt::FramelessWindowHint);
     this->setFixedSize(404,152);
 
-//    QPixmap pixmap(":/images/cursor.png");
+//    QPixmap pixmap(":/images/icon/cursor.png");
 //    QSize size(5,5);
 //    pixmap.scaled(5,5,Qt::KeepAspectRatio);
 //    QCursor *myCursor = new QCursor(pixmap,0,0);    //-1,-1表示热点位于图片中心

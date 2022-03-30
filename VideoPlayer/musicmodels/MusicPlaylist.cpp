@@ -12,7 +12,7 @@ MusicPlaylist::MusicPlaylist(QWidget *parent) :
     ui(new Ui::MusicPlaylist)
 {
     ui->setupUi(this);
-//    QIcon icon_clsong(":/images/clear.png");
+//    QIcon icon_clsong(":/images/icon/clear.png");
 //    m_songAction = new QAction();
 //    m_songAction->setObjectName(QString::fromLocal8Bit("m_songAction"));
 //    ui->lineEdit_searchSong->addAction(m_songAction, QLineEdit::TrailingPosition);// 右侧显示

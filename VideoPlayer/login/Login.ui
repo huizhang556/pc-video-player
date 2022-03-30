@@ -228,7 +228,7 @@ border-radius:18px;
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">image: url(:/images/tongbu.png);</string>
+               <string notr="true">image: url(:/images/icon/tongbu.png);</string>
               </property>
               <property name="text">
                <string/>
@@ -279,7 +279,7 @@ border-radius:18px;
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">image: url(:/images/talk.png);</string>
+               <string notr="true">image: url(:/images/icon/talk.png);</string>
               </property>
               <property name="text">
                <string/>
@@ -333,7 +333,7 @@ border-radius:18px;
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">image: url(:/images/tuijian.png);</string>
+               <string notr="true">image: url(:/images/icon/tuijian.png);</string>
               </property>
               <property name="text">
                <string/>

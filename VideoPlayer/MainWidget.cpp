@@ -70,7 +70,7 @@ void MainWidget::initOtherWidgetUi()
     m_pExitDlg->setObjectName(QString::fromLatin1("m_pExitDlg"));
 
     //托盘
-    QIcon icno(":/images/tray.png");
+    QIcon icno(":/images/icon/tray.png");
     m_tray = new QSystemTrayIcon(icno,this);
     m_tray->setToolTip(QString::fromLocal8Bit("播放器"));
     m_tray->show();

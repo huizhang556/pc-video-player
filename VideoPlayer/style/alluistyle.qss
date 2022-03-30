@@ -293,7 +293,7 @@ border-top-left-radius:0;
 border-top-right-radius:0;
 border-bottom-right-radius:0;
 border-bottom-left-radius:0;
-image: url(:/images/file_open.png);
+image: url(:/images/icon/file_open.png);
 padding:2px;
 }
 
@@ -312,7 +312,7 @@ QToolBox QWidget QPushButton:hover
 color:white;
 /*border: 1px solid #D1DBCB;*/
 padding:2px;
-image: url(:/images/file_open_hover.png);
+image: url(:/images/icon/file_open_hover.png);
 }
 
 /*listwidget-每个item上的按钮*/
@@ -431,13 +431,13 @@ QScrollBar::sub-page:vertical,QScrollBar::sub-page:horizontal
 /*
 QScrollBar::sub-line:vertical
 {
-background-image: url(:/images/arrowdown.png);
+background-image: url(:/images/icon/arrowdown.png);
 subcontrol-position:top;
 }
 
 QScrollBar::add-line:vertical
 {
-background-image: url(:/images/arrowup.png);
+background-image: url(:/images/icon/arrowup.png);
 subcontrol-position:bottom;
 }
 */

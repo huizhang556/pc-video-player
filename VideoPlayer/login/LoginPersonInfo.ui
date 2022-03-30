@@ -44,7 +44,7 @@ background-color: rgb(6, 40, 54);
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <property name="styleSheet">
@@ -116,12 +116,12 @@ background-color: rgb(6, 40, 54);
               <property name="styleSheet">
                <string notr="true">QPushButton
 {
-border-image: url(:/images/setlogin.png);
+border-image: url(:/images/icon/setlogin.png);
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/setloginhover.png);
+border-image: url(:/images/icon/setloginhover.png);
 }</string>
               </property>
               <property name="text">
@@ -162,11 +162,11 @@ border-image: url(:/images/setloginhover.png);
               <property name="styleSheet">
                <string notr="true">QPushButton
 {
-border-image: url(:/images/minlogin.png);
+border-image: url(:/images/icon/minlogin.png);
 }
 QPushButton:hover
 {
-border-image: url(:/images/minloginhover.png);
+border-image: url(:/images/icon/minloginhover.png);
 }</string>
               </property>
               <property name="text">
@@ -207,11 +207,11 @@ border-image: url(:/images/minloginhover.png);
               <property name="styleSheet">
                <string notr="true">QPushButton
 {
-border-image: url(:/images/close3.png);
+border-image: url(:/images/icon/close3.png);
 }
 QPushButton:hover
 {
-border-image: url(:/images/closehover.png);
+border-image: url(:/images/icon/closehover.png);
 }</string>
               </property>
               <property name="text">
@@ -299,13 +299,13 @@ border-image: url(:/images/closehover.png);
                <string notr="true">QLabel
 {
 border-radius:33px;
-border-image: url(:/images/logintouxianghover.png);;
+border-image: url(:/images/icon/logintouxianghover.png);;
 }
 
 QLabel:hover
 {
 border-radius:33px;
-border-image: url(:/images/logintouxiang.png);
+border-image: url(:/images/icon/logintouxiang.png);
 }</string>
               </property>
               <property name="text">
@@ -354,7 +354,7 @@ border-image: url(:/images/logintouxiang.png);
                   <property name="styleSheet">
                    <string notr="true">QLabel
 {
-border-image: url(:/images/loginuser.png);
+border-image: url(:/images/icon/loginuser.png);
 }
 
 QLabel:hover
@@ -452,7 +452,7 @@ border:2px solid #ff5c38;
                   <property name="styleSheet">
                    <string notr="true">QLabel
 {
-border-image: url(:/images/loginpasswd.png);
+border-image: url(:/images/icon/loginpasswd.png);
 }</string>
                   </property>
                   <property name="text">
@@ -582,14 +582,14 @@ QCheckBox::indicator
 height:18px;
 width:18px;
 border-radius:3px;
-border-image: url(:/images/login_uncheck.png);
+border-image: url(:/images/icon/login_uncheck.png);
 }
 
 /*选中时的样式*/
 QCheckBox::indicator:checked
 {
 border-radius:3px;
-border-image: url(:/images/login_checked.png);
+border-image: url(:/images/icon/login_checked.png);
 }</string>
                   </property>
                   <property name="text">
@@ -664,14 +664,14 @@ QCheckBox::indicator
 height:18px;
 width:18px;
 border-radius:3px;
-border-image: url(:/images/login_uncheck.png);
+border-image: url(:/images/icon/login_uncheck.png);
 }
 
 /*选中时的样式*/
 QCheckBox::indicator:checked
 {
 border-radius:3px;
-border-image: url(:/images/login_checked.png);
+border-image: url(:/images/icon/login_checked.png);
 }</string>
                   </property>
                   <property name="text">
@@ -852,12 +852,12 @@ color:black;
                   <property name="styleSheet">
                    <string notr="true">QPushButton
 {
-border-image: url(:/images/loginregis.png);
+border-image: url(:/images/icon/loginregis.png);
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/loginregishover.png);
+border-image: url(:/images/icon/loginregishover.png);
 }</string>
                   </property>
                   <property name="text">
@@ -895,12 +895,12 @@ border-image: url(:/images/loginregishover.png);
                   <property name="styleSheet">
                    <string notr="true">QPushButton
 {
-border-image: url(:/images/loginerweimanormal.png);
+border-image: url(:/images/icon/loginerweimanormal.png);
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/loginerweima.png);
+border-image: url(:/images/icon/loginerweima.png);
 }</string>
                   </property>
                   <property name="text">
@@ -986,12 +986,12 @@ border-image: url(:/images/loginerweima.png);
               <property name="styleSheet">
                <string notr="true">QPushButton
 {
-border-image: url(:/images/return_normal.png);
+border-image: url(:/images/icon/return_normal.png);
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/return_hover.png);
+border-image: url(:/images/icon/return_hover.png);
 }</string>
               </property>
               <property name="text">
@@ -1477,7 +1477,7 @@ color:black;
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">border-image: url(:/images/loginerweima.png);</string>
+        <string notr="true">border-image: url(:/images/icon/loginerweima.png);</string>
        </property>
        <property name="text">
         <string/>
@@ -1493,7 +1493,7 @@ color:black;
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">border-image: url(:/images/tongbu.png);</string>
+        <string notr="true">border-image: url(:/images/icon/tongbu.png);</string>
        </property>
        <property name="text">
         <string/>
@@ -1558,12 +1558,12 @@ color:black;
           <property name="styleSheet">
            <string notr="true">QPushButton
 {
-border-image: url(:/images/return_normal.png);
+border-image: url(:/images/icon/return_normal.png);
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/return_hover.png);
+border-image: url(:/images/icon/return_hover.png);
 }</string>
           </property>
           <property name="text">
@@ -1641,12 +1641,12 @@ border-image: url(:/images/return_hover.png);
               <property name="styleSheet">
                <string notr="true">QPushButton
 {
-border-image: url(:/images/return_normal.png);
+border-image: url(:/images/icon/return_normal.png);
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/return_hover.png);
+border-image: url(:/images/icon/return_hover.png);
 }</string>
               </property>
               <property name="text">
@@ -2793,12 +2793,12 @@ color: rgb(0, 0, 0);
           <property name="styleSheet">
            <string notr="true">QPushButton
 {
-border-image: url(:/images/return_normal.png);
+border-image: url(:/images/icon/return_normal.png);
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/return_hover.png);
+border-image: url(:/images/icon/return_hover.png);
 }</string>
           </property>
           <property name="text">

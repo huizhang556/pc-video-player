@@ -23,14 +23,14 @@ void RecomVideoTab::slots_switchTurn()
     {
         qDebug() << "!m_turnOnStatus";
         ui->Btn_turn->setStyleSheet("#Btn_turn{"
-                                           "border-image: url(:/images/turn_on.png);"
+                                           "border-image: url(:/images/icon/turn_on.png);"
                                            "}");
     }
     else
     {
         qDebug() << "m_turnOnStatus";
         ui->Btn_turn->setStyleSheet("#Btn_turn{"
-                                           "border-image: url(:/images/turn_off.png);"
+                                           "border-image: url(:/images/icon/turn_off.png);"
                                            "}");
     }
     m_turnOnStatus = !m_turnOnStatus;

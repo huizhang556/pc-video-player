@@ -571,11 +571,11 @@ padding-left:10px;
              <property name="styleSheet">
               <string notr="true">QPushButton
 {
-border-image: url(:/images/tanmuClose.png);
+border-image: url(:/images/icon/tanmuClose.png);
 }
 QPushButton:checked
 {
-border-image: url(:/images/tanmuOpen.png);
+border-image: url(:/images/icon/tanmuOpen.png);
 border: 1px solid #5F92B2;
 }
 QPushButton:hover
@@ -625,12 +625,12 @@ color:#484848; font-size:12px;
              <property name="styleSheet">
               <string notr="true">QPushButton
 {
-border-image: url(:/images/set.png);
+border-image: url(:/images/icon/set.png);
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/set_hover.png);
+border-image: url(:/images/icon/set_hover.png);
 }</string>
              </property>
              <property name="text">
@@ -736,7 +736,7 @@ color:#484848; font-size:12px;
 	
 	/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));*/
 background-color: transparent;
-	border-image: url(:/images/curplaylist_normal.png);
+	border-image: url(:/images/icon/curplaylist_normal.png);
 	border:none;
 
 }
@@ -748,7 +748,7 @@ QPushButton:hover{
 /*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
 	stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
 border: 1px solid #3C80B1;
-border-image: url(:/images/curplaylist_hover.png);
+border-image: url(:/images/icon/curplaylist_hover.png);
 border:none;
 }
 

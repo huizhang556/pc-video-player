@@ -42,7 +42,7 @@ void LeftSideBar::setSlideBarListText(QStringList strList)
     //传统方法
     for(int i = 0;i<strList.size();i++)
     {
-        QIcon strIcon = QIcon(QString(":/images/hot%1.png").arg(i));
+        QIcon strIcon = QIcon(QString(":/images/icon/hot%1.png").arg(i));
         QString name = strList.at(i);
         QListWidgetItem *ppItem = new QListWidgetItem(strIcon,name);
         ppItem->setTextAlignment(Qt::AlignVCenter);

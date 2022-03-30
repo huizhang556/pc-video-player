@@ -73,7 +73,7 @@ LoginPersonInfo::LoginPersonInfo(QWidget *parent) :
     ui->gis_lineEditEmail->setValidator(new QRegExpValidator(regExp5, this));
 
     /*登录--清除按钮*/
-    QIcon icon_clear(":/images/clear.png");
+    QIcon icon_clear(":/images/icon/clear.png");
     clearAction1 = new QAction(icon_clear,"");
     clearAction1->setObjectName(QString::fromLocal8Bit("clearAction1"));
     connect(clearAction1,&QAction::triggered,[=](){ui->login_lineEditUser->clear();});
@@ -112,7 +112,7 @@ LoginPersonInfo::LoginPersonInfo(QWidget *parent) :
     });
 
     /*登录---显示密码按钮*/
-    QIcon icon_passwd(":/images/passwd_hide.png");
+    QIcon icon_passwd(":/images/icon/passwd_hide.png");
     clearAction2 = new QAction(icon_passwd,"");
     clearAction2->setObjectName(QString::fromLocal8Bit("clearAction2"));
     connect(ui->login_lineEditPasswd,&QLineEdit::textChanged,[=](QString content)
@@ -135,12 +135,12 @@ LoginPersonInfo::LoginPersonInfo(QWidget *parent) :
     {
         if(!passwdStatus)
         {
-            clearAction2->setIcon(QIcon(":/images/passwd_hide.png"));
+            clearAction2->setIcon(QIcon(":/images/icon/passwd_hide.png"));
             ui->login_lineEditPasswd->setEchoMode(QLineEdit::Password);
         }
         else
         {
-            clearAction2->setIcon(QIcon(":/images/passwd_show.png"));
+            clearAction2->setIcon(QIcon(":/images/icon/passwd_show.png"));
             ui->login_lineEditPasswd->setEchoMode(QLineEdit::Normal);
         }
              passwdStatus =! passwdStatus;
@@ -170,12 +170,12 @@ LoginPersonInfo::LoginPersonInfo(QWidget *parent) :
     {
         if(!passwdStatus2)
         {
-            clearAction4->setIcon(QIcon(":/images/passwd_hide.png"));
+            clearAction4->setIcon(QIcon(":/images/icon/passwd_hide.png"));
             ui->gis_lineEditPasswd->setEchoMode(QLineEdit::Password);
         }
         else
         {
-            clearAction4->setIcon(QIcon(":/images/passwd_show.png"));
+            clearAction4->setIcon(QIcon(":/images/icon/passwd_show.png"));
             ui->gis_lineEditPasswd->setEchoMode(QLineEdit::Normal);
         }
              passwdStatus2 =! passwdStatus2;
