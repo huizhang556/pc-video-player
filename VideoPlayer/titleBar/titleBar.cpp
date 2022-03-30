@@ -109,6 +109,25 @@ void TitleBar::chandleSignalAndSLots()
     connect(ui->pushButton_advance,&QPushButton::clicked,[=](){emit sig_sendUrlAdvance();});
     //显示登录窗口
     connect(ui->Btnlogin,&QPushButton::clicked,[=](){qDebug() << "login clicked!"; showLoginForm();});
+    //历史记录记录搜索历史
+//    connect(this,&TitleBar::sig_sendNewSearch,m_searchForm,&SearchForm::addHistoryItem);
+    //关闭程序关闭历史搜索框
+    connect(this,&TitleBar::sig_winClose,m_searchForm,&SearchForm::closeSearchForm);
+    //还原时，关闭历史搜索框
+    connect(this,&TitleBar::sig_winNormal,m_searchForm,&SearchForm::closeSearchForm);
+    connect(ui->lineEdit_webSearch,&QLineEdit::returnPressed,[=](){
+        QString url = ui->lineEdit_webSearch->text().trimmed();
+        emit sig_sendNewUrl(url);
+        qDebug() << "emit sig_sendNewUrl(url);";
+    });
+
+    connect(ui->lineEditSearch,&QLineEdit::returnPressed,[=](){
+        QString his = ui->lineEditSearch->text().trimmed();
+        m_searchForm->addHistoryItem(his);
+        qDebug() << "emit sig_sendNewSearch(his);";
+        //处理其他事件
+        //鼠标进入样式改变
+    });
 }
 
 /*设置tooltip*/
@@ -134,22 +153,47 @@ void TitleBar::mouseDoubleClickEvent(QMouseEvent *event)
 bool TitleBar::eventFilter(QObject *watched, QEvent *event)
 {
     QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);//转换为鼠标事件
-    mouseIsEnterLeaveLineEdit(watched,mouseEvent);//搜索框鼠标进入离开
-    mouseIsPressReleaseLineEdit(watched,mouseEvent);//搜索框鼠标按下释放
-    if(watched == ui->lineEdit_webSearch)
-    {
-        if(event->type() == QEvent::Enter)
-        {
-            connect(ui->lineEdit_webSearch,&QLineEdit::returnPressed,[=](){
-                QString url = ui->lineEdit_webSearch->text().trimmed();
-                emit sig_sendNewUrl(url);
-                //处理其他事件
-                //鼠标进入样式改变
+    mouseIsEnterLeaveLineEdit(watched,mouseEvent);//搜索框鼠标进入离开,处理样式
+    mouseIsPressReleaseLineEdit(watched,mouseEvent);//搜索框鼠标按下释放，处理历史记录
+//    if(watched == ui->lineEdit_webSearch)
+//    {
+//        if(event->type() == QEvent::Enter)
+//        {
+//            connect(ui->lineEdit_webSearch,&QLineEdit::returnPressed,[=](){
+//                QString url = ui->lineEdit_webSearch->text().trimmed();
+//                emit sig_sendNewUrl(url);
+//                qDebug() << "emit sig_sendNewUrl(url);";
+//                //处理其他事件
+//                //鼠标进入样式改变
 
-            });
-        }
-    }
+//            });
+//        }
+//    }
+
+//    if(watched == ui->lineEditSearch)
+//    {
+//        if(event->type() == QEvent::Enter)
+//        {
+//            connect(ui->lineEditSearch,&QLineEdit::returnPressed,[=](){
+//                QString his = ui->lineEditSearch->text().trimmed();
+//                m_searchForm->addHistoryItem(his);
+//                qDebug() << "emit sig_sendNewSearch(his);";
+//                //处理其他事件
+//                //鼠标进入样式改变
+
+//            });
+//        }
+//    }
     return QWidget::eventFilter(watched,event);
+}
+
+void TitleBar::showEvent(QShowEvent *event)
+{
+    Q_UNUSED(event);
+    this->setFocusPolicy(Qt::NoFocus);
+    ui->lineEditSearch->setFocus();
+    ui->lineEditSearch->setFocusPolicy(Qt::StrongFocus);
+    ui->lineEdit_webSearch->setFocus();
 }
 
 /*根据窗口状态设置样式*/
@@ -201,7 +245,7 @@ void TitleBar::mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event)
         {
             ui->lineEditSearch->setStyleSheet("QLineEdit{"
                                               "color:#cccccc;"
-                                              "font-size:18px;"
+                                              "font: 10pt Microsoft YaHei;"
                                               "margin-right:-3px;"
                                               "padding-left:15px;"
                                               "background-color: #3c3842;"
@@ -220,7 +264,7 @@ void TitleBar::mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event)
         {
             ui->lineEditSearch->setStyleSheet("QLineEdit{"
                                               "color:#aeada7;"
-                                              "font-size:18px;"
+                                              "font: 10pt Microsoft YaHei;"
                                               "padding-left:15px;"
                                               "margin-right:-3px;"
                                               "border-right:-2px;"
@@ -245,7 +289,7 @@ void TitleBar::mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event)
         {
             ui->lineEditSearch->setStyleSheet("QLineEdit{"
                                               "color:#cccccc;"
-                                              "font-size:18px;"
+                                              "font: 10pt Microsoft YaHei;"
                                               "margin-right:-3px;"
                                               "padding-left:15px;"
                                               "background-color: #3c3842;"
@@ -263,7 +307,7 @@ void TitleBar::mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event)
         else if(event->type() == QEvent::Enter)
         {
             ui->lineEditSearch->setStyleSheet("QLineEdit{"
-                                              "font-size:18px;"
+                                              "font: 10pt Microsoft YaHei;"
                                               "margin-right:-3px;"
                                               "padding-left:15px;"
                                               "border-right:-2px;"
@@ -290,13 +334,21 @@ void TitleBar::mouseIsPressReleaseLineEdit(QObject *watched, QEvent *event)
     {
         if(event->type() == QEvent::MouseButtonPress)
         {
-                int x = this->mapToGlobal(ui->lineEditSearch->pos()+ui->stackedWidget->pos()+this->pos()).x();
-                int y = this->mapToGlobal(ui->lineEditSearch->pos()+ui->stackedWidget->pos()+this->pos()).y();
-                int height = ui->lineEditSearch->height();
-                m_searchForm->setGeometry(x+16,y+height-2,ui->lineEditSearch->width()+ui->BtnSearch->width()-36,m_searchForm->height());
-                m_searchForm->raise();//必须提升界面所处层次
-                m_searchForm->show();
+            int x = this->mapToGlobal(ui->lineEditSearch->pos()+ui->stackedWidget->pos()+this->pos()).x();
+            int y = this->mapToGlobal(ui->lineEditSearch->pos()+ui->stackedWidget->pos()+this->pos()).y();
+            int height = ui->lineEditSearch->height();
+            m_searchForm->setGeometry(x+10,y+height-2,ui->lineEditSearch->width()+ui->BtnSearch->width()-26,m_searchForm->height());
+            m_searchForm->raise();//必须提升界面所处层次
+            m_searchForm->show();
         }
+    }
+}
+
+void TitleBar::serarchLineEditFacous(QObject *watched, QEvent *event)
+{
+    if(watched == ui->lineEditSearch)
+    {
+
     }
 }
 
@@ -311,9 +363,7 @@ void TitleBar::getSystemTimeShow()
 /*槽函数 --- 地址栏显示当前url*/
 void TitleBar::setLineEditAddress(const QUrl url)
 {
-//    ui->lineEdit_webSearch->clear();
-//    QString text = url.toLocalFile();
-    //    ui->lineEdit_webSearch->setText(text);
+    ui->lineEdit_webSearch->clear();
 }
 
 void TitleBar::showLoginForm()

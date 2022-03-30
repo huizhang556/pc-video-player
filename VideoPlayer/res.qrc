@@ -147,5 +147,9 @@
         <file>images/his_delete.png</file>
         <file>images/his_hot.png</file>
         <file>images/his_pic.png</file>
+        <file>images/url_collect_hover.png</file>
+        <file>images/url_collection.png</file>
+        <file>images/his_delete_hover.png</file>
+        <file>images/skin/GreatView.png</file>
     </qresource>
 </RCC>

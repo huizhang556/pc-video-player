@@ -15,10 +15,20 @@ class SearchForm : public QWidget
 public:
     explicit SearchForm(QWidget *parent = nullptr);
     ~SearchForm();
+
+    void initWorkUi();
+    void chandleSignalsAndSlot();
 protected:
     void leaveEvent(QEvent *event) override;
 private:
     Ui::SearchForm *ui;
+
+private slots:
+    void clearHistoryList();
+public slots:
+    void addHistoryItem(QString his);
+
+    void closeSearchForm();
 };
 
 #endif // SEARCHFORM_H

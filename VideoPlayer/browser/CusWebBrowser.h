@@ -12,6 +12,7 @@ class CusWebBrowser : public QWebEngineView
 public:
     explicit CusWebBrowser(QWidget *parent = nullptr);
     ~CusWebBrowser();
+    QUrl getCurrentWebPageUrl();
 
 protected:
     QWebEngineView *createWindow(QWebEnginePage::WebWindowType type) override;

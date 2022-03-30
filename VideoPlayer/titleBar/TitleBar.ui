@@ -157,13 +157,13 @@ background-color: rgb(255, 255, 255);
              <widget class="QLineEdit" name="lineEditSearch">
               <property name="minimumSize">
                <size>
-                <width>100</width>
+                <width>350</width>
                 <height>36</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>1000</width>
+                <width>1200</width>
                 <height>36</height>
                </size>
               </property>
@@ -172,8 +172,7 @@ background-color: rgb(255, 255, 255);
 QLineEdit
 {
 color:#cccccc;
-font-family:&quot;微软雅黑&quot;;
-font-size:18px;
+font: 10pt &quot;楷体&quot;;
 background-color: #3c3842;
 selection-background-color: #D1DBCB;
 border-right:transparent;
@@ -204,13 +203,13 @@ border:1px solid #ff5c38;
              <widget class="QPushButton" name="BtnSearch">
               <property name="minimumSize">
                <size>
-                <width>80</width>
+                <width>90</width>
                 <height>36</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>100</width>
+                <width>120</width>
                 <height>36</height>
                </size>
               </property>
@@ -572,6 +571,51 @@ color:#1afa29;
              </property>
             </widget>
            </item>
+           <item>
+            <spacer name="horizontalSpacer_20">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>15</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton">
+             <property name="minimumSize">
+              <size>
+               <width>18</width>
+               <height>18</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>18</width>
+               <height>18</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+border-image: url(:/images/url_collection.png);
+}
+QPushButton:hover
+{
+border-image: url(:/images/url_collect_hover.png);
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
         </layout>
@@ -585,11 +629,11 @@ color:#1afa29;
         <enum>Qt::Horizontal</enum>
        </property>
        <property name="sizeType">
-        <enum>QSizePolicy::Maximum</enum>
+        <enum>QSizePolicy::Fixed</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>75</width>
+         <width>50</width>
          <height>20</height>
         </size>
        </property>

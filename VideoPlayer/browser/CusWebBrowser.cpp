@@ -21,6 +21,12 @@ CusWebBrowser::~CusWebBrowser()
 
 }
 
+QUrl CusWebBrowser::getCurrentWebPageUrl()
+{
+    return this->page()->url().toString();
+    qDebug() << this->page()->url().toString();
+}
+
 QWebEngineView *CusWebBrowser::createWindow(QWebEnginePage::WebWindowType type)
 {
     Q_UNUSED(type);
@@ -39,6 +45,7 @@ QWebEngineView *CusWebBrowser::createWindow(QWebEnginePage::WebWindowType type)
 void CusWebBrowser::slots_createNewWindows(const QUrl url)
 {
     newUrl = url;
+    getCurrentWebPageUrl();
 }
 
 /*处理输入框传过来的url*/
@@ -49,6 +56,7 @@ void CusWebBrowser::slots_loadNewUrl(QString path)
     {
         this->load(path);
         newUrl = QUrl(path);
+        qDebug() << "NEW URL = " << newUrl;
     }
 }
 

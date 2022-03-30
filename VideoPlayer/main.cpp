@@ -3,6 +3,7 @@
 #include "database/dataBase.h"
 #include "titleBar/TitleBar.h"
 #include "customer/FirstShow.h"
+#include "titleBar/CusLineEdit.h"
 #include "style/loadGlobalQss.h"
 #include "customer/CusLineEdit.h"
 #include "videomodels/MultipPlayer.h"
@@ -17,6 +18,9 @@ int main(int argc, char *argv[])
     dataBase::creatConnection();//连接数据库
     MainWidget w1;
     w1.show();
+
+//    CusLineEdit x;
+//    x.show();
 
 //    ControlForm v;
 //    v.show();
