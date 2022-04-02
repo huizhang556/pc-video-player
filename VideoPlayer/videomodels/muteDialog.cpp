@@ -44,3 +44,16 @@ void muteDialog::leaveEvent(QEvent *event)
 
 }
 
+/*点击空白消失界面*/
+bool muteDialog::event(QEvent *event)
+{
+    if (event->type() == QEvent::ActivationChange)
+        {
+            if(QApplication::activeWindow() != this)
+            {
+                this->close();
+            }
+        }
+        return QWidget::event(event);
+}
+

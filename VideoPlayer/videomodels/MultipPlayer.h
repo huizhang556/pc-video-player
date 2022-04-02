@@ -6,6 +6,7 @@
 #include "browser/CusWebBrowser.h"
 #include "videomodels/VideoBlank.h"
 #include "videomodels/muteDialog.h"
+#include "videomodels/CommentTab.h"
 #include "videomodels/AdjustBright.h"
 #include "messagebox/SystemSetting.h"
 #include "musicmodels/MusicPlayShow.h"
@@ -70,6 +71,10 @@ public:
     bool fileType(QStringList &filenames,int index);// 重载函数2
 
     void get_fileFromServer();
+
+    void removeTabwidgetTabBar(QTabWidget *tabwidget);
+
+    void set_showTwoTabBar(QTabWidget *tabwidget, int index1, QWidget *obj1,QString tabtext1, int index2, QWidget *obj2, QString tabtext2);
 
     void set_fileTolistWidget(QString item);//将服务器获取到的文件列表显示
 
@@ -211,6 +216,7 @@ private:
     SystemSetting               *m_systemSetting    = nullptr;
     VideoTitleBar               *m_videoTitleBar    = nullptr;
     RecomVideoTab               *m_recomTab         = nullptr;
+    CommentTab                  *m_commentTab       = nullptr;
     MyVideoWidget               *videoWidget        = nullptr;
     QMediaPlaylist              *playlist           = nullptr;
     int                         m_voice;                        //静音之前的值

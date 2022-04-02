@@ -17,7 +17,7 @@
    <string notr="true">QWidget
 {
 /*background-color:#136a8a;*/
-background-color: rgb(6, 40, 54);
+background-color: #25252a;
 	
 }
 	</string>

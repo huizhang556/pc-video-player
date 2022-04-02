@@ -4,6 +4,11 @@ background-color:#2a2a31;
 color: rgb(85, 255, 0);
 }
 
+QListWidget QTabWidget QStackWidget QTextBrowser
+{
+border:none;/*去边线*/
+}
+
 /*大标题栏---右键菜单*/
 #pmenu2
 {

@@ -5,8 +5,6 @@ dataBase::dataBase()
 
 }
 
-
-
 /*连接数据库*/
 bool dataBase::creatConnection()
 {

@@ -7,7 +7,9 @@ SOURCES += \
     $$PWD/MultipPlayer.cpp \
     $$PWD/RecomVideoTab.cpp \
     $$PWD/ControlForm.cpp \
-    $$PWD/VideoProgressBar.cpp
+    $$PWD/VideoProgressBar.cpp \
+    $$PWD/CommentTab.cpp \
+    $$PWD/CommentForm.cpp
 
 
 HEADERS += \
@@ -19,7 +21,9 @@ HEADERS += \
     $$PWD/MultipPlayer.h \
     $$PWD/RecomVideoTab.h \
     $$PWD/ControlForm.h \
-    $$PWD/VideoProgressBar.h
+    $$PWD/VideoProgressBar.h \
+    $$PWD/CommentTab.h \
+    $$PWD/CommentForm.h
 
 
 FORMS += \
@@ -30,5 +34,7 @@ FORMS += \
     $$PWD/MultipPlayer.ui \
     $$PWD/RecomVideoTab.ui \
     $$PWD/ControlForm.ui \
-    $$PWD/VideoProgressBar.ui
+    $$PWD/VideoProgressBar.ui \
+    $$PWD/CommentTab.ui \
+    $$PWD/CommentForm.ui
 

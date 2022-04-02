@@ -25,6 +25,7 @@ public:
 
 protected:
     void leaveEvent(QEvent *event) override;
+    bool event(QEvent *event) override;
 
 private:
     Ui::muteDialog *ui;

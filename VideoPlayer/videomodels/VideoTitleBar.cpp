@@ -6,11 +6,26 @@ VideoTitleBar::VideoTitleBar(QWidget *parent) :
     ui(new Ui::VideoTitleBar)
 {
     ui->setupUi(this);
+    initUi();//初始化代码层面界面
+    chandleSignalsAndSlots();//处理信号与槽函数
+}
+
+VideoTitleBar::~VideoTitleBar()
+{
+    delete ui;
+}
+
+void VideoTitleBar::initUi()
+{
     this->setFixedHeight(55);
     setTitleStackWidgetPage(0);
     ui->pushButton_close->setFlat(true);
     ui->pushButton_min->setFlat(true);
     ui->lineEdit_url->setPlaceholderText(QString::fromLocal8Bit("请输入网络资源地址"));
+}
+
+void VideoTitleBar::chandleSignalsAndSlots()
+{
     //关闭按钮
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){emit sig_winVClose();});
     //还原按钮
@@ -27,11 +42,6 @@ VideoTitleBar::VideoTitleBar(QWidget *parent) :
         QString input = ui->lineEdit_url->text().trimmed();//去除两端的空格
         emit sig_inputSourceUrl(input);
     });
-}
-
-VideoTitleBar::~VideoTitleBar()
-{
-    delete ui;
 }
 
 /*设置标题栏*/

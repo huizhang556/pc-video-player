@@ -8,8 +8,8 @@ Login::Login(QWidget *parent) :
 {
     ui->setupUi(this);
     installEventFilter(this);
-    this->setFixedSize(310,200);
-    setWindowFlags(Qt::FramelessWindowHint);
+    this->setFixedSize(310,200);    
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
 
     connect(ui->BtnLogin,&QPushButton::clicked,[=]()
     {

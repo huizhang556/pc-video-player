@@ -590,7 +590,8 @@ QToolTip
 {
 border:1px solid rgb(118, 118, 118); 
 background-color: #ffffff;
-color:#484848; font-size:12px;
+color:#484848; 
+font-size:12px;
 }</string>
              </property>
              <property name="text">

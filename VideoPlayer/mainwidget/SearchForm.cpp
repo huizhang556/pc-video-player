@@ -7,7 +7,7 @@ SearchForm::SearchForm(QWidget *parent) :
     ui(new Ui::SearchForm)
 {
     ui->setupUi(this);
-    this->setWindowFlag(Qt::FramelessWindowHint);
+    this->setWindowFlags(Qt::FramelessWindowHint);
     initWorkUi();
     chandleSignalsAndSlot();
 

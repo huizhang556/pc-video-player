@@ -8,6 +8,7 @@
 #include "customer/CusLineEdit.h"
 #include "videomodels/MultipPlayer.h"
 #include "videomodels/ControlForm.h"
+#include "videomodels/CommentTab.h"
 #include "mainwidget/Slideshow.h"
 
 
@@ -18,6 +19,9 @@ int main(int argc, char *argv[])
     dataBase::creatConnection();//连接数据库
     MainWidget w1;
     w1.show();
+
+//    CommentTab c;
+//    c.show();
 
 //    CusLineEdit x;
 //    x.show();

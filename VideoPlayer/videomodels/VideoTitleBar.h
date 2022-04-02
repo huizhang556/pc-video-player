@@ -15,6 +15,8 @@ class VideoTitleBar : public QWidget
 public:
     explicit VideoTitleBar(QWidget *parent = nullptr);
     ~VideoTitleBar();
+    void initUi();
+    void chandleSignalsAndSlots();
 public slots:
     void setTitleStackWidgetPage(int index);
 

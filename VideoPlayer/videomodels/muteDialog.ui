@@ -30,7 +30,7 @@
 {
 background-color: rgb(75, 75, 75);
 border:5px bolid black;
-
+border-radius:5px;
 }
 </string>
   </property>
@@ -72,7 +72,8 @@ border:5px bolid black;
        <property name="styleSheet">
         <string notr="true">background-color: transparent;
 text-align:center;
-color: rgb(255, 95, 21);</string>
+color: rgb(255, 95, 21);
+border-radius:10px;</string>
        </property>
        <property name="text">
         <string/>

@@ -108,13 +108,16 @@ void TitleBar::chandleSignalAndSLots()
     //前进 浏览器处理
     connect(ui->pushButton_advance,&QPushButton::clicked,[=](){emit sig_sendUrlAdvance();});
     //显示登录窗口
-    connect(ui->Btnlogin,&QPushButton::clicked,[=](){qDebug() << "login clicked!"; showLoginForm();});
+    connect(ui->Btnlogin,&QPushButton::clicked,[=](){qDebug() << "login had clicked!"; showLoginForm();});
     //历史记录记录搜索历史
 //    connect(this,&TitleBar::sig_sendNewSearch,m_searchForm,&SearchForm::addHistoryItem);
     //关闭程序关闭历史搜索框
     connect(this,&TitleBar::sig_winClose,m_searchForm,&SearchForm::closeSearchForm);
     //还原时，关闭历史搜索框
     connect(this,&TitleBar::sig_winNormal,m_searchForm,&SearchForm::closeSearchForm);
+    //还原时，关闭登录界面
+    connect(this,&TitleBar::sig_winNormal,m_loginForm,&Login::close);
+    //网址输入框---回车键处理
     connect(ui->lineEdit_webSearch,&QLineEdit::returnPressed,[=](){
         QString url = ui->lineEdit_webSearch->text().trimmed();
         emit sig_sendNewUrl(url);
@@ -363,6 +366,7 @@ void TitleBar::getSystemTimeShow()
 /*槽函数 --- 地址栏显示当前url*/
 void TitleBar::setLineEditAddress(const QUrl url)
 {
+    Q_UNUSED(url);
     ui->lineEdit_webSearch->clear();
 }
 
