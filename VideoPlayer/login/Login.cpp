@@ -70,6 +70,6 @@ void Login::receiveMainWinCloseAppSignal()
 void Login::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
-    QPainter painter(this);
-    painter.drawPixmap(0,0,this->width(),this->height(),QPixmap(":/images/icon/mainback2.png"));
+//    QPainter painter(this);
+//    painter.drawPixmap(0,0,this->width(),this->height(),QPixmap(":/images/bgpic/login_bgpic.png"));
 }

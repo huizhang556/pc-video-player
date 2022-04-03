@@ -152,5 +152,32 @@
         <file>images/icon/comment_more.png</file>
         <file>images/icon/comment_picture.png</file>
         <file>images/icon/comment_picture_hover.png</file>
+        <file>images/icon/intro_start.png</file>
+        <file>images/icon/intro_start_hover.png</file>
+        <file>images/icon/all_delete.png</file>
+        <file>images/icon/all_delete_hover.png</file>
+        <file>images/icon/all_openfile.png</file>
+        <file>images/icon/all_openfile_hover.png</file>
+        <file>images/icon/all_pause.png</file>
+        <file>images/icon/all_pause_hover.png</file>
+        <file>images/icon/all_start.png</file>
+        <file>images/icon/all_start_hover.png</file>
+        <file>images/icon/collect_video.png</file>
+        <file>images/icon/collect_video_hover.png</file>
+        <file>images/icon/dingyue.png</file>
+        <file>images/icon/dingyue_hover.png</file>
+        <file>images/icon/download_video.png</file>
+        <file>images/icon/download_video_hover.png</file>
+        <file>images/icon/emails_open.png</file>
+        <file>images/icon/emails_open_hover.png</file>
+        <file>images/icon/huanfu.png</file>
+        <file>images/icon/huanfu_hover.png</file>
+        <file>images/icon/zuanshi.png</file>
+        <file>images/icon/zuanshi_hover.png</file>
+        <file>images/icon/all_set.png</file>
+        <file>images/icon/all_set_hover.png</file>
+        <file>images/bgpic/adjust_bgpic.png</file>
+        <file>images/bgpic/login_bgpic.png</file>
+        <file>images/bgpic/voice_bgpic.png</file>
     </qresource>
 </RCC>

@@ -190,6 +190,16 @@ void MultipPlayer::initMainWindow()
     m_toolBox->addItem(m_listWisget4,icon_internet,QString::fromLocal8Bit("播放记录"));
     m_toolBox->layout()->setSpacing(3);//item之间的间距
 
+    m_introduceForm = new IntroduceForm;
+    m_introduceForm->setObjectName(QString::fromLocal8Bit("m_introduceForm"));
+    m_introduceForm->setCommentStarts(4);
+
+    m_introStack = new QStackedWidget;
+    m_introStack->setObjectName(QString::fromLocal8Bit("m_introStack"));
+    m_introStack->setFixedSize(260,100);
+    m_introStack->insertWidget(0,m_introduceForm);
+//    m_introStack->setHidden(true);
+
     m_recomTab = new RecomVideoTab;
     m_recomTab->setObjectName(QString::fromLocal8Bit("m_recomTab"));
     m_recomTab->setFixedWidth(260);
@@ -202,13 +212,21 @@ void MultipPlayer::initMainWindow()
     m_tabWidget1 = new QTabWidget;//不用手动释放，有包含关系
     m_tabWidget1->setObjectName(QString::fromLocal8Bit("m_tabWidget1"));
     m_tabWidget1->setFixedWidth(260);//固定宽度
-    set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_recomTab,QString::fromLocal8Bit("推荐视频"));
+    set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_commentTab,QString::fromLocal8Bit("讨论"));
     m_tabWidget1->setCurrentIndex(0);
-    removeTabwidgetTabBar(m_tabWidget1);
-    set_showTwoTabBar(m_tabWidget1,0,m_commentTab,QString::fromLocal8Bit("讨论"),1,m_recomTab,QString::fromLocal8Bit("推荐视频"));
+    //测试
+//    removeTabwidgetTabBar(m_tabWidget1);
+//    set_showTwoTabBar(m_tabWidget1,0,m_commentTab,QString::fromLocal8Bit("讨论"),1,m_recomTab,QString::fromLocal8Bit("推荐视频"));
+
+    m_vHlayout_jianjie = new QVBoxLayout;
+    m_vHlayout_jianjie->setObjectName(QString::fromLocal8Bit("m_vHlayout_jianjie"));
+    m_vHlayout_jianjie->addWidget(m_introStack,2);
+    m_vHlayout_jianjie->addWidget(m_tabWidget1,8);
+    m_vHlayout_jianjie->setSpacing(0);
+
     m_hboxlayout_rlist = new QHBoxLayout;
     m_hboxlayout_rlist->addWidget(ui->stackedWidget);
-    m_hboxlayout_rlist->addWidget(m_tabWidget1);
+    m_hboxlayout_rlist->addLayout(m_vHlayout_jianjie);
     m_hboxlayout_rlist->setSpacing(0);
     m_hboxlayout_rlist->setStretch(0,7);
     m_hboxlayout_rlist->setStretch(1,3);
@@ -589,7 +607,13 @@ void MultipPlayer::removeTabwidgetTabBar(QTabWidget *tabwidget)
     }
 }
 
-/*设置显示的tab*/
+/*重载1---只显示1个tab*/
+void MultipPlayer::set_showTwoTabBar(QTabWidget *tabwidget, int index1, QWidget *obj1, QString tabtext1)
+{
+    tabwidget->insertTab(index1,obj1,tabtext1);
+}
+
+/*重载2---设置显示2个的tab*/
 void MultipPlayer::set_showTwoTabBar(QTabWidget *tabwidget, int index1, QWidget *obj1, QString tabtext1, int index2, QWidget *obj2, QString tabtext2)
 {
     tabwidget->insertTab(index1,obj1,tabtext1);

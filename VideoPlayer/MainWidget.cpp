@@ -65,6 +65,9 @@ void MainWidget::initOtherWidgetUi()
     m_webBrowser = new CusWebBrowser();
     m_webBrowser->setObjectName(QString::fromLatin1("m_webBrowser"));
 
+    m_personForm = new PersonFileForm();
+    m_personForm->setObjectName(QString::fromLatin1("m_personForm"));
+
     //弹出对话框
     m_pExitDlg = new ExitDialog(this);
     m_pExitDlg->setObjectName(QString::fromLatin1("m_pExitDlg"));
@@ -178,7 +181,7 @@ void MainWidget::setStackedWidgetPage()
     m_stackWidget->insertWidget(2,m_videoBlank);
     m_stackWidget->insertWidget(3,m_musicShow);
     m_stackWidget->insertWidget(4,m_musicList);
-    m_stackWidget->insertWidget(5,m_musicShow);
+    m_stackWidget->insertWidget(5,m_personForm);
 }
 
 

@@ -28,7 +28,7 @@
   <property name="styleSheet">
    <string notr="true">QWidget
 {
-background-color: rgb(75, 75, 75);
+background-color:#4b4b4b;
 border:5px bolid black;
 border-radius:5px;
 }

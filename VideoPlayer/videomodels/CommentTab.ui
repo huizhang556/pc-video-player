@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>276</width>
-    <height>245</height>
+    <height>275</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>0</width>
-    <height>245</height>
+    <height>210</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -72,13 +72,13 @@ background-color: rgb(60, 56, 66);
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>70</height>
+            <height>50</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>70</height>
+            <height>40</height>
            </size>
           </property>
           <property name="styleSheet">
@@ -146,7 +146,7 @@ border-image: url(:/images/icon/comment_picture_hover.png);
           <property name="minimumSize">
            <size>
             <width>85</width>
-            <height>30</height>
+            <height>32</height>
            </size>
           </property>
           <property name="maximumSize">

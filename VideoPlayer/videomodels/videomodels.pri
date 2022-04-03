@@ -9,7 +9,9 @@ SOURCES += \
     $$PWD/ControlForm.cpp \
     $$PWD/VideoProgressBar.cpp \
     $$PWD/CommentTab.cpp \
-    $$PWD/CommentForm.cpp
+    $$PWD/CommentForm.cpp \
+    $$PWD/IntroduceForm.cpp \
+    $$PWD/PersonFileForm.cpp
 
 
 HEADERS += \
@@ -23,7 +25,9 @@ HEADERS += \
     $$PWD/ControlForm.h \
     $$PWD/VideoProgressBar.h \
     $$PWD/CommentTab.h \
-    $$PWD/CommentForm.h
+    $$PWD/CommentForm.h \
+    $$PWD/IntroduceForm.h \
+    $$PWD/PersonFileForm.h
 
 
 FORMS += \
@@ -36,5 +40,7 @@ FORMS += \
     $$PWD/ControlForm.ui \
     $$PWD/VideoProgressBar.ui \
     $$PWD/CommentTab.ui \
-    $$PWD/CommentForm.ui
+    $$PWD/CommentForm.ui \
+    $$PWD/IntroduceForm.ui \
+    $$PWD/PersonFileForm.ui
 

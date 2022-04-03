@@ -14,6 +14,8 @@
 #include "musicmodels/MusicPlaylist.h"
 #include "musicmodels/MusicPlayShow.h"
 #include "videomodels/VideoTitleBar.h"
+#include "videomodels/PersonFileForm.h"
+
 #include <QPoint>
 #include <QLayout>
 #include <QWidget>
@@ -88,6 +90,7 @@ private:
     ExitDialog          *m_pExitDlg         = nullptr;
     TitleBar            *m_titleBar         = nullptr;
     FirstShow           *m_firstShow        = nullptr;
+    PersonFileForm      *m_personForm       = nullptr;
     MultipPlayer        *m_mainPlayer       = nullptr;
     LeftSideBar         *m_leftSideBar      = nullptr;
     MusicPlaylist       *m_musicList        = nullptr;

@@ -14,6 +14,7 @@
 #include "musicmodels/MusicPlaylist.h"
 #include "videomodels/VideoTitleBar.h"
 #include "videomodels/RecomVideoTab.h"
+#include "videomodels/IntroduceForm.h"
 
 #include <QMap>
 #include <QPoint>
@@ -36,6 +37,7 @@
 #include <QMediaPlayer>
 #include <QVideoWidget>
 #include <QWidgetAction>
+#include <QStackedWidget>
 #include <QMediaPlaylist>
 #include <QSystemTrayIcon>
 #include <QDesktopServices>
@@ -73,7 +75,7 @@ public:
     void get_fileFromServer();
 
     void removeTabwidgetTabBar(QTabWidget *tabwidget);
-
+    void set_showTwoTabBar(QTabWidget *tabwidget, int index1, QWidget *obj1,QString tabtext1);
     void set_showTwoTabBar(QTabWidget *tabwidget, int index1, QWidget *obj1,QString tabtext1, int index2, QWidget *obj2, QString tabtext2);
 
     void set_fileTolistWidget(QString item);//将服务器获取到的文件列表显示
@@ -208,6 +210,7 @@ private:
     QHBoxLayout                 *m_hLayout          = nullptr; //搜索按钮和搜索框布局
     QHBoxLayout                 *m_hboxlayout_rlist = nullptr; //右侧播放列表
     QVBoxLayout                 *m_vHlayout         = nullptr; //布局listwidget和m_hLayout
+    QVBoxLayout                 *m_vHlayout_jianjie = nullptr; //视频简介
     QPushButton                 *m_searchBtn        = nullptr;
     QMediaPlayer                *player             = nullptr;
     AdjustBright                *m_adjustBright     = nullptr;
@@ -215,10 +218,12 @@ private:
     MusicPlaylist               *m_musicShowList    = nullptr;
     SystemSetting               *m_systemSetting    = nullptr;
     VideoTitleBar               *m_videoTitleBar    = nullptr;
+    IntroduceForm               *m_introduceForm    = nullptr;
     RecomVideoTab               *m_recomTab         = nullptr;
     CommentTab                  *m_commentTab       = nullptr;
     MyVideoWidget               *videoWidget        = nullptr;
     QMediaPlaylist              *playlist           = nullptr;
+    QStackedWidget              *m_introStack       = nullptr;
     int                         m_voice;                        //静音之前的值
     bool                        m_winMax;                       //默认非最大化
     bool                        m_isClose;
