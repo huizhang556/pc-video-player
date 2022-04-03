@@ -146,5 +146,11 @@
         <file>images/icon/yingling_1.png</file>
         <file>images/icon/yingling2.png</file>
         <file>images/skin/GreatView.png</file>
+        <file>images/icon/comment_dianzan.png</file>
+        <file>images/icon/comment_dianzan_hover.png</file>
+        <file>images/icon/comment_message.png</file>
+        <file>images/icon/comment_more.png</file>
+        <file>images/icon/comment_picture.png</file>
+        <file>images/icon/comment_picture_hover.png</file>
     </qresource>
 </RCC>

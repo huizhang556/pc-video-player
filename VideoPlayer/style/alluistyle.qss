@@ -6,6 +6,7 @@ color: rgb(85, 255, 0);
 
 QListWidget QTabWidget QStackWidget QTextBrowser
 {
+outline:0;
 border:none;/*去边线*/
 }
 

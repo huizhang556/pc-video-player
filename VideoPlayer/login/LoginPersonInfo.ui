@@ -436,7 +436,7 @@ border:2px solid #ff5c38;
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_2">
+                 <widget class="QLabel" name="label_passwd">
                   <property name="minimumSize">
                    <size>
                     <width>30</width>

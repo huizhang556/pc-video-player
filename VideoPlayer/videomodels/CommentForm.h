@@ -14,6 +14,8 @@ class CommentForm : public QWidget
 public:
     explicit CommentForm(QWidget *parent = nullptr);
     ~CommentForm();
+    void chandleSignalsAndSLots();
+
     void setUserPicture(QPixmap pix);
 
     void setUserNick(QString nick);
@@ -21,6 +23,8 @@ public:
     void setUserCommitDataTime(QString datatime);
 
     void setCommentZanCount(int count);
+public slots:
+
 
 private:
     Ui::CommentForm *ui;

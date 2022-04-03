@@ -17,8 +17,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     loadGlobalQss::loadAllUIQss();//加载全局样式
     dataBase::creatConnection();//连接数据库
-    MainWidget w1;
-    w1.show();
+//    MainWidget w1;
+//    w1.show();
 
 //    CommentTab c;
 //    c.show();
@@ -38,8 +38,8 @@ int main(int argc, char *argv[])
 //    CusLineEdit c;
 //    c.show();
 
-//    MultipPlayer w;
-//    w.show();
+    MultipPlayer w;
+    w.show();
 
 //    TitleBar t;
 //    t.show();
