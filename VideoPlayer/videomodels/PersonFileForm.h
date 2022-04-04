@@ -14,6 +14,7 @@ class PersonFileForm : public QWidget
 public:
     explicit PersonFileForm(QWidget *parent = nullptr);
     ~PersonFileForm();
+    void initWorkUI();
     void chandleSignalsAndSLots();
 
 private:

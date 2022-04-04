@@ -198,7 +198,7 @@ void MultipPlayer::initMainWindow()
     m_introStack->setObjectName(QString::fromLocal8Bit("m_introStack"));
     m_introStack->setFixedSize(260,100);
     m_introStack->insertWidget(0,m_introduceForm);
-//    m_introStack->setHidden(true);
+    m_introStack->setHidden(true);
 
     m_recomTab = new RecomVideoTab;
     m_recomTab->setObjectName(QString::fromLocal8Bit("m_recomTab"));

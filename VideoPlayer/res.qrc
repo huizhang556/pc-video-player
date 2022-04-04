@@ -179,5 +179,6 @@
         <file>images/bgpic/adjust_bgpic.png</file>
         <file>images/bgpic/login_bgpic.png</file>
         <file>images/bgpic/voice_bgpic.png</file>
+        <file>images/icon/his_delete_hover_orange.png</file>
     </qresource>
 </RCC>

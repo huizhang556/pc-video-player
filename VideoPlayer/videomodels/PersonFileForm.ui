@@ -53,13 +53,13 @@
             <property name="minimumSize">
              <size>
               <width>50</width>
-              <height>32</height>
+              <height>28</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>50</width>
-              <height>16777215</height>
+              <height>28</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -101,6 +101,18 @@ color: rgb(255, 85, 0);
      </item>
      <item>
       <widget class="QWidget" name="widget" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>140</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>140</height>
+        </size>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color:#34343c;</string>
        </property>
@@ -122,28 +134,15 @@ color: rgb(255, 85, 0);
         </property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_8">
-          <item>
-           <spacer name="horizontalSpacer_76">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>10</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
+          <property name="spacing">
+           <number>6</number>
+          </property>
           <item>
            <widget class="QLabel" name="labeluserpic">
             <property name="minimumSize">
              <size>
-              <width>80</width>
-              <height>80</height>
+              <width>100</width>
+              <height>100</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -156,8 +155,8 @@ color: rgb(255, 85, 0);
              <string notr="true">QLabel
 {
 border-image: url(:/images/icon/collect_title.png);
-border-radius:30px;
-margin:5px;
+border-radius:40px;
+margin:10px;
 }</string>
             </property>
             <property name="text">
@@ -166,26 +165,23 @@ margin:5px;
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_77">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>10</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <property name="spacing">
-             <number>0</number>
+             <number>5</number>
             </property>
+            <item>
+             <spacer name="verticalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
             <item>
              <widget class="QFrame" name="frame_2">
               <property name="maximumSize">
@@ -460,10 +456,29 @@ color: rgb(255, 85, 0);
               </layout>
              </widget>
             </item>
+            <item>
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
            </layout>
           </item>
           <item>
            <widget class="QFrame" name="frame_4">
+            <property name="minimumSize">
+             <size>
+              <width>245</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -535,6 +550,22 @@ border-image: url(:/images/icon/emails_open_hover.png);
                   <string/>
                  </property>
                 </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_25">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>15</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
                </item>
                <item>
                 <widget class="QLabel" name="label_prompt">
@@ -610,7 +641,7 @@ font-weight:bold;
        <property name="currentIndex">
         <number>0</number>
        </property>
-       <widget class="QWidget" name="tab">
+       <widget class="QWidget" name="tab_history">
         <attribute name="title">
          <string>看过</string>
         </attribute>
@@ -656,7 +687,7 @@ font-weight:bold;
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>20</width>
+                    <width>10</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -759,8 +790,18 @@ color: rgb(255, 85, 0);
                     <height>20</height>
                    </size>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton
+{
+border-image: url(:/images/icon/all_openfile.png);
+}
+QPushButton:hover
+{
+border-image: url(:/images/icon/all_openfile_hover.png);
+}</string>
+                  </property>
                   <property name="text">
-                   <string>选择文件</string>
+                   <string/>
                   </property>
                  </widget>
                 </item>
@@ -774,7 +815,7 @@ color: rgb(255, 85, 0);
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>10</width>
+                    <width>20</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -788,8 +829,18 @@ color: rgb(255, 85, 0);
                     <height>24</height>
                    </size>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton
+{
+border-image: url(:/images/icon/his_delete_hover.png);
+}
+QPushButton:hover
+{
+border-image: url(:/images/icon/his_delete_hover_orange.png);
+}</string>
+                  </property>
                   <property name="text">
-                   <string>全部清空</string>
+                   <string/>
                   </property>
                  </widget>
                 </item>
@@ -924,7 +975,7 @@ QListWidget::item:hover
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>20</width>
+                    <width>10</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -1070,8 +1121,24 @@ color: rgb(255, 85, 0);
                     <height>24</height>
                    </size>
                   </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>36</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton
+{
+border-image: url(:/images/icon/all_openfile.png);
+}
+QPushButton:hover
+{
+border-image: url(:/images/icon/all_openfile_hover.png);
+}</string>
+                  </property>
                   <property name="text">
-                   <string>选择文件</string>
+                   <string/>
                   </property>
                  </widget>
                 </item>
@@ -1085,7 +1152,7 @@ color: rgb(255, 85, 0);
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>10</width>
+                    <width>20</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -1099,8 +1166,24 @@ color: rgb(255, 85, 0);
                     <height>24</height>
                    </size>
                   </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>36</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton
+{
+border-image: url(:/images/icon/his_delete_hover.png);
+}
+QPushButton:hover
+{
+border-image: url(:/images/icon/his_delete_hover_orange.png);
+}</string>
+                  </property>
                   <property name="text">
-                   <string>全部清空</string>
+                   <string/>
                   </property>
                  </widget>
                 </item>
@@ -1133,21 +1216,84 @@ color: rgb(255, 85, 0);
              <widget class="QWidget" name="page_collect1">
               <layout class="QVBoxLayout" name="verticalLayout_10">
                <item>
-                <widget class="QListWidget" name="listWidget_coll_all"/>
+                <widget class="QListWidget" name="listWidget_coll_all">
+                 <property name="styleSheet">
+                  <string notr="true">QListWidget
+{
+border:none;
+}
+QListWidget::item
+{
+
+}
+
+QListWidget::item:hover
+{
+
+}</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>coll_all_all</string>
+                  </property>
+                 </item>
+                </widget>
                </item>
               </layout>
              </widget>
              <widget class="QWidget" name="page_collect2">
               <layout class="QVBoxLayout" name="verticalLayout_11">
                <item>
-                <widget class="QListWidget" name="listWidget_coll_movies"/>
+                <widget class="QListWidget" name="listWidget_coll_movies">
+                 <property name="styleSheet">
+                  <string notr="true">QListWidget
+{
+border:none;
+}
+QListWidget::item
+{
+
+}
+
+QListWidget::item:hover
+{
+
+}</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>coll_movies</string>
+                  </property>
+                 </item>
+                </widget>
                </item>
               </layout>
              </widget>
              <widget class="QWidget" name="page_coll_other">
               <layout class="QVBoxLayout" name="verticalLayout_13">
                <item>
-                <widget class="QListWidget" name="listWidget_coll_other"/>
+                <widget class="QListWidget" name="listWidget_coll_other">
+                 <property name="styleSheet">
+                  <string notr="true">QListWidget
+{
+border:none;
+}
+QListWidget::item
+{
+
+}
+
+QListWidget::item:hover
+{
+
+}</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>coll_other</string>
+                  </property>
+                 </item>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -1157,7 +1303,7 @@ color: rgb(255, 85, 0);
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="tab_3">
+       <widget class="QWidget" name="tab_order">
         <attribute name="title">
          <string>订阅</string>
         </attribute>
@@ -1200,7 +1346,7 @@ color: rgb(255, 85, 0);
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>20</width>
+                    <width>10</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -1309,8 +1455,18 @@ color: rgb(255, 85, 0);
                     <height>16777215</height>
                    </size>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton
+{
+border-image: url(:/images/icon/his_delete_hover.png);
+}
+QPushButton:hover
+{
+border-image: url(:/images/icon/his_delete_hover_orange.png);
+}</string>
+                  </property>
                   <property name="text">
-                   <string>删除</string>
+                   <string/>
                   </property>
                  </widget>
                 </item>
@@ -1343,14 +1499,56 @@ color: rgb(255, 85, 0);
              <widget class="QWidget" name="page_order1">
               <layout class="QVBoxLayout" name="verticalLayout_55">
                <item>
-                <widget class="QListWidget" name="listWidget_order_videos"/>
+                <widget class="QListWidget" name="listWidget_order_videos">
+                 <property name="styleSheet">
+                  <string notr="true">QListWidget
+{
+border:none;
+}
+QListWidget::item
+{
+
+}
+
+QListWidget::item:hover
+{
+
+}</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>order-videos</string>
+                  </property>
+                 </item>
+                </widget>
                </item>
               </layout>
              </widget>
              <widget class="QWidget" name="page_order2">
               <layout class="QVBoxLayout" name="verticalLayout_56">
                <item>
-                <widget class="QListWidget" name="listWidget_order_musics"/>
+                <widget class="QListWidget" name="listWidget_order_musics">
+                 <property name="styleSheet">
+                  <string notr="true">QListWidget
+{
+border:none;
+}
+QListWidget::item
+{
+
+}
+
+QListWidget::item:hover
+{
+
+}</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>order-music</string>
+                  </property>
+                 </item>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -1360,7 +1558,7 @@ color: rgb(255, 85, 0);
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="tab_4">
+       <widget class="QWidget" name="tab_skin">
         <attribute name="title">
          <string>换肤</string>
         </attribute>
@@ -1403,7 +1601,7 @@ color: rgb(255, 85, 0);
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>20</width>
+                    <width>10</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -1512,8 +1710,18 @@ color: rgb(255, 85, 0);
                     <height>16777215</height>
                    </size>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton
+{
+border-image: url(:/images/icon/his_delete_hover.png);
+}
+QPushButton:hover
+{
+border-image: url(:/images/icon/his_delete_hover_orange.png);
+}</string>
+                  </property>
                   <property name="text">
-                   <string>删除</string>
+                   <string/>
                   </property>
                  </widget>
                 </item>
@@ -1541,19 +1749,61 @@ color: rgb(255, 85, 0);
            <item>
             <widget class="QStackedWidget" name="stackedWidget_skin">
              <property name="currentIndex">
-              <number>1</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="page_skin1">
               <layout class="QVBoxLayout" name="verticalLayout_51">
                <item>
-                <widget class="QListWidget" name="listWidget_skin_videos"/>
+                <widget class="QListWidget" name="listWidget_skin_videos">
+                 <property name="styleSheet">
+                  <string notr="true">QListWidget
+{
+border:none;
+}
+QListWidget::item
+{
+
+}
+
+QListWidget::item:hover
+{
+
+}</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>SKIN-VIDEOS</string>
+                  </property>
+                 </item>
+                </widget>
                </item>
               </layout>
              </widget>
              <widget class="QWidget" name="page_skin2">
               <layout class="QVBoxLayout" name="verticalLayout_52">
                <item>
-                <widget class="QListWidget" name="listWidget_skin_musics"/>
+                <widget class="QListWidget" name="listWidget_skin_musics">
+                 <property name="styleSheet">
+                  <string notr="true">QListWidget
+{
+border:none;
+}
+QListWidget::item
+{
+
+}
+
+QListWidget::item:hover
+{
+
+}</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>SKIN-MUSIC</string>
+                  </property>
+                 </item>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -1563,7 +1813,7 @@ color: rgb(255, 85, 0);
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="tab_5">
+       <widget class="QWidget" name="tab_download">
         <attribute name="title">
          <string>下载</string>
         </attribute>
@@ -1606,7 +1856,7 @@ color: rgb(255, 85, 0);
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>20</width>
+                    <width>10</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -1934,19 +2184,61 @@ border-image: url(:/images/icon/all_delete_hover.png);
            <item>
             <widget class="QStackedWidget" name="stackedWidget_down">
              <property name="currentIndex">
-              <number>1</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="page_down1">
               <layout class="QVBoxLayout" name="verticalLayout_15">
                <item>
-                <widget class="QListWidget" name="listWidget_down_videos"/>
+                <widget class="QListWidget" name="listWidget_down_videos">
+                 <property name="styleSheet">
+                  <string notr="true">QListWidget
+{
+border:none;
+}
+QListWidget::item
+{
+
+}
+
+QListWidget::item:hover
+{
+
+}</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>DOWNLOAD_VIDEOS</string>
+                  </property>
+                 </item>
+                </widget>
                </item>
               </layout>
              </widget>
              <widget class="QWidget" name="page_down2">
               <layout class="QVBoxLayout" name="verticalLayout_16">
                <item>
-                <widget class="QListWidget" name="listWidget_musics"/>
+                <widget class="QListWidget" name="listWidget_down_musics">
+                 <property name="styleSheet">
+                  <string notr="true">QListWidget
+{
+border:none;
+}
+QListWidget::item
+{
+
+}
+
+QListWidget::item:hover
+{
+
+}</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>DOWNLOAD_musics</string>
+                  </property>
+                 </item>
+                </widget>
                </item>
               </layout>
              </widget>

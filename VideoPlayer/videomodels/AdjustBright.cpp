@@ -8,7 +8,7 @@ AdjustBright::AdjustBright(QWidget *parent) :
     ui(new Ui::AdjustBright)
 {
     ui->setupUi(this);
-    setFixedSize(360,330);//最大尺寸
+    setFixedSize(360,340);//最大尺寸
 //    setFixedSize(300,245);
     this->setWindowFlags(Qt::FramelessWindowHint);
 
