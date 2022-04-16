@@ -3,8 +3,8 @@
 #include "database/dataBase.h"
 #include "titleBar/TitleBar.h"
 #include "customer/FirstShow.h"
-#include "titleBar/CusLineEdit.h"
 #include "style/loadGlobalQss.h"
+#include "customer/CusLineEdit.h"
 #include "mainwidget/Slideshow.h"
 #include "customer/CusLineEdit.h"
 #include "videomodels/CommentTab.h"
@@ -18,8 +18,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     loadGlobalQss::loadAllUIQss();//加载全局样式
     dataBase::creatConnection();//连接数据库
-    MainWidget w1;
-    w1.show();
+//    MainWidget w1;
+//    w1.show();
 
 
 //    PersonFileForm f;
@@ -40,11 +40,11 @@ int main(int argc, char *argv[])
 //    Slideshow s;
 //    s.show();
 
-//    CusLineEdit c;
+//    CusLineEdit c(QIcon(":/images/icon/checked.png"));
 //    c.show();
 
-//    MultipPlayer w;
-//    w.show();
+    MultipPlayer w;
+    w.show();
 
 //    TitleBar t;
 //    t.show();

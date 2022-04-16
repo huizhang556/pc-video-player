@@ -125,7 +125,7 @@ margin:0px;
 color: rgb(85, 255, 0);
 }
 
-/*侧边栏底部--按钮*/
+/*侧边栏底部--展开按钮*/
 #m_expandBtn
 {
 background-color: rgb(43, 43, 43);
@@ -251,16 +251,10 @@ border:none;
 /*font:bold italic 18px "微软雅黑";*/
 }
 
-/*视频显示widget1*/
-QWidget #widget1
+/*m_widget1*/
+QWidget #m_widget1
 {
-background-color:#3d3d3d;
-}
-
-/*QDockWidget上的widget2*/
-QDockWidget QWidget#widget2
-{
-background-color:#3d3d3d;
+border-left: 1px solid green;
 }
 
 /*搜索框*/
@@ -382,13 +376,14 @@ QToolBox QListWidget::item:selected:!active
 }
 
 /*滚动条-垂直*/
+/*
 QScrollBar:vertical,QScrollBar:horizontal
 {
 background:skyblue;
-width:8px; 
-height:8px;
  }
+*/
 
+/*
 QScrollBar::handle:vertical,QScrollBar::handle:horizontal
 {
 /*顶部留出10px给箭头*/
@@ -398,19 +393,18 @@ QScrollBar::handle:vertical,QScrollBar::handle:horizontal
 background:#3f3f48;
  border:2px solid #3f3f48;
  border-radius:5px;
- width:4px;
-min-height:4px;
  }
+*/
 
+/*
 QScrollBar::handle:vertical:hover,QScrollBar::handle:horizontal:hover
 {
 /*background:#00BFFF; */
 background:#3f3f48;
 border:2px solid #3f3f48;
  border-radius:5px;
- width:4px;
-min-height:4px;
 }
+*/
 
 /*
 QScrollBar::handle:vertical:pressed
@@ -418,21 +412,24 @@ QScrollBar::handle:vertical:pressed
 background:#00BFFF;
 border:2px solid transparent;
  border-radius:5px;
-width:4px;
-min-height:8px;
 }
 */
 
 /*page属于移动的区域*/
+/*
 QScrollBar::add-page:vertical,QScrollBar::add-page:horizontal
 {    
         background-color: rgb(87, 97, 106);
 }
+*/
 
+
+/*
 QScrollBar::sub-page:vertical,QScrollBar::sub-page:horizontal
 {
         background-color: rgb(87, 97, 106);
 }
+*/
 
 /*
 QScrollBar::sub-line:vertical
@@ -440,7 +437,9 @@ QScrollBar::sub-line:vertical
 background-image: url(:/images/icon/arrowdown.png);
 subcontrol-position:top;
 }
+*/
 
+/*
 QScrollBar::add-line:vertical
 {
 background-image: url(:/images/icon/arrowup.png);

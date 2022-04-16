@@ -1,4 +1,5 @@
 ﻿#include "MyVideoWidget.h"
+#include <QDebug>
 
 MyVideoWidget::MyVideoWidget(QWidget *parent) :
     QVideoWidget()
@@ -14,5 +15,19 @@ MyVideoWidget::MyVideoWidget(QWidget *parent) :
 MyVideoWidget::~MyVideoWidget()
 {
 
+}
+
+void MyVideoWidget::enterEvent(QEvent *e)
+{
+    Q_UNUSED(e);
+    emit mouseEnterToVideoUI();
+    qDebug() << "the mouse enter video";
+}
+
+void MyVideoWidget::leaveEvent(QEvent *e)
+{
+    Q_UNUSED(e);
+    emit mouseLeaveFromVideoUI();
+    qDebug() << "the mouse leave video";
 }
 

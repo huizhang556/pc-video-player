@@ -99,7 +99,6 @@
         <file>images/icon/passwd_show.png</file>
         <file>images/icon/pausehover.png</file>
         <file>images/icon/picture_page1.PNG</file>
-        <file>images/icon/playercollect.png</file>
         <file>images/icon/playerinternet.png</file>
         <file>images/icon/playerlist.png</file>
         <file>images/icon/playhover.png</file>
@@ -143,8 +142,6 @@
         <file>images/icon/user.png</file>
         <file>images/icon/video.png</file>
         <file>images/icon/yingling.png</file>
-        <file>images/icon/yingling_1.png</file>
-        <file>images/icon/yingling2.png</file>
         <file>images/skin/GreatView.png</file>
         <file>images/icon/comment_dianzan.png</file>
         <file>images/icon/comment_dianzan_hover.png</file>
@@ -180,5 +177,26 @@
         <file>images/bgpic/login_bgpic.png</file>
         <file>images/bgpic/voice_bgpic.png</file>
         <file>images/icon/his_delete_hover_orange.png</file>
+        <file>images/wallpaper/picturewall/1.png</file>
+        <file>images/wallpaper/picturewall/2.png</file>
+        <file>images/wallpaper/picturewall/3.png</file>
+        <file>images/wallpaper/picturewall/4.png</file>
+        <file>images/wallpaper/picturewall/5.png</file>
+        <file>images/wallpaper/picturewall/6.png</file>
+        <file>images/wallpaper/picturewall/7.png</file>
+        <file>images/wallpaper/picturewall/8.png</file>
+        <file>images/wallpaper/picturewall/9.png</file>
+        <file>images/wallpaper/picturewall/10.png</file>
+        <file>images/icon/media_download.png</file>
+        <file>images/icon/media_download_hover.png</file>
+        <file>images/icon/media_fullgreen.png</file>
+        <file>images/icon/media_fullgreen_cancel.png</file>
+        <file>images/icon/media_fullgreen_cancel_hover.png</file>
+        <file>images/icon/media_fullgreen_hover.png</file>
+        <file>images/icon/play_collect_checked.png</file>
+        <file>images/icon/play_collect_unchecked.png</file>
+        <file>images/icon/comment_message_hover.png</file>
+        <file>images/icon/arrow_left.png</file>
+        <file>images/icon/arrow_right.png</file>
     </qresource>
 </RCC>

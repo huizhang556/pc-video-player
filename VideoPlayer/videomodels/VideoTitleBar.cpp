@@ -60,7 +60,7 @@ void VideoTitleBar::setTitleStackWidgetPage(int index)
 /*设置当前标题*/
 void VideoTitleBar::setTitleText(const QString &text)
 {
-    ui->label_title->setText(text);
+    ui->label_title->setText(QString::fromLocal8Bit("正在播放：")+text);
 }
 
 /*清除标题栏*/

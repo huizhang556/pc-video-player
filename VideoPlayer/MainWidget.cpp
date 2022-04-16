@@ -176,12 +176,12 @@ void MainWidget::chandleSignalAndSlots()
 //设置StackedWidget布局每个page界面
 void MainWidget::setStackedWidgetPage()
 {
-    m_stackWidget->insertWidget(0,m_tabWidget);
-    m_stackWidget->insertWidget(1,m_webBrowser);
-    m_stackWidget->insertWidget(2,m_videoBlank);
-    m_stackWidget->insertWidget(3,m_musicShow);
-    m_stackWidget->insertWidget(4,m_musicList);
-    m_stackWidget->insertWidget(5,m_personForm);
+    m_stackWidget->insertWidget(0,m_tabWidget);//custabwidget
+    m_stackWidget->insertWidget(1,m_webBrowser);//cuswebbrowser
+    m_stackWidget->insertWidget(2,m_videoBlank);//videoblack
+    m_stackWidget->insertWidget(3,m_musicShow);//musicshow
+    m_stackWidget->insertWidget(4,m_musicList);//musiclist
+    m_stackWidget->insertWidget(5,m_personForm);//personform 个人管理
 }
 
 

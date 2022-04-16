@@ -2,8 +2,7 @@
 #define MULTIPPLAYER_H
 #define MARWIDTH 2 //窗口边距
 #include "network/MyHttp.h"
-#include "customer/CusTabWidget.h"
-#include "browser/CusWebBrowser.h"
+
 #include "videomodels/VideoBlank.h"
 #include "videomodels/muteDialog.h"
 #include "videomodels/CommentTab.h"
@@ -75,10 +74,14 @@ public:
     void get_fileFromServer();
 
     void removeTabwidgetTabBar(QTabWidget *tabwidget);
+
     void set_showTwoTabBar(QTabWidget *tabwidget, int index1, QWidget *obj1,QString tabtext1);
+
     void set_showTwoTabBar(QTabWidget *tabwidget, int index1, QWidget *obj1,QString tabtext1, int index2, QWidget *obj2, QString tabtext2);
 
-    void set_fileTolistWidget(QString item);//将服务器获取到的文件列表显示
+    void set_fileTolistWidget(QString item);//将服务器获取到的文件列表显
+
+//    void showMediaCommentTab();
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
@@ -93,6 +96,8 @@ protected:
 
     void showEvent(QShowEvent *event) override;
 
+    void resizeEvent(QResizeEvent *event) override;
+
 public slots:
     void loadFileInfoToWinTitle(int index);//标题栏显示视频名称
 
@@ -106,7 +111,7 @@ public slots:
 
     void closeCurrentWindow();
 
-    void clearListWidgetList_user();//清空用户信息
+//    void clearListWidgetList_user();//清空用户信息
 
     void clearListWidgetList_playlist();//清空播放列表
 
@@ -115,6 +120,18 @@ public slots:
     void clearListWidgetList_history();//清空历史记录
 
     void clearUserInputSearchInfo();//清空用户输入的搜索字
+
+    void setCurrentMediaName(QString name);//进度条上显示媒体名称
+
+    void setCurrentMediaNamePicture(const QPixmap &pix);//进度条上显示媒体图片
+
+    void updateFoldButtonGeometry();//更显显示/隐藏按钮的位置
+
+    void setFoldButtonStyle();//判断箭头的方向
+
+    void on_foldBtn_clicked();//点击箭头动作
+
+    void setLeftCurrentListSHowHide();
 
 private slots:
     void on_time();
@@ -139,10 +156,6 @@ private slots:
 
     void on_pushButton_6_clicked();//重新打开
 
-    void on_frameHidden();
-
-    void on_enterShowFrame();
-
     void switchListPage(int index);
 
     void setVideoRate(int value);
@@ -158,6 +171,8 @@ private slots:
     bool videoDouleExit(QObject *watched, QEvent *event);
 
     void volumeAdjustShowUi(QObject *watched, QEvent *event);
+
+    void stackWidgetSliderButtonEventFilter(QObject *watched, QEvent *event);
 
     void playlistMouseEnterLeave(QObject *watched, QEvent *event);
 
@@ -180,9 +195,15 @@ private slots:
 
     void playHttpRequireRecourse(const QString &url);
 
-    void on_pushButton_danmu_clicked();
+//    void on_pushButton_danmu_clicked();//弹幕按钮
 
     void chandleRestoreWindow();
+
+    bool loadCollectListWidgetList();//加载收藏菜单
+
+    bool currentListWidgetItemChange();
+
+    bool findCollectList();
 
 signals:
     void sig_sendSwitchToMusicPage(QString name);
@@ -203,15 +224,18 @@ private:
     muteDialog                  *m_muteDlg          = nullptr;
     VideoBlank                  *m_videoBlank       = nullptr;
     QTabWidget                  *m_tabWidget1        = nullptr; //节目列表选项
-    QListWidget                 *m_listWisget1      = nullptr;
+    CommentTab                  *m_commentTab       = nullptr;
+//    QListWidget                 *m_listWisget1      = nullptr;
     QListWidget                 *m_listWisget2      = nullptr;
     QListWidget                 *m_listWisget3      = nullptr;
     QListWidget                 *m_listWisget4      = nullptr;
     QHBoxLayout                 *m_hLayout          = nullptr; //搜索按钮和搜索框布局
     QHBoxLayout                 *m_hboxlayout_rlist = nullptr; //右侧播放列表
     QVBoxLayout                 *m_vHlayout         = nullptr; //布局listwidget和m_hLayout
-    QVBoxLayout                 *m_vHlayout_jianjie = nullptr; //视频简介
+    QVBoxLayout                 *m_vHlayout_jianjie = nullptr; //视频简介布局
+    QVBoxLayout                 *m_vHlayout_jieshao = nullptr; //视频介绍布局
     QPushButton                 *m_searchBtn        = nullptr;
+    QPushButton                 *m_foldBtn          = nullptr;
     QMediaPlayer                *player             = nullptr;
     AdjustBright                *m_adjustBright     = nullptr;
     MusicPlayShow               *m_musicUi          = nullptr;
@@ -220,27 +244,30 @@ private:
     VideoTitleBar               *m_videoTitleBar    = nullptr;
     IntroduceForm               *m_introduceForm    = nullptr;
     RecomVideoTab               *m_recomTab         = nullptr;
-    CommentTab                  *m_commentTab       = nullptr;
     MyVideoWidget               *videoWidget        = nullptr;
     QMediaPlaylist              *playlist           = nullptr;
     QStackedWidget              *m_introStack       = nullptr;
     int                         m_voice;                        //静音之前的值
     bool                        m_winMax;                       //默认非最大化
     bool                        m_isClose;
-    bool                        m_isEnter           = false;
+    bool                        m_isHide            = false;    //侧边栏显示/隐藏按钮，默认没有隐藏
     bool                        m_newStart          = false;    //可以打开新文件按钮标识
     bool                        m_bPress            = false;
     bool                        m_muteShow          = false;    //默认不显示
     bool                        m_jiemuShow         = false;    //默认不显示
     bool                        m_danmuStatus       = false;    //默认不显示
+    bool                        m_collectStatus     = false;    //默认不显示
     qint64                      m_times;                        //文件长度
     QPoint                      m_mvPos;
     QPoint                      m_videoPos;
     QStringList                 m_fileNames;                    //文件名称列表
-    QMap<int,QString>           m_mapList;
-    QMap<int,QString>           m_mapList2;
+    QMap<int,QString>           m_mapList;                      //存储歌名路径
+    QMap<int,QString>           m_mapList2;                     //存储歌名带后缀
+    QMap<int,QString>           m_mapList_collect;
+    QMap<int,QString>           m_mapList_history;
     QMediaPlayer::State         m_playerState;
     QStringList                 list_temp;
+    QString                     m_curMediaName;
 /*以下为界面拉伸所用*/
     bool                        _isleftpressed      = false;    //判断是否是左键点击
     int                         _curpos = 0;                    //鼠标左键按下时光标所在区域

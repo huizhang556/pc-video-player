@@ -1,13 +1,10 @@
 SOURCES += \
-    $$PWD/TitleBar.cpp \
-    $$PWD/CusLineEdit.cpp
+    $$PWD/TitleBar.cpp
 
 
 HEADERS += \
-    $$PWD/TitleBar.h \
-    $$PWD/CusLineEdit.h
+    $$PWD/TitleBar.h
 
 FORMS += \
-    $$PWD/TitleBar.ui \
-    $$PWD/CusLineEdit.ui
+    $$PWD/TitleBar.ui
 

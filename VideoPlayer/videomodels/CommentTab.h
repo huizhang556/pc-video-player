@@ -20,6 +20,10 @@ public:
     void initWorkUI();
     void chandleSignalsAndSLots();
     void setLabelCommentCounts(int count);
+
+public slots:
+    void slot_insertNewCommentForm(QPixmap &pic, QString &nick, QString &date, QString &data, int count);//插入新的评论
+
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 

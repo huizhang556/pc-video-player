@@ -2,7 +2,9 @@
 #define MYVIDEOWIDGET_H
 
 #include <QWidget>
+#include <QEvent>
 #include <QVideoWidget>
+
 namespace Ui {
 class MyVideoWidget;
 }
@@ -15,13 +17,18 @@ public:
     explicit MyVideoWidget(QWidget *parent = nullptr);
     ~MyVideoWidget();
 
-    //视频类接口
+protected:
+    void enterEvent(QEvent *e) override;
+
+    void leaveEvent(QEvent *e) override;
 
 public slots:
 
 private:
 
-private slots:
+signals:
+    void mouseEnterToVideoUI();
+    void mouseLeaveFromVideoUI();
 
 
 };
