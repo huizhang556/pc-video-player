@@ -1,6 +1,7 @@
 ﻿#ifndef MUSICPLAYLIST_H
 #define MUSICPLAYLIST_H
 
+#include "SongItemForm.h"
 #include "delegate/Delegate.h"
 #include <QWidget>
 #include <QAction>
@@ -19,6 +20,9 @@ class MusicPlaylist : public QWidget
 public:
     explicit MusicPlaylist(QWidget *parent = nullptr);
     ~MusicPlaylist();
+
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 public slots:
     bool playerListIsNull();//判断播放列表是否为空
@@ -42,6 +46,8 @@ public slots:
     void slots_rightMenu_movetolist();
 
     void slots_rightMenu_openFilePath();
+
+    bool slots_addSonersToPage2(const QStringList &list);
 
 signals:
     void hoverIndexChanged(QModelIndex);
@@ -72,8 +78,9 @@ private slots:
 private:
     Ui::MusicPlaylist *ui;
 //    QAction         *m_songAction;
-    QSqlTableModel          *model_songInfo = nullptr;
-    Delegate                *delegate = nullptr;
+
+    QSqlTableModel          *model_songInfo       =   nullptr;
+    Delegate                *delegate             =   nullptr;
 };
 
 #endif // MUSICPLAYLIST_H

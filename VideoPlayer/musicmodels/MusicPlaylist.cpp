@@ -5,6 +5,7 @@
 #include <QPoint>
 #include <QHeaderView>
 #include <QMessageBox>
+#include <QListWidgetItem>
 #include <QAbstractItemModel>
 
 MusicPlaylist::MusicPlaylist(QWidget *parent) :
@@ -17,6 +18,8 @@ MusicPlaylist::MusicPlaylist(QWidget *parent) :
 //    m_songAction->setObjectName(QString::fromLocal8Bit("m_songAction"));
 //    ui->lineEdit_searchSong->addAction(m_songAction, QLineEdit::TrailingPosition);// 右侧显示
 //    connect(m_songAction,&QAction::triggered,[=](){ui->lineEdit_searchSong->clear();});
+
+    ui->listWidget_songer->installEventFilter(this);
 
     ui->lineEdit_searchSong->setEnabled(false);//空时不能搜索
     ui->tableView_songList->setMouseTracking(true);
@@ -36,12 +39,43 @@ MusicPlaylist::MusicPlaylist(QWidget *parent) :
     connect(ui->lineEdit_searchSong,&QLineEdit::textChanged,this,&MusicPlaylist::selectTableAboutSongName);
     connect(ui->tableView_songList,SIGNAL(clicked(QModelIndex)),this,SLOT(slots_selectRowIndex(QModelIndex)));
     connect(ui->Btn_sort,&QPushButton::clicked,this,&MusicPlaylist::slots_btnSortCustomMenu);
+
+    connect(ui->listWidget_songer,&QListWidget::itemClicked,[=](){
+        qDebug() << "ui->listWidget_songer itemClicked";
+    });
+
+    connect(ui->listWidget_songer,&QListWidget::itemDoubleClicked,[=](){
+        qDebug() << "ui->listWidget_songer itemDoubleClicked";
+    });
+
+    connect(ui->listWidget_songer,&QListWidget::itemChanged,[=](){
+        qDebug() << "ui->listWidget_songer itemChanged";
+    });
+
+    connect(ui->listWidget_songer,&QListWidget::itemEntered,[=](){
+        qDebug() << "ui->listWidget_songer itemEntered";
+    });
+
+    connect(ui->listWidget_songer,&QListWidget::itemPressed,[=](){
+        qDebug() << "ui->listWidget_songer itemPressed";
+    });
+
+
+    QStringList list;
+    list << "1" << "2";
+    slots_addSonersToPage2(list);
 }
 
 MusicPlaylist::~MusicPlaylist()
 {
     delete ui;
     //    delete m_songAction;
+}
+
+/*过滤事件*/
+bool MusicPlaylist::eventFilter(QObject *watched, QEvent *event)
+{
+    return QWidget::eventFilter(watched,event);
 }
 
 /*判断播放列表是否为空*/
@@ -282,6 +316,25 @@ void MusicPlaylist::slots_rightMenu_movetolist()
 void MusicPlaylist::slots_rightMenu_openFilePath()
 {
     qDebug()<<"this is the openfilepath";
+}
+
+/*public槽函数：page2添加内容*/
+bool MusicPlaylist::slots_addSonersToPage2(const QStringList &list)
+{
+    for(int i = 0; i < 50; i++)
+    {
+        QListWidgetItem *item = new QListWidgetItem();
+        SongItemForm *son_item = new SongItemForm(QString::fromLocal8Bit("0%1").arg(i+1),
+                                                  QString::fromLocal8Bit("林俊杰").arg(i+1),
+                                                  true,
+                                                  QString::fromLocal8Bit("张辉").arg(i+1),
+                                                  QString::fromLocal8Bit("天使之约").arg(i+1));
+        item->setSizeHint(son_item->size());
+        ui->listWidget_songer->addItem(item);
+        ui->listWidget_songer->setItemWidget(item,son_item);
+    }
+
+    return 0;
 }
 
 
