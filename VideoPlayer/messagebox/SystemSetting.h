@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QDialog>
 #include <QPoint>
+#include <QTimer>
 
 namespace Ui {
 class SystemSetting;
@@ -16,15 +17,22 @@ class SystemSetting : public QDialog
 public:
     explicit SystemSetting(QWidget *parent = nullptr);
     ~SystemSetting();
+    void initWorkUI();
+    void chandleSignalAndSlot();
+
+public slots:
+    QString openLocalFileSystem();
+    void setTitleWarningText(QString text = "",int msec = 50000);//默认参数
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void savesSettingConfigFile();//保存配置
     void loadDefaultConfig();//加载一些默认配置
-
+    void setObjectShowTip(QObject *obj, QString &text);
 private:
     Ui::SystemSetting *ui;
     QPoint      m_mvPos;
+//    QTimer      *m_timer        =   nullptr;
 };
 
 #endif // SYSTEMSETTING_H

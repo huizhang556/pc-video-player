@@ -11,7 +11,8 @@ SOURCES += \
     $$PWD/CommentTab.cpp \
     $$PWD/CommentForm.cpp \
     $$PWD/IntroduceForm.cpp \
-    $$PWD/PersonFileForm.cpp
+    $$PWD/PersonFileForm.cpp \
+    $$PWD/DramaListForm.cpp
 
 
 HEADERS += \
@@ -27,7 +28,8 @@ HEADERS += \
     $$PWD/CommentTab.h \
     $$PWD/CommentForm.h \
     $$PWD/IntroduceForm.h \
-    $$PWD/PersonFileForm.h
+    $$PWD/PersonFileForm.h \
+    $$PWD/DramaListForm.h
 
 
 FORMS += \
@@ -42,5 +44,6 @@ FORMS += \
     $$PWD/CommentTab.ui \
     $$PWD/CommentForm.ui \
     $$PWD/IntroduceForm.ui \
-    $$PWD/PersonFileForm.ui
+    $$PWD/PersonFileForm.ui \
+    $$PWD/DramaListForm.ui
 

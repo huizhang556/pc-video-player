@@ -4,6 +4,7 @@
 #include <QMouseEvent>
 #include <QStringList>
 #include <QMessageBox>
+#include <QFileDialog>
 #include <QDebug>
 
 SystemSetting::SystemSetting(QWidget *parent) :
@@ -14,15 +15,34 @@ SystemSetting::SystemSetting(QWidget *parent) :
     this->setFixedSize(700,520);
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     loadDefaultConfig();
+    initWorkUI();
+    chandleSignalAndSlot();//处理信号与槽函数
+}
 
-//    QButtonGroup *btnGroup1 = new QButtonGroup;
-//    btnGroup1->addButton(ui->radioButton_exit,0);
-//    btnGroup1->addButton(ui->radioButton_tray,1);
+SystemSetting::~SystemSetting()
+{
+    delete ui;
+}
 
+void SystemSetting::initWorkUI()
+{
+    ui->stackedWidget->setCurrentIndex(0);//显示第一项
+    ui->tabWidget->setCurrentIndex(0);//显示第一项
+    //有些按钮需要设置互斥选择，有些事共同不需要互斥
+    //    QButtonGroup *btnGroup1 = new QButtonGroup;
+    //    btnGroup1->addButton(ui->radioButton_exit,0);
+    //    btnGroup1->addButton(ui->radioButton_tray,1);
+
+//    ui->label_warning->setAlignment(Qt::AlignCenter);//无用，不添加布局，需要设置padding
+}
+
+void SystemSetting::chandleSignalAndSlot()
+{
     //选项变化
     connect(ui->listWidget,&QListWidget::currentRowChanged,ui->stackedWidget,&QStackedWidget::setCurrentIndex);
     //close
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){
+    setTitleWarningText(QString::fromLocal8Bit("您当前的配置有改动，请选择保存或取消再退出！"),7000);
         if(true)
         {
             //退出 0  取消 1
@@ -36,20 +56,81 @@ SystemSetting::SystemSetting(QWidget *parent) :
                 this->close();
             }
         }
+        savesSettingConfigFile();
+        this->close();
     });
 
     //画面设置 -- 柔和
-    connect(ui->pushButton_rouhe,&QPushButton::clicked,[=](){qDebug() <<"rouhe";});
-    //画面设置 -- 明亮
-    connect(ui->pushButton_mingliang,&QPushButton::clicked,[=](){qDebug() <<"minliang";});
-    //画面设置 -- 恢复默认
-    connect(ui->pushButton_recover,&QPushButton::clicked,[=](){qDebug() <<"huifumoren";});
+    connect(ui->pushButton_rouhe,&QPushButton::clicked,[=](){
 
+        qDebug() <<"rouhe";
+    });
+    //画面设置 -- 明亮
+    connect(ui->pushButton_mingliang,&QPushButton::clicked,[=](){
+
+        qDebug() <<"minliang";
+    });
+    //画面设置 -- 恢复默认
+    connect(ui->pushButton_recover,&QPushButton::clicked,[=](){
+
+        qDebug() <<"huifumoren";
+    });
+
+    //视频管理 -- 下载目录
+    connect(ui->pushButton_v_down_open,&QPushButton::clicked,[=](){
+        QString fpath = openLocalFileSystem();
+        if(!fpath.isEmpty())
+        {
+            ui->lineEdit_savevideopath->setText(fpath);
+            ui->lineEdit_savevideopath->setToolTip(fpath);
+            qDebug() <<fpath;
+        }
+    });
+    //视频管理 -- 缓存目录
+    connect(ui->pushButton_v_his_open,&QPushButton::clicked,[=](){
+        QString fpath = openLocalFileSystem();
+        if(!fpath.isEmpty())
+        {
+            ui->lineEdit_watchedsavepath->setText(fpath);
+            ui->lineEdit_watchedsavepath->setToolTip(fpath);
+            qDebug() <<fpath;
+        }
+    });
+    //游戏管理 -- 下载目录
+    connect(ui->pushButton_gdown_open,&QPushButton::clicked,[=](){
+        QString fpath = openLocalFileSystem();
+        if(!fpath.isEmpty())
+        {
+            ui->lineEdit_savegamepath->setText(fpath);
+            ui->lineEdit_savegamepath->setToolTip(fpath);
+            qDebug() <<fpath;
+        }
+    });
 }
 
-SystemSetting::~SystemSetting()
+/*打开本地文件系统*/
+QString SystemSetting::openLocalFileSystem()
 {
-    delete ui;
+    QString fpath = QFileDialog::getExistingDirectory(this,
+                                                QString::fromLocal8Bit("选择路径"),
+                                                QString::fromLocal8Bit("C:\\Users\\24939\\Desktop"));
+    if(!fpath.isEmpty())//不为空
+    {
+        fpath = fpath + QString(tr("/"));
+        return fpath;
+    }
+    else
+    {
+        return false;//打开不选择有问题
+    }
+}
+
+void SystemSetting::setTitleWarningText(QString text, int msec)
+{
+    ui->label_warning->setText(text);
+    QTimer *m_timer = new QTimer(this);
+    m_timer->start(msec);//持续5秒,按毫秒算
+    connect(m_timer,&QTimer::timeout,[=](){ ui->label_warning->clear(); });
 }
 
 void SystemSetting::mousePressEvent(QMouseEvent *event)
@@ -110,7 +191,7 @@ void SystemSetting::loadDefaultConfig()
 
     //下载设置
     //下载视频保存路径
-    ui->lineEdit_savevideopath->setText("'E:\\QLDownload\\");
+    ui->lineEdit_savevideopath->setText("E:\\QLDownload\\");
     //最大同时下载数量
     QStringList maxvdowncounts;
     maxvdowncounts << "3" << "5" << "7";
@@ -182,4 +263,10 @@ void SystemSetting::loadDefaultConfig()
         ui->listWidget->addItem(pitem);
     }
     qDebug() << "the file config are loaded!";
+}
+
+void SystemSetting::setObjectShowTip(QObject *obj, QString &text)
+{
+    QLineEdit *lineEdit = qobject_cast<QLineEdit *>(obj);
+    lineEdit->setText(text);
 }

@@ -43,35 +43,61 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
 
   //测试功能
   list_temp<<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/xiashanshalajiang.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/movies/let_the_bullets_fly.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/hongzhaoyuan123.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/JIMINGYUE_DANCE.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/yuxitan.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/你莫走_山水组合_97217950_MP4.mp4")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/星月神话_金莎_628218_MP4UL.mp4")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/心若琉璃_刘惜君_196224216.mp4")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/mp3/最美情侣-白小白-23534035.mp3")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/mp3/Monody-Laura_Brehm_TheFatRat-7185892.mp3")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/mp3/红昭愿-音阙诗听-16644260.mp3")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/mp3/追梦人-古筝-280886.mp3")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/wxinyongheng.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/cover Roller Coaster.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/fangxuefancha.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/huaijiejie1.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/The Pussycat Dolls.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/TOMBOY.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/Love Story.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/chiling.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/fanliang.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/pengyouzhouhuajian.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/qiazouyixiang.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/fangxuefancha.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/sahonianjiandangbainia.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/shakeit.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/sishouzhiyouzhongguoren.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/womingyouwobuyoutian.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/qingyi.flv?name=qingyi.flv")
-           <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/shuishouzhengzhihua.flv");
+          <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/movies/let_the_bullets_fly.flv")
+         <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/hongzhaoyuan123.flv")
+        <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/JIMINGYUE_DANCE.flv")
+       <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/yuxitan.flv")
+      <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/你莫走_山水组合_97217950_MP4.mp4")
+     <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/星月神话_金莎_628218_MP4UL.mp4")
+    <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/心若琉璃_刘惜君_196224216.mp4")
+   <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/mp3/最美情侣-白小白-23534035.mp3")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/mp3/Monody-Laura_Brehm_TheFatRat-7185892.mp3")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/mp3/红昭愿-音阙诗听-16644260.mp3")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/mp3/追梦人-古筝-280886.mp3")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/wxinyongheng.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/cover Roller Coaster.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/fangxuefancha.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/huaijiejie1.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/The Pussycat Dolls.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/TOMBOY.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/Love Story.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/chiling.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/fanliang.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/pengyouzhouhuajian.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/qiazouyixiang.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/fangxuefancha.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/sahonianjiandangbainia.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/shakeit.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/sishouzhiyouzhongguoren.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/womingyouwobuyoutian.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/qingyi.flv?name=qingyi.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/shuishouzhengzhihua.flv")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/f64160074119f49ecf09828b2d82145c")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/b406f97ae4c797de546e5776d0e14c60")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/ae713714dacc980f8dee31b0b3281ac0")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/b8754a3a7cba5352dbf960e8762d5c30")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/db3eb18b5025eba07fd61e80ec8e1a75")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/685912fb972c3546d40f95476688a7fd")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/e47b954f2874ac8dd46b2242cacb55c8")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/bb973a1f2c9d1d1113873c15e59e1d0b")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/a0543afc8f61754a4227170a8aae6998")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/8d8b31c3dbcaa65345ca0c9889dcb960")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/1b71f2b2936726193b1ac72fdce38de2")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/74edbb7393d79e8e37e74d57c13dda6f")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/0af39ea6c5d7f1198c200ef02921e187")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/7255576ae140a95ab474224ee9135922")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/b88d5e802a67e90678aae0326c89b14b")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/dd905ebafc1a90e60781f95af9b3417d")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/55ae340607ab4d4b32d126308cd2ea4f")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/de44c9d7ffe85d26c85ae7a9bf17be3d")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/4e264ecf2db71d19806f498721c045ba")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/b1891ade83ea5427b90d474350858264")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/583aee9a9c7aaed615cf02f0a8352941")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/e0094eac26497a888f5c170e9d4fad60")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/76d8f20fee8e0cb6f2e88d1b3d7dad11")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/b62842ff56290bd8666981f02326886c")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/d9d6cd39aa871b5e57605908c446e703")
+  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/big/upload/d9d6cd39aa871b5e57605908c446e703");
 }
 
 MultipPlayer::~MultipPlayer()
@@ -90,7 +116,6 @@ MultipPlayer::~MultipPlayer()
     delete m_adjustBright;
     delete m_videoTitleBar;
     delete m_musicShowList;
-    delete m_systemSetting;
     delete m_hboxlayout_rlist;
 }
 
@@ -124,9 +149,6 @@ void MultipPlayer::initMainWindow()
 
     m_musicUi = new MusicPlayShow();
     m_musicUi->setObjectName(QString::fromLocal8Bit("m_musicUi"));
-
-    m_systemSetting = new SystemSetting();
-    m_systemSetting->setObjectName(QString::fromLocal8Bit("m_systemSetting"));
 
     m_videoTitleBar = new VideoTitleBar();
     m_videoTitleBar->setObjectName(QString::fromLocal8Bit("m_videoTitleBar"));
@@ -1653,32 +1675,13 @@ void MultipPlayer::playlistMouseEnterLeave(QObject *watched, QEvent *event)
     }
 }
 
-/*系统设置*/
-void MultipPlayer::help_stemAboutSetting()
-{
-
-}
-
-/*问题帮助*/
-void MultipPlayer::help_questionAnswer()
-{
-    QMessageBox::information(this,QString::fromLocal8Bit("问题帮助"),QString::fromLocal8Bit("为当前系统进行问题帮助。"));
-}
-
 /*打开本地文件*/
 void MultipPlayer::help_aboutLocalFile()
 {
-//    QMessageBox::information(this,QString::fromLocal8Bit("本地文件"),QString::fromLocal8Bit("选择本地文件进行播放。"));
      openLocalFile();
      this->show();
 }
 
-/*打开门户网站*/
-void MultipPlayer::help_openWebSite()
-{
-//    QMessageBox::information(this,QString::fromLocal8Bit("修复建议"),QString::fromLocal8Bit("为当前系统提供修复建议。"));
-    QDesktopServices::openUrl(QUrl(QString("https://v.qq.com/biu/download#Windows")));
-}
 
 /*调节界面*/
 void MultipPlayer::set_adjustBright()

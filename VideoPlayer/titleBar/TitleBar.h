@@ -1,8 +1,9 @@
 ﻿#ifndef TITLEBAR_H
 #define TITLEBAR_H
 #include "login/Login.h"
-#include "browser/CusWebBrowser.h"
+#include "skin/MySkin.h"
 #include "mainwidget/SearchForm.h"
+
 #include <QPoint>
 #include <QTimer>
 #include <QWidget>
@@ -22,7 +23,7 @@ public:
     explicit TitleBar(QWidget *parent = nullptr);
     ~TitleBar();
     void initWorker();
-
+    void chandleSignalAndSLots();
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
 
@@ -45,29 +46,35 @@ private slots:
     void getSystemTimeShow();
     void setLineEditAddress(const QUrl url);
     void showLoginForm();//显示登录窗口
+    void showMySkin();//皮肤设置
 
 private:
-    void chandleSignalAndSLots();
+
     void setShowToolTip();
 
 private:
     QTimer          *m_timer1       = nullptr;
     QTimer          *m_timer2       = nullptr;
     QTimer          *m_timer3       = nullptr;
-    CusWebBrowser   *m_webrowser    = nullptr;
     SearchForm      *m_searchForm   = nullptr;
     Login           *m_loginForm    = nullptr;
-    bool            hisShow         = false;   //默认不显示
+    MySkin          *m_mySkin       = nullptr;
     Ui::TitleBar    *ui;
 
 signals:
+    //窗口大小调节按钮
     void sig_winClose();
     void sig_winNormal();
     void sig_winMinimum();
-    void sig_doubleClick();
-    void sig_callLogin();
-    void sig_historyDownload();
-    void sig_settingHelp();
+    void sig_doubleClick();//调节主窗口
+    //标题栏功能按钮
+    void sig_settingHelp();//帮助
+    void sig_callLogin();//登录
+    void sig_setWindowSkin();//设置皮肤
+    void sig_filesUploadDownLoad(int index1, int index2);//上传下载
+    void sig_historyDownload(int index1, int index2);//历史记录
+    void sig_screenPicture();//截图
+    //浏览器部分的信号
     void sig_sendNewUrl(QString url);
     void sig_sendNewSearch(QString his);
     void sig_sendUrlBack();

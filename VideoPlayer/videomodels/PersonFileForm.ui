@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>730</width>
-    <height>609</height>
+    <height>443</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -649,10 +649,22 @@ font-weight:bold;
          <property name="spacing">
           <number>0</number>
          </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
-            <widget class="QFrame" name="frame_5">
+            <widget class="QFrame" name="frame_his">
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
              </property>
@@ -937,10 +949,25 @@ QListWidget::item:hover
          <string>收藏</string>
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_12">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_9">
            <item>
-            <widget class="QFrame" name="frame_6">
+            <widget class="QFrame" name="frame_collect">
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
              </property>
@@ -1308,10 +1335,25 @@ QListWidget::item:hover
          <string>订阅</string>
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_57">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_54">
            <item>
-            <widget class="QFrame" name="frame_23">
+            <widget class="QFrame" name="frame_order">
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
              </property>
@@ -1563,10 +1605,25 @@ QListWidget::item:hover
          <string>换肤</string>
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_53">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_34">
            <item>
-            <widget class="QFrame" name="frame_22">
+            <widget class="QFrame" name="frame_skin">
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
              </property>
@@ -1818,10 +1875,25 @@ QListWidget::item:hover
          <string>下载</string>
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_17">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_14">
            <item>
-            <widget class="QFrame" name="frame_7">
+            <widget class="QFrame" name="frame_download">
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
              </property>
@@ -2184,7 +2256,7 @@ border-image: url(:/images/icon/all_delete_hover.png);
            <item>
             <widget class="QStackedWidget" name="stackedWidget_down">
              <property name="currentIndex">
-              <number>0</number>
+              <number>1</number>
              </property>
              <widget class="QWidget" name="page_down1">
               <layout class="QVBoxLayout" name="verticalLayout_15">

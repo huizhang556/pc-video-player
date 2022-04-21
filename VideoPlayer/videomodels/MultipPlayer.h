@@ -7,7 +7,6 @@
 #include "videomodels/muteDialog.h"
 #include "videomodels/CommentTab.h"
 #include "videomodels/AdjustBright.h"
-#include "messagebox/SystemSetting.h"
 #include "musicmodels/MusicPlayShow.h"
 #include "videomodels/MyVideoWidget.h"
 #include "musicmodels/MusicPlaylist.h"
@@ -177,13 +176,7 @@ private slots:
     void playlistMouseEnterLeave(QObject *watched, QEvent *event);
 
     //帮助菜单槽函数
-    void help_stemAboutSetting();//系统设置
-
-    void help_questionAnswer();//问题帮助
-
-    void help_aboutLocalFile();//本地文件
-
-    void help_openWebSite();//门户网站
+    void help_aboutLocalFile();//本地文件  
 
     void adjust_playBackMode(int index);//调节播放模式
 
@@ -240,7 +233,6 @@ private:
     AdjustBright                *m_adjustBright     = nullptr;
     MusicPlayShow               *m_musicUi          = nullptr;
     MusicPlaylist               *m_musicShowList    = nullptr;
-    SystemSetting               *m_systemSetting    = nullptr;
     VideoTitleBar               *m_videoTitleBar    = nullptr;
     IntroduceForm               *m_introduceForm    = nullptr;
     RecomVideoTab               *m_recomTab         = nullptr;

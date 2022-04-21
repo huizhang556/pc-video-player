@@ -140,7 +140,7 @@ color: rgb(255, 85, 0);
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page">
            <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -153,7 +153,11 @@ color: rgb(255, 85, 0);
                </font>
               </property>
               <property name="styleSheet">
-               <string notr="true"/>
+               <string notr="true">QLabel
+{
+padding-bottom:5px;
+}
+</string>
               </property>
               <property name="text">
                <string/>

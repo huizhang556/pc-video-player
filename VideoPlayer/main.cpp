@@ -1,5 +1,7 @@
 ﻿#include "MainWidget.h"
 #include <QApplication>
+#include "skin/MySkin.h"
+#include "skin/MySkinItem.h"
 #include "database/dataBase.h"
 #include "titleBar/TitleBar.h"
 #include "customer/FirstShow.h"
@@ -19,11 +21,17 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     loadGlobalQss::loadAllUIQss();//加载全局样式
     dataBase::creatConnection();//连接数据库
-    MainWidget w1;
-    w1.show();
+        MainWidget w1;
+        w1.show();
 
 //    SongItemForm s("001",QString("第%1"),true,QString("zhanghui%1"),QString("zhuanji%1"));;
 //    s.show();
+
+//    MySkin s;
+//    s.show();
+
+//    MySkinItem mskin(180,130,20,20,0);
+//    mskin.show();
 
 //    PersonFileForm f;
 //    f.show();

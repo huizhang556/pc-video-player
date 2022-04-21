@@ -10,6 +10,7 @@
 #include "messagebox/ExitDialog.h"
 #include "login/LoginPersonInfo.h"
 #include "videomodels/VideoBlank.h"
+#include "messagebox/SystemSetting.h"
 #include "videomodels/MultipPlayer.h"
 #include "musicmodels/MusicPlaylist.h"
 #include "musicmodels/MusicPlayShow.h"
@@ -74,6 +75,12 @@ private slots:
 
     void createHelpMenu();//帮助菜单
 
+    void help_stemAboutSetting();//系统设置
+
+    void help_questionAnswer();//问题帮助
+
+    void help_openWebSite();//门户网站
+
     void help_aboutLocalFile();//播放本地资源
 
     void help_aboutNetworklFile();//播放网络资源
@@ -99,6 +106,7 @@ private:
     VideoBlank          *m_videoBlank       = nullptr;
     CusWebBrowser       *m_webBrowser       = nullptr;
     VideoTitleBar       *m_videoTitle       = nullptr;
+    SystemSetting       *m_systemSetting    = nullptr;
     QSystemTrayIcon     *m_tray             = nullptr;
     QMenu               *pmenu2             = nullptr;
     QMenu               *pmenu3             = nullptr;

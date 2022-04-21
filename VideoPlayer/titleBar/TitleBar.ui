@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1176</width>
+    <width>1129</width>
     <height>59</height>
    </rect>
   </property>
@@ -14,8 +14,12 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">color: rgb(85, 255, 0);
-background-color: #2a2a31;</string>
+   <string notr="true">QWidget
+{
+color: rgb(85, 255, 0);
+background-color: #2a2a31;
+}
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -650,6 +654,7 @@ border-image: url(:/images/icon/url_collect_hover.png);
        <property name="styleSheet">
         <string notr="true">QPushButton
 {
+background-color: transparent;
 border-image: url(:/images/icon/create.png);
 }
 
@@ -697,6 +702,7 @@ QPushButton::item:selected
        <property name="styleSheet">
         <string notr="true">QPushButton
 {
+background-color: transparent;
 border-image: url(:/images/icon/history.png);
 }
 
@@ -744,6 +750,7 @@ QPushButton::item:selected
        <property name="styleSheet">
         <string notr="true">QPushButton
 {
+background-color: transparent;
 border-image: url(:/images/icon/download.png);
 }
 
@@ -791,6 +798,7 @@ QPushButton::item:selected
        <property name="styleSheet">
         <string notr="true">QPushButton
 {
+background-color: transparent;
 border-image: url(:/images/icon/skin.png);
 }
 
@@ -838,6 +846,7 @@ QPushButton::item:selected
        <property name="styleSheet">
         <string notr="true">#Btnlogin
 {
+background-color: transparent;
 border-image: url(:/images/icon/login.png);
 }
 
@@ -897,6 +906,7 @@ border-image: url(:/images/icon/logined.png);
        <property name="styleSheet">
         <string notr="true">QPushButton
 {
+background-color: transparent;
 border-image: url(:/images/icon/help.png);
 }
 
@@ -1013,7 +1023,7 @@ border: 1px solid #3C80B1;
         <string notr="true">QPushButton
 {
 border-image: url(:/images/icon/normalmax.png);
-background-color: transparent;;
+background-color: transparent;
 }
 
 QPushButton:hover

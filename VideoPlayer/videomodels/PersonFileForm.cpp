@@ -79,3 +79,37 @@ void PersonFileForm::chandleSignalsAndSLots()
     //下载---全部删除
     connect(ui->pushButton_down_alldel,&QPushButton::clicked,[=](){ qDebug() << "DOWN_ALLDELETE_FILES";});
 }
+
+
+/*重载槽函数1：*/
+void PersonFileForm::setShowCurrentWidget(QObject *obj1, int index1, QObject *obj2, int index2)
+{
+
+}
+
+/*重载槽函数2：*/
+void PersonFileForm::setShowCurrentWidget(QObject *obj1, QWidget *wdgt1, QObject *obj2, QWidget *wdgt2)
+{
+
+}
+
+/*获取QStackedWidget*/
+QStackedWidget *PersonFileForm::getgetCurrentShowWidget_SW(QWidget *parent, QString &objname)
+{
+
+    return new QStackedWidget();
+}
+
+/*获取QListWidget*/
+QListWidget *PersonFileForm::getCurrentShowWidget_LW(QWidget *parent, QString &objname)
+{
+    return new QListWidget();
+}
+
+/*获取QTabWidget*/
+QTabWidget *PersonFileForm::getCurrentShowWidget_TW(QWidget *parent, QString &objname)
+{
+    return new QTabWidget();
+}
+
+

@@ -40,6 +40,7 @@ void TitleBar::initWorker()
     ui->pushButton_close->setFlat(true);
     ui->stackedWidget->setCurrentIndex(0);//默认显示第一个page
     setShowToolTip();//增加提示
+
     //home
     ui->pushButton_home->setFixedSize(20,20);
     ui->pushButton_home->setFlat(true);
@@ -76,29 +77,50 @@ void TitleBar::initWorker()
 
     m_loginForm = new Login();
     m_loginForm->setObjectName(QString::fromLocal8Bit("m_loginForm"));
+
+    m_mySkin = new MySkin();
+    m_mySkin->setObjectName(QString::fromLocal8Bit("m_mySkin"));
 }
 
 
 /*处理信号与槽函数*/
 void TitleBar::chandleSignalAndSLots()
 {
+    /*关于窗口大小调整*/
     //发送窗口关闭信号
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){emit sig_winClose();});
     //发送窗口还原信号
     connect(ui->pushButton_normal,&QPushButton::clicked,[=](){emit sig_winNormal();});
     //发送窗口最小化信号
     connect(ui->pushButton_min,&QPushButton::clicked,[=](){emit sig_winMinimum();});
+    //关闭程序关闭历史搜索框
+    connect(this,&TitleBar::sig_winClose,m_searchForm,&SearchForm::closeSearchForm);
+    //还原时，关闭历史搜索框
+    connect(this,&TitleBar::sig_winNormal,m_searchForm,&SearchForm::closeSearchForm);
+    //还原时，关闭登录界面
+    connect(this,&TitleBar::sig_winNormal,m_loginForm,&Login::close);
     //更新时间
     connect(m_timer3,&QTimer::timeout,this,&TitleBar::getSystemTimeShow);
-    //调用登录提示板
-    connect(ui->Btnlogin,&QPushButton::clicked,[=](){emit sig_callLogin();});
-    //历史记录
-    connect(ui->BtnHistory,&QPushButton::clicked,[=](){emit sig_historyDownload();});
+
+    /*关于标题栏功能性按钮*/
     //帮助设置
-    connect(ui->Btnhelp,&QPushButton::clicked,[=](){emit sig_settingHelp();});
+    connect(ui->Btnhelp,&QPushButton::clicked,[=](){emit sig_settingHelp();});//帮助菜单信号
+    //调用登录提示板
+    connect(ui->Btnlogin,&QPushButton::clicked,[=](){emit sig_callLogin();});//登录选择界面
+    //皮肤设置
+    connect(ui->Btnskin,&QPushButton::clicked,[=](){showMySkin();});//显示皮肤
+    //下载记录
+    connect(ui->BtnDownload,&QPushButton::clicked,[=](){emit sig_filesUploadDownLoad(5,4);});//上传下载
+    //历史记录
+    connect(ui->BtnHistory,&QPushButton::clicked,[=](){emit sig_historyDownload(5,0);});//历史记录
+    //截屏
+    connect(ui->BtnScreen,&QPushButton::clicked,[=](){emit sig_screenPicture();});//截屏
+
+
     //腾讯主页
     connect(ui->Btn_logo,&QPushButton::clicked,[=](){QDesktopServices::openUrl(QUrl(QString("https://v.qq.com/")));});
-\
+
+    /*关于浏览器*/
     //返回主页
     connect(ui->pushButton_home,&QPushButton::clicked,[=](){emit sig_sendUrlHome();});
     //后退 浏览器处理
@@ -111,12 +133,7 @@ void TitleBar::chandleSignalAndSLots()
     connect(ui->Btnlogin,&QPushButton::clicked,[=](){qDebug() << "login had clicked!"; showLoginForm();});
     //历史记录记录搜索历史
 //    connect(this,&TitleBar::sig_sendNewSearch,m_searchForm,&SearchForm::addHistoryItem);
-    //关闭程序关闭历史搜索框
-    connect(this,&TitleBar::sig_winClose,m_searchForm,&SearchForm::closeSearchForm);
-    //还原时，关闭历史搜索框
-    connect(this,&TitleBar::sig_winNormal,m_searchForm,&SearchForm::closeSearchForm);
-    //还原时，关闭登录界面
-    connect(this,&TitleBar::sig_winNormal,m_loginForm,&Login::close);
+
     //网址输入框---回车键处理
     connect(ui->lineEdit_webSearch,&QLineEdit::returnPressed,[=](){
         QString url = ui->lineEdit_webSearch->text().trimmed();
@@ -136,11 +153,10 @@ void TitleBar::chandleSignalAndSLots()
 /*设置tooltip*/
 void TitleBar::setShowToolTip()
 {
-    ui->Btn_logo->setToolTip(QString::fromLocal8Bit("转至网页"));
     ui->Btnhelp->setToolTip(QString::fromLocal8Bit("帮助"));
     ui->Btnlogin->setToolTip(QString::fromLocal8Bit("登录"));
     ui->Btnskin->setToolTip(QString::fromLocal8Bit("皮肤"));
-    ui->BtnDownload->setToolTip(QString::fromLocal8Bit("云端"));
+    ui->BtnDownload->setToolTip(QString::fromLocal8Bit("上传下载"));
     ui->BtnHistory->setToolTip(QString::fromLocal8Bit("历史记录"));
     ui->BtnScreen->setToolTip(QString::fromLocal8Bit("截屏"));
 }
@@ -149,7 +165,7 @@ void TitleBar::setShowToolTip()
 void TitleBar::mouseDoubleClickEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);
-    emit sig_doubleClick();
+    emit sig_doubleClick();//主窗口调整界面大小
 }
 
 /*监听事件*/
@@ -398,6 +414,37 @@ void TitleBar::showLoginForm()
         m_loginForm->setGeometry(x-310/2,y+h+10,m_loginForm->width(),m_loginForm->height());
         m_loginForm->raise();
         m_loginForm->show();
+    }
+}
+
+/*皮肤设置*/
+void TitleBar::showMySkin()
+{
+    if(m_mySkin)
+    {
+        if(!m_mySkin->isHidden())
+        {
+            m_mySkin->hide();
+        }
+        else
+        {
+            int x = ui->Btnskin->parentWidget()->mapToGlobal(ui->Btnskin->pos()).x();
+            int y = ui->Btnskin->parentWidget()->mapToGlobal(ui->Btnskin->pos()).y();
+            int h = ui->Btnskin->height();
+            m_mySkin->setGeometry(x-150,y+h+10,m_mySkin->width(),m_mySkin->height());
+            m_mySkin->raise();
+            m_mySkin->show();
+        }
+    }
+    else
+    {
+        m_mySkin = new MySkin();
+        int x = ui->Btnskin->parentWidget()->mapToGlobal(ui->Btnskin->pos()).x();
+        int y = ui->Btnskin->parentWidget()->mapToGlobal(ui->Btnskin->pos()).y();
+        int h = ui->Btnskin->height();
+        m_mySkin->setGeometry(x-150,y+h+10,m_mySkin->width(),m_mySkin->height());
+        m_mySkin->raise();
+        m_mySkin->show();
     }
 }
 

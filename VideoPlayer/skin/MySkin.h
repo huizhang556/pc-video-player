@@ -2,6 +2,8 @@
 #define MYSKIN_H
 
 #include <QDialog>
+#include "MySkinItem.h"
+#include <QListWidget>
 
 namespace Ui {
 class MySkin;
@@ -14,6 +16,9 @@ class MySkin : public QDialog
 public:
     explicit MySkin(QWidget *parent = nullptr);
     ~MySkin();
+    void initWorkUI();
+    void chandleSignalAndSlot();
+
 protected:
     bool eventFilter(QObject *watch, QEvent *event) override;
 

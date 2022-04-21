@@ -92,10 +92,10 @@ stop:0 rgba(231,80,229, 255),
 stop:1 rgba(7,208,255, 255));*/
 background-color: rgb(245, 245, 245);
 font-family:&quot;微软雅黑&quot;;
-border:none;/*去掉边框线*/
+border:transparent;/*去掉边框线*/
+border-right:1px solid #cdcdcd;
 icon-size:40px;
 font-size:14px;
-outline:0px;
 }
 
 QListWidget::item
@@ -171,20 +171,37 @@ QListWidget::item:selected:!active
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
-             <spacer name="horizontalSpacer_5">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
+             <widget class="QLabel" name="label_warning">
+              <property name="minimumSize">
                <size>
-                <width>448</width>
-                <height>20</height>
+                <width>460</width>
+                <height>0</height>
                </size>
               </property>
-             </spacer>
+              <property name="styleSheet">
+               <string notr="true">QLabel
+{
+padding-left:-150px;/*减去左边设置占用的宽度*/
+color:#ffea00;
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QPushButton" name="pushButton_close">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>20</height>
+               </size>
+              </property>
               <property name="maximumSize">
                <size>
                 <width>20</width>
@@ -258,12 +275,12 @@ border: 1px solid #3C80B1;
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
              </property>
              <property name="text">
@@ -286,12 +303,12 @@ border-image: url(:/images/uncheck_set.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
              </property>
              <property name="text">
@@ -352,12 +369,12 @@ border-image: url(:/images/uncheck_set.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
              </property>
              <property name="text">
@@ -399,12 +416,12 @@ border-image: url(:/images/uncheck_set.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
              </property>
              <property name="text">
@@ -454,12 +471,12 @@ height:18px;
 }
 QRadioButton::indicator:checked
 {
-border-image: url(:/images/radio_checked.png);
+border-image: url(:/images/icon/radio_checked.png);
 }
 
 QRadioButton::indicator:unchecked
 {
-border-image: url(:/images/radio_unchecked.png);
+border-image: url(:/images/icon/radio_unchecked.png);
 }</string>
              </property>
              <property name="text">
@@ -483,12 +500,12 @@ height:18px;
 }
 QRadioButton::indicator:checked
 {
-border-image: url(:/images/radio_checked.png);
+border-image: url(:/images/icon/radio_checked.png);
 }
 
 QRadioButton::indicator:unchecked
 {
-border-image: url(:/images/radio_unchecked.png);
+border-image: url(:/images/icon/radio_unchecked.png);
 }</string>
              </property>
              <property name="text">
@@ -512,12 +529,12 @@ height:18px;
 }
 QRadioButton::indicator:checked
 {
-border-image: url(:/images/radio_checked.png);
+border-image: url(:/images/icon/radio_checked.png);
 }
 
 QRadioButton::indicator:unchecked
 {
-border-image: url(:/images/radio_unchecked.png);
+border-image: url(:/images/icon/radio_unchecked.png);
 }</string>
              </property>
              <property name="text">
@@ -541,12 +558,12 @@ height:18px;
 }
 QRadioButton::indicator:checked
 {
-border-image: url(:/images/radio_checked.png);
+border-image: url(:/images/icon/radio_checked.png);
 }
 
 QRadioButton::indicator:unchecked
 {
-border-image: url(:/images/radio_unchecked.png);
+border-image: url(:/images/icon/radio_unchecked.png);
 }</string>
              </property>
              <property name="text">
@@ -571,12 +588,12 @@ border-image: url(:/images/radio_unchecked.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
              </property>
              <property name="text">
@@ -618,12 +635,12 @@ border-image: url(:/images/uncheck_set.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
              </property>
              <property name="text">
@@ -665,12 +682,12 @@ border-image: url(:/images/uncheck_set.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
              </property>
              <property name="text">
@@ -731,12 +748,12 @@ border-image: url(:/images/uncheck_set.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
              </property>
              <property name="text">
@@ -759,12 +776,12 @@ border-image: url(:/images/uncheck_set.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
              </property>
              <property name="text">
@@ -787,12 +804,12 @@ border-image: url(:/images/uncheck_set.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
              </property>
              <property name="text">
@@ -815,12 +832,12 @@ border-image: url(:/images/uncheck_set.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
              </property>
              <property name="text">
@@ -1358,12 +1375,12 @@ border-radius:4px;
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
              </property>
              <property name="text">
@@ -1429,12 +1446,12 @@ height:18px;
 }
 QRadioButton::indicator:checked
 {
-border-image: url(:/images/radio_checked.png);
+border-image: url(:/images/icon/radio_checked.png);
 }
 
 QRadioButton::indicator:unchecked
 {
-border-image: url(:/images/radio_unchecked.png);
+border-image: url(:/images/icon/radio_unchecked.png);
 }</string>
              </property>
              <property name="text">
@@ -1458,12 +1475,12 @@ height:18px;
 }
 QRadioButton::indicator:checked
 {
-border-image: url(:/images/radio_checked.png);
+border-image: url(:/images/icon/radio_checked.png);
 }
 
 QRadioButton::indicator:unchecked
 {
-border-image: url(:/images/radio_unchecked.png);
+border-image: url(:/images/icon/radio_unchecked.png);
 }</string>
              </property>
              <property name="text">
@@ -1487,12 +1504,12 @@ height:18px;
 }
 QRadioButton::indicator:checked
 {
-border-image: url(:/images/radio_checked.png);
+border-image: url(:/images/icon/radio_checked.png);
 }
 
 QRadioButton::indicator:unchecked
 {
-border-image: url(:/images/radio_unchecked.png);
+border-image: url(:/images/icon/radio_unchecked.png);
 }</string>
              </property>
              <property name="text">
@@ -1587,12 +1604,12 @@ border-image: url(:/images/radio_unchecked.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
              </property>
              <property name="text">
@@ -1687,16 +1704,6 @@ font-weight:bold;
                   <string>将下载的节目存储在此文件夹中</string>
                  </property>
                 </widget>
-                <widget class="QLineEdit" name="lineEdit_savevideopath">
-                 <property name="geometry">
-                  <rect>
-                   <x>10</x>
-                   <y>40</y>
-                   <width>381</width>
-                   <height>25</height>
-                  </rect>
-                 </property>
-                </widget>
                 <widget class="QLabel" name="label_80">
                  <property name="geometry">
                   <rect>
@@ -1749,12 +1756,12 @@ font-weight:bold;
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
                  </property>
                  <property name="text">
@@ -1777,12 +1784,12 @@ border-image: url(:/images/uncheck_set.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
                  </property>
                  <property name="text">
@@ -1806,16 +1813,6 @@ border-image: url(:/images/uncheck_set.png);
                  </property>
                  <property name="text">
                   <string> 缓存管理</string>
-                 </property>
-                </widget>
-                <widget class="QLineEdit" name="lineEdit_watchedsavepath">
-                 <property name="geometry">
-                  <rect>
-                   <x>10</x>
-                   <y>240</y>
-                   <width>381</width>
-                   <height>25</height>
-                  </rect>
                  </property>
                 </widget>
                 <widget class="QLabel" name="label_85">
@@ -1880,6 +1877,114 @@ border-image: url(:/images/uncheck_set.png);
                   </rect>
                  </property>
                 </widget>
+                <widget class="QWidget" name="layoutWidget">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>40</y>
+                   <width>381</width>
+                   <height>28</height>
+                  </rect>
+                 </property>
+                 <layout class="QHBoxLayout" name="horizontalLayout">
+                  <property name="spacing">
+                   <number>6</number>
+                  </property>
+                  <item>
+                   <widget class="QLineEdit" name="lineEdit_savevideopath">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>25</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="pushButton_v_down_open">
+                    <property name="minimumSize">
+                     <size>
+                      <width>26</width>
+                      <height>26</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>32</width>
+                      <height>26</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton
+{
+border-image: url(:/images/icon/all_openfile.png);
+}
+QPushButton:hover
+{
+border-image: url(:/images/icon/all_openfile_hover.png);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="layoutWidget">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>240</y>
+                   <width>381</width>
+                   <height>28</height>
+                  </rect>
+                 </property>
+                 <layout class="QHBoxLayout" name="horizontalLayout_5">
+                  <property name="spacing">
+                   <number>6</number>
+                  </property>
+                  <item>
+                   <widget class="QLineEdit" name="lineEdit_watchedsavepath">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>25</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="pushButton_v_his_open">
+                    <property name="minimumSize">
+                     <size>
+                      <width>26</width>
+                      <height>26</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>32</width>
+                      <height>26</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton
+{
+border-image: url(:/images/icon/all_openfile.png);
+}
+QPushButton:hover
+{
+border-image: url(:/images/icon/all_openfile_hover.png);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
                <widget class="QWidget" name="tab_2">
                 <attribute name="title">
@@ -1896,16 +2001,6 @@ border-image: url(:/images/uncheck_set.png);
                  </property>
                  <property name="text">
                   <string> 将下载的游戏存储在此文件夹中</string>
-                 </property>
-                </widget>
-                <widget class="QLineEdit" name="lineEdit_savegamepath">
-                 <property name="geometry">
-                  <rect>
-                   <x>10</x>
-                   <y>40</y>
-                   <width>381</width>
-                   <height>25</height>
-                  </rect>
                  </property>
                 </widget>
                 <widget class="QLabel" name="label_90">
@@ -1960,12 +2055,12 @@ border-image: url(:/images/uncheck_set.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
                  </property>
                  <property name="text">
@@ -1988,17 +2083,71 @@ border-image: url(:/images/uncheck_set.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
                  </property>
                  <property name="text">
                   <string>下载完成后提示</string>
                  </property>
+                </widget>
+                <widget class="QWidget" name="layoutWidget">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>40</y>
+                   <width>390</width>
+                   <height>28</height>
+                  </rect>
+                 </property>
+                 <layout class="QHBoxLayout" name="horizontalLayout_6">
+                  <property name="spacing">
+                   <number>6</number>
+                  </property>
+                  <item>
+                   <widget class="QLineEdit" name="lineEdit_savegamepath">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>25</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="pushButton_gdown_open">
+                    <property name="minimumSize">
+                     <size>
+                      <width>26</width>
+                      <height>26</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>32</width>
+                      <height>26</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton
+{
+border-image: url(:/images/icon/all_openfile.png);
+}
+QPushButton:hover
+{
+border-image: url(:/images/icon/all_openfile_hover.png);
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
                 </widget>
                </widget>
               </widget>
@@ -2355,12 +2504,12 @@ border-image: url(:/images/uncheck_set.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
              </property>
              <property name="text">
@@ -2383,12 +2532,12 @@ border-image: url(:/images/uncheck_set.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
              </property>
              <property name="text">
@@ -2411,12 +2560,12 @@ border-image: url(:/images/uncheck_set.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
              </property>
              <property name="text">
@@ -2439,12 +2588,12 @@ border-image: url(:/images/uncheck_set.png);
 }
 QCheckBox::indicator:checked
 {
-border-image: url(:/images/checked_set.png);
+border-image: url(:/images/icon/checked_set.png);
 }
 
 QCheckBox::indicator:unchecked
 {
-border-image: url(:/images/uncheck_set.png);
+border-image: url(:/images/icon/uncheck_set.png);
 }</string>
              </property>
              <property name="text">
@@ -2470,12 +2619,12 @@ height:18px;
 }
 QRadioButton::indicator:checked
 {
-border-image: url(:/images/radio_checked.png);
+border-image: url(:/images/icon/radio_checked.png);
 }
 
 QRadioButton::indicator:unchecked
 {
-border-image: url(:/images/radio_unchecked.png);
+border-image: url(:/images/icon/radio_unchecked.png);
 }</string>
              </property>
              <property name="text">
@@ -2499,12 +2648,12 @@ height:18px;
 }
 QRadioButton::indicator:checked
 {
-border-image: url(:/images/radio_checked.png);
+border-image: url(:/images/icon/radio_checked.png);
 }
 
 QRadioButton::indicator:unchecked
 {
-border-image: url(:/images/radio_unchecked.png);
+border-image: url(:/images/icon/radio_unchecked.png);
 }</string>
              </property>
              <property name="text">
@@ -2528,12 +2677,12 @@ height:18px;
 }
 QRadioButton::indicator:checked
 {
-border-image: url(:/images/radio_checked.png);
+border-image: url(:/images/icon/radio_checked.png);
 }
 
 QRadioButton::indicator:unchecked
 {
-border-image: url(:/images/radio_unchecked.png);
+border-image: url(:/images/icon/radio_unchecked.png);
 }</string>
              </property>
              <property name="text">
@@ -2557,12 +2706,12 @@ height:18px;
 }
 QRadioButton::indicator:checked
 {
-border-image: url(:/images/radio_checked.png);
+border-image: url(:/images/icon/radio_checked.png);
 }
 
 QRadioButton::indicator:unchecked
 {
-border-image: url(:/images/radio_unchecked.png);
+border-image: url(:/images/icon/radio_unchecked.png);
 }</string>
              </property>
              <property name="text">

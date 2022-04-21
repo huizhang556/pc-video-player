@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>437</height>
+    <width>1106</width>
+    <height>428</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>998</width>
+      <width>1092</width>
       <height>410</height>
      </rect>
     </property>
@@ -567,9 +567,15 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba
            </item>
            <item>
             <widget class="QFrame" name="frame_adjust">
+             <property name="minimumSize">
+              <size>
+               <width>260</width>
+               <height>0</height>
+              </size>
+             </property>
              <property name="maximumSize">
               <size>
-               <width>400</width>
+               <width>260</width>
                <height>16777215</height>
               </size>
              </property>
@@ -581,7 +587,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_8">
               <property name="spacing">
-               <number>0</number>
+               <number>6</number>
               </property>
               <property name="leftMargin">
                <number>0</number>
@@ -598,19 +604,16 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_7">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>5</number>
                 </property>
                 <item>
-                 <spacer name="horizontalSpacer_15">
+                 <spacer name="horizontalSpacer_6">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
-                  </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>12</width>
+                    <width>100</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -652,7 +655,7 @@ border-image: url(:/images/icon/set_hover.png);
                    <enum>Qt::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Expanding</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -690,7 +693,7 @@ border-image: url(:/images/icon/set_hover.png);
                    <enum>Qt::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Expanding</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -741,7 +744,7 @@ border-image: url(:/images/icon/play_collect_unchecked.png);
                    <enum>Qt::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Expanding</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -787,7 +790,7 @@ border-image: url(:/images/icon/media_download_hover.png);
                    <enum>Qt::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Expanding</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -846,22 +849,6 @@ color:#484848; font-size:12px;
                  </widget>
                 </item>
                </layout>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_9">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>6</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
               </item>
              </layout>
             </widget>

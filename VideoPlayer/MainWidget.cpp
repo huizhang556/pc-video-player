@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QMenu>
 #include <QSqlQuery>
+#include <QMessageBox>
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
@@ -72,6 +73,9 @@ void MainWidget::initOtherWidgetUi()
     m_pExitDlg = new ExitDialog(this);
     m_pExitDlg->setObjectName(QString::fromLatin1("m_pExitDlg"));
 
+    m_systemSetting = new SystemSetting();
+    m_systemSetting->setObjectName(QString::fromLocal8Bit("m_systemSetting"));
+
     //托盘
     QIcon icno(":/images/icon/tray.png");
     m_tray = new QSystemTrayIcon(icno,this);
@@ -119,6 +123,15 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_titleBar,SIGNAL(sig_sendUrlAdvance()),m_webBrowser,SLOT(slots_advance()));
     //返回主页
     connect(m_titleBar,SIGNAL(sig_sendUrlHome()),m_webBrowser,SLOT(slots_home()));
+    //上传下载
+    connect(m_titleBar,&TitleBar::sig_filesUploadDownLoad,[=](int index1,int index2){
+       m_stackWidget->setCurrentIndex(index1);//个人信息界面
+    });
+    //历史记录
+    connect(m_titleBar,&TitleBar::sig_historyDownload,[=](int index1,int index2){
+        m_stackWidget->setCurrentIndex(index1);//个人信息界面
+    });
+
     //显示当前页面的地址
     connect(m_webBrowser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(setLineEditAddress(QUrl)));
 
@@ -223,7 +236,7 @@ void MainWidget::createHelpMenu()
 //                          "{"
 //                          "color:red;"
 //                          "}");//font:bold italic 18px "微软雅黑";
-    pmenu2->addAction(QString::fromLocal8Bit("系统设置"),this,SLOT(help_stemAboutSetting()));
+    pmenu2->addAction(QString::fromLocal8Bit("系统设置"),this,SLOT(help_stemAboutSetting()));//SystemSetting
     pmenu2->addSeparator();
     pmenu2->addAction(QString::fromLocal8Bit("网络资源"),this,SLOT(playHttpRequireRecourse(QString)));
     pmenu2->addSeparator();
@@ -246,6 +259,24 @@ void MainWidget::createHelpMenu()
     pmenu2->exec(point4);
 //    pmenu2->exec(QCursor::pos());
     delete pmenu2;
+}
+
+/*系统设置*/
+void MainWidget::help_stemAboutSetting()
+{
+    m_systemSetting->exec();
+}
+
+/*问题帮助*/
+void MainWidget::help_questionAnswer()
+{
+    QMessageBox::information(this,QString::fromLocal8Bit("问题帮助"),QString::fromLocal8Bit("为当前系统进行问题帮助。"));
+}
+
+/*门户网站*/
+void MainWidget::help_openWebSite()
+{
+    QDesktopServices::openUrl(QUrl(QString("https://v.qq.com/biu/download#Windows")));
 }
 
 /*播放本地文件*/
