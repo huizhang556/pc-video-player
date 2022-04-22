@@ -8,6 +8,9 @@
 #include <QRegExpValidator>
 #include <QAbstractItemView>
 
+//类外初始化
+LoginPersonInfo* LoginPersonInfo::m_pInstance = NULL;//初始化指针
+
 LoginPersonInfo::LoginPersonInfo(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::LoginPersonInfo)
@@ -16,7 +19,33 @@ LoginPersonInfo::LoginPersonInfo(QWidget *parent) :
     ui->setupUi(this);
     this->setFixedSize(430,328);
     setWindowFlags(Qt::FramelessWindowHint);
-    ui->stackedWidget->setCurrentIndex(0);
+    initWorkUI();
+    chandleSignalsAndSLots();
+}
+
+/*析构函数*/
+LoginPersonInfo::~LoginPersonInfo()
+{
+    delete ui;
+    //删除创建的单例
+    if(m_pInstance != NULL)
+        delete m_pInstance;
+    m_pInstance = NULL;
+}
+
+/*获取单例*/
+LoginPersonInfo* LoginPersonInfo::getInstance()
+{
+    if(m_pInstance == NULL)
+    {
+        m_pInstance = new LoginPersonInfo();
+    }
+    return m_pInstance;
+}
+
+void LoginPersonInfo::initWorkUI()
+{
+    ui->stackedWidget_login->setCurrentIndex(0);
 
     ui->set_comboBox_dl->setView(new QListView());
     ui->set_comboBox_xx->setView(new QListView());
@@ -71,7 +100,10 @@ LoginPersonInfo::LoginPersonInfo(QWidget *parent) :
     ui->gis_lineEditEmail->setPlaceholderText(QString::fromLocal8Bit("找回密码用"));
     QRegExp regExp5("^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$");
     ui->gis_lineEditEmail->setValidator(new QRegExpValidator(regExp5, this));
+}
 
+void LoginPersonInfo::chandleSignalsAndSLots()
+{
     /*登录--清除按钮*/
     QIcon icon_clear(":/images/icon/clear.png");
     clearAction1 = new QAction(icon_clear,"");
@@ -217,32 +249,54 @@ LoginPersonInfo::LoginPersonInfo(QWidget *parent) :
 
     connect(ui->login_BtnRegis,&QPushButton::clicked,[=]()
     {
-       ui->stackedWidget->setCurrentIndex(1);
+       ui->stackedWidget_login->setCurrentIndex(1);
     });
 
     connect(ui->login_BtnQR,&QPushButton::clicked,[=]()
     {
-       ui->stackedWidget->setCurrentIndex(2);
+       ui->stackedWidget_login->setCurrentIndex(2);
     });
 
     /*登录---最小化按钮*/
     connect(ui->login_Btnmin,&QPushButton::clicked,[=](){showMinimized();});
 
     /*设置按钮*/
-    connect(ui->login_Btnset,&QPushButton::clicked,[=](){ui->stackedWidget->setCurrentIndex(4);});
+    connect(ui->login_Btnset,&QPushButton::clicked,[=](){ui->stackedWidget_login->setCurrentIndex(4);});
 
     /*重置密码按钮*/
-    connect(ui->login_BtnResetPwd,&QPushButton::clicked,[=](){ui->stackedWidget->setCurrentIndex(3);});
+    connect(ui->login_BtnResetPwd,&QPushButton::clicked,[=](){ui->stackedWidget_login->setCurrentIndex(3);});
 }
 
-LoginPersonInfo::~LoginPersonInfo()
-{
-    delete ui;
-}
+
 
 void LoginPersonInfo::showLoginWindow()
 {
     this->showNormal();
+}
+
+void LoginPersonInfo::showLoginWindow(int index)
+{
+    if(index ==0)//登录
+    {
+        ui->stackedWidget_login->setCurrentIndex(0);
+    }
+    else if(index ==1)//注册
+    {
+        ui->stackedWidget_login->setCurrentIndex(1);
+    }
+    else if(index ==2)//二维码
+    {
+        ui->stackedWidget_login->setCurrentIndex(2);
+    }
+    else if(index ==3)//重置
+    {
+        ui->stackedWidget_login->setCurrentIndex(3);
+    }
+    else if(index ==4)//设置
+    {
+        ui->stackedWidget_login->setCurrentIndex(4);
+    }
+    this->show();
 }
 
 void LoginPersonInfo::receiveLoginAppClose()
@@ -270,13 +324,13 @@ void LoginPersonInfo::mouseMoveEvent(QMouseEvent *event)
 /*page2返回*/
 void LoginPersonInfo::on_pushButton_return_page2_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget_login->setCurrentIndex(0);
 }
 
 /*page3返回*/
 void LoginPersonInfo::on_pushButton_return_page3_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget_login->setCurrentIndex(0);
 }
 
 /*注册按钮*/
@@ -294,12 +348,12 @@ void LoginPersonInfo::on_reset_BtnReset_clicked()
 /*page4返回*/
 void LoginPersonInfo::on_pushButton_return_page4_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget_login->setCurrentIndex(0);
 }
 
 /*page5返回*/
 void LoginPersonInfo::on_set_BtnReturn_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget_login->setCurrentIndex(0);
 }
 

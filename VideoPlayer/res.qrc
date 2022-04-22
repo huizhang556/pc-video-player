@@ -206,5 +206,6 @@
         <file>images/icon/player_shunxu.png</file>
         <file>images/icon/player_suiji.png</file>
         <file>images/icon/player_xunhuan.png</file>
+        <file>images/icon/kugou.ico</file>
     </qresource>
 </RCC>

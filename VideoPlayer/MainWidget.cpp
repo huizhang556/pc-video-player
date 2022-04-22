@@ -37,7 +37,7 @@ void MainWidget::initOtherWidgetUi()
          << QString::fromLocal8Bit("主界面7")
          << QString::fromLocal8Bit("主界面8");
     m_leftSideBar->setSlideBarListText(list);
-    m_leftSideBar->setFixedWidth(150);
+    m_leftSideBar->setFixedWidth(170);
 
     m_stackWidget = new QStackedWidget(this);
     m_stackWidget->setCurrentIndex(0);//默认显示第一个page页
@@ -140,15 +140,6 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_pExitDlg,&ExitDialog::sig_SendcloseMain,[=](){m_isClose = true;});
     //没收到主窗口关闭信号
     connect(m_pExitDlg,&ExitDialog::sig_SendNotcloseMain,[=](){m_isClose = false;});
-
-    //接收 播放界面 返回主界面信号
-    m_videoTitle = new VideoTitleBar();
-    connect(m_videoTitle,&VideoTitleBar::sig_returnMainUi,[=]()
-    {
-        qDebug() << "receive return main ui signal";
-        this->raise();
-        show();
-    });
 
     //关闭主窗口，先通知标题栏，再转发登录窗口关闭
     connect(this,&MainWidget::sig_startCloseAppliction,m_titleBar,&TitleBar::receiveMainFormClose);
@@ -292,8 +283,8 @@ void MainWidget::help_aboutLocalFile()
 void MainWidget::help_aboutNetworklFile()
 {
     qDebug() <<"PLAY NETWORK RESOURCE";
-    m_videoTitle->setTitleStackWidgetPage(1);
     m_mainPlayer->show();
+    m_mainPlayer->setVideTitleBar(1);//转到网络播放标题栏
 }
 
 /*设置全局tooltip*/
@@ -326,7 +317,6 @@ MainWidget::~MainWidget()
   delete m_musicShow;
   delete m_tabWidget;
   delete m_webBrowser;
-  delete m_videoTitle;
   delete m_videoBlank;
   delete m_mainPlayer;
 }

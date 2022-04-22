@@ -12,13 +12,16 @@ class LoginPersonInfo;
 class LoginPersonInfo : public QWidget
 {
     Q_OBJECT
-
 public:
-    explicit LoginPersonInfo(QWidget *parent = nullptr);
     ~LoginPersonInfo();
+    void initWorkUI();
+    void chandleSignalsAndSLots();
+    static  LoginPersonInfo* getInstance();
 
 public slots:
     void showLoginWindow();
+
+    void showLoginWindow(int index);
 
     void receiveLoginAppClose();
 protected:
@@ -44,6 +47,8 @@ private slots:
 
 
 private:
+    //构造函数私有化  实现单例
+    explicit LoginPersonInfo(QWidget *parent = nullptr);
     Ui::LoginPersonInfo *ui;
     QPoint              m_mvPos;
     QAction             *clearAction1;
@@ -53,6 +58,7 @@ private:
     QAction             *clearAction5;
     bool                passwdStatus;
     bool                passwdStatus2;
+    static  LoginPersonInfo* m_pInstance;
 };
 
 #endif // LOGINPERSONINFO_H

@@ -7,7 +7,7 @@
 QT       += core gui multimediawidgets multimedia sql network webenginewidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
+CONFIG += C++11 ##使用C++11某些新语法
 TARGET = VideoPlayer
 TEMPLATE = app
 RC_ICONS = favicon.ico

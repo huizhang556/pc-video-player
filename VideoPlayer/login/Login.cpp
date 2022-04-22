@@ -13,36 +13,35 @@ Login::Login(QWidget *parent) :
 
     connect(ui->BtnLogin,&QPushButton::clicked,[=]()
     {
-        if(m_loginMain)
+        if(LoginPersonInfo::getInstance())
         {
-            if(!m_loginMain->isHidden())//正常显示
+            if(!LoginPersonInfo::getInstance()->isHidden())//正常显示
             {
-                m_loginMain->hide();
+                LoginPersonInfo::getInstance()->hide();
             }
             else//隐藏
             {
-//                m_loginMain->showNormal();
-                m_loginMain->raise();
-                m_loginMain->show();
+//                LoginPersonInfo::getInstance()->showNormal();
+                LoginPersonInfo::getInstance()->raise();
+                LoginPersonInfo::getInstance()->show();
             }
         }
-        else
-        {
-            m_loginMain = new LoginPersonInfo;
-            m_loginMain->raise();
-            m_loginMain->show();
-        }
+//        else
+//        {
+//            m_loginMain = new LoginPersonInfo;
+//            m_loginMain->raise();
+//            m_loginMain->show();
+//        }
 
     });
 
-    connect(this,&Login::sig_LoginWinClose,m_loginMain,&LoginPersonInfo::receiveLoginAppClose);
+    connect(this,&Login::sig_LoginWinClose,LoginPersonInfo::getInstance(),&LoginPersonInfo::receiveLoginAppClose);
 
 }
 
 Login::~Login()
 {
     delete ui;
-    delete m_loginMain;
 }
 
 

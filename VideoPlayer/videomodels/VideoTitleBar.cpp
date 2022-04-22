@@ -1,5 +1,6 @@
 ﻿#include "VideoTitleBar.h"
 #include "ui_VideoTitleBar.h"
+#include <QDebug>
 
 VideoTitleBar::VideoTitleBar(QWidget *parent) :
     QWidget(parent),
@@ -47,11 +48,12 @@ void VideoTitleBar::chandleSignalsAndSlots()
 /*设置标题栏*/
 void VideoTitleBar::setTitleStackWidgetPage(int index)
 {
-    if(index == 0)
+    qDebug() << "now is web url lineedit";
+    if(index == 0)//显示媒体标题
     {
         ui->stackedWidget->setCurrentIndex(0);
     }
-    else if(index == 1)
+    else if(index == 1)//输入网址
     {
         ui->stackedWidget->setCurrentIndex(1);
     }

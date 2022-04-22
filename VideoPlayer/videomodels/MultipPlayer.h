@@ -135,6 +135,8 @@ public slots:
 
     void setPlayOrderButtonStyleSheet(int index);
 
+    void setVideTitleBar(int index);
+
 private slots:
     void on_time();
 

@@ -3,7 +3,7 @@
 #include "login/Login.h"
 #include "skin/MySkin.h"
 #include "mainwidget/SearchForm.h"
-
+#include "login/LoginPersonInfo.h"
 #include <QPoint>
 #include <QTimer>
 #include <QWidget>
@@ -39,6 +39,7 @@ public slots:
     void receiveMainFormClose();
     void mouseIsPressReleaseLineEdit(QObject *watched, QEvent *event);//搜索框点击事件
     void serarchLineEditFacous(QObject *watched, QEvent *event);
+    void slot_switchToLoginPage(int mark,QString nick);
 
 //私有槽函数，外部不能直接访问
 private slots:
@@ -81,6 +82,9 @@ signals:
     void sig_sendUrlAdvance();
     void sig_sendUrlRefreshen();
     void sig_sendUrlHome();
+    //登录部分
+    void sig_userLogin();
+    void sig_userRegister();
 };
 
 #endif // TITLEBAR_H

@@ -93,6 +93,7 @@ text-align:center;
 color:#cccccc;
 background-color: rgb(43, 43, 43);
 min-height:50px;/*有效设置item高度*/
+padding-left:20px;
 }
 
 #listWidget_playlist::item:hover
@@ -110,7 +111,6 @@ background-color: rgb(33, 33, 33);
 /*border:0px;*/
 /*border:1px solid #55ff00;*/
 background:#382e15;
-padding:0px;
 margin:0px;
 color:#ff5c38;
 }
@@ -120,7 +120,6 @@ color:#ff5c38;
 {
 border-width:0px;
 background:#382e15;
-padding:0px;
 margin:0px;
 color: rgb(85, 255, 0);
 }

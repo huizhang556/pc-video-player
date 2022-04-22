@@ -27,6 +27,10 @@ TitleBar::~TitleBar()
 /*初始化工作*/
 void TitleBar::initWorker()
 {
+    ui->stackedWidget_login->setCurrentIndex(0);
+    ui->pushButton_userlogin->setFlat(true);
+    ui->pushButton_userregis->setFlat(true);
+
     //LCD数字显示
     ui->lcdNumber->setDigitCount(20);//显示数量（个数）
     ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);
@@ -80,12 +84,26 @@ void TitleBar::initWorker()
 
     m_mySkin = new MySkin();
     m_mySkin->setObjectName(QString::fromLocal8Bit("m_mySkin"));
+
+    slot_switchToLoginPage(1,QString::fromLocal8Bit("测试测名称8020"));
 }
 
 
 /*处理信号与槽函数*/
 void TitleBar::chandleSignalAndSLots()
 {
+    connect(ui->pushButton_logo,&QPushButton::clicked,[=](){ ui->stackedWidget_login->setCurrentIndex(1);});
+    connect(ui->pushButton_logo2,&QPushButton::clicked,[=](){ ui->stackedWidget_login->setCurrentIndex(0);});
+    //登录
+    connect(ui->pushButton_userlogin,&QPushButton::clicked,[=](){
+        LoginPersonInfo::getInstance()->showLoginWindow(0);
+    });
+
+    //注册
+    connect(ui->pushButton_userregis,&QPushButton::clicked,[=](){
+        LoginPersonInfo::getInstance()->showLoginWindow(1);
+    });
+
     /*关于窗口大小调整*/
     //发送窗口关闭信号
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){emit sig_winClose();});
@@ -118,7 +136,7 @@ void TitleBar::chandleSignalAndSLots()
 
 
     //腾讯主页
-    connect(ui->Btn_logo,&QPushButton::clicked,[=](){QDesktopServices::openUrl(QUrl(QString("https://v.qq.com/")));});
+//    connect(ui->Btn_logo,&QPushButton::clicked,[=](){QDesktopServices::openUrl(QUrl(QString("https://v.qq.com/")));});
 
     /*关于浏览器*/
     //返回主页
@@ -370,6 +388,22 @@ void TitleBar::serarchLineEditFacous(QObject *watched, QEvent *event)
 
     }
 }
+
+/*左上角登陆*/
+void TitleBar::slot_switchToLoginPage(int mark, QString nick)
+{
+    if(mark  == 0)//未登录
+    {
+        ui->stackedWidget_login->setCurrentIndex(0);
+    }
+    else if(mark  == 1)//已登录
+    {
+        ui->stackedWidget_login->setCurrentIndex(1);
+        ui->pushButton_usernick->setText(nick);
+    }
+
+}
+
 
 /*槽函数 --- 获取系统时间并且显示*/
 void TitleBar::getSystemTimeShow()

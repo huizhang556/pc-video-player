@@ -131,7 +131,7 @@ color: rgb(255, 85, 0);
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
+            <width>30</width>
             <height>20</height>
            </size>
           </property>
@@ -139,8 +139,20 @@ color: rgb(255, 85, 0);
         </item>
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
+          <property name="minimumSize">
+           <size>
+            <width>800</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>1800</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page">
            <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -218,11 +230,11 @@ border:1px solid #ff5c38;
            <enum>Qt::Horizontal</enum>
           </property>
           <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
+           <enum>QSizePolicy::Minimum</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
+            <width>180</width>
             <height>20</height>
            </size>
           </property>

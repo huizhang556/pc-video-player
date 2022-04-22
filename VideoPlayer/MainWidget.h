@@ -105,7 +105,6 @@ private:
     CusTabWidget        *m_tabWidget        = nullptr;
     VideoBlank          *m_videoBlank       = nullptr;
     CusWebBrowser       *m_webBrowser       = nullptr;
-    VideoTitleBar       *m_videoTitle       = nullptr;
     SystemSetting       *m_systemSetting    = nullptr;
     QSystemTrayIcon     *m_tray             = nullptr;
     QMenu               *pmenu2             = nullptr;

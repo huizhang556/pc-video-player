@@ -2063,6 +2063,11 @@ void MultipPlayer::setPlayOrderButtonStyleSheet(int index)
     }
 }
 
+void MultipPlayer::setVideTitleBar(int index)
+{
+    m_videoTitleBar->setTitleStackWidgetPage(index);
+}
+
 /*监听事件*/
 bool MultipPlayer::eventFilter(QObject *watched, QEvent *event)
 {

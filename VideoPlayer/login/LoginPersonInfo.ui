@@ -17,7 +17,7 @@
    <string notr="true">QWidget
 {
 /*background-color:#136a8a;*/
-background-color: #25252a;
+background-color:#44444f;
 	
 }
 	</string>
@@ -39,7 +39,7 @@ background-color: #25252a;
     <number>0</number>
    </property>
    <item>
-    <widget class="QStackedWidget" name="stackedWidget">
+    <widget class="QStackedWidget" name="stackedWidget_login">
      <property name="styleSheet">
       <string notr="true"/>
      </property>
