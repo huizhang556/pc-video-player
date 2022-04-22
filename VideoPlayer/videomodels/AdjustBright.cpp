@@ -8,7 +8,7 @@ AdjustBright::AdjustBright(QWidget *parent) :
     ui(new Ui::AdjustBright)
 {
     ui->setupUi(this);
-    setFixedSize(385,340);//固定尺寸
+    setFixedSize(385,310);//固定尺寸
 //    setFixedSize(300,245);
     this->setWindowFlags(Qt::FramelessWindowHint);
 
@@ -18,6 +18,12 @@ AdjustBright::AdjustBright(QWidget *parent) :
 //    ui->checkBox_2->setVisible(false);
 //    ui->checkBox_3->setVisible(false);
 //    ui->checkBox_4->setVisible(false);
+
+    ui->label_playSelect->setFixedSize(0,0);
+    ui->radioButton_dcxh->setFixedSize(0,0);
+    ui->radioButton_sjbf->setFixedSize(0,0);
+    ui->radioButton_lbxh->setFixedSize(0,0);
+    ui->radioButton_sxbf->setFixedSize(0,0);
 
     ui->BtnRate_1->setCheckable(true);//设置为可设置选中状态
     ui->BtnRate_2->setCheckable(true);
@@ -83,10 +89,10 @@ AdjustBright::AdjustBright(QWidget *parent) :
     connect(ui->BtnRate_5,SIGNAL(clicked(bool)),this,SLOT(selectPlayRate()));
 
     //播放模式
-    connect(ui->radioButton_dcxh,SIGNAL(clicked(bool)),this,SLOT(selectPlaybackMode()));
-    connect(ui->radioButton_sjbf,SIGNAL(clicked(bool)),this,SLOT(selectPlaybackMode()));
-    connect(ui->radioButton_lbxh,SIGNAL(clicked(bool)),this,SLOT(selectPlaybackMode()));
-    connect(ui->radioButton_sxbf,SIGNAL(clicked(bool)),this,SLOT(selectPlaybackMode()));
+//    connect(ui->radioButton_dcxh,SIGNAL(clicked(bool)),this,SLOT(selectPlaybackMode()));
+//    connect(ui->radioButton_sjbf,SIGNAL(clicked(bool)),this,SLOT(selectPlaybackMode()));
+//    connect(ui->radioButton_lbxh,SIGNAL(clicked(bool)),this,SLOT(selectPlaybackMode()));
+//    connect(ui->radioButton_sxbf,SIGNAL(clicked(bool)),this,SLOT(selectPlaybackMode()));
 
     //屏幕占比
     connect(ui->checkBox_1,SIGNAL(clicked(bool)),this,SLOT(setAspectRatioMode()));
@@ -186,26 +192,26 @@ void AdjustBright::selectPlayRate()
 /*判断播放模式并向视频界面发射调节模式信号*/
 void AdjustBright::selectPlaybackMode()
 {
-    int mode = 0;
-    QRadioButton *pButton = qobject_cast<QRadioButton*>(sender());
-    if(pButton->objectName() == "radioButton_dcxh")
-    {
-        mode = 0;//单次播放
-    }
-    else if(pButton->objectName() == "radioButton_lbxh")
-    {
-        mode = 1;//列表循环
-    }
-    else if(pButton->objectName() == "radioButton_sjbf")
-    {
-        mode = 2;//随机播放
-    }
-    else if(pButton->objectName() == "radioButton_sxbf")
-    {
-        mode = 3;//顺序播放
-    }
-    emit valueChange_playBackMode(mode);
-    qDebug()<<"valueChange_playBackMode ="<<mode;
+//    int mode = 0;
+//    QRadioButton *pButton = qobject_cast<QRadioButton*>(sender());
+//    if(pButton->objectName() == "radioButton_dcxh")
+//    {
+//        mode = 0;//单次播放
+//    }
+//    else if(pButton->objectName() == "radioButton_lbxh")
+//    {
+//        mode = 1;//列表循环
+//    }
+//    else if(pButton->objectName() == "radioButton_sjbf")
+//    {
+//        mode = 2;//随机播放
+//    }
+//    else if(pButton->objectName() == "radioButton_sxbf")
+//    {
+//        mode = 3;//顺序播放
+//    }
+//    emit valueChange_playBackMode(mode);
+//    qDebug()<<"valueChange_playBackMode ="<<mode;
 }
 
 /*判断屏幕占比并向视频界面发送调节信号*/

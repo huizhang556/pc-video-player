@@ -14,7 +14,7 @@ SongItemForm::SongItemForm(QString num, QString son_name, bool col, QString song
     ui(new Ui::SongItemForm)
 {
     ui->setupUi(this);
-    ui->label_order->setText(num);
+    ui->label_order->setText(addPrefixNum(num));
     ui->pushButton_son_name->setText(son_name);
     slot_setSongCollectStatus(col);
     ui->pushButton_songer->setText(songer);
@@ -48,6 +48,22 @@ SongItemForm::SongItemForm(QString num, QString son_name, bool col, QString song
 SongItemForm::~SongItemForm()
 {
     delete ui;
+}
+
+QString SongItemForm::addPrefixNum(QString num)
+{
+    if(num.length() == 1)
+    {
+        return QString::fromLocal8Bit("00")+num;
+    }
+    else if(num.length() == 2)
+    {
+        return QString::fromLocal8Bit("0")+num;
+    }
+    else
+    {
+        return num;
+    }
 }
 
 void SongItemForm::slot_setSongCollectStatus(bool status)

@@ -20,9 +20,9 @@ public:
     void initWorkUI();
     void chandleSignalsAndSLots();
 
-    QStackedWidget* getgetCurrentShowWidget_SW(QWidget *parent, QString &objname);
-    QListWidget*    getCurrentShowWidget_LW(QWidget *parent, QString &objname);
-    QTabWidget*     getCurrentShowWidget_TW(QWidget *parent, QString &objname);
+    QStackedWidget* getgetCurrentShowWidget_SW();
+    QListWidget*    getCurrentShowWidget_LW();
+    QTabWidget*     getCurrentShowWidget_TW();
 
 public slots:
     //处理各个界面  重载

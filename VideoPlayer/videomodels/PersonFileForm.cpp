@@ -94,22 +94,22 @@ void PersonFileForm::setShowCurrentWidget(QObject *obj1, QWidget *wdgt1, QObject
 }
 
 /*获取QStackedWidget*/
-QStackedWidget *PersonFileForm::getgetCurrentShowWidget_SW(QWidget *parent, QString &objname)
+QStackedWidget *PersonFileForm::getgetCurrentShowWidget_SW()
 {
 
     return new QStackedWidget();
 }
 
 /*获取QListWidget*/
-QListWidget *PersonFileForm::getCurrentShowWidget_LW(QWidget *parent, QString &objname)
+QListWidget *PersonFileForm::getCurrentShowWidget_LW()
 {
     return new QListWidget();
 }
 
 /*获取QTabWidget*/
-QTabWidget *PersonFileForm::getCurrentShowWidget_TW(QWidget *parent, QString &objname)
+QTabWidget *PersonFileForm::getCurrentShowWidget_TW()
 {
-    return new QTabWidget();
+    return ui->tabWidget;
 }
 
 

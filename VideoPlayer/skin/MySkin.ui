@@ -50,7 +50,7 @@ background-color: #3b3b45;
 
 QTabWidget::tab-bar 
 {
-left: 35px; /* move to the right by 5px */
+/*left: 35px;*/
 }
 
 QTabBar::tab

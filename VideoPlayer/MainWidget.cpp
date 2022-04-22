@@ -107,8 +107,7 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_titleBar,&TitleBar::sig_winNormal,this,&MainWidget::chandleRestoreWindow);//根据不同状态处理窗口
     connect(m_titleBar,&TitleBar::sig_winMinimum,[=](){this->showMinimized();});
     connect(m_titleBar,&TitleBar::sig_doubleClick,[=](){chandleRestoreWindow();});
-    //响应 标题栏 调用历史记录信号
-    connect(m_titleBar,&TitleBar::sig_historyDownload,[=](){m_stackWidget->setCurrentIndex(1);});
+
     //响应 标题栏 帮助设置发来信号，弹出右键菜单
     connect(m_titleBar,&TitleBar::sig_settingHelp,this,&MainWidget::createHelpMenu);
 
@@ -126,10 +125,12 @@ void MainWidget::chandleSignalAndSlots()
     //上传下载
     connect(m_titleBar,&TitleBar::sig_filesUploadDownLoad,[=](int index1,int index2){
        m_stackWidget->setCurrentIndex(index1);//个人信息界面
+       m_personForm->getCurrentShowWidget_TW()->setCurrentIndex(index2);
     });
     //历史记录
     connect(m_titleBar,&TitleBar::sig_historyDownload,[=](int index1,int index2){
         m_stackWidget->setCurrentIndex(index1);//个人信息界面
+        m_personForm->getCurrentShowWidget_TW()->setCurrentIndex(index2);
     });
 
     //显示当前页面的地址

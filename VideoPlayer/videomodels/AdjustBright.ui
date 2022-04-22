@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>390</width>
-    <height>376</height>
+    <width>402</width>
+    <height>340</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -647,8 +647,8 @@ background-color: #2a2a31;
        <property name="verticalSpacing">
         <number>20</number>
        </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_ld">
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_bhd">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -666,124 +666,7 @@ background-color: #2a2a31;
 background-color: #2a2a31;</string>
          </property>
          <property name="text">
-          <string>亮    度</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QSlider" name="horizontalSlider_liangdu">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QSlider
-{
-background-color:#2a2a31;
-margin-left:13px;
-}
-/*整个进度条*/
-QSlider::groove:horizontal 
-{
-background:transparent;
-height: 8px;
-border-radius:4px;
-}
-
-/*J拖动按钮*/
-QSlider::handle:horizontal 
-{
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
-stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
-width: 8px;
-height:8px;
-margin-top: -2px;
-margin-bottom: -2px;
-padding-right:1px;
-border-radius: 4px;
-border:1px solid white;
-}
-
-/*J拖动按钮-hover*/
-QSlider::handle:horizontal:hover 
-{
-border-radius: 4px;
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 #2A8BDA,stop:0.778409 rgba(255, 255, 255, 255));
-}
-
-/*未划过的区域，右边界线*/
-QSlider::add-page:horizontal,QSlider::add-line:horizontal
-{
-background-color: rgb(87, 97, 106); 
-border-radius:4px;
-}
-
-/*已划过的区域，右边界线*/
-QSlider::sub-page:horizontal,QSlider::sub-line:horizontal
-{
-/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));*/
-background-color:rgb(255, 94, 30);
-border-radius:4px;
-}
-</string>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLabel" name="label_liangdu">
-         <property name="minimumSize">
-          <size>
-           <width>35</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLabel
-{
-color: #f85a37;
-background-color:#2a2a31;
-margin-left:10px;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_dbd">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 0);
-background-color: #2a2a31;</string>
-         </property>
-         <property name="text">
-          <string>对 比 度</string>
+          <string>饱 和 度</string>
          </property>
         </widget>
        </item>
@@ -857,8 +740,31 @@ border-radius:4px;
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
-        <widget class="QLabel" name="label_duibidu">
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_sd">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(85, 255, 0);
+background-color: #2a2a31;</string>
+         </property>
+         <property name="text">
+          <string>色    调</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLabel" name="label_baohedu">
          <property name="minimumSize">
           <size>
            <width>35</width>
@@ -878,29 +784,6 @@ margin-left:10px;
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_bhd">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 0);
-background-color: #2a2a31;</string>
-         </property>
-         <property name="text">
-          <string>饱 和 度</string>
          </property>
         </widget>
        </item>
@@ -974,8 +857,31 @@ border-radius:4px;
          </property>
         </widget>
        </item>
-       <item row="2" column="2">
-        <widget class="QLabel" name="label_baohedu">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_ld">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(85, 255, 0);
+background-color: #2a2a31;</string>
+         </property>
+         <property name="text">
+          <string>亮    度</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLabel" name="label_duibidu">
          <property name="minimumSize">
           <size>
            <width>35</width>
@@ -998,26 +904,27 @@ margin-left:10px;
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_sd">
+       <item row="0" column="2">
+        <widget class="QLabel" name="label_liangdu">
          <property name="minimumSize">
           <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
+           <width>35</width>
            <height>20</height>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 0);
-background-color: #2a2a31;</string>
+          <string notr="true">QLabel
+{
+color: #f85a37;
+background-color:#2a2a31;
+margin-left:10px;
+}</string>
          </property>
          <property name="text">
-          <string>色    调</string>
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -1112,6 +1019,99 @@ margin-left:10px;
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_dbd">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(85, 255, 0);
+background-color: #2a2a31;</string>
+         </property>
+         <property name="text">
+          <string>对 比 度</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSlider" name="horizontalSlider_liangdu">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QSlider
+{
+background-color:#2a2a31;
+margin-left:13px;
+}
+/*整个进度条*/
+QSlider::groove:horizontal 
+{
+background:transparent;
+height: 8px;
+border-radius:4px;
+}
+
+/*J拖动按钮*/
+QSlider::handle:horizontal 
+{
+background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
+stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+width: 8px;
+height:8px;
+margin-top: -2px;
+margin-bottom: -2px;
+padding-right:1px;
+border-radius: 4px;
+border:1px solid white;
+}
+
+/*J拖动按钮-hover*/
+QSlider::handle:horizontal:hover 
+{
+border-radius: 4px;
+background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 #2A8BDA,stop:0.778409 rgba(255, 255, 255, 255));
+}
+
+/*未划过的区域，右边界线*/
+QSlider::add-page:horizontal,QSlider::add-line:horizontal
+{
+background-color: rgb(87, 97, 106); 
+border-radius:4px;
+}
+
+/*已划过的区域，右边界线*/
+QSlider::sub-page:horizontal,QSlider::sub-line:horizontal
+{
+/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));*/
+background-color:rgb(255, 94, 30);
+border-radius:4px;
+}
+</string>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>

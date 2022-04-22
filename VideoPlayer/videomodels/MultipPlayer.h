@@ -13,6 +13,7 @@
 #include "videomodels/VideoTitleBar.h"
 #include "videomodels/RecomVideoTab.h"
 #include "videomodels/IntroduceForm.h"
+#include "videomodels/PlayOrderForm.h"
 
 #include <QMap>
 #include <QPoint>
@@ -132,6 +133,8 @@ public slots:
 
     void setLeftCurrentListSHowHide();
 
+    void setPlayOrderButtonStyleSheet(int index);
+
 private slots:
     void on_time();
 
@@ -236,12 +239,14 @@ private:
     VideoTitleBar               *m_videoTitleBar    = nullptr;
     IntroduceForm               *m_introduceForm    = nullptr;
     RecomVideoTab               *m_recomTab         = nullptr;
+    PlayOrderForm               *m_playOrderForm    = nullptr;
     MyVideoWidget               *videoWidget        = nullptr;
     QMediaPlaylist              *playlist           = nullptr;
     QStackedWidget              *m_introStack       = nullptr;
     int                         m_voice;                        //静音之前的值
     bool                        m_winMax;                       //默认非最大化
     bool                        m_isClose;
+    bool                        m_orderStatus       = false;
     bool                        m_isHide            = false;    //侧边栏显示/隐藏按钮，默认没有隐藏
     bool                        m_newStart          = false;    //可以打开新文件按钮标识
     bool                        m_bPress            = false;

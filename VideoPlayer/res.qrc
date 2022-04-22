@@ -202,5 +202,9 @@
         <file>images/skin/title3.jpg</file>
         <file>images/skin/title4.jpg</file>
         <file>images/skin/title5.jpg</file>
+        <file>images/icon/player_dxunhuan.png</file>
+        <file>images/icon/player_shunxu.png</file>
+        <file>images/icon/player_suiji.png</file>
+        <file>images/icon/player_xunhuan.png</file>
     </qresource>
 </RCC>

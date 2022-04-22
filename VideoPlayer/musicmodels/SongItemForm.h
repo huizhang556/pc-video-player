@@ -15,6 +15,7 @@ public:
     explicit SongItemForm(QWidget *parent = nullptr);
     explicit SongItemForm(QString num, QString son_name, bool col, QString songer, QString zhuanji, QWidget *parent = nullptr);
     ~SongItemForm();
+    QString addPrefixNum(QString num);
 private slots:
     void slot_setSongCollectStatus(bool status);
 

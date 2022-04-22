@@ -135,7 +135,7 @@ void MultipPlayer::initMainWindow()
     ui->horizontalSlider->setPageStep(5);
     ui->horizontalSlider->setEnabled(false);
 
-    playlist->setPlaybackMode(QMediaPlaylist::Loop);
+    playlist->setPlaybackMode(QMediaPlaylist::Loop);//设置默认播放模式
     player->setPlaylist(playlist);
 
     videoWidget = new MyVideoWidget();
@@ -367,7 +367,11 @@ void MultipPlayer::initMainWindow()
     m_pTimer->start(1000);
 
     m_muteDlg = new muteDialog();//不加this
+    m_muteDlg->setObjectName(QString::fromLocal8Bit("m_muteDlg"));
     m_muteDlg->setHidden(true);
+
+    m_playOrderForm = new PlayOrderForm();
+    m_playOrderForm->setObjectName(QString::fromLocal8Bit("m_playOrderForm"));
 }
 
 /*处理信号与槽函数*/
@@ -521,8 +525,8 @@ void MultipPlayer::chandleSignalAndSLots()
     connect(playlist,SIGNAL(currentIndexChanged(int)),this,SLOT(update_adjustBright()));//亮度，饱和度，色调，对比度恢复原值
     //调节倍速
     connect(m_adjustBright,SIGNAL(valueChange_playRate(qreal)),player,SLOT(setPlaybackRate(qreal)));
-    //调节播放模式
-    connect(m_adjustBright,SIGNAL(valueChange_playBackMode(int)),this,SLOT(adjust_playBackMode(int)));
+    //调节播放模式(暂时不用)
+//    connect(m_adjustBright,SIGNAL(valueChange_playBackMode(int)),this,SLOT(adjust_playBackMode(int)));
     //调节屏幕占比
     connect(m_adjustBright,SIGNAL(valueChange_aspectRatio(int)),this,SLOT(adjust_aspectRatioMode(int)));
     connect(m_adjustBright,SIGNAL(valueChange_liangdu(int)),videoWidget,SLOT(setBrightness(int)));
@@ -588,6 +592,40 @@ void MultipPlayer::chandleSignalAndSLots()
         }
         m_collectStatus = !m_collectStatus;
     });
+
+    connect(ui->pushButton_playOrder,&QPushButton::clicked,[=](){
+        if(m_playOrderForm)
+        {
+            if(!m_playOrderForm->isHidden())
+            {
+                m_playOrderForm->hide();
+            }
+            else
+            {
+                int x = ui->pushButton_playOrder->parentWidget()->mapToGlobal(ui->pushButton_playOrder->pos()).x();
+                int y = ui->pushButton_playOrder->parentWidget()->mapToGlobal(ui->pushButton_playOrder->pos()).y();
+                int w = m_playOrderForm->width();
+                int h = m_playOrderForm->height();
+                m_playOrderForm->setGeometry(x-w/2,y-h-10,m_playOrderForm->width(),m_playOrderForm->height());
+                m_playOrderForm->raise();
+                m_playOrderForm->show();
+            }
+        }
+        else
+        {
+            m_playOrderForm = new PlayOrderForm();
+            int x = ui->pushButton_playOrder->parentWidget()->mapToGlobal(ui->pushButton_playOrder->pos()).x();
+            int y = ui->pushButton_playOrder->parentWidget()->mapToGlobal(ui->pushButton_playOrder->pos()).y();
+            int w = m_playOrderForm->width();
+            int h = m_playOrderForm->height();
+            m_playOrderForm->setGeometry(x-w/2,y-h-10,m_playOrderForm->width(),m_playOrderForm->height());
+            m_playOrderForm->raise();
+            m_playOrderForm->show();
+        }
+    });
+
+    //播放顺序 -- 单曲1 顺序2 循环3 随机4
+    connect(m_playOrderForm,SIGNAL(sig_playerOrder(int)),this,SLOT(setPlayOrderButtonStyleSheet(int)));
 
     //显示 列表
     connect(ui->pushButton_curlist,&QPushButton::clicked,[=](){setLeftCurrentListSHowHide();});
@@ -1730,7 +1768,7 @@ void MultipPlayer::set_adjustBright()
 /*调节播放模式*/
 void MultipPlayer::adjust_playBackMode(int index)
 {
-    qDebug()<<index;
+    qDebug()<< "player mode =" <<index;
     if(index == 0)
     {
         playlist->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
@@ -1988,6 +2026,40 @@ void MultipPlayer::setLeftCurrentListSHowHide()
         {
             m_widget1->hide();
         }
+    }
+}
+
+/*播放次序按钮*/
+void MultipPlayer::setPlayOrderButtonStyleSheet(int index)
+{
+    qDebug() << "current order = " << index;
+    if(index == 1)//单曲
+    {
+        ui->pushButton_playOrder->setStyleSheet("QPushButton{"
+                                                "border-image: url(:/images/icon/player_dxunhuan.png);"
+                                                "}");
+        adjust_playBackMode(0);//模式调节0
+    }
+    else if(index == 2)//顺序
+    {
+        ui->pushButton_playOrder->setStyleSheet("QPushButton{"
+                                                "border-image: url(:/images/icon/player_shunxu.png);"
+                                                "}");
+        adjust_playBackMode(3);//模式调节3
+    }
+    else if(index == 3)//循环
+    {
+        ui->pushButton_playOrder->setStyleSheet("QPushButton{"
+                                                "border-image: url(:/images/icon/player_xunhuan.png);"
+                                                "}");
+        adjust_playBackMode(1);//模式调节1
+    }
+    else if(index == 4)//随机
+    {
+        ui->pushButton_playOrder->setStyleSheet("QPushButton{"
+                                                "border-image: url(:/images/icon/player_suiji.png);"
+                                                "}");
+        adjust_playBackMode(2);//模式调节4
     }
 }
 

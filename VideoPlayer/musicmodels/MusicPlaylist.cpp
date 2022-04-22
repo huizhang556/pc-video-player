@@ -321,10 +321,10 @@ void MusicPlaylist::slots_rightMenu_openFilePath()
 /*public槽函数：page2添加内容*/
 bool MusicPlaylist::slots_addSonersToPage2(const QStringList &list)
 {
-    for(int i = 0; i < 50; i++)
+    for(int i = 0; i < 60; i++)
     {
-        QListWidgetItem *item = new QListWidgetItem();
-        SongItemForm *son_item = new SongItemForm(QString::fromLocal8Bit("0%1").arg(i+1),
+        QListWidgetItem *item  = new QListWidgetItem();
+        SongItemForm *son_item = new SongItemForm(QString::fromLocal8Bit("%1").arg(i+1),
                                                   QString::fromLocal8Bit("林俊杰").arg(i+1),
                                                   true,
                                                   QString::fromLocal8Bit("张辉").arg(i+1),
