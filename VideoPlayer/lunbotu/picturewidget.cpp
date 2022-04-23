@@ -19,8 +19,8 @@ static int dir = 0;//记录方向
 static QList<qreal> spaceList;
 static QList<qreal> unitList;
 static QList<qreal> transScaleList;//缩放比例表
-static QSize pictrueBigSize = RAW_VIEW_SIZE/SCALE_VIEW_PIXMAP;
-static QSize pictrueSmallSize = RAW_VIEW_SIZE/SCALE_VIEW_PIXMAP/SCALE_BIG_SMALL;
+ QSize pictrueBigSize = RAW_VIEW_SIZE/SCALE_VIEW_PIXMAP;
+ QSize pictrueSmallSize = RAW_VIEW_SIZE/SCALE_VIEW_PIXMAP/SCALE_BIG_SMALL;
 static QList<pictureItem *> itemList;
 static QList<int> finishList;
 static QMap<int, pictureItem *> mapLink;  //按钮id 与 图片资源的映射
@@ -244,6 +244,11 @@ void PictureWidget::clickedItemRoll(int type)
     if(m_timer->isActive())
         return;
     rollItem(type, 0); //得到最新的id 按钮位置
+}
+
+void PictureWidget::resizeEvent(QResizeEvent *event)
+{
+//    RAW_VIEW_SIZE.width() = this->width()/2;
 }
 
 //左边运动

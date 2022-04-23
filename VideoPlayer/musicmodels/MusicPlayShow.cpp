@@ -12,7 +12,7 @@ MusicPlayShow::MusicPlayShow(QWidget *parent) :
     photo = new QPixmap;
     //    photo->load("./pictures");
     time = new QTimer(this);
-    time->start(10000);
+    time->start(6000);
     connect(time,&QTimer::timeout,[=]()
     {
         /********release时使用***************/
@@ -20,7 +20,7 @@ MusicPlayShow::MusicPlayShow(QWidget *parent) :
 //        fileName = exepath + QString("/pictures/%1.png").arg(i);
 //        qDebug()<<fileName;
         /***********debug时候使用************/
-       fileName = QString("E:/QtProjects/000QtDemo_51ctodemo/04_20VideosPlayer/pictures/%1.png").arg(i);
+       fileName = QString("E:/QtProjects/000QtDemo_51ctodemo/04_20VideosPlayer/pictures/%1.png").arg(i);//只能使用png格式的图片
         loadPictures(fileName);
         changeTimeCout();
     });
@@ -44,7 +44,7 @@ void MusicPlayShow::loadPictures(QString &path) const
 
 void MusicPlayShow::changeTimeCout()
 {
-    if(++i > 22)
+    if(++i > 15)
         i = 1;
 }
 

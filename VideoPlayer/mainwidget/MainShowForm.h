@@ -4,6 +4,7 @@
 #include "lunbotu/PictureWidget.h"
 #include <QWidget>
 #include <QBoxLayout>
+#include <QTabWidget>
 
 namespace Ui {
 class MainShowForm;
@@ -24,6 +25,7 @@ private:
     QWidget             *m_widget1      =   nullptr;
     QVBoxLayout         *m_vHlayout1    =   nullptr;
     PictureWidget       *m_picWidget    =   nullptr;
+    QTabWidget          *m_tabWdgt      =   nullptr;
 
 };
 

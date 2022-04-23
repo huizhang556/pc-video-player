@@ -2,9 +2,11 @@
 #define PICTUREWIDGET_H
 
 #include <QWidget>
+#include <QSize>
 #include <QButtonGroup>
 #include <QGraphicsScene>
-#define RAW_VIEW_SIZE QSize(750,198)
+//#define RAW_VIEW_SIZE QSize(750,198)
+#define RAW_VIEW_SIZE QSize(750,220)
 #define SCALE_VIEW_PIXMAP (qreal)1/1 //View与图片比例
 #define SCALE_BIG_SMALL (qreal)1/1 //图片大小比例
 
@@ -52,6 +54,8 @@ public:
 public slots:
      void timerOutFunc();
      void clickedItemRoll(int type);
+protected:
+     void resizeEvent(QResizeEvent *event) override;
 private slots:
      void on_btnL_clicked();
 
@@ -72,8 +76,12 @@ private:
     unsigned m_rollCount; //滚动次数
     QButtonGroup *m_BtnGroup; //按钮盒子
     bool btnMoveEnable;
-
     QTimer *m_newT; //旋转定时器
+
+//    QSize   RAW_VIEW_SIZE;
+//    qreal   SCALE_VIEW_PIXMAP;
+//    qreal   SCALE_BIG_SMALL;
+
 };
 
 #endif // PICTUREWIDGET_H
