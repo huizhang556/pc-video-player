@@ -3,13 +3,13 @@
 #define MARGIN 2 //窗口边距
 
 #include "titleBar/TitleBar.h"
-#include "customer/FirstShow.h"
 #include "slidebar/LeftSideBar.h"
 #include "customer/CusTabWidget.h"
 #include "browser/CusWebBrowser.h"
 #include "messagebox/ExitDialog.h"
 #include "login/LoginPersonInfo.h"
 #include "videomodels/VideoBlank.h"
+#include "mainwidget/MainShowForm.h"
 #include "messagebox/SystemSetting.h"
 #include "videomodels/MultipPlayer.h"
 #include "musicmodels/MusicPlaylist.h"
@@ -73,7 +73,7 @@ private:
 private slots:
     void chandleRestoreWindow();
 
-    void createHelpMenu();//帮助菜单
+    void chandleSetHelpItem(int index);
 
     void help_stemAboutSetting();//系统设置
 
@@ -96,7 +96,7 @@ private:
     QHBoxLayout         *m_hblayout         = nullptr;
     ExitDialog          *m_pExitDlg         = nullptr;
     TitleBar            *m_titleBar         = nullptr;
-    FirstShow           *m_firstShow        = nullptr;
+    MainShowForm        *m_mainShowForm     = nullptr;
     PersonFileForm      *m_personForm       = nullptr;
     MultipPlayer        *m_mainPlayer       = nullptr;
     LeftSideBar         *m_leftSideBar      = nullptr;

@@ -4,12 +4,13 @@
 #include "skin/MySkinItem.h"
 #include "database/dataBase.h"
 #include "titleBar/TitleBar.h"
-#include "customer/FirstShow.h"
 #include "style/loadGlobalQss.h"
 #include "customer/CusLineEdit.h"
 #include "mainwidget/Slideshow.h"
 #include "customer/CusLineEdit.h"
+#include "lunbotu/PictureWidget.h"
 #include "videomodels/CommentTab.h"
+#include "mainwidget/MainShowForm.h"
 #include "videomodels/ControlForm.h"
 #include "videomodels/MultipPlayer.h"
 #include "videomodels/PersonFileForm.h"
@@ -26,6 +27,9 @@ int main(int argc, char *argv[])
 
 //    SongItemForm s("001",QString("第%1"),true,QString("zhanghui%1"),QString("zhuanji%1"));;
 //    s.show();
+
+//    MainShowForm m;
+//    m.show();
 
 //    MySkin s;
 //    s.show();
@@ -44,9 +48,6 @@ int main(int argc, char *argv[])
 
 //    ControlForm v;
 //    v.show();
-
-//    FirstShow f;
-//    f.show();
 
 //    Slideshow s;
 //    s.show();

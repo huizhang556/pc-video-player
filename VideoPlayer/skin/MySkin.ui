@@ -50,7 +50,7 @@ background-color: #3b3b45;
 
 QTabWidget::tab-bar 
 {
-/*left: 35px;*/
+left: 35px;
 }
 
 QTabBar::tab
@@ -79,7 +79,7 @@ font-weight:bold;
 }</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_zhuti">
       <attribute name="title">

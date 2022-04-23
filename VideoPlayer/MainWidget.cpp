@@ -56,8 +56,8 @@ void MainWidget::initOtherWidgetUi()
     m_tabWidget = new CusTabWidget();
     m_tabWidget->setObjectName(QString::fromLatin1("m_tabWidget"));
 
-    m_firstShow = new FirstShow();
-    m_firstShow->setObjectName(QString::fromLocal8Bit("m_firstShow"));
+    m_mainShowForm = new MainShowForm();
+    m_mainShowForm->setObjectName(QString::fromLocal8Bit("m_mainShowForm"));
 
     m_videoBlank = new VideoBlank();
     m_videoBlank->setHideOpenButton(true);
@@ -99,6 +99,17 @@ void MainWidget::initOtherWidgetUi()
     this->setLayout(m_vblayout);
 }
 
+//设置StackedWidget布局每个page界面
+void MainWidget::setStackedWidgetPage()
+{
+    m_stackWidget->insertWidget(0,m_mainShowForm);//m_mainShowForm
+    m_stackWidget->insertWidget(1,m_webBrowser);//cuswebbrowser
+    m_stackWidget->insertWidget(2,m_tabWidget);//m_tabWidget
+    m_stackWidget->insertWidget(3,m_musicShow);//musicshow
+    m_stackWidget->insertWidget(4,m_musicList);//musiclist
+    m_stackWidget->insertWidget(5,m_personForm);//personform 个人管理
+}
+
 //处理信号与槽函数
 void MainWidget::chandleSignalAndSlots()
 {
@@ -109,7 +120,7 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_titleBar,&TitleBar::sig_doubleClick,[=](){chandleRestoreWindow();});
 
     //响应 标题栏 帮助设置发来信号，弹出右键菜单
-    connect(m_titleBar,&TitleBar::sig_settingHelp,this,&MainWidget::createHelpMenu);
+    connect(m_titleBar,SIGNAL(sig_settingHelpItem(int)),this,SLOT(chandleSetHelpItem(int)));
 
     //处理标题栏信号与浏览器槽函数
     //回车
@@ -156,41 +167,9 @@ void MainWidget::chandleSignalAndSlots()
         m_mainPlayer->openLocalFile();
         m_mainPlayer->show();
     });
-
 }
 
-/*加载界面样式*/
-//void MainWidget::loadAllUIQss()
-//{
-//    QFile file(":/style/alluistyle.qss");
-//    file.open(QFile::ReadOnly | QFile::Text);
-//    if(!file.isOpen())
-//    {
-//        qDebug()<<"the style qss is unload!";
-//        return;
-//    }
-//    else
-//    {
-//        QString style = tr(file.readAll());
-//        qApp->setStyleSheet(style);
-//        qDebug()<<"the style is load successfull!";
-//    }
-//    file.close();
-//}
-
-//设置StackedWidget布局每个page界面
-void MainWidget::setStackedWidgetPage()
-{
-    m_stackWidget->insertWidget(0,m_tabWidget);//custabwidget
-    m_stackWidget->insertWidget(1,m_webBrowser);//cuswebbrowser
-    m_stackWidget->insertWidget(2,m_videoBlank);//videoblack
-    m_stackWidget->insertWidget(3,m_musicShow);//musicshow
-    m_stackWidget->insertWidget(4,m_musicList);//musiclist
-    m_stackWidget->insertWidget(5,m_personForm);//personform 个人管理
-}
-
-
-/*托盘菜单*/
+/*槽函数：托盘菜单*/
 void MainWidget::createTrayMenu()
 {
     QMenu *pmenu = new QMenu(this);
@@ -211,46 +190,45 @@ void MainWidget::createTrayMenu()
     m_tray->setContextMenu(pmenu);
 }
 
-/*帮助菜单*/
-void MainWidget::createHelpMenu()
+/*处理设置按钮发过来的信号*/
+void MainWidget::chandleSetHelpItem(int index)
 {
-    pmenu2 = new QMenu(this);
-    pmenu2->setObjectName(QString::fromLocal8Bit("pmenu2"));//样式表中设置样式必须设置对象名称才能生效
-//    pmenu2->setStyleSheet("#pmenu2"
-//                          "{"
-//                          "font-size:12px;"
-//                          "background-color:#3d3d3d;"
-//                          "color:green;"
-//                          "width:90px;"
-////                        "padding:15px 15px;"//调整文字间距
-//                          "}"
-//                          "#pmenu2::item:selected"
-//                          "{"
-//                          "color:red;"
-//                          "}");//font:bold italic 18px "微软雅黑";
-    pmenu2->addAction(QString::fromLocal8Bit("系统设置"),this,SLOT(help_stemAboutSetting()));//SystemSetting
-    pmenu2->addSeparator();
-    pmenu2->addAction(QString::fromLocal8Bit("网络资源"),this,SLOT(playHttpRequireRecourse(QString)));
-    pmenu2->addSeparator();
-    pmenu2->addAction(QString::fromLocal8Bit("问题帮助"),this,SLOT(help_questionAnswer()));
-    pmenu2->addSeparator();
-    pmenu3 = new QMenu(QString::fromLocal8Bit("播放视频"),this);
-    pmenu3->setObjectName(QString::fromLocal8Bit("pmenu3"));
-    pmenu3->addAction(QString::fromLocal8Bit("本地视频"),this,SLOT(help_aboutLocalFile()));
-    pmenu3->addAction(QString::fromLocal8Bit("网络视频"),this,SLOT(help_aboutNetworklFile()));
-    pmenu2->addMenu(pmenu3);
-    pmenu2->addSeparator();
-    pmenu2->addAction(QString::fromLocal8Bit("软件下载"),this,SLOT(help_openWebSite()));
-    pmenu2->addSeparator();
-    pmenu2->addAction(QString::fromLocal8Bit("软件退出"),this,SLOT(close()));
-
-//    ui->Btnhelp->setMenu(pmenu2);
-//    pmenu2->show();
-
-    QPoint point4 = QPoint(QCursor::pos().x()-70,QCursor::pos().y()+25);
-    pmenu2->exec(point4);
-//    pmenu2->exec(QCursor::pos());
-    delete pmenu2;
+    if(index == 0)//个人账户
+    {
+        qDebug() << "person login";
+    }
+    else if(index == 1)//系统设置
+    {
+        help_stemAboutSetting();
+    }
+    else if(index == 2)//网络资源
+    {
+        qDebug() << "network source";
+    }
+    else if(index == 3)//问题帮助
+    {
+        help_questionAnswer();
+    }
+    else if(index == 4)//本地视频
+    {
+        help_aboutLocalFile();
+    }
+    else if(index == 5)//网络视频
+    {
+        help_aboutNetworklFile();
+    }
+    else if(index == 6)//软件下载
+    {
+        help_openWebSite();
+    }
+    else if(index == 7)//软件退出
+    {
+        this->close();
+    }
+    else
+    {
+        return;
+    }
 }
 
 /*系统设置*/

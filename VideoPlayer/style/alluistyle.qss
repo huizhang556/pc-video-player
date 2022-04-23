@@ -10,55 +10,6 @@ outline:0;
 border:none;/*去边线*/
 }
 
-/*大标题栏---右键菜单*/
-#pmenu2
-{
-font-size:12px;
-background-color:#3d3d3d;
-color:green;
-}
-
-
-#pmenu2::item
-{
-text-align:center;
-}
-
-#pmenu2::item::indicator
-{
-/*magin-right:20px;*/
-}
-
-#pmenu2::item::right-arrow
-{
-/*magin-left:20px;*/
-}
-
-/*menu-hover*/
-#pmenu2::item:selected
-{
-color:red;
-}
-
-#pmenu3
-{
-font-size:12px;
-background-color:#3d3d3d;
-color:green;
-
-}
-
-#pmenu3::item
-{
-
-}
-
-/*menu-hover*/
-#pmenu3::item:selected
-{
-color:red;
-}
-
 MainWindow
 {
 background-color:#2a2a31;
@@ -142,6 +93,58 @@ background-color: rgb(33, 33, 33);
 color:rgb(255, 94, 30);
 }
 
+QMenu
+{
+background-color:#3d3d3d;
+margin: 2px;
+font-size:14px;
+/*定义宽度多级菜单就没有右边箭头*/
+/*font:bold italic 14px "微软雅黑";*/
+}
+
+QMenu::item
+{
+color:#41cd52;
+padding: 2px 25px 2px 20px;
+border: 1px solid transparent;
+}
+
+QMenu::item:selected
+{
+border-color: darkblue;
+background: #b5aaa8;
+border-radius:4px;
+color:red;
+}
+
+QMenu::icon
+{
+padding-left:15px;/*有效*/
+}
+
+/*
+QMenu::separator 
+{
+height:1px;
+background: lightblue;
+}
+*/
+
+/*
+QMenu::indicator 
+{
+    width: 13px;
+    height: 13px;
+}
+*/
+
+/*
+QMenu::right-arrow
+{
+image: url(://images/icon/help_arrow_r.png);
+}
+*/
+
 /*去掉dockwidget边界空白*/
 QMainWindow::separator 
 {
@@ -150,11 +153,6 @@ width:0px;
 height:0px;
 margin:0px;
 padding:0px;
-}
-
-QDockWidget
-{
-outline:0;
 }
 
 QDockWidget#m_dockWidget::title

@@ -42,20 +42,20 @@ void SystemSetting::chandleSignalAndSlot()
     connect(ui->listWidget,&QListWidget::currentRowChanged,ui->stackedWidget,&QStackedWidget::setCurrentIndex);
     //close
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){
-    setTitleWarningText(QString::fromLocal8Bit("您当前的配置有改动，请选择保存或取消再退出！"),7000);
-        if(true)
-        {
-            //退出 0  取消 1
-            int code = QMessageBox::warning(this,QString::fromLocal8Bit("提示"),QString::fromLocal8Bit("您确定要退出吗？"),QString::fromLocal8Bit("退出"), QString::fromLocal8Bit("取消"));
-            //            qDebug() << code;
-            if(code == 0)
-            {
-                //保存文件设置
-                savesSettingConfigFile();
-                //退出设置界面
-                this->close();
-            }
-        }
+//    setTitleWarningText(QString::fromLocal8Bit("您当前的配置有改动，请选择保存或取消再退出！"),7000);
+//        if(true)
+//        {
+//            //退出 0  取消 1
+//            int code = QMessageBox::warning(this,QString::fromLocal8Bit("提示"),QString::fromLocal8Bit("您确定要退出吗？"),QString::fromLocal8Bit("退出"), QString::fromLocal8Bit("取消"));
+//            //            qDebug() << code;
+//            if(code == 0)
+//            {
+//                //保存文件设置
+//                savesSettingConfigFile();
+//                //退出设置界面
+//                this->close();
+//            }
+//        }
         savesSettingConfigFile();
         this->close();
     });

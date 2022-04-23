@@ -4,6 +4,7 @@
 #include "skin/MySkin.h"
 #include "mainwidget/SearchForm.h"
 #include "login/LoginPersonInfo.h"
+#include <QMenu>
 #include <QPoint>
 #include <QTimer>
 #include <QWidget>
@@ -40,6 +41,7 @@ public slots:
     void mouseIsPressReleaseLineEdit(QObject *watched, QEvent *event);//搜索框点击事件
     void serarchLineEditFacous(QObject *watched, QEvent *event);
     void slot_switchToLoginPage(int mark,QString nick);
+    void slot_setButtonHelpEmitItem();
 
 //私有槽函数，外部不能直接访问
 private slots:
@@ -48,15 +50,16 @@ private slots:
     void setLineEditAddress(const QUrl url);
     void showLoginForm();//显示登录窗口
     void showMySkin();//皮肤设置
-
+    void createHelpMenu();//帮助菜单
 private:
-
     void setShowToolTip();
 
 private:
     QTimer          *m_timer1       = nullptr;
     QTimer          *m_timer2       = nullptr;
     QTimer          *m_timer3       = nullptr;
+    QMenu           *pmenu2         = nullptr;
+    QMenu           *pmenu3         = nullptr;
     SearchForm      *m_searchForm   = nullptr;
     Login           *m_loginForm    = nullptr;
     MySkin          *m_mySkin       = nullptr;
@@ -69,7 +72,7 @@ signals:
     void sig_winMinimum();
     void sig_doubleClick();//调节主窗口
     //标题栏功能按钮
-    void sig_settingHelp();//帮助
+    void sig_settingHelpItem(int index);//帮助
     void sig_callLogin();//登录
     void sig_setWindowSkin();//设置皮肤
     void sig_filesUploadDownLoad(int index1, int index2);//上传下载

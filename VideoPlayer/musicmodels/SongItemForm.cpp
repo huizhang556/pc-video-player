@@ -23,6 +23,10 @@ SongItemForm::SongItemForm(QString num, QString son_name, bool col, QString song
 //    ui->pushButton_son_collect->setAttribute(Qt::WA_TransparentForMouseEvents,true);//设置鼠标穿透
 //    ui->pushButton_son_download->setAttribute(Qt::WA_TransparentForMouseEvents,true);//设置鼠标穿透
 //    ui->pushButton_son_delete->setAttribute(Qt::WA_TransparentForMouseEvents,true);//设置鼠标穿透
+    ui->pushButton_son_collect->setFixedSize(22,22);
+    ui->pushButton_son_download->setFixedSize(22,22);
+    ui->pushButton_son_delete->setFixedSize(22,22);
+    ui->pushButton_son_more->setFixedSize(22,22);
 
     connect(ui->pushButton_son_collect,&QPushButton::clicked,[=](){
         emit on_son_collectbtn_clicked(ui->label_order->text().toInt());

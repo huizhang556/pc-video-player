@@ -552,9 +552,9 @@ void MultipPlayer::chandleSignalAndSLots()
     connect(m_videoTitleBar,&VideoTitleBar::sig_inputSourceUrl,[=](QString newurl)
     {
 //        QFileInfo info(newurl);
-        QUrl url = QUrl::fromLocalFile(newurl);
-        player->setMedia(url);
-        player->play();
+//        QUrl url = QUrl::fromLocalFile(newurl);
+//        player->setMedia(url);
+//        player->play();
     });
 
     //收藏按钮
@@ -2065,7 +2065,7 @@ void MultipPlayer::setPlayOrderButtonStyleSheet(int index)
 
 void MultipPlayer::setVideTitleBar(int index)
 {
-    m_videoTitleBar->setTitleStackWidgetPage(index);
+//    m_videoTitleBar->setTitleStackWidgetPage(index);
 }
 
 /*监听事件*/

@@ -207,5 +207,14 @@
         <file>images/icon/player_suiji.png</file>
         <file>images/icon/player_xunhuan.png</file>
         <file>images/icon/kugou.ico</file>
+        <file>images/icon/help_account.png</file>
+        <file>images/icon/help_download.png</file>
+        <file>images/icon/help_exit.png</file>
+        <file>images/icon/help_internet.png</file>
+        <file>images/icon/help_local.png</file>
+        <file>images/icon/help_qahelp.png</file>
+        <file>images/icon/help_v_net.png</file>
+        <file>images/icon/help_play.png</file>
+        <file>images/icon/help_arrow_r.png</file>
     </qresource>
 </RCC>

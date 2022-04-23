@@ -120,7 +120,7 @@ font-weight:bold;
 }</string>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab_danqu">
         <attribute name="title">
@@ -275,6 +275,9 @@ image: url(:/images/icon/downloadhover.png);
                       <property name="text">
                        <string/>
                       </property>
+                      <property name="flat">
+                       <bool>true</bool>
+                      </property>
                      </widget>
                     </item>
                     <item>
@@ -312,6 +315,9 @@ image: url(:/images/icon/downloadhover.png);
                       </property>
                       <property name="text">
                        <string>编辑</string>
+                      </property>
+                      <property name="flat">
+                       <bool>true</bool>
                       </property>
                      </widget>
                     </item>
@@ -1159,6 +1165,9 @@ font-size:15px;</string>
                       </property>
                       <property name="text">
                        <string>编辑</string>
+                      </property>
+                      <property name="flat">
+                       <bool>true</bool>
                       </property>
                      </widget>
                     </item>

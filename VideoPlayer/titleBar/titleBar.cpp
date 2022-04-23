@@ -121,8 +121,8 @@ void TitleBar::chandleSignalAndSLots()
     connect(m_timer3,&QTimer::timeout,this,&TitleBar::getSystemTimeShow);
 
     /*关于标题栏功能性按钮*/
-    //帮助设置
-    connect(ui->Btnhelp,&QPushButton::clicked,[=](){emit sig_settingHelp();});//帮助菜单信号
+    //帮助
+    connect(ui->Btnhelp,&QPushButton::clicked,[=](){createHelpMenu();});//帮助菜单
     //调用登录提示板
     connect(ui->Btnlogin,&QPushButton::clicked,[=](){emit sig_callLogin();});//登录选择界面
     //皮肤设置
@@ -166,6 +166,37 @@ void TitleBar::chandleSignalAndSLots()
         //处理其他事件
         //鼠标进入样式改变
     });
+}
+
+/*创建菜单*/
+void TitleBar::createHelpMenu()
+{
+    pmenu2 = new QMenu(this);
+    pmenu2->setObjectName(QString::fromLocal8Bit("pmenu2"));//样式表中设置样式必须设置对象名称才能生效
+    pmenu3 = new QMenu(QString::fromLocal8Bit("播放视频"),this);
+    pmenu3->setObjectName(QString::fromLocal8Bit("pmenu3"));
+    pmenu3->setIcon(QIcon("://images/icon/help_play.png"));
+    pmenu2->addAction(QIcon("://images/icon/help_account.png"),QString::fromLocal8Bit("个人账户"),this,SLOT(slot_setButtonHelpEmitItem()));
+    pmenu2->addSeparator();
+    pmenu2->addAction(QIcon("://images/icon/setlogin.png"),QString::fromLocal8Bit("系统设置"),this,SLOT(slot_setButtonHelpEmitItem()));//注意：槽函数不加分号，且不能带参数
+    pmenu2->addSeparator();
+    pmenu2->addAction(QIcon("://images/icon/help_internet.png"),QString::fromLocal8Bit("网络资源"),this,SLOT(slot_setButtonHelpEmitItem()));//接收端使用sendor()判断
+    pmenu2->addSeparator();
+    pmenu2->addAction(QIcon("://images/icon/help_qahelp.png"),QString::fromLocal8Bit("问题帮助"),this,SLOT(slot_setButtonHelpEmitItem()));
+    pmenu2->addSeparator();
+    pmenu3->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("本地视频"),this,SLOT(slot_setButtonHelpEmitItem()));
+    pmenu3->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("网络视频"),this,SLOT(slot_setButtonHelpEmitItem()));
+    pmenu2->addMenu(pmenu3);
+    pmenu2->addSeparator();
+    pmenu2->addAction(QIcon("://images/icon/help_download.png"),QString::fromLocal8Bit("软件下载"),this,SLOT(slot_setButtonHelpEmitItem()));
+    pmenu2->addSeparator();
+    pmenu2->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("退出软件"),this,SLOT(slot_setButtonHelpEmitItem()));
+    int x = ui->Btnhelp->parentWidget()->mapToGlobal(ui->Btnhelp->pos()).x();
+    int y = ui->Btnhelp->parentWidget()->mapToGlobal(ui->Btnhelp->pos()).y();
+//    QPoint point4 = QPoint(QCursor::pos().x()-70,QCursor::pos().y()+25);
+    pmenu2->setGeometry(x-70,y+25,pmenu2->width(),pmenu2->height());
+    pmenu2->exec();
+    delete pmenu2;
 }
 
 /*设置tooltip*/
@@ -383,10 +414,7 @@ void TitleBar::mouseIsPressReleaseLineEdit(QObject *watched, QEvent *event)
 
 void TitleBar::serarchLineEditFacous(QObject *watched, QEvent *event)
 {
-    if(watched == ui->lineEditSearch)
-    {
 
-    }
 }
 
 /*左上角登陆*/
@@ -402,6 +430,43 @@ void TitleBar::slot_switchToLoginPage(int mark, QString nick)
         ui->pushButton_usernick->setText(nick);
     }
 
+}
+
+void TitleBar::slot_setButtonHelpEmitItem()
+{
+    QAction *action = qobject_cast<QAction *>(sender());
+    if(action->text() == QString::fromLocal8Bit("个人账户"))
+    {
+        emit sig_filesUploadDownLoad(5,4);
+    }
+    else if(action->text() == QString::fromLocal8Bit("系统设置"))
+    {
+        emit sig_settingHelpItem(1);
+    }
+    else if(action->text() == QString::fromLocal8Bit("网络资源"))
+    {
+        emit sig_settingHelpItem(2);
+    }
+    else if(action->text() == QString::fromLocal8Bit("问题帮助"))
+    {
+        emit sig_settingHelpItem(3);
+    }
+    else if(action->text() == QString::fromLocal8Bit("本地视频"))
+    {
+        emit sig_settingHelpItem(4);
+    }
+    else if(action->text() == QString::fromLocal8Bit("网络视频"))
+    {
+        emit sig_settingHelpItem(5);
+    }
+    else if(action->text() == QString::fromLocal8Bit("软件下载"))
+    {
+        emit sig_settingHelpItem(6);
+    }
+    else if(action->text() == QString::fromLocal8Bit("退出软件"))
+    {
+        emit sig_settingHelpItem(7);
+    }
 }
 
 
@@ -481,6 +546,8 @@ void TitleBar::showMySkin()
         m_mySkin->show();
     }
 }
+
+
 
 void TitleBar::receiveMainFormClose()
 {
