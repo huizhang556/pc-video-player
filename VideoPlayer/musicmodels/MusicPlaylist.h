@@ -75,6 +75,8 @@ private slots:
 
    void on_tableView_songList_customContextMenuRequested(const QPoint &pos);
 
+   void on_listWidget_songer_customContextMenuRequested(const QPoint &pos);
+
 private:
     Ui::MusicPlaylist *ui;
 //    QAction         *m_songAction;

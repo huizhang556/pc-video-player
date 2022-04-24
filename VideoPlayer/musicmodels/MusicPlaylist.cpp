@@ -20,6 +20,7 @@ MusicPlaylist::MusicPlaylist(QWidget *parent) :
 //    connect(m_songAction,&QAction::triggered,[=](){ui->lineEdit_searchSong->clear();});
 
     ui->listWidget_songer->installEventFilter(this);
+    ui->listWidget_songer->setContextMenuPolicy(Qt::CustomContextMenu);//自定义菜单
 
     ui->lineEdit_searchSong->setEnabled(false);//空时不能搜索
     ui->tableView_songList->setMouseTracking(true);
@@ -222,7 +223,7 @@ void MusicPlaylist::slots_btnBatchModelUpdate()
 
 }
 
-
+/*不用关联直接邮件可以打开*/
 void MusicPlaylist::on_tableView_songList_customContextMenuRequested(const QPoint &pos)
 {
     Q_UNUSED(pos);
@@ -260,6 +261,75 @@ void MusicPlaylist::on_tableView_songList_customContextMenuRequested(const QPoin
     pmenu_right->addSeparator();
     pmenu_right->exec(QCursor::pos());
     delete pmenu_right;
+}
+
+/*不用关联直接右键可以打开*/
+void MusicPlaylist::on_listWidget_songer_customContextMenuRequested(const QPoint &pos)
+{
+    Q_UNUSED(pos);
+    QMenu *pmenu_songer = new QMenu(this);
+    QMenu *pmenu_addto = new QMenu(QString::fromLocal8Bit("添加到"));
+    QMenu *pmenu_sort = new QMenu(QString::fromLocal8Bit("歌曲排序"));
+    QMenu *pmenu_playmode = new QMenu(QString::fromLocal8Bit("播放模式"));
+    QMenu *pmenu_muctool = new QMenu(QString::fromLocal8Bit("音乐工具"));
+
+    pmenu_addto->addAction(QString::fromLocal8Bit("本地列表"),this,SLOT(slots_rightMenu_player()));
+    pmenu_addto->addAction(QString::fromLocal8Bit("云端列表"),this,SLOT(slots_rightMenu_player()));
+    pmenu_addto->addAction(QString::fromLocal8Bit("我的收藏"),this,SLOT(slots_rightMenu_player()));
+    pmenu_addto->addAction(QString::fromLocal8Bit("我的喜好"),this,SLOT(slots_rightMenu_player()));
+    pmenu_addto->addAction(QString::fromLocal8Bit("播放列表"),this,SLOT(slots_rightMenu_player()));
+    pmenu_addto->addAction(QString::fromLocal8Bit("默认列表"),this,SLOT(slots_rightMenu_player()));
+
+    pmenu_sort->addAction(QString::fromLocal8Bit("默认排序"),this,SLOT(slots_rightMenu_player()));
+    pmenu_sort->addAction(QString::fromLocal8Bit("按歌名"),this,SLOT(slots_rightMenu_player()));
+    pmenu_sort->addAction(QString::fromLocal8Bit("按歌手"),this,SLOT(slots_rightMenu_player()));
+    pmenu_sort->addAction(QString::fromLocal8Bit("按专辑"),this,SLOT(slots_rightMenu_player()));
+    pmenu_sort->addAction(QString::fromLocal8Bit("按音质"),this,SLOT(slots_rightMenu_player()));
+    pmenu_sort->addAction(QString::fromLocal8Bit("随机"),this,SLOT(slots_rightMenu_player()));
+
+    pmenu_playmode->addAction(QString::fromLocal8Bit("单曲播放"),this,SLOT(slots_rightMenu_player()));
+    pmenu_playmode->addAction(QString::fromLocal8Bit("单曲循环"),this,SLOT(slots_rightMenu_player()));
+    pmenu_playmode->addAction(QString::fromLocal8Bit("顺序播放"),this,SLOT(slots_rightMenu_player()));
+    pmenu_playmode->addAction(QString::fromLocal8Bit("循环播放"),this,SLOT(slots_rightMenu_player()));
+    pmenu_playmode->addAction(QString::fromLocal8Bit("随机播放"),this,SLOT(slots_rightMenu_player()));
+
+    pmenu_muctool->addAction(QString::fromLocal8Bit("制作铃声"),this,SLOT(slots_rightMenu_player()));
+    pmenu_muctool->addAction(QString::fromLocal8Bit("定时关机"),this,SLOT(slots_rightMenu_player()));
+
+    pmenu_songer->setStyleSheet("font-size:12px;"
+                               "background-color:#3d3d3d;"
+                               "color:green;");//font:bold italic 18px "微软雅黑";
+    pmenu_addto->setStyleSheet("font-size:12px;"
+                               "background-color:#3d3d3d;"
+                               "color:green;");//font:bold italic 18px "微软雅黑";
+    pmenu_sort->setStyleSheet("font-size:12px;"
+                               "background-color:#3d3d3d;"
+                               "color:green;");//font:bold italic 18px "微软雅黑";
+    pmenu_playmode->setStyleSheet("font-size:12px;"
+                               "background-color:#3d3d3d;"
+                               "color:green;");//font:bold italic 18px "微软雅黑";
+    pmenu_muctool->setStyleSheet("font-size:12px;"
+                               "background-color:#3d3d3d;"
+                               "color:green;");//font:bold italic 18px "微软雅黑";
+
+    pmenu_songer->addAction(QString::fromLocal8Bit("播放"),this,SLOT(slots_rightMenu_player()));
+    pmenu_songer->addAction(QString::fromLocal8Bit("下一首播放"),this,SLOT(slots_rightMenu_delete()));
+    pmenu_songer->addAction(QString::fromLocal8Bit("播放MV"),this,SLOT(slots_rightMenu_download()));
+    pmenu_songer->addSeparator();
+    pmenu_songer->addAction(QString::fromLocal8Bit("下载"),this,SLOT(slots_rightMenu_next()));
+    pmenu_songer->addAction(QString::fromLocal8Bit("我要收藏"),this,SLOT(slots_rightMenu_next()));
+    pmenu_songer->addAction(QString::fromLocal8Bit("分享"),this,SLOT(slots_rightMenu_next()));
+    pmenu_songer->addAction(QString::fromLocal8Bit("传歌"),this,SLOT(slots_rightMenu_next()));
+    pmenu_songer->addMenu(pmenu_addto);
+    pmenu_songer->addAction(QString::fromLocal8Bit("查看评论"),this,SLOT(slots_rightMenu_next()));
+    pmenu_songer->addAction(QString::fromLocal8Bit("删除"),this,SLOT(slots_rightMenu_next()));
+    pmenu_songer->addMenu(pmenu_sort);
+    pmenu_songer->addSeparator();
+    pmenu_songer->addMenu(pmenu_playmode);
+    pmenu_songer->addAction(QString::fromLocal8Bit("清空歌单"),this,SLOT(slots_rightMenu_clearAllList()));
+    pmenu_songer->addMenu(pmenu_muctool);
+    pmenu_songer->exec(QCursor::pos());
+    delete pmenu_songer;
 }
 
 /*播放当前歌曲*/

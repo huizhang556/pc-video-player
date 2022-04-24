@@ -81,7 +81,7 @@ public:
 
     void set_fileTolistWidget(QString item);//将服务器获取到的文件列表显
 
-//    void showMediaCommentTab();
+    void showMediaCommentTab();
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;

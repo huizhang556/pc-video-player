@@ -378,7 +378,7 @@ void MultipPlayer::initMainWindow()
 void MultipPlayer::chandleSignalAndSLots()
 {
     //查看评论
-//    connect(ui->pushButton_comment,&QPushButton::clicked,[=](){ showMediaCommentTab();});
+    connect(ui->pushButton_comments,&QPushButton::clicked,[=](){ showMediaCommentTab();});
     //应该在有影片播放的时候，执行定时器，否则就是无效；1s更新一次进度
     connect(m_pTimer,&QTimer::timeout,this,&MultipPlayer::on_time);
     //监测媒体播放状态 StoppedState PlayingState PausedState
@@ -796,8 +796,11 @@ void MultipPlayer::removeTabwidgetTabBar(QTabWidget *tabwidget)
 {
     if(tabwidget)
     {
-        for(int i = 0; i < tabwidget->tabBar()->count();i++)
-            tabwidget->removeTab(i);
+        for(int i = tabwidget->tabBar()->count(); i > 0;i--)
+        {
+
+            tabwidget->removeTab(i);//从大往小删除
+        }
     }
 }
 
@@ -822,26 +825,12 @@ void MultipPlayer::set_fileTolistWidget(QString item)
     m_listWisget2->addItem(pitem);
 }
 
-//void MultipPlayer::showMediaCommentTab()
-//{
-//    if(m_tabWidget1->count()>1)
-//    {
-//        if(m_tabWidget1->findChild<CommentTab*>("m_commentTab"))
-//        {
-//            m_tabWidget1->setCurrentWidget(m_commentTab);
-//        }
-//        else
-//        {
-//            removeTabwidgetTabBar(m_tabWidget1);
-//            set_showTwoTabBar(m_tabWidget1,0,m_commentTab,QString::fromLocal8Bit("讨论"));
-//        }
-//    }
-//    else
-//    {
-//        removeTabwidgetTabBar(m_tabWidget1);
-//        set_showTwoTabBar(m_tabWidget1,0,m_commentTab,QString::fromLocal8Bit("讨论"));
-//    }
-//}
+void MultipPlayer::showMediaCommentTab()
+{
+            removeTabwidgetTabBar(m_tabWidget1);
+            set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_commentTab,QString::fromLocal8Bit("讨论"));
+            m_tabWidget1->setCurrentWidget(m_commentTab);
+}
 
 /*文件路径放进容器，将名称显示在列表*/
 void MultipPlayer::addFileToList(const QStringList &strList)
