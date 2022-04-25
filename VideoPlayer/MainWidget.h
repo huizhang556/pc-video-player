@@ -9,12 +9,12 @@
 #include "messagebox/ExitDialog.h"
 #include "login/LoginPersonInfo.h"
 #include "videomodels/VideoBlank.h"
-#include "mainwidget/MainShowForm.h"
 #include "messagebox/SystemSetting.h"
 #include "videomodels/MultipPlayer.h"
 #include "musicmodels/MusicPlaylist.h"
 #include "musicmodels/MusicPlayShow.h"
 #include "videomodels/VideoTitleBar.h"
+#include "mainwidget/CentralHomeForm.h"
 #include "videomodels/PersonFileForm.h"
 
 #include <QPoint>
@@ -96,7 +96,7 @@ private:
     QHBoxLayout         *m_hblayout         = nullptr;
     ExitDialog          *m_pExitDlg         = nullptr;
     TitleBar            *m_titleBar         = nullptr;
-    MainShowForm        *m_mainShowForm     = nullptr;
+    CentralHomeForm     *m_homeWdgt         = nullptr;
     PersonFileForm      *m_personForm       = nullptr;
     MultipPlayer        *m_mainPlayer       = nullptr;
     LeftSideBar         *m_leftSideBar      = nullptr;

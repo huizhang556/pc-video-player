@@ -20,7 +20,8 @@ class MusicPlaylist : public QWidget
 public:
     explicit MusicPlaylist(QWidget *parent = nullptr);
     ~MusicPlaylist();
-
+    void sortCurrentIndex(int index);
+    QString addPrefixNum(QString num);
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 

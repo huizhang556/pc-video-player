@@ -16,6 +16,10 @@ public:
     explicit SongItemForm(QString num, QString son_name, bool col, QString songer, QString zhuanji, QWidget *parent = nullptr);
     ~SongItemForm();
     QString addPrefixNum(QString num);
+
+protected:
+    void enterEvent(QEvent *event) override;
+    void leaveEvent(QEvent *event) override;
 private slots:
     void slot_setSongCollectStatus(bool status);
 
@@ -23,6 +27,7 @@ private:
     Ui::SongItemForm *ui;
 
 signals:
+    void on_son_mvbtn_clicked(int index);
     void on_son_collectbtn_clicked(int index);
     void on_son_downloadbtn_clicked(int index);
     void on_son_deletebtn_clicked(int index);

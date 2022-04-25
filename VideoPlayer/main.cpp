@@ -10,11 +10,14 @@
 #include "customer/CusLineEdit.h"
 #include "lunbotu/PictureWidget.h"
 #include "videomodels/CommentTab.h"
-#include "mainwidget/MainShowForm.h"
+#include "mainwidget/RecommendForm.h"
 #include "videomodels/ControlForm.h"
 #include "videomodels/MultipPlayer.h"
 #include "videomodels/PersonFileForm.h"
 #include "musicmodels/SongItemForm.h"
+#include "mainwidget/StackItemForm.h"
+#include "mainwidget/GalleryItemForm.h"
+
 
 
 int main(int argc, char *argv[])
@@ -25,10 +28,16 @@ int main(int argc, char *argv[])
     MainWidget w1;
     w1.show();
 
+//    StackItemForm s;
+//    s.show();
+
+//    GalleryItemForm g;
+//    g.show();
+
 //    SongItemForm s("001",QString("第%1"),true,QString("zhanghui%1"),QString("zhuanji%1"));;
 //    s.show();
 
-//    MainShowForm m;
+//    RecommendForm m;
 //    m.show();
 
 //    MySkin s;

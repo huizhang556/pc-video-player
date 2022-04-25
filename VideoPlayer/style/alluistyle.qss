@@ -4,10 +4,27 @@ background-color:#2a2a31;
 color: rgb(85, 255, 0);
 }
 
-/*主界面tabwidget开始*/
-#m_tabWdgt
+/*推荐栏左右调节按钮*/
+#m_recLeftBtn
 {
-background-color: #2a2a31;
+border-radius:20px;
+background: rbga(240, 240, 240,0.6) url(://images/icon/page_leftBtn.png) no-repeat no-repeat center center;
+}
+#m_recLeftBtn:hover
+{
+border-radius:20px;
+background: rbga(240, 240, 240,0.6) url(://images/icon/page_leftBtn_hover.png) no-repeat no-repeat center center;
+}
+
+#m_recRightBtn
+{
+border-radius:20px;
+background: rbga(240, 240, 240,0.6) url(://images/icon/page_rightBtn.png) no-repeat no-repeat center center;
+}
+#m_recRightBtn:hover
+{
+border-radius:20px;
+background: rbga(240, 240, 240,0.6) url(://images/icon/page_rightBtn_hover.png) no-repeat no-repeat center center;
 }
 
 /*去白边*/
@@ -22,31 +39,17 @@ background-color: #3b3b45;
 left: 35px;
 }
 
-#m_tabWdgt>QTabBar::tab
+#m_homeListWidget
 {
-min-width:80px;
-color: white;
-background-color:qlineargradient(x1: 0, y1: 0, x2: 0.7, y2: 0.7,stop: 0.3 rgb(40,150,200,160),stop: 0.6 rgb(40,150,200,220),stop:1 rgb(40,150,200,255));
-border: 0px solid;
-border-top-left-radius: 0px;
-border-top-right-radius: 0px;
-padding:5px;/*tab中字体距离*/
+background-color:#2a2a31;
+border:none;
 }
 
-#m_tabWdgt>QTabBar::tab:!selected
+#m_homeListWidget::item
 {
-margin-top: 0px;
-font-weight:bold;
-background-color: rgb(190, 190, 190);
+background-color:#2a2a31;
+border:none;
 }
-
-#m_tabWdgt>QTabBar::tab:selected
-{
-color: white;
-font-size:12px;
-font-weight:bold;
-}
-/*主界面tabwidget结束*/
 
 QListWidget QTabWidget QStackWidget QTextBrowser
 {

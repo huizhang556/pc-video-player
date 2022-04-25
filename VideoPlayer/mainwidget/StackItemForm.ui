@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>StackItemForm</class>
+ <widget class="QWidget" name="StackItemForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1029</width>
+    <height>427</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="7,3">
+     <item>
+      <widget class="QStackedWidget" name="stackedWidget_itempic">
+       <property name="minimumSize">
+        <size>
+         <width>600</width>
+         <height>300</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QStackWidget
+{
+border:none;
+}</string>
+       </property>
+       <widget class="QWidget" name="page"/>
+       <widget class="QWidget" name="page_2"/>
+      </widget>
+     </item>
+     <item>
+      <widget class="QWidget" name="widget" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>300</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>300</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="pushButton_rec1">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>猜你会看</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_rec2">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>重磅推荐</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="listWidget">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>240</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QListWidget
+{
+border:none;
+}
+QListWidget::item
+{
+font-size:12px;
+margin:8px;
+}
+
+QListWidget::item:hover
+{
+font-size:18px;
+color:#ff0000;
+}
+
+</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>且试天下</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>新游记</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>毛血旺</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>雪音教主</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>东北告别</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>现在就告白</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>特战荣耀</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>斗罗大陆</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

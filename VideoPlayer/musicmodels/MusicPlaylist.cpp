@@ -73,6 +73,34 @@ MusicPlaylist::~MusicPlaylist()
     //    delete m_songAction;
 }
 
+void MusicPlaylist::sortCurrentIndex(int index)
+{
+    int count = ui->listWidget_songer->count();//删除后的item总数
+    for(int i = index-1; i < count-index+1; i++)
+    {
+        QWidget *widget = ui->listWidget_songer->itemWidget(ui->listWidget_songer->item(i));//此时的item是删除后已经排好序的
+        QLabel* label_sort = widget->findChild<QLabel*>("label_order");
+        qDebug() << label_sort->text();
+        label_sort->setText(addPrefixNum(QString::number(i+1)));
+    }
+}
+
+QString MusicPlaylist::addPrefixNum(QString num)
+{
+    if(num.length() == 1)
+    {
+        return QString::fromLocal8Bit("00")+num;
+    }
+    else if(num.length() == 2)
+    {
+        return QString::fromLocal8Bit("0")+num;
+    }
+    else
+    {
+        return num;
+    }
+}
+
 /*过滤事件*/
 bool MusicPlaylist::eventFilter(QObject *watched, QEvent *event)
 {
@@ -269,9 +297,13 @@ void MusicPlaylist::on_listWidget_songer_customContextMenuRequested(const QPoint
     Q_UNUSED(pos);
     QMenu *pmenu_songer = new QMenu(this);
     QMenu *pmenu_addto = new QMenu(QString::fromLocal8Bit("添加到"));
+    pmenu_addto->setIcon(QIcon("://images/music/song_add.png"));
     QMenu *pmenu_sort = new QMenu(QString::fromLocal8Bit("歌曲排序"));
+    pmenu_sort->setIcon(QIcon("://images/music/song_order.png"));
     QMenu *pmenu_playmode = new QMenu(QString::fromLocal8Bit("播放模式"));
+    pmenu_playmode->setIcon(QIcon("://images/music/song_playmode.png"));
     QMenu *pmenu_muctool = new QMenu(QString::fromLocal8Bit("音乐工具"));
+    pmenu_muctool->setIcon(QIcon("://images/music/song_tools.png"));
 
     pmenu_addto->addAction(QString::fromLocal8Bit("本地列表"),this,SLOT(slots_rightMenu_player()));
     pmenu_addto->addAction(QString::fromLocal8Bit("云端列表"),this,SLOT(slots_rightMenu_player()));
@@ -296,37 +328,21 @@ void MusicPlaylist::on_listWidget_songer_customContextMenuRequested(const QPoint
     pmenu_muctool->addAction(QString::fromLocal8Bit("制作铃声"),this,SLOT(slots_rightMenu_player()));
     pmenu_muctool->addAction(QString::fromLocal8Bit("定时关机"),this,SLOT(slots_rightMenu_player()));
 
-    pmenu_songer->setStyleSheet("font-size:12px;"
-                               "background-color:#3d3d3d;"
-                               "color:green;");//font:bold italic 18px "微软雅黑";
-    pmenu_addto->setStyleSheet("font-size:12px;"
-                               "background-color:#3d3d3d;"
-                               "color:green;");//font:bold italic 18px "微软雅黑";
-    pmenu_sort->setStyleSheet("font-size:12px;"
-                               "background-color:#3d3d3d;"
-                               "color:green;");//font:bold italic 18px "微软雅黑";
-    pmenu_playmode->setStyleSheet("font-size:12px;"
-                               "background-color:#3d3d3d;"
-                               "color:green;");//font:bold italic 18px "微软雅黑";
-    pmenu_muctool->setStyleSheet("font-size:12px;"
-                               "background-color:#3d3d3d;"
-                               "color:green;");//font:bold italic 18px "微软雅黑";
-
-    pmenu_songer->addAction(QString::fromLocal8Bit("播放"),this,SLOT(slots_rightMenu_player()));
-    pmenu_songer->addAction(QString::fromLocal8Bit("下一首播放"),this,SLOT(slots_rightMenu_delete()));
-    pmenu_songer->addAction(QString::fromLocal8Bit("播放MV"),this,SLOT(slots_rightMenu_download()));
+    pmenu_songer->addAction(QIcon("://images/music/song_play.png"),QString::fromLocal8Bit("播放"),this,SLOT(slots_rightMenu_player()));
+    pmenu_songer->addAction(QIcon("://images/music/song_next.png"),QString::fromLocal8Bit("下一首播放"),this,SLOT(slots_rightMenu_delete()));
+    pmenu_songer->addAction(QIcon("://images/music/song_mv.png"),QString::fromLocal8Bit("播放MV"),this,SLOT(slots_rightMenu_download()));
     pmenu_songer->addSeparator();
-    pmenu_songer->addAction(QString::fromLocal8Bit("下载"),this,SLOT(slots_rightMenu_next()));
-    pmenu_songer->addAction(QString::fromLocal8Bit("我要收藏"),this,SLOT(slots_rightMenu_next()));
-    pmenu_songer->addAction(QString::fromLocal8Bit("分享"),this,SLOT(slots_rightMenu_next()));
-    pmenu_songer->addAction(QString::fromLocal8Bit("传歌"),this,SLOT(slots_rightMenu_next()));
+    pmenu_songer->addAction(QIcon("://images/music/song_download.png"),QString::fromLocal8Bit("下载"),this,SLOT(slots_rightMenu_next()));
+    pmenu_songer->addAction(QIcon("://images/music/song_collect.png"),QString::fromLocal8Bit("我要收藏"),this,SLOT(slots_rightMenu_next()));
+    pmenu_songer->addAction(QIcon("://images/music/song_share.png"),QString::fromLocal8Bit("分享"),this,SLOT(slots_rightMenu_next()));
+    pmenu_songer->addAction(QIcon("://images/music/song_chuange.png"),QString::fromLocal8Bit("传歌"),this,SLOT(slots_rightMenu_next()));
     pmenu_songer->addMenu(pmenu_addto);
-    pmenu_songer->addAction(QString::fromLocal8Bit("查看评论"),this,SLOT(slots_rightMenu_next()));
-    pmenu_songer->addAction(QString::fromLocal8Bit("删除"),this,SLOT(slots_rightMenu_next()));
+    pmenu_songer->addAction(QIcon("://images/music/song_commit.png"),QString::fromLocal8Bit("查看评论"),this,SLOT(slots_rightMenu_next()));
+    pmenu_songer->addAction(QIcon("://images/music/song_delete.png"),QString::fromLocal8Bit("删除"),this,SLOT(slots_rightMenu_next()));
     pmenu_songer->addMenu(pmenu_sort);
     pmenu_songer->addSeparator();
     pmenu_songer->addMenu(pmenu_playmode);
-    pmenu_songer->addAction(QString::fromLocal8Bit("清空歌单"),this,SLOT(slots_rightMenu_clearAllList()));
+    pmenu_songer->addAction(QIcon("://images/music/song_clear.png"),QString::fromLocal8Bit("清空歌单"),this,SLOT(slots_rightMenu_clearAllList()));
     pmenu_songer->addMenu(pmenu_muctool);
     pmenu_songer->exec(QCursor::pos());
     delete pmenu_songer;
@@ -391,17 +407,43 @@ void MusicPlaylist::slots_rightMenu_openFilePath()
 /*public槽函数：page2添加内容*/
 bool MusicPlaylist::slots_addSonersToPage2(const QStringList &list)
 {
+    Q_UNUSED(list);
     for(int i = 0; i < 60; i++)
     {
         QListWidgetItem *item  = new QListWidgetItem();
         SongItemForm *son_item = new SongItemForm(QString::fromLocal8Bit("%1").arg(i+1),
-                                                  QString::fromLocal8Bit("林俊杰").arg(i+1),
+                                                  QString::fromLocal8Bit("%1林俊杰&&张英俊&&张辉&&群星").arg(i+1),
                                                   true,
                                                   QString::fromLocal8Bit("张辉").arg(i+1),
                                                   QString::fromLocal8Bit("天使之约").arg(i+1));
-        item->setSizeHint(son_item->size());
+        item->setSizeHint(QSize(son_item->size().width(),son_item->size().height()-8));//在此可以微调整item的宽高
         ui->listWidget_songer->addItem(item);
         ui->listWidget_songer->setItemWidget(item,son_item);
+
+        //播放视频MV
+        connect(son_item,&SongItemForm::on_son_mvbtn_clicked,[=](int index){
+            qDebug() << "on_son_mvbtn_clicked = " << index;
+        });
+        //收藏
+        connect(son_item,&SongItemForm::on_son_collectbtn_clicked,[=](int index){
+            qDebug() << "on_son_collectbtn_clicked = " << index;
+        });
+        //删除
+        connect(son_item,&SongItemForm::on_son_deletebtn_clicked,[=](int index){//index总是比真实索引大1
+            qDebug() << "on_son_deletebtn_clicked = " << index;
+            QListWidgetItem *delItem = ui->listWidget_songer->item(index-1);
+            ui->listWidget_songer->takeItem(index-1);
+            delete delItem;//手动释放内存
+            sortCurrentIndex(index);
+        });
+        //下载
+        connect(son_item,&SongItemForm::on_son_downloadbtn_clicked,[=](int index){
+            qDebug() << "on_son_downloadbtn_clicked = " << index;
+        });
+        //更多信息
+        connect(son_item,&SongItemForm::on_son_morebtn_clicked,[=](int index){
+            qDebug() << "on_son_morebtn_clicked = " << index;
+        });
     }
 
     return 0;

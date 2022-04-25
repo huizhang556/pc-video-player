@@ -24,12 +24,28 @@ SongItemForm::SongItemForm(QString num, QString son_name, bool col, QString song
 //    ui->pushButton_son_download->setAttribute(Qt::WA_TransparentForMouseEvents,true);//设置鼠标穿透
 //    ui->pushButton_son_delete->setAttribute(Qt::WA_TransparentForMouseEvents,true);//设置鼠标穿透
     ui->pushButton_son_collect->setFixedSize(21,21);
+    ui->pushButton_son_collect->setCheckable(true);
+    ui->pushButton_son_collect->setChecked(true);
     ui->pushButton_son_download->setFixedSize(21,21);
     ui->pushButton_son_delete->setFixedSize(21,21);
     ui->pushButton_son_more->setFixedSize(21,21);
+    ui->pushButton_son_mv->setFixedSize(21,21);
 
     connect(ui->pushButton_son_collect,&QPushButton::clicked,[=](){
         emit on_son_collectbtn_clicked(ui->label_order->text().toInt());
+        qDebug() << "clicked collectbtn" << ui->label_order->text().toInt();
+        if(ui->pushButton_son_collect->isChecked())
+        {
+            ui->pushButton_son_collect->setChecked(false);
+        }
+        else
+        {
+            ui->pushButton_son_collect->setChecked(true);
+        }
+    });
+
+    connect(ui->pushButton_son_mv,&QPushButton::clicked,[=](){
+        emit on_son_mvbtn_clicked(ui->label_order->text().toInt());
         qDebug() << "clicked collectbtn" << ui->label_order->text().toInt();
     });
 
@@ -68,6 +84,18 @@ QString SongItemForm::addPrefixNum(QString num)
     {
         return num;
     }
+}
+
+void SongItemForm::enterEvent(QEvent *event)
+{
+    Q_UNUSED(event);
+//    ui->frame_make->show();
+}
+
+void SongItemForm::leaveEvent(QEvent *event)
+{
+    Q_UNUSED(event);
+//    ui->frame_make->hide();
 }
 
 void SongItemForm::slot_setSongCollectStatus(bool status)

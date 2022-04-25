@@ -1303,7 +1303,7 @@ color:#fefefe;
 {
 background-color: transparent;
 text-align : left;
-padding-left:10px;
+padding-left:12px;
 color:#fefefe;
 }
 QPushButton:hover
@@ -1470,6 +1470,7 @@ color:#28b7c2;
 background-color: transparent;
 text-align : left;
 color:#fefefe;
+padding-left:-2px;
 }
 QPushButton:hover
 {

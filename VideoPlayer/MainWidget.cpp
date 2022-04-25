@@ -9,7 +9,7 @@ MainWidget::MainWidget(QWidget *parent) :
     m_winMax(false),
     m_firstOpen(true)
 {
-    setMinimumSize(1320,800);
+    setMinimumSize(1300,800);
     setMouseTracking(true);
     this->setWindowFlags(Qt::FramelessWindowHint);//去掉标题栏
     this->setWindowTitle(QString::fromLocal8Bit("Qt简易视频播放器主界面"));
@@ -56,9 +56,6 @@ void MainWidget::initOtherWidgetUi()
     m_tabWidget = new CusTabWidget();
     m_tabWidget->setObjectName(QString::fromLatin1("m_tabWidget"));
 
-    m_mainShowForm = new MainShowForm();
-    m_mainShowForm->setObjectName(QString::fromLocal8Bit("m_mainShowForm"));
-
     m_videoBlank = new VideoBlank();
     m_videoBlank->setHideOpenButton(true);
     m_videoBlank->setObjectName(QString::fromLatin1("m_videoBlank"));
@@ -75,6 +72,9 @@ void MainWidget::initOtherWidgetUi()
 
     m_systemSetting = new SystemSetting();
     m_systemSetting->setObjectName(QString::fromLocal8Bit("m_systemSetting"));
+
+    m_homeWdgt = new CentralHomeForm();
+    m_homeWdgt->setObjectName(QString::fromLocal8Bit("m_homeWdgt"));
 
     //托盘
     QIcon icno(":/images/icon/tray.png");
@@ -102,7 +102,7 @@ void MainWidget::initOtherWidgetUi()
 //设置StackedWidget布局每个page界面
 void MainWidget::setStackedWidgetPage()
 {
-    m_stackWidget->insertWidget(0,m_mainShowForm);//m_mainShowForm
+    m_stackWidget->insertWidget(0,m_homeWdgt);//m_mainShowForm
     m_stackWidget->insertWidget(1,m_webBrowser);//cuswebbrowser
     m_stackWidget->insertWidget(2,m_tabWidget);//m_tabWidget
     m_stackWidget->insertWidget(3,m_musicShow);//musicshow
