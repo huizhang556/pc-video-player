@@ -1240,6 +1240,7 @@ QPushButton::menu-indicator:image
 {
 background-color: transparent;
 border-image: url(:/images/icon/min2.png);
+margin-bottom:3px;
 }
 
 QPushButton:hover{

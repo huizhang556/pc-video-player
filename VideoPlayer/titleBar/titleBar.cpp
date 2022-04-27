@@ -11,7 +11,7 @@ TitleBar::TitleBar(QWidget *parent) :
     ui(new Ui::TitleBar)
 {
     ui->setupUi(this);
-    this->setFixedHeight(50);
+    this->setFixedHeight(40);
     initWorker();//初始化
     chandleSignalAndSLots();
 }

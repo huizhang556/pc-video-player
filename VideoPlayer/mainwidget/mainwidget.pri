@@ -5,7 +5,8 @@ SOURCES += \
     $$PWD/GalleryItemForm.cpp \
     $$PWD/CentralHomeForm.cpp \
     $$PWD/PicWallItem.cpp \
-    $$PWD/StackItemForm.cpp
+    $$PWD/StackItemForm.cpp \
+    $$PWD/StackItem.cpp
 
 HEADERS += \
     $$PWD/Slideshow.h \
@@ -14,7 +15,8 @@ HEADERS += \
     $$PWD/GalleryItemForm.h \
     $$PWD/CentralHomeForm.h \
     $$PWD/PicWallItem.h \
-    $$PWD/StackItemForm.h
+    $$PWD/StackItemForm.h \
+    $$PWD/StackItem.h
 
 FORMS += \
     $$PWD/Slideshow.ui \
@@ -22,5 +24,6 @@ FORMS += \
     $$PWD/RecommendForm.ui \
     $$PWD/GalleryItemForm.ui \
     $$PWD/PicWallItem.ui \
-    $$PWD/StackItemForm.ui
+    $$PWD/StackItemForm.ui \
+    $$PWD/StackItem.ui
 

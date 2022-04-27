@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1029</width>
-    <height>427</height>
+    <width>758</width>
+    <height>320</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>320</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>346</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -30,13 +42,19 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="7,3">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="8,2">
      <item>
       <widget class="QStackedWidget" name="stackedWidget_itempic">
        <property name="minimumSize">
         <size>
-         <width>600</width>
-         <height>300</height>
+         <width>500</width>
+         <height>320</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>320</height>
         </size>
        </property>
        <property name="styleSheet">
@@ -53,13 +71,13 @@ border:none;
       <widget class="QWidget" name="widget" native="true">
        <property name="minimumSize">
         <size>
-         <width>300</width>
+         <width>260</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>300</width>
+         <width>260</width>
          <height>16777215</height>
         </size>
        </property>
@@ -88,9 +106,35 @@ border:none;
            <widget class="QPushButton" name="pushButton_rec1">
             <property name="minimumSize">
              <size>
-              <width>0</width>
-              <height>36</height>
+              <width>260</width>
+              <height>30</height>
              </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>260</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+text-align:left;
+border:1px solid transparent;
+border-bottom-color:#cdcdcd;
+background-color:transparent;
+font-size:16px;
+font-weight:700;
+color:#ff0000;
+padding-left:15px;
+}
+
+QPushButton:hover
+{
+text-align:left;
+color:#ff0000;
+padding-left:15px;
+}</string>
             </property>
             <property name="text">
              <string>猜你会看</string>
@@ -101,9 +145,34 @@ border:none;
            <widget class="QPushButton" name="pushButton_rec2">
             <property name="minimumSize">
              <size>
-              <width>0</width>
-              <height>36</height>
+              <width>250</width>
+              <height>30</height>
              </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>250</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+text-align:left;
+border:1px solid transparent;
+background-color:transparent;
+font-size:16px;
+font-weight:700;
+color:#ff0000;
+padding-left:15px;
+}
+
+QPushButton:hover
+{
+text-align:left;
+color:#ff0000;
+padding-left:15px;
+}</string>
             </property>
             <property name="text">
              <string>重磅推荐</string>
@@ -111,11 +180,17 @@ border:none;
            </widget>
           </item>
           <item>
-           <widget class="QListWidget" name="listWidget">
+           <widget class="QListWidget" name="listWidget_reclist">
             <property name="minimumSize">
              <size>
-              <width>0</width>
-              <height>240</height>
+              <width>260</width>
+              <height>270</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>260</width>
+              <height>270</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -126,7 +201,7 @@ border:none;
 QListWidget::item
 {
 font-size:12px;
-margin:8px;
+margin-bottom:3px;
 }
 
 QListWidget::item:hover
@@ -137,46 +212,6 @@ color:#ff0000;
 
 </string>
             </property>
-            <item>
-             <property name="text">
-              <string>且试天下</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>新游记</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>毛血旺</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>雪音教主</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>东北告别</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>现在就告白</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>特战荣耀</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>斗罗大陆</string>
-             </property>
-            </item>
            </widget>
           </item>
          </layout>

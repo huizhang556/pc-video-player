@@ -1,9 +1,10 @@
 ﻿#ifndef MYVIDEOWIDGET_H
 #define MYVIDEOWIDGET_H
-
+#include "videomodels/PlayCtlAdjustForm.h"
 #include <QWidget>
 #include <QEvent>
 #include <QVideoWidget>
+#include <QMouseEvent>
 
 namespace Ui {
 class MyVideoWidget;
@@ -22,9 +23,14 @@ protected:
 
     void leaveEvent(QEvent *e) override;
 
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
+
+
 public slots:
+//    void updatePlayAdustForm();//更新播放栏目位置
 
 private:
+//    PlayCtlAdjustForm       *m_playAdjust       = nullptr;
 
 signals:
     void mouseEnterToVideoUI();

@@ -18,7 +18,7 @@ VideoTitleBar::~VideoTitleBar()
 
 void VideoTitleBar::initUi()
 {
-    this->setFixedHeight(55);
+    this->setFixedHeight(40);
     setTitleStackWidgetPage(0);
     ui->pushButton_close->setFlat(true);
     ui->pushButton_min->setFlat(true);
@@ -62,6 +62,8 @@ void VideoTitleBar::setTitleStackWidgetPage(int index)
 /*设置当前标题*/
 void VideoTitleBar::setTitleText(const QString &text)
 {
+    if(text.isEmpty())
+        return;
     ui->label_title->setText(QString::fromLocal8Bit("正在播放：")+text);
 }
 

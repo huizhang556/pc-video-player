@@ -78,3 +78,10 @@ void CentralHomeForm::addWidgetToListWidget()
     m_homeListWidget->addItem(item5);
     m_homeListWidget->setItemWidget(item5,pitem5);
 }
+
+void CentralHomeForm::resizeEvent(QResizeEvent *event)
+{
+//    QListWidgetItem *item = m_homeListWidget->item(0);//得到第一项item
+////    m_homeListWidget->setMinimumHeight(m_homeListWidget->sizeHintForRow(0));
+//    item->setSizeHint(QSize(this->width(),m_homeListWidget->sizeHintForRow(0)));
+}

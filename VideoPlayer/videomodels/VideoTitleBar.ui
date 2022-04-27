@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1277</width>
-    <height>76</height>
+    <width>1082</width>
+    <height>52</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:#2a262e;</string>
+   <string notr="true">background-color:#404244;</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_8">
    <property name="spacing">
@@ -342,7 +342,8 @@ border:1px solid #ff5c38;
              <string notr="true">QPushButton
 {
 background-color: transparent;
-	border-image: url(:/images/icon/min2.png);
+border-image: url(:/images/icon/min2.png);
+margin-bottom:3px;
 }
 
 QPushButton:hover{

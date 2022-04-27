@@ -40,8 +40,6 @@ public:
     explicit MainWidget(QWidget *parent = nullptr);
     ~MainWidget();
 
-
-
 protected:
     void mousePressEvent(QMouseEvent *event) override;
 
@@ -84,6 +82,9 @@ private slots:
     void help_aboutLocalFile();//播放本地资源
 
     void help_aboutNetworklFile();//播放网络资源
+
+    //托盘
+    void tray_showMainWidget();
 
 
     //界面拉伸私有成员函数

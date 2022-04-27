@@ -36,6 +36,7 @@
 #include <QMediaPlayer>
 #include <QVideoWidget>
 #include <QWidgetAction>
+#include <QDesktopWidget>
 #include <QStackedWidget>
 #include <QMediaPlaylist>
 #include <QSystemTrayIcon>
@@ -47,7 +48,7 @@ class MultipPlayer;
 }
 
 
-class MultipPlayer : public QMainWindow
+class MultipPlayer : public QWidget
 {
     Q_OBJECT
 
@@ -83,6 +84,9 @@ public:
 
     void showMediaCommentTab();
 
+    QString getCurrentMediaPlayFileName();
+
+    QRect getDesktopScreenGeometry();
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 
@@ -97,6 +101,8 @@ protected:
     void showEvent(QShowEvent *event) override;
 
     void resizeEvent(QResizeEvent *event) override;
+
+    void keyPressEvent(QKeyEvent *event) override;
 
 public slots:
     void loadFileInfoToWinTitle(int index);//标题栏显示视频名称
@@ -129,7 +135,7 @@ public slots:
 
     void setFoldButtonStyle();//判断箭头的方向
 
-    void on_foldBtn_clicked();//点击箭头动作
+    void judgeFoldBtnOfRightDockList();//判断右侧停靠栏指示按钮位置
 
     void setLeftCurrentListSHowHide();
 
@@ -143,10 +149,6 @@ private slots:
     void checkChandleMediaPlayerStatus();//监测处理媒体播放状态
 
     void checkChandleMediaStatus();//监测处理媒体状态
-
-    void showPlayerUi();//显示播放器界面
-
-    void showPlayerList();//显示播放列表
 
     void loadDefaultLogo();//加载默认图标
 
@@ -180,8 +182,9 @@ private slots:
 
     void playlistMouseEnterLeave(QObject *watched, QEvent *event);
 
+
     //帮助菜单槽函数
-    void help_aboutLocalFile();//本地文件  
+    void help_aboutLocalFile();//本地文件
 
     void adjust_playBackMode(int index);//调节播放模式
 
@@ -199,9 +202,11 @@ private slots:
 
     bool loadCollectListWidgetList();//加载收藏菜单
 
-    bool currentListWidgetItemChange();
+    bool setCollectBtnShowStatus();//设置收藏按钮显示状态
 
-    bool findCollectList();
+    bool findCollectListStatus(QString name);//遍历列表，没有则添加
+
+    int getCurrentMediaRowOfCollectList(QString name);
 
 signals:
     void sig_sendSwitchToMusicPage(QString name);
@@ -213,6 +218,7 @@ signals:
     void sig_winVStatus(bool);
 private:
     Ui::MultipPlayer *ui;
+    QDesktopWidget              *system_screen      = nullptr;
     QTimer                      *m_pTimer           = nullptr; //进度滚动条更新
     QTimer                      *m_pTimer2          = nullptr; //延迟ui界面
     QWidget                     *m_widget1          = nullptr;
@@ -249,7 +255,7 @@ private:
     bool                        m_winMax;                       //默认非最大化
     bool                        m_isClose;
     bool                        m_orderStatus       = false;
-    bool                        m_isHide            = false;    //侧边栏显示/隐藏按钮，默认没有隐藏
+    bool                        m_isHide            = false;    //侧边栏显示/隐藏按钮，默认没隐藏
     bool                        m_newStart          = false;    //可以打开新文件按钮标识
     bool                        m_bPress            = false;
     bool                        m_muteShow          = false;    //默认不显示

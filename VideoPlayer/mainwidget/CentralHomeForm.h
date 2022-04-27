@@ -21,6 +21,8 @@ public:
     void initWorkUI();
     void chandleSignalsAndSLots();
     void addWidgetToListWidget();
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 private:
     RecommendForm   *m_recommend        = nullptr;
     QListWidget     *m_homeListWidget   = nullptr;

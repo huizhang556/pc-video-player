@@ -16,11 +16,10 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QWidgetAction>
-#include <QDesktopWidget>
 #include <QtSql/QSqlQuery>
 
 MultipPlayer::MultipPlayer(QWidget *parent) :
-    QMainWindow(parent),
+    QWidget(parent),
     ui(new Ui::MultipPlayer),
     m_winMax(false),
     m_times(0),
@@ -124,11 +123,11 @@ void MultipPlayer::initMainWindow()
 {
 //    ui->pushButton_danmu->setCheckable(true);
 //    ui->pushButton_danmu->setChecked(false);
-    ui->pushButton_collect->setChecked(true);//收藏按钮可以checkedable
-    ui->pushButton_collect->setCheckable(false);//默认没有选中
+//    ui->pushButton_collect->setChecked(true);//收藏按钮可以checked
+//    ui->pushButton_collect->setCheckable(false);//默认没有选中
 
     player = new QMediaPlayer(this);
-    playlist = new QMediaPlaylist(this);    
+    playlist = new QMediaPlaylist(this);
     player->setVolume(10);
 
     ui->horizontalSlider->setValue(0);
@@ -138,7 +137,7 @@ void MultipPlayer::initMainWindow()
     playlist->setPlaybackMode(QMediaPlaylist::Loop);//设置默认播放模式
     player->setPlaylist(playlist);
 
-    videoWidget = new MyVideoWidget();
+    videoWidget = new MyVideoWidget(ui->stackedWidget);
     player->setVideoOutput(videoWidget);
 
     m_widget2 = new QWidget;//listwidget显示（暂时不用）
@@ -153,11 +152,13 @@ void MultipPlayer::initMainWindow()
     m_videoTitleBar = new VideoTitleBar();
     m_videoTitleBar->setObjectName(QString::fromLocal8Bit("m_videoTitleBar"));
 
+    //中间主显示部分，视频显示部分
     ui->stackedWidget->insertWidget(0,m_videoBlank);
     m_videoBlank->setHideOpenButton(true);
     ui->stackedWidget->insertWidget(1,videoWidget);
     ui->stackedWidget->insertWidget(2,m_musicUi);
     ui->stackedWidget->setCurrentIndex(0);//默认显示音乐界面
+    ui->stackedWidget->setMinimumSize(975,735);//必须设置最小尺寸，否则播放控制栏位置不正确
 
     //用户信息（暂时）
 //    m_listWisget1 = new QListWidget;
@@ -335,12 +336,14 @@ void MultipPlayer::initMainWindow()
     m_vHlayout_jianjie->addWidget(m_tabWidget1,8);
     m_vHlayout_jianjie->setSpacing(0);
 
-    m_widget1 = new QWidget;//右侧列表整体父亲
+    m_widget1 = new QWidget(this);//右侧列表整体父亲
     m_widget1->setObjectName(QString::fromLocal8Bit("m_widget1"));
-    m_widget1->setFixedWidth(261);
-    m_widget1->setContentsMargins(0,0,0,0);
+    m_widget1->setFixedWidth(260);
+    m_widget1->setContentsMargins(0,0,0,0);//m_widget1的内容与m_widget1的间距
     m_widget1->setLayout(m_vHlayout_jianjie);
-    m_widget1->layout()->setMargin(0);
+    m_widget1->layout()->setContentsMargins(1,0,0,0);//包裹m_widget1的布局 左 上 右 下
+//    m_widget1->setHidden(true);//测试使用
+
 
     m_hboxlayout_rlist = new QHBoxLayout;
     m_hboxlayout_rlist->addWidget(ui->stackedWidget);
@@ -349,16 +352,15 @@ void MultipPlayer::initMainWindow()
     m_hboxlayout_rlist->setStretch(0,7);
     m_hboxlayout_rlist->setStretch(1,3);
 
-    ui->verticalLayout_5->insertWidget(0,m_videoTitleBar);//标题栏
-    ui->verticalLayout_5->insertLayout(1,m_hboxlayout_rlist);
-//    ui->verticalLayout_5->insertWidget(2,ui->widget_splider);
-    ui->verticalLayout_5->insertWidget(2,ui->stackedWidget_player);
-    ui->verticalLayout_5->setSpacing(0);
-    ui->verticalLayout_5->setStretch(0,1);
-    ui->verticalLayout_5->setStretch(1,7);
-    ui->verticalLayout_5->setStretch(2,1);
+    ui->verticalLayout_main->insertWidget(0,m_videoTitleBar);//标题栏
+    ui->verticalLayout_main->insertLayout(1,m_hboxlayout_rlist);
+    ui->verticalLayout_main->insertWidget(2,ui->stackedWidget_player);
+    ui->verticalLayout_main->setSpacing(0);
+    ui->verticalLayout_main->setStretch(0,1);
+    ui->verticalLayout_main->setStretch(1,7);
+    ui->verticalLayout_main->setStretch(2,1);
+    this->layout()->setMargin(2);//留出2px边距拉伸使用
     loadDefaultLogo();//加载默认图标
-    this->centralWidget()->setLayout(ui->verticalLayout_2);
 
 
     m_pTimer  = new QTimer(this);
@@ -372,11 +374,22 @@ void MultipPlayer::initMainWindow()
 
     m_playOrderForm = new PlayOrderForm();
     m_playOrderForm->setObjectName(QString::fromLocal8Bit("m_playOrderForm"));
+
+    m_foldBtn = new QPushButton(ui->stackedWidget);//父亲必须指定，要不然显示不出来
+    m_foldBtn->setObjectName(QString::fromLocal8Bit("m_foldBtn"));
+    m_foldBtn->setFixedSize(40,60);
+    m_foldBtn->setAttribute(Qt::WA_TranslucentBackground,true);//没效果，得定制
+    m_foldBtn->setHidden(true);//初始化隐藏按钮
 }
 
 /*处理信号与槽函数*/
 void MultipPlayer::chandleSignalAndSLots()
 {
+    //列表折叠指示按钮
+    connect(m_foldBtn,&QPushButton::clicked,[=](){
+        judgeFoldBtnOfRightDockList();
+    });
+
     //查看评论
     connect(ui->pushButton_comments,&QPushButton::clicked,[=](){ showMediaCommentTab();});
     //应该在有影片播放的时候，执行定时器，否则就是无效；1s更新一次进度
@@ -471,24 +484,14 @@ void MultipPlayer::chandleSignalAndSLots()
 
     //窗口还原按钮
     connect(this,SIGNAL(sig_winVStatus(bool)),m_videoTitleBar,SLOT(chandleVMainWinStatus(bool)));
+    connect(m_videoTitleBar,&VideoTitleBar::sig_doubleClick,[=](){chandleRestoreWindow();});
     //窗口还原，关闭视频配置调节界面
     connect(m_videoTitleBar,&VideoTitleBar::sig_winVRestore,[=](){m_adjustBright->close();});
+    //窗口还原
+    connect(m_videoTitleBar,&VideoTitleBar::sig_winVRestore,[=](){chandleRestoreWindow();});
     //窗口关闭
     connect(m_videoTitleBar,&VideoTitleBar::sig_winVClose,[=](){m_adjustBright->close();});
-    connect(m_videoTitleBar,&VideoTitleBar::sig_winVRestore,[=]()
-    {
-        if(!m_winMax)//非最大化
-        {
-            this->showMaximized();
-            emit sig_winVStatus(m_winMax);
-        }
-        else
-        {
-            this->showNormal();
-            emit sig_winVStatus(m_winMax);
-        }
-        m_winMax = !m_winMax;
-    });
+
 
     connect(ui->Btn_adjust,&QPushButton::clicked,[=](){set_adjustBright();});
     //通知播放列表加载信息
@@ -503,10 +506,10 @@ void MultipPlayer::chandleSignalAndSLots()
     /*上一首，下一首，对应m_listwidget项的变化*/
     connect(playlist,&QMediaPlaylist::currentIndexChanged,[=](int index)
     {
-        fileType(index);
+        fileType(index);//判断视频还是歌曲，显示对应的界面
         m_listWisget2->setCurrentRow(index);
         //          ui->playerListWidget->setCurrentRow(index);
-        currentListWidgetItemChange();//处理所有的item改变时的操作
+        setCollectBtnShowStatus();//处理所有的item改变时的操作
         loadFileInfoToWinTitle(index);
         updateRateTypeUiLayout(index);
     });
@@ -560,39 +563,60 @@ void MultipPlayer::chandleSignalAndSLots()
     //收藏按钮
     connect(ui->pushButton_collect,&QPushButton::clicked,[=](){
         qDebug() << "pushButton_collect clicled!";
-        if(!m_collectStatus)
+//        if(!m_collectStatus)
+//        {
+//            ui->pushButton_collect->setChecked(true);//进行收藏
+//            //收藏操作
+//            bool hasMedia = findCollectList();
+//            qDebug() << "shi fou zhao dao = " << hasMedia;
+//            if(!hasMedia)//没有重名才插入
+//            {
+//                m_mapList_collect.insert(m_mapList_collect.count(),m_curMediaName);
+//                loadCollectListWidgetList();//重新加载
+//            }
+//        }
+//        else
+//        {
+//            ui->pushButton_collect->setChecked(false);//取消收藏
+//            //取消操作
+//            if(m_mapList_collect.isEmpty())
+//            {
+//                return;
+//            }
+//            else
+//            {
+//                int key = m_mapList_collect.key(m_curMediaName);
+//                if(m_mapList_collect.contains(key))
+//                {
+//                    m_listWisget3->takeItem(key);
+//                    m_mapList_collect.remove(key);
+//                }
+//            }
+//        }
+//        m_collectStatus = !m_collectStatus;
+        bool hasValue = findCollectListStatus(m_curMediaName);
+        qDebug() << "fined hasVal = " << hasValue;
+        if(!hasValue)
         {
-            ui->pushButton_collect->setChecked(true);//进行收藏
-            //收藏操作
-            bool hasMedia = findCollectList();
-            qDebug() << "shi fou zhao dao = " << hasMedia;
-            if(!hasMedia)//没有重名才插入
-            {
-                m_mapList_collect.insert(m_mapList_collect.count(),m_curMediaName);
-                loadCollectListWidgetList();//重新加载
-            }
+            if(m_curMediaName.isEmpty()) return;
+            qDebug() << "now has count = " << m_listWisget3->count();
+            m_listWisget3->addItem(m_curMediaName);
+            ui->pushButton_collect->setStyleSheet("QPushButton{"
+                                                  "border-image: url(:/images/icon/play_collect_checked.png);"
+                                                  "}");
         }
         else
         {
-            ui->pushButton_collect->setChecked(false);//取消收藏
-            //取消操作
-            if(m_mapList_collect.isEmpty())
-            {
-                return;
-            }
-            else
-            {
-                int key = m_mapList_collect.key(m_curMediaName);
-                if(m_mapList_collect.contains(key))
-                {
-                    m_listWisget3->takeItem(key);
-                    m_mapList_collect.remove(key);
-                }
-            }
+            QListWidgetItem *item = m_listWisget3->takeItem(getCurrentMediaRowOfCollectList(m_curMediaName));
+            m_listWisget3->takeItem(getCurrentMediaRowOfCollectList(m_curMediaName));
+            ui->pushButton_collect->setStyleSheet("QPushButton{"
+                                                  "border-image: url(:/images/icon/play_collect_unchecked.png);"
+                                                  "}");
+            delete item;//手动释放
         }
-        m_collectStatus = !m_collectStatus;
     });
 
+    //播放顺序选择
     connect(ui->pushButton_playOrder,&QPushButton::clicked,[=](){
         if(m_playOrderForm)
         {
@@ -732,6 +756,7 @@ void MultipPlayer::createSwitchSkinMenu()
 bool MultipPlayer::fileType(QStringList &filenames, int index)
 {
     QString filename = filenames[index];
+    m_curMediaName = filename;
     bool mp3 = filename.endsWith(QString::fromLocal8Bit(".mp3"),Qt::CaseInsensitive);//判断是否以.mp3结尾，去除大小写敏感
     if(mp3)
     {
@@ -830,6 +855,18 @@ void MultipPlayer::showMediaCommentTab()
             removeTabwidgetTabBar(m_tabWidget1);
             set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_commentTab,QString::fromLocal8Bit("讨论"));
             m_tabWidget1->setCurrentWidget(m_commentTab);
+}
+
+QString MultipPlayer::getCurrentMediaPlayFileName()
+{
+    return m_curMediaName;
+}
+
+QRect MultipPlayer::getDesktopScreenGeometry()
+{
+    system_screen = QApplication::desktop();
+    QRect desktop_screen = system_screen->screenGeometry();
+    return desktop_screen;
 }
 
 /*文件路径放进容器，将名称显示在列表*/
@@ -1193,8 +1230,8 @@ void MultipPlayer::checkChandleMediaPlayerStatus()
 //监测处理媒体本身状态，加载完毕，正在加载，缓冲结束，正在缓冲，未知，有效等
 void MultipPlayer::checkChandleMediaStatus()
 {
-    if(player->media().isNull())
-        return;
+    if(player->media().isNull()) return;
+
     if(player->mediaStatus() == QMediaPlayer::UnknownMediaStatus)//未知媒体状态
     {
         qDebug() << QString::fromLocal8Bit("QMediaPlayer::UnknownMediaStatus");
@@ -1236,32 +1273,6 @@ void MultipPlayer::checkChandleMediaStatus()
     {
         qDebug() << QString::fromLocal8Bit("other unknow problem!");
     }
-}
-
-/*显示播放器界面*/
-void MultipPlayer::showPlayerUi()
-{
-//    this->showNormal();
-//    this->move((QApplication::desktop()->width()-this->width())/2, (QApplication::desktop()->height()-this->height())/2);
-//    m_winMax = true;
-//    if(this->isHidden() || this->isMinimized())
-//    {
-//        m_winMax = true;
-        this->showMinimized();
-//        ui->pushButton_normal->setStyleSheet("QPushButton{"
-//                                             "background-color: transparent;"
-//                                             "border-image: url(:/images/icon/normal.png);}"
-//                                             "QPushButton:hover{"
-//                                             "border: 1px solid #3C80B1;"
-//                                             "border-image: url(:/images/icon/normalhover.png);}");
-        qDebug()<<"show ui to the central";
-//    }
-}
-
-void MultipPlayer::showPlayerList()
-{
-//    m_dockWidget->show();
-    m_toolBox->show();
 }
 
 /*上一首*/
@@ -1359,6 +1370,19 @@ void MultipPlayer::resizeEvent(QResizeEvent *event)
 //    m_widget1->show();
     Q_UNUSED(event);
 //    updateFoldButtonGeometry();
+//    updatePlayAdustForm();
+    updateFoldButtonGeometry();
+    setFoldButtonStyle();
+}
+
+/*键盘事件*/
+void MultipPlayer::keyPressEvent(QKeyEvent *event)
+{
+//    if(event->type() == Qt::Key_Escape)//ESC键盘
+//        {
+//        videoWidget->setWindowFlags(Qt::SubWindow);
+//        videoWidget->showNormal();
+//    }
 }
 
 //鼠标移动事件
@@ -1480,19 +1504,13 @@ bool MultipPlayer::videoDouleExit(QObject *watched, QEvent *event)
 
                 if(m_playerState == QMediaPlayer::PlayingState)//左键双击
                 {
-                    if(videoWidget->isFullScreen())
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        videoWidget->setWindowFlags(Qt::Window);//设置为顶级窗口
-                        videoWidget->showFullScreen();
-
-                    }
+                    videoWidget->setWindowFlags(Qt::Window);//设置为顶级窗口
+//                    QRect screen =  getDesktopScreenGeometry();
+//                    videoWidget->resize(screen.width(),screen.height());
+                    videoWidget->showFullScreen();
+                    qDebug() << "fullscreen";
                 }
             }
-
         }
     }
     return 0;
@@ -1504,20 +1522,20 @@ void MultipPlayer::volumeAdjustShowUi(QObject *watched, QEvent *event)
         /*音量调节显示*/
     if(watched == ui->pushButton_sound)
     {
-        qDebug()<<"pushButton_sound enter!";
+//        qDebug()<<"pushButton_sound enter!";
         if(event->type() == QEvent::Enter && this->isActiveWindow())
         {
                     int x = ui->pushButton_sound->parentWidget()->mapToGlobal(ui->pushButton_sound->pos()).x();
                     int y = ui->pushButton_sound->parentWidget()->mapToGlobal(ui->pushButton_sound->pos()).y();
                     int h = m_muteDlg->height();
-                    qDebug() << "QPont_g(" << x << "," << y << ")";
+//                    qDebug() << "QPont_g(" << x << "," << y << ")";
                     m_muteDlg->setGeometry(x-11,y-h-6,m_muteDlg->width(),m_muteDlg->height());//
                     m_muteDlg->raise();
                     m_muteDlg->show();
         }
         else if(event->type() == QEvent::Leave)
         {
-            qDebug() << "pushButton_sound leave!";
+//            qDebug() << "pushButton_sound leave!";
             QRect tempRect = ui->pushButton_sound->geometry();
 //            qDebug() << "old rect:" << tempRect << "cursor:" << ui->pushButton_sound->parentWidget()->mapFromGlobal(QCursor::pos());
             tempRect.moveTo(ui->pushButton_sound->pos().x(),ui->pushButton_sound->y()-ui->pushButton_sound->height());
@@ -1532,36 +1550,20 @@ void MultipPlayer::stackWidgetSliderButtonEventFilter(QObject *watched, QEvent *
 {
     if(watched == ui->stackedWidget)
     {
-        if(event->type() == QEvent::Enter)
+        //01.注意区分界面隐藏和按钮隐藏是两个不同的状态,
+        //02.按钮的样式取决于m_isHide状态，显隐取决于进入还是离开
+        //03.进入的时候更新坐标和样式，点击以后也要更新坐标和样式
+        if(event->type() == QEvent::Enter)//鼠标进入监视对象
         {
-            on_foldBtn_clicked();//第一次进入更新坐标和样式
-            m_foldBtn->show();//无论是否伸缩，都显示箭头
-            connect(m_foldBtn,&QPushButton::clicked,[=]()
-            {
-                if(m_widget1->isHidden())
-                {
-                    m_widget1->show();
-                    on_foldBtn_clicked();
-                    m_foldBtn->adjustSize();
-                    m_isHide = true;
-                    return;
-                }
-                else
-                {
-                    m_widget1->hide();
-                    on_foldBtn_clicked();
-                    m_foldBtn->adjustSize();
-                    m_isHide = false;
-                    return;
-                }
-            });
+//            qDebug() << "stackwidget enter";
+            updateFoldButtonGeometry();
+            setFoldButtonStyle();
+            m_foldBtn->show();
         }
-
-        if(event->type() == QEvent::Leave)
+        else if(event->type() == QEvent::Leave)//鼠标离开监视对象
         {
             m_foldBtn->hide();
-            updateFoldButtonGeometry();//更新坐标
-            qDebug() << "stackwidget leave";
+//            qDebug() << "stackwidget leave";
         }
     }
 }
@@ -1574,7 +1576,7 @@ void MultipPlayer::playlistMouseEnterLeave(QObject *watched, QEvent *event)
         /*搜索框，搜索按钮鼠标离开*/
         if(event->type() == QEvent::Leave)
         {
-            qDebug() << "mouse Leave!";
+//            qDebug() << "mouse Leave!";
             m_searchBtn->setStyleSheet("QPushButton"
                                          "{"
                                          "color:#ff5c38;"
@@ -1605,7 +1607,7 @@ void MultipPlayer::playlistMouseEnterLeave(QObject *watched, QEvent *event)
         /*搜索框，搜索按钮鼠标进入*/
         if(event->type() == QEvent::Enter)
         {
-             qDebug() << "mouse Enter!";
+//             qDebug() << "mouse Enter!";
             m_searchBtn->setStyleSheet("QPushButton"
                                          "{"
                                          "color:white;"
@@ -1640,7 +1642,7 @@ void MultipPlayer::playlistMouseEnterLeave(QObject *watched, QEvent *event)
         /*搜索框，搜索按钮鼠标离开*/
         if(event->type() == QEvent::Leave)
         {
-            qDebug() << "mouse Leave!";
+//            qDebug() << "mouse Leave!";
             m_searchBtn->setStyleSheet("QPushButton"
                                          "{"
                                          "color:#ff5c38;"
@@ -1671,7 +1673,7 @@ void MultipPlayer::playlistMouseEnterLeave(QObject *watched, QEvent *event)
         /*搜索框，搜索按钮鼠标进入*/
         if(event->type() == QEvent::Enter)
         {
-            qDebug() << "mouse Enter!";
+//            qDebug() << "mouse Enter!";
             m_searchBtn->setStyleSheet("QPushButton"
                                          "{"
                                          "color:white;"
@@ -1701,6 +1703,7 @@ void MultipPlayer::playlistMouseEnterLeave(QObject *watched, QEvent *event)
         }
     }
 }
+
 
 /*打开本地文件*/
 void MultipPlayer::help_aboutLocalFile()
@@ -1866,41 +1869,83 @@ bool MultipPlayer::loadCollectListWidgetList()
     return true;
 }
 
-bool MultipPlayer::currentListWidgetItemChange()
+/*槽函数：设置收藏按钮显示状态*/
+bool MultipPlayer::setCollectBtnShowStatus()
 {
-    bool hasVal = findCollectList();
-    qDebug() << " current collect status = " << hasVal;
+    bool hasVal = findCollectListStatus(getCurrentMediaPlayFileName());
+    qDebug() << getCurrentMediaPlayFileName() << "currewnt media collect status = " <<hasVal;
     if(hasVal)
     {
-        m_collectStatus = true;
-        ui->pushButton_collect->setCheckable(true);
-//        ui->pushButton_collect->setStyleSheet("QPushButton{border-image: url(:/images/icon/play_collect_checked.png);}");
+//        ui->pushButton_collect->setChecked(true);
+        ui->pushButton_collect->setStyleSheet("QPushButton{"
+                                              "border-image: url(:/images/icon/play_collect_checked.png);"
+                                              "}");
     }
     else
     {
-        m_collectStatus = false;
-        ui->pushButton_collect->setCheckable(true);
-//        ui->pushButton_collect->setStyleSheet("QPushButton{border-image: url(:/images/icon/play_collect_unchecked.png);}");
+//        ui->pushButton_collect->setChecked(false);
+        ui->pushButton_collect->setStyleSheet("QPushButton{"
+                                              "border-image: url(:/images/icon/play_collect_unchecked.png);"
+                                              "}");
     }
     return 0;
 }
 
-bool MultipPlayer::findCollectList()
+/*遍历列表，没有则添加*/
+bool MultipPlayer::findCollectListStatus(QString name)
 {
-    if(m_mapList_collect.isEmpty())
-        return false;
-    for(QMap<int,QString>::iterator iter = m_mapList_collect.begin(); iter != m_mapList_collect.end(); ++iter)
+    int row = 0;
+    QString line;
+    while(row < m_listWisget3->count())
     {
-        if(iter.value() == m_curMediaName)
+        line = m_listWisget3->item(row)->text();
+        qDebug() << line << "\n";
+        if(name == line)
         {
-            return true;//有
+            qDebug() << "finded";
+            return true;//循环当中找到了，直接返回true
         }
-        else
-        {
-            return false;//没找到
-        }
+       row++;
     }
+    qDebug() << " no find";
+    return false;//循环完毕，没有找到，返回 false
 }
+
+int MultipPlayer::getCurrentMediaRowOfCollectList(QString name)
+{
+    int row = 0;
+    QString mname;
+    while(row < m_listWisget3->count())
+    {
+        mname = m_listWisget3->item(row)->text();
+        qDebug() << mname << "\n";
+        if(name == mname)
+        {
+            return row;//循环当中找到了，直接返回true
+            qDebug() << "finded";
+        }
+       row++;
+    }
+    return -1;
+}
+
+//bool MultipPlayer::findCollectList()
+//{
+//    if(m_mapList_collect.isEmpty())
+//        return false;
+//    for(QMap<int,QString>::iterator iter = m_mapList_collect.begin(); iter != m_mapList_collect.end(); ++iter)
+//    {
+//        if(iter.value() == m_curMediaName)
+//        {
+//            return true;//有
+//        }
+//        else
+//        {
+//            return false;//没找到
+//        }
+//    }
+//}
+
 
 void MultipPlayer::closeCurrentWindow()
 {
@@ -1950,19 +1995,8 @@ void MultipPlayer::clearUserInputSearchInfo()
 /*更新箭头的坐标*/
 void MultipPlayer::updateFoldButtonGeometry()
 {
-    if(m_foldBtn)
-    {
-        m_foldBtn->move(ui->stackedWidget->width()-m_foldBtn->width(),ui->stackedWidget->height()/2);
+        m_foldBtn->setGeometry(ui->stackedWidget->width()-m_foldBtn->width()+2,ui->stackedWidget->height()/2-m_foldBtn->height()/2,40,60);//固定的大小
         m_foldBtn->raise();
-    }
-    else
-    {
-        m_foldBtn = new QPushButton;//父亲必须指定，要不然显示不出来
-        m_foldBtn->setObjectName(QString::fromLocal8Bit("m_foldBtn"));
-        m_foldBtn->setParent(ui->stackedWidget);
-        m_foldBtn->setFixedSize(40,60);
-        updateFoldButtonGeometry();
-    }
 }
 
 void MultipPlayer::setCurrentMediaName(QString name)
@@ -1986,36 +2020,50 @@ void MultipPlayer::setFoldButtonStyle()
     if(!m_isHide)
     {
         //需要隐藏
-        m_foldBtn->setStyleSheet("QPushButton{background:rgba(155,155,155,0.1) url(':/images/icon/arrow_right.png') no-repeat center center;}");
+        m_foldBtn->setStyleSheet("QPushButton{background:rgba(81,81,81,0.3) url(:/images/icon/arrow_right.png) no-repeat center center;border:none;}");
     }
-    else
+    else if(m_isHide)
     {
         //需要显示
-        m_foldBtn->setStyleSheet("QPushButton{background:rgba(155,155,155,0.1) url(':/images/icon/arrow_left.png') no-repeat center center;}");
+        m_foldBtn->setStyleSheet("QPushButton{background:rgba(81,81,81,0.3) url(:/images/icon/arrow_left.png) no-repeat center center;border:none;}");
     }
 }
 
-/*点击箭头动作*/
-void MultipPlayer::on_foldBtn_clicked()
+/*判断右侧停靠栏指示按钮位置*/
+void MultipPlayer::judgeFoldBtnOfRightDockList()
 {
-    updateFoldButtonGeometry();
-    setFoldButtonStyle();
+    if(m_isHide)//点击按钮发现，界面处于隐藏状态
+    {
+        m_widget1->show();//点击后则显示界面
+        updateFoldButtonGeometry();
+        setFoldButtonStyle();
+        m_foldBtn->hide();
+    }
+    else//点击按钮发现，界面处于显示状态
+    {
+        m_widget1->hide();//点击后则隐藏界面
+        updateFoldButtonGeometry();
+        setFoldButtonStyle();
+        m_foldBtn->hide();
+    }
+    m_isHide = !m_isHide;//状态置反
 }
+
 
 /*左侧列表控制显隐*/
 void MultipPlayer::setLeftCurrentListSHowHide()
 {
-    if(m_widget1)
-    {
-        if(m_widget1->isHidden())
-        {
-            m_widget1->show();
-        }
-        else
-        {
-            m_widget1->hide();
-        }
-    }
+//    if(m_widget1)
+//    {
+//        if(m_widget1->isHidden())
+//        {
+//            m_widget1->show();
+//        }
+//        else
+//        {
+//            m_widget1->hide();
+//        }
+//    }
 }
 
 /*播放次序按钮*/
@@ -2063,7 +2111,7 @@ bool MultipPlayer::eventFilter(QObject *watched, QEvent *event)
     QMouseEvent *mousevent = static_cast<QMouseEvent*>(event);
     volumeAdjustShowUi(watched,mousevent);//视频参数调节界面
     playlistMouseEnterLeave(watched,mousevent);//节目列表搜索框
-//    stackWidgetSliderButtonEventFilter(watched,mousevent);//箭头显示影藏动作
+    stackWidgetSliderButtonEventFilter(watched,mousevent);//箭头显示影藏动作
 //    videoDouleExit(watched,mousevent);
     return QWidget::eventFilter(watched,event);
 }

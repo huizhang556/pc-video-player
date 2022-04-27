@@ -296,9 +296,10 @@ border:none;
 }
 
 /*m_widget1*/
-QWidget #m_widget1
+#m_widget1
 {
-border-left: 1px solid green;
+border:1px solid transapent;
+border-left-color: #838383;
 }
 
 /*搜索框*/

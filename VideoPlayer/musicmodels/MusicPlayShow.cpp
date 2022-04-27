@@ -20,7 +20,7 @@ MusicPlayShow::MusicPlayShow(QWidget *parent) :
 //        fileName = exepath + QString("/pictures/musicwall/%1.png").arg(i);
 //        qDebug()<<fileName;
         /***********debug时候使用************/
-       fileName = QString("E:/QtProjects/000QtDemo_51ctodemo/04_20VideosPlayer/pictures/musicwall/%1.png").arg(i);//只能使用png格式的图片
+       fileName = QString("E:\\QtProjects\\000QtDemo_51ctodemo\\04_20SubVideoPlayer\\VideoPlayer\\pictures\\musicwall\\%1.png").arg(i);//只能使用png格式的图片
         loadPictures(fileName);
         changeTimeCout();
     });

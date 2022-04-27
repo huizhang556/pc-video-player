@@ -10,6 +10,7 @@ RecommendForm::RecommendForm(QWidget *parent) :
     ui(new Ui::RecommendForm)
 {
     ui->setupUi(this);
+    this->setFixedHeight(360);
     initWorkUI();
     chandleSignalsAndSlots();
     ui->stackedWidget_recommend->installEventFilter(this);//安装监听器
@@ -23,11 +24,11 @@ RecommendForm::~RecommendForm()
 void RecommendForm::initWorkUI()
 {
     //左右调节按钮
-    m_recLeftBtn = new QPushButton(ui->stackedWidget_recommend);//
+    m_recLeftBtn = new QPushButton(ui->stackedWidget_recommend);//需要指定父亲
     m_recLeftBtn->setObjectName(QString::fromLocal8Bit("m_recLeftBtn"));
     m_recLeftBtn->setFixedSize(40,40);
 
-    m_recRightBtn = new QPushButton(ui->stackedWidget_recommend);
+    m_recRightBtn = new QPushButton(ui->stackedWidget_recommend);//需要指定父亲
     m_recRightBtn->setObjectName(QString::fromLocal8Bit("m_recRightBtn"));
     m_recRightBtn->setFixedSize(40,40);
 

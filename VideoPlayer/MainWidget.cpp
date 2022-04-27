@@ -176,15 +176,13 @@ void MainWidget::createTrayMenu()
     pmenu->setStyleSheet("font-size:12px;"
                          "background-color:#3d3d3d;"
                          "color:green;");//font:bold italic 18px "微软雅黑";
-    pmenu->addAction(QString::fromLocal8Bit("显示主界面"),this,SLOT(showPlayerUi()));
+    pmenu->addAction(QString::fromLocal8Bit("显示主界面"),this,SLOT(tray_showMainWidget()));
     pmenu->addSeparator();
-    pmenu->addAction(QString::fromLocal8Bit("显示播放列表"),this,SLOT(showPlayerList()));
+    pmenu->addAction(QString::fromLocal8Bit("上一首"),this,SLOT(on_pushButton_previous_clicked()));
     pmenu->addSeparator();
-    pmenu->addAction(QString::fromLocal8Bit("上一首"),this,SLOT(on_pushButton_7_clicked()));
+    pmenu->addAction(QString::fromLocal8Bit("下一首"),this,SLOT(on_pushButton_next_clicked()));
     pmenu->addSeparator();
-    pmenu->addAction(QString::fromLocal8Bit("下一首"),this,SLOT(on_pushButton_8_clicked()));
-    pmenu->addSeparator();
-    pmenu->addAction(QString::fromLocal8Bit("暂停/播放"),this,SLOT(on_pushButton_4_clicked()));
+    pmenu->addAction(QString::fromLocal8Bit("暂停/播放"),this,SLOT(pushButton_pauseStart()));
     pmenu->addSeparator();
     pmenu->addAction(QString::fromLocal8Bit("退出"),this,SLOT(close()));//注意消息阻塞
     m_tray->setContextMenu(pmenu);
@@ -263,6 +261,19 @@ void MainWidget::help_aboutNetworklFile()
     qDebug() <<"PLAY NETWORK RESOURCE";
     m_mainPlayer->show();
     m_mainPlayer->setVideTitleBar(1);//转到网络播放标题栏
+}
+
+/*私有槽函数：显示主界面*/
+void MainWidget::tray_showMainWidget()
+{
+    if(!this->isHidden())
+    {
+        this->show();
+    }
+    else
+    {
+        this->hide();
+    }
 }
 
 /*设置全局tooltip*/
