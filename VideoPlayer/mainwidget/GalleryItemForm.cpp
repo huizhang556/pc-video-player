@@ -39,6 +39,9 @@ void GalleryItemForm::initWorkUI()
     for(int i = 0; i < 16; i++)
     {
         PicWallItem *pitem = new PicWallItem();
+        QString path = QString("E:/QtProjects/000QtDemo_51ctodemo/04_20SubVideoPlayer/VideoPlayer/pictures/recommend/recommend%1.png").arg(i);
+        pitem->setPicItemWall(path);
+        pitem->setPicItemWallText(QString::fromLocal8Bit("美好的歌曲%1").arg(i+1));
         QListWidgetItem *item = new QListWidgetItem();
         item->setSizeHint(QSize(pitem->size().width()+15,pitem->size().height()));
         ui->listWidget_itempic->addItem(item);

@@ -14,6 +14,7 @@
 #include "videomodels/RecomVideoTab.h"
 #include "videomodels/IntroduceForm.h"
 #include "videomodels/PlayOrderForm.h"
+#include "videomodels/VideoProgressBar.h"
 
 #include <QMap>
 #include <QPoint>
@@ -208,6 +209,12 @@ private slots:
 
     int getCurrentMediaRowOfCollectList(QString name);
 
+    void mediaLoadingStatusProgressBar_Start();
+
+    void mediaLoadingStatusProgressBar_End();
+
+    bool updateProgressBarGeometry();
+
 signals:
     void sig_sendSwitchToMusicPage(QString name);
 
@@ -251,6 +258,7 @@ private:
     MyVideoWidget               *videoWidget        = nullptr;
     QMediaPlaylist              *playlist           = nullptr;
     QStackedWidget              *m_introStack       = nullptr;
+
     int                         m_voice;                        //静音之前的值
     bool                        m_winMax;                       //默认非最大化
     bool                        m_isClose;

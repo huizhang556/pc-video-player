@@ -39,13 +39,13 @@
        <property name="minimumSize">
         <size>
          <width>110</width>
-         <height>0</height>
+         <height>50</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
          <width>110</width>
-         <height>16777215</height>
+         <height>50</height>
         </size>
        </property>
        <property name="frameShape">
@@ -194,8 +194,9 @@ color: rgb(255, 85, 0);
               <property name="styleSheet">
                <string notr="true">QLabel
 {
-color:#55ff00;
-padding-bottom:5px;
+color:#ff0000;
+padding-bottom:6px;
+padding-left:40px;
 }
 </string>
               </property>
@@ -275,13 +276,13 @@ border:1px solid #ff5c38;
        <property name="minimumSize">
         <size>
          <width>150</width>
-         <height>0</height>
+         <height>50</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
          <width>150</width>
-         <height>16777215</height>
+         <height>50</height>
         </size>
        </property>
        <property name="frameShape">

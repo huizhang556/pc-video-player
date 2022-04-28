@@ -17,8 +17,8 @@
 #include "musicmodels/SongItemForm.h"
 #include "mainwidget/StackItemForm.h"
 #include "mainwidget/GalleryItemForm.h"
+#include "videomodels/VideoProgressBar.h"
 #include "videomodels/PlayCtlAdjustForm.h"
-
 
 int main(int argc, char *argv[])
 {
@@ -27,6 +27,8 @@ int main(int argc, char *argv[])
     dataBase::creatConnection();//连接数据库
     MainWidget w1;
     w1.show();
+
+//    VideoProgressBar::getInstance()->show();
 
 //    PlayCtlAdjustForm p;
 //    p.show();

@@ -234,5 +234,6 @@
         <file>images/icon/page_leftBtn_hover.png</file>
         <file>images/icon/page_rightBtn.png</file>
         <file>images/icon/page_rightBtn_hover.png</file>
+        <file>images/bgpic/transparent.png</file>
     </qresource>
 </RCC>

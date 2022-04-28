@@ -158,7 +158,7 @@ void MultipPlayer::initMainWindow()
     ui->stackedWidget->insertWidget(1,videoWidget);
     ui->stackedWidget->insertWidget(2,m_musicUi);
     ui->stackedWidget->setCurrentIndex(0);//默认显示音乐界面
-    ui->stackedWidget->setMinimumSize(975,735);//必须设置最小尺寸，否则播放控制栏位置不正确
+    ui->stackedWidget->setMinimumSize(976,700);//必须设置最小尺寸，否则播放控制栏位置不正确
 
     //用户信息（暂时）
 //    m_listWisget1 = new QListWidget;
@@ -362,11 +362,12 @@ void MultipPlayer::initMainWindow()
     this->layout()->setMargin(2);//留出2px边距拉伸使用
     loadDefaultLogo();//加载默认图标
 
+    VideoProgressBar::getInstance()->hide();
 
     m_pTimer  = new QTimer(this);
     m_pTimer2 = new QTimer(this);
     m_pTimer2->setSingleShot(true);//只执行一次定时器
-    m_pTimer->start(1000);
+    m_pTimer->start(1000);//每1000毫秒执行一次
 
     m_muteDlg = new muteDialog();//不加this
     m_muteDlg->setObjectName(QString::fromLocal8Bit("m_muteDlg"));
@@ -394,6 +395,7 @@ void MultipPlayer::chandleSignalAndSLots()
     connect(ui->pushButton_comments,&QPushButton::clicked,[=](){ showMediaCommentTab();});
     //应该在有影片播放的时候，执行定时器，否则就是无效；1s更新一次进度
     connect(m_pTimer,&QTimer::timeout,this,&MultipPlayer::on_time);
+    connect(m_pTimer,&QTimer::timeout,this,&MultipPlayer::updateProgressBarGeometry);//每0.3秒更新不管有没有缓冲
     //监测媒体播放状态 StoppedState PlayingState PausedState
     connect(player,&QMediaPlayer::stateChanged,this,&MultipPlayer::checkChandleMediaPlayerStatus);
     //监测媒体本身状态,所带参数为新的媒体状态，比如缓冲状态 BufferingMedia BufferedMedia
@@ -1239,15 +1241,17 @@ void MultipPlayer::checkChandleMediaStatus()
     else if(player->mediaStatus() == QMediaPlayer::NoMedia)//无媒体状态
     {
         qDebug() << QString::fromLocal8Bit("QMediaPlayer::NoMedia");
-        ui->stackedWidget->setCurrentIndex(0);
+        ui->stackedWidget->setCurrentIndex(0);//空白页
     }
     else if(player->mediaStatus() == QMediaPlayer::LoadingMedia)//加载媒体中
     {
         qDebug() << QString::fromLocal8Bit("QMediaPlayer::LoadingMedia");
+        mediaLoadingStatusProgressBar_Start();
     }
     else if(player->mediaStatus() == QMediaPlayer::LoadedMedia)//媒体加载完毕
     {
         qDebug() << QString::fromLocal8Bit("QMediaPlayer::LoadedMedia");
+        mediaLoadingStatusProgressBar_End();
     }
     else if(player->mediaStatus() == QMediaPlayer::StalledMedia)//媒体停顿
     {
@@ -1256,10 +1260,12 @@ void MultipPlayer::checkChandleMediaStatus()
     else if(player->mediaStatus() == QMediaPlayer::BufferingMedia)//媒体正在缓冲
     {
         qDebug() << QString::fromLocal8Bit("QMediaPlayer::BufferingMedia");
+        mediaLoadingStatusProgressBar_Start();
     }
     else if(player->mediaStatus() == QMediaPlayer::BufferedMedia)//媒体缓冲完毕
     {
         qDebug() << QString::fromLocal8Bit("QMediaPlayer::BufferedMedia");
+        mediaLoadingStatusProgressBar_End();
     }
     else if(player->mediaStatus() == QMediaPlayer::EndOfMedia)//媒体结束
     {
@@ -1928,6 +1934,37 @@ int MultipPlayer::getCurrentMediaRowOfCollectList(QString name)
     }
     return -1;
 }
+
+void MultipPlayer::mediaLoadingStatusProgressBar_Start()
+{
+//    VideoProgressBar::getInstance()->setParent(ui->stackedWidget);//设置父窗口，背景变为黑色
+    VideoProgressBar::getInstance()->raise();
+    VideoProgressBar::getInstance()->show();
+}
+
+void MultipPlayer::mediaLoadingStatusProgressBar_End()
+{
+    if(!VideoProgressBar::getInstance())
+    {
+        return;
+    }
+    else
+    {
+        VideoProgressBar::getInstance()->hide();
+    }
+}
+
+bool MultipPlayer::updateProgressBarGeometry()
+{
+    int x = ui->stackedWidget->parentWidget()->mapToGlobal(ui->stackedWidget->pos()).x();
+    int y = ui->stackedWidget->parentWidget()->mapToGlobal(ui->stackedWidget->pos()).y();
+    VideoProgressBar::getInstance()->setGeometry(x+ui->stackedWidget->width()/2 - VideoProgressBar::getInstance()->width()/2,
+                                                 y+ui->stackedWidget->height()/2 - VideoProgressBar::getInstance()->height()/2,
+                                                 VideoProgressBar::getInstance()->width(),
+                                                 VideoProgressBar::getInstance()->height());
+    return 0;
+}
+
 
 //bool MultipPlayer::findCollectList()
 //{
