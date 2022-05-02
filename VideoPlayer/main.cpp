@@ -5,6 +5,7 @@
 #include "database/dataBase.h"
 #include "titleBar/TitleBar.h"
 #include "style/loadGlobalQss.h"
+#include "customer/SystemTray.h"
 #include "customer/CusLineEdit.h"
 #include "mainwidget/Slideshow.h"
 #include "customer/CusLineEdit.h"
@@ -27,6 +28,10 @@ int main(int argc, char *argv[])
     dataBase::creatConnection();//连接数据库
     MainWidget w1;
     w1.show();
+
+
+//    SystemTray s;
+//    s.show();
 
 //    VideoProgressBar::getInstance()->show();
 

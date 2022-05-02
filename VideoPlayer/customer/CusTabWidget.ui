@@ -35,7 +35,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QTabWidget" name="tabWidget">
+      <widget class="QTabWidget" name="tabWidget_bottom">
        <property name="styleSheet">
         <string notr="true">QTabWidget{
 }
@@ -180,77 +180,6 @@ image: ;
 }
 QTableWidget::indicator:enabled:unchecked{
 image: ;
-}
-
-/*垂直滚动条整体*/
-QScrollBar:vertical
-{
-    width:8px;
-    background:rgb(0,0,0,0%);
-    margin:0px,0px,0px,0px;
-    padding-top:12px;   /*上预留位置*/
-    padding-bottom:12px;    /*下预留位置*/
-}
-
-/*滚动条中滑块的样式*/
-QScrollBar::handle:vertical
-{
-    width:8px;
-    background:rgb(0,0,0,25%);
-    border-radius:4px;
-    min-height:20px;
-}
-
-/*鼠标触及滑块样式*/
-QScrollBar::handle:vertical:hover
-{
-    width:9px;
-    background:rgb(0,0,0,50%);
-    border-radius:4px;
-    min-height:20;
-}
-
-/*设置下箭头*/
-QScrollBar::add-line:vertical
-{
-    height:12px;
-    width:10px;
-  /*  border-image:url(:/selectfile/scroll/3.png); */
-    subcontrol-position:bottom;
-}
-
-/*设置上箭头*/
-QScrollBar::sub-line:vertical
-{
-    height:12px;
-    width:10px;
-   /* border-image:url(:/selectfile/scroll/1.png); */
-    subcontrol-position:top;
-}
-
-/*设置下箭头:悬浮状态*/
-QScrollBar::add-line:vertical:hover
-{
-    height:12px;
-    width:10px;
-   /* border-image:url(:/selectfile/scroll/4.png);*/
-    subcontrol-position:bottom;
-}
-
-/*设置上箭头：悬浮状态*/
-QScrollBar::sub-line:vertical:hover
-{
-    height:12px;
-    width:10px;
-   /* border-image:url(:/selectfile/scroll/2.png);*/
-    subcontrol-position:top;
-}
-
-/*当滚动条滚动的时候，上面的部分和下面的部分*/
-QScrollBar::add-page:vertical,QScrollBar::sub-page:vertical
-{
-    background:rgb(0,0,0,10%);
-    border-radius:4px;
 }
 </string>
            </property>
@@ -480,7 +409,7 @@ QScrollBar::add-page:vertical,QScrollBar::sub-page:vertical
          </property>
          <property name="styleSheet">
           <string notr="true">background-color: transparent;
-color:black;</string>
+color: #ff0000;</string>
          </property>
          <property name="text">
           <string>&lt;&lt;</string>
@@ -513,7 +442,7 @@ color:black;</string>
          </property>
          <property name="styleSheet">
           <string notr="true">background-color: transparent;
-color:black;</string>
+color: #ff0000;</string>
          </property>
          <property name="text">
           <string>&gt;&gt;</string>
@@ -523,7 +452,7 @@ color:black;</string>
       </layout>
      </item>
      <item>
-      <widget class="QStackedWidget" name="stackedWidget">
+      <widget class="QStackedWidget" name="stackedWidget_custom">
        <property name="currentIndex">
         <number>0</number>
        </property>
@@ -545,7 +474,7 @@ color:black;</string>
           <number>0</number>
          </property>
          <item row="0" column="0">
-          <widget class="QTableWidget" name="tableWidget_3">
+          <widget class="QTableWidget" name="tableWidget_custom">
            <property name="styleSheet">
             <string notr="true">QHeaderView{
 font: 15px &quot;宋体&quot;;
@@ -619,80 +548,7 @@ image: ;
 }
 QTableWidget::indicator:enabled:unchecked{
 image: ;
-}
-
-/*垂直滚动条整体*/
-QScrollBar:vertical
-{
-    width:8px;
-    background:rgb(0,0,0,0%);
-    margin:0px,0px,0px,0px;
-    padding-top:12px;   /*上预留位置*/
-    padding-bottom:12px;    /*下预留位置*/
-}
-
-/*滚动条中滑块的样式*/
-QScrollBar::handle:vertical
-{
-    width:8px;
-    background:rgb(0,0,0,25%);
-    border-radius:4px;
-    min-height:20px;
-}
-
-/*鼠标触及滑块样式*/
-QScrollBar::handle:vertical:hover
-{
-    width:9px;
-    background:rgb(0,0,0,50%);
-    border-radius:4px;
-    min-height:20;
-}
-
-/*设置下箭头*/
-QScrollBar::add-line:vertical
-{
-    height:12px;
-    width:10px;
-  /*  border-image:url(:/selectfile/scroll/3.png); */
-    subcontrol-position:bottom;
-}
-
-/*设置上箭头*/
-QScrollBar::sub-line:vertical
-{
-    height:12px;
-    width:10px;
-   /* border-image:url(:/selectfile/scroll/1.png); */
-    subcontrol-position:top;
-}
-
-/*设置下箭头:悬浮状态*/
-QScrollBar::add-line:vertical:hover
-{
-    height:12px;
-    width:10px;
-   /* border-image:url(:/selectfile/scroll/4.png);*/
-    subcontrol-position:bottom;
-}
-
-/*设置上箭头：悬浮状态*/
-QScrollBar::sub-line:vertical:hover
-{
-    height:12px;
-    width:10px;
-   /* border-image:url(:/selectfile/scroll/2.png);*/
-    subcontrol-position:top;
-}
-
-/*当滚动条滚动的时候，上面的部分和下面的部分*/
-QScrollBar::add-page:vertical,QScrollBar::sub-page:vertical
-{
-    background:rgb(0,0,0,10%);
-    border-radius:4px;
-}
-
-</string>
+}</string>
            </property>
            <row>
             <property name="text">
@@ -876,7 +732,10 @@ QScrollBar::add-page:vertical,QScrollBar::sub-page:vertical
           <number>0</number>
          </property>
          <item row="0" column="0">
-          <widget class="QTreeWidget" name="treeWidget">
+          <widget class="QTreeWidget" name="treeWidget_custom">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
            <column>
             <property name="text">
              <string>1</string>

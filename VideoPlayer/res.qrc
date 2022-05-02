@@ -235,5 +235,22 @@
         <file>images/icon/page_rightBtn.png</file>
         <file>images/icon/page_rightBtn_hover.png</file>
         <file>images/bgpic/transparent.png</file>
+        <file>images/tray/tray_next.png</file>
+        <file>images/tray/tray_pause.png</file>
+        <file>images/tray/tray_play.png</file>
+        <file>images/tray/tray_previous.png</file>
+        <file>images/tray/tray_muted.png</file>
+        <file>images/tray/tray_sound.png</file>
+        <file>images/tray/tray_exit.png</file>
+        <file>images/tray/tray_help.png</file>
+        <file>images/tray/tray_home.png</file>
+        <file>images/tray/tray_logout.png</file>
+        <file>images/tray/tray_lyric.png</file>
+        <file>images/tray/tray_setting.png</file>
+        <file>images/tray/tray_upgrade.png</file>
+        <file>images/tray/tray_checked.png</file>
+        <file>images/tray/tray_playmode.png</file>
+        <file>images/icon/main_bottombtn.png</file>
+        <file>images/icon/main_bottom_hover.png</file>
     </qresource>
 </RCC>

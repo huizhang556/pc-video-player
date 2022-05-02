@@ -3,6 +3,7 @@
 #define MARGIN 2 //窗口边距
 
 #include "titleBar/TitleBar.h"
+#include "customer/SystemTray.h"
 #include "slidebar/LeftSideBar.h"
 #include "customer/CusTabWidget.h"
 #include "browser/CusWebBrowser.h"
@@ -13,14 +14,16 @@
 #include "videomodels/MultipPlayer.h"
 #include "musicmodels/MusicPlaylist.h"
 #include "musicmodels/MusicPlayShow.h"
+#include "videomodels/PlayOrderForm.h"
 #include "videomodels/VideoTitleBar.h"
 #include "mainwidget/CentralHomeForm.h"
 #include "videomodels/PersonFileForm.h"
-
+#include <QMenu>
 #include <QPoint>
 #include <QLayout>
 #include <QWidget>
 #include <QShowEvent>
+#include <QPushButton>
 #include <QMouseEvent>
 #include <QCloseEvent>
 #include <QResizeEvent>
@@ -41,19 +44,21 @@ public:
     ~MainWidget();
 
 protected:
-    void mousePressEvent(QMouseEvent *event) override;
+    bool   eventFilter(QObject *watched, QEvent *event) override;
 
-    void mouseMoveEvent(QMouseEvent *event) override;
+    void   mousePressEvent(QMouseEvent *event) override;
 
-    void mouseReleaseEvent(QMouseEvent *event) override;
+    void   mouseMoveEvent(QMouseEvent *event) override;
 
-    void changeEvent(QEvent *event) override;
+    void   mouseReleaseEvent(QMouseEvent *event) override;
 
-    void showEvent(QShowEvent *event) override;
+    void   changeEvent(QEvent *event) override;
 
-    void closeEvent(QCloseEvent *event) override;
+    void   showEvent(QShowEvent *event) override;
 
-    void resizeEvent(QResizeEvent *event) override;
+    void   closeEvent(QCloseEvent *event) override;
+
+    void   resizeEvent(QResizeEvent *event) override;
 
 private:
     void initOtherWidgetUi();
@@ -69,6 +74,12 @@ private:
     void setGlobalToolTip();
 
 private slots:
+    void slot_on_leftButton_clicked();//左侧边栏点击判断
+
+    void setLeftButtonStyleSheetStatus();//更新左侧边栏按钮样式
+
+    void updateLeftButtonGeometry();//更新左侧边栏按钮位置
+
     void chandleRestoreWindow();
 
     void chandleSetHelpItem(int index);
@@ -85,6 +96,14 @@ private slots:
 
     //托盘
     void tray_showMainWidget();
+    void tray_showDesktopLyric();
+    void tray_systemSettting();
+    void tray_onlineUpgrade();
+    void tray_systemLogout();
+    void tray_systemExitSoftware();
+    void tray_getCurrentPlayOrder(QAction *sendAction);
+    void tray_setCurrentPlayOrderStatus(QAction *sendAction);//重载1
+    void tray_setCurrentPlayOrderStatus(int index);//重载2
 
 
     //界面拉伸私有成员函数
@@ -92,35 +111,42 @@ private slots:
     int   countFlag(QPoint p,int row);    //获取光标在窗口所在区域的 列  返回行列坐标
     void  setCursorType(int flag);        //根据传入的坐标，设置光标样式
 private:
-    QStackedWidget      *m_stackWidget      = nullptr;
-    QVBoxLayout         *m_vblayout         = nullptr;
-    QHBoxLayout         *m_hblayout         = nullptr;
-    ExitDialog          *m_pExitDlg         = nullptr;
-    TitleBar            *m_titleBar         = nullptr;
-    CentralHomeForm     *m_homeWdgt         = nullptr;
-    PersonFileForm      *m_personForm       = nullptr;
-    MultipPlayer        *m_mainPlayer       = nullptr;
-    LeftSideBar         *m_leftSideBar      = nullptr;
-    MusicPlaylist       *m_musicList        = nullptr;
-    MusicPlayShow       *m_musicShow        = nullptr;
-    CusTabWidget        *m_tabWidget        = nullptr;
-    VideoBlank          *m_videoBlank       = nullptr;
-    CusWebBrowser       *m_webBrowser       = nullptr;
-    SystemSetting       *m_systemSetting    = nullptr;
-    QSystemTrayIcon     *m_tray             = nullptr;
-    QMenu               *pmenu2             = nullptr;
-    QMenu               *pmenu3             = nullptr;
+    QStackedWidget      *m_stackWidget_center      = nullptr;//中心显示区域
+    QStackedWidget      *m_stackWidget_left        = nullptr;//左侧边栏区域
+    QPushButton         *m_leftButton              = nullptr;//控制显示还是隐藏的按钮
+    QVBoxLayout         *m_vblayout                = nullptr;
+    QHBoxLayout         *m_hblayout                = nullptr;
+    ExitDialog          *m_pExitDlg                = nullptr;
+    TitleBar            *m_titleBar                = nullptr;
+    CentralHomeForm     *m_homeWdgt                = nullptr;
+    PersonFileForm      *m_personForm              = nullptr;
+    MultipPlayer        *m_mainPlayer              = nullptr;
+    LeftSideBar         *m_leftSideBar             = nullptr;
+    MusicPlaylist       *m_musicList               = nullptr;
+    MusicPlayShow       *m_musicShow               = nullptr;
+    CusTabWidget        *m_tabWidget               = nullptr;
+    VideoBlank          *m_videoBlank              = nullptr;
+    CusWebBrowser       *m_webBrowser              = nullptr;
+    SystemSetting       *m_systemSetting           = nullptr;
+    SystemTray          *m_systemTray              = nullptr;
+    QSystemTrayIcon     *m_tray                    = nullptr;
+    QActionGroup        *m_actionGroup             = nullptr;
+    QMenu               *m_menuTray                = nullptr;
+    QMenu               *m_playMode                = nullptr;
+    QMenu               *pmenu2                    = nullptr;
+    QMenu               *pmenu3                    = nullptr;
+    bool                 m_isHide;        //左侧显示隐藏按钮
     bool                 m_winMax;        //默认非最大化
     bool                 m_isClose;
     bool                 m_firstOpen;     //第一次打开文件
     //界面拉伸私有成员变量
-    bool     _isleftpressed = false;      //判断是否是左键点击
-    int      _curpos = 0;                 //鼠标左键按下时光标所在区域
-    QPoint   _plast;                      //获取鼠标左键按下时光标在全局(屏幕而非窗口)的位置
+    bool                _isleftpressed             = false;      //判断是否是左键点击
+    int                 _curpos = 0;                             //鼠标左键按下时光标所在区域
+    QPoint              _plast;                                  //获取鼠标左键按下时光标在全局(屏幕而非窗口)的位置
 
 signals:
     void sig_winStatus(bool);
-
+    void sig_trayPlayOrder(int order);
     void sig_startCloseAppliction();//主窗口关闭信号
 };
 

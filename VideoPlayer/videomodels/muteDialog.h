@@ -17,11 +17,12 @@ class muteDialog : public QDialog
 public:
     explicit muteDialog(QWidget *parent = nullptr);
     ~muteDialog();
-
+public slots:
     void setSpliderValue(int value);
 
     int  getSpliderValue();
 
+//    static muteDialog* getInstance();
 
 protected:
     void leaveEvent(QEvent *event) override;
@@ -29,6 +30,7 @@ protected:
 
 private:
     Ui::muteDialog *ui;
+//    static   muteDialog* m_pInstance;
 
 signals:
     void sig_SpliderValueChange(int value);

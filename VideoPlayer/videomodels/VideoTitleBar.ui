@@ -7,14 +7,30 @@
     <x>0</x>
     <y>0</y>
     <width>1082</width>
-    <height>52</height>
+    <height>43</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>40</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>43</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:#404244;</string>
+   <string notr="true">QWidget
+{
+background-color:#263446;
+border:1px solid transparent;
+}</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_8">
    <property name="spacing">
@@ -30,7 +46,7 @@
     <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -39,14 +55,17 @@
        <property name="minimumSize">
         <size>
          <width>110</width>
-         <height>50</height>
+         <height>40</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
          <width>110</width>
-         <height>50</height>
+         <height>40</height>
         </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
@@ -112,8 +131,17 @@ color: rgb(255, 85, 0);
        <property name="minimumSize">
         <size>
          <width>0</width>
-         <height>50</height>
+         <height>40</height>
         </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:#263446;</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
@@ -142,17 +170,20 @@ color: rgb(255, 85, 0);
           <property name="minimumSize">
            <size>
             <width>800</width>
-            <height>50</height>
+            <height>38</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>1800</width>
-            <height>16777215</height>
+            <height>38</height>
            </size>
           </property>
+          <property name="styleSheet">
+           <string notr="true">background-color:#263446;</string>
+          </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page">
            <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -176,26 +207,30 @@ color: rgb(255, 85, 0);
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>36</height>
+                <height>40</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>36</height>
+                <height>40</height>
                </size>
               </property>
               <property name="font">
                <font>
-                <family>黑体</family>
+                <family>楷体</family>
                 <pointsize>14</pointsize>
+                <weight>87</weight>
+                <italic>false</italic>
+                <bold>true</bold>
                </font>
               </property>
               <property name="styleSheet">
                <string notr="true">QLabel
 {
-color:#ff0000;
-padding-bottom:6px;
+color:#00aaff;
+font: 14pt &quot;楷体&quot;;
+font-weight:700;
 padding-left:40px;
 }
 </string>
@@ -275,14 +310,14 @@ border:1px solid #ff5c38;
       <widget class="QFrame" name="frame_win">
        <property name="minimumSize">
         <size>
-         <width>150</width>
-         <height>50</height>
+         <width>260</width>
+         <height>38</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>150</width>
-         <height>50</height>
+         <width>260</width>
+         <height>38</height>
         </size>
        </property>
        <property name="frameShape">
@@ -329,8 +364,8 @@ border:1px solid #ff5c38;
            <widget class="QPushButton" name="pushButton_min">
             <property name="minimumSize">
              <size>
-              <width>0</width>
-              <height>0</height>
+              <width>20</width>
+              <height>20</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -379,8 +414,8 @@ border: 1px solid #3C80B1;
            <widget class="QPushButton" name="pushButton_normal">
             <property name="minimumSize">
              <size>
-              <width>0</width>
-              <height>0</height>
+              <width>20</width>
+              <height>20</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -427,8 +462,8 @@ border: 1px solid #3C80B1;
            <widget class="QPushButton" name="pushButton_close">
             <property name="minimumSize">
              <size>
-              <width>0</width>
-              <height>0</height>
+              <width>20</width>
+              <height>20</height>
              </size>
             </property>
             <property name="maximumSize">

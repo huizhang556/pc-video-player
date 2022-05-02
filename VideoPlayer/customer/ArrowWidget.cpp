@@ -8,6 +8,8 @@
 #define TRIANGLE_HEIGHT 10              // 小三角的高度;
 #define BORDER_RADIUS 5                 // 窗口边角的弧度;
 
+ArrowWidget* ArrowWidget::m_pInstance = NULL;
+
 ArrowWidget::ArrowWidget(QWidget *parent)
     : QWidget(parent)
     , m_startX(50)
@@ -27,12 +29,30 @@ ArrowWidget::ArrowWidget(QWidget *parent)
     setFixedSize(150, 200);
 }
 
+ArrowWidget::~ArrowWidget()
+{
+    if(m_pInstance != NULL)
+        delete m_pInstance;
+    m_pInstance = NULL;
+}
+
 void ArrowWidget::setCenterWidget(QWidget* widget)
 {
     QHBoxLayout* hMainLayout = new QHBoxLayout(this);
     hMainLayout->addWidget(widget);
     hMainLayout->setSpacing(0);
     hMainLayout->setContentsMargins(SHADOW_WIDTH, SHADOW_WIDTH + TRIANGLE_HEIGHT, SHADOW_WIDTH, SHADOW_WIDTH);
+}
+
+
+
+ArrowWidget *ArrowWidget::getInstance()
+{
+    if(m_pInstance == NULL)
+    {
+        m_pInstance = new ArrowWidget();
+    }
+    return m_pInstance;
 }
 
 // 设置小三角显示的起始位置;
@@ -52,7 +72,7 @@ void ArrowWidget::paintEvent(QPaintEvent *)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setPen(Qt::NoPen);
-    painter.setBrush(QColor(255, 255, 255));
+    painter.setBrush(QColor(64, 66, 68));
 
     // 小三角区域;
     QPolygon trianglePolygon;

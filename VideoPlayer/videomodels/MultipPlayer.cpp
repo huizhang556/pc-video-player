@@ -172,93 +172,29 @@ void MultipPlayer::initMainWindow()
     m_listWisget2->setMinimumWidth(260);
     m_listWisget2->setFocusPolicy(Qt::NoFocus);//作用是点击item去掉虚线边框
     m_listWisget2->setAlternatingRowColors(false);//交替显示
-    m_listWisget2->verticalScrollBar()->setStyleSheet("QScrollBar:vertical"
-                                                      "{"
-                                                      "background-color:#3f3f48;"
-                                                      "width:9px;"
-                                                      "}"
-                                                      "QScrollBar::handle:vertical"
-                                                      "{"
-                                                      "height:4px;"
-                                                      "border-radius:4px;"
-                                                      "background-color:#cdcdcd;"
-                                                      "}"
-                                                      "QScrollBar::handle:vertical:hover"
-                                                      "{"
-                                                      "background-color:white;"
-                                                      "border-radius:4px;"
-                                                      "}"
-                                                      "QScrollBar::sub-page:vertical"
-                                                      "{"
-                                                      "background-color:#038387;"
-                                                      "}"
-                                                      "QScrollBar::add-page:vertical"
-                                                      "{"
-                                                      "background-color:#038387;"
-                                                      "}"
-                                                      );
+    m_listWisget2->verticalScrollBar()->setObjectName(QString::fromUtf8("list2_vertical_scrollBar"));//单独设置样式
+    m_listWisget2->horizontalScrollBar()->setHidden(true);
+    m_listWisget2->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     //我的收藏
     m_listWisget3 = new QListWidget;
     m_listWisget3->setObjectName(QString::fromLocal8Bit("m_listWisget3"));
     m_listWisget3->setMinimumWidth(260);
     m_listWisget3->setAlternatingRowColors(false);//交替显示
-    m_listWisget3->verticalScrollBar()->setStyleSheet("QScrollBar:vertical"
-                                                      "{"
-                                                      "background-color:#3f3f48;"
-                                                      "width:9px;"
-                                                      "}"
-                                                      "QScrollBar::handle:vertical"
-                                                      "{"
-                                                      "height:4px;"
-                                                      "border-radius:4px;"
-                                                      "background-color:#cdcdcd;"
-                                                      "}"
-                                                      "QScrollBar::handle:vertical:hover"
-                                                      "{"
-                                                      "background-color:white;"
-                                                      "border-radius:4px;"
-                                                      "}"
-                                                      "QScrollBar::sub-page:vertical"
-                                                      "{"
-                                                      "background-color:#038387;"
-                                                      "}"
-                                                      "QScrollBar::add-page:vertical"
-                                                      "{"
-                                                      "background-color:#038387;"
-                                                      "}"
-                                                      );
+    m_listWisget3->verticalScrollBar()->setObjectName(QString::fromUtf8("list3_vertical_scrollBar"));
+    m_listWisget3->horizontalScrollBar()->setHidden(true);
+    m_listWisget3->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+
 
     //网络曲库
     m_listWisget4 = new QListWidget;
     m_listWisget4->setObjectName(QString::fromLocal8Bit("m_listWisget4"));
     m_listWisget4->setMinimumWidth(260);
     m_listWisget4->setAlternatingRowColors(false);//交替显示
-    m_listWisget4->verticalScrollBar()->setStyleSheet("QScrollBar:vertical"
-                                                      "{"
-                                                      "background-color:#3f3f48;"
-                                                      "width:9px;"
-                                                      "}"
-                                                      "QScrollBar::handle:vertical"
-                                                      "{"
-                                                      "height:4px;"
-                                                      "border-radius:4px;"
-                                                      "background-color:#cdcdcd;"
-                                                      "}"
-                                                      "QScrollBar::handle:vertical:hover"
-                                                      "{"
-                                                      "background-color:white;"
-                                                      "border-radius:4px;"
-                                                      "}"
-                                                      "QScrollBar::sub-page:vertical"
-                                                      "{"
-                                                      "background-color:#038387;"
-                                                      "}"
-                                                      "QScrollBar::add-page:vertical"
-                                                      "{"
-                                                      "background-color:#038387;"
-                                                      "}"
-                                                      );
+    m_listWisget4->verticalScrollBar()->setObjectName(QString::fromUtf8("list4_vertical_scrollBar"));
+    m_listWisget4->horizontalScrollBar()->setHidden(true);
+    m_listWisget4->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+
 
     m_lineEdit = new QLineEdit;//曲库列表搜索框
     m_lineEdit->setObjectName(QString::fromLocal8Bit("m_lineEdit"));
@@ -373,13 +309,13 @@ void MultipPlayer::initMainWindow()
     m_muteDlg->setObjectName(QString::fromLocal8Bit("m_muteDlg"));
     m_muteDlg->setHidden(true);
 
-    m_playOrderForm = new PlayOrderForm();
-    m_playOrderForm->setObjectName(QString::fromLocal8Bit("m_playOrderForm"));
+//    m_playOrderForm = new PlayOrderForm();
+//    m_playOrderForm->setObjectName(QString::fromLocal8Bit("m_playOrderForm"));
 
     m_foldBtn = new QPushButton(ui->stackedWidget);//父亲必须指定，要不然显示不出来
     m_foldBtn->setObjectName(QString::fromLocal8Bit("m_foldBtn"));
     m_foldBtn->setFixedSize(40,60);
-    m_foldBtn->setAttribute(Qt::WA_TranslucentBackground,true);//没效果，得定制
+//    m_foldBtn->setAttribute(Qt::WA_TranslucentBackground,true);//没效果，得定制
     m_foldBtn->setHidden(true);//初始化隐藏按钮
 }
 
@@ -441,9 +377,12 @@ void MultipPlayer::chandleSignalAndSLots()
 //            }
 //        }
 //    });
+    //接收value值改变
+    connect(this,SIGNAL(sig_currentMediaSoundValueChange(int)),m_muteDlg,SLOT(setSpliderValue(int)));
 
     /*音量值调节显示数值*/
     connect(m_muteDlg,&muteDialog::sig_SpliderValueChange,[=](int value){
+        emit sig_currentMediaSoundValueChange(value);//托盘接收信号
         player->setVolume(value);
         if(value != 0)
         {
@@ -505,6 +444,7 @@ void MultipPlayer::chandleSignalAndSLots()
         qDebug()<<name_song;
     });
 
+
     /*上一首，下一首，对应m_listwidget项的变化*/
     connect(playlist,&QMediaPlaylist::currentIndexChanged,[=](int index)
     {
@@ -513,7 +453,7 @@ void MultipPlayer::chandleSignalAndSLots()
         //          ui->playerListWidget->setCurrentRow(index);
         setCollectBtnShowStatus();//处理所有的item改变时的操作
         loadFileInfoToWinTitle(index);
-        updateRateTypeUiLayout(index);
+        updateRateTypeUiLayout();
     });
 
     /*浮动窗口-曲库歌曲搜索*/
@@ -565,96 +505,51 @@ void MultipPlayer::chandleSignalAndSLots()
     //收藏按钮
     connect(ui->pushButton_collect,&QPushButton::clicked,[=](){
         qDebug() << "pushButton_collect clicled!";
-//        if(!m_collectStatus)
-//        {
-//            ui->pushButton_collect->setChecked(true);//进行收藏
-//            //收藏操作
-//            bool hasMedia = findCollectList();
-//            qDebug() << "shi fou zhao dao = " << hasMedia;
-//            if(!hasMedia)//没有重名才插入
-//            {
-//                m_mapList_collect.insert(m_mapList_collect.count(),m_curMediaName);
-//                loadCollectListWidgetList();//重新加载
-//            }
-//        }
-//        else
-//        {
-//            ui->pushButton_collect->setChecked(false);//取消收藏
-//            //取消操作
-//            if(m_mapList_collect.isEmpty())
-//            {
-//                return;
-//            }
-//            else
-//            {
-//                int key = m_mapList_collect.key(m_curMediaName);
-//                if(m_mapList_collect.contains(key))
-//                {
-//                    m_listWisget3->takeItem(key);
-//                    m_mapList_collect.remove(key);
-//                }
-//            }
-//        }
-//        m_collectStatus = !m_collectStatus;
-        bool hasValue = findCollectListStatus(m_curMediaName);
-        qDebug() << "fined hasVal = " << hasValue;
-        if(!hasValue)
-        {
-            if(m_curMediaName.isEmpty()) return;
-            qDebug() << "now has count = " << m_listWisget3->count();
-            m_listWisget3->addItem(m_curMediaName);
-            ui->pushButton_collect->setStyleSheet("QPushButton{"
-                                                  "border-image: url(:/images/icon/play_collect_checked.png);"
-                                                  "}");
-        }
-        else
-        {
-            QListWidgetItem *item = m_listWisget3->takeItem(getCurrentMediaRowOfCollectList(m_curMediaName));
-            m_listWisget3->takeItem(getCurrentMediaRowOfCollectList(m_curMediaName));
-            ui->pushButton_collect->setStyleSheet("QPushButton{"
-                                                  "border-image: url(:/images/icon/play_collect_unchecked.png);"
-                                                  "}");
-            delete item;//手动释放
-        }
+        addCurrentMediaToList(m_listWisget3);
+    });
+
+    //播放添加历史记录
+    connect(this,&MultipPlayer::sig_sendSwitchToMusicPage,[=](){
+        addCurrentMediaToList(m_listWisget4);
     });
 
     //播放顺序选择
     connect(ui->pushButton_playOrder,&QPushButton::clicked,[=](){
-        if(m_playOrderForm)
-        {
-            if(!m_playOrderForm->isHidden())
+//        if(PlayOrderForm::getInstance())
+//        {
+            if(!PlayOrderForm::getInstance()->isHidden())
             {
-                m_playOrderForm->hide();
+                PlayOrderForm::getInstance()->hide();
             }
             else
             {
                 int x = ui->pushButton_playOrder->parentWidget()->mapToGlobal(ui->pushButton_playOrder->pos()).x();
                 int y = ui->pushButton_playOrder->parentWidget()->mapToGlobal(ui->pushButton_playOrder->pos()).y();
-                int w = m_playOrderForm->width();
-                int h = m_playOrderForm->height();
-                m_playOrderForm->setGeometry(x-w/2,y-h-10,m_playOrderForm->width(),m_playOrderForm->height());
-                m_playOrderForm->raise();
-                m_playOrderForm->show();
+                int w = PlayOrderForm::getInstance()->width();
+                int h = PlayOrderForm::getInstance()->height();
+                PlayOrderForm::getInstance()->setGeometry(x-w/2,y-h-10,PlayOrderForm::getInstance()->width(),PlayOrderForm::getInstance()->height());
+                PlayOrderForm::getInstance()->raise();
+                PlayOrderForm::getInstance()->show();
             }
-        }
-        else
-        {
-            m_playOrderForm = new PlayOrderForm();
-            int x = ui->pushButton_playOrder->parentWidget()->mapToGlobal(ui->pushButton_playOrder->pos()).x();
-            int y = ui->pushButton_playOrder->parentWidget()->mapToGlobal(ui->pushButton_playOrder->pos()).y();
-            int w = m_playOrderForm->width();
-            int h = m_playOrderForm->height();
-            m_playOrderForm->setGeometry(x-w/2,y-h-10,m_playOrderForm->width(),m_playOrderForm->height());
-            m_playOrderForm->raise();
-            m_playOrderForm->show();
-        }
+//        }
+//        else
+//        {
+//            PlayOrderForm::getInstance() = new PlayOrderForm();
+//            int x = ui->pushButton_playOrder->parentWidget()->mapToGlobal(ui->pushButton_playOrder->pos()).x();
+//            int y = ui->pushButton_playOrder->parentWidget()->mapToGlobal(ui->pushButton_playOrder->pos()).y();
+//            int w = PlayOrderForm::getInstance()->width();
+//            int h = PlayOrderForm::getInstance()->height();
+//            PlayOrderForm::getInstance()->setGeometry(x-w/2,y-h-10,PlayOrderForm::getInstance()->width(),PlayOrderForm::getInstance()->height());
+//            PlayOrderForm::getInstance()->raise();
+//            PlayOrderForm::getInstance()->show();
+//        }
     });
 
     //播放顺序 -- 单曲1 顺序2 循环3 随机4
-    connect(m_playOrderForm,SIGNAL(sig_playerOrder(int)),this,SLOT(setPlayOrderButtonStyleSheet(int)));
+    connect(PlayOrderForm::getInstance(),SIGNAL(sig_playerOrder(int)),this,SLOT(setPlayOrderButtonStyleSheet(int)));
 
     //显示 列表
-    connect(ui->pushButton_curlist,&QPushButton::clicked,[=](){setLeftCurrentListSHowHide();});
+    connect(ui->pushButton_curlist,&QPushButton::clicked,[=](){setMainWindowShowFullgreen();});
 }
 
 /*加载默认图标*/
@@ -664,7 +559,7 @@ void MultipPlayer::loadDefaultLogo()
     ui->pushButton_sound->setToolTip(QString::fromLocal8Bit("音量"));
     ui->pushButton_collect->setToolTip(QString::fromLocal8Bit("收藏"));
     ui->pushButton_download->setToolTip(QString::fromLocal8Bit("下载"));
-    ui->pushButton_curlist->setToolTip(QString::fromLocal8Bit("列表"));
+    ui->pushButton_curlist->setToolTip(QString::fromLocal8Bit("全屏(ESC键退出)"));
 
     m_lineEdit->setPlaceholderText(QString::fromLocal8Bit("输入要搜索的内容^_^"));
     m_lineEdit->setEnabled(false);
@@ -1116,9 +1011,8 @@ void MultipPlayer::setVideoRate(int value)
 }
 
 /*更新rate,type,layout*/
-void MultipPlayer::updateRateTypeUiLayout(int str)
+void MultipPlayer::updateRateTypeUiLayout()
 {
-    Q_UNUSED(str);
     ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/pausehover.png"));//播放
     player->setPlaybackRate(1.0);//速率恢复正常
 }
@@ -1133,6 +1027,7 @@ void MultipPlayer::on_pushButton_pauseStart_clicked()
         m_playerState = QMediaPlayer::PausedState;
         ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/playhover.png"));
         ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
+        emit sig_currentMediaPlayStatus(false);
     }
     else if(m_playerState == QMediaPlayer::PausedState)
     {
@@ -1140,6 +1035,7 @@ void MultipPlayer::on_pushButton_pauseStart_clicked()
         m_playerState = QMediaPlayer::PlayingState;
         ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/pausehover.png"));
         ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("暂停"));
+        emit sig_currentMediaPlayStatus(true);
     }
 }
 
@@ -1295,6 +1191,25 @@ void MultipPlayer::on_pushButton_previous_clicked()
     player->play();
 }
 
+//接收托盘发过来的音量信号
+void MultipPlayer::receiveSystemTraySendSoundValue(int value)
+{
+    emit sig_currentMediaSoundValueChange(value);
+}
+
+//设置静音
+void MultipPlayer::on_setCurrentMediaSoundSatus()
+{
+    if(player->isMuted())
+    {
+        player->setMuted(false);
+    }
+    else
+    {
+        player->setMuted(true);
+    }
+}
+
 /*下一首*/
 void MultipPlayer::on_pushButton_next_clicked()
 {
@@ -1384,11 +1299,10 @@ void MultipPlayer::resizeEvent(QResizeEvent *event)
 /*键盘事件*/
 void MultipPlayer::keyPressEvent(QKeyEvent *event)
 {
-//    if(event->type() == Qt::Key_Escape)//ESC键盘
-//        {
-//        videoWidget->setWindowFlags(Qt::SubWindow);
-//        videoWidget->showNormal();
-//    }
+    if(event->key() == Qt::Key_Escape)//ESC键盘
+    {
+        chandleRestoreWindow();
+    }
 }
 
 //鼠标移动事件
@@ -1490,7 +1404,7 @@ void MultipPlayer::searchMouseEnterLeaveShow(QObject *watched, QEvent *event)
 /*处理视频界面双击退出事件*/
 bool MultipPlayer::videoDouleExit(QObject *watched, QEvent *event)
 {
-    if(watched == videoWidget)
+    if(watched == ui->stackedWidget)
     {
         {
             if(event->type() == QEvent::KeyPress)
@@ -1853,6 +1767,8 @@ void MultipPlayer::chandleRestoreWindow()
     else
     {
         this->showNormal();
+        if(m_videoTitleBar->isHidden()) m_videoTitleBar->show();
+        if(ui->stackedWidget_player->isHidden()) ui->stackedWidget_player->show();
         emit sig_winVStatus(m_winMax);//向窗口发送正常状态信号
     }
     m_winMax = !m_winMax;
@@ -1878,7 +1794,7 @@ bool MultipPlayer::loadCollectListWidgetList()
 /*槽函数：设置收藏按钮显示状态*/
 bool MultipPlayer::setCollectBtnShowStatus()
 {
-    bool hasVal = findCollectListStatus(getCurrentMediaPlayFileName());
+    bool hasVal = findCollectListStatus(m_listWisget3,getCurrentMediaPlayFileName());
     qDebug() << getCurrentMediaPlayFileName() << "currewnt media collect status = " <<hasVal;
     if(hasVal)
     {
@@ -1898,13 +1814,13 @@ bool MultipPlayer::setCollectBtnShowStatus()
 }
 
 /*遍历列表，没有则添加*/
-bool MultipPlayer::findCollectListStatus(QString name)
+bool MultipPlayer::findCollectListStatus(QListWidget *listdgt, QString name)
 {
     int row = 0;
     QString line;
-    while(row < m_listWisget3->count())
+    while(row < listdgt->count())
     {
-        line = m_listWisget3->item(row)->text();
+        line = listdgt->item(row)->text();
         qDebug() << line << "\n";
         if(name == line)
         {
@@ -1917,13 +1833,13 @@ bool MultipPlayer::findCollectListStatus(QString name)
     return false;//循环完毕，没有找到，返回 false
 }
 
-int MultipPlayer::getCurrentMediaRowOfCollectList(QString name)
+int MultipPlayer::getCurrentMediaRowOfCollectList(QListWidget* listdgt, QString name)
 {
     int row = 0;
     QString mname;
-    while(row < m_listWisget3->count())
+    while(row < listdgt->count())
     {
-        mname = m_listWisget3->item(row)->text();
+        mname = listdgt->item(row)->text();
         qDebug() << mname << "\n";
         if(name == mname)
         {
@@ -1935,9 +1851,34 @@ int MultipPlayer::getCurrentMediaRowOfCollectList(QString name)
     return -1;
 }
 
+void MultipPlayer::addCurrentMediaToList(QListWidget *destList)
+{
+    bool hasValue = findCollectListStatus(destList,m_curMediaName);
+    qDebug() << "fined hasVal = " << hasValue;
+    if(!hasValue)//不存在则添加进收藏
+    {
+        if(m_curMediaName.isEmpty()) return;
+        qDebug() << "now has count = " << destList->count();
+        destList->insertItem(0,m_curMediaName);
+        ui->pushButton_collect->setStyleSheet("QPushButton{"
+                                              "border-image: url(:/images/icon/play_collect_checked.png);"
+                                              "}");
+    }
+    else//存在则取消收藏
+    {
+        QListWidgetItem *item = m_listWisget3->takeItem(getCurrentMediaRowOfCollectList(m_listWisget3,m_curMediaName));
+        destList->takeItem(getCurrentMediaRowOfCollectList(m_listWisget3,m_curMediaName));
+        ui->pushButton_collect->setStyleSheet("QPushButton{"
+                                              "border-image: url(:/images/icon/play_collect_unchecked.png);"
+                                              "}");
+        delete item;//手动释放
+    }
+}
+
 void MultipPlayer::mediaLoadingStatusProgressBar_Start()
 {
 //    VideoProgressBar::getInstance()->setParent(ui->stackedWidget);//设置父窗口，背景变为黑色
+    if(this->isHidden() || this->isMinimized()) return;
     VideoProgressBar::getInstance()->raise();
     VideoProgressBar::getInstance()->show();
 }
@@ -2059,7 +2000,7 @@ void MultipPlayer::setFoldButtonStyle()
         //需要隐藏
         m_foldBtn->setStyleSheet("QPushButton{background:rgba(81,81,81,0.3) url(:/images/icon/arrow_right.png) no-repeat center center;border:none;}");
     }
-    else if(m_isHide)
+    else
     {
         //需要显示
         m_foldBtn->setStyleSheet("QPushButton{background:rgba(81,81,81,0.3) url(:/images/icon/arrow_left.png) no-repeat center center;border:none;}");
@@ -2088,19 +2029,13 @@ void MultipPlayer::judgeFoldBtnOfRightDockList()
 
 
 /*左侧列表控制显隐*/
-void MultipPlayer::setLeftCurrentListSHowHide()
+void MultipPlayer::setMainWindowShowFullgreen()
 {
-//    if(m_widget1)
-//    {
-//        if(m_widget1->isHidden())
-//        {
-//            m_widget1->show();
-//        }
-//        else
-//        {
-//            m_widget1->hide();
-//        }
-//    }
+    m_videoTitleBar->hide();
+    ui->stackedWidget_player->hide();
+    m_widget1->hide();
+    m_isHide = true;
+    chandleRestoreWindow();//相当于双击标题栏效果
 }
 
 /*播放次序按钮*/

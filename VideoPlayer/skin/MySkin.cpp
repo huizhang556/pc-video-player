@@ -29,7 +29,7 @@ void MySkin::initWorkUI()
 //    ui->listWidget_zhuti->setResizeMode(QListWidget::Adjust);//图标的调整模式，默认是固定的
     ui->listWidget_zhuti->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_zhuti->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
+    ui->listWidget_zhuti->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     ui->listWidget_yuzhi->setViewMode(QListView::IconMode);//显示模式 图标模式
     ui->listWidget_yuzhi->setMovement(QListView::Static);//图标不可拖动
@@ -38,7 +38,7 @@ void MySkin::initWorkUI()
 //    ui->listWidget_yuzhi->setResizeMode(QListWidget::Adjust);//图标的调整模式，默认是固定的
     ui->listWidget_yuzhi->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_yuzhi->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
+    ui->listWidget_yuzhi->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     ui->listWidget_custom->setViewMode(QListView::IconMode);//显示模式 图标模式
     ui->listWidget_custom->setMovement(QListView::Static);//图标不可拖动
@@ -47,6 +47,7 @@ void MySkin::initWorkUI()
 //    ui->listWidget_custom->setResizeMode(QListWidget::Adjust);//图标的调整模式，默认是固定的
     ui->listWidget_custom->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_custom->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_custom->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     for(int i = 0; i < 5; i++)
     {

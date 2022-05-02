@@ -2,6 +2,7 @@
 #define SONGITEMFORM_H
 
 #include <QWidget>
+#include <QPushbutton>
 
 namespace Ui {
 class SongItemForm;
@@ -22,16 +23,19 @@ protected:
     void leaveEvent(QEvent *event) override;
 private slots:
     void slot_setSongCollectStatus(bool status);
+    void slot_printSenderName();
 
 private:
     Ui::SongItemForm *ui;
 
 signals:
-    void on_son_mvbtn_clicked(int index);
-    void on_son_collectbtn_clicked(int index);
-    void on_son_downloadbtn_clicked(int index);
-    void on_son_deletebtn_clicked(int index);
-    void on_son_morebtn_clicked(int index);
+    void sig_son_playbtn_clicked(int index);
+    void sig_son_mvbtn_clicked(int index);
+    void sig_son_collectbtn_clicked(int index);
+    void sig_son_downloadbtn_clicked(int index);
+    void sig_son_deletebtn_clicked(int index);
+    void sig_son_morebtn_clicked(int index);
+    void sig_son_qualityBtn_clicked(int index);
 
 };
 

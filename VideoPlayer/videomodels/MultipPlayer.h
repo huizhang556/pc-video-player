@@ -69,9 +69,9 @@ public:
 
     void addFileToList(const QStringList &strList);//浮动歌曲列表
 
-    bool fileType(int index);// 重载函数1
+    bool fileType(int index);// 重载函数1  判断文件类型显示视频还是音乐
 
-    bool fileType(QStringList &filenames,int index);// 重载函数2
+    bool fileType(QStringList &filenames,int index);// 重载函数2  判断文件类型显示视频还是音乐
 
     void get_fileFromServer();
 
@@ -138,11 +138,23 @@ public slots:
 
     void judgeFoldBtnOfRightDockList();//判断右侧停靠栏指示按钮位置
 
-    void setLeftCurrentListSHowHide();
+    void setMainWindowShowFullgreen();
 
     void setPlayOrderButtonStyleSheet(int index);
 
     void setVideTitleBar(int index);
+
+    void on_pushButton_pauseStart_clicked();//暂停、播放
+
+    void updateRateTypeUiLayout();
+
+    void on_pushButton_next_clicked();//下一首
+
+    void on_pushButton_previous_clicked();//上一首
+
+    void receiveSystemTraySendSoundValue(int value);//接收托盘发过来的音量信号
+
+    void on_setCurrentMediaSoundSatus();
 
 private slots:
     void on_time();
@@ -153,21 +165,13 @@ private slots:
 
     void loadDefaultLogo();//加载默认图标
 
-    void on_pushButton_pauseStart_clicked();//暂停、播放
-
     void on_pushButton_5_clicked();//打开文件
-
-    void on_pushButton_previous_clicked();//上一首
-
-    void on_pushButton_next_clicked();//下一首
 
     void on_pushButton_6_clicked();//重新打开
 
     void switchListPage(int index);
 
     void setVideoRate(int value);
-
-    void updateRateTypeUiLayout(int str);
 
     void on_moreBtn_clicked();
 
@@ -205,9 +209,11 @@ private slots:
 
     bool setCollectBtnShowStatus();//设置收藏按钮显示状态
 
-    bool findCollectListStatus(QString name);//遍历列表，没有则添加
+    bool findCollectListStatus(QListWidget* listdgt, QString name);//遍历列表，没有则添加
 
-    int getCurrentMediaRowOfCollectList(QString name);
+    int getCurrentMediaRowOfCollectList(QListWidget* listdgt,QString name);
+
+    void addCurrentMediaToList(QListWidget *destList);
 
     void mediaLoadingStatusProgressBar_Start();
 
@@ -223,6 +229,12 @@ signals:
     void sig_sendToMusicList();
 
     void sig_winVStatus(bool);
+
+    void sig_currentMediaPlayStatus(bool status);
+
+    void sig_currentMediaSoundValueChange(int value);
+
+
 private:
     Ui::MultipPlayer *ui;
     QDesktopWidget              *system_screen      = nullptr;
@@ -254,7 +266,7 @@ private:
     VideoTitleBar               *m_videoTitleBar    = nullptr;
     IntroduceForm               *m_introduceForm    = nullptr;
     RecomVideoTab               *m_recomTab         = nullptr;
-    PlayOrderForm               *m_playOrderForm    = nullptr;
+//    PlayOrderForm               *m_playOrderForm    = nullptr;
     MyVideoWidget               *videoWidget        = nullptr;
     QMediaPlaylist              *playlist           = nullptr;
     QStackedWidget              *m_introStack       = nullptr;

@@ -42,6 +42,7 @@ void StackItemForm::chandleSignalsAndSlots()
 {
     //列表与qstackwidget联动
     ui->listWidget_reclist->setMouseTracking(true);//设置鼠标跟踪
+    //鼠标进入/离开对应stackwidget切换
     connect(ui->listWidget_reclist,SIGNAL(itemEntered(QListWidgetItem*)),this,SLOT(slot_switchPageToStackWidget(QListWidgetItem*)));
 }
 

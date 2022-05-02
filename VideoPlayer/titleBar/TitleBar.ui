@@ -917,20 +917,15 @@ border-image: url(:/images/icon/url_collect_hover.png);
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton
+        <string notr="true">#BtnScreen
 {
 background-color: transparent;
 border-image: url(:/images/icon/create.png);
 }
 
-QPushButton:hover
+#BtnScreen:hover
 {
 border-image: url(:/images/icon/createhover.png);
-}
-
-QPushButton::item:selected
-{
-
 }
 
 </string>
@@ -965,20 +960,15 @@ QPushButton::item:selected
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton
+        <string notr="true">#BtnHistory
 {
 background-color: transparent;
 border-image: url(:/images/icon/history.png);
 }
 
-QPushButton:hover
+#BtnHistory:hover
 {
 border-image: url(:/images/icon/historyhover.png);
-}
-
-QPushButton::item:selected
-{
-
 }
 
 </string>
@@ -1013,20 +1003,15 @@ QPushButton::item:selected
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton
+        <string notr="true">#BtnDownload
 {
 background-color: transparent;
 border-image: url(:/images/icon/download.png);
 }
 
-QPushButton:hover
+#BtnDownload:hover
 {
 border-image: url(:/images/icon/downloadhover.png);
-}
-
-QPushButton::item:selected
-{
-
 }
 
 </string>
@@ -1061,20 +1046,15 @@ QPushButton::item:selected
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton
+        <string notr="true">#Btnskin
 {
 background-color: transparent;
 border-image: url(:/images/icon/skin.png);
 }
 
-QPushButton:hover
+#Btnskin:hover
 {
 border-image: url(:/images/icon/skin_hover.png);
-}
-
-QPushButton::item:selected
-{
-
 }
 
 </string>
@@ -1118,11 +1098,6 @@ border-image: url(:/images/icon/login.png);
 #Btnlogin:hover
 {
 border-image: url(:/images/icon/login_hover.png);
-}
-
-#Btnlogin::item:selected
-{
-border-image: url(:/images/icon/logined.png);
 }
 
 </string>
@@ -1169,35 +1144,17 @@ border-image: url(:/images/icon/logined.png);
         <enum>Qt::CustomContextMenu</enum>
        </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton
+        <string notr="true">#Btnhelp
 {
 background-color: transparent;
 border-image: url(:/images/icon/help.png);
 }
-
-QPushButton:hover
+#Btnhelp:hover
 {
 border-image: url(:/images/icon/help_hover.png);
 }
 
-QPushButton::item:selected
-{
-/*border-image: url(:/images/icon/help_hover.png);*/
-}
 
-QPushButton::menu-indicator
-{
-	image: none;
-}
-
-/*
-QPushButton::menu-indicator:image
-{
-	subcontrol-origin: margin;
-	subcontrol-position: bottom center;
-	margin-top: 5px;
-}
-*/
 </string>
        </property>
        <property name="text">

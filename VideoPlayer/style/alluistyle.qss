@@ -1,7 +1,20 @@
+/*所有控件需要有明确的对象名称，需要设置共同样式，指明控件的层次次序*/
 MainWidget
 {
 background-color:#2a2a31;
-color: rgb(85, 255, 0);
+}
+
+/*主界面底部按钮*/
+#m_bottomBtn
+{
+border-radius:25px;
+background: rbga(240, 240, 240,0.6) url(://images/icon/main_bottom_hover.png) no-repeat no-repeat center center;
+}
+
+#m_bottomBtn:hover
+{
+border-radius:25px;
+background: rbga(240, 240, 240,0.6) url(://images/icon/main_bottombtn.png) no-repeat no-repeat center center;
 }
 
 /*推荐栏左右调节按钮*/
@@ -106,10 +119,8 @@ background-color: rgb(33, 33, 33);
 
 #listWidget_playlist::item:selected
 {
-/*border:0px;*/
 /*border:1px solid #55ff00;*/
 background:#382e15;
-margin:0px;
 color:#ff5c38;
 }
 
@@ -140,67 +151,107 @@ background-color: rgb(33, 33, 33);
 color:rgb(255, 94, 30);
 }
 
-QMenu
+/*托盘二级菜单---样式开始*/
+#m_menuTray,#m_playMode
 {
-background-color:#3d3d3d;
-margin: 2px;
-font-size:14px;
-/*定义宽度多级菜单就没有右边箭头*/
-/*font:bold italic 14px "微软雅黑";*/
+background-color:white;
+color:#2a2a31;
+font:normal normal 15px '微软雅黑';
 }
 
-QMenu::item
+/*一级菜单tiem*/
+#m_menuTray::item
 {
-color:#41cd52;
-padding: 2px 25px 2px 20px;
+height:30px;
+padding: 2px 15px 2px 15px;/*上 右 下 左*/
 border: 1px solid transparent;
 }
 
-QMenu::item:selected
+/*二级菜单tiem*/
+#m_playMode::item
 {
-border-color: darkblue;
-background: #b5aaa8;
-border-radius:4px;
-color:red;
+height:30px;
+padding: 2px 5px 2px 15px;/*上 右 下 左*/
+border: 1px solid transparent;
 }
 
-QMenu::icon
+/*鼠标滑过*/
+#m_menuTray::item:selected,#m_playMode::item:selected
 {
-padding-left:15px;/*有效*/
+border-radius: 5px;
+background: #90c8f6;
 }
 
-/*
-QMenu::separator 
+/*一级菜单--图标*/
+#m_menuTray::icon
 {
-height:1px;
-background: lightblue;
+width:30px;
+height:30px;
+margin-left:10px;
 }
-*/
 
-/*
-QMenu::indicator 
+/*二级菜单--图标*/
+#m_playMode::icon
 {
-    width: 13px;
-    height: 13px;
-}
-*/
-
-/*
-QMenu::right-arrow
-{
-image: url(://images/icon/help_arrow_r.png);
-}
-*/
-
-/*去掉dockwidget边界空白*/
-QMainWindow::separator 
-{
-outline:0;
 width:0px;
 height:0px;
-margin:0px;
-padding:0px;
 }
+
+/*指示器---菜单勾选项*/
+#m_menuTray::indicator,#m_playMode::indicator
+{
+margin:5px;
+width:20px;
+height:20px;
+}
+
+/*菜单项指示器---互斥--选中*/
+#m_playMode::indicator:exclusive:checked
+{
+image: url(://images/tray/tray_checked.png);
+}
+/*托盘二级菜单---样式结束*/
+
+/*帮助按钮菜单-----------------开始*/
+#pmenu_help1,#pmenu_help2
+{
+background-color:white;
+color:#2a2a31;
+font:normal normal 15px '微软雅黑';
+}
+
+#pmenu_help1::item
+{
+height:18px;
+padding: 4px 28px 4px 20px;/*上 右 下 左*/
+border: 1px solid transparent;
+}
+
+#pmenu_help2::item
+{
+height:18px;
+padding: 4px 8px 4px 12px;/*上 右 下 左*/
+border: 1px solid transparent;
+margin:0px;
+}
+
+#pmenu_help1::item:selected,#pmenu_help2::item:selected
+{
+border-radius: 5px;
+background: #00aabf;
+}
+
+#pmenu_help1::icon,#pmenu_help2::icon
+{
+width:10px;
+height:20px;
+margin-left:10px;
+}
+/*帮助按钮菜单--------------------结束*/
+
+/*歌曲右键菜---开始*/
+
+/*歌曲右键菜单---结束*/
 
 QDockWidget#m_dockWidget::title
 {
@@ -279,15 +330,13 @@ background-color:rgb(101,210,105);
 /*
 QToolTip
 {
-     border: 1px solid black;
-     background-color: #D1DBCB;
-     padding: 1px;
-     border-radius: 3px;
-     opacity: 100;
+border: 1px solid black;
+background-color: #D1DBCB;
+padding: 1px;
+border-radius: 3px;
+opacity: 50;
 }
 */
-
-/*菜单样式-通用样式*/
 
 QLCDNumber
 {
@@ -334,10 +383,6 @@ QToolBox QWidget QPushButton
 color:#ff5c38;
 border:1px solid transparent;
 background-color: rgb(75, 75, 75);
-border-top-left-radius:0;
-border-top-right-radius:0;
-border-bottom-right-radius:0;
-border-bottom-left-radius:0;
 image: url(:/images/icon/file_open.png);
 padding:2px;
 }
@@ -359,17 +404,6 @@ color:white;
 padding:2px;
 image: url(:/images/icon/file_open_hover.png);
 }
-
-/*listwidget-每个item上的按钮*/
-QToolBox QWidget QListWidget QPushButton
-{
-color:#cccccc;
-background-color:#3a3a3a;
-/*
-min-height:30px;
-max-height:30px;
-*/
-} 
 
 /*QListWidget播放列表*/
 QToolBox QListWidget
@@ -420,132 +454,143 @@ QToolBox QListWidget::item:selected:!active
     color: rgb(85, 255, 0);
 }
 
+/*单独的统一放在通用样式之前设置*/
+#list2_vertical_scrollBar::handle:vertical,#list3_vertical_scrollBar::handle:vertical,#list4_vertical_scrollBar::handle:vertical
+{
+background-color:#65d269;
+border-radius:5px;
+}
+
+/*鼠标放到滑块上面样式*/
+#list2_vertical_scrollBar::handle:vertical:hover,#list3_vertical_scrollBar::handle:vertical:hover,#list4_vertical_scrollBar::handle:vertical:hover
+{
+background-color:#c0ff02;
+border-radius:5px;
+}
+
+/*滚动条滚过部分样式*/
+#list2_vertical_scrollBar::sub-page:vertical,#list3_vertical_scrollBar::sub-page:vertical,#list4_vertical_scrollBar::sub-page:vertical
+{
+background-color:#038387;
+}
+
+/*滚动条未滚过部分样式*/
+#list2_vertical_scrollBar::add-page:vertical,#list3_vertical_scrollBar::add-page:vertical,#list4_vertical_scrollBar::add-page:vertical
+{
+background-color:#038387;
+}
+
+/*滚动条整体样式，需要单独设置的，在下面按照层次顺序指明，或者按照对象名设置 --start*/
+/*垂直滚动条整体样式*/
 QScrollBar:vertical
 {
-background-color:#3f3f48;
-width:9px;
+background-color:#3f3f48;/*背景颜色*/
+width:10px;/*整体宽度*/
 }
 
+/*水平滚动条整体样式*/
 QScrollBar:horizontal
 {
-background-color:#3f3f48;
-height:9px;
+background-color:#3f3f48;/*背景颜色*/
+height:10px;/*整体高度*/
 }
 
+/*垂直滚动条内滑块样式*/
 QScrollBar::handle:vertical
 {
-height:4px;
-border-radius:4px;
-background-color:#cdcdcd;
+min-height:20px;/*滑块宽度*/
+border-radius:5px;/*滑块角度弯曲*/
+background-color:#038387;
 }
 
+/*水平滚动条内滑块样式*/
 QScrollBar::handle:horizontal
 {
-width:4px;
-border-radius:4px;
-background-color:#cdcdcd;
+min-width:20px;/*滑块高度*/
+border-radius:5px;/*滑块角度弯曲*/
+background-color:#038387;
 }
 
+/*垂直滚动条内滑块样式--hover*/
 QScrollBar::handle:vertical:hover
 {
-background-color:white;
-border-radius:4px;
+background-color:#6b9fa7;
+border-radius:5px;
 }
 
+/*水平滚动条内滑块样式--hover*/
 QScrollBar::handle:horizontal:hover
 {
-background-color:white;
-border-radius:4px;
+background-color:#6b9fa7;
+border-radius:5px;
 }
 
+/*垂直滚动条滑过上部分的样式*/
 QScrollBar::sub-page:vertical
 {
-background-color:#038387;
+background-color:#25252a;
 }
 
+/*水平滚动条滑过左部分的样式*/
 QScrollBar::sub-page:horizontal
 {
-background-color:#038387;
+background-color:#25252a;
 }
 
+/*垂直滚动条滑过下部分的样式*/
 QScrollBar::add-page:vertical
 {
-background-color:#038387;
+background-color:#25252a;
 }
 
+/*水平滚动条滑过右部分的样式*/
 QScrollBar::add-page:horizontal
 {
-background-color:#038387;
+background-color:#25252a;
 }
 
-/*滚动条-垂直*/
 /*
-QScrollBar:vertical,QScrollBar:horizontal
-{
-background:skyblue;
- }
-*/
-
-/*
-QScrollBar::handle:vertical,QScrollBar::handle:horizontal
-{
-/*顶部留出10px给箭头*/
-/*padding-top:10px;*/
-/*padding-bottom:10px;*/
-/*background:#008B8B;*/
-background:#3f3f48;
- border:2px solid #3f3f48;
- border-radius:5px;
- }
-*/
-
-/*
-QScrollBar::handle:vertical:hover,QScrollBar::handle:horizontal:hover
-{
-/*background:#00BFFF; */
-background:#3f3f48;
-border:2px solid #3f3f48;
- border-radius:5px;
-}
-*/
-
-/*
-QScrollBar::handle:vertical:pressed
-{
-background:#00BFFF;
-border:2px solid transparent;
- border-radius:5px;
-}
-*/
-
-/*page属于移动的区域*/
-/*
-QScrollBar::add-page:vertical,QScrollBar::add-page:horizontal
-{    
-        background-color: rgb(87, 97, 106);
-}
-*/
-
-
-/*
-QScrollBar::sub-page:vertical,QScrollBar::sub-page:horizontal
-{
-        background-color: rgb(87, 97, 106);
-}
-*/
-
-/*
+/*垂直滚动条滑过上部分的底部箭头部分样式*/
 QScrollBar::sub-line:vertical
 {
+width:10px;
+height:10px;
 background-image: url(:/images/icon/arrowdown.png);
-subcontrol-position:top;
+subcontrol-position: top;
+subcontrol-origin: margin;
 }
-*/
 
-/*
+/*垂直滚动条滑过下部分的底部箭头部分样式*/
 QScrollBar::add-line:vertical
 {
+width:10px;
+height:10px;
 background-image: url(:/images/icon/arrowup.png);
-subcontrol-position:bottom;
+subcontrol-position: bottom;
+subcontrol-origin: margin;
+}
+
+/*水平滚动条滑过左部分的左边箭头部分样式*/
+QScrollBar::sub-line:horizontal
+{
+width:10px;
+height:10px;
+background-image: url(:/images/icon/arrowdown.png);
+subcontrol-position: left;
+subcontrol-origin: margin;
+}
+
+/*水平滚动条滑过右部分的右边箭头部分样式*/
+QScrollBar::add-line:horizontal
+{
+width:10px;
+height:10px;
+background-image: url(:/images/icon/arrowup.png);
+subcontrol-position: right;
+subcontrol-origin: margin;
 }
 */
+/*滚动条整体样式，需要单独设置的，在下面按照层次顺序指明，或者按照对象名设置 --end*/
+
+
+

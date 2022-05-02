@@ -171,32 +171,28 @@ void TitleBar::chandleSignalAndSLots()
 /*创建菜单*/
 void TitleBar::createHelpMenu()
 {
-    pmenu2 = new QMenu(this);
-    pmenu2->setObjectName(QString::fromLocal8Bit("pmenu2"));//样式表中设置样式必须设置对象名称才能生效
-    pmenu3 = new QMenu(QString::fromLocal8Bit("播放视频"),this);
-    pmenu3->setObjectName(QString::fromLocal8Bit("pmenu3"));
-    pmenu3->setIcon(QIcon("://images/icon/help_play.png"));
-    pmenu2->addAction(QIcon("://images/icon/help_account.png"),QString::fromLocal8Bit("个人账户"),this,SLOT(slot_setButtonHelpEmitItem()));
-    pmenu2->addSeparator();
-    pmenu2->addAction(QIcon("://images/icon/setlogin.png"),QString::fromLocal8Bit("系统设置"),this,SLOT(slot_setButtonHelpEmitItem()));//注意：槽函数不加分号，且不能带参数
-    pmenu2->addSeparator();
-    pmenu2->addAction(QIcon("://images/icon/help_internet.png"),QString::fromLocal8Bit("网络资源"),this,SLOT(slot_setButtonHelpEmitItem()));//接收端使用sendor()判断
-    pmenu2->addSeparator();
-    pmenu2->addAction(QIcon("://images/icon/help_qahelp.png"),QString::fromLocal8Bit("问题帮助"),this,SLOT(slot_setButtonHelpEmitItem()));
-    pmenu2->addSeparator();
-    pmenu3->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("本地视频"),this,SLOT(slot_setButtonHelpEmitItem()));
-    pmenu3->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("网络视频"),this,SLOT(slot_setButtonHelpEmitItem()));
-    pmenu2->addMenu(pmenu3);
-    pmenu2->addSeparator();
-    pmenu2->addAction(QIcon("://images/icon/help_download.png"),QString::fromLocal8Bit("软件下载"),this,SLOT(slot_setButtonHelpEmitItem()));
-    pmenu2->addSeparator();
-    pmenu2->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("退出软件"),this,SLOT(slot_setButtonHelpEmitItem()));
+    pmenu_help1 = new QMenu(this);
+    pmenu_help1->setObjectName(QString::fromLocal8Bit("pmenu_help1"));//样式表中设置样式必须设置对象名称才能生效
+    pmenu_help2 = new QMenu(QString::fromLocal8Bit("播放视频"),this);
+    pmenu_help2->setObjectName(QString::fromLocal8Bit("pmenu_help2"));
+    pmenu_help2->setIcon(QIcon("://images/icon/help_play.png"));
+    pmenu_help1->addAction(QIcon("://images/icon/help_account.png"),QString::fromLocal8Bit("个人账户"),this,SLOT(slot_setButtonHelpEmitItem()));
+    pmenu_help1->addAction(QIcon("://images/icon/setlogin.png"),QString::fromLocal8Bit("系统设置"),this,SLOT(slot_setButtonHelpEmitItem()));//注意：槽函数不加分号，且不能带参数
+    pmenu_help1->addAction(QIcon("://images/icon/help_internet.png"),QString::fromLocal8Bit("网络资源"),this,SLOT(slot_setButtonHelpEmitItem()));//接收端使用sendor()判断
+    pmenu_help1->addAction(QIcon("://images/icon/help_qahelp.png"),QString::fromLocal8Bit("问题帮助"),this,SLOT(slot_setButtonHelpEmitItem()));
+    pmenu_help2->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("本地视频"),this,SLOT(slot_setButtonHelpEmitItem()));
+    pmenu_help2->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("网络视频"),this,SLOT(slot_setButtonHelpEmitItem()));
+    pmenu_help1->addMenu(pmenu_help2);
+    pmenu_help1->addAction(QIcon("://images/icon/help_download.png"),QString::fromLocal8Bit("软件下载"),this,SLOT(slot_setButtonHelpEmitItem()));
+    pmenu_help1->addSeparator();
+    pmenu_help1->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("退出软件"),this,SLOT(slot_setButtonHelpEmitItem()));
     int x = ui->Btnhelp->parentWidget()->mapToGlobal(ui->Btnhelp->pos()).x();
     int y = ui->Btnhelp->parentWidget()->mapToGlobal(ui->Btnhelp->pos()).y();
 //    QPoint point4 = QPoint(QCursor::pos().x()-70,QCursor::pos().y()+25);
-    pmenu2->setGeometry(x-70,y+25,pmenu2->width(),pmenu2->height());
-    pmenu2->exec();
-    delete pmenu2;
+    pmenu_help1->setGeometry(x-60,y+25,pmenu_help1->width(),pmenu_help1->height());
+    pmenu_help1->exec();
+    delete pmenu_help1;
+    delete pmenu_help2;
 }
 
 /*设置tooltip*/
@@ -435,6 +431,7 @@ void TitleBar::slot_switchToLoginPage(int mark, QString nick)
 void TitleBar::slot_setButtonHelpEmitItem()
 {
     QAction *action = qobject_cast<QAction *>(sender());
+    qDebug() << action->text();
     if(action->text() == QString::fromLocal8Bit("个人账户"))
     {
         emit sig_filesUploadDownLoad(5,4);

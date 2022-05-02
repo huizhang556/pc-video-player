@@ -2,6 +2,8 @@
 #include "ui_muteDialog.h"
 #include <QDebug>
 
+//muteDialog* muteDialog::m_pInstance = NULL;
+
 muteDialog::muteDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::muteDialog)
@@ -24,6 +26,11 @@ muteDialog::muteDialog(QWidget *parent) :
 muteDialog::~muteDialog()
 {
     delete ui;
+//    if(m_pInstance != NULL)
+//    {
+//        delete m_pInstance;
+//    }
+//    m_pInstance = NULL;
 }
 
 void muteDialog::setSpliderValue(int value)
@@ -35,6 +42,15 @@ int muteDialog::getSpliderValue()
 {
     return ui->verticalSlider->value();
 }
+
+//muteDialog* muteDialog::getInstance()
+//{
+//    if(m_pInstance == NULL)
+//    {
+//        m_pInstance = new muteDialog();
+//    }
+//    return m_pInstance;
+//}
 
 void muteDialog::leaveEvent(QEvent *event)
 {

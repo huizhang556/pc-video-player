@@ -254,10 +254,14 @@ void MusicPlaylist::slots_btnBatchModelUpdate()
 /*不用关联直接邮件可以打开*/
 void MusicPlaylist::on_tableView_songList_customContextMenuRequested(const QPoint &pos)
 {
+//    if(model_songInfo->rowCount() < 0) return;
     Q_UNUSED(pos);
     QMenu *pmenu_right = new QMenu(this);
+    pmenu_right->setObjectName(QString::fromUtf8("pmenu_right"));
     QMenu *pmenu_addto = new QMenu(QString::fromLocal8Bit("添加到"));
+    pmenu_addto->setObjectName(QString::fromUtf8("pmenu_addto"));
     QMenu *pmenu_moveto = new QMenu(QString::fromLocal8Bit("移动到"));
+    pmenu_moveto->setObjectName(QString::fromUtf8("pmenu_moveto"));
     pmenu_addto->addAction(QString::fromLocal8Bit("本地列表"),this,SLOT(slots_rightMenu_player()));
     pmenu_addto->addAction(QString::fromLocal8Bit("云端列表"),this,SLOT(slots_rightMenu_player()));
     pmenu_moveto->addAction(QString::fromLocal8Bit("我的收藏"),this,SLOT(slots_rightMenu_player()));
@@ -294,15 +298,21 @@ void MusicPlaylist::on_tableView_songList_customContextMenuRequested(const QPoin
 /*不用关联直接右键可以打开*/
 void MusicPlaylist::on_listWidget_songer_customContextMenuRequested(const QPoint &pos)
 {
+    if(ui->listWidget_songer->count() < 1) return;
     Q_UNUSED(pos);
     QMenu *pmenu_songer = new QMenu(this);
+    pmenu_songer->setObjectName(QString::fromLocal8Bit("pmenu_songer"));
     QMenu *pmenu_addto = new QMenu(QString::fromLocal8Bit("添加到"));
+    pmenu_addto->setObjectName(QString::fromLocal8Bit("pmenu_addto"));
     pmenu_addto->setIcon(QIcon("://images/music/song_add.png"));
     QMenu *pmenu_sort = new QMenu(QString::fromLocal8Bit("歌曲排序"));
+    pmenu_sort->setObjectName(QString::fromLocal8Bit("pmenu_sort"));
     pmenu_sort->setIcon(QIcon("://images/music/song_order.png"));
     QMenu *pmenu_playmode = new QMenu(QString::fromLocal8Bit("播放模式"));
+    pmenu_playmode->setObjectName(QString::fromLocal8Bit("pmenu_playmode"));
     pmenu_playmode->setIcon(QIcon("://images/music/song_playmode.png"));
     QMenu *pmenu_muctool = new QMenu(QString::fromLocal8Bit("音乐工具"));
+    pmenu_muctool->setObjectName(QString::fromLocal8Bit("pmenu_muctool"));
     pmenu_muctool->setIcon(QIcon("://images/music/song_tools.png"));
 
     pmenu_addto->addAction(QString::fromLocal8Bit("本地列表"),this,SLOT(slots_rightMenu_player()));
@@ -346,6 +356,130 @@ void MusicPlaylist::on_listWidget_songer_customContextMenuRequested(const QPoint
     pmenu_songer->addMenu(pmenu_muctool);
     pmenu_songer->exec(QCursor::pos());
     delete pmenu_songer;
+}
+
+//播放
+void MusicPlaylist::slot_listWidget_songer_Play()
+{
+    QPushButton *playBtn = qobject_cast<QPushButton *>(sender());
+//    qDebug() << playBtn->parentWidget()->objectName();
+    if(!playBtn)
+    {
+        return;
+    }
+    for(int i =0; i < ui->listWidget_songer->count(); i++)
+    {
+        if(playBtn->parentWidget()->parentWidget()->parentWidget() == ui->listWidget_songer->itemWidget(ui->listWidget_songer->item(i)))
+        {
+            qDebug() << ui->listWidget_songer->itemWidget(ui->listWidget_songer->item(i))->objectName();
+            qDebug() << playBtn->objectName();
+        }
+    }
+}
+
+//播放MV
+void MusicPlaylist::slot_listWidget_songer_MV()
+{
+    QPushButton *mvBtn = qobject_cast<QPushButton*>(sender());
+    if(!mvBtn)
+    {
+        return;
+    }
+    for(int i =0; i < ui->listWidget_songer->count(); i++)
+    {
+        if(mvBtn->parentWidget()->parentWidget()->parentWidget() == ui->listWidget_songer->itemWidget(ui->listWidget_songer->item(i)))
+        {
+            qDebug() << mvBtn->objectName();
+        }
+    }
+}
+
+//收藏
+void MusicPlaylist::slot_listWidget_songer_Collect()
+{
+    QPushButton *collectBtn = qobject_cast<QPushButton*>(sender());
+    if(!collectBtn)
+    {
+        return;
+    }
+    for(int i =0; i < ui->listWidget_songer->count(); i++)
+    {
+        if(collectBtn->parentWidget()->parentWidget()->parentWidget() == ui->listWidget_songer->itemWidget(ui->listWidget_songer->item(i)))
+        {
+            qDebug() << collectBtn->objectName();
+        }
+    }
+}
+
+//下载
+void MusicPlaylist::slot_listWidget_songer_Download()
+{
+    QPushButton *downloadBtn = qobject_cast<QPushButton*>(sender());
+    if(!downloadBtn)
+    {
+        return;
+    }
+    for(int i =0; i < ui->listWidget_songer->count(); i++)
+    {
+        if(downloadBtn->parentWidget()->parentWidget()->parentWidget() == ui->listWidget_songer->itemWidget(ui->listWidget_songer->item(i)))
+        {
+            qDebug() << downloadBtn->objectName();
+        }
+    }
+}
+
+//删除
+void MusicPlaylist::slot_listWidget_songer_Delete()
+{
+    QPushButton *deletedBtn = qobject_cast<QPushButton*>(sender());
+    if(!deletedBtn)
+    {
+        return;
+    }
+    for(int i =0; i < ui->listWidget_songer->count(); i++)
+    {
+        if(deletedBtn->parentWidget()->parentWidget()->parentWidget() == ui->listWidget_songer->itemWidget(ui->listWidget_songer->item(i)))
+        {
+            QListWidgetItem *delItem = ui->listWidget_songer->item(i);
+            ui->listWidget_songer->removeItemWidget(ui->listWidget_songer->item(i));
+            delete delItem;//手动释放内存
+            qDebug() << deletedBtn->objectName();
+        }
+    }
+}
+
+//更多信息
+void MusicPlaylist::slot_listWidget_songer_More()
+{
+    QPushButton *moreBtn = qobject_cast<QPushButton*>(sender());
+    if(!moreBtn)
+    {
+        return;
+    }
+    for(int i =0; i < ui->listWidget_songer->count(); i++)
+    {
+        if(moreBtn->parentWidget()->parentWidget()->parentWidget() == ui->listWidget_songer->itemWidget(ui->listWidget_songer->item(i)))
+        {
+            qDebug() << moreBtn->objectName();
+        }
+    }
+}
+
+//音质
+void MusicPlaylist::slot_listWidget_songer_Quality()
+{
+    QPushButton *qualityBtn = qobject_cast<QPushButton*>(sender());
+    if(!qualityBtn)
+    {
+        return;
+    }
+    for(int i =0; i < ui->listWidget_songer->count(); i++)
+    {
+        if(qualityBtn->parentWidget()->parentWidget() == ui->listWidget_songer->itemWidget(ui->listWidget_songer->item(i)))
+        {
+            qDebug() << qualityBtn->objectName();
+        }
+    }
 }
 
 /*播放当前歌曲*/
@@ -410,39 +544,55 @@ bool MusicPlaylist::slots_addSonersToPage2(const QStringList &list)
     Q_UNUSED(list);
     for(int i = 0; i < 60; i++)
     {
-        QListWidgetItem *item  = new QListWidgetItem();
-        SongItemForm *son_item = new SongItemForm(QString::fromLocal8Bit("%1").arg(i+1),
+        QListWidgetItem  *item  = new QListWidgetItem(ui->listWidget_songer);
+        son_item = new SongItemForm(QString::fromLocal8Bit("%1").arg(i+1),
                                                   QString::fromLocal8Bit("%1林俊杰&&张英俊&&张辉&&群星").arg(i+1),
                                                   true,
                                                   QString::fromLocal8Bit("张辉").arg(i+1),
-                                                  QString::fromLocal8Bit("天使之约").arg(i+1));
+                                                  QString::fromLocal8Bit("天使之约").arg(i+1),
+                                                  this);
         item->setSizeHint(QSize(son_item->size().width(),son_item->size().height()-8));//在此可以微调整item的宽高
         ui->listWidget_songer->addItem(item);
         ui->listWidget_songer->setItemWidget(item,son_item);
 
+
+        //播放
+        connect(son_item,&SongItemForm::sig_son_playbtn_clicked,[=](int index){
+            slot_listWidget_songer_Play();
+            qDebug() << "received on_son_playbtn_clicked = " << index;
+        });
         //播放视频MV
-        connect(son_item,&SongItemForm::on_son_mvbtn_clicked,[=](int index){
-            qDebug() << "on_son_mvbtn_clicked = " << index;
+        connect(son_item,&SongItemForm::sig_son_mvbtn_clicked,[=](int index){
+            slot_listWidget_songer_MV();
+            qDebug() << "received on_son_mvbtn_clicked = " << index;
         });
         //收藏
-        connect(son_item,&SongItemForm::on_son_collectbtn_clicked,[=](int index){
-            qDebug() << "on_son_collectbtn_clicked = " << index;
+        connect(son_item,&SongItemForm::sig_son_collectbtn_clicked,[=](int index){
+            slot_listWidget_songer_Collect();
+            qDebug() << "received on_son_collectbtn_clicked = " << index;
         });
         //删除
-        connect(son_item,&SongItemForm::on_son_deletebtn_clicked,[=](int index){//index总是比真实索引大1
-            qDebug() << "on_son_deletebtn_clicked = " << index;
-            QListWidgetItem *delItem = ui->listWidget_songer->item(index-1);
-            ui->listWidget_songer->takeItem(index-1);
-            delete delItem;//手动释放内存
-            sortCurrentIndex(index);
+        connect(son_item,&SongItemForm::sig_son_deletebtn_clicked,[=](int index){//index总是比真实索引大1
+            slot_listWidget_songer_Delete();
+            qDebug() << "received on_son_deletebtn_clicked = " << index;
+
+//            sortCurrentIndex(index);
         });
         //下载
-        connect(son_item,&SongItemForm::on_son_downloadbtn_clicked,[=](int index){
-            qDebug() << "on_son_downloadbtn_clicked = " << index;
+        connect(son_item,&SongItemForm::sig_son_downloadbtn_clicked,[=](int index){
+            slot_listWidget_songer_Download();
+            qDebug() << "received on_son_downloadbtn_clicked = " << index;
         });
         //更多信息
-        connect(son_item,&SongItemForm::on_son_morebtn_clicked,[=](int index){
-            qDebug() << "on_son_morebtn_clicked = " << index;
+        connect(son_item,&SongItemForm::sig_son_morebtn_clicked,[=](int index){
+            slot_listWidget_songer_More();
+            qDebug() << "received on_son_morebtn_clicked = " << index;
+        });
+
+        //音质
+        connect(son_item,&SongItemForm::sig_son_qualityBtn_clicked,[=](int index){
+            slot_listWidget_songer_More();
+            qDebug() << "received on_son_qualitybtn_clicked = " << index;
         });
     }
 

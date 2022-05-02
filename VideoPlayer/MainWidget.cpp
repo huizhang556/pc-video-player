@@ -1,11 +1,13 @@
 ﻿#include "MainWidget.h"
 #include <QDebug>
-#include <QMenu>
 #include <QSqlQuery>
 #include <QMessageBox>
+#include <QActionGroup>
+#include <QWidgetAction>
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
+    m_isHide(false),
     m_winMax(false),
     m_firstOpen(true)
 {
@@ -16,6 +18,7 @@ MainWidget::MainWidget(QWidget *parent) :
     initOtherWidgetUi();//初始化界面
     setStackedWidgetPage();//设置StackedWidget布局每个page界面
     chandleSignalAndSlots();//处理所有的信号与槽函数
+
 }
 
 //初始化界面
@@ -39,11 +42,16 @@ void MainWidget::initOtherWidgetUi()
     m_leftSideBar->setSlideBarListText(list);
     m_leftSideBar->setFixedWidth(170);
 
-    m_stackWidget = new QStackedWidget(this);
-    m_stackWidget->setCurrentIndex(0);//默认显示第一个page页
-    m_stackWidget->setObjectName(QString::fromLatin1("m_stackWidget"));
-
+    m_stackWidget_center = new QStackedWidget(this);
+    m_stackWidget_center->setObjectName(QString::fromLatin1("m_stackWidget_center"));
+    m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
+    m_stackWidget_center->installEventFilter(this);//安装事件监听器
     //QStackedWidget此处不能指定父参数，否则界面会出问题
+
+    m_leftButton = new QPushButton(m_stackWidget_center);
+    m_leftButton->setObjectName(QString::fromLocal8Bit("m_leftButton"));
+    m_leftButton->setFixedSize(20,50);
+
     m_mainPlayer = new MultipPlayer();
     m_mainPlayer->setObjectName(QString::fromLatin1("m_mainPlayer"));
 
@@ -79,35 +87,42 @@ void MainWidget::initOtherWidgetUi()
     //托盘
     QIcon icno(":/images/icon/tray.png");
     m_tray = new QSystemTrayIcon(icno,this);
-    m_tray->setToolTip(QString::fromLocal8Bit("播放器"));
+    m_tray->setToolTip(QString::fromLocal8Bit("辉婕播放器"));
     m_tray->show();
     createTrayMenu();
+
+    m_stackWidget_left = new QStackedWidget(this);
+    m_stackWidget_left->setObjectName(QString::fromLocal8Bit("m_stackWidget_left"));
+    m_stackWidget_left->setFixedWidth(170);//固定宽度170
+    m_stackWidget_left->insertWidget(0,m_leftSideBar);
 
     m_vblayout = new QVBoxLayout(this);
     m_hblayout = new QHBoxLayout(this);
     //侧边栏+QStackedWidget--->水平布局
-    m_hblayout->addWidget(m_leftSideBar,0,Qt::AlignLeft);
-//    m_hblayout->addWidget(m_stackWidget,1,Qt::AlignCenter);//此处不能添加布局，否则导致界面错乱
-    m_hblayout->addWidget(m_stackWidget);
+    m_hblayout->addWidget(m_stackWidget_left,0,Qt::AlignLeft);
+//    m_hblayout->addWidget(m_stackWidget_center,1,Qt::AlignCenter);//此处不能添加布局，否则导致界面错乱
+    m_hblayout->addWidget(m_stackWidget_center);
     m_hblayout->setSpacing(0);
     m_hblayout->setContentsMargins(0,0,0,0);
+    m_hblayout->setMargin(0);
     //标题栏+水平布局--->垂直布局
     m_vblayout->addWidget(m_titleBar,0,Qt::AlignTop);
     m_vblayout->addLayout(m_hblayout,1);
-    m_vblayout->setContentsMargins(2,2,2,2);//左 上 右 下
+    m_vblayout->setContentsMargins(2,2,2,2);
     m_vblayout->setSpacing(0);
+    m_hblayout->setMargin(0);
     this->setLayout(m_vblayout);
 }
 
 //设置StackedWidget布局每个page界面
 void MainWidget::setStackedWidgetPage()
 {
-    m_stackWidget->insertWidget(0,m_homeWdgt);//m_mainShowForm
-    m_stackWidget->insertWidget(1,m_webBrowser);//cuswebbrowser
-    m_stackWidget->insertWidget(2,m_tabWidget);//m_tabWidget
-    m_stackWidget->insertWidget(3,m_musicShow);//musicshow
-    m_stackWidget->insertWidget(4,m_musicList);//musiclist
-    m_stackWidget->insertWidget(5,m_personForm);//personform 个人管理
+    m_stackWidget_center->insertWidget(0,m_homeWdgt);//m_mainShowForm
+    m_stackWidget_center->insertWidget(1,m_webBrowser);//cuswebbrowser
+    m_stackWidget_center->insertWidget(2,m_tabWidget);//m_tabWidget
+    m_stackWidget_center->insertWidget(3,m_musicShow);//musicshow
+    m_stackWidget_center->insertWidget(4,m_musicList);//musiclist
+    m_stackWidget_center->insertWidget(5,m_personForm);//personform 个人管理
 }
 
 //处理信号与槽函数
@@ -135,12 +150,12 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_titleBar,SIGNAL(sig_sendUrlHome()),m_webBrowser,SLOT(slots_home()));
     //上传下载
     connect(m_titleBar,&TitleBar::sig_filesUploadDownLoad,[=](int index1,int index2){
-       m_stackWidget->setCurrentIndex(index1);//个人信息界面
+       m_stackWidget_center->setCurrentIndex(index1);//个人信息界面
        m_personForm->getCurrentShowWidget_TW()->setCurrentIndex(index2);
     });
     //历史记录
     connect(m_titleBar,&TitleBar::sig_historyDownload,[=](int index1,int index2){
-        m_stackWidget->setCurrentIndex(index1);//个人信息界面
+        m_stackWidget_center->setCurrentIndex(index1);//个人信息界面
         m_personForm->getCurrentShowWidget_TW()->setCurrentIndex(index2);
     });
 
@@ -157,8 +172,12 @@ void MainWidget::chandleSignalAndSlots()
     //侧边栏有关信号与槽函数处理
     connect(m_leftSideBar,&LeftSideBar::sig_sidebarItemChange,[=](int index)
     {
-        m_stackWidget->setCurrentIndex(index);
+        m_stackWidget_center->setCurrentIndex(index);
         m_titleBar->isNecessaryShowSearch(index);
+    });
+    //左侧边栏控制显示/隐藏的按钮
+    connect(m_leftButton,&QPushButton::clicked,[=](){
+        slot_on_leftButton_clicked();
     });
     connect(this,SIGNAL(sig_winStatus(bool)),m_titleBar,SLOT(chandleMainWinStatus(bool)));//标题栏处理不同状态下样式
     //空白页---打开文件
@@ -167,25 +186,88 @@ void MainWidget::chandleSignalAndSlots()
         m_mainPlayer->openLocalFile();
         m_mainPlayer->show();
     });
+    //托盘action组
+    connect(m_actionGroup,&QActionGroup::triggered,[=](QAction *action)
+    {
+        tray_getCurrentPlayOrder(action);//发送信号
+        tray_setCurrentPlayOrderStatus(action);
+    });
+
+    //播放次序选择界面接收信号
+    connect(this,SIGNAL(sig_trayPlayOrder(int)),PlayOrderForm::getInstance(),SLOT(clearAndSetButtonCheckedStatus(int)));
+    //接收西蹙选择界面发送过来信号
+    connect(PlayOrderForm::getInstance(),SIGNAL(sig_playerOrder(int)),this,SLOT(tray_setCurrentPlayOrderStatus(int)));
+    //托盘---上一首
+    connect(m_systemTray,SIGNAL(sig_playStatusPrevious()),m_mainPlayer,SLOT(on_pushButton_previous_clicked()));
+    //托盘---下一首
+    connect(m_systemTray,SIGNAL(sig_playStatusNext()),m_mainPlayer,SLOT(on_pushButton_next_clicked()));
+    //托盘---播放/暂停
+    connect(m_systemTray,SIGNAL(sig_playStatusPause(bool)),m_mainPlayer,SLOT(on_pushButton_pauseStart_clicked()));
+    //接收播放器发送的播放暂停
+    connect(m_mainPlayer,SIGNAL(sig_currentMediaPlayStatus(bool)),m_systemTray,SLOT(slot_setCurrentPlayStatus(bool)));
+    //接收主界面（实际是音量界面发过来的值，做了中转）的音量值
+    connect(m_mainPlayer,SIGNAL(sig_currentMediaSoundValueChange(int)),m_systemTray,SLOT(slot_setCurrentPlaySoundValue(int)));
+    //托盘---音量值改变-->播放界面值改变
+    connect(m_systemTray,SIGNAL(sig_playProgressValue(int)),m_mainPlayer,SLOT(receiveSystemTraySendSoundValue(int)));
+    //静音按钮
+    connect(m_systemTray,SIGNAL(sig_playStatusMuted(bool)),m_mainPlayer,SLOT(on_setCurrentMediaSoundSatus()));
 }
 
 /*槽函数：托盘菜单*/
 void MainWidget::createTrayMenu()
 {
-    QMenu *pmenu = new QMenu(this);
-    pmenu->setStyleSheet("font-size:12px;"
-                         "background-color:#3d3d3d;"
-                         "color:green;");//font:bold italic 18px "微软雅黑";
-    pmenu->addAction(QString::fromLocal8Bit("显示主界面"),this,SLOT(tray_showMainWidget()));
-    pmenu->addSeparator();
-    pmenu->addAction(QString::fromLocal8Bit("上一首"),this,SLOT(on_pushButton_previous_clicked()));
-    pmenu->addSeparator();
-    pmenu->addAction(QString::fromLocal8Bit("下一首"),this,SLOT(on_pushButton_next_clicked()));
-    pmenu->addSeparator();
-    pmenu->addAction(QString::fromLocal8Bit("暂停/播放"),this,SLOT(pushButton_pauseStart()));
-    pmenu->addSeparator();
-    pmenu->addAction(QString::fromLocal8Bit("退出"),this,SLOT(close()));//注意消息阻塞
-    m_tray->setContextMenu(pmenu);
+    m_menuTray = new QMenu(this);
+    m_menuTray->setObjectName(QString::fromLocal8Bit("m_menuTray"));//设置样式用
+    m_systemTray = new SystemTray(this);//必须new 出来，不能获取单例方式
+    m_playMode = new  QMenu(QString::fromLocal8Bit("播放模式"));
+    m_playMode->setObjectName(QString::fromLocal8Bit("m_playMode"));
+    m_playMode->setIcon(QIcon("://images/tray/tray_playmode.png"));
+    m_actionGroup = new QActionGroup(this);
+    m_actionGroup->setExclusive(true);
+    m_actionGroup->setObjectName(QString::fromLocal8Bit("m_actionGroup"));
+    QAction *onceAction = new QAction(QString::fromLocal8Bit("单曲循环"));
+    onceAction->setCheckable(true);
+    QAction *sequAction = new QAction(QString::fromLocal8Bit("顺序播放"));
+    sequAction->setCheckable(true);
+    QAction *loopAction = new QAction(QString::fromLocal8Bit("循环播放"));
+    loopAction->setCheckable(true);
+    loopAction->setChecked(true);//默认循环播放
+    QAction *rankAction = new QAction(QString::fromLocal8Bit("随机播放"));
+    rankAction->setCheckable(true);
+    m_playMode->addAction(onceAction);
+    m_playMode->addAction(sequAction);
+    m_playMode->addAction(loopAction);
+    m_playMode->addAction(rankAction);
+    //使用组容器以便达到互斥
+    m_actionGroup->addAction(onceAction);
+    m_actionGroup->addAction(sequAction);
+    m_actionGroup->addAction(loopAction);
+    m_actionGroup->addAction(rankAction);
+
+    QWidgetAction *wgtAction = new QWidgetAction(m_menuTray);//还可以子类化QWidgetAction，paintEvent()重绘
+    wgtAction->setDefaultWidget(m_systemTray);
+//    m_menuTray->setStyleSheet("QMenu{"
+//                              "background-color:white;"
+//                              "color:#cdcdcd;"
+//                              "font:bold normal 15px '微软雅黑';"
+//                              "border:1px solid transparent;"
+//                              "}");//font:bold italic 18px "微软雅黑";
+//    m_playMode->setStyleSheet("QMenu{"
+//                              "background-color:white;"
+//                              "color:#cdcdcd;"
+//                              "font:bold normal 15px '微软雅黑';"
+//                              "border:1px solid transparent;"
+//                              "}");//font:bold italic 18px "微软雅黑";
+    m_menuTray->addAction(wgtAction);
+    m_menuTray->addAction(QIcon("://images/tray/tray_home.png"),QString::fromLocal8Bit("显示主界面"),this,SLOT(tray_showMainWidget()));
+    m_menuTray->addMenu(m_playMode);//添加 子菜单 播放模式
+    m_menuTray->addAction(QIcon("://images/tray/tray_lyric.png"),QString::fromLocal8Bit("显示桌面歌词"),this,SLOT(tray_showDesktopLyric()));
+    m_menuTray->addAction(QIcon("://images/tray/tray_setting.png"),QString::fromLocal8Bit("设置"),this,SLOT(tray_systemSettting()));
+    m_menuTray->addAction(QIcon("://images/tray/tray_upgrade.png"),QString::fromLocal8Bit("在线升级"),this,SLOT(tray_onlineUpgrade()));//注意消息阻塞
+    m_menuTray->addAction(QIcon("://images/tray/tray_logout.png"),QString::fromLocal8Bit("退出登录"),this,SLOT(tray_systemLogout()));
+    m_menuTray->addSeparator();
+    m_menuTray->addAction(QIcon("://images/tray/tray_exit.png"),QString::fromLocal8Bit("退出软件"),this,SLOT(tray_systemExitSoftware()));
+    m_tray->setContextMenu(m_menuTray);
 }
 
 /*处理设置按钮发过来的信号*/
@@ -266,20 +348,116 @@ void MainWidget::help_aboutNetworklFile()
 /*私有槽函数：显示主界面*/
 void MainWidget::tray_showMainWidget()
 {
-    if(!this->isHidden())
+        this->showNormal();
+    qDebug() << "this is show";
+}
+
+void MainWidget::tray_showDesktopLyric()
+{
+    QMessageBox::information(this,QString::fromLocal8Bit("功能提示"),QString::fromLocal8Bit("功能暂未开放，敬请期待！"));
+}
+
+void MainWidget::tray_systemSettting()
+{
+    help_stemAboutSetting();
+}
+
+void MainWidget::tray_onlineUpgrade()
+{
+    QMessageBox::information(this,QString::fromLocal8Bit("更新提示"),QString::fromLocal8Bit("请前往官网下载更新！"));
+}
+
+void MainWidget::tray_systemLogout()
+{
+    QMessageBox::information(this,QString::fromLocal8Bit("登出提示"),QString::fromLocal8Bit("您已成功退出登录！"));
+}
+
+void MainWidget::tray_systemExitSoftware()
+{
+    this->close();
+}
+
+void MainWidget::tray_setCurrentPlayOrderStatus(QAction *sendAction)
+{
+    sendAction->setChecked(true);
+    qDebug() << sendAction->text();
+}
+
+void MainWidget::tray_setCurrentPlayOrderStatus(int index)
+{
+    m_actionGroup->actions().at(index-1)->setChecked(true);//互斥组内相互互斥，前提是设置checkable
+}
+
+
+void MainWidget::tray_getCurrentPlayOrder(QAction *sendAction)
+{
+    int num = 0;
+    if(sendAction->text() == QString::fromLocal8Bit("单曲循环"))
     {
-        this->show();
+        num = 1;
     }
-    else
+    else if(sendAction->text() == QString::fromLocal8Bit("顺序播放"))
     {
-        this->hide();
+        num = 2;
     }
+    else if(sendAction->text() == QString::fromLocal8Bit("循环播放"))
+    {
+        num = 3;
+    }
+    else if(sendAction->text() == QString::fromLocal8Bit("随机播放"))
+    {
+        num = 4;
+    }
+    emit sig_trayPlayOrder(num);
+    qDebug() << "play order  = " << num;
 }
 
 /*设置全局tooltip*/
 void MainWidget::setGlobalToolTip()
 {
 
+}
+
+//左侧边栏点击判断
+void MainWidget::slot_on_leftButton_clicked()
+{
+    if(m_isHide)
+    {
+        m_stackWidget_left->show();
+        updateLeftButtonGeometry();
+        setLeftButtonStyleSheetStatus();
+        m_leftButton->hide();
+    }
+    else
+    {
+        m_stackWidget_left->hide();
+        updateLeftButtonGeometry();
+        setLeftButtonStyleSheetStatus();
+        m_leftButton->hide();
+    }
+    m_isHide = !m_isHide;//状态置反
+}
+
+//更新左侧边栏按钮样式
+void MainWidget::setLeftButtonStyleSheetStatus()
+{
+    if(!m_isHide)
+    {
+        m_leftButton->setStyleSheet("QPushButton{background:rgba(81,81,81,0.3) url(:/images/icon/arrow_left.png) no-repeat center center;border:none;}");
+    }
+    else
+    {
+        m_leftButton->setStyleSheet("QPushButton{background:rgba(81,81,81,0.3) url(:/images/icon/arrow_right.png) no-repeat center center;border:none;}");
+    }
+}
+
+//更新左侧边栏按钮位置
+void MainWidget::updateLeftButtonGeometry()
+{
+    m_leftButton->setGeometry(0,
+                              m_stackWidget_center->height()/2 - m_leftButton->height()/2,
+                              25,60);
+    m_leftButton->raise();
 }
 
 /*处理窗口还原*/
@@ -307,7 +485,26 @@ MainWidget::~MainWidget()
   delete m_tabWidget;
   delete m_webBrowser;
   delete m_videoBlank;
-  delete m_mainPlayer;
+    delete m_mainPlayer;
+}
+
+/*事件过滤器*/
+bool MainWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == m_stackWidget_center)
+    {
+        if(event->type() == QEvent::Enter)
+        {
+            updateLeftButtonGeometry();
+            setLeftButtonStyleSheetStatus();
+            m_leftButton->show();
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+            m_leftButton->hide();
+        }
+    }
+    return QWidget::eventFilter(watched,event);
 }
 
 void MainWidget::mousePressEvent(QMouseEvent *event)
@@ -376,7 +573,7 @@ void MainWidget::changeEvent(QEvent *event)
         {
         case QEvent::WindowStateChange:
             {
-                this->update();
+                this->update();//触发重绘事件
                 this->repaint();
                 event->ignore();
                 break;
@@ -454,16 +651,18 @@ void MainWidget::setCursorType(int flag)
         break;
     case 13:
     case 31:
-        setCursor(Qt::SizeBDiagCursor);break;
+        setCursor(Qt::SizeBDiagCursor);break;//左下 右上
     case 21:
     case 23:
-        setCursor(Qt::SizeHorCursor);break;
+        setCursor(Qt::SizeHorCursor);break;//最左 最右
     case 12:
     case 32:
-        setCursor(Qt::SizeVerCursor);break;
+        setCursor(Qt::SizeVerCursor);break;//最上 最下
     case 22:
-        setCursor(Qt::ArrowCursor);
+        setCursor(Qt::ArrowCursor);//正常区域
         QApplication::restoreOverrideCursor();//恢复鼠标指针性状
+        break;
+    default:
         break;
     }
 }

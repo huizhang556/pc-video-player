@@ -1,4 +1,7 @@
 ﻿#include "CentralHomeForm.h"
+#include <QDebug>
+#include <QScrollBar>
+#include <QListView>
 #include <QListWidgetItem>
 
 CentralHomeForm::CentralHomeForm(QWidget *parent) :
@@ -20,6 +23,14 @@ void CentralHomeForm::initWorkUI()
 
     m_homeListWidget = new QListWidget(this);
     m_homeListWidget->setObjectName(QString::fromLocal8Bit("m_homeListWidget"));
+    //默认按每次一个item滚动,另一个默认按每次一个像素滚动
+    m_homeListWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);//按照像素滚动
+
+    //底部按钮
+    m_bottomBtn = new QPushButton(m_homeListWidget);//指定父窗口，可以使用相对坐标
+    m_bottomBtn->setObjectName(QString::fromLocal8Bit("m_bottomBtn"));
+    m_bottomBtn->setFixedSize(50,50);
+    m_bottomBtn->setHidden(true);//指定父窗口默认是显示的，需要隐藏
 
     m_vBlayout = new QVBoxLayout(this);
     m_vBlayout->setObjectName(QString::fromLocal8Bit("m_vBlayout"));
@@ -32,7 +43,10 @@ void CentralHomeForm::initWorkUI()
 
 void CentralHomeForm::chandleSignalsAndSLots()
 {
-
+    connect(m_homeListWidget->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(makeBottomButton(int)));
+    connect(m_bottomBtn,&QPushButton::clicked,[=](){
+        m_homeListWidget->scrollToTop();//返回到顶部 scrollToBottom();
+    });
 }
 
 void CentralHomeForm::addWidgetToListWidget()
@@ -77,6 +91,38 @@ void CentralHomeForm::addWidgetToListWidget()
     item5->setSizeHint(pitem5->size());
     m_homeListWidget->addItem(item5);
     m_homeListWidget->setItemWidget(item5,pitem5);
+
+    QListWidgetItem *item6 = new QListWidgetItem();
+    GalleryItemForm *pitem6 = new GalleryItemForm();
+    pitem6->setHeaderTitle(QString::fromLocal8Bit("我的附近"));
+    item6->setSizeHint(pitem6->size());
+    m_homeListWidget->addItem(item6);
+    m_homeListWidget->setItemWidget(item6,pitem6);
+
+    QListWidgetItem *item7 = new QListWidgetItem();
+    GalleryItemForm *pitem7 = new GalleryItemForm();
+    pitem7->setHeaderTitle(QString::fromLocal8Bit("好剧推荐"));
+    item7->setSizeHint(pitem7->size());
+    m_homeListWidget->addItem(item7);
+    m_homeListWidget->setItemWidget(item7,pitem7);
+
+    QListWidgetItem *item8 = new QListWidgetItem();
+    QWidget *subWidget = new QWidget();
+    QLineEdit *subEdit = new QLineEdit();
+    subEdit->setPlaceholderText(QString::fromLocal8Bit("点我反馈"));
+    QPushButton *submitBtn = new QPushButton(QString::fromLocal8Bit("提交"));
+    QHBoxLayout *hblayout = new QHBoxLayout();
+    subEdit->setMinimumSize(300,36);
+    subEdit->setMaximumSize(300,36);
+    submitBtn->setFixedSize(50,36);
+    hblayout->addWidget(subEdit);
+    hblayout->addWidget(submitBtn);
+    subWidget->setLayout(hblayout);
+    subWidget->setFixedSize(350,36);
+    hblayout->layout()->setMargin(0);
+    item8->setSizeHint(subWidget->size());
+    m_homeListWidget->addItem(item8);
+    m_homeListWidget->setItemWidget(item8,subWidget);
 }
 
 void CentralHomeForm::resizeEvent(QResizeEvent *event)
@@ -84,4 +130,29 @@ void CentralHomeForm::resizeEvent(QResizeEvent *event)
 //    QListWidgetItem *item = m_homeListWidget->item(0);//得到第一项item
 ////    m_homeListWidget->setMinimumHeight(m_homeListWidget->sizeHintForRow(0));
 //    item->setSizeHint(QSize(this->width(),m_homeListWidget->sizeHintForRow(0)));
+    //    m_homeListWidget->updateGeometries();//更新所有itemWidget的布局
+    updateBottomButtonGeometry();
+}
+
+//判断滚动条位置，适时出现
+void CentralHomeForm::makeBottomButton(int value)
+{
+//    qDebug() << "value ==" << value;
+    if(value > m_homeListWidget->item(0)->sizeHint().height())
+    {
+        updateBottomButtonGeometry();
+        m_bottomBtn->show();
+    }
+    else if(value < m_homeListWidget->item(0)->sizeHint().height())
+    {
+        updateBottomButtonGeometry();
+        m_bottomBtn->hide();
+    }
+}
+
+void CentralHomeForm::updateBottomButtonGeometry()
+{
+    m_bottomBtn->setGeometry(m_homeListWidget->width()-m_bottomBtn->width()-10,
+                             m_homeListWidget->height() - m_bottomBtn->height()-10,
+                             m_bottomBtn->width(),m_bottomBtn->height());
 }

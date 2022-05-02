@@ -3,11 +3,13 @@
 
 #include "SongItemForm.h"
 #include "delegate/Delegate.h"
+#include <QMenu>
 #include <QWidget>
 #include <QAction>
 #include <QSqlTableModel>
 #include <QPushButton>
 #include <QHBoxLayout>
+#include <QListWidgetItem>
 
 namespace Ui {
 class MusicPlaylist;
@@ -20,7 +22,7 @@ class MusicPlaylist : public QWidget
 public:
     explicit MusicPlaylist(QWidget *parent = nullptr);
     ~MusicPlaylist();
-    void sortCurrentIndex(int index);
+    void    sortCurrentIndex(int index);
     QString addPrefixNum(QString num);
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
@@ -78,12 +80,27 @@ private slots:
 
    void on_listWidget_songer_customContextMenuRequested(const QPoint &pos);
 
+   void slot_listWidget_songer_Play();//播放处理
+
+   void slot_listWidget_songer_MV();//播放MV处理
+
+   void slot_listWidget_songer_Collect();//收藏
+
+   void slot_listWidget_songer_Download();//下载
+
+   void slot_listWidget_songer_Delete();//删除
+
+   void slot_listWidget_songer_More();//更多信息
+
+   void slot_listWidget_songer_Quality();//音质
 private:
     Ui::MusicPlaylist *ui;
 //    QAction         *m_songAction;
+    QMenu                   *pmenu_right          = nullptr;
+    QSqlTableModel          *model_songInfo       = nullptr;
+    Delegate                *delegate             = nullptr;
+    SongItemForm            *son_item             = nullptr;
 
-    QSqlTableModel          *model_songInfo       =   nullptr;
-    Delegate                *delegate             =   nullptr;
 };
 
 #endif // MUSICPLAYLIST_H

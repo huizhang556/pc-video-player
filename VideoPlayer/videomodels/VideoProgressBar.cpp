@@ -25,6 +25,10 @@ VideoProgressBar::VideoProgressBar(QWidget *parent) :
 VideoProgressBar::~VideoProgressBar()
 {
     delete ui;
+    //删除创建的单例
+    if(m_pInstance != NULL)
+        delete m_pInstance;
+    m_pInstance = NULL;
 }
 
 /*获取唯一单例*/
