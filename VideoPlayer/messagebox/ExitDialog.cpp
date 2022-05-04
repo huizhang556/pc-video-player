@@ -25,18 +25,7 @@ ExitDialog::ExitDialog(QWidget *parent) :
     ui->pushButton_ok->setFocus();//显示选中状态
     ui->pushButton_ok->setDefault(1);//按回车会关闭窗口
     ui->pushButton_ok->setStyleSheet("border:2px solid #9e9e9e;background-color:rgb(101,210,105);font-size:14px;");
-
-    /**********release时候用这行代码***************/
-//    QString exepath = qApp->applicationDirPath();
-//    m_iniPath = exepath + "/config/config.ini";
-
-    /***********debug时候用这行代码****************/
-    m_iniPath = "E:\\QtProjects\\000QtDemo_51ctodemo\\04_20SubVideoPlayer\\VideoPlayer\\config\\config.ini";//windows(只读不能写)下放在资源文件下，永远不会因为路径改变而不生效；Linux下就写成./形式
-
-//    qDebug()<<"config  file path:"<<m_iniPath;
-//    qDebug()<<"currentPath:"<<QDir::currentPath();
-//    qDebug()<<"dir path = "<<QApplication::applicationDirPath();
-//    qDebug()<<"file path = "<<QApplication::applicationFilePath();
+    m_iniPath = Global::appDirPath + "/config/config.ini";
     //此处有bug,只要点击，不管沟上还是没有勾上，都是设置为 1
 //    connect(ui->checkBox,&QCheckBox::clicked,[=](){
 

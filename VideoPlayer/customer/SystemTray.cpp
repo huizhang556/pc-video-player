@@ -64,6 +64,7 @@ void SystemTray::chandleSignalsAndSlots()
     });
     //静音/打开信号
     connect(ui->pushButton_mute,&QPushButton::clicked,[=](){
+            if(ui->horizontalSlider_sound->value() == 0) return;
         slot_setCurrentMediaMutedStyleSheet();//只更新样式
         emit sig_playStatusMuted(m_soundStatus);
         qDebug() <<"emit sig_playStatusMuted()" << m_soundStatus;
@@ -103,7 +104,6 @@ void SystemTray::slot_setCurrentPlaySoundValue(int value)
 
 void SystemTray::slot_setCurrentMediaMutedStyleSheet()
 {
-    if(ui->horizontalSlider_sound->value() == 0) return;
     if(m_soundStatus)
     {
         ui->pushButton_mute->setStyleSheet("QPushButton{"

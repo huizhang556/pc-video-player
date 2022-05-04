@@ -12,6 +12,7 @@ TARGET = VideoPlayer
 TEMPLATE = app
 RC_ICONS = favicon.ico
 
+
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -36,6 +37,7 @@ HEADERS += \
 include($$PWD/skin/skin.pri)
 include($$PWD/style/style.pri)
 include($$PWD/login/login.pri)
+include($$PWD/global/global.pri)
 include($$PWD/lunbotu/lunbotu.pri)
 include($$PWD/network/network.pri)
 include($$PWD/browser/browser.pri)

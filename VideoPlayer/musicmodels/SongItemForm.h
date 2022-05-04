@@ -23,7 +23,6 @@ protected:
     void leaveEvent(QEvent *event) override;
 private slots:
     void slot_setSongCollectStatus(bool status);
-    void slot_printSenderName();
 
 private:
     Ui::SongItemForm *ui;

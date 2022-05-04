@@ -337,7 +337,13 @@ border:none;
 }
 QListWidget::item
 {
-margin:10px 0px 10px 10px;
+margin:10px 10px 10px 10px;
+color:#00aaff;
+}
+
+QListWidget::item:hover
+{
+color:#ff0000;
 }</string>
        </property>
       </widget>

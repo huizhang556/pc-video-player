@@ -1,6 +1,6 @@
 ﻿#ifndef PICTUREWIDGET_H
 #define PICTUREWIDGET_H
-
+#include "global/Global.h"
 #include <QWidget>
 #include <QSize>
 #include <QButtonGroup>

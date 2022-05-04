@@ -455,8 +455,8 @@ void MainWidget::setLeftButtonStyleSheetStatus()
 void MainWidget::updateLeftButtonGeometry()
 {
     m_leftButton->setGeometry(0,
-                              m_stackWidget_center->height()/2 - m_leftButton->height()/2,
-                              25,60);
+                              m_stackWidget_center->height()/2 - m_leftButton->height()/2 - 50,
+                              25,50);
     m_leftButton->raise();
 }
 

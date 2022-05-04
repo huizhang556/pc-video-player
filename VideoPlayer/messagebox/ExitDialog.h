@@ -1,6 +1,6 @@
 ﻿#ifndef EXITDIALOG_H
 #define EXITDIALOG_H
-
+#include "global/Global.h"
 #include <QDialog>
 #include <QPoint>
 

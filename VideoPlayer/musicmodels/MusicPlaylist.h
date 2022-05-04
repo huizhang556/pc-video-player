@@ -6,9 +6,10 @@
 #include <QMenu>
 #include <QWidget>
 #include <QAction>
-#include <QSqlTableModel>
+#include <QLabel>
 #include <QPushButton>
 #include <QHBoxLayout>
+#include <QSqlTableModel>
 #include <QListWidgetItem>
 
 namespace Ui {
@@ -24,6 +25,7 @@ public:
     ~MusicPlaylist();
     void    sortCurrentIndex(int index);
     QString addPrefixNum(QString num);
+//    QWidget* makeSongInfoItem();
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 
@@ -96,11 +98,21 @@ private slots:
 private:
     Ui::MusicPlaylist *ui;
 //    QAction         *m_songAction;
-    QMenu                   *pmenu_right          = nullptr;
-    QSqlTableModel          *model_songInfo       = nullptr;
-    Delegate                *delegate             = nullptr;
-    SongItemForm            *son_item             = nullptr;
+    QMenu             *pmenu_right          = nullptr;
+    QSqlTableModel    *model_songInfo       = nullptr;
+    Delegate          *delegate             = nullptr;
 
+    //音乐信息
+//    QLabel            *m_songNum            = nullptr;//01--歌曲序号
+//    QPushButton       *m_songName           = nullptr;//02--歌曲名称
+//    QPushButton       *m_songMV             = nullptr;//03--歌曲MV
+//    QPushButton       *m_songCollect        = nullptr;//04--歌曲收藏
+//    QPushButton       *m_songDownload       = nullptr;//05--歌曲下载
+//    QPushButton       *m_songDelete         = nullptr;//06--歌曲删除
+//    QPushButton       *m_songMore           = nullptr;//07--歌曲更多
+//    QPushButton       *m_songer             = nullptr;//07--歌曲歌手
+//    QPushButton       *m_songAlbum          = nullptr;//07--歌曲专辑
+//    QPushButton       *m_songQuality        = nullptr;//07--歌曲音质
 };
 
 #endif // MUSICPLAYLIST_H

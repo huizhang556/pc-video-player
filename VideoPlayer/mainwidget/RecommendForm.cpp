@@ -10,7 +10,7 @@ RecommendForm::RecommendForm(QWidget *parent) :
     ui(new Ui::RecommendForm)
 {
     ui->setupUi(this);
-    this->setFixedHeight(360);
+    this->setMinimumHeight(360);
     initWorkUI();
     chandleSignalsAndSlots();
     ui->stackedWidget_recommend->installEventFilter(this);//安装监听器
@@ -158,6 +158,7 @@ void RecommendForm::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
     updataAdjustButton_LR();//界面大小发生变化调节按钮位置
+    emit sig_sizeChange(this->size());
 }
 
 void RecommendForm::moveEvent(QMoveEvent *event)

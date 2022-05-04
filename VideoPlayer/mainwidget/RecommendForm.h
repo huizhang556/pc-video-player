@@ -36,6 +36,8 @@ private slots:
     void addPage();
     void subPage();
     void showCurrentPage(int index);
+signals:
+    void sig_sizeChange(QSize size);
 private:
     Ui::RecommendForm *ui;
     PictureWidget       *m_picWidget        =   nullptr;

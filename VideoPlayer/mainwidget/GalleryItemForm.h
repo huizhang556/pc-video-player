@@ -1,10 +1,11 @@
 ﻿#ifndef GALLERYITEMFORM_H
 #define GALLERYITEMFORM_H
+#include "global/Global.h"
 #include "mainwidget/PicWallItem.h"
 #include <QWidget>
 #include <QPushButton>
+#include <QListWidgetItem>
 #include <QAbstractItemView>
-
 namespace Ui {
 class GalleryItemForm;
 }
@@ -20,8 +21,10 @@ public:
     void chandleSignalsAndSlots();
     void setHeaderTitle(QString title);
     void adjustListWidgetItemsSize();
+
 protected:
     void resizeEvent(QResizeEvent *event) override;
+
 public slots:
 
 private slots:

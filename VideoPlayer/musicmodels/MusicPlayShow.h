@@ -1,6 +1,6 @@
 ﻿#ifndef MUSICPLAYSHOW_H
 #define MUSICPLAYSHOW_H
-
+#include "global/Global.h"
 #include <QWidget>
 #include <QTimer>
 #include <QPixmap>

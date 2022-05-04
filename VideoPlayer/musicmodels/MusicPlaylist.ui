@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(61, 61, 61);</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_13">
    <property name="spacing">
@@ -1022,7 +1022,7 @@ QTableView::item:selected:!active
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_14">
            <property name="spacing">
-            <number>6</number>
+            <number>1</number>
            </property>
            <item>
             <widget class="QFrame" name="frame_3">
@@ -1604,7 +1604,7 @@ color:#28b7c2;
              <property name="styleSheet">
               <string notr="true">QListWidget
 {
-background-color:#3d3d3d;
+background-color:#2a2a31;
 border:none;
 }
 

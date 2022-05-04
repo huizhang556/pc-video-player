@@ -27,7 +27,8 @@ void StackItemForm::initWorkUI()
     for(int i = 0; i < 10; i++)
     {
         QLabel *label = new QLabel();
-        QPixmap pix(QString::fromLocal8Bit("E:/QtProjects/000QtDemo_51ctodemo/04_20SubVideoPlayer/VideoPlayer/pictures/stackwall/stack%1.png").arg(i));
+        QString path = QString(Global::appDirPath +"/pictures/stackwall/stack%1.png").arg(i);
+        QPixmap pix(path);
         label->setPixmap(pix);
         label->setScaledContents(true);//图片自适应
         m_mapLabel.insert(i, label);

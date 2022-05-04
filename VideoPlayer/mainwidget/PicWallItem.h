@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QMap>
+#include <QPushButton>
 
 namespace Ui {
 class PicWallItem;
@@ -15,9 +16,15 @@ class PicWallItem : public QWidget
 public:
     explicit PicWallItem(QWidget *parent = nullptr);
     ~PicWallItem();
+    QPushButton* getWallItemTextButton();
     void setPicItemWall(QString path);
     void setPicItemWallText(QString text);
-
+    void setPicItemWall2(QString path);
+    void setPicItemWallText2(QString text);
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+signals:
+    void sig_sizeChange(QSize size);
 private:
     Ui::PicWallItem *ui;
 };

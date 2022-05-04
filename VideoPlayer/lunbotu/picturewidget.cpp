@@ -97,7 +97,8 @@ void PictureWidget::setPictureScreen()
 
     //添加对应图片
     for (int i = 1; i<=10;i++) {
-        m_PixmapList.append(QPixmap(QString("E:/QtProjects/000QtDemo_51ctodemo/04_20SubVideoPlayer/VideoPlayer/pictures/lunbotu/lbt%1.png").arg(i)));
+        //release时候使用
+        m_PixmapList.append(QPixmap(QString(Global::appDirPath + "/pictures/lunbotu/lbt%1.png").arg(i)));
     }
     for (int i = 0; i<10;i++) {
         itemList.append(new pictureItem(m_PixmapList[i].scaled(pictrueBigSize,

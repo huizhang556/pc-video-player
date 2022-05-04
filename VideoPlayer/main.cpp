@@ -1,6 +1,7 @@
 ﻿#include "MainWidget.h"
 #include <QApplication>
 #include "skin/MySkin.h"
+#include "global/Global.h"
 #include "skin/MySkinItem.h"
 #include "database/dataBase.h"
 #include "titleBar/TitleBar.h"
@@ -28,7 +29,6 @@ int main(int argc, char *argv[])
     dataBase::creatConnection();//连接数据库
     MainWidget w1;
     w1.show();
-
 
 //    SystemTray s;
 //    s.show();

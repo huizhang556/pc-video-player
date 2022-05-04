@@ -151,7 +151,7 @@ background-color: rgb(33, 33, 33);
 color:rgb(255, 94, 30);
 }
 
-/*托盘二级菜单---样式开始*/
+/*托盘二级菜单-----------------样式开始*/
 #m_menuTray,#m_playMode
 {
 background-color:white;
@@ -210,9 +210,9 @@ height:20px;
 {
 image: url(://images/tray/tray_checked.png);
 }
-/*托盘二级菜单---样式结束*/
+/*托盘二级菜单-----------------------样式结束*/
 
-/*帮助按钮菜单-----------------开始*/
+/*帮助按钮菜单-----------------------样式开始*/
 #pmenu_help1,#pmenu_help2
 {
 background-color:white;
@@ -247,11 +247,35 @@ width:10px;
 height:20px;
 margin-left:10px;
 }
-/*帮助按钮菜单--------------------结束*/
+/*帮助按钮菜单-----------------------样式结束*/
 
-/*歌曲右键菜---开始*/
+/*歌曲右键菜------------------------------开始*/
+#pmenu_songer,#pmenu_son_addto,#pmenu_son_sort,#pmenu_son_playmode,#pmenu_son_muctool
+{
+background: white;
+color:#2a2a31;
+font:normal normal 15px '微软雅黑';
+}
 
-/*歌曲右键菜单---结束*/
+#pmenu_songer::item,#pmenu_son_addto::item,#pmenu_son_sort::item,#pmenu_son_playmode::item,#pmenu_son_muctool::item
+{
+height:18px;
+padding: 4px 28px 4px 20px;/*上 右 下 左*/
+border: 1px solid transparent;
+}
+
+#pmenu_songer::item:selected,#pmenu_son_addto::item:selected,#pmenu_son_sort::item:selected,#pmenu_son_playmode::item:selected,#pmenu_son_muctool::item:selected
+{
+background: #00aabf;
+}
+
+#pmenu_songer::icon,#pmenu_son_addto::icon,#pmenu_son_sort::icon,#pmenu_son_playmode::icon,#pmenu_son_muctool::icon
+{
+width:20px;
+height:18px;
+margin-left:10px;
+}
+/*歌曲右键菜单-----------------------------结束*/
 
 QDockWidget#m_dockWidget::title
 {

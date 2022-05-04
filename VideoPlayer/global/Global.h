@@ -1,0 +1,19 @@
+﻿#ifndef GLOBAL_H
+#define GLOBAL_H
+#include <QObject>
+#include <QString>
+#include <QApplication>
+
+class Global : public QObject
+{
+    Q_OBJECT
+public:
+    explicit Global(QObject *parent = nullptr);
+    //声明共有静态变量
+    static QString appDirPath;
+signals:
+
+public slots:
+};
+
+#endif // GLOBAL_H
