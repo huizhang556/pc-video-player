@@ -23,6 +23,7 @@
 #include <QLayout>
 #include <QWidget>
 #include <QShowEvent>
+#include <QTabWidget>
 #include <QPushButton>
 #include <QMouseEvent>
 #include <QCloseEvent>
@@ -73,7 +74,24 @@ private:
 
     void setGlobalToolTip();
 
+
 private slots:
+    void slot_judgeCurrentBrowserIsActive_home();//过滤不是当前活跃的窗口--返回主页
+
+    void slot_judgeCurrentBrowserIsActive_back();//返回上一级
+
+    void slot_judgeCurrentBrowserIsActive_freshen();//刷新
+
+    void slot_judgeCurrentBrowserIsActive_advance();//下一页
+
+    void slot_judgeCurrentBrowserIsActive_load(QString newUrl);//加载输入框地址
+
+    void slot_addToWebTabwidgetBrowser(QUrl &url);//重载1
+
+    void slot_addToWebTabwidgetBrowser(QString &url);//重载2
+
+    void slot_removeTabWidgetTab(int index);//删除某一个tab
+
     void slot_on_leftButton_clicked();//左侧边栏点击判断
 
     void setLeftButtonStyleSheetStatus();//更新左侧边栏按钮样式
@@ -126,6 +144,7 @@ private:
     MusicPlayShow       *m_musicShow               = nullptr;
     CusTabWidget        *m_tabWidget               = nullptr;
     VideoBlank          *m_videoBlank              = nullptr;
+    QTabWidget          *m_webTabWidget            = nullptr;
     CusWebBrowser       *m_webBrowser              = nullptr;
     SystemSetting       *m_systemSetting           = nullptr;
     SystemTray          *m_systemTray              = nullptr;

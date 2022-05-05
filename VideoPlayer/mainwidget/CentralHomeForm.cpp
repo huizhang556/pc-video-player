@@ -107,6 +107,27 @@ void CentralHomeForm::addWidgetToListWidget()
     m_homeListWidget->setItemWidget(item7,pitem7);
 
     QListWidgetItem *item8 = new QListWidgetItem();
+    GalleryItemForm *pitem8 = new GalleryItemForm();
+    pitem8->setHeaderTitle(QString::fromLocal8Bit("热播大剧"));
+    item8->setSizeHint(pitem8->size());
+    m_homeListWidget->addItem(item8);
+    m_homeListWidget->setItemWidget(item8,pitem8);
+
+    QListWidgetItem *item9 = new QListWidgetItem();
+    GalleryItemForm *pitem9 = new GalleryItemForm();
+    pitem9->setHeaderTitle(QString::fromLocal8Bit("好剧推荐"));
+    item9->setSizeHint(pitem9->size());
+    m_homeListWidget->addItem(item9);
+    m_homeListWidget->setItemWidget(item9,pitem9);
+
+    QListWidgetItem *item10 = new QListWidgetItem();
+    GalleryItemForm *pitem10 = new GalleryItemForm();
+    pitem10->setHeaderTitle(QString::fromLocal8Bit("好剧推荐"));
+    item10->setSizeHint(pitem10->size());
+    m_homeListWidget->addItem(item10);
+    m_homeListWidget->setItemWidget(item10,pitem10);
+
+    QListWidgetItem *item_back = new QListWidgetItem();
     QWidget *subWidget = new QWidget();
     QLineEdit *subEdit = new QLineEdit();
     subEdit->setPlaceholderText(QString::fromLocal8Bit("点我反馈"));
@@ -121,8 +142,8 @@ void CentralHomeForm::addWidgetToListWidget()
     subWidget->setFixedSize(350,36);
     hblayout->layout()->setMargin(0);
     item8->setSizeHint(subWidget->size());
-    m_homeListWidget->addItem(item8);
-    m_homeListWidget->setItemWidget(item8,subWidget);
+    m_homeListWidget->addItem(item_back);
+    m_homeListWidget->setItemWidget(item_back,subWidget);
 }
 
 void CentralHomeForm::resizeEvent(QResizeEvent *event)

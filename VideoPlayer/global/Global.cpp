@@ -4,9 +4,9 @@
 #ifdef QT_DEBUG
         QString Global::appDirPath = QString("E:/QtProjects/000QtDemo_51ctodemo/04_20SubVideoPlayer/VideoPlayer");
 #else
-        QString Global::appDirPath = QCoreApplication::applicationDirPath();
+        QString Global::appDirPath = QDir::currentPath();//release时使用
 #endif
-
+//QString Global::appDirPath = QDir::currentPath();//静态全局变量使用applicationDirPath();为空
 Global::Global(QObject *parent) : QObject(parent)
 {
 

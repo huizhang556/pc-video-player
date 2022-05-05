@@ -4,6 +4,95 @@ MainWidget
 background-color:#2a2a31;
 }
 
+QFileDialog 
+{
+background-color:#f0f0f0;
+}
+
+QFileDialog QScrollBar::handle:vertical,QScrollBar::handle:horizontal
+{
+border-radius:0px;
+background-color:#cdcdcd;
+}
+
+QFileDialog QScrollBar::handle:vertical:hover,QScrollBar::handle:horizontal:hover
+{
+border-radius:0px;
+background-color:#cdcdcd;
+}
+
+QFileDialog QScrollBar::sub-page:vertical,QScrollBar::sub-page:horizontal
+{
+background-color:#f0f0f0;
+}
+
+QFileDialog QScrollBar::add-page:vertical,QScrollBar::add-page:horizontal
+{
+background-color:#f0f0f0;
+}
+
+/*浏览器----stackwidget-----start*/
+#m_webTabWidget
+{
+background-color:#4969c7;
+}
+
+#m_webTabWidgetr::pane
+{
+background-color:#009999;
+}
+
+#m_webTabWidget::tab-bar
+{
+left:0px;
+background-color:#009999;
+height:24px;
+}
+
+/*tabbar样式*/
+#m_webTabBar::tab
+{
+background-color:#4969c7;
+border-top-left-radius: 8px;
+border-top-right-radius: 8px;
+min-width: 120px;
+height:24px;
+margin-left: 0px;
+margin-right: 0px;
+}
+
+#m_webTabBar::tab:first
+{
+margin-left: 0px;
+}
+
+#m_webTabBar::tab:last
+{
+margin-right: 0px;
+}
+
+#m_webTabBar::tab:selected,#m_webTabBar::tab:hover
+{
+background-color:#99abe0;
+}
+
+#m_webTabBar::tab:!selected
+{
+margin-top: 0px;
+background-color:#4969c7;
+}
+
+#m_webTabBar::close-button
+{
+image: url(://images/icon/tab_closebtn.png);
+}
+
+#m_webTabBar::close-button:hover
+{
+image: url(://images/icon/tab_closebtn_hover.png);
+}
+/*浏览器----stackwidget-----end*/
+
 /*主界面底部按钮*/
 #m_bottomBtn
 {
@@ -430,7 +519,7 @@ image: url(:/images/icon/file_open_hover.png);
 }
 
 /*QListWidget播放列表*/
-QToolBox QListWidget
+QToolBox QWidget  QListWidget
 {
 /*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0,
 stop:0 rgba(231,80,229, 255), 
@@ -438,44 +527,44 @@ stop:1 rgba(7,208,255, 255));*/
 background-color:#3d3d3d;
 font-family:"Mircrosoft YaHei";
 border:none;/*去掉边框线*/
-
 }
 
-QToolBox QListWidget::item
+QToolBox QWidget  QListWidget::item
 {
 color:#cccccc;
 background-color:#3a3a3a;
 min-height:30px;
+font-size:15px;
 }
 
-QToolBox QListWidget::item:hover
+QToolBox QWidget  QListWidget::item:hover
 {
-    show-decoration-selected:5;
-    /*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
+show-decoration-selected:5;
+ /*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
        stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
-    background-color:#707070;
-    border-style:outset;
-    color:#FF7F24;	
+background-color:#707070;
+border-style:outset;
+color:white;
+font-size:18px;	
 }
 
-QToolBox QListWidget::item:selected
+QToolBox QWidget  QListWidget::item:selected
 {
-    /*border:0px;*/
-    /*border:1px solid #55ff00;*/
-    background:#382e15;
-    padding:0px;
-    margin:0px;
-    color:#ff5c38;
+background:#382e15;
+padding:0px;
+margin:0px;
+color:#ff5c38;
+font-size:18px;
 }
 
 /*上次选择后保留的状态，鼠标离开后显示*/
-QToolBox QListWidget::item:selected:!active
+QToolBox QWidget  QListWidget::item:selected:!active
 {
-    border-width:0px;
-    background:#382e15;
-    padding:0px;
-    margin:0px;
-    color: rgb(85, 255, 0);
+border-width:0px;
+background:#382e15;
+padding:0px;
+margin:0px;
+color: rgb(85, 255, 0);
 }
 
 /*单独的统一放在通用样式之前设置*/

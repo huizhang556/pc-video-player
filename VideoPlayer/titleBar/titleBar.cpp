@@ -155,8 +155,8 @@ void TitleBar::chandleSignalAndSLots()
     //网址输入框---回车键处理
     connect(ui->lineEdit_webSearch,&QLineEdit::returnPressed,[=](){
         QString url = ui->lineEdit_webSearch->text().trimmed();
-        emit sig_sendNewUrl(url);
-        qDebug() << "emit sig_sendNewUrl(url);";
+        emit sig_sendInputNewUrl(url);
+        qDebug() << "emit sig_sendInputNewUrl(url);"<< url;
     });
 
     connect(ui->lineEditSearch,&QLineEdit::returnPressed,[=](){
@@ -479,7 +479,7 @@ void TitleBar::getSystemTimeShow()
 void TitleBar::setLineEditAddress(const QUrl url)
 {
     Q_UNUSED(url);
-    ui->lineEdit_webSearch->clear();
+//    ui->lineEdit_webSearch->clear();
 }
 
 void TitleBar::showLoginForm()

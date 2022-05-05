@@ -21,6 +21,8 @@ protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 private:
     Ui::StackItem *ui;
+signals:
+    void sig_currentHoverItem(QString title);
 };
 
 #endif // STACKITEM_H

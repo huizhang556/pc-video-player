@@ -1,7 +1,10 @@
 ﻿#include "CusWebBrowser.h"
 #include <QHBoxLayout>
+#include <QMessageBox>
 #include <QWebEnginePage>
+#include <QWebEngineProfile>
 #include <QWebEngineSettings>
+#include <QWebEngineCookieStore>
 #include <QDebug>
 
 CusWebBrowser::CusWebBrowser(QWidget *parent) :
@@ -12,13 +15,14 @@ CusWebBrowser::CusWebBrowser(QWidget *parent) :
     this->load(QUrl("https://www.baidu.com/"));
 //    this->page()->settings()->setAttribute(QWebEngineSettings::ShowScrollBars,false);//不显示滚动条    
     //这两个信号槽要配合使用，有先后顺序之分，一个触发会导致另一个触发
-    connect(this->page(),&QWebEnginePage::linkHovered,this,&CusWebBrowser::slots_createNewWindows);
-    connect(this,SIGNAL(urlChanged(QUrl)),this,SLOT(slots_createNewWindows(QUrl)));
+    connect(this->page(),&QWebEnginePage::linkHovered,this,&CusWebBrowser::slots_createNewWindows);//就是鼠标放上去的操作
+//    connect(this,SIGNAL(urlChanged(QUrl)),this,SLOT(slots_sendToNewAddress()));
 }
 
 CusWebBrowser::~CusWebBrowser()
 {
-
+//    this->page()->profile()->clearHttpCache();//清除缓存
+//    this->page()->profile()->cookieStore()->deleteAllCookies();//清除cookies
 }
 
 QUrl CusWebBrowser::getCurrentWebPageUrl()
@@ -29,16 +33,28 @@ QUrl CusWebBrowser::getCurrentWebPageUrl()
 
 QWebEngineView *CusWebBrowser::createWindow(QWebEnginePage::WebWindowType type)
 {
-    Q_UNUSED(type);
-//    CusWebBrowser *webbrowser = new CusWebBrowser(this);
-//    QWidget *newWeb =  new QWidget(this) ;
-//    QHBoxLayout *layout = new QHBoxLayout(this);
-//    layout->setMargin(0);
-//    layout->addWidget(webbrowser);
-//    newWeb->setLayout(layout);
-//    webbrowser->showMaximized();
-//    newWeb->showMaximized();
+    if(type == QWebEnginePage::WebBrowserTab)
+    {
+        emit sig_sendToNewUrl(newUrl);
+    }
+    else if(type == QWebEnginePage::WebBrowserWindow)
+    {
     this->load(newUrl);
+    }
+    else if(type == QWebEnginePage::WebDialog)
+    {
+        QMessageBox::information(this,
+                                 QString::fromLocal8Bit("提示"),
+                                 QString::fromLocal8Bit("这是一个网页弹框WebDialog！")
+                                 );
+    }
+    else if(type == QWebEnginePage::WebBrowserWindow)
+    {
+        QMessageBox::information(this,
+                                 QString::fromLocal8Bit("提示"),
+                                 QString::fromLocal8Bit("这是WebBrowserWindow！")
+                                 );
+    }
     return 0;
 }
 
@@ -46,6 +62,7 @@ void CusWebBrowser::slots_createNewWindows(const QUrl url)
 {
     newUrl = url;
     getCurrentWebPageUrl();
+    qDebug() << "emit sig_sendToNewUrl(newUrl)" << newUrl;
 }
 
 /*处理输入框传过来的url*/
@@ -57,6 +74,10 @@ void CusWebBrowser::slots_loadNewUrl(QString path)
         this->load(path);
         newUrl = QUrl(path);
         qDebug() << "NEW URL = " << newUrl;
+    }
+    else
+    {
+        qDebug() << path;
     }
 }
 
@@ -86,4 +107,9 @@ void CusWebBrowser::slots_home()
 {
     this->load(QUrl("https://www.baidu.com/"));
     newUrl = QUrl("https://www.baidu.com/");
+}
+
+void CusWebBrowser::slots_sendToNewAddress()
+{
+    emit sig_sendToNewUrl(newUrl);
 }

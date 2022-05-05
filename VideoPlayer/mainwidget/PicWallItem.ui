@@ -73,7 +73,7 @@
           <string notr="true">QPushButton
 {
 background-color:transparent;
-color:white;
+color:#00aabf;
 font-size:12px;
 }
 QPushButton:hover
@@ -117,7 +117,7 @@ font-size:14px;
           <string notr="true">QPushButton
 {
 background-color:transparent;
-color:white;
+color:#00aabf;
 font-size:12px;
 }
 QPushButton:hover

@@ -24,10 +24,13 @@ public:
     void addCusWidgetToList();
 private slots:
     void slot_switchPageToStackWidget(QListWidgetItem *item);
-
+    int getQMapKey(QMap<int, QString> vector, QString text);
 private:
     Ui::StackItemForm *ui;
-    QMap<int,QLabel*>    m_mapLabel;
+    QMap<int,QLabel*>        m_mapLabel;
+    QMap<int,QString>        m_vectitle;
+    QMap<int,QString>        m_vecexplain;
+    QMap<int,QString>        m_vecicon;
 };
 
 #endif // STACKITEMFORM_H

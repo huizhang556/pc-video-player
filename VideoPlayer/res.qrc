@@ -252,5 +252,7 @@
         <file>images/tray/tray_playmode.png</file>
         <file>images/icon/main_bottombtn.png</file>
         <file>images/icon/main_bottom_hover.png</file>
+        <file>images/icon/tab_closebtn.png</file>
+        <file>images/icon/tab_closebtn_hover.png</file>
     </qresource>
 </RCC>

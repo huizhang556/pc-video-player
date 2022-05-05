@@ -3,18 +3,21 @@ SOURCES += \
     $$PWD/CusMenu.cpp \
     $$PWD/ArrowWidget.cpp \
     $$PWD/CusLineEdit.cpp \
-    $$PWD/SystemTray.cpp
+    $$PWD/SystemTray.cpp \
+    $$PWD/CusFileDialog.cpp
 
 HEADERS += \
     $$PWD/CusTabWidget.h \
     $$PWD/CusMenu.h \
     $$PWD/ArrowWidget.h \
     $$PWD/CusLineEdit.h \
-    $$PWD/SystemTray.h
+    $$PWD/SystemTray.h \
+    $$PWD/CusFileDialog.h
 
 FORMS += \
     $$PWD/CusTabWidget.ui \
-    $$PWD/SystemTray.ui
+    $$PWD/SystemTray.ui \
+    $$PWD/CusFileDialog.ui
 
 SUBDIRS +=
 

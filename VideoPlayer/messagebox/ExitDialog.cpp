@@ -26,6 +26,7 @@ ExitDialog::ExitDialog(QWidget *parent) :
     ui->pushButton_ok->setDefault(1);//按回车会关闭窗口
     ui->pushButton_ok->setStyleSheet("border:2px solid #9e9e9e;background-color:rgb(101,210,105);font-size:14px;");
     m_iniPath = Global::appDirPath + "/config/config.ini";
+    qDebug() << "config file path = " << m_iniPath;
     //此处有bug,只要点击，不管沟上还是没有勾上，都是设置为 1
 //    connect(ui->checkBox,&QCheckBox::clicked,[=](){
 

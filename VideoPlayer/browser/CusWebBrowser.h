@@ -24,9 +24,9 @@ public slots:
     void slots_refreshen();
     void slots_advance();
     void slots_home();
-
+    void slots_sendToNewAddress();
 signals:
-
+    void sig_sendToNewUrl(QUrl &url);
 private:
     QUrl     newUrl;
 };

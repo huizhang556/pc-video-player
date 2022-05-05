@@ -1,5 +1,6 @@
 ﻿#include "StackItem.h"
 #include "ui_StackItem.h"
+#include <QDebug>
 
 StackItem::StackItem(QWidget *parent) :
     QWidget(parent),
@@ -12,6 +13,15 @@ StackItem::StackItem(QWidget *parent) :
     //设置鼠标穿透，会使监听器失效
 //    ui->pushButton_name->setAttribute(Qt::WA_TransparentForMouseEvents,true);
 //    ui->pushButton_intro->setAttribute(Qt::WA_TransparentForMouseEvents,true);
+    connect(ui->pushButton_name,&QPushButton::clicked,[=](){
+        emit sig_currentHoverItem(ui->pushButton_name->text());//发送带名字的信号
+        qDebug() << "current item text = " << ui->pushButton_name->text();
+    });
+
+    connect(ui->pushButton_intro,&QPushButton::clicked,[=](){
+        emit sig_currentHoverItem(ui->pushButton_name->text());//发送带名字的信号
+        qDebug() << "current item text = " << ui->pushButton_name->text();
+    });
 }
 
 StackItem::~StackItem()
@@ -54,6 +64,7 @@ bool StackItem::eventFilter(QObject *watched, QEvent *event)
                                                 "text-align:left;"
                                                 "font-size:13px;"
                                                "}");
+            emit sig_currentHoverItem(ui->pushButton_name->text());
         }
         else if(event->type() == QEvent::Leave)
         {
@@ -89,6 +100,7 @@ bool StackItem::eventFilter(QObject *watched, QEvent *event)
                                                 "text-align:left;"
                                                 "font-size:13px;"
                                                "}");
+            emit sig_currentHoverItem(ui->pushButton_name->text());
         }
         else if(event->type() == QEvent::Leave)
         {

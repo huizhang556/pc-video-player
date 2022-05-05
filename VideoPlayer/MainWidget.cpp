@@ -71,6 +71,12 @@ void MainWidget::initOtherWidgetUi()
     m_webBrowser = new CusWebBrowser();
     m_webBrowser->setObjectName(QString::fromLatin1("m_webBrowser"));
 
+    m_webTabWidget = new QTabWidget();
+    m_webTabWidget->setObjectName(QString::fromLocal8Bit("m_webTabWidget"));
+    m_webTabWidget->tabBar()->setObjectName(QString::fromLocal8Bit("m_webTabBar"));
+    m_webTabWidget->insertTab(0,m_webBrowser,QString::fromLocal8Bit("default"));
+    m_webTabWidget->setTabsClosable(true);//打开关闭按钮
+
     m_personForm = new PersonFileForm();
     m_personForm->setObjectName(QString::fromLatin1("m_personForm"));
 
@@ -118,16 +124,107 @@ void MainWidget::initOtherWidgetUi()
 void MainWidget::setStackedWidgetPage()
 {
     m_stackWidget_center->insertWidget(0,m_homeWdgt);//m_mainShowForm
-    m_stackWidget_center->insertWidget(1,m_webBrowser);//cuswebbrowser
+    m_stackWidget_center->insertWidget(1,m_webTabWidget);//m_webTabWidget
     m_stackWidget_center->insertWidget(2,m_tabWidget);//m_tabWidget
     m_stackWidget_center->insertWidget(3,m_musicShow);//musicshow
     m_stackWidget_center->insertWidget(4,m_musicList);//musiclist
     m_stackWidget_center->insertWidget(5,m_personForm);//personform 个人管理
 }
 
+//重载函数1：添加一个browser---参数为QUrl
+void MainWidget::slot_addToWebTabwidgetBrowser(QUrl &url)
+{
+    if(url.isEmpty()) return;
+    CusWebBrowser *browser = new CusWebBrowser();
+    browser->setObjectName(QString::fromLocal8Bit("browser"));
+    browser->load(url);
+    m_webTabWidget->insertTab(m_webTabWidget->count(),browser,QString::fromLocal8Bit("New Page"));
+    m_webTabWidget->setCurrentIndex(m_webTabWidget->count()-1);
+    connect(browser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
+    connect(m_webTabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(slot_removeTabWidgetTab(int)));
+    //回车
+    connect(m_titleBar,SIGNAL(sig_sendInputNewUrl(QString)),this,SLOT(slot_judgeCurrentBrowserIsActive_load(QString)));
+    //后退
+    connect(m_titleBar,SIGNAL(sig_sendUrlBack()),this,SLOT(slot_judgeCurrentBrowserIsActive_back()));
+    //刷新
+    connect(m_titleBar,SIGNAL(sig_sendUrlRefreshen()),this,SLOT(slot_judgeCurrentBrowserIsActive_freshen()));
+    //前进
+    connect(m_titleBar,SIGNAL(sig_sendUrlAdvance()),this,SLOT(slot_judgeCurrentBrowserIsActive_advance()));
+    //返回主页
+    connect(m_titleBar,SIGNAL(sig_sendUrlHome()),this,SLOT(slot_judgeCurrentBrowserIsActive_home()));
+}
+
+//重载函数2：添加一个browser---参数为QString
+void MainWidget::slot_addToWebTabwidgetBrowser(QString &url)
+{
+    if(url.isEmpty()) return;
+    CusWebBrowser *browser = new CusWebBrowser();
+    browser->setObjectName(QString::fromLocal8Bit("browser"));
+    browser->load(url);
+    m_webTabWidget->insertTab(m_webTabWidget->count(),browser,QString::fromLocal8Bit("New Page"));
+    m_webTabWidget->setCurrentIndex(m_webTabWidget->count()-1);
+    connect(browser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
+    connect(m_webTabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(slot_removeTabWidgetTab(int)));
+    //回车
+    connect(m_titleBar,SIGNAL(sig_sendInputNewUrl(QString)),this,SLOT(slot_judgeCurrentBrowserIsActive_load(QString)));
+    //后退
+    connect(m_titleBar,SIGNAL(sig_sendUrlBack()),this,SLOT(slot_judgeCurrentBrowserIsActive_back()));
+    //刷新
+    connect(m_titleBar,SIGNAL(sig_sendUrlRefreshen()),this,SLOT(slot_judgeCurrentBrowserIsActive_freshen()));
+    //前进
+    connect(m_titleBar,SIGNAL(sig_sendUrlAdvance()),this,SLOT(slot_judgeCurrentBrowserIsActive_advance()));
+    //返回主页
+    connect(m_titleBar,SIGNAL(sig_sendUrlHome()),this,SLOT(slot_judgeCurrentBrowserIsActive_home()));
+}
+
+//过滤不是当前活跃的窗口--返回主页
+void MainWidget::slot_judgeCurrentBrowserIsActive_home()
+{
+   CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
+   actWdgt->slots_home();
+}
+
+void MainWidget::slot_judgeCurrentBrowserIsActive_back()
+{
+    CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
+    actWdgt->slots_back();
+}
+
+void MainWidget::slot_judgeCurrentBrowserIsActive_freshen()
+{
+    CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
+    actWdgt->slots_refreshen();
+}
+
+void MainWidget::slot_judgeCurrentBrowserIsActive_advance()
+{
+    CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
+    actWdgt->slots_advance();
+}
+
+void MainWidget::slot_judgeCurrentBrowserIsActive_load(QString newUrl)
+{
+    qDebug() << "receive new url = "<< newUrl;
+    CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
+    actWdgt->slots_loadNewUrl(newUrl);
+}
+
+void MainWidget::slot_removeTabWidgetTab(int index)
+{
+    if(index == 0) return;//永远不删除第一个，留一个
+    QWidget* currWidget = m_webTabWidget->widget(index);
+    delete currWidget;
+    currWidget = nullptr;
+    m_webTabWidget->removeTab(index);
+}
+
 //处理信号与槽函数
 void MainWidget::chandleSignalAndSlots()
 {
+    //添加一个browser
+    connect(m_webBrowser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
+
+    //标题栏窗口控制按钮
     connect(this,&MainWidget::sig_startCloseAppliction,m_mainPlayer,&MultipPlayer::closeCurrentWindow);//转到重写事件
     connect(m_titleBar,&TitleBar::sig_winClose,this,&MainWidget::close);//转到重写事件
     connect(m_titleBar,&TitleBar::sig_winNormal,this,&MainWidget::chandleRestoreWindow);//根据不同状态处理窗口
@@ -139,15 +236,15 @@ void MainWidget::chandleSignalAndSlots()
 
     //处理标题栏信号与浏览器槽函数
     //回车
-    connect(m_titleBar,SIGNAL(sig_sendNewUrl(QString)),m_webBrowser,SLOT(slots_loadNewUrl(QString)));
+    connect(m_titleBar,SIGNAL(sig_sendInputNewUrl(QString)),this,SLOT(slot_judgeCurrentBrowserIsActive_load(QString)));
     //后退
-    connect(m_titleBar,SIGNAL(sig_sendUrlBack()),m_webBrowser,SLOT(slots_back()));
+    connect(m_titleBar,SIGNAL(sig_sendUrlBack()),this,SLOT(slot_judgeCurrentBrowserIsActive_back()));
     //刷新
-    connect(m_titleBar,SIGNAL(sig_sendUrlRefreshen()),m_webBrowser,SLOT(slots_refreshen()));
+    connect(m_titleBar,SIGNAL(sig_sendUrlRefreshen()),this,SLOT(slot_judgeCurrentBrowserIsActive_freshen()));
     //前进
-    connect(m_titleBar,SIGNAL(sig_sendUrlAdvance()),m_webBrowser,SLOT(slots_advance()));
+    connect(m_titleBar,SIGNAL(sig_sendUrlAdvance()),this,SLOT(slot_judgeCurrentBrowserIsActive_advance()));
     //返回主页
-    connect(m_titleBar,SIGNAL(sig_sendUrlHome()),m_webBrowser,SLOT(slots_home()));
+    connect(m_titleBar,SIGNAL(sig_sendUrlHome()),this,SLOT(slot_judgeCurrentBrowserIsActive_home()));
     //上传下载
     connect(m_titleBar,&TitleBar::sig_filesUploadDownLoad,[=](int index1,int index2){
        m_stackWidget_center->setCurrentIndex(index1);//个人信息界面
@@ -480,12 +577,41 @@ void MainWidget::chandleRestoreWindow()
 /*析构函数*/
 MainWidget::~MainWidget()
 {
-  delete m_musicList;
-  delete m_musicShow;
-  delete m_tabWidget;
-  delete m_webBrowser;
-  delete m_videoBlank;
-    delete m_mainPlayer;
+    if(m_webBrowser != nullptr)
+    {
+        delete m_webBrowser;
+        m_webBrowser = nullptr;
+    }
+
+    if(m_musicList != nullptr)
+    {
+        delete m_musicList;
+        m_musicList = nullptr;
+    }
+
+    if(m_musicShow != nullptr)
+    {
+        delete m_musicShow;
+        m_musicShow = nullptr;
+    }
+
+    if(m_tabWidget != nullptr)
+    {
+        delete m_tabWidget;
+        m_tabWidget = nullptr;
+    }
+
+    if(m_videoBlank != nullptr)
+    {
+        delete m_videoBlank;
+        m_videoBlank = nullptr;
+    }
+
+    if(m_mainPlayer != nullptr)
+    {
+        delete m_mainPlayer;
+        m_mainPlayer = nullptr;
+    }
 }
 
 /*事件过滤器*/

@@ -21,8 +21,19 @@ StackItemForm::~StackItemForm()
 void StackItemForm::initWorkUI()
 {
     ui->listWidget_reclist->setItemAlignment(Qt::AlignCenter);
+    for(int i = 0; i < 10; i++)
+    {
+        QString icon = QString::fromLocal8Bit("://images/icon/hot%1.png").arg(i);
+        m_vecicon.insert(i,icon);
+    }
 
-
+    for(int i = 0; i < 10; i++)
+    {
+        QString title = QString::fromLocal8Bit("黑道往事之风云20年%1").arg(i);
+        QString intro = QString::fromLocal8Bit("贾玲张小斐联袂出演%1").arg(i);
+        m_vectitle.insert(i,title);
+        m_vecexplain.insert(i,intro);
+    }
 
     for(int i = 0; i < 10; i++)
     {
@@ -45,6 +56,7 @@ void StackItemForm::chandleSignalsAndSlots()
     ui->listWidget_reclist->setMouseTracking(true);//设置鼠标跟踪
     //鼠标进入/离开对应stackwidget切换
     connect(ui->listWidget_reclist,SIGNAL(itemEntered(QListWidgetItem*)),this,SLOT(slot_switchPageToStackWidget(QListWidgetItem*)));
+
 }
 
 void StackItemForm::addLabelToStackWidget()
@@ -62,12 +74,16 @@ void StackItemForm::addCusWidgetToList()
     {
         QListWidgetItem *item = new QListWidgetItem();
         StackItem *sitem = new StackItem();
-        sitem->setlistBtn_NameIcon(QString("://images/icon/hot%1.png").arg(i));
-        sitem->setlistBtn_NameText(QString::fromLocal8Bit("雪中悍刀行%1").arg(i+1));
-        sitem->setlistBtn_IntroText(QString::fromLocal8Bit("胡军联袂领衔主演%1").arg(i+1));
+        sitem->setlistBtn_NameIcon(m_vecicon[i]);
+        sitem->setlistBtn_NameText(m_vectitle[i]);
+        sitem->setlistBtn_IntroText(m_vecexplain[i]);
         item->setSizeHint(sitem->size());
         ui->listWidget_reclist->addItem(item);
         ui->listWidget_reclist->setItemWidget(item,sitem);
+        connect(sitem,&StackItem::sig_currentHoverItem,[=](QString name){
+            int index = getQMapKey(m_vectitle,name);
+            ui->stackedWidget_itempic->setCurrentIndex(index);
+        });
     }
 
 }
@@ -76,4 +92,16 @@ void StackItemForm::slot_switchPageToStackWidget(QListWidgetItem *item)
 {
     qDebug() << ui->listWidget_reclist->row(item);
     ui->stackedWidget_itempic->setCurrentIndex(ui->listWidget_reclist->row(item));
+}
+
+int StackItemForm::getQMapKey(QMap<int, QString> vector,QString text)
+{
+    for(QMap<int, QString>::iterator iter = vector.begin(); iter!= vector.end(); iter++)
+    {
+        if(iter.value() == text)
+        {
+            return iter.key();//找到，返回对应的key
+        }
+    }
+    return -1;//没有找到，返回-1
 }

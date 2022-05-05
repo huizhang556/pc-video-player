@@ -79,7 +79,7 @@ signals:
     void sig_historyDownload(int index1, int index2);//历史记录
     void sig_screenPicture();//截图
     //浏览器部分的信号
-    void sig_sendNewUrl(QString url);
+    void sig_sendInputNewUrl(QString url);
     void sig_sendNewSearch(QString his);
     void sig_sendUrlBack();
     void sig_sendUrlAdvance();

@@ -12,6 +12,7 @@
 #include "customer/CusLineEdit.h"
 #include "lunbotu/PictureWidget.h"
 #include "videomodels/CommentTab.h"
+#include "customer/CusFileDialog.h"
 #include "mainwidget/RecommendForm.h"
 #include "videomodels/ControlForm.h"
 #include "videomodels/MultipPlayer.h"
@@ -29,6 +30,9 @@ int main(int argc, char *argv[])
     dataBase::creatConnection();//连接数据库
     MainWidget w1;
     w1.show();
+
+//    CusFileDialog s;
+//    s.show();
 
 //    SystemTray s;
 //    s.show();

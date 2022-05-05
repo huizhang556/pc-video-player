@@ -100,8 +100,8 @@ void RecommendForm::addToStackWidgetPage()
 
 void RecommendForm::setSelectButtonText()
 {
-    ui->pushButton_jingxuan->setText(QString::fromLocal8Bit("精选"));
-    ui->pushButton_songer->setText(QString::fromLocal8Bit("歌手"));
+    ui->pushButton_jingxuan->setText(QString::fromLocal8Bit("精选推荐"));
+    ui->pushButton_songer->setText(QString::fromLocal8Bit("热播大剧"));
     ui->pushButton_ranking->setText(QString::fromLocal8Bit("排行榜"));
     ui->pushButton_listsort->setText(QString::fromLocal8Bit("歌单分类"));
     ui->pushButton_zhubo->setText(QString::fromLocal8Bit("主播电台"));
