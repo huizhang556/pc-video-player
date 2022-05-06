@@ -73,7 +73,7 @@ margin-right: 0px;
 
 #m_webTabBar::tab:selected,#m_webTabBar::tab:hover
 {
-background-color:#99abe0;
+background-color:#3385ff;
 }
 
 #m_webTabBar::tab:!selected

@@ -76,6 +76,8 @@ void MainWidget::initOtherWidgetUi()
     m_webTabWidget->tabBar()->setObjectName(QString::fromLocal8Bit("m_webTabBar"));
     m_webTabWidget->insertTab(0,m_webBrowser,QString::fromLocal8Bit("default"));
     m_webTabWidget->setTabsClosable(true);//打开关闭按钮
+    m_webTabWidget->setMovable(true);//标签可拖动
+//    m_webTabWidget->setTabShape(QTabWidget::Triangular);//设置样式后，不起作用
 
     m_personForm = new PersonFileForm();
     m_personForm->setObjectName(QString::fromLatin1("m_personForm"));
@@ -212,10 +214,11 @@ void MainWidget::slot_judgeCurrentBrowserIsActive_load(QString newUrl)
 void MainWidget::slot_removeTabWidgetTab(int index)
 {
     if(index == 0) return;//永远不删除第一个，留一个
+//    m_webTabWidget->tabBar()->tabButton(index,QTabBar::LeftSide);
     QWidget* currWidget = m_webTabWidget->widget(index);
     delete currWidget;
     currWidget = nullptr;
-    m_webTabWidget->removeTab(index);
+    m_webTabWidget->removeTab(index);//为什么主窗口删除，其他子窗口也被删除？
 }
 
 //处理信号与槽函数
