@@ -23,6 +23,7 @@ public:
     void setPicItemWallText2(QString text);
 protected:
     void resizeEvent(QResizeEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 signals:
     void sig_sizeChange(QSize size);
 private:

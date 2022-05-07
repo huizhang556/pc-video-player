@@ -7,6 +7,7 @@
 #include <QSettings>
 #include <QMouseEvent>
 
+//构造函数1
 ExitDialog::ExitDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ExitDialog)
@@ -61,6 +62,41 @@ ExitDialog::ExitDialog(QWidget *parent) :
         close();
     });
 }
+
+//构造函数2
+ExitDialog::ExitDialog(QString title, QString warn, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::ExitDialog)
+{
+    ui->setupUi(this);
+    //去掉边框
+    this->setWindowFlag(Qt::FramelessWindowHint);
+    this->setFixedSize(225,135);
+    ui->pushButton_ok->setFocus();//显示选中状态
+    ui->pushButton_ok->setDefault(1);//按回车会关闭窗口
+    ui->pushButton_ok->setStyleSheet("border:2px solid #9e9e9e;background-color:rgb(101,210,105);font-size:14px;");
+    m_iniPath = Global::appDirPath + "/config/config.ini";
+    ui->label->setText(title);
+    ui->label_3->setText(warn);
+    //确定关闭
+    connect(ui->pushButton_ok,&QPushButton::clicked,[=](){
+        /*可以做一些类似数据保存的其他操作*/
+        emit sig_SendcloseMain();//给主窗口发送关闭窗口信号
+        this->close();
+    });
+    //确定取消
+    connect(ui->pushButton_cancel,&QPushButton::clicked,[=](){
+        emit sig_SendNotcloseMain();//发送不关闭主窗口信号
+        this->close();
+
+    });
+    //close
+    connect(ui->pushButton_close,&QPushButton::clicked,[=](){
+        emit sig_SendNotcloseMain();
+        close();
+    });
+}
+
 
 ExitDialog::~ExitDialog()
 {

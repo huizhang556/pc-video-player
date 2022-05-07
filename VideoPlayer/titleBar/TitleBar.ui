@@ -397,7 +397,7 @@ border-image: url(:/images/icon/zuanshi_hover.png);
         </size>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page">
         <layout class="QHBoxLayout" name="horizontalLayout_2">

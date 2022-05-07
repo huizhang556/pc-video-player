@@ -29,7 +29,7 @@ void StackItemForm::initWorkUI()
 
     for(int i = 0; i < 10; i++)
     {
-        QString title = QString::fromLocal8Bit("黑道往事之风云20年%1").arg(i);
+        QString title = QString::fromLocal8Bit("黑道往事之风云年%1").arg(i);
         QString intro = QString::fromLocal8Bit("贾玲张小斐联袂出演%1").arg(i);
         m_vectitle.insert(i,title);
         m_vecexplain.insert(i,intro);

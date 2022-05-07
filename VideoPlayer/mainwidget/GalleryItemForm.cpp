@@ -27,12 +27,13 @@ GalleryItemForm::~GalleryItemForm()
 void GalleryItemForm::chandleSignalsAndSlots()
 {
     connect(ui->listWidget_itempic,&QListWidget::itemEntered,[=](QListWidgetItem *item){
-//        item->setSizeHint(item->sizeHint()+QSize(5,5));
+//        item->setSizeHint(item->sizeHint()+QSize(15,15));
+        update();
         qDebug() << "enter item";
     });
 
     connect(ui->listWidget_itempic,&QListWidget::itemChanged,[=](QListWidgetItem *item){
-//        QFont font;
+        qDebug() <<"item leave";
 
     });
 }
@@ -45,6 +46,7 @@ void GalleryItemForm::initWorkUI()
     ui->listWidget_itempic->setWrapping(false);//自动换行 所有itm在一行显示
 //    ui->listWidget_itempic->setIconSize(QSize(260,260));
     ui->listWidget_itempic->setFlow(QListView::LeftToRight);//从左到右布局  多行显示变成一行显示( 与模式有关)
+    ui->listWidget_itempic->setMouseTracking(true);
     ui->listWidget_itempic->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_itempic->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 

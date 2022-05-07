@@ -14,7 +14,7 @@ class ExitDialog : public QDialog
 
 public:
     explicit ExitDialog(QWidget *parent = nullptr);
-
+    explicit ExitDialog(QString title,QString warn,QWidget *parent = nullptr);
 
     ~ExitDialog();
 

@@ -76,6 +76,8 @@ private:
 
 
 private slots:
+    void slot_switchCurrentTab_URL(int index);//转换到当前索引
+
     void slot_judgeCurrentBrowserIsActive_home();//过滤不是当前活跃的窗口--返回主页
 
     void slot_judgeCurrentBrowserIsActive_back();//返回上一级

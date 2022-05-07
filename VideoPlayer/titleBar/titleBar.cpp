@@ -27,7 +27,7 @@ TitleBar::~TitleBar()
 /*初始化工作*/
 void TitleBar::initWorker()
 {
-    ui->stackedWidget_login->setCurrentIndex(0);
+    ui->stackedWidget_login->setCurrentIndex(0);//左上角登录stackwidget
     ui->pushButton_userlogin->setFlat(true);
     ui->pushButton_userregis->setFlat(true);
 
@@ -36,10 +36,8 @@ void TitleBar::initWorker()
     ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);
     ui->lcdNumber->setPalette(Qt::red);//显示文字颜色，不怎么生效
     //初始化定时器
-    m_timer1 = new QTimer(this);
-    m_timer2 = new QTimer(this);
     m_timer3 = new QTimer(this);
-    m_timer3->start(100);//0.1s更新发送一次时间,放在下面合适
+    m_timer3->start(1000);//0.1s更新发送一次时间,放在下面合适
     ui->Btnhelp->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->pushButton_close->setFlat(true);
     ui->stackedWidget->setCurrentIndex(0);//默认显示第一个page
@@ -63,6 +61,7 @@ void TitleBar::initWorker()
     ui->pushButton_advance->setToolTip(QString::fromLocal8Bit("前进"));
 
     ui->lineEdit_webSearch->setFixedHeight(28);
+    ui->lineEdit_webSearch->setText(QString::fromLocal8Bit("https://www.baidu.com/"));//默认显示的网址
     ui->lineEdit_webSearch->setPlaceholderText(QString::fromLocal8Bit("请输入网址"));
     //正则校验  url校验
 //    QRegExp regExp("^[a-zA-z]+://(\w+(-\w+)*)(\.(\w+(-\w+)*))*(\?\S*)?$");
@@ -466,6 +465,15 @@ void TitleBar::slot_setButtonHelpEmitItem()
     }
 }
 
+void TitleBar::slot_setWebLineEditCurentUrl(QUrl url)
+{
+    qDebug() <<QString::fromLocal8Bit("接收到最新的地址是：")<< url;
+    if(!url.isEmpty())
+    {
+        ui->lineEdit_webSearch->setText(url.toString());
+    }
+}
+
 
 /*槽函数 --- 获取系统时间并且显示*/
 void TitleBar::getSystemTimeShow()
@@ -479,7 +487,7 @@ void TitleBar::getSystemTimeShow()
 void TitleBar::setLineEditAddress(const QUrl url)
 {
     Q_UNUSED(url);
-//    ui->lineEdit_webSearch->clear();
+//    ui->lineEdit_webSearch->setText(url.toString());
 }
 
 void TitleBar::showLoginForm()

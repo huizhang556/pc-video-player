@@ -42,6 +42,7 @@ public slots:
     void serarchLineEditFacous(QObject *watched, QEvent *event);
     void slot_switchToLoginPage(int mark,QString nick);
     void slot_setButtonHelpEmitItem();
+    void slot_setWebLineEditCurentUrl(QUrl url);//设置当前url
 
 //私有槽函数，外部不能直接访问
 private slots:
@@ -55,8 +56,6 @@ private:
     void setShowToolTip();
 
 private:
-    QTimer          *m_timer1       = nullptr;
-    QTimer          *m_timer2       = nullptr;
     QTimer          *m_timer3       = nullptr;
     QMenu           *pmenu_help1    = nullptr;
     QMenu           *pmenu_help2    = nullptr;

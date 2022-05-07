@@ -21,9 +21,9 @@ private:
     void setTextButton();// 设置文本按钮或图标按钮的大小和外观
     void setIconButton();
     void addButton();//将按钮添加到edit
-    void setButtonSize(QPushButton *button, int width);
-    QPushButton     *m_button = nullptr;
-    const     int   buttonMargin = 3;// 按钮和输入内容的边距
+    void setButtonSize(QPushButton *button, int width,int height);
+    QPushButton     *m_button       =       nullptr;
+    const   int     buttonMargin    =       3;// 按钮和输入内容的边距
 
 signals:
     void buttonClicked(bool);

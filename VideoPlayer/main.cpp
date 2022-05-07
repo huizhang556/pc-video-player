@@ -13,6 +13,7 @@
 #include "lunbotu/PictureWidget.h"
 #include "videomodels/CommentTab.h"
 #include "customer/CusFileDialog.h"
+#include "messagebox/CusMessageBox.h"
 #include "mainwidget/RecommendForm.h"
 #include "videomodels/ControlForm.h"
 #include "videomodels/MultipPlayer.h"
@@ -30,6 +31,9 @@ int main(int argc, char *argv[])
     dataBase::creatConnection();//连接数据库
     MainWidget w1;
     w1.show();
+
+//    CusMessageBox e;
+//    e.show();
 
 //    CusFileDialog s;
 //    s.show();
@@ -66,7 +70,7 @@ int main(int argc, char *argv[])
 //    CommentTab c;
 //    c.show();
 
-//    CusLineEdit x;
+//    CusLineEdit x("123");
 //    x.show();
 
 //    ControlForm v;

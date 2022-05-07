@@ -115,14 +115,14 @@ void CentralHomeForm::addWidgetToListWidget()
 
     QListWidgetItem *item9 = new QListWidgetItem();
     GalleryItemForm *pitem9 = new GalleryItemForm();
-    pitem9->setHeaderTitle(QString::fromLocal8Bit("好剧推荐"));
+    pitem9->setHeaderTitle(QString::fromLocal8Bit("抖音热歌"));
     item9->setSizeHint(pitem9->size());
     m_homeListWidget->addItem(item9);
     m_homeListWidget->setItemWidget(item9,pitem9);
 
     QListWidgetItem *item10 = new QListWidgetItem();
     GalleryItemForm *pitem10 = new GalleryItemForm();
-    pitem10->setHeaderTitle(QString::fromLocal8Bit("好剧推荐"));
+    pitem10->setHeaderTitle(QString::fromLocal8Bit("每日推荐"));
     item10->setSizeHint(pitem10->size());
     m_homeListWidget->addItem(item10);
     m_homeListWidget->setItemWidget(item10,pitem10);
@@ -141,7 +141,7 @@ void CentralHomeForm::addWidgetToListWidget()
     subWidget->setLayout(hblayout);
     subWidget->setFixedSize(350,36);
     hblayout->layout()->setMargin(0);
-    item8->setSizeHint(subWidget->size());
+    item_back->setSizeHint(subWidget->size());
     m_homeListWidget->addItem(item_back);
     m_homeListWidget->setItemWidget(item_back,subWidget);
 }

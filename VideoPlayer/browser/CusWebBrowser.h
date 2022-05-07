@@ -27,6 +27,7 @@ public slots:
     void slots_sendToNewAddress();
 signals:
     void sig_sendToNewUrl(QUrl &url);
+    void sig_currentPageSwitch(QUrl &url);
 private:
     QUrl     newUrl;
 };

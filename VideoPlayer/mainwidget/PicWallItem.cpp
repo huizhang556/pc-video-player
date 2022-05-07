@@ -53,3 +53,16 @@ void PicWallItem::resizeEvent(QResizeEvent *event)
     Q_UNUSED(event);
     emit sig_sizeChange(this->size());
 }
+
+bool PicWallItem::eventFilter(QObject *watched, QEvent *event)
+{
+//    if(watched == ui->label_wallitem1)
+//    {
+
+//    }
+//    else if(watched == ui->label_wallitem1)
+//    {
+
+//    }
+    return QWidget::eventFilter(watched,event);
+}

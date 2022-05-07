@@ -140,10 +140,10 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QUrl &url)
     CusWebBrowser *browser = new CusWebBrowser();
     browser->setObjectName(QString::fromLocal8Bit("browser"));
     browser->load(url);
+    m_titleBar->slot_setWebLineEditCurentUrl(url);
     m_webTabWidget->insertTab(m_webTabWidget->count(),browser,QString::fromLocal8Bit("New Page"));
     m_webTabWidget->setCurrentIndex(m_webTabWidget->count()-1);
     connect(browser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
-    connect(m_webTabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(slot_removeTabWidgetTab(int)));
     //回车
     connect(m_titleBar,SIGNAL(sig_sendInputNewUrl(QString)),this,SLOT(slot_judgeCurrentBrowserIsActive_load(QString)));
     //后退
@@ -154,6 +154,10 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QUrl &url)
     connect(m_titleBar,SIGNAL(sig_sendUrlAdvance()),this,SLOT(slot_judgeCurrentBrowserIsActive_advance()));
     //返回主页
     connect(m_titleBar,SIGNAL(sig_sendUrlHome()),this,SLOT(slot_judgeCurrentBrowserIsActive_home()));
+    //当前项改变
+    connect(browser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(slot_setWebLineEditCurentUrl(QUrl)));
+    //当前网页自己显示
+//    connect(browser->page(),SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(slot_setWebLineEditCurentUrl(QUrl)));
 }
 
 //重载函数2：添加一个browser---参数为QString
@@ -163,10 +167,10 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QString &url)
     CusWebBrowser *browser = new CusWebBrowser();
     browser->setObjectName(QString::fromLocal8Bit("browser"));
     browser->load(url);
+    m_titleBar->slot_setWebLineEditCurentUrl(url);
     m_webTabWidget->insertTab(m_webTabWidget->count(),browser,QString::fromLocal8Bit("New Page"));
     m_webTabWidget->setCurrentIndex(m_webTabWidget->count()-1);
     connect(browser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
-    connect(m_webTabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(slot_removeTabWidgetTab(int)));
     //回车
     connect(m_titleBar,SIGNAL(sig_sendInputNewUrl(QString)),this,SLOT(slot_judgeCurrentBrowserIsActive_load(QString)));
     //后退
@@ -177,48 +181,65 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QString &url)
     connect(m_titleBar,SIGNAL(sig_sendUrlAdvance()),this,SLOT(slot_judgeCurrentBrowserIsActive_advance()));
     //返回主页
     connect(m_titleBar,SIGNAL(sig_sendUrlHome()),this,SLOT(slot_judgeCurrentBrowserIsActive_home()));
+    //当前项改变
+    connect(browser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(slot_setWebLineEditCurentUrl(QUrl)));
 }
 
 //过滤不是当前活跃的窗口--返回主页
 void MainWidget::slot_judgeCurrentBrowserIsActive_home()
 {
    CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
-   actWdgt->slots_home();
+       actWdgt->slots_home();
+//       delete actWdgt;
 }
 
 void MainWidget::slot_judgeCurrentBrowserIsActive_back()
 {
     CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
-    actWdgt->slots_back();
+        actWdgt->slots_back();
+//        delete actWdgt;
 }
 
 void MainWidget::slot_judgeCurrentBrowserIsActive_freshen()
 {
     CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
-    actWdgt->slots_refreshen();
+        actWdgt->slots_refreshen();
+//        delete actWdgt;
 }
 
 void MainWidget::slot_judgeCurrentBrowserIsActive_advance()
 {
     CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
-    actWdgt->slots_advance();
+        actWdgt->slots_advance();
+//        delete actWdgt;
 }
 
 void MainWidget::slot_judgeCurrentBrowserIsActive_load(QString newUrl)
 {
     qDebug() << "receive new url = "<< newUrl;
     CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
-    actWdgt->slots_loadNewUrl(newUrl);
+        actWdgt->slots_loadNewUrl(newUrl);
+//        delete actWdgt;
 }
 
 void MainWidget::slot_removeTabWidgetTab(int index)
 {
+    qDebug() << QString::fromLocal8Bit("要删除的选项索引是:") << index;
     if(index == 0) return;//永远不删除第一个，留一个
 //    m_webTabWidget->tabBar()->tabButton(index,QTabBar::LeftSide);
     QWidget* currWidget = m_webTabWidget->widget(index);
-    delete currWidget;
-    currWidget = nullptr;
-    m_webTabWidget->removeTab(index);//为什么主窗口删除，其他子窗口也被删除？
+    //大坑：在此delete后，就不需要removeTab()了，否则会删除所有的tab
+    if(currWidget != nullptr)
+    {
+        delete currWidget;
+        currWidget = nullptr;
+    }
+
+//    m_webTabWidget->removeTab(index);//为什么主窗口删除，其他子窗口也被删除？
+//    m_webTabWidget->tabBar()->hide();
+//    CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
+//    m_titleBar->slot_setWebLineEditCurentUrl(actWdgt->url());//删除显示最新的tab的URL
+//    delete actWdgt;
 }
 
 //处理信号与槽函数
@@ -226,6 +247,11 @@ void MainWidget::chandleSignalAndSlots()
 {
     //添加一个browser
     connect(m_webBrowser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
+    //当前项改变
+    connect(m_webBrowser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(slot_setWebLineEditCurentUrl(QUrl)));
+    //tabbar点击改变
+    connect(m_webTabWidget,SIGNAL(tabBarClicked(int)),this,SLOT(slot_switchCurrentTab_URL(int)));
+    connect(m_webTabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(slot_removeTabWidgetTab(int)));
 
     //标题栏窗口控制按钮
     connect(this,&MainWidget::sig_startCloseAppliction,m_mainPlayer,&MultipPlayer::closeCurrentWindow);//转到重写事件
@@ -518,6 +544,24 @@ void MainWidget::setGlobalToolTip()
 
 }
 
+/*私有槽函数：点击tabbar,转化到当前的索引界面*/
+void MainWidget::slot_switchCurrentTab_URL(int index)
+{
+    Q_UNUSED(index);
+    CusWebBrowser* widget = qobject_cast<CusWebBrowser *>(m_webTabWidget->widget(index));
+//    qDebug() << widget->objectName();
+//    CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
+    if(widget != nullptr)
+    {
+        m_titleBar->slot_setWebLineEditCurentUrl(widget->url());//删除显示最新的tab的URL
+//        delete widget;
+    }
+    else
+    {
+        return;
+    }
+}
+
 //左侧边栏点击判断
 void MainWidget::slot_on_leftButton_clicked()
 {
@@ -749,7 +793,8 @@ void MainWidget::closeEvent(QCloseEvent *event)
 void MainWidget::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
-    m_webBrowser->resize(this->size());
+//    if(m_webBrowser!=nullptr)
+//    m_webBrowser->resize(this->size());
 }
 
 /*获取光标在窗口所在区域的 行   返回行数*/

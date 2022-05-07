@@ -4,6 +4,7 @@
 CusLineEdit::CusLineEdit(const QString &btnText, QWidget *parent) :
     QLineEdit(parent)
 {
+    this->setFixedHeight(50);
     m_button = new QPushButton(btnText);
     setTextButton();
     addButton();
@@ -29,7 +30,7 @@ void CusLineEdit::setTextButton()
         }
         // 获得当前字体下文本内容的像素宽度
         auto width = QWidget::fontMetrics().width(m_button->text());
-        setButtonSize(m_button, width);
+        setButtonSize(m_button, width,this->height()-buttonMargin*2);
 }
 
 void CusLineEdit::setIconButton()
@@ -40,7 +41,7 @@ void CusLineEdit::setIconButton()
 
         // 获取图标的width简单得多
         auto width = m_button->iconSize().width();
-        setButtonSize(m_button, width);
+        setButtonSize(m_button, width,this->height()-buttonMargin*2);
         // 设置背景和边框在非点击时不可见
         m_button->setFlat(true);
 }
@@ -63,11 +64,12 @@ void CusLineEdit::addButton()
     setTextMargins(0, 0, m_button->width(), 0);
 }
 
-void CusLineEdit::setButtonSize(QPushButton *button, int width)
+void CusLineEdit::setButtonSize(QPushButton *button, int width, int height)
 {
     auto policy = button->sizePolicy();
     policy.setHorizontalPolicy(QSizePolicy::Fixed);
     button->setSizePolicy(policy);
     // 固定宽度，加上边距
-    button->setFixedWidth((width+buttonMargin*2));
+    button->setMinimumWidth((width+buttonMargin*2));
+    button->setMinimumHeight((height+buttonMargin*2));
 }

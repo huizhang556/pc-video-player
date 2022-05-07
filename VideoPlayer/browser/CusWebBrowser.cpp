@@ -13,6 +13,8 @@ CusWebBrowser::CusWebBrowser(QWidget *parent) :
     this->showMaximized();
 //    this->load(QUrl("https://v.qq.com/"));
     this->load(QUrl("https://www.baidu.com/"));
+    this->page()->setAudioMuted(false);//不自动静音
+    this->page()->setBackgroundColor(QColor(38,40,41));
 //    this->page()->settings()->setAttribute(QWebEngineSettings::ShowScrollBars,false);//不显示滚动条    
     //这两个信号槽要配合使用，有先后顺序之分，一个触发会导致另一个触发
     connect(this->page(),&QWebEnginePage::linkHovered,this,&CusWebBrowser::slots_createNewWindows);//就是鼠标放上去的操作
@@ -40,6 +42,7 @@ QWebEngineView *CusWebBrowser::createWindow(QWebEnginePage::WebWindowType type)
     else if(type == QWebEnginePage::WebBrowserWindow)
     {
     this->load(newUrl);
+       emit sig_currentPageSwitch(newUrl);
     }
     else if(type == QWebEnginePage::WebDialog)
     {
