@@ -213,7 +213,9 @@ private slots:
 
     int getCurrentMediaRowOfCollectList(QListWidget* listdgt,QString name);
 
-    void addCurrentMediaToList(QListWidget *destList);
+    void addCurrentMediaToList_Collect(QListWidget *destList);//添加进收藏列表
+
+    void addCurrentMediaToList_History(QListWidget *destList);//添加进历史记录
 
     void mediaLoadingStatusProgressBar_Start();
 

@@ -76,7 +76,11 @@ private:
 
 
 private slots:
+    void slot_setRemoveTabLineEditText(int index);//删除某个tab后，标题栏显示URL
+
     void slot_switchCurrentTab_URL(int index);//转换到当前索引
+
+    void slot_setCurrentTabWidgetEnable();//设置可用不可用
 
     void slot_judgeCurrentBrowserIsActive_home();//过滤不是当前活跃的窗口--返回主页
 

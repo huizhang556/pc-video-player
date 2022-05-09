@@ -4,6 +4,8 @@ SUBDIRS += \
     VideoPlayer
 
 
+#2022-02-07  allcount = 11424 rows
+
 #release编译之前（已使用模式选择(release|debug)解决）：
 #1.MusicPlayShow.cpp文件中，修改picture路径；
 #2.ExitDialog.cpp文件中，修改退出窗口配置文件路径；

@@ -18,7 +18,6 @@ MainWidget::MainWidget(QWidget *parent) :
     initOtherWidgetUi();//初始化界面
     setStackedWidgetPage();//设置StackedWidget布局每个page界面
     chandleSignalAndSlots();//处理所有的信号与槽函数
-
 }
 
 //初始化界面
@@ -234,6 +233,7 @@ void MainWidget::slot_removeTabWidgetTab(int index)
         delete currWidget;
         currWidget = nullptr;
     }
+    slot_setRemoveTabLineEditText(index);//显示当前选中的web URL
 
 //    m_webTabWidget->removeTab(index);//为什么主窗口删除，其他子窗口也被删除？
 //    m_webTabWidget->tabBar()->hide();
@@ -251,6 +251,7 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_webBrowser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(slot_setWebLineEditCurentUrl(QUrl)));
     //tabbar点击改变
     connect(m_webTabWidget,SIGNAL(tabBarClicked(int)),this,SLOT(slot_switchCurrentTab_URL(int)));
+    //tab关闭
     connect(m_webTabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(slot_removeTabWidgetTab(int)));
 
     //标题栏窗口控制按钮
@@ -544,10 +545,10 @@ void MainWidget::setGlobalToolTip()
 
 }
 
+
 /*私有槽函数：点击tabbar,转化到当前的索引界面*/
 void MainWidget::slot_switchCurrentTab_URL(int index)
 {
-    Q_UNUSED(index);
     CusWebBrowser* widget = qobject_cast<CusWebBrowser *>(m_webTabWidget->widget(index));
 //    qDebug() << widget->objectName();
 //    CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
@@ -555,6 +556,41 @@ void MainWidget::slot_switchCurrentTab_URL(int index)
     {
         m_titleBar->slot_setWebLineEditCurentUrl(widget->url());//删除显示最新的tab的URL
 //        delete widget;
+    }
+    else
+    {
+        return;
+    }
+}
+
+/*设置可用不可用*/
+void MainWidget::slot_setCurrentTabWidgetEnable()
+{
+    for(int i = 0; i < m_webTabWidget->count(); i++)
+    {
+        CusWebBrowser* widget = qobject_cast<CusWebBrowser *>(m_webTabWidget->widget(i));
+        widget->setEnabled(false);//非活动控件，设置为false
+    }
+    CusWebBrowser* widget = qobject_cast<CusWebBrowser *>(m_webTabWidget->currentWidget());
+    if(widget != nullptr)
+    {
+        widget->setEnabled(true);//设置当前活跃的可用
+        qDebug() <<QString::fromLocal8Bit("当前已设置为可用控件");
+    }
+    else
+    {
+        return;
+    }
+}
+
+/*删除某个tab后，标题栏显示URL*/
+void MainWidget::slot_setRemoveTabLineEditText(int index)
+{
+    Q_UNUSED(index);
+    CusWebBrowser* widget = qobject_cast<CusWebBrowser *>(m_webTabWidget->currentWidget());
+    if(widget != nullptr)
+    {
+        m_titleBar->slot_setWebLineEditCurentUrl(widget->url());
     }
     else
     {

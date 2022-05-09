@@ -505,12 +505,12 @@ void MultipPlayer::chandleSignalAndSLots()
     //收藏按钮
     connect(ui->pushButton_collect,&QPushButton::clicked,[=](){
         qDebug() << "pushButton_collect clicled!";
-        addCurrentMediaToList(m_listWisget3);
+        addCurrentMediaToList_Collect(m_listWisget3);
     });
 
     //播放添加历史记录
     connect(this,&MultipPlayer::sig_sendSwitchToMusicPage,[=](){
-        addCurrentMediaToList(m_listWisget4);
+        addCurrentMediaToList_History(m_listWisget4);
     });
 
     //播放顺序选择
@@ -1860,14 +1860,14 @@ int MultipPlayer::getCurrentMediaRowOfCollectList(QListWidget* listdgt, QString 
     return -1;//没找到，返回row为-1
 }
 
-void MultipPlayer::addCurrentMediaToList(QListWidget *destList)
+void MultipPlayer::addCurrentMediaToList_Collect(QListWidget *destList)
 {
     bool hasValue = findCollectListStatus(destList,m_curMediaName);//判断是否收藏
-    qDebug() << "current media collect status = " << hasValue;
+    qDebug() << QString::fromLocal8Bit("当前播放媒体收藏状态：") << hasValue;
+    qDebug() << QString::fromLocal8Bit("添加前收藏总数：") << destList->count();
     if(!hasValue)//不存在则添加进收藏
     {
         if(m_curMediaName.isEmpty()) return;
-        qDebug() << "now collect list's count = " << destList->count();
         destList->insertItem(0,m_curMediaName);//头插法
         ui->pushButton_collect->setStyleSheet("QPushButton{"
                                               "border-image: url(:/images/icon/play_collect_checked.png);"
@@ -1882,11 +1882,27 @@ void MultipPlayer::addCurrentMediaToList(QListWidget *destList)
                                               "}");
         delete item;//手动释放
     }
+    qDebug() << QString::fromLocal8Bit("添加后收藏总数：") << destList->count();
+}
+
+void MultipPlayer::addCurrentMediaToList_History(QListWidget *destList)
+{
+    bool hasValue = findCollectListStatus(destList,m_curMediaName);//判断是否收藏
+    qDebug() << "current media collect status = " << hasValue;
+    if(!hasValue)//不存在则添加进收藏
+    {
+        if(m_curMediaName.isEmpty()) return;
+        qDebug() << "now collect list's count = " << destList->count();
+        destList->insertItem(0,m_curMediaName);//头插法
+    }
+    else
+    {
+        //存在，什么也不做
+    }
 }
 
 void MultipPlayer::mediaLoadingStatusProgressBar_Start()
 {
-//    VideoProgressBar::getInstance()->setParent(ui->stackedWidget);//设置父窗口，背景变为黑色
     if(this->isHidden() || this->isMinimized()) return;
     VideoProgressBar::getInstance()->raise();
     VideoProgressBar::getInstance()->show();

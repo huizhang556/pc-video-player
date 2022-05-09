@@ -227,7 +227,7 @@ void CusWebBrowser::slot_createCustomRightMenu()
     rmenu->addSeparator();
     rmenu->addAction(QIcon(""),QString::fromLocal8Bit("复制网页地址"),this,SLOT(slot_copyWebUrl()));
     rmenu->addAction(QIcon(""),QString::fromLocal8Bit("保存网页"),this,SLOT(slot_savePage()));
-    rmenu->addAction(QIcon(""),QString::fromLocal8Bit("审查源码"),this,SLOT(slot_browserPageSource()));
+    rmenu->addAction(QIcon(""),QString::fromLocal8Bit("审查源码(调试器)"),this,SLOT(slot_browserPageSource()));
     rmenu->exec(QCursor::pos());
     delete rmenu;
 }
@@ -292,5 +292,5 @@ void CusWebBrowser::slot_browserPageSource()
 {
 //    this->pageAction(QWebEnginePage::WebAction::InspectElement)->trigger();
     QUrl url("http://127.0.0.1:8999");//进入调试界面
-    emit sig_sendToNewUrl(url);
+    emit sig_sendToNewUrl(url);//打开新界面，进行调试
 }
