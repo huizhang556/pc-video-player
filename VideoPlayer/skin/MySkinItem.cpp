@@ -17,22 +17,23 @@ MySkinItem::MySkinItem(int x, int y, int w, int h,int type, QWidget *parent) :
 {
     ui->setupUi(this);
     this->installEventFilter(this);
-    this->setFixedSize(x-5,y-10);
+    this->setFixedSize(x,y);
     QIcon icon_close(":/images/icon/close3.png");
     m_closeBtn = new QPushButton(icon_close,"",this);
-    m_closeBtn->setObjectName(QString::fromLocal8Bit("m_closeBtn"));
+    m_closeBtn->setObjectName(QString::fromLocal8Bit("m_skinCloseBtn"));
+    m_closeBtn->setFlat(true);
 //    m_closeBtn->setGeometry(130,0,20,20);// x-w,0,,w,h
     setCloseButtonGeometry(m_closeBtn,x,y,w,h);
-    setCloseButtonStyleSheet();
+//    setCloseButtonStyleSheet();
     m_closeBtn->hide();
 
-    QIcon icon_check(":/images/icon/uncheck_set.png");
-    m_checkedBtn = new QPushButton(icon_check,"",this);
-    m_checkedBtn->setObjectName(QString::fromLocal8Bit("m_checkedBtn"));
+    QIcon icon_check("://images/skin/myskin_checkbtn.png");
+    m_checkedBtn = new QPushButton(QIcon(""),"",this);
+    m_checkedBtn->setObjectName(QString::fromLocal8Bit("m_skinCheckedBtn"));
+    m_checkedBtn->setFlat(true);
 //    m_checkedBtn->setGeometry(130,80,20,20);//x-w,y-h-间距,w,h
     setCheckedButtonGeometry(m_checkedBtn,x,y,w,h,type);
-//    setSkinPicture(QString::fromLocal8Bit(":/images/skin/title%1.jpg").arg(1));
-    setCheckedButtonStyleSheet();
+    setCheckButtonStatus();
     m_checkedBtn->hide();
 
     connect(m_closeBtn,&QPushButton::clicked,[=](){
@@ -65,6 +66,11 @@ void MySkinItem::setSkinPicture(QString path)
     ui->label_skin->setScaledContents(true);//图片自适应
 }
 
+void MySkinItem::setCheckButtonText(QString text)
+{
+//    m_checkedBtn->setText(text);
+}
+
 void MySkinItem::setcheckedStatus()
 {
     m_status = true;
@@ -81,14 +87,16 @@ void MySkinItem::setCheckButtonStatus()
     {
         m_checkedBtn->setStyleSheet("QPushButton"
                                     "{"
-                                    "border-image: url(:/images/icon/checkhover.png);"
+                                    "background:transparent;"
+                                    "border-image: url(://images/skin/myskin_checkbtn_hover.png);"
                                     "}");
     }
     else
     {
         m_checkedBtn->setStyleSheet("QPushButton"
                                     "{"
-                                    "border-image: url(:/images/icon/checked.png);"
+                                    "background:transparent;"
+                                    "border-image: url(://images/skin/myskin_checkbtn.png);"
                                     "}");
     }
     m_status = !m_status;//状态置为反面
@@ -98,6 +106,7 @@ void MySkinItem::setCloseButtonStyleSheet()
 {
     m_closeBtn->setStyleSheet("QPushButton"
                               "{"
+                              "background:transparent;"
                               "border-image: url(:/images/icon/close3.png);"
                               "}"
                               );
@@ -107,7 +116,8 @@ void MySkinItem::setCheckedButtonStyleSheet()
 {
     m_checkedBtn->setStyleSheet("QPushButton"
                               "{"
-                              "border-image: url(:/images/icon/checkhover.png);"
+                              "background:transparent;"
+                              "border-image: url(://images/skin/myskin_checkbtn.png);"
                               "}"
                               );
 }
@@ -130,7 +140,7 @@ bool MySkinItem::eventFilter(QObject *watched, QEvent *event)
 /*设置close按钮位置*/
 bool MySkinItem::setCloseButtonGeometry(QPushButton *btn, int x, int y, int w, int h)
 {
-    btn->setGeometry(x-w-5,0,w,h);//固定大小
+    btn->setGeometry(x-20,0,20,20);//固定大小
     return true;
 }
 
@@ -140,7 +150,7 @@ bool MySkinItem::setCheckedButtonGeometry(QPushButton *btn, int x, int y, int w,
     //三种不同的位置
     if(type == 0)
     {
-        btn->setGeometry(x-w-5,y-h-10,w,h);//固定大小10
+        btn->setGeometry(x/2 -w/2,y/2-h/2,w,h);//固定大小10
     }
     else if(type == 1)
     {

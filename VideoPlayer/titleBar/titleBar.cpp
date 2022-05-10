@@ -3,8 +3,11 @@
 #include <QDebug>
 #include <QDateTime>
 #include <QRegExp>
+#include <QPalette>
 #include <QRegExpValidator>
 #include <QDesktopServices>
+#include <QPropertyAnimation>
+#include <QGraphicsOpacityEffect>
 
 TitleBar::TitleBar(QWidget *parent) :
     QWidget(parent),
@@ -33,8 +36,11 @@ void TitleBar::initWorker()
 
     //LCD数字显示
     ui->lcdNumber->setDigitCount(20);//显示数量（个数）
-    ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);
-    ui->lcdNumber->setPalette(Qt::red);//显示文字颜色，不怎么生效
+    ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);//设置数字字体
+//    ui->lcdNumber->setPalette(Qt::red);//显示文字颜色，不怎么生效
+    QPalette lcdpat = ui->lcdNumber->palette();
+    lcdpat.setColor(QPalette::Normal,QPalette::WindowText,Qt::green);
+    ui->lcdNumber->setPalette(lcdpat);
     //初始化定时器
     m_timer3 = new QTimer(this);
     m_timer3->start(1000);//0.1s更新发送一次时间,放在下面合适
@@ -83,6 +89,10 @@ void TitleBar::initWorker()
 
     m_mySkin = new MySkin();
     m_mySkin->setObjectName(QString::fromLocal8Bit("m_mySkin"));
+
+    m_downlist = new WebDownLoadList();
+    m_downlist->setObjectName(QString::fromLocal8Bit("m_downlist"));
+
 
     slot_switchToLoginPage(1,QString::fromLocal8Bit("测试测名称8020"));
 }
@@ -164,6 +174,31 @@ void TitleBar::chandleSignalAndSLots()
         qDebug() << "emit sig_sendNewSearch(his);";
         //处理其他事件
         //鼠标进入样式改变
+    });
+
+    //网址收藏
+    connect(ui->pushButton_webcollect,&QPushButton::clicked,[=](){
+        qDebug() << QString::fromLocal8Bit("网络文件收藏");
+    });
+    //网络文件下载
+    connect(ui->pushButton_webdownload,&QPushButton::clicked,[=](){
+        qDebug() << QString::fromLocal8Bit("网络文件下载");
+        if(m_downlist)
+        {
+            if(m_downlist->isHidden())
+            {
+                m_downlist->show();
+            }
+            else
+            {
+                m_downlist->hide();
+            }
+        }
+    });
+
+    //下载设置
+    connect(m_downlist,&WebDownLoadList::sig_setConfig,[=](){
+        emit sig_settingHelpItem(1);//1  代表系统设置
     });
 }
 
@@ -474,6 +509,29 @@ void TitleBar::slot_setWebLineEditCurentUrl(QUrl url)
     }
 }
 
+void TitleBar::slot_setWebProgressBarValue(int value)
+{
+    ui->webProgressBar->setValue(value);
+    if(value == 100)
+    {
+//        QTimer::singleShot(1000,this,SLOT(slot_resetWebProgressBarValue()));
+    }
+}
+
+void TitleBar::slot_resetWebProgressBarValue()
+{
+    ui->webProgressBar->setValue(0);
+    QGraphicsOpacityEffect *opacity = new QGraphicsOpacityEffect(this);
+//    opacity->setOpacity(0.5); //设置透明度0.5,透明范围：[0,1]
+    ui->webProgressBar->setGraphicsEffect(opacity);//应用到需要透明变化的控件；
+    //使用属性动画类让控件在透明度范围内变化
+    QPropertyAnimation *opacityAnimation = new QPropertyAnimation(opacity, "opacity");
+    opacityAnimation->setDuration(30000); //动效时长3s
+    opacityAnimation->setStartValue(0);
+    opacityAnimation->setEndValue(1);
+    opacityAnimation->start();
+}
+
 
 /*槽函数 --- 获取系统时间并且显示*/
 void TitleBar::getSystemTimeShow()
@@ -532,23 +590,23 @@ void TitleBar::showMySkin()
         }
         else
         {
-            int x = ui->Btnskin->parentWidget()->mapToGlobal(ui->Btnskin->pos()).x();
-            int y = ui->Btnskin->parentWidget()->mapToGlobal(ui->Btnskin->pos()).y();
-            int h = ui->Btnskin->height();
-            m_mySkin->setGeometry(x-150,y+h+10,m_mySkin->width(),m_mySkin->height());
+//            int x = ui->Btnskin->parentWidget()->mapToGlobal(ui->Btnskin->pos()).x();
+//            int y = ui->Btnskin->parentWidget()->mapToGlobal(ui->Btnskin->pos()).y();
+//            int h = ui->Btnskin->height();
+//            m_mySkin->setGeometry(x-150,y+h+10,m_mySkin->width(),m_mySkin->height());
             m_mySkin->raise();
-            m_mySkin->show();
+            m_mySkin->exec();
         }
     }
     else
     {
         m_mySkin = new MySkin();
-        int x = ui->Btnskin->parentWidget()->mapToGlobal(ui->Btnskin->pos()).x();
-        int y = ui->Btnskin->parentWidget()->mapToGlobal(ui->Btnskin->pos()).y();
-        int h = ui->Btnskin->height();
-        m_mySkin->setGeometry(x-150,y+h+10,m_mySkin->width(),m_mySkin->height());
+//        int x = ui->Btnskin->parentWidget()->mapToGlobal(ui->Btnskin->pos()).x();
+//        int y = ui->Btnskin->parentWidget()->mapToGlobal(ui->Btnskin->pos()).y();
+//        int h = ui->Btnskin->height();
+//        m_mySkin->setGeometry(x-150,y+h+10,m_mySkin->width(),m_mySkin->height());
         m_mySkin->raise();
-        m_mySkin->show();
+        m_mySkin->exec();
     }
 }
 

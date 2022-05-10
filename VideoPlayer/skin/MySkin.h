@@ -1,9 +1,14 @@
 ﻿#ifndef MYSKIN_H
 #define MYSKIN_H
-
-#include <QDialog>
 #include "MySkinItem.h"
+#include "global/Global.h"
+#include <QPoint>
+#include <QDialog>
 #include <QListWidget>
+#include <QMouseEvent>
+#include <QPushButton>
+#include <QButtonGroup>
+#include <QAbstractButton>
 
 namespace Ui {
 class MySkin;
@@ -21,9 +26,17 @@ public:
 
 protected:
     bool eventFilter(QObject *watch, QEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+
+private slots:
+    void on_pushButton_close_clicked();
+    void switchButtonToStackWidget(QAbstractButton *button);
 
 private:
     Ui::MySkin *ui;
+    QButtonGroup        *btngroup   = nullptr;
+    QPoint              m_mvPos;
 };
 
 #endif // MYSKIN_H

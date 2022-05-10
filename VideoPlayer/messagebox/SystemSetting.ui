@@ -237,7 +237,7 @@ border: 1px solid #3C80B1;
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>5</number>
            </property>
            <widget class="QWidget" name="page_0">
             <widget class="QLabel" name="label_2">
@@ -1685,9 +1685,9 @@ font-weight:bold;
 }</string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
-               <widget class="QWidget" name="tab">
+               <widget class="QWidget" name="tab_video">
                 <attribute name="title">
                  <string>视频管理</string>
                 </attribute>
@@ -1986,7 +1986,7 @@ border-image: url(:/images/icon/all_openfile_hover.png);
                  </layout>
                 </widget>
                </widget>
-               <widget class="QWidget" name="tab_2">
+               <widget class="QWidget" name="tab_game">
                 <attribute name="title">
                  <string>游戏管理</string>
                 </attribute>
@@ -2149,6 +2149,11 @@ border-image: url(:/images/icon/all_openfile_hover.png);
                   </item>
                  </layout>
                 </widget>
+               </widget>
+               <widget class="QWidget" name="tab">
+                <attribute name="title">
+                 <string>浏览器管理</string>
+                </attribute>
                </widget>
               </widget>
              </item>

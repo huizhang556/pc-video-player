@@ -143,6 +143,8 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QUrl &url)
     m_webTabWidget->insertTab(m_webTabWidget->count(),browser,QString::fromLocal8Bit("New Page"));
     m_webTabWidget->setCurrentIndex(m_webTabWidget->count()-1);
     connect(browser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
+    //加载网页进度
+    connect(browser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
     //回车
     connect(m_titleBar,SIGNAL(sig_sendInputNewUrl(QString)),this,SLOT(slot_judgeCurrentBrowserIsActive_load(QString)));
     //后退
@@ -170,6 +172,8 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QString &url)
     m_webTabWidget->insertTab(m_webTabWidget->count(),browser,QString::fromLocal8Bit("New Page"));
     m_webTabWidget->setCurrentIndex(m_webTabWidget->count()-1);
     connect(browser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
+    //加载网页进度
+    connect(browser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
     //回车
     connect(m_titleBar,SIGNAL(sig_sendInputNewUrl(QString)),this,SLOT(slot_judgeCurrentBrowserIsActive_load(QString)));
     //后退
@@ -245,8 +249,12 @@ void MainWidget::slot_removeTabWidgetTab(int index)
 //处理信号与槽函数
 void MainWidget::chandleSignalAndSlots()
 {
+    //显示当前页面的地址
+    connect(m_webBrowser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(setLineEditAddress(QUrl)));
     //添加一个browser
     connect(m_webBrowser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
+    //加载网页进度
+    connect(m_webBrowser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
     //当前项改变
     connect(m_webBrowser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(slot_setWebLineEditCurentUrl(QUrl)));
     //tabbar点击改变
@@ -285,9 +293,6 @@ void MainWidget::chandleSignalAndSlots()
         m_stackWidget_center->setCurrentIndex(index1);//个人信息界面
         m_personForm->getCurrentShowWidget_TW()->setCurrentIndex(index2);
     });
-
-    //显示当前页面的地址
-    connect(m_webBrowser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(setLineEditAddress(QUrl)));
 
     //收到主窗口关闭信号
     connect(m_pExitDlg,&ExitDialog::sig_SendcloseMain,[=](){m_isClose = true;});

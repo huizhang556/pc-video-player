@@ -7,7 +7,7 @@ CusWebBrowser::CusWebBrowser(QWidget *parent) :
     qputenv("QTWEBENGINE_REMOTE_DEBUGGING","8999"); //调试窗口, 需重新编译生效
     this->showMaximized();
     installEventFilter(this);
-    this->load(QUrl("http://82.156.175.81/study/index.html"));
+    this->load(QUrl("http://www.baidu.com"));
     this->page()->setAudioMuted(false);//不自动静音
     this->settings()->setAttribute(QWebEngineSettings::PluginsEnabled,true);//支持插件
     this->settings()->setAttribute(QWebEngineSettings::SpatialNavigationEnabled, true);
@@ -17,7 +17,9 @@ CusWebBrowser::CusWebBrowser(QWidget *parent) :
     //这两个信号槽要配合使用，有先后顺序之分，一个触发会导致另一个触发
 //    connect(this,&CusWebBrowser::customContextMenuRequested,this,&CusWebBrowser::slot_createCustomRightMenu);
     connect(this->page(),&QWebEnginePage::linkHovered,this,&CusWebBrowser::slots_createNewWindows);//就是鼠标放上去的操作
-    connect(this->page()->profile(),SIGNAL(downloadRequested(QWebEngineDownloadItem*)),this,SLOT(slot_receiveDownloadRequested(QWebEngineDownloadItem*)));
+    connect(this->page()->profile(),SIGNAL(downloadRequested(QWebEngineDownloadItem*)),
+            this,SLOT(slot_receiveDownloadRequested(QWebEngineDownloadItem*)),
+            Qt::UniqueConnection);//防止重复连接，只连接一次
 //    connect(this,SIGNAL(urlChanged(QUrl)),this,SLOT(slots_sendToNewAddress()));
 
 //    this->pageAction(QWebEnginePage::Back)->setText(QString::fromLocal8Bit("后退"));

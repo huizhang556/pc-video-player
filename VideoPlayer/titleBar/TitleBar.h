@@ -4,6 +4,7 @@
 #include "skin/MySkin.h"
 #include "mainwidget/SearchForm.h"
 #include "login/LoginPersonInfo.h"
+#include "browser/WebDownLoadList.h"
 #include <QMenu>
 #include <QPoint>
 #include <QTimer>
@@ -43,7 +44,8 @@ public slots:
     void slot_switchToLoginPage(int mark,QString nick);
     void slot_setButtonHelpEmitItem();
     void slot_setWebLineEditCurentUrl(QUrl url);//设置当前url
-
+    void slot_setWebProgressBarValue(int value);//网页加载时，显示加载进度
+    void slot_resetWebProgressBarValue();
 //私有槽函数，外部不能直接访问
 private slots:
     void chandleMainWinStatus(bool status);
@@ -59,6 +61,7 @@ private:
     QTimer          *m_timer3       = nullptr;
     QMenu           *pmenu_help1    = nullptr;
     QMenu           *pmenu_help2    = nullptr;
+    WebDownLoadList *m_downlist     = nullptr;
     SearchForm      *m_searchForm   = nullptr;
     Login           *m_loginForm    = nullptr;
     MySkin          *m_mySkin       = nullptr;

@@ -197,11 +197,6 @@
         <file>images/icon/comment_message_hover.png</file>
         <file>images/icon/arrow_left.png</file>
         <file>images/icon/arrow_right.png</file>
-        <file>images/skin/title1.jpg</file>
-        <file>images/skin/title2.jpg</file>
-        <file>images/skin/title3.jpg</file>
-        <file>images/skin/title4.jpg</file>
-        <file>images/skin/title5.jpg</file>
         <file>images/icon/player_dxunhuan.png</file>
         <file>images/icon/player_shunxu.png</file>
         <file>images/icon/player_suiji.png</file>
@@ -254,5 +249,9 @@
         <file>images/icon/main_bottom_hover.png</file>
         <file>images/icon/tab_closebtn.png</file>
         <file>images/icon/tab_closebtn_hover.png</file>
+        <file>images/skin/myskin_checkbtn.png</file>
+        <file>images/skin/myskin_checkbtn_hover.png</file>
+        <file>images/icon/title_webdownload_hover.png</file>
+        <file>images/icon/title_webdownload.png</file>
     </qresource>
 </RCC>

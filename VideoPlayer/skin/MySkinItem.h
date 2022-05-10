@@ -18,6 +18,7 @@ public:
     ~MySkinItem();
 public slots:
     void setSkinPicture(QString path);
+    void setCheckButtonText(QString text);
     void setcheckedStatus();
     void setUnCheckedStatus();
     void setCheckButtonStatus();

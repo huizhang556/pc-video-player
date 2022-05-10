@@ -4,7 +4,8 @@
 #include <QWidget>
 #include <QLayout>
 #include <QLabel>
-#include <QSlider>
+#include <QMouseEvent>
+#include <QProgressBar>
 #include <QPushButton>
 #include <QListWidgetItem>
 
@@ -22,22 +23,27 @@ public:
     void initWorkUI();
     void chandleSignalsAndSLots();
 public slots:
-    bool slot_addDownLoadRecordToList();//添加下载记录
+    bool slot_addDownLoadRecordToList(int order);//添加下载记录
     bool slot_setDownLoadStatus();
     bool slot_chandleCancel();
-    bool slot_clearHistoryList();
-    bool slot_setDownLoadConfig();
     void slot_searchDownloadHirtory(QString text);
+    void slot_setDownloadProgressbar(int value);
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
+
+    void mouseMoveEvent(QMouseEvent *event) override;
 private:
     Ui::WebDownLoadList *ui;
+    QPoint              m_mvPos;
+private slots:
+    void on_pushButton_min_clicked();
+    void on_pushButton_close_clicked();
 signals:
     void sig_cancel();
     void sig_pause();
     void sig_setConfig();
     void sig_delete();
-private slots:
-    void on_pushButton_min_clicked();
-    void on_pushButton_close_clicked();
+
 };
 
 #endif // WEBDOWNLOADLIST_H

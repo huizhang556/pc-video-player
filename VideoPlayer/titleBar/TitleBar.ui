@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1051</width>
+    <width>1421</width>
     <height>59</height>
    </rect>
   </property>
@@ -350,33 +350,7 @@ border-image: url(:/images/icon/zuanshi_hover.png);
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>20</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLCDNumber" name="lcdNumber">
-       <property name="maximumSize">
-        <size>
-         <width>150</width>
-         <height>35</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_4">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>50</width>
+         <width>10</width>
          <height>20</height>
         </size>
        </property>
@@ -397,7 +371,7 @@ border-image: url(:/images/icon/zuanshi_hover.png);
         </size>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="page">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -422,6 +396,41 @@ border-image: url(:/images/icon/zuanshi_hover.png);
             <property name="spacing">
              <number>0</number>
             </property>
+            <item>
+             <widget class="QLCDNumber" name="lcdNumber">
+              <property name="minimumSize">
+               <size>
+                <width>150</width>
+                <height>35</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>150</width>
+                <height>35</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
             <item>
              <widget class="QLineEdit" name="lineEditSearch">
               <property name="minimumSize">
@@ -551,6 +560,63 @@ padding:-1px;
            <property name="spacing">
             <number>0</number>
            </property>
+           <item>
+            <spacer name="horizontalSpacer_19">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>10</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="webProgressBar">
+             <property name="minimumSize">
+              <size>
+               <width>80</width>
+               <height>18</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>80</width>
+               <height>18</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QProgressBar
+{
+font:9pt;
+color:white;
+border-radius:5px;
+text-align:center;
+border:1px solid #E8EDF2;
+background-color:#2a2a31;
+border-color: rgb(180, 180, 180);
+}
+QProgressBar:chunk
+{
+width:5px;
+margin:0.5px;
+border-radius:5px;
+background-color:#47df00;
+}</string>
+             </property>
+             <property name="value">
+              <number>0</number>
+             </property>
+             <property name="textVisible">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
            <item>
             <spacer name="horizontalSpacer_7">
              <property name="orientation">
@@ -752,7 +818,7 @@ border-image: url(:/images/icon/advance_hover.png);
             <widget class="QLineEdit" name="lineEdit_webSearch">
              <property name="minimumSize">
               <size>
-               <width>205</width>
+               <width>150</width>
                <height>30</height>
               </size>
              </property>
@@ -857,7 +923,53 @@ color:#1afa29;
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton">
+            <widget class="QPushButton" name="pushButton_webdownload">
+             <property name="minimumSize">
+              <size>
+               <width>18</width>
+               <height>18</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>18</width>
+               <height>18</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+border-image: url(:/images/icon/title_webdownload.png);
+}
+
+QPushButton:hover
+{
+border-image: url(:/images/icon/title_webdownload_hover.png);
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_22">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>15</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_webcollect">
              <property name="minimumSize">
               <size>
                <width>18</width>

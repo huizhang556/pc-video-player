@@ -6,18 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>330</width>
-    <height>228</height>
+    <width>617</width>
+    <height>348</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: #3b3b45;
-border-radius:50px;</string>
+   <string notr="true">background-color:rgba(239, 239, 239,0.5);
+
+</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -34,77 +35,345 @@ border-radius:50px;</string>
     <number>0</number>
    </property>
    <item>
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="styleSheet">
-      <string notr="true">QTabWidget
-{
-background-color: #3b3b45;
-}
-
-/*去白边*/
-QTabWidget::pane 
-{
-border-right: 0;
-background-color: #3b3b45;
-}
-
-QTabWidget::tab-bar 
-{
-left: 35px;
-}
-
-QTabBar::tab
-{
-min-width:80px;
-color: white;
-background-color:qlineargradient(x1: 0, y1: 0, x2: 0.7, y2: 0.7,stop: 0.3 rgb(40,150,200,160),stop: 0.6 rgb(40,150,200,220),stop:1 rgb(40,150,200,255));
-border: 0px solid;
-border-top-left-radius: 0px;
-border-top-right-radius: 0px;
-padding:5px;/*tab中字体距离*/
-}
-
-QTabBar::tab:!selected
-{
-margin-top: 0px;
-font-weight:bold;
-background-color: rgb(190, 190, 190);
-}
-
-QTabBar::tab:selected
-{
-color: white;
-font-size:12px;
-font-weight:bold;
-}</string>
-     </property>
-     <property name="currentIndex">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="tab_zhuti">
-      <attribute name="title">
-       <string>主题皮肤</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="spacing">
+     <item>
+      <widget class="QWidget" name="widget_title" native="true">
+       <property name="styleSheet">
+        <string notr="true">#widget_title
+{
+background-color:#5382ac;
+border:1px solid transparent;
+border-bottom-color:#ebebeb;
+}</string>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>20</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="pushButton_desktopmusic">
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>80</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+background-color:#c9d5df;
+margin:2px 2px;
+border:1px solid transparent;
+border-radius:13px;
+font-size:12px;
+color:#858585;
+}
+QPushButton:hover
+{
+background-color:#317098;
+border-radius:13px;
+font-weight:700;
+color: #00aaff;
+}
+QPushButton:checked
+{
+background-color:#317098;
+border-radius:13px;
+font-weight:700;
+font-size:12px;
+color: #00aaff;
+}</string>
+          </property>
+          <property name="text">
+           <string>桌面音乐</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_themeskin">
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>80</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+background-color:#c9d5df;
+margin:2px 2px;
+border:1px solid transparent;
+border-radius:13px;
+font-size:12px;
+color:#858585;
+}
+QPushButton:hover
+{
+background-color:#317098;
+border-radius:13px;
+font-weight:700;
+color: #00aaff;
+}
+QPushButton:checked
+{
+background-color:#317098;
+border-radius:13px;
+font-weight:700;
+font-size:12px;
+color: #00aaff;
+}</string>
+          </property>
+          <property name="text">
+           <string>主题皮肤</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_bgskin">
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>80</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+background-color:#c9d5df;
+margin:2px 2px;
+border:1px solid transparent;
+border-radius:13px;
+font-size:12px;
+color:#858585;
+}
+QPushButton:hover
+{
+background-color:#317098;
+border-radius:13px;
+font-weight:700;
+color: #00aaff;
+}
+QPushButton:checked
+{
+background-color:#317098;
+border-radius:13px;
+font-weight:700;
+font-size:12px;
+color: #00aaff;
+}</string>
+          </property>
+          <property name="text">
+           <string>背景皮肤</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_myselfskin">
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>80</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+background-color:#c9d5df;
+margin:2px 2px;
+border:1px solid transparent;
+border-radius:13px;
+font-size:12px;
+color:#858585;
+}
+QPushButton:hover
+{
+background-color:#317098;
+border-radius:13px;
+font-weight:700;
+color: #00aaff;
+}
+QPushButton:checked
+{
+background-color:#317098;
+font-weight:700;
+font-size:12px;
+color: #00aaff;
+}</string>
+          </property>
+          <property name="text">
+           <string>我的皮肤</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_prompt">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel
+{
+color:#cecece;
+background-color:#5382ac;
+}</string>
+          </property>
+          <property name="text">
+           <string>可以鼠标拖动本地图片到音乐盒</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_close">
+          <property name="minimumSize">
+           <size>
+            <width>26</width>
+            <height>26</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>30</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+margin:5px;
+background-color: transparent;
+border-image: url(:/images/icon/close3.png);
+}
+
+QPushButton:hover
+{
+border-image: url(:/images/icon/closehover.png);
+border: 1px solid #3C80B1;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QStackedWidget" name="stackedWidget_skin">
+       <property name="currentIndex">
         <number>0</number>
        </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QListWidget" name="listWidget_zhuti">
-         <property name="styleSheet">
-          <string notr="true">QListWidget
+       <widget class="QWidget" name="page_musicdesktop">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QListWidget" name="listWidget_desktop">
+           <property name="styleSheet">
+            <string notr="true">QListWidget
+{
+border:none;
+}
+
+QListWidget::item
+{
+margin-left:10px;
+margin-top:10px;
+}
+
+QListWidget::item:hover
+{
+
+}
+
+QListWidget::item:selected
+{
+border:none;
+}</string>
+           </property>
+           <property name="flow">
+            <enum>QListView::LeftToRight</enum>
+           </property>
+           <property name="resizeMode">
+            <enum>QListView::Fixed</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_themeskin">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QListWidget" name="listWidget_zhuti">
+           <property name="styleSheet">
+            <string notr="true">QListWidget
 {
 border:none;
 }
@@ -123,35 +392,32 @@ QListWidget::item:selected
 {
 border:none;
 }</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_backgroundskin">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <property name="spacing">
+          <number>0</number>
          </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_yuzhi">
-      <attribute name="title">
-       <string>预置皮肤</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QListWidget" name="listWidget_yuzhi">
-         <property name="styleSheet">
-          <string notr="true">QListWidget
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QListWidget" name="listWidget_yuzhi">
+           <property name="styleSheet">
+            <string notr="true">QListWidget
 {
 border:none;
 }
@@ -170,35 +436,32 @@ QListWidget::item:selected
 {
 border:none;
 }</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_myselfskin">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <property name="spacing">
+          <number>0</number>
          </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_custom">
-      <attribute name="title">
-       <string>自定义</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_5">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QListWidget" name="listWidget_custom">
-         <property name="styleSheet">
-          <string notr="true">QListWidget
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QListWidget" name="listWidget_custom">
+           <property name="styleSheet">
+            <string notr="true">QListWidget
 {
 border:none;
 }
@@ -217,12 +480,14 @@ QListWidget::item:selected
 {
 border:none;
 }</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
