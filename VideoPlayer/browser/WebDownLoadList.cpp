@@ -1,12 +1,15 @@
 ﻿#include "WebDownLoadList.h"
 #include "ui_WebDownLoadList.h"
+#include <QDebug>
 
 WebDownLoadList::WebDownLoadList(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::WebDownLoadList)
 {
     ui->setupUi(this);
+    this->setWindowTitle(QString::fromLocal8Bit("下载栏"));
     setWindowFlags(Qt::FramelessWindowHint);
+    this->setFixedSize(615,400);//记得滚动条的10px宽度
     initWorkUI();
     chandleSignalsAndSLots();
 }
@@ -18,7 +21,8 @@ WebDownLoadList::~WebDownLoadList()
 
 void WebDownLoadList::initWorkUI()
 {
-    this->setFixedSize(720,400);
+    ui->lineEdit_search->setPlaceholderText(QString::fromLocal8Bit("搜索下载内容"));
+    ui->lineEdit_inputurl->setPlaceholderText(QString::fromLocal8Bit("请输入下载地址"));
     ui->listWidget_list->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     for(int i = 0; i<20; i++)
     slot_addDownLoadRecordToList(i+1);
@@ -40,45 +44,54 @@ bool WebDownLoadList::slot_addDownLoadRecordToList(int order)
 {
     QLabel  *num = new QLabel(QString::number(order));
     num->setObjectName(QString::fromLocal8Bit("dl_num"));
+    num->setAlignment(Qt::AlignCenter);//文字居中
     QProgressBar *progressbar = new QProgressBar();
     progressbar->setObjectName(QString::fromLocal8Bit("dl_progressbar"));
     progressbar->setValue(20);
-//    QLabel  *percent = new QLabel(QString::fromLocal8Bit("进度"));
-//    percent->setObjectName(QString::fromLocal8Bit("dl_percent"));
-    QPushButton *stopbtn = new QPushButton(QString::fromLocal8Bit("暂停"));
+    QPushButton *stopbtn = new QPushButton();
     stopbtn->setObjectName(QString::fromLocal8Bit("dl_stopbtn"));
-    QPushButton *cancelbtn = new QPushButton(QString::fromLocal8Bit("取消"));
-    cancelbtn->setObjectName(QString::fromLocal8Bit("dl_cancelbtn"));
-    QPushButton *deletebtn = new QPushButton(QString::fromLocal8Bit("删除"));
+    stopbtn->setToolTip(QString::fromLocal8Bit("暂停"));
+    QPushButton *downloadlbtn = new QPushButton();
+    downloadlbtn->setObjectName(QString::fromLocal8Bit("dl_downloadlbtn"));
+    downloadlbtn->setToolTip(QString::fromLocal8Bit("下载"));
+    QPushButton *deletebtn = new QPushButton();
     deletebtn->setObjectName(QString::fromLocal8Bit("dl_deletebtn"));
-    QPushButton *openbtn = new QPushButton(QString::fromLocal8Bit("打开"));
+    deletebtn->setToolTip(QString::fromLocal8Bit("删除"));
+    QPushButton *openbtn = new QPushButton();
     openbtn->setObjectName(QString::fromLocal8Bit("dl_openbtn"));
-    num->setFixedSize(QSize(30,26));
-//    percent->setFixedSize(QSize(30,30));
-    progressbar->setMaximumSize(400,26);
-    stopbtn->setFixedSize(QSize(30,26));
-    deletebtn->setFixedSize(QSize(30,26));
-    cancelbtn->setFixedSize(QSize(30,26));
-    openbtn->setFixedSize(QSize(30,26));
+    openbtn->setToolTip(QString::fromLocal8Bit("打开文件"));
+    num->setFixedSize(QSize(26,26));
+    progressbar->setFixedSize(360,18);
+    stopbtn->setFixedSize(QSize(18,18));
+    deletebtn->setFixedSize(QSize(18,18));
+    downloadlbtn->setFixedSize(QSize(18,18));
+    openbtn->setFixedSize(QSize(18,18));
     QHBoxLayout *hblayout1 = new QHBoxLayout();
     QHBoxLayout *hblayout2 = new QHBoxLayout();
-    hblayout2->addWidget(stopbtn);
-    hblayout2->addWidget(cancelbtn);
-    hblayout2->addWidget(deletebtn);
-    hblayout2->addWidget(openbtn);
-    hblayout1->addWidget(num);
-    hblayout1->addWidget(progressbar);
-//    hblayout->addWidget(percent);
-    hblayout1->addLayout(hblayout2);
-    hblayout1->setSpacing(10);
-    hblayout1->setContentsMargins(0,0,0,0);
+    hblayout2->addWidget(stopbtn);//暂停
+    hblayout2->addWidget(downloadlbtn);//下载
+    hblayout2->addWidget(deletebtn);//删除
+    hblayout2->addWidget(openbtn);//打开
+    hblayout2->setSpacing(10);
+    hblayout1->addWidget(num);//序号
+    hblayout1->addWidget(progressbar);//进度条
+    hblayout1->addSpacerItem(new QSpacerItem(5, 18, QSizePolicy::Fixed));//最小 30 26，可扩大
+    hblayout1->addLayout(hblayout2);//操作按钮
+    hblayout1->addSpacerItem(new QSpacerItem(5,18,QSizePolicy::Fixed));//右边界固定
     QWidget *tempwdt = new QWidget();
-    tempwdt->setFixedSize(700,26);
+    tempwdt->setFixedSize(600,40);
     tempwdt->setLayout(hblayout1);
+    tempwdt->layout()->setContentsMargins(0,0,0,0);
+    tempwdt->layout()->setMargin(0);
     QListWidgetItem *item = new QListWidgetItem();
     item->setSizeHint(tempwdt->size());
     ui->listWidget_list->addItem(item);
     ui->listWidget_list->setItemWidget(item,tempwdt);
+    //信号与槽函数关联
+    connect(stopbtn,&QPushButton::clicked,[=](){ qDebug()<< QString::fromLocal8Bit("暂停") << num->text(); });
+    connect(deletebtn,&QPushButton::clicked,[=](){ qDebug()<< QString::fromLocal8Bit("删除") << num->text();  });
+    connect(downloadlbtn,&QPushButton::clicked,[=](){ qDebug() << QString::fromLocal8Bit("下载") << num->text();  });
+    connect(openbtn,&QPushButton::clicked,[=](){ qDebug() << QString::fromLocal8Bit("打开") << num->text();  });
     return true;
 }
 

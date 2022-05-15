@@ -17,6 +17,7 @@
 #include "videomodels/VideoProgressBar.h"
 
 #include <QMap>
+#include <QMenu>
 #include <QPoint>
 #include <QTimer>
 #include <QAction>
@@ -159,7 +160,7 @@ public slots:
 private slots:
     void on_time();
 
-    void checkChandleMediaPlayerStatus();//监测处理媒体播放状态
+    void checkChandleMediaPlayerStatus(QMediaPlayer::State newState);//监测处理媒体播放状态
 
     void checkChandleMediaStatus();//监测处理媒体状态
 
@@ -213,7 +214,9 @@ private slots:
 
     int getCurrentMediaRowOfCollectList(QListWidget* listdgt,QString name);
 
-    void addCurrentMediaToList_Collect(QListWidget *destList);//添加进收藏列表
+    void addCurrentMediaToList_Collect(QListWidget *destList);//重载函数1：添加进收藏列表1
+
+    void addCurrentMediaToList_Collect(QListWidget *destList,QString text);//重载函数2：添加进收藏列表1
 
     void addCurrentMediaToList_History(QListWidget *destList);//添加进历史记录
 
@@ -222,6 +225,32 @@ private slots:
     void mediaLoadingStatusProgressBar_End();
 
     bool updateProgressBarGeometry();
+
+    void slot_createRight_playListTable(const QPoint &pos);//播放列表右键菜单
+
+    void slot_createRight_playCollectTable(const QPoint &pos);//收藏列表右键菜单
+
+    void slot_createRight_playHistoryTable(const QPoint &pos);//历史列表右键菜单
+
+    void slot_clearListAllRecords(QListWidget *obj);//清空列表
+
+    void slot_deleteListRecords(QListWidget *obj,int start,int end);//多选删除
+
+    void slot_deleteListRecord(QListWidget *obj,int index);//删除某条记录
+
+    void slot_addListRecordItems(QListWidget *obj);//批量添加
+
+    void slot_addListRecordItem(QListWidget *obj);//单个添加
+
+    void slot_playCurrentListItem(QListWidget *obj,int index);//播放选中的某条记录
+
+    void slot_playNextListItem(QListWidget *obj,int index);//播放选中的某条记录的吓一条
+
+    void slot_downloadListItem(QListWidget *obj,int index);//下载选中的某条记录
+
+    void slot_collectListItem(QListWidget *obj,QString text);//收藏选中的某条记录
+
+    void slot_selectAllListItem(QListWidget *obj);//全选
 
 signals:
     void sig_sendSwitchToMusicPage(QString name);
@@ -235,6 +264,8 @@ signals:
     void sig_currentMediaPlayStatus(bool status);
 
     void sig_currentMediaSoundValueChange(int value);
+
+    void sig_mainPlayerClose();
 
 
 private:
@@ -284,6 +315,8 @@ private:
     bool                        m_jiemuShow         = false;    //默认不显示
     bool                        m_danmuStatus       = false;    //默认不显示
     bool                        m_collectStatus     = false;    //默认不显示
+    bool                        m_selectAllStatus1  = false;    //全选状态 默认没有全选
+    bool                        m_selectAllStatus2  = false;    //全选状态 默认没有全选
     qint64                      m_times;                        //文件长度
     QPoint                      m_mvPos;
     QPoint                      m_videoPos;

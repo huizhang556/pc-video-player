@@ -16,7 +16,7 @@
   <property name="styleSheet">
    <string notr="true">background-color: #404244;</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_3">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -34,6 +34,9 @@
    </property>
    <item>
     <layout class="QGridLayout" name="gridLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item row="1" column="2">
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
@@ -90,20 +93,106 @@
       </spacer>
      </item>
      <item row="1" column="1">
-      <widget class="QPushButton" name="Btn_blank">
+      <widget class="QWidget" name="widget" native="true">
        <property name="minimumSize">
         <size>
-         <width>80</width>
-         <height>60</height>
+         <width>65</width>
+         <height>80</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>65</width>
+         <height>80</height>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">border-image: url(:/images/icon/openfile.png);
-background-color: #404244;</string>
+        <string notr="true">QWidget
+{
+background-color:#2a2a31;
+}</string>
        </property>
-       <property name="text">
-        <string/>
-       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>4</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="Btn_blank">
+            <property name="minimumSize">
+             <size>
+              <width>60</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>60</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+border-image: url(:/images/icon/openfile.png);
+background-color:#2a2a31;
+margin-left:5px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_openfile">
+            <property name="minimumSize">
+             <size>
+              <width>65</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>65</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#pushButton_openfile
+{
+background-color:transparent;
+color:#bbbebf;
+}
+#pushButton_openfile:hover
+{
+color:#ff0000;
+}</string>
+            </property>
+            <property name="text">
+             <string>打开文件</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
      </item>
     </layout>

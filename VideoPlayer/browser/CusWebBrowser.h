@@ -1,6 +1,7 @@
 ﻿#ifndef CUSWEBBROWSER_H
 #define CUSWEBBROWSER_H
 #include "global/Global.h"
+#include "browser/NewWork.h"
 #include <QUrl>
 #include <QMenu>
 #include <QCursor>
@@ -64,7 +65,9 @@ private slots:
     void slot_browserPageSource();
 private:
     QUrl     newUrl;
-    QObject *m_child        =   nullptr;
+    QUrl     oldUrl;
+    NewWork         *m_newWork      =   nullptr;
+    QObject         *m_child        =   nullptr;
 };
 
 #endif // CUSWEBBROWSER_H

@@ -64,7 +64,7 @@ void MainWidget::initOtherWidgetUi()
     m_tabWidget->setObjectName(QString::fromLatin1("m_tabWidget"));
 
     m_videoBlank = new VideoBlank();
-    m_videoBlank->setHideOpenButton(true);
+    m_videoBlank->setHideOpenButton(false);//隐藏打开文件按钮
     m_videoBlank->setObjectName(QString::fromLatin1("m_videoBlank"));
 
     m_webBrowser = new CusWebBrowser();
@@ -140,8 +140,8 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QUrl &url)
     browser->setObjectName(QString::fromLocal8Bit("browser"));
     browser->load(url);
     m_titleBar->slot_setWebLineEditCurentUrl(url);
-    m_webTabWidget->insertTab(m_webTabWidget->count(),browser,QString::fromLocal8Bit("New Page"));
-    m_webTabWidget->setCurrentIndex(m_webTabWidget->count()-1);
+    m_webTabWidget->insertTab(m_webTabWidget->currentIndex()+1,browser,QString::fromLocal8Bit("New Page"));
+    m_webTabWidget->setCurrentIndex(m_webTabWidget->currentIndex()+1);
     connect(browser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
     //加载网页进度
     connect(browser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
@@ -169,8 +169,10 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QString &url)
     browser->setObjectName(QString::fromLocal8Bit("browser"));
     browser->load(url);
     m_titleBar->slot_setWebLineEditCurentUrl(url);
-    m_webTabWidget->insertTab(m_webTabWidget->count(),browser,QString::fromLocal8Bit("New Page"));
-    m_webTabWidget->setCurrentIndex(m_webTabWidget->count()-1);
+    int current = m_webTabWidget->currentIndex();
+    qDebug() <<QString::fromLocal8Bit("当前要插入的行号:") <<current;
+    m_webTabWidget->insertTab(m_webTabWidget->currentIndex()+1,browser,QString::fromLocal8Bit("New Page"));
+    m_webTabWidget->setCurrentIndex(m_webTabWidget->currentIndex()+1);
     connect(browser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
     //加载网页进度
     connect(browser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
@@ -316,7 +318,7 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_videoBlank,&VideoBlank::sig_openLocalFile,[=]()
     {
         m_mainPlayer->openLocalFile();
-        m_mainPlayer->show();
+//        m_mainPlayer->show();
     });
     //托盘action组
     connect(m_actionGroup,&QActionGroup::triggered,[=](QAction *action)
@@ -335,6 +337,13 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_systemTray,SIGNAL(sig_playStatusNext()),m_mainPlayer,SLOT(on_pushButton_next_clicked()));
     //托盘---播放/暂停
     connect(m_systemTray,SIGNAL(sig_playStatusPause(bool)),m_mainPlayer,SLOT(on_pushButton_pauseStart_clicked()));
+    //接收播放器关闭--
+    connect(m_mainPlayer,&MultipPlayer::sig_mainPlayerClose,[=](){
+        if(m_mainPlayer!=nullptr)
+        {
+            m_mainPlayer->close();//实际没有删除，需要手动delete
+        }
+    });
     //接收播放器发送的播放暂停
     connect(m_mainPlayer,SIGNAL(sig_currentMediaPlayStatus(bool)),m_systemTray,SLOT(slot_setCurrentPlayStatus(bool)));
     //接收主界面（实际是音量界面发过来的值，做了中转）的音量值
@@ -464,9 +473,9 @@ void MainWidget::help_openWebSite()
 /*播放本地文件*/
 void MainWidget::help_aboutLocalFile()
 {
-    m_mainPlayer->openLocalFile();
-    m_mainPlayer->setMainCurrentIndex(1);
-    m_mainPlayer->show();
+//    m_mainPlayer->openLocalFile();
+    m_mainPlayer->setMainCurrentIndex(0);//视频播放界面
+    m_mainPlayer->show();//只显示播放器界面
 }
 
 /*播放网络资源*/

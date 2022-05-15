@@ -16,9 +16,7 @@
   <property name="styleSheet">
    <string notr="true">QWidget
 {
-/*background-color:#136a8a;*/
-background-color:#44444f;
-	
+background-color: qlineargradient(spread:reflect, x1:0.056, y1:0.04, x2:1, y2:1, stop:0.511364 rgba(73, 187, 221, 255), stop:1 rgba(255, 255, 255, 255));
 }
 	</string>
   </property>
@@ -44,7 +42,7 @@ background-color:#44444f;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="page">
       <property name="styleSheet">
@@ -116,6 +114,7 @@ background-color:#44444f;
               <property name="styleSheet">
                <string notr="true">QPushButton
 {
+background-color: transparent;
 border-image: url(:/images/icon/setlogin.png);
 }
 
@@ -162,6 +161,7 @@ border-image: url(:/images/icon/setloginhover.png);
               <property name="styleSheet">
                <string notr="true">QPushButton
 {
+background-color: transparent;
 border-image: url(:/images/icon/minlogin.png);
 }
 QPushButton:hover
@@ -207,6 +207,7 @@ border-image: url(:/images/icon/minloginhover.png);
               <property name="styleSheet">
                <string notr="true">QPushButton
 {
+background-color: transparent;
 border-image: url(:/images/icon/close3.png);
 }
 QPushButton:hover
@@ -354,6 +355,7 @@ border-image: url(:/images/icon/logintouxiang.png);
                   <property name="styleSheet">
                    <string notr="true">QLabel
 {
+background-color: transparent;
 border-image: url(:/images/icon/loginuser.png);
 }
 
@@ -452,6 +454,7 @@ border:2px solid #ff5c38;
                   <property name="styleSheet">
                    <string notr="true">QLabel
 {
+background-color: transparent;
 border-image: url(:/images/icon/loginpasswd.png);
 }</string>
                   </property>
@@ -852,6 +855,7 @@ color:black;
                   <property name="styleSheet">
                    <string notr="true">QPushButton
 {
+background-color: transparent;
 border-image: url(:/images/icon/loginregis.png);
 }
 
@@ -895,6 +899,7 @@ border-image: url(:/images/icon/loginregishover.png);
                   <property name="styleSheet">
                    <string notr="true">QPushButton
 {
+background-color: transparent;
 border-image: url(:/images/icon/loginerweimanormal.png);
 }
 
@@ -986,6 +991,7 @@ border-image: url(:/images/icon/loginerweima.png);
               <property name="styleSheet">
                <string notr="true">QPushButton
 {
+background-color: transparent;
 border-image: url(:/images/icon/return_normal.png);
 }
 
@@ -1016,6 +1022,9 @@ border-image: url(:/images/icon/return_hover.png);
                 <width>16777215</width>
                 <height>35</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: transparent;</string>
               </property>
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
@@ -1069,7 +1078,7 @@ border-image: url(:/images/icon/return_hover.png);
                   <property name="styleSheet">
                    <string notr="true">QLabel
 {
-/*background-color: rgb(2, 184, 250);*/
+background-color: transparent;
 font-size:14px;
 font-family:&quot;楷体&quot;;
 color:white;
@@ -1169,7 +1178,7 @@ border:2px solid #ff5c38;
                   <property name="styleSheet">
                    <string notr="true">QLabel
 {
-/*background-color: rgb(2, 184, 250);*/
+background-color: transparent;
 font-size:14px;
 font-family:&quot;楷体&quot;;
 color:white;
@@ -1278,7 +1287,7 @@ border:2px solid #ff5c38;
                   <property name="styleSheet">
                    <string notr="true">QLabel
 {
-/*background-color: rgb(2, 184, 250);*/
+background-color: transparent;
 font-size:14px;
 font-family:&quot;楷体&quot;;
 color:white;
@@ -1430,6 +1439,9 @@ color:black;
                 <height>30</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: transparent;</string>
+              </property>
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
               </property>
@@ -1467,6 +1479,9 @@ color:black;
       </layout>
      </widget>
      <widget class="QWidget" name="page_3">
+      <property name="styleSheet">
+       <string notr="true">background-color: transparent;</string>
+      </property>
       <widget class="QLabel" name="label_5">
        <property name="geometry">
         <rect>
@@ -1477,7 +1492,8 @@ color:black;
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">border-image: url(:/images/icon/loginerweima.png);</string>
+        <string notr="true">background-color: transparent;
+border-image: url(:/images/icon/loginerweima.png);</string>
        </property>
        <property name="text">
         <string/>
@@ -1493,7 +1509,8 @@ color:black;
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">border-image: url(:/images/icon/tongbu.png);</string>
+        <string notr="true">background-color: transparent;
+border-image: url(:/images/icon/tongbu.png);</string>
        </property>
        <property name="text">
         <string/>
@@ -1509,7 +1526,8 @@ color:black;
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(0, 255, 255);</string>
+        <string notr="true">background-color: transparent;
+color: rgb(0, 255, 255);</string>
        </property>
        <property name="text">
         <string>刷新二维码</string>
@@ -1558,6 +1576,7 @@ color:black;
           <property name="styleSheet">
            <string notr="true">QPushButton
 {
+background-color: transparent;
 border-image: url(:/images/icon/return_normal.png);
 }
 
@@ -1575,6 +1594,9 @@ border-image: url(:/images/icon/return_hover.png);
       </widget>
      </widget>
      <widget class="QWidget" name="page_4">
+      <property name="styleSheet">
+       <string notr="true">background-color: transparent;</string>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout_17">
        <property name="spacing">
         <number>0</number>
@@ -2122,6 +2144,9 @@ color:black;
       </layout>
      </widget>
      <widget class="QWidget" name="page_5">
+      <property name="styleSheet">
+       <string notr="true">background-color: transparent;</string>
+      </property>
       <widget class="QLabel" name="label_7">
        <property name="geometry">
         <rect>
@@ -2221,9 +2246,16 @@ color:white;
 color: rgb(85, 255, 0);
 }
 
+QListView
+{
+background-color:#ffffff;
+}
+
 QListView::item:hover
 { 
-color: rgb(85, 255, 0);
+background-color:#aaff7f;
+color: #00aaff;
+font-size:14px;
 }</string>
        </property>
        <item>
@@ -2526,9 +2558,16 @@ color:white;
 color: rgb(85, 255, 0);
 }
 
+QListView
+{
+background-color:#ffffff;
+}
+
 QListView::item:hover
 { 
-color: rgb(85, 255, 0);
+background-color:#aaff7f;
+color: #00aaff;
+font-size:14px;
 }</string>
        </property>
        <item>
@@ -2668,9 +2707,16 @@ color:white;
 color: rgb(85, 255, 0);
 }
 
+QListView
+{
+background-color:#ffffff;
+}
+
 QListView::item:hover
 { 
-color: rgb(85, 255, 0);
+background-color:#aaff7f;
+color: #00aaff;
+font-size:14px;
 }</string>
        </property>
        <item>

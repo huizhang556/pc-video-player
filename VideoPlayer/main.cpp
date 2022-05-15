@@ -2,6 +2,7 @@
 #include <QApplication>
 #include "skin/MySkin.h"
 #include "global/Global.h"
+#include "browser/NewWork.h"
 #include "skin/MySkinItem.h"
 #include "database/dataBase.h"
 #include "titleBar/TitleBar.h"
@@ -35,6 +36,9 @@ int main(int argc, char *argv[])
 
 //    WebDownLoadList f;
 //    f.show();
+
+//    NewWork m;
+//    m.show();
 
 //    CusMessageBox e;
 //    e.show();

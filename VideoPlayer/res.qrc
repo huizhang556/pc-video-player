@@ -253,5 +253,16 @@
         <file>images/skin/myskin_checkbtn_hover.png</file>
         <file>images/icon/title_webdownload_hover.png</file>
         <file>images/icon/title_webdownload.png</file>
+        <file>images/function/download_delete.png</file>
+        <file>images/function/download_download.png</file>
+        <file>images/function/download_pause.png</file>
+        <file>images/function/download_start.png</file>
+        <file>images/function/download_jpg.png</file>
+        <file>images/function/download_mp3.png</file>
+        <file>images/function/download_openfile.png</file>
+        <file>images/function/download_png.png</file>
+        <file>images/function/download_video.png</file>
+        <file>images/function/download_wav.png</file>
+        <file>images/function/new_disc.png</file>
     </qresource>
 </RCC>

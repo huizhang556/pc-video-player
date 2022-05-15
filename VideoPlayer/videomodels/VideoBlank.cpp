@@ -12,6 +12,11 @@ VideoBlank::VideoBlank(QWidget *parent) :
         emit sig_openLocalFile();
         qDebug() <<"emit sig_openLocalFile!" ;
     });
+    connect(ui->pushButton_openfile,&QPushButton::clicked,[=]()
+    {
+        emit sig_openLocalFile();
+        qDebug() <<"emit sig_openLocalFile!" ;
+    });
 }
 
 VideoBlank::~VideoBlank()
@@ -21,13 +26,13 @@ VideoBlank::~VideoBlank()
 
 void VideoBlank::setHideOpenButton(bool hide)
 {
-    if(hide)
-    {
-        ui->Btn_blank->setHidden(true);
-    }
-    else
+    if(hide)//真 不隐藏
     {
         ui->Btn_blank->setHidden(false);
+    }
+    else//假 隐藏
+    {
+        ui->Btn_blank->setHidden(true);
     }
 }
 

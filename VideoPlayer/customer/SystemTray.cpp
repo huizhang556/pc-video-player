@@ -6,7 +6,7 @@
 
 SystemTray::SystemTray(QWidget *parent) :
     QWidget(parent),
-    m_playStatus(true),//默认正在播放状态
+    m_playStatus(false),//默认正在播放状态
     m_soundStatus(true),//默认没静音
     ui(new Ui::SystemTray)
 {
@@ -30,7 +30,7 @@ void SystemTray::initWorkUI()
 {
     //初始播放状态
     ui->pushButton_pause->setStyleSheet("QPushButton{"
-                                        "border-image: url(:/images/tray/tray_play.png);"
+                                        "border-image: url(:/images/tray/tray_pause.png);"
                                         "}");
     //初始非静音状态
     ui->pushButton_mute->setStyleSheet("QPushButton{"
@@ -81,6 +81,7 @@ void SystemTray::chandleSignalsAndSlots()
 
 void SystemTray::slot_setCurrentPlayStatus(bool status)
 {
+    qDebug() << "TRAY HAS RECEIVED CURRENT MEDIA NEW STATUS:" << status;
     if(!status)//播放
     {
         ui->pushButton_pause->setStyleSheet("QPushButton{"

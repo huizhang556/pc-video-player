@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1227</width>
+    <width>1308</width>
     <height>339</height>
    </rect>
   </property>
@@ -14,7 +14,7 @@
    <string>MultipPlayer</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: #2a2a31;</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
@@ -37,6 +37,18 @@
      <property name="spacing">
       <number>0</number>
      </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="minimumSize">
@@ -48,8 +60,8 @@
        <property name="styleSheet">
         <string notr="true">QStackedWidget
 {
-background-color:#2a2a31;
 margin:0px;
+background-color:#2a2a31;
 }
 
 QStackedWidget::tab

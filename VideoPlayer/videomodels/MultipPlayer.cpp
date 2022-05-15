@@ -153,11 +153,11 @@ void MultipPlayer::initMainWindow()
     m_videoTitleBar->setObjectName(QString::fromLocal8Bit("m_videoTitleBar"));
 
     //中间主显示部分，视频显示部分
-    ui->stackedWidget->insertWidget(0,m_videoBlank);
     m_videoBlank->setHideOpenButton(true);
+    ui->stackedWidget->insertWidget(0,m_videoBlank);
     ui->stackedWidget->insertWidget(1,videoWidget);
     ui->stackedWidget->insertWidget(2,m_musicUi);
-    ui->stackedWidget->setCurrentIndex(0);//默认显示音乐界面
+    ui->stackedWidget->setCurrentIndex(0);//默认显示空白界面
     ui->stackedWidget->setMinimumSize(976,700);//必须设置最小尺寸，否则播放控制栏位置不正确
 
     //用户信息（暂时）
@@ -169,6 +169,7 @@ void MultipPlayer::initMainWindow()
     //播放列表
     m_listWisget2 = new QListWidget;
     m_listWisget2->setObjectName(QString::fromLocal8Bit("m_listWisget2"));
+    m_listWisget2->setContextMenuPolicy(Qt::CustomContextMenu);
     m_listWisget2->setMinimumWidth(260);
     m_listWisget2->setFocusPolicy(Qt::NoFocus);//作用是点击item去掉虚线边框
     m_listWisget2->setAlternatingRowColors(false);//交替显示
@@ -179,6 +180,7 @@ void MultipPlayer::initMainWindow()
     //我的收藏
     m_listWisget3 = new QListWidget;
     m_listWisget3->setObjectName(QString::fromLocal8Bit("m_listWisget3"));
+    m_listWisget3->setContextMenuPolicy(Qt::CustomContextMenu);
     m_listWisget3->setMinimumWidth(260);
     m_listWisget3->setAlternatingRowColors(false);//交替显示
     m_listWisget3->verticalScrollBar()->setObjectName(QString::fromUtf8("list3_vertical_scrollBar"));
@@ -189,6 +191,7 @@ void MultipPlayer::initMainWindow()
     //网络曲库
     m_listWisget4 = new QListWidget;
     m_listWisget4->setObjectName(QString::fromLocal8Bit("m_listWisget4"));
+    m_listWisget4->setContextMenuPolicy(Qt::CustomContextMenu);
     m_listWisget4->setMinimumWidth(260);
     m_listWisget4->setAlternatingRowColors(false);//交替显示
     m_listWisget4->verticalScrollBar()->setObjectName(QString::fromUtf8("list4_vertical_scrollBar"));
@@ -295,7 +298,10 @@ void MultipPlayer::initMainWindow()
     ui->verticalLayout_main->setStretch(0,1);
     ui->verticalLayout_main->setStretch(1,7);
     ui->verticalLayout_main->setStretch(2,1);
-    this->layout()->setMargin(2);//留出2px边距拉伸使用
+    ui->verticalLayout_main->setContentsMargins(0,0,0,0);
+    ui->verticalLayout_main->setSpacing(0);
+    ui->verticalLayout_main->setMargin(2);
+    this->setLayout(ui->verticalLayout_main);
     loadDefaultLogo();//加载默认图标
 
     VideoProgressBar::getInstance()->hide();
@@ -333,7 +339,7 @@ void MultipPlayer::chandleSignalAndSLots()
     connect(m_pTimer,&QTimer::timeout,this,&MultipPlayer::on_time);
     connect(m_pTimer,&QTimer::timeout,this,&MultipPlayer::updateProgressBarGeometry);//每0.3秒更新不管有没有缓冲
     //监测媒体播放状态 StoppedState PlayingState PausedState
-    connect(player,&QMediaPlayer::stateChanged,this,&MultipPlayer::checkChandleMediaPlayerStatus);
+    connect(player,SIGNAL(stateChanged(QMediaPlayer::State)),this,SLOT(checkChandleMediaPlayerStatus(QMediaPlayer::State)));
     //监测媒体本身状态,所带参数为新的媒体状态，比如缓冲状态 BufferingMedia BufferedMedia
     connect(player,&QMediaPlayer::mediaStatusChanged,this,&MultipPlayer::checkChandleMediaStatus);
     connect(player,&QMediaPlayer::durationChanged,[=](){
@@ -402,8 +408,9 @@ void MultipPlayer::chandleSignalAndSLots()
     connect(m_listWisget2,&QListWidget::itemDoubleClicked,[=](QListWidgetItem *item)
     {
         int row = m_listWisget2->row(item);
-        m_playerState = QMediaPlayer::PlayingState;
-        ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/pausehover.png"));//播放
+//        m_playerState = QMediaPlayer::PlayingState;
+//        ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/pausehover.png"));//播放
+
         playlist->setCurrentIndex(row);
         fileType(row);
         player->play();
@@ -454,6 +461,7 @@ void MultipPlayer::chandleSignalAndSLots()
         setCollectBtnShowStatus();//处理所有的item改变时的操作
         loadFileInfoToWinTitle(index);
         updateRateTypeUiLayout();
+        checkChandleMediaPlayerStatus(player->state());//核验状态
     });
 
     /*右侧窗口-曲库歌曲搜索*/
@@ -479,6 +487,19 @@ void MultipPlayer::chandleSignalAndSLots()
     connect(m_adjustBright,SIGNAL(valueChange_baohedu(int)),videoWidget,SLOT(setSaturation(int)));
     connect(m_adjustBright,SIGNAL(valueChange_sediao(int)),videoWidget,SLOT(setHue(int)));
 
+    //空白页打开文件
+    connect(m_videoBlank,&VideoBlank::sig_openLocalFile,[=]()
+    {
+        if(!m_newStart)
+        {
+            on_pushButton_5_clicked();
+        }
+        else
+        {
+
+            on_pushButton_6_clicked();
+        }
+    });
     //打开文件
     connect(m_searchBtn,&QPushButton::clicked,[=]()
     {
@@ -550,6 +571,13 @@ void MultipPlayer::chandleSignalAndSLots()
 
     //显示 列表
     connect(ui->pushButton_curlist,&QPushButton::clicked,[=](){setMainWindowShowFullgreen();});
+
+    //播放列表右键
+    connect(m_listWisget2,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(slot_createRight_playListTable(QPoint)));
+    //收藏列表右键
+    connect(m_listWisget3,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(slot_createRight_playCollectTable(QPoint)));
+    //历史列表右键
+    connect(m_listWisget4,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(slot_createRight_playHistoryTable(QPoint)));
 }
 
 /*加载默认图标*/
@@ -791,19 +819,23 @@ void MultipPlayer::addFileToList(const QStringList &strList)
         //判断一下文件类型，加载不同图标
         if(fileSuffix == "mp4")//返回的是mp4,而非 .mp4
         {
-            pItem = new QListWidgetItem(btnIcon1,QString::fromLocal8Bit("%1.").arg(i+1) + name);
+//            pItem = new QListWidgetItem(btnIcon1,QString::fromLocal8Bit("%1.").arg(i+1) + name);
+            pItem = new QListWidgetItem(btnIcon1,name);
         }
         else if(fileSuffix == "mp3")
         {
-            pItem = new QListWidgetItem(btnIcon2,QString::fromLocal8Bit("%1.").arg(i+1) + name);
+//            pItem = new QListWidgetItem(btnIcon2,QString::fromLocal8Bit("%1.").arg(i+1) + name);
+            pItem = new QListWidgetItem(btnIcon2,name);
         }
         else if(fileSuffix == "flv")
         {
-            pItem = new QListWidgetItem(btnIcon1,QString::fromLocal8Bit("%1.").arg(i+1) + name);
+//            pItem = new QListWidgetItem(btnIcon1,QString::fromLocal8Bit("%1.").arg(i+1) + name);
+            pItem = new QListWidgetItem(btnIcon1,name);
         }
         else//后面有需要还可以添加文件类型判断
         {
-            pItem = new QListWidgetItem(btnIcon1,QString::fromLocal8Bit("%1.").arg(i+1) + name);
+//            pItem = new QListWidgetItem(btnIcon1,QString::fromLocal8Bit("%1.").arg(i+1) + name);
+            pItem = new QListWidgetItem(btnIcon1,name);
         }
 
         pItem->setToolTip(name);
@@ -934,7 +966,8 @@ void MultipPlayer::on_pushButton_5_clicked()
                 ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("暂停"));
                 m_newStart = true;
             });
-            player->play();
+            player->play();//调试暂停2022-05-14
+            setMainCurrentIndex(1);
         }
     }
 }
@@ -970,7 +1003,8 @@ void MultipPlayer::on_pushButton_6_clicked()
             m_listWisget3->clear();
             addFileToList(m_fileNames);
             fileType(m_fileNames,0);//判断文件类型并作出界面反应
-            player->play();
+            player->play();//调试暂停 2022-05-14
+            setMainCurrentIndex(1);
             m_playerState = QMediaPlayer::PlayingState;
             ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/pausehover.png"));
             ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("暂停"));
@@ -994,11 +1028,15 @@ void MultipPlayer::setMainCurrentIndex(const int index)
 {
     if(index == 0)
     {
-        ui->stackedWidget->setCurrentIndex(0);
+        ui->stackedWidget->setCurrentIndex(0);//空白页面
     }
     else if(index == 1)
     {
-        ui->stackedWidget->setCurrentIndex(1);
+        ui->stackedWidget->setCurrentIndex(1);//视频界面
+    }
+    else if(index == 2)
+    {
+        ui->stackedWidget->setCurrentIndex(2);//音乐界面
     }
     else
     {
@@ -1034,7 +1072,6 @@ void MultipPlayer::on_pushButton_pauseStart_clicked()
         m_playerState = QMediaPlayer::PausedState;
         ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/playhover.png"));
         ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
-        emit sig_currentMediaPlayStatus(false);
     }
     else if(m_playerState == QMediaPlayer::PausedState)
     {
@@ -1042,7 +1079,6 @@ void MultipPlayer::on_pushButton_pauseStart_clicked()
         m_playerState = QMediaPlayer::PlayingState;
         ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/pausehover.png"));
         ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("暂停"));
-        emit sig_currentMediaPlayStatus(true);
     }
 }
 
@@ -1109,26 +1145,34 @@ void MultipPlayer::on_time()
     //        return hou + ":" + min + ":" + sec ;
 }
 
-//监测处理媒体播放状态
-void MultipPlayer::checkChandleMediaPlayerStatus()
+/*监测处理媒体播放状态*/
+void MultipPlayer::checkChandleMediaPlayerStatus(QMediaPlayer::State newState)
 {
-    if(player->media().isNull())
-        return;
-    if(player->state() == QMediaPlayer::PausedState)
+    qDebug() << "media status had changed! NEW STATUS:" <<newState ;
+    if(player->media().isNull()) return;
+    if(newState == QMediaPlayer::PausedState)
     {
+        ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/playhover.png"));//播放
+        ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
         qDebug() << QString::fromLocal8Bit("QMediaPlayer::PausedState");
+        emit sig_currentMediaPlayStatus(false);//false 代表暂停状态
     }
-    else if(player->state() == QMediaPlayer::PlayingState)
+    else if(newState == QMediaPlayer::PlayingState)
     {
+        ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/pausehover.png"));
+        ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("暂停"));
         qDebug() << QString::fromLocal8Bit("QMediaPlayer::PlayingState");
+        emit sig_currentMediaPlayStatus(true);//true 代表播放状态
     }
-    else if(player->state() == QMediaPlayer::StoppedState)
+    else if(newState == QMediaPlayer::StoppedState)
     {
+
         qDebug() << QString::fromLocal8Bit("QMediaPlayer::StoppedState");
+        emit sig_currentMediaPlayStatus(false);//false 代表暂停状态
     }
     else
     {
-        qDebug() << QString::fromLocal8Bit("other state!");
+        qDebug() << QString::fromLocal8Bit("other unknow state!");
     }
 }
 
@@ -1860,6 +1904,7 @@ int MultipPlayer::getCurrentMediaRowOfCollectList(QListWidget* listdgt, QString 
     return -1;//没找到，返回row为-1
 }
 
+//重载函数1
 void MultipPlayer::addCurrentMediaToList_Collect(QListWidget *destList)
 {
     bool hasValue = findCollectListStatus(destList,m_curMediaName);//判断是否收藏
@@ -1877,6 +1922,32 @@ void MultipPlayer::addCurrentMediaToList_Collect(QListWidget *destList)
     {
         //按理第一步能确认媒体在收藏列表，那么一定能返回行号，所以对-1不做处理
         QListWidgetItem *item = destList->takeItem(getCurrentMediaRowOfCollectList(destList,m_curMediaName));
+        ui->pushButton_collect->setStyleSheet("QPushButton{"
+                                              "border-image: url(:/images/icon/play_collect_unchecked.png);"
+                                              "}");
+        delete item;//手动释放
+    }
+    qDebug() << QString::fromLocal8Bit("添加后收藏总数：") << destList->count();
+}
+
+//重载函数2
+void MultipPlayer::addCurrentMediaToList_Collect(QListWidget *destList, QString text)
+{
+    bool hasValue = findCollectListStatus(destList,text);//判断是否收藏
+    qDebug() << QString::fromLocal8Bit("当前播放媒体收藏状态：") << hasValue;
+    qDebug() << QString::fromLocal8Bit("添加前收藏总数：") << destList->count();
+    if(!hasValue)//不存在则添加进收藏
+    {
+        if(text.isEmpty()) return;
+        destList->insertItem(0,text);//头插法
+        ui->pushButton_collect->setStyleSheet("QPushButton{"
+                                              "border-image: url(:/images/icon/play_collect_checked.png);"
+                                              "}");
+    }
+    else//存在则取消收藏
+    {
+        //按理第一步能确认媒体在收藏列表，那么一定能返回行号，所以对-1不做处理
+        QListWidgetItem *item = destList->takeItem(getCurrentMediaRowOfCollectList(destList,text));
         ui->pushButton_collect->setStyleSheet("QPushButton{"
                                               "border-image: url(:/images/icon/play_collect_unchecked.png);"
                                               "}");
@@ -1931,6 +2002,341 @@ bool MultipPlayer::updateProgressBarGeometry()
     return 0;
 }
 
+//播放列表右键菜单
+void MultipPlayer::slot_createRight_playListTable(const QPoint &pos)
+{
+    if(m_listWisget2->count() == 0) return;//没有item就返回，不出现右键菜单
+    QMenu *playMenu = new QMenu(m_listWisget2);
+    playMenu->setObjectName(QString::fromLocal8Bit("playlist_playMenu"));
+    QAction *playAction = new QAction(QIcon(""),QString::fromLocal8Bit("播放"));
+    QAction *nextAction = new QAction(QIcon(""),QString::fromLocal8Bit("下一首"));
+    QAction *deleteAction = new QAction(QIcon(""),QString::fromLocal8Bit("删除"));
+    QAction *downloadAction = new QAction(QIcon(""),QString::fromLocal8Bit("下载"));
+    QAction *collectAction = new QAction(QIcon(""),QString::fromLocal8Bit("收藏"));
+    QAction *selectallAction = new QAction(QIcon(""),QString::fromLocal8Bit("全选"));
+    QAction *clearAction = new QAction(QIcon(""),QString::fromLocal8Bit("清空列表"));
+//    int row = m_listWisget2->currentRow();//当前选中的行号，注意-1和向后传递的情况
+//    QString text = m_listWisget2->currentItem()->text();
+    //播放
+    connect(playAction,&QAction::triggered,[=](){slot_playCurrentListItem(m_listWisget2,m_listWisget2->currentRow());});
+    //下一首
+    connect(nextAction,&QAction::triggered,[=](){slot_playNextListItem(m_listWisget2,m_listWisget2->currentRow());});
+    //删除
+    connect(deleteAction,&QAction::triggered,[=](){slot_deleteListRecord(m_listWisget2,m_listWisget2->currentRow());});
+    //下载
+    connect(downloadAction,&QAction::triggered,[=](){slot_downloadListItem(m_listWisget2,m_listWisget2->currentRow());});
+    //全选
+    connect(selectallAction,&QAction::triggered,[=](){slot_selectAllListItem(m_listWisget2);});
+    //清空列表
+    connect(clearAction,&QAction::triggered,[=](){slot_clearListAllRecords(m_listWisget2);});
+    //收藏
+    connect(collectAction,&QAction::triggered,[=](){slot_collectListItem(m_listWisget3,m_listWisget2->currentItem()->text());});
+    playMenu->addAction(playAction);
+//    playMenu->addAction(nextAction);
+    playMenu->addAction(deleteAction);
+    playMenu->addAction(downloadAction);
+//    playMenu->addAction(selectallAction);
+    playMenu->addAction(collectAction);
+    playMenu->addAction(clearAction);
+    playMenu->exec(m_listWisget2->mapToGlobal(pos));//deng同于playMenu->exec(this->mapToGlobal(m_listWisget2->mapToParent(pos)));
+    delete playMenu;
+    playMenu = nullptr;
+}
+
+//收藏列表右键菜单
+void MultipPlayer::slot_createRight_playCollectTable(const QPoint &pos)
+{
+    if(m_listWisget3->count() == 0) return;
+    QMenu *collectMenu = new QMenu(m_listWisget3);
+    collectMenu->setObjectName(QString::fromLocal8Bit("playlist_collectMenu"));
+    QAction *playAction = new QAction(QIcon(""),QString::fromLocal8Bit("播放"));
+    QAction *downloadAction = new QAction(QIcon(""),QString::fromLocal8Bit("下载"));
+    QAction *deleteAction = new QAction(QIcon(""),QString::fromLocal8Bit("删除"));
+    QAction *nextAction = new QAction(QIcon(""),QString::fromLocal8Bit("下一首"));
+    QAction *selectallAction = new QAction(QIcon(""),QString::fromLocal8Bit("全选"));
+    QAction *collectAction = new QAction(QIcon(""),QString::fromLocal8Bit("取消收藏"));
+    QAction *clearAction = new QAction(QIcon(""),QString::fromLocal8Bit("清空列表"));
+//    int row = m_listWisget3->currentRow();//当前选中的行号，注意-1和向后传递的情况
+//    QString text = m_listWisget3->currentItem()->text();
+    //播放
+    connect(playAction,&QAction::triggered,[=](){slot_playCurrentListItem(m_listWisget3,m_listWisget3->currentRow());});
+    //下一首
+    connect(nextAction,&QAction::triggered,[=](){slot_playNextListItem(m_listWisget3,m_listWisget3->currentRow());});
+    //删除
+    connect(deleteAction,&QAction::triggered,[=](){slot_deleteListRecord(m_listWisget3,m_listWisget3->currentRow());});
+    //下载
+    connect(downloadAction,&QAction::triggered,[=](){slot_downloadListItem(m_listWisget3,m_listWisget3->currentRow());});
+    //清空列表
+    //全选
+    connect(selectallAction,&QAction::triggered,[=](){slot_selectAllListItem(m_listWisget3);});
+    connect(clearAction,&QAction::triggered,[=](){slot_clearListAllRecords(m_listWisget3);});
+    //收藏
+    connect(collectAction,&QAction::triggered,[=](){slot_collectListItem(m_listWisget3,m_listWisget3->currentItem()->text());});
+    collectMenu->addAction(playAction);
+    collectMenu->addAction(downloadAction);
+//    collectMenu->addAction(deleteAction);
+//    collectMenu->addAction(nextAction);
+    collectMenu->addAction(collectAction);
+    collectMenu->addAction(clearAction);
+    collectMenu->exec(m_listWisget3->mapToGlobal(pos));
+    delete collectMenu;
+    collectMenu = nullptr;
+}
+
+//历史列表右键菜单
+void MultipPlayer::slot_createRight_playHistoryTable(const QPoint &pos)
+{
+    if(m_listWisget4->count() == 0) return;
+    QMenu *historytMenu = new QMenu(m_listWisget4);
+    historytMenu->setObjectName(QString::fromLocal8Bit("playlist_historytMenu"));
+    QAction *playAction = new QAction(QIcon(""),QString::fromLocal8Bit("播放"));
+    QAction *deleteAction = new QAction(QIcon(""),QString::fromLocal8Bit("删除"));
+    QAction *clearAction = new QAction(QIcon(""),QString::fromLocal8Bit("清空列表"));
+//    int row = m_listWisget4->currentRow();//当前选中的行号，注意-1和向后传递的情况
+    //播放
+    connect(playAction,&QAction::triggered,[=](){slot_playCurrentListItem(m_listWisget4,m_listWisget4->currentRow());});
+    //删除
+    connect(deleteAction,&QAction::triggered,[=](){slot_deleteListRecord(m_listWisget4,m_listWisget4->currentRow());});
+    //清空列表
+    connect(clearAction,&QAction::triggered,[=](){slot_clearListAllRecords(m_listWisget4);});
+    historytMenu->addAction(deleteAction);
+    historytMenu->addAction(clearAction);
+    historytMenu->exec(m_listWisget4->mapToGlobal(pos));
+    delete historytMenu;
+    historytMenu = nullptr;
+}
+
+//清空列表
+void MultipPlayer::slot_clearListAllRecords(QListWidget *obj)
+{
+    if(obj->count() == 0) return;
+    if(obj->objectName() == "m_listWisget2")
+    {
+        obj->clear();
+    }
+    else if(obj->objectName() == "m_listWisget3")
+    {
+        obj->clear();
+    }
+    else if(obj->objectName() == "m_listWisget4")
+    {
+        obj->clear();
+    }
+    else
+    {
+        return;
+    }
+}
+
+
+//多选删除
+void MultipPlayer::slot_deleteListRecords(QListWidget *obj, int start, int end)
+{
+    if(end - start < 0) return;
+    if(obj->objectName() == "m_listWisget2")//播放列表
+    {
+        for(int i = start; i<end; i++)
+        {
+            QListWidgetItem *item =  obj->takeItem(i);
+            delete item;
+        }
+
+        playlist->removeMedia(start,end);
+    }
+    else if(obj->objectName() == "m_listWisget3")//收藏列表
+    {
+
+    }
+    else if(obj->objectName() == "m_listWisget4")//历史列表
+    {
+
+    }
+    else
+    {
+        return;
+    }
+}
+
+//删除某条记录
+void MultipPlayer::slot_deleteListRecord(QListWidget *obj, int index)
+{
+    if(index == -1) return;
+    qDebug() << QString::fromLocal8Bit("当操作列表：") << obj->objectName() << QString::fromLocal8Bit("当操作索引：") << index;
+    if(obj->objectName() == "m_listWisget2")//播放列表
+    {
+        QListWidgetItem *item =  obj->takeItem(index);
+        delete item;
+        m_mapList2.remove(index);
+        playlist->removeMedia(index);
+    }
+    else if(obj->objectName() == "m_listWisget3")//收藏列表
+    {
+        QListWidgetItem *item =  obj->takeItem(index);
+        delete item;
+        m_mapList_collect.remove(index);
+    }
+    else if(obj->objectName() == "m_listWisget4")//历史列表
+    {
+        QListWidgetItem *item =  obj->takeItem(index);
+        delete item;
+        m_mapList_history.remove(index);
+    }
+    else
+    {
+        return;
+    }
+}
+
+//批量添加
+void MultipPlayer::slot_addListRecordItems(QListWidget *obj)
+{
+    if(obj->objectName() == "m_listWisget2")
+    {
+
+    }
+    else
+    {
+        return;
+    }
+}
+
+//单个添加
+void MultipPlayer::slot_addListRecordItem(QListWidget *obj)
+{
+    if(obj->objectName() == "m_listWisget2")
+    {
+
+    }
+    else if(obj->objectName() == "m_listWisget3")
+    {
+
+    }
+    else
+    {
+        return;
+    }
+}
+
+//播放选中的某条记录
+void MultipPlayer::slot_playCurrentListItem(QListWidget *obj, int index)
+{
+    if(index == -1) return;//-1非法值
+    if(obj->objectName() == "m_listWisget2")//判断为播放列表
+    {
+        playlist->setCurrentIndex(index);
+        player->play();
+    }
+    else if(obj->objectName() == "m_listWisget3")//判断为收藏列表
+    {
+
+    }
+    else
+    {
+        return;
+    }
+}
+
+//播放选中的某条记录的下一条
+void MultipPlayer::slot_playNextListItem(QListWidget *obj, int index)
+{
+    if(index == -1) return;//-1非法值
+    if(obj->objectName() == "m_listWisget2")
+    {
+        playlist->setCurrentIndex(index+1);
+        player->play();
+    }
+    else if(obj->objectName() == "m_listWisget3")
+    {
+
+    }
+    else
+    {
+        return;
+    }
+}
+
+//下载选中的某条记录
+void MultipPlayer::slot_downloadListItem(QListWidget *obj, int index)
+{
+    if(index == -1) return;//-1非法值
+    if(obj->objectName() == "m_listWisget2")
+    {
+
+    }
+    else if(obj->objectName() == "m_listWisget3")
+    {
+
+    }
+    else
+    {
+        return;
+    }
+}
+
+//收藏选中的某条记录
+void MultipPlayer::slot_collectListItem(QListWidget *obj, QString text)
+{
+    if(text == -1) return;//-1非法值
+    if(obj->objectName() == "m_listWisget2")
+    {
+        addCurrentMediaToList_Collect(obj);
+    }
+    else if(obj->objectName() == "m_listWisget3")
+    {
+        addCurrentMediaToList_Collect(obj,text);
+    }
+    else
+    {
+        return;
+    }
+}
+
+//全选
+void MultipPlayer::slot_selectAllListItem(QListWidget *obj)
+{
+    if(obj->count() == 0 ) return;
+    if(obj->objectName() == "m_listWisget2")
+    {
+        if(m_selectAllStatus1)
+        {
+            for(int i = 0; i < obj->count(); i++)
+            {
+                obj->item(i)->setFlags(Qt::NoItemFlags);
+            }
+        }
+        else
+        {
+            for(int i = 0; i < obj->count(); i++)
+            {
+                obj->item(i)->setCheckState(Qt::Checked);//Checked
+            }
+        }
+        m_selectAllStatus1 = !m_selectAllStatus1;
+    }
+    else if(obj->objectName() == "m_listWisget3")
+    {
+        if(m_selectAllStatus2)
+        {
+            for(int i = 0; i < obj->count(); i++)
+            {
+                obj->item(i)->setFlags(Qt::NoItemFlags);
+            }
+        }
+        else
+        {
+            for(int i = 0; i < obj->count(); i++)
+            {
+                obj->item(i)->setCheckState(Qt::Checked);//Checked
+            }
+        }
+        m_selectAllStatus2 = !m_selectAllStatus2;
+    }
+    else
+    {
+        return;
+    }
+}
+
 
 //bool MultipPlayer::findCollectList()
 //{
@@ -1953,16 +2359,19 @@ bool MultipPlayer::updateProgressBarGeometry()
 void MultipPlayer::closeCurrentWindow()
 {
     player->stop();//暂停播放
+    playlist->clear();//播放列表清空
     m_mapList.clear();//清空容器
     m_mapList2.clear();//清空容器
+    m_mapList_collect.clear();
+    m_mapList_history.clear();
     ui->stackedWidget->setCurrentIndex(0);//空白页
 //    clearListWidgetList_user();
-    clearListWidgetList_playlist();
-    clearListWidgetList_collection();
-    clearListWidgetList_history();
-    clearUserInputSearchInfo();
-    this->close();
-
+    clearListWidgetList_playlist();//播放列表清空
+    clearListWidgetList_collection();//收藏列表清空
+    clearListWidgetList_history();//历史列表清空
+    clearUserInputSearchInfo();//登陆列表以往输入的信息清空
+//    this->close();
+    emit sig_mainPlayerClose();//主界面处理内存删除
 }
 
 //清空用户信息
