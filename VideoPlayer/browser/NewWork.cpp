@@ -10,8 +10,9 @@ NewWork::NewWork(QWidget *parent) :
     ui(new Ui::NewWork)
 {
     ui->setupUi(this);
-    this->setWindowTitle(QString::fromLocal8Bit("新任务"));
+    this->setWindowTitle(QString::fromLocal8Bit("添加新任务"));
     setWindowFlags(Qt::FramelessWindowHint);
+    this->setAttribute(Qt::WA_TranslucentBackground);//背景透明
     this->setFixedSize(450,226);//记得滚动条的10px宽度
     initWorkUI();
     chandleSignalsAndSlots();
@@ -24,6 +25,8 @@ NewWork::~NewWork()
 
 void NewWork::initWorkUI()
 {
+    ui->lineEdit_savepath->setText(QString::fromLocal8Bit("C:/Users/24939/Downloads"));//默认的路径
+
     m_clearBtn = new QPushButton(QString::fromLocal8Bit("清除历史记录"));
     m_clearBtn->setObjectName(QString::fromLocal8Bit("newwork_m_clearBtn"));
     m_clearBtn->setFixedHeight(26);
@@ -69,9 +72,13 @@ void NewWork::chandleSignalsAndSlots()
 {
     connect(m_fileSize,&QAction::triggered,[=](){ qDebug() << QString::fromLocal8Bit("文件大小");});
     connect(m_spaceSize,&QAction::triggered,[=](){ qDebug() << QString::fromLocal8Bit("剩余空间");});
-    connect(ui->pushButton_his,&QPushButton::clicked,this,&NewWork::updateShowListPathWidget);
+    connect(ui->pushButton_his,&QPushButton::clicked,this,&NewWork::slot_updateShowListPathWidget);
     connect(m_clearBtn,&QPushButton::clicked,[=](){m_listWdgt_path->clear();});
-    connect(ui->pushButton_close,&QPushButton::clicked,this,&NewWork::close);
+    connect(ui->pushButton_close,&QPushButton::clicked,[=]()
+    {
+        emit sig_download(false);
+        this->close();
+    });
     connect(ui->pushButton_lookin,&QPushButton::clicked,[=]()
     {
         QString path = openLocalFileSystem();
@@ -124,7 +131,9 @@ void NewWork::slot_receivedNewWorkInfo(const QString &adress, const QString &fil
     if(adress.isEmpty()) return;
     if(filename.isEmpty()) return;
     ui->lineEdit_address->setText(adress);
+    ui->lineEdit_address->setCursorPosition(0);
     ui->lineEdit_filename->setText(filename);
+    ui->lineEdit_filename->setCursorPosition(0);
 }
 
 bool NewWork::eventFilter(QObject *watched, QEvent *event)
@@ -163,7 +172,7 @@ bool NewWork::slot_judgePathExist(const QString &path)
     return false;//不存在
 }
 
-void NewWork::updateShowListPathWidget()
+void NewWork::slot_updateShowListPathWidget()
 {
     int x = ui->lineEdit_savepath->parentWidget()->mapToGlobal(ui->lineEdit_savepath->pos()).x();
     int y = ui->lineEdit_savepath->parentWidget()->mapToGlobal(ui->lineEdit_savepath->pos()).y();
@@ -191,4 +200,5 @@ void NewWork::slot_addPathToList(const QString &path)
 void NewWork::slot_setLineEditText(QLineEdit *edit, const QString &text)
 {
     edit->setText(text);
+    edit->setCursorPosition(0);//字符串过长时，显示的依旧是最左端文字
 }

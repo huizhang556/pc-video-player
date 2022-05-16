@@ -35,9 +35,13 @@ protected:
 private:
     Ui::WebDownLoadList *ui;
     QPoint              m_mvPos;
+    bool                m_start;
+
 private slots:
     void on_pushButton_min_clicked();
     void on_pushButton_close_clicked();
+    void slot_setStartStatus(QPushButton *button,bool status);
+    void slot_openFile(const QString &filepath);
 signals:
     void sig_cancel();
     void sig_pause();

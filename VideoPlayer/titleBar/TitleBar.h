@@ -28,9 +28,7 @@ public:
     void chandleSignalAndSLots();
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
-
     bool eventFilter(QObject *watched, QEvent *event) override;
-
     void showEvent(QShowEvent *event) override;
 
 //公有槽函数以公共接口的形式暴露在外面，外部任何客户可以直接访问
@@ -54,17 +52,37 @@ private slots:
     void showLoginForm();//显示登录窗口
     void showMySkin();//皮肤设置
     void createHelpMenu();//帮助菜单
+    QString judgeUrlType(QString url);
+    bool judgeCollectUrlType(QString url);//判断要收藏的url是否有效类型
+    bool judgeCollectUrlExist(const QString &url);//判断当前的网址是否已经在收藏栏
+
+    bool judgeHistorytUrlType(QString url);//判断要收藏的url是否有效类型
+    bool judgeHistoryUrlExist(const QString &url);//判断当前的网址是否已经在收藏栏
+
+    void slot_setCurrentWebSiteCollectStatus(const QString &url);//判断当前的网址是显示收藏还是未收藏
+    void slot_updateShowListCollectWidget();//显示收藏菜单界面
+    void slot_addToListCollectWidget(const QString &text);//选中回显
+    void slot_updateShowListHistoryWidget();//显示历史记录界面
+    void slot_addToListHistoryWidget(const QString &text);//选中回显
+    void slot_updateShowListSettigMenu();//显示设置右键菜单
+
+    //浏览器设置
+    void slot_browser_setting_newWindows();//新建窗口
+    void slot_browser_setting_clearSearchHistory();
 private:
     void setShowToolTip();
 
 private:
-    QTimer          *m_timer3       = nullptr;
-    QMenu           *pmenu_help1    = nullptr;
-    QMenu           *pmenu_help2    = nullptr;
-    WebDownLoadList *m_downlist     = nullptr;
-    SearchForm      *m_searchForm   = nullptr;
-    Login           *m_loginForm    = nullptr;
-    MySkin          *m_mySkin       = nullptr;
+    QTimer          *m_timer3               = nullptr;
+    QMenu           *pmenu_help1            = nullptr;
+    QMenu           *pmenu_help2            = nullptr;
+    WebDownLoadList *m_downlist             = nullptr;
+    SearchForm      *m_searchForm           = nullptr;
+    Login           *m_loginForm            = nullptr;
+    MySkin          *m_mySkin               = nullptr;
+    QListWidget     *m_listWdgt_colloect    = nullptr;//收藏列表
+    QListWidget     *m_listWdgt_history     = nullptr;//历史记录
+    QListWidget     *m_listWdgt_setting     = nullptr;//浏览器设置列表
     Ui::TitleBar    *ui;
 
 signals:

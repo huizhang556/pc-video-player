@@ -28,7 +28,7 @@ CusWebBrowser::CusWebBrowser(QWidget *parent) :
     connect(this->page()->profile(),&QWebEngineProfile::downloadRequested,[=](QWebEngineDownloadItem *item)
     {
         if(item->url().isEmpty()) return;
-        if(oldUrl == item->url()) return;
+//        if(oldUrl == item->url()) return;
         slot_receiveDownloadRequested(item);
     });
 //    connect(this,SIGNAL(urlChanged(QUrl)),this,SLOT(slots_sendToNewAddress()));
@@ -199,7 +199,7 @@ void CusWebBrowser::slot_receiveDownloadRequested(QWebEngineDownloadItem *item)
 {
     qDebug() << QString::fromLocal8Bit("已接收到请求...");
     qDebug() << QString::fromLocal8Bit("请求地址：") << item->url();
-    oldUrl = item->url();
+//    oldUrl = item->url();
     m_newWork->slot_receivedNewWorkInfo(item->url().toString(),"shizhan.pdf");
     m_newWork->exec();
     connect(m_newWork,&NewWork::sig_download,[=](bool status)
@@ -211,7 +211,7 @@ void CusWebBrowser::slot_receiveDownloadRequested(QWebEngineDownloadItem *item)
         }
         else
         {
-            item->cancel();//取消下载
+//            item->cancel();//取消下载
         }
     });
     connect(item,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(slot_downLoad_progress(qint64,qint64)));

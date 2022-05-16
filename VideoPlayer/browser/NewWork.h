@@ -32,7 +32,8 @@ private slots:
     void slot_addPathToList(const QString &path);
     void slot_setLineEditText(QLineEdit *edit, const QString &text);
     bool slot_judgePathExist(const QString &path);
-    void updateShowListPathWidget();
+    void slot_updateShowListPathWidget();
+
 private:
     Ui::NewWork *ui;
     QPoint              m_mvPos;

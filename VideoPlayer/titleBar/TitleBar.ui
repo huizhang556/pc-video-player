@@ -14,11 +14,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget
-{
-color: rgb(85, 255, 0);
-background-color: #2a2a31;
-}
+   <string notr="true">
 </string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -627,7 +623,7 @@ background-color:#47df00;
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>10</width>
+               <width>15</width>
                <height>20</height>
               </size>
              </property>
@@ -718,7 +714,7 @@ border-image: url(:/images/icon/back_hover.png);
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>20</width>
+               <width>18</width>
                <height>20</height>
               </size>
              </property>
@@ -763,7 +759,7 @@ border-image: url(:/images/icon/refreshen_hover.png);
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>20</width>
+               <width>18</width>
                <height>20</height>
               </size>
              </property>
@@ -808,7 +804,49 @@ border-image: url(:/images/icon/advance_hover.png);
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>15</width>
+               <width>18</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_webcollect">
+             <property name="minimumSize">
+              <size>
+               <width>18</width>
+               <height>18</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>18</width>
+               <height>18</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+border-image: url(:/images/icon/url_collection.png);
+}
+</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_23">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>18</width>
                <height>20</height>
               </size>
              </property>
@@ -837,12 +875,12 @@ font-family:&quot;微软雅黑&quot;;
 font-size:15px;
 background-color: rgb(81, 81, 81);
 selection-background-color: #D1DBCB;
-border-right:transparent;
+border-right-width:0px;
 border:1px solid #bbbbbb;
-border-top-left-radius:5;
+border-top-left-radius:3;
 border-top-right-radius:0;
 border-bottom-right-radius:0;
-border-bottom-left-radius:5;
+border-bottom-left-radius:3;
 padding-right:2px;
 padding-left:2px;
 }
@@ -863,46 +901,58 @@ border:1px solid #ff5c38;
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="Btn_expand">
+            <widget class="QPushButton" name="pushButton_webhislist">
              <property name="minimumSize">
               <size>
-               <width>30</width>
+               <width>18</width>
                <height>30</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>30</width>
+               <width>18</width>
                <height>30</height>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">/*搜索按钮*/ 
-#Btn_expand
+              <string notr="true">QPushButton
 {
-color:white;
-border:1px solid #bbbbbb;
-border-left:transparent;
-background-color: rgb(81, 81, 81);
+border:1px solid #adadad;
+border-left-width:0px;
+background: rbga(240, 240, 240,0.6) url(:/images/function/download_arrow.png) no-repeat no-repeat center center;
 border-top-left-radius:0;
-border-top-right-radius:5;
-border-bottom-right-radius:5;
+border-top-right-radius:3;
+border-bottom-right-radius:3;
 border-bottom-left-radius:0;
 }
 
-/*搜索按钮-按下*/
-#Btn_expand:pressed
+QPushButton:hover
 {
+border:1px solid #bbbbbb;
+border-left-width:0px;
+background: rbga(240, 240, 240,0.6) url(:/images/function/download_arrow.png) no-repeat no-repeat center center;
+border-top-left-radius:0;
+border-top-right-radius:3;
+border-bottom-right-radius:3;
+border-bottom-left-radius:0;
 }
 
-
-#Btn_expand:hover
+/*搜索按钮*/ 
+#Btn_expand
 {
-color:#1afa29;
-}</string>
+color:white;
+
+border-left-width:0px;
+background-color: rgb(81, 81, 81);
+border-top-left-radius:0;
+border-top-right-radius:3;
+border-bottom-right-radius:3;
+border-bottom-left-radius:0;
+}
+</string>
              </property>
              <property name="text">
-              <string>∨</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -916,7 +966,7 @@ color:#1afa29;
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>15</width>
+               <width>16</width>
                <height>20</height>
               </size>
              </property>
@@ -962,14 +1012,14 @@ border-image: url(:/images/icon/title_webdownload_hover.png);
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>15</width>
+               <width>16</width>
                <height>20</height>
               </size>
              </property>
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_webcollect">
+            <widget class="QPushButton" name="pushButton_more">
              <property name="minimumSize">
               <size>
                <width>18</width>
@@ -985,11 +1035,11 @@ border-image: url(:/images/icon/title_webdownload_hover.png);
              <property name="styleSheet">
               <string notr="true">QPushButton
 {
-border-image: url(:/images/icon/url_collection.png);
+border-image: url(:/images/icon/web_funclist.png);
 }
 QPushButton:hover
 {
-border-image: url(:/images/icon/url_collect_hover.png);
+border-image: url(:/images/icon/web_funclist_hover.png);
 }</string>
              </property>
              <property name="text">

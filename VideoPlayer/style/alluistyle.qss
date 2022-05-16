@@ -10,6 +10,73 @@ MultipPlayer
 background-color:#2a2a31;
 }
 
+/*标题栏*/
+TitleBar
+{
+color: rgb(85, 255, 0);
+background-color: #2a2a31;
+}
+
+/*浏览器---收藏列表*/
+#m_listWdgt_colloect
+{
+border:none;
+color:black;
+background-color:#f5f5f5;
+}
+
+#m_listWdgt_colloect::item
+{
+background-color:#f0f0f0;
+padding: 2px;
+}
+
+#m_listWdgt_colloect::icon:hover
+{
+border-image:url(://images/function/collect_list_item.png);
+}
+
+#m_listWdgt_colloect::item:selected
+{
+background-color: #d6eff7;
+}
+
+#m_listWdgt_colloect::item:hover
+{
+background-color: #d6eff7;
+color:#55ff00;
+}
+
+/*浏览器---搜索记录*/
+#m_listWdgt_history
+{
+border:none;
+color:black;
+background-color:#f5f5f5;
+}
+
+#m_listWdgt_history::item
+{
+padding: 2px;
+background-color:#f0f0f0;
+}
+
+#m_listWdgt_history::icon:hover
+{
+border-image:url(://images/function/history_list_item.png);
+}
+
+#m_listWdgt_history::item:selected
+{
+background-color: #d6eff7;
+}
+
+#m_listWdgt_history::item:hover
+{
+background-color: #d6eff7;
+color:#55ff00;
+}
+
 /*新建任务---清除历史路径*/
 #newwork_m_clearBtn
 {

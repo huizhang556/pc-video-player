@@ -42,7 +42,7 @@ background-color: qlineargradient(spread:reflect, x1:0.056, y1:0.04, x2:1, y2:1,
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <property name="styleSheet">

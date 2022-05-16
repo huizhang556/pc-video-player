@@ -264,5 +264,13 @@
         <file>images/function/download_video.png</file>
         <file>images/function/download_wav.png</file>
         <file>images/function/new_disc.png</file>
+        <file>images/function/download_arrow_hover.png</file>
+        <file>images/function/download_arrow.png</file>
+        <file>images/icon/web_funclist_hover.png</file>
+        <file>images/icon/web_funclist.png</file>
+        <file>images/function/collect_list_item.png</file>
+        <file>images/function/collect_list_item_hover.png</file>
+        <file>images/function/history_list_item.png</file>
+        <file>images/function/history_list_item_hover.png</file>
     </qresource>
 </RCC>

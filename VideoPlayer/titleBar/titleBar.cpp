@@ -68,18 +68,23 @@ void TitleBar::initWorker()
 
     ui->lineEdit_webSearch->setFixedHeight(28);
     ui->lineEdit_webSearch->setText(QString::fromLocal8Bit("https://www.baidu.com/"));//默认显示的网址
-    ui->lineEdit_webSearch->setPlaceholderText(QString::fromLocal8Bit("请输入网址"));
+    ui->lineEdit_webSearch->setPlaceholderText(QString::fromLocal8Bit("请输入有效网址或要搜索的内容-_-"));
     //正则校验  url校验
 //    QRegExp regExp("^[a-zA-z]+://(\w+(-\w+)*)(\.(\w+(-\w+)*))*(\?\S*)?$");
 //    QRegExpValidator *expval = new QRegExpValidator(regExp,this);
 //    ui->lineEdit_webSearch->setValidator(expval);
-    ui->Btn_expand->setFixedSize(30,28);
+    ui->pushButton_webhislist->setFixedSize(18,28);
 
-    ui->Btn_expand->setFlat(true);
-    ui->Btn_expand->setToolTip(QString::fromLatin1("点击查看历史记录"));
+    ui->pushButton_webhislist->setFlat(true);
+    ui->pushButton_webhislist->setToolTip(QString::fromLocal8Bit("搜索历史"));
     ui->lineEditSearch->installEventFilter(this);//输入检索字
     ui->BtnSearch->installEventFilter(this);
     ui->lineEdit_webSearch->installEventFilter(this);//输入网址
+
+    ui->pushButton_webcollect->installEventFilter(this);
+    ui->pushButton_webcollect->setToolTip(QString::fromLocal8Bit("收藏"));
+    ui->pushButton_more->setToolTip(QString::fromLocal8Bit("浏览器设置"));
+    ui->pushButton_webdownload->setToolTip(QString::fromLocal8Bit("下载列表"));
 
     m_searchForm = new SearchForm();//不指定父控件，也不加布局，需要手动删除
     m_searchForm->setObjectName(QString::fromLocal8Bit("m_searchForm"));
@@ -93,6 +98,21 @@ void TitleBar::initWorker()
     m_downlist = new WebDownLoadList();
     m_downlist->setObjectName(QString::fromLocal8Bit("m_downlist"));
 
+    //收藏列表
+    m_listWdgt_colloect = new QListWidget();
+    m_listWdgt_colloect->setObjectName(QString::fromLocal8Bit("m_listWdgt_colloect"));
+    m_listWdgt_colloect->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_listWdgt_colloect->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_listWdgt_colloect->setWindowFlags(Qt::FramelessWindowHint);
+    m_listWdgt_colloect->installEventFilter(this);
+
+    //历史记录列表
+    m_listWdgt_history = new QListWidget();
+    m_listWdgt_history->setObjectName(QString::fromLocal8Bit("m_listWdgt_history"));
+    m_listWdgt_history->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_listWdgt_history->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_listWdgt_history->setWindowFlags(Qt::FramelessWindowHint);
+    m_listWdgt_history->installEventFilter(this);
 
     slot_switchToLoginPage(1,QString::fromLocal8Bit("测试测名称8020"));
 }
@@ -101,6 +121,13 @@ void TitleBar::initWorker()
 /*处理信号与槽函数*/
 void TitleBar::chandleSignalAndSLots()
 {
+    //收藏按钮
+//    connect(ui->pushButton_webcollect,&QPushButton::clicked,this,&TitleBar::slot_updateShowListCollectWidget);
+    //历史记录
+    connect(ui->pushButton_webhislist,&QPushButton::clicked,this,&TitleBar::slot_updateShowListHistoryWidget);
+    //浏览器设置
+    connect(ui->pushButton_more,&QPushButton::clicked,this,&TitleBar::slot_updateShowListSettigMenu);
+    //登录位置转换
     connect(ui->pushButton_logo,&QPushButton::clicked,[=](){ ui->stackedWidget_login->setCurrentIndex(1);});
     connect(ui->pushButton_logo2,&QPushButton::clicked,[=](){ ui->stackedWidget_login->setCurrentIndex(0);});
     //登录
@@ -163,9 +190,17 @@ void TitleBar::chandleSignalAndSLots()
 
     //网址输入框---回车键处理
     connect(ui->lineEdit_webSearch,&QLineEdit::returnPressed,[=](){
-        QString url = ui->lineEdit_webSearch->text().trimmed();
-        emit sig_sendInputNewUrl(url);
-        qDebug() << "emit sig_sendInputNewUrl(url);"<< url;
+        QString newurl = judgeUrlType(ui->lineEdit_webSearch->text().trimmed());
+        if(newurl.isEmpty()) return;
+        slot_addToListHistoryWidget(ui->lineEdit_webSearch->text().trimmed());//添加进历史记录
+        emit sig_sendInputNewUrl(newurl);//补充的url
+        qDebug() << "emit sig_sendInputNewUrl(url);"<< newurl;
+    });
+
+    //网址输入框---文本改变,判断是否收藏当前网址
+    connect(ui->lineEdit_webSearch,&QLineEdit::textChanged,[=](QString text)
+    {
+              slot_setCurrentWebSiteCollectStatus(text);
     });
 
     connect(ui->lineEditSearch,&QLineEdit::returnPressed,[=](){
@@ -176,9 +211,18 @@ void TitleBar::chandleSignalAndSLots()
         //鼠标进入样式改变
     });
 
-    //网址收藏
+    //网址收藏----单击收藏，双击显示列表
     connect(ui->pushButton_webcollect,&QPushButton::clicked,[=](){
-        qDebug() << QString::fromLocal8Bit("网络文件收藏");
+        bool valid = judgeCollectUrlType(ui->lineEdit_webSearch->text());
+        if(valid)
+        {
+            slot_addToListCollectWidget(ui->lineEdit_webSearch->text());
+        }
+        else
+        {
+            return;
+        }
+
     });
     //网络文件下载
     connect(ui->pushButton_webdownload,&QPushButton::clicked,[=](){
@@ -200,6 +244,24 @@ void TitleBar::chandleSignalAndSLots()
     connect(m_downlist,&WebDownLoadList::sig_setConfig,[=](){
         emit sig_settingHelpItem(1);//1  代表系统设置
     });
+
+    //历史记录选中回显----回显选择的历史记录到lineEdit
+    connect(m_listWdgt_history,&QListWidget::itemClicked,[=](QListWidgetItem *item)
+    {
+        if(item->text().isEmpty()) return;
+        QString addUrl = judgeUrlType(item->text());
+        ui->lineEdit_webSearch->setText(item->text());
+        emit sig_sendInputNewUrl(addUrl);
+    });
+
+    //收藏菜单选中回显----回显选择的记录到lineEdit
+    connect(m_listWdgt_colloect,&QListWidget::itemClicked,[=](QListWidgetItem *item)
+    {
+        if(item->text().isEmpty()) return;
+        ui->lineEdit_webSearch->setText(item->text());
+        emit sig_sendInputNewUrl(item->text());
+    });
+
 }
 
 /*创建菜单*/
@@ -229,6 +291,225 @@ void TitleBar::createHelpMenu()
     delete pmenu_help2;
 }
 
+//判断输入框输入内容，并做适当的调整，返回url
+QString TitleBar::judgeUrlType(QString url)
+{
+    if(url.startsWith("http://"))//判断开头，这里用正则表达式做最好
+    {
+        return url;
+    }
+    else if(url.startsWith("https://"))
+    {
+        return url;
+    }
+    else if(url.startsWith("www."))
+    {
+        return QString::fromLocal8Bit("http://") + url;
+    }
+    else
+    {
+        return QString::fromLocal8Bit("https://www.baidu.com/s?wd=") + url;
+    }
+}
+
+bool TitleBar::judgeCollectUrlType(QString url)
+{
+    if(url.startsWith("http://"))//判断开头，这里用正则表达式做最好
+    {
+        return true;
+    }
+    else if(url.startsWith("https://"))
+    {
+        return true;
+    }
+    else if(url.startsWith("www."))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool TitleBar::judgeCollectUrlExist(const QString &url)
+{
+    for(int i = 0; i < m_listWdgt_colloect->count(); i++)
+    {
+        if(m_listWdgt_colloect->item(i)->text() == url)
+        {
+            return true;//有，返回true
+        }
+    }
+    return false;//没有返回false
+}
+
+bool TitleBar::judgeHistorytUrlType(QString url)
+{
+    if(url.startsWith("http"))
+    {
+        return true;
+    }
+
+    else if(url.startsWith("https"))
+    {
+        return true;
+    }
+    else if(url.startsWith("www."))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool TitleBar::judgeHistoryUrlExist(const QString &url)
+{
+    for(int i = 0; i < m_listWdgt_history->count(); i++)
+    {
+        if(m_listWdgt_history->item(i)->text() == url)
+            return true;//代表有
+    }
+    return false;//代表无
+}
+
+//判断收藏状态
+void TitleBar::slot_setCurrentWebSiteCollectStatus(const QString &url)
+{
+    if(url.isEmpty()) return;
+    bool valid = judgeCollectUrlExist(url);
+    if(valid)
+    {
+        ui->pushButton_webcollect->setStyleSheet("#pushButton_webcollect{"
+                                                 "border-image: url(:/images/icon/url_collect_hover.png);"
+                                                 "}");
+    }
+    else
+    {
+        ui->pushButton_webcollect->setStyleSheet("#pushButton_webcollect{"
+                                                 "border-image: url(:/images/icon/url_collection.png);"
+                                                 "}");
+    }
+}
+
+//显示收藏列表
+void TitleBar::slot_updateShowListCollectWidget()
+{
+    if(m_listWdgt_colloect)
+        if(m_listWdgt_colloect->isHidden())
+        {
+            int x = ui->pushButton_webcollect->parentWidget()->mapToGlobal(ui->pushButton_webcollect->pos()).x();
+            int y = ui->pushButton_webcollect->parentWidget()->mapToGlobal(ui->pushButton_webcollect->pos()).y();
+            m_listWdgt_colloect->setGeometry(x - 130,y + 58,
+                                             300,500);
+            m_listWdgt_colloect->raise();
+            m_listWdgt_colloect->show();
+        }
+        else
+        {
+            m_listWdgt_colloect->hide();
+        }
+}
+
+void TitleBar::slot_addToListCollectWidget(const QString &text)
+{
+    if(text.isEmpty()) return;
+    bool valid = judgeCollectUrlExist(text);
+    if(!valid)//没有则收藏
+    {
+        QListWidgetItem *item = new QListWidgetItem(QIcon("://images/function/collect_list_item.png"),text);
+        m_listWdgt_colloect->insertItem(0,item);
+    }
+    else//有，则不做任何处理
+    {
+        return;
+    }
+    slot_setCurrentWebSiteCollectStatus(text);//收藏以后，样式在做一次处理
+}
+
+
+//显示历史记录
+void TitleBar::slot_updateShowListHistoryWidget()
+{
+    if(m_listWdgt_history)
+        if(m_listWdgt_history->isHidden())
+        {
+            int x = ui->lineEdit_webSearch->parentWidget()->mapToGlobal(ui->lineEdit_webSearch->pos()).x();
+            int y = ui->lineEdit_webSearch->parentWidget()->mapToGlobal(ui->lineEdit_webSearch->pos()).y();
+            m_listWdgt_history->setGeometry(x,y + ui->lineEdit_webSearch->height(),
+                                            ui->lineEdit_webSearch->width()+ui->pushButton_webhislist->width(),200);
+            m_listWdgt_history->raise();
+            m_listWdgt_history->show();
+        }
+        else
+        {
+            m_listWdgt_history->hide();
+        }
+}
+
+void TitleBar::slot_addToListHistoryWidget(const QString &text)
+{
+    if(text.isEmpty()) return;
+    if(!judgeHistoryUrlExist(text))//没有找到才添加
+    {
+        QListWidgetItem *item = new QListWidgetItem(QIcon("://images/function/history_list_item.png"),text);
+        m_listWdgt_history->addItem(item);
+    }
+}
+
+//显示浏览器设置
+void TitleBar::slot_updateShowListSettigMenu()
+{
+    QMenu *pmenu_funclist = new QMenu(this);
+    pmenu_funclist->setObjectName(QString::fromLocal8Bit("pmenu_funclist"));
+    QMenu *pmenu_func_tool = new QMenu(QString::fromLocal8Bit("工具"));
+    pmenu_func_tool->setObjectName(QString::fromLocal8Bit("pmenu_func_tool"));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_account.png"),QString::fromLocal8Bit("新建窗口"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_account.png"),QString::fromLocal8Bit("新建隐身窗口"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_funclist->addSeparator();
+    pmenu_funclist->addAction(QIcon("://images/icon/setlogin.png"),QString::fromLocal8Bit("保存网页"),this,SLOT(slot_browser_setting_newWindows()));//注意：槽函数不加分号，且不能带参数
+    pmenu_funclist->addAction(QIcon("://images/icon/help_internet.png"),QString::fromLocal8Bit("查找"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_qahelp.png"),QString::fromLocal8Bit("全屏"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_funclist->addSeparator();
+    pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("收藏列表"),this,SLOT(slot_updateShowListCollectWidget()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("历史记录"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("下载任务管理"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("代理服务器"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_funclist->addMenu(pmenu_func_tool);
+    pmenu_func_tool->addAction(QIcon("://images/icon/help_download.png"),QString::fromLocal8Bit("管理扩展"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_func_tool->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("清除上网痕迹"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_func_tool->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("清除搜索记录"),this,SLOT(slot_browser_setting_clearSearchHistory()));
+    pmenu_func_tool->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("查看源代码"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_func_tool->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("任务管理器"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_func_tool->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("控制台选项"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_func_tool->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("internet选项"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_funclist->addSeparator();
+    pmenu_funclist->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("退出登录"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_funclist->addSeparator();
+    pmenu_funclist->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("常见问题"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("帮助"),this,SLOT(slot_browser_setting_newWindows()));
+
+    int x = ui->pushButton_more->parentWidget()->mapToGlobal(ui->pushButton_more->pos()).x();
+    int y = ui->pushButton_more->parentWidget()->mapToGlobal(ui->pushButton_more->pos()).y();
+    pmenu_funclist->setGeometry(x-50, y + 30,
+                                 pmenu_funclist->width(),pmenu_funclist->height());
+    pmenu_funclist->exec();
+    delete pmenu_funclist;
+    delete pmenu_func_tool;
+}
+
+void TitleBar::slot_browser_setting_newWindows()
+{
+    emit sig_sendInputNewUrl("http://www.baidu.com");
+}
+
+void TitleBar::slot_browser_setting_clearSearchHistory()
+{
+    m_listWdgt_history->clear();
+}
+
 /*设置tooltip*/
 void TitleBar::setShowToolTip()
 {
@@ -253,35 +534,21 @@ bool TitleBar::eventFilter(QObject *watched, QEvent *event)
     QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);//转换为鼠标事件
     mouseIsEnterLeaveLineEdit(watched,mouseEvent);//搜索框鼠标进入离开,处理样式
     mouseIsPressReleaseLineEdit(watched,mouseEvent);//搜索框鼠标按下释放，处理历史记录
-//    if(watched == ui->lineEdit_webSearch)
-//    {
-//        if(event->type() == QEvent::Enter)
-//        {
-//            connect(ui->lineEdit_webSearch,&QLineEdit::returnPressed,[=](){
-//                QString url = ui->lineEdit_webSearch->text().trimmed();
-//                emit sig_sendNewUrl(url);
-//                qDebug() << "emit sig_sendNewUrl(url);";
-//                //处理其他事件
-//                //鼠标进入样式改变
+    if(watched == m_listWdgt_history)
+    {
+        if(event->type() == QEvent::Leave)
+        {
+            m_listWdgt_history->hide();
+        }
+    }
+    if(watched == m_listWdgt_colloect)
+    {
+        if(event->type() == QEvent::Leave)
+        {
+            m_listWdgt_colloect->hide();
+        }
+    }
 
-//            });
-//        }
-//    }
-
-//    if(watched == ui->lineEditSearch)
-//    {
-//        if(event->type() == QEvent::Enter)
-//        {
-//            connect(ui->lineEditSearch,&QLineEdit::returnPressed,[=](){
-//                QString his = ui->lineEditSearch->text().trimmed();
-//                m_searchForm->addHistoryItem(his);
-//                qDebug() << "emit sig_sendNewSearch(his);";
-//                //处理其他事件
-//                //鼠标进入样式改变
-
-//            });
-//        }
-//    }
     return QWidget::eventFilter(watched,event);
 }
 

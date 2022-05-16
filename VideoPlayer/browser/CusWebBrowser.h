@@ -10,9 +10,9 @@
 #include <QKeyEvent>
 #include <QWheelEvent>
 #include <QChildEvent>
-#include <QApplication>
 #include <QHBoxLayout>
 #include <QMessageBox>
+#include <QApplication>
 #include <QWebEngineView>
 #include <QWebEnginePage>
 #include <QWebEngineProfile>

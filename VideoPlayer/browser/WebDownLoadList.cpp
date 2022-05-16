@@ -1,9 +1,11 @@
 ﻿#include "WebDownLoadList.h"
 #include "ui_WebDownLoadList.h"
 #include <QDebug>
+#include <QFileDialog>
 
 WebDownLoadList::WebDownLoadList(QWidget *parent) :
     QWidget(parent),
+    m_start(true),//默认是开始下载状态
     ui(new Ui::WebDownLoadList)
 {
     ui->setupUi(this);
@@ -42,7 +44,7 @@ void WebDownLoadList::chandleSignalsAndSLots()
 
 bool WebDownLoadList::slot_addDownLoadRecordToList(int order)
 {
-    QLabel  *num = new QLabel(QString::number(order));
+    QLabel *num = new QLabel(QString::number(order));
     num->setObjectName(QString::fromLocal8Bit("dl_num"));
     num->setAlignment(Qt::AlignCenter);//文字居中
     QProgressBar *progressbar = new QProgressBar();
@@ -87,11 +89,12 @@ bool WebDownLoadList::slot_addDownLoadRecordToList(int order)
     item->setSizeHint(tempwdt->size());
     ui->listWidget_list->addItem(item);
     ui->listWidget_list->setItemWidget(item,tempwdt);
+
     //信号与槽函数关联
-    connect(stopbtn,&QPushButton::clicked,[=](){ qDebug()<< QString::fromLocal8Bit("暂停") << num->text(); });
+    connect(stopbtn,&QPushButton::clicked,[=](){ slot_setStartStatus(stopbtn,m_start); qDebug()<< QString::fromLocal8Bit("暂停") << num->text(); });
     connect(deletebtn,&QPushButton::clicked,[=](){ qDebug()<< QString::fromLocal8Bit("删除") << num->text();  });
     connect(downloadlbtn,&QPushButton::clicked,[=](){ qDebug() << QString::fromLocal8Bit("下载") << num->text();  });
-    connect(openbtn,&QPushButton::clicked,[=](){ qDebug() << QString::fromLocal8Bit("打开") << num->text();  });
+    connect(openbtn,&QPushButton::clicked,[=](){ slot_openFile("/"); qDebug() << QString::fromLocal8Bit("打开") << num->text();  });
     return true;
 }
 
@@ -138,4 +141,34 @@ void WebDownLoadList::on_pushButton_min_clicked()
 void WebDownLoadList::on_pushButton_close_clicked()
 {
     this->hide();
+}
+
+void WebDownLoadList::slot_setStartStatus(QPushButton *button, bool status)
+{
+    if(status)
+    {
+        button->setStyleSheet("#dl_stopbtn{"
+                               "border-image:url(://images/function/download_start.png);"
+                               "}");
+        button->setToolTip(QString::fromLocal8Bit("开始"));
+    }
+    else
+    {
+        button->setStyleSheet("#dl_stopbtn{"
+                               "border-image:url(://images/function/download_pause.png);"
+                               "}");
+        button->setToolTip(QString::fromLocal8Bit("暂停"));
+    }
+    m_start = !m_start;//状态置反
+}
+
+//打开文件
+void WebDownLoadList::slot_openFile(const QString &filepath)
+{
+    QFileDialog::getOpenFileNames(this,//不指定父窗口，设置自己的样式
+                                  QString::fromLocal8Bit("选择文件"),
+                                  filepath,
+                                  QString::fromLocal8Bit("Videos(*avi *mp4 *flv *mp3 *wmv)"),
+                                                         0);
+
 }
