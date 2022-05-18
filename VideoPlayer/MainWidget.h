@@ -2,6 +2,7 @@
 #define MAINWIDGET_H
 #define MARGIN 2 //窗口边距
 
+#include "browser/NewWork.h"
 #include "titleBar/TitleBar.h"
 #include "customer/SystemTray.h"
 #include "slidebar/LeftSideBar.h"

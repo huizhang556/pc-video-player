@@ -231,6 +231,7 @@ void TitleBar::chandleSignalAndSLots()
         {
             if(m_downlist->isHidden())
             {
+                m_downlist->setWindowModality(Qt::ApplicationModal);
                 m_downlist->show();
             }
             else
@@ -473,6 +474,7 @@ void TitleBar::slot_updateShowListSettigMenu()
     pmenu_funclist->addAction(QIcon("://images/icon/help_internet.png"),QString::fromLocal8Bit("查找"),this,SLOT(slot_browser_setting_newWindows()));
     pmenu_funclist->addAction(QIcon("://images/icon/help_qahelp.png"),QString::fromLocal8Bit("全屏"),this,SLOT(slot_browser_setting_newWindows()));
     pmenu_funclist->addSeparator();
+    pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("清空搜索"),this,SLOT(slot_clearSearchListHistory()));
     pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("收藏列表"),this,SLOT(slot_updateShowListCollectWidget()));
     pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("历史记录"),this,SLOT(slot_browser_setting_newWindows()));
     pmenu_funclist->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("下载任务管理"),this,SLOT(slot_browser_setting_newWindows()));
@@ -506,6 +508,11 @@ void TitleBar::slot_browser_setting_newWindows()
 }
 
 void TitleBar::slot_browser_setting_clearSearchHistory()
+{
+    m_listWdgt_history->clear();
+}
+
+void TitleBar::slot_clearSearchListHistory()
 {
     m_listWdgt_history->clear();
 }

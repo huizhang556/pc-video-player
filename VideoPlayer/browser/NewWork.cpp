@@ -1,9 +1,13 @@
 ﻿#include "NewWork.h"
 #include "ui_NewWork.h"
 #include <QDebug>
+#include <QFileInfo>
 #include <QScrollBar>
 #include <QFileDialog>
 #include <QListWidgetItem>
+#include <QWebEngineDownloadItem>
+
+NewWork* NewWork::m_pInstance = nullptr;
 
 NewWork::NewWork(QWidget *parent) :
     QDialog(parent),
@@ -21,6 +25,11 @@ NewWork::NewWork(QWidget *parent) :
 NewWork::~NewWork()
 {
     delete ui;
+    if(m_pInstance != nullptr)
+    {
+        delete m_pInstance;
+        m_pInstance = nullptr;
+    }
 }
 
 void NewWork::initWorkUI()
@@ -110,6 +119,15 @@ void NewWork::chandleSignalsAndSlots()
     });
 }
 
+NewWork *NewWork::getInstance()
+{
+    if(m_pInstance == nullptr)
+    {
+        m_pInstance = new NewWork();
+    }
+    return m_pInstance;
+}
+
 QString NewWork::openLocalFileSystem()
 {
     QString fpath = QFileDialog::getExistingDirectory(this,
@@ -117,7 +135,7 @@ QString NewWork::openLocalFileSystem()
                                                 QString::fromLocal8Bit("C:\\Users\\24939\\Desktop"));
     if(!fpath.isEmpty())//不为空
     {
-        fpath = fpath + QString(tr("/"));
+//        fpath = fpath + QString(tr("/"));
         return fpath;
     }
     else
@@ -130,10 +148,35 @@ void NewWork::slot_receivedNewWorkInfo(const QString &adress, const QString &fil
 {
     if(adress.isEmpty()) return;
     if(filename.isEmpty()) return;
-    ui->lineEdit_address->setText(adress);
+
+
+}
+
+void NewWork::slot_receiveDownloadRequested(QWebEngineDownloadItem *item)
+{
+    qDebug() << QString::fromLocal8Bit("已接收到请求...");
+    qDebug() << QString::fromLocal8Bit("请求地址：") << item->url().toString();
+    QFileInfo info(item->url().toString());
+    ui->lineEdit_address->setText(item->url().toString());
     ui->lineEdit_address->setCursorPosition(0);
-    ui->lineEdit_filename->setText(filename);
+    ui->lineEdit_filename->setText(info.fileName());
     ui->lineEdit_filename->setCursorPosition(0);
+    connect(item,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(slot_downLoad_progress(qint64,qint64)));
+    connect(item,&QWebEngineDownloadItem::finished,this,&NewWork::slot_downLoad_finished);
+    this->setWindowModality(Qt::ApplicationModal);
+    this->show();
+}
+
+//下载过程
+void NewWork::slot_downLoad_progress(qint64 bytesReceived, qint64 bytesTotal)
+{
+    qDebug() << QString::fromLocal8Bit("已接受数据：")<<bytesReceived << QString::fromLocal8Bit("百分比：%1%").arg((bytesReceived*100)/bytesTotal)  << QString::fromLocal8Bit("文件总大小：") << bytesTotal;
+}
+
+//下载结束
+void NewWork::slot_downLoad_finished()
+{
+    qDebug() <<QString::fromLocal8Bit("下载结束！");
 }
 
 bool NewWork::eventFilter(QObject *watched, QEvent *event)

@@ -272,5 +272,6 @@
         <file>images/function/collect_list_item_hover.png</file>
         <file>images/function/history_list_item.png</file>
         <file>images/function/history_list_item_hover.png</file>
+        <file>images/bgpic/login.png</file>
     </qresource>
 </RCC>

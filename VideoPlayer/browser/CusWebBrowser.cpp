@@ -2,8 +2,7 @@
 #include <QDebug>
 
 CusWebBrowser::CusWebBrowser(QWidget *parent) :
-    QWebEngineView(parent),
-    oldUrl("")//置空
+    QWebEngineView(parent)
 {
     qputenv("QTWEBENGINE_REMOTE_DEBUGGING","8999"); //调试窗口, 需重新编译生效
     this->showMaximized();
@@ -15,22 +14,10 @@ CusWebBrowser::CusWebBrowser(QWidget *parent) :
     setContextMenuPolicy(Qt::DefaultContextMenu);
     this->page()->setBackgroundColor(QColor(38,40,41));
 
-    m_newWork = new NewWork();
-    m_newWork->setObjectName(QString::fromLocal8Bit("m_newWork"));
-
 //    this->page()->settings()->setAttribute(QWebEngineSettings::ShowScrollBars,false);//不显示滚动条    
     //这两个信号槽要配合使用，有先后顺序之分，一个触发会导致另一个触发
 //    connect(this,&CusWebBrowser::customContextMenuRequested,this,&CusWebBrowser::slot_createCustomRightMenu);
     connect(this->page(),&QWebEnginePage::linkHovered,this,&CusWebBrowser::slots_createNewWindows);//就是鼠标放上去的操作
-//    connect(this->page()->profile(),SIGNAL(downloadRequested(QWebEngineDownloadItem*)),
-//            this,SLOT(slot_receiveDownloadRequested(QWebEngineDownloadItem*)),
-//            Qt::UniqueConnection);//防止重复连接，只连接一次
-    connect(this->page()->profile(),&QWebEngineProfile::downloadRequested,[=](QWebEngineDownloadItem *item)
-    {
-        if(item->url().isEmpty()) return;
-//        if(oldUrl == item->url()) return;
-        slot_receiveDownloadRequested(item);
-    });
 //    connect(this,SIGNAL(urlChanged(QUrl)),this,SLOT(slots_sendToNewAddress()));
 
 //    this->pageAction(QWebEnginePage::Back)->setText(QString::fromLocal8Bit("后退"));
@@ -192,44 +179,6 @@ void CusWebBrowser::slots_home()
 void CusWebBrowser::slots_sendToNewAddress()
 {
     emit sig_sendToNewUrl(newUrl);
-}
-
-//处理下载请求
-void CusWebBrowser::slot_receiveDownloadRequested(QWebEngineDownloadItem *item)
-{
-    qDebug() << QString::fromLocal8Bit("已接收到请求...");
-    qDebug() << QString::fromLocal8Bit("请求地址：") << item->url();
-//    oldUrl = item->url();
-    m_newWork->slot_receivedNewWorkInfo(item->url().toString(),"shizhan.pdf");
-    m_newWork->exec();
-    connect(m_newWork,&NewWork::sig_download,[=](bool status)
-    {
-        qDebug() << QString::fromLocal8Bit("接收到的状态:") << status;
-        if(status)//确认下载
-        {
-            item->accept();//确认下载
-        }
-        else
-        {
-//            item->cancel();//取消下载
-        }
-    });
-    connect(item,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(slot_downLoad_progress(qint64,qint64)));
-    connect(item,&QWebEngineDownloadItem::finished,this,&CusWebBrowser::slot_downLoad_finished);
-//    item->signalsBlocked();//如果block为真，阻塞信号，或者如果block为假，取消信号阻塞。如果信号被阻塞，被发射的信号消失在超空间
-}
-
-
-//下载过程
-void CusWebBrowser::slot_downLoad_progress(qint64 bytesReceived, qint64 bytesTotal)
-{
-    qDebug() << QString::fromLocal8Bit("已接受数据：")<<bytesReceived << QString::fromLocal8Bit("百分比：%1%").arg((bytesReceived*100)/bytesTotal)  << QString::fromLocal8Bit("文件总大小：") << bytesTotal;
-}
-
-//下载结束
-void CusWebBrowser::slot_downLoad_finished()
-{
-    qDebug() <<QString::fromLocal8Bit("下载结束！");
 }
 
 //自定义右键菜单

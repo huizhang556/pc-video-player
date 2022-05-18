@@ -19,6 +19,7 @@ LoginPersonInfo::LoginPersonInfo(QWidget *parent) :
     ui->setupUi(this);
     this->setFixedSize(430,328);
     setWindowFlags(Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_TranslucentBackground);
     initWorkUI();
     chandleSignalsAndSLots();
 }

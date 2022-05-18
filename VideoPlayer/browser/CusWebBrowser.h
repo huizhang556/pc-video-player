@@ -1,7 +1,6 @@
 ﻿#ifndef CUSWEBBROWSER_H
 #define CUSWEBBROWSER_H
 #include "global/Global.h"
-#include "browser/NewWork.h"
 #include <QUrl>
 #include <QMenu>
 #include <QCursor>
@@ -43,9 +42,6 @@ public slots:
     void slots_advance();
     void slots_home();
     void slots_sendToNewAddress();
-    void slot_receiveDownloadRequested(QWebEngineDownloadItem* item);
-    void slot_downLoad_progress(qint64 bytesReceived, qint64 bytesTotal);
-    void slot_downLoad_finished();
     void slot_createCustomRightMenu();//右键菜单内容
 signals:
     void sig_sendToNewUrl(QUrl &url);
@@ -65,8 +61,6 @@ private slots:
     void slot_browserPageSource();
 private:
     QUrl     newUrl;
-    QUrl     oldUrl;
-    NewWork         *m_newWork      =   nullptr;
     QObject         *m_child        =   nullptr;
 };
 

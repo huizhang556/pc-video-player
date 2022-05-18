@@ -69,6 +69,7 @@ private slots:
     //浏览器设置
     void slot_browser_setting_newWindows();//新建窗口
     void slot_browser_setting_clearSearchHistory();
+    void slot_clearSearchListHistory();
 private:
     void setShowToolTip();
 
@@ -82,7 +83,6 @@ private:
     MySkin          *m_mySkin               = nullptr;
     QListWidget     *m_listWdgt_colloect    = nullptr;//收藏列表
     QListWidget     *m_listWdgt_history     = nullptr;//历史记录
-    QListWidget     *m_listWdgt_setting     = nullptr;//浏览器设置列表
     Ui::TitleBar    *ui;
 
 signals:

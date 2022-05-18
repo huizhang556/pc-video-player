@@ -21,17 +21,11 @@ Login::Login(QWidget *parent) :
             }
             else//隐藏
             {
-//                LoginPersonInfo::getInstance()->showNormal();
                 LoginPersonInfo::getInstance()->raise();
+                LoginPersonInfo::getInstance()->setWindowModality(Qt::ApplicationModal);
                 LoginPersonInfo::getInstance()->show();
             }
         }
-//        else
-//        {
-//            m_loginMain = new LoginPersonInfo;
-//            m_loginMain->raise();
-//            m_loginMain->show();
-//        }
 
     });
 

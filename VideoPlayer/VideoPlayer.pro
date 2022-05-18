@@ -38,6 +38,7 @@ HEADERS += \
 include($$PWD/skin/skin.pri)
 include($$PWD/style/style.pri)
 include($$PWD/login/login.pri)
+include($$PWD/thread/thread.pri)
 include($$PWD/global/global.pri)
 include($$PWD/lunbotu/lunbotu.pri)
 include($$PWD/network/network.pri)

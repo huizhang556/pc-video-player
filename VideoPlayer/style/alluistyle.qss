@@ -20,9 +20,12 @@ background-color: #2a2a31;
 /*浏览器---收藏列表*/
 #m_listWdgt_colloect
 {
-border:none;
-color:black;
-background-color:#f5f5f5;
+border:1px solid #bbbbbb;
+color:#979aa4;
+background-color: #f8f8f8;
+border-radius:0px;
+border-bottom-left-radius:6px;
+border-bottom-right-radius:6px;
 }
 
 #m_listWdgt_colloect::item
@@ -43,16 +46,18 @@ background-color: #d6eff7;
 
 #m_listWdgt_colloect::item:hover
 {
-background-color: #d6eff7;
-color:#55ff00;
+background-color: #ffffff;
+color:#2b2b2b;
 }
 
 /*浏览器---搜索记录*/
 #m_listWdgt_history
 {
-border:none;
-color:black;
-background-color:#f5f5f5;
+border:1px solid #bbbbbb;
+color:#979aa4;
+background-color: #f8f8f8;
+border-bottom-left-radius:6px;
+border-bottom-right-radius:6px;
 }
 
 #m_listWdgt_history::item
@@ -68,13 +73,12 @@ border-image:url(://images/function/history_list_item.png);
 
 #m_listWdgt_history::item:selected
 {
-background-color: #d6eff7;
+color:#3385ff;
 }
 
 #m_listWdgt_history::item:hover
 {
-background-color: #d6eff7;
-color:#55ff00;
+color:#3385ff;
 }
 
 /*新建任务---清除历史路径*/

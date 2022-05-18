@@ -145,6 +145,8 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QUrl &url)
     connect(browser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
     //加载网页进度
     connect(browser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
+    //网页下载请求1
+    connect(browser->page()->profile(),SIGNAL(downloadRequested(QWebEngineDownloadItem*)),NewWork::getInstance(),SLOT(slot_receiveDownloadRequested(QWebEngineDownloadItem*)),Qt::UniqueConnection);//都五个参数，防止多次请求
     //回车
     connect(m_titleBar,SIGNAL(sig_sendInputNewUrl(QString)),this,SLOT(slot_judgeCurrentBrowserIsActive_load(QString)));
     //后退
@@ -176,6 +178,8 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QString &url)
     connect(browser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
     //加载网页进度
     connect(browser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
+    //网页下载请求2
+    connect(browser->page()->profile(),SIGNAL(downloadRequested(QWebEngineDownloadItem*)),NewWork::getInstance(),SLOT(slot_receiveDownloadRequested(QWebEngineDownloadItem*)),Qt::UniqueConnection);//都五个参数，防止多次请求
     //回车
     connect(m_titleBar,SIGNAL(sig_sendInputNewUrl(QString)),this,SLOT(slot_judgeCurrentBrowserIsActive_load(QString)));
     //后退
@@ -251,6 +255,8 @@ void MainWidget::slot_removeTabWidgetTab(int index)
 //处理信号与槽函数
 void MainWidget::chandleSignalAndSlots()
 {
+    //网页下载请求3
+    connect(m_webBrowser->page()->profile(),SIGNAL(downloadRequested(QWebEngineDownloadItem*)),NewWork::getInstance(),SLOT(slot_receiveDownloadRequested(QWebEngineDownloadItem*)),Qt::UniqueConnection);//都五个参数，防止多次请求
     //显示当前页面的地址
     connect(m_webBrowser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(setLineEditAddress(QUrl)));
     //添加一个browser
