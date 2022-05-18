@@ -85,7 +85,7 @@ void NewWork::chandleSignalsAndSlots()
     connect(m_clearBtn,&QPushButton::clicked,[=](){m_listWdgt_path->clear();});
     connect(ui->pushButton_close,&QPushButton::clicked,[=]()
     {
-        emit sig_download(false);
+        emit sig_cancel();
         this->close();
     });
     connect(ui->pushButton_lookin,&QPushButton::clicked,[=]()
@@ -97,12 +97,13 @@ void NewWork::chandleSignalsAndSlots()
     });
     connect(ui->pushButton_download,&QPushButton::clicked,[=]()
     {
-        emit sig_download(true);
+        //确认下载将文件名和保存地址传过去
+        emit sig_download(ui->lineEdit_filename->text(),ui->lineEdit_savepath->text());
         qDebug() << "emit sig_download(true);" << QString::fromLocal8Bit("确认下载");
     });
     connect(ui->pushButton_cancel,&QPushButton::clicked,[=]()
     {
-        emit  sig_download(false);
+        emit  sig_cancel();
         qDebug() << "emit sig_download(false);" << QString::fromLocal8Bit("取消下载");
         this->hide();
     });
@@ -161,23 +162,23 @@ void NewWork::slot_receiveDownloadRequested(QWebEngineDownloadItem *item)
     ui->lineEdit_address->setCursorPosition(0);
     ui->lineEdit_filename->setText(info.fileName());
     ui->lineEdit_filename->setCursorPosition(0);
-    connect(item,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(slot_downLoad_progress(qint64,qint64)));
-    connect(item,&QWebEngineDownloadItem::finished,this,&NewWork::slot_downLoad_finished);
+//    connect(item,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(slot_downLoad_progress(qint64,qint64)));
+//    connect(item,&QWebEngineDownloadItem::finished,this,&NewWork::slot_downLoad_finished);
     this->setWindowModality(Qt::ApplicationModal);
     this->show();
 }
 
 //下载过程
-void NewWork::slot_downLoad_progress(qint64 bytesReceived, qint64 bytesTotal)
-{
-    qDebug() << QString::fromLocal8Bit("已接受数据：")<<bytesReceived << QString::fromLocal8Bit("百分比：%1%").arg((bytesReceived*100)/bytesTotal)  << QString::fromLocal8Bit("文件总大小：") << bytesTotal;
-}
+//void NewWork::slot_downLoad_progress(qint64 bytesReceived, qint64 bytesTotal)
+//{
+//    qDebug() << QString::fromLocal8Bit("已接受数据：")<<bytesReceived << QString::fromLocal8Bit("百分比：%1%").arg((bytesReceived*100)/bytesTotal)  << QString::fromLocal8Bit("文件总大小：") << bytesTotal;
+//}
 
 //下载结束
-void NewWork::slot_downLoad_finished()
-{
-    qDebug() <<QString::fromLocal8Bit("下载结束！");
-}
+//void NewWork::slot_downLoad_finished()
+//{
+//    qDebug() <<QString::fromLocal8Bit("下载结束！");
+//}
 
 bool NewWork::eventFilter(QObject *watched, QEvent *event)
 {
@@ -217,11 +218,21 @@ bool NewWork::slot_judgePathExist(const QString &path)
 
 void NewWork::slot_updateShowListPathWidget()
 {
-    int x = ui->lineEdit_savepath->parentWidget()->mapToGlobal(ui->lineEdit_savepath->pos()).x();
-    int y = ui->lineEdit_savepath->parentWidget()->mapToGlobal(ui->lineEdit_savepath->pos()).y();
-    m_hisWdgt->setGeometry(x,y + ui->lineEdit_savepath->height(),
-                                 m_listWdgt_path->width(),m_listWdgt_path->height());
-    m_hisWdgt->show();
+    if(m_hisWdgt)
+    {
+       if(m_hisWdgt->isHidden())
+       {
+           int x = ui->lineEdit_savepath->parentWidget()->mapToGlobal(ui->lineEdit_savepath->pos()).x();
+           int y = ui->lineEdit_savepath->parentWidget()->mapToGlobal(ui->lineEdit_savepath->pos()).y();
+           m_hisWdgt->setGeometry(x,y + ui->lineEdit_savepath->height(),
+                                        m_listWdgt_path->width(),m_listWdgt_path->height());
+           m_hisWdgt->show();
+       }
+       else
+       {
+           m_hisWdgt->hide();
+       }
+    }
 }
 
 void NewWork::slot_addPathToList(const QString &path)

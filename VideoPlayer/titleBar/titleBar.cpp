@@ -121,8 +121,6 @@ void TitleBar::initWorker()
 /*处理信号与槽函数*/
 void TitleBar::chandleSignalAndSLots()
 {
-    //收藏按钮
-//    connect(ui->pushButton_webcollect,&QPushButton::clicked,this,&TitleBar::slot_updateShowListCollectWidget);
     //历史记录
     connect(ui->pushButton_webhislist,&QPushButton::clicked,this,&TitleBar::slot_updateShowListHistoryWidget);
     //浏览器设置

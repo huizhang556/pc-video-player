@@ -26,8 +26,8 @@ public slots:
     QString openLocalFileSystem();
     void slot_receivedNewWorkInfo(const QString &adress, const QString &filename);
     void slot_receiveDownloadRequested(QWebEngineDownloadItem* item);
-    void slot_downLoad_progress(qint64 bytesReceived, qint64 bytesTotal);
-    void slot_downLoad_finished();
+//    void slot_downLoad_progress(qint64 bytesReceived, qint64 bytesTotal);
+//    void slot_downLoad_finished();
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
@@ -41,18 +41,18 @@ private slots:
 private:
     explicit NewWork(QWidget *parent = nullptr);
     Ui::NewWork *ui;
-    QPoint              m_mvPos;
+    QPoint          m_mvPos;
     QAction         *m_spaceSize            = nullptr;
     QAction         *m_fileSize             = nullptr;
     QListWidget     *m_listWdgt_path        = nullptr;
     QPushButton     *m_clearBtn             = nullptr;
     QWidget         *m_hisWdgt              = nullptr;
-
     static  NewWork *m_pInstance;
 
 signals:
-    void sig_download(bool status);
-    void sig_downloadOpen();
+    void        sig_download(const QString& filename, const QString& savepath);
+    void        sig_downloadOpen();
+    void        sig_cancel();
 };
 
 #endif // NEWWORK_H

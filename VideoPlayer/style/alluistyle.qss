@@ -78,7 +78,8 @@ color:#3385ff;
 
 #m_listWdgt_history::item:hover
 {
-color:#3385ff;
+background-color: #ffffff;
+color:#2b2b2b;
 }
 
 /*新建任务---清除历史路径*/

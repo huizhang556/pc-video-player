@@ -273,5 +273,6 @@
         <file>images/function/history_list_item.png</file>
         <file>images/function/history_list_item_hover.png</file>
         <file>images/bgpic/login.png</file>
+        <file>images/bgpic/newwork.png</file>
     </qresource>
 </RCC>

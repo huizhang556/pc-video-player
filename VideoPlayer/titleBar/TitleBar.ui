@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1421</width>
+    <width>1185</width>
     <height>59</height>
    </rect>
   </property>
@@ -14,8 +14,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-</string>
+   <string notr="true"/>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_11">
    <property name="spacing">
@@ -1033,13 +1032,21 @@ border-image: url(:/images/icon/title_webdownload_hover.png);
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">QPushButton
+              <string notr="true">#pushButton_more
 {
 border-image: url(:/images/icon/web_funclist.png);
 }
-QPushButton:hover
+#pushButton_more:hover
 {
 border-image: url(:/images/icon/web_funclist_hover.png);
+}
+#pushButton_more:selected
+{
+border-image: url(:/images/icon/web_funclist.png);
+}
+#pushButton_more:!selected
+{
+border-image: url(:/images/icon/web_funclist.png);
 }</string>
              </property>
              <property name="text">
@@ -1261,6 +1268,14 @@ border-image: url(:/images/icon/login.png);
 {
 border-image: url(:/images/icon/login_hover.png);
 }
+#Btnlogin:selected
+{
+border-image: url(:/images/icon/login.png);
+}
+#Btnlogin:!selected
+{
+border-image: url(:/images/icon/login.png);
+}
 
 </string>
        </property>
@@ -1311,9 +1326,18 @@ border-image: url(:/images/icon/login_hover.png);
 background-color: transparent;
 border-image: url(:/images/icon/help.png);
 }
+/*注意hover与press顺序*/
 #Btnhelp:hover
 {
 border-image: url(:/images/icon/help_hover.png);
+}
+#Btnhelp:selected
+{
+border-image: url(:/images/icon/help.png);
+}
+#Btnhelp:!selected
+{
+border-image: url(:/images/icon/help.png);
 }
 
 
