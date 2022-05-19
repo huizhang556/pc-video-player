@@ -1,6 +1,6 @@
 ﻿#ifndef NEWWORK_H
 #define NEWWORK_H
-
+#include "global/Global.h"
 #include <QDialog>
 #include <QAction>
 #include <QBoxLayout>
@@ -41,14 +41,13 @@ private slots:
 private:
     explicit NewWork(QWidget *parent = nullptr);
     Ui::NewWork *ui;
-    QPoint          m_mvPos;
-    QAction         *m_spaceSize            = nullptr;
-    QAction         *m_fileSize             = nullptr;
-    QListWidget     *m_listWdgt_path        = nullptr;
-    QPushButton     *m_clearBtn             = nullptr;
-    QWidget         *m_hisWdgt              = nullptr;
-    static  NewWork *m_pInstance;
-
+    QPoint                  m_mvPos;
+    QAction                 *m_spaceSize            =   nullptr;
+    QAction                 *m_fileSize             =   nullptr;
+    QListWidget             *m_listWdgt_path        =   nullptr;
+    QPushButton             *m_clearBtn             =   nullptr;
+    QWidget                 *m_hisWdgt              =   nullptr;
+    static  NewWork         *m_pInstance;
 signals:
     void        sig_download(const QString& filename, const QString& savepath);
     void        sig_downloadOpen();

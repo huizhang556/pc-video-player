@@ -15,6 +15,7 @@
 #include <QWebEngineView>
 #include <QWebEnginePage>
 #include <QWebEngineProfile>
+#include <QWebEngineHistory>
 #include <QWebEngineSettings>
 #include <QWebEngineCookieStore>
 #include <QWebEngineDownloadItem>
@@ -43,6 +44,7 @@ public slots:
     void slots_home();
     void slots_sendToNewAddress();
     void slot_createCustomRightMenu();//右键菜单内容
+
 signals:
     void sig_sendToNewUrl(QUrl &url);
     void sig_currentPageSwitch(QUrl &url);
@@ -57,6 +59,7 @@ private slots:
     void slot_paste();
     void slot_cut();
     void slot_undo();
+    void slot_saveImage();
     void slot_savePage();
     void slot_browserPageSource();
 private:

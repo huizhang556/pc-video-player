@@ -120,6 +120,23 @@ void NewWork::chandleSignalsAndSlots()
     });
 }
 
+//收到请求---弹出对话框
+void NewWork::slot_receiveDownloadRequested(QWebEngineDownloadItem *item)
+{
+    qDebug() << QString::fromLocal8Bit("已接收到请求...");
+    qDebug() << QString::fromLocal8Bit("请求地址：") << item->url().toString();
+    QFileInfo info(item->url().toString());
+    ui->lineEdit_address->setText(item->url().toString());
+    ui->lineEdit_address->setCursorPosition(0);
+    ui->lineEdit_filename->setText(info.fileName());
+    ui->lineEdit_filename->setCursorPosition(0);
+    item->setPath(Global::appDirPath + "/download/" + info.fileName());
+    qDebug() <<QString::fromLocal8Bit("下载保存路径为：") << Global::appDirPath + "/download/" + info.fileName();
+    item->accept();
+//    this->setWindowModality(Qt::ApplicationModal);
+//    this->show();
+}
+
 NewWork *NewWork::getInstance()
 {
     if(m_pInstance == nullptr)
@@ -153,20 +170,6 @@ void NewWork::slot_receivedNewWorkInfo(const QString &adress, const QString &fil
 
 }
 
-void NewWork::slot_receiveDownloadRequested(QWebEngineDownloadItem *item)
-{
-    qDebug() << QString::fromLocal8Bit("已接收到请求...");
-    qDebug() << QString::fromLocal8Bit("请求地址：") << item->url().toString();
-    QFileInfo info(item->url().toString());
-    ui->lineEdit_address->setText(item->url().toString());
-    ui->lineEdit_address->setCursorPosition(0);
-    ui->lineEdit_filename->setText(info.fileName());
-    ui->lineEdit_filename->setCursorPosition(0);
-//    connect(item,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(slot_downLoad_progress(qint64,qint64)));
-//    connect(item,&QWebEngineDownloadItem::finished,this,&NewWork::slot_downLoad_finished);
-    this->setWindowModality(Qt::ApplicationModal);
-    this->show();
-}
 
 //下载过程
 //void NewWork::slot_downLoad_progress(qint64 bytesReceived, qint64 bytesTotal)
@@ -225,7 +228,7 @@ void NewWork::slot_updateShowListPathWidget()
            int x = ui->lineEdit_savepath->parentWidget()->mapToGlobal(ui->lineEdit_savepath->pos()).x();
            int y = ui->lineEdit_savepath->parentWidget()->mapToGlobal(ui->lineEdit_savepath->pos()).y();
            m_hisWdgt->setGeometry(x,y + ui->lineEdit_savepath->height(),
-                                        m_listWdgt_path->width(),m_listWdgt_path->height());
+                                   m_listWdgt_path->width(),m_listWdgt_path->height());
            m_hisWdgt->show();
        }
        else

@@ -52,19 +52,19 @@ void TitleBar::initWorker()
     //home
     ui->pushButton_home->setFixedSize(20,20);
     ui->pushButton_home->setFlat(true);
-    ui->pushButton_home->setToolTip(QString::fromLocal8Bit("主页"));
+
     //后退
     ui->pushButton_back->setFixedSize(20,20);
     ui->pushButton_back->setFlat(true);
-    ui->pushButton_back->setToolTip(QString::fromLocal8Bit("后退"));
+    ui->pushButton_back->installEventFilter(this);
     //刷新
     ui->pushButton_freshen->setFixedSize(20,20);
     ui->pushButton_freshen->setFlat(true);
-    ui->pushButton_freshen->setToolTip(QString::fromLocal8Bit("刷新"));
+
     //前进
     ui->pushButton_advance->setFixedSize(20,20);
     ui->pushButton_advance->setFlat(true);
-    ui->pushButton_advance->setToolTip(QString::fromLocal8Bit("前进"));
+    ui->pushButton_advance->installEventFilter(this);
 
     ui->lineEdit_webSearch->setFixedHeight(28);
     ui->lineEdit_webSearch->setText(QString::fromLocal8Bit("https://www.baidu.com/"));//默认显示的网址
@@ -80,11 +80,7 @@ void TitleBar::initWorker()
     ui->lineEditSearch->installEventFilter(this);//输入检索字
     ui->BtnSearch->installEventFilter(this);
     ui->lineEdit_webSearch->installEventFilter(this);//输入网址
-
     ui->pushButton_webcollect->installEventFilter(this);
-    ui->pushButton_webcollect->setToolTip(QString::fromLocal8Bit("收藏"));
-    ui->pushButton_more->setToolTip(QString::fromLocal8Bit("浏览器设置"));
-    ui->pushButton_webdownload->setToolTip(QString::fromLocal8Bit("下载列表"));
 
     m_searchForm = new SearchForm();//不指定父控件，也不加布局，需要手动删除
     m_searchForm->setObjectName(QString::fromLocal8Bit("m_searchForm"));
@@ -500,6 +496,35 @@ void TitleBar::slot_updateShowListSettigMenu()
     delete pmenu_func_tool;
 }
 
+void TitleBar::slot_setCanGoForward(bool status)
+{
+    if(status)
+    {
+        ui->pushButton_advance->setStyleSheet("#pushButton_advance{"
+                                              "border-image: url(:/images/icon/advance_hover.png);"
+                                              "}");
+    }
+    else
+    {
+        return;
+    }
+}
+
+void TitleBar::slot_setCanGoBack(bool status)
+{
+    if(status)
+    {
+        ui->pushButton_back->setStyleSheet("#pushButton_back{"
+                                           "border-image: url(:/images/icon/back_hover.png);"
+                                           "}");
+    }
+    else
+    {
+        return;
+    }
+}
+
+
 void TitleBar::slot_browser_setting_newWindows()
 {
     emit sig_sendInputNewUrl("http://www.baidu.com");
@@ -551,6 +576,32 @@ bool TitleBar::eventFilter(QObject *watched, QEvent *event)
         if(event->type() == QEvent::Leave)
         {
             m_listWdgt_colloect->hide();
+        }
+    }
+    if(watched == ui->pushButton_back)//返回按钮
+        {
+        if(event->type() == QEvent::Enter)
+        {
+            emit sig_sendCanGoBack();
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+            ui->pushButton_back->setStyleSheet("#pushButton_back{"
+                                               "border-image: url(:/images/icon/back.png);"
+                                               "}");
+        }
+    }
+    if(watched == ui->pushButton_advance)//前进按钮
+        {
+        if(event->type() == QEvent::Enter)
+        {
+            emit sig_sendCanForward();
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+            ui->pushButton_advance->setStyleSheet("#pushButton_advance{"
+                                                  "border-image: url(:/images/icon/advance.png);"
+                                                  "}");
         }
     }
 
@@ -778,6 +829,7 @@ void TitleBar::slot_setWebLineEditCurentUrl(QUrl url)
     if(!url.isEmpty())
     {
         ui->lineEdit_webSearch->setText(url.toString());
+        ui->lineEdit_webSearch->setCursorPosition(0);
     }
 }
 

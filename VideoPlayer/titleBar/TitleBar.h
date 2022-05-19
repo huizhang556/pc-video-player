@@ -65,25 +65,14 @@ private slots:
     void slot_updateShowListHistoryWidget();//显示历史记录界面
     void slot_addToListHistoryWidget(const QString &text);//选中回显
     void slot_updateShowListSettigMenu();//显示设置右键菜单
-
+    void slot_setCanGoForward(bool status);
+    void slot_setCanGoBack(bool status);
     //浏览器设置
     void slot_browser_setting_newWindows();//新建窗口
     void slot_browser_setting_clearSearchHistory();
     void slot_clearSearchListHistory();
 private:
     void setShowToolTip();
-
-private:
-    QTimer          *m_timer3               = nullptr;
-    QMenu           *pmenu_help1            = nullptr;
-    QMenu           *pmenu_help2            = nullptr;
-    WebDownLoadList *m_downlist             = nullptr;
-    SearchForm      *m_searchForm           = nullptr;
-    Login           *m_loginForm            = nullptr;
-    MySkin          *m_mySkin               = nullptr;
-    QListWidget     *m_listWdgt_colloect    = nullptr;//收藏列表
-    QListWidget     *m_listWdgt_history     = nullptr;//历史记录
-    Ui::TitleBar    *ui;
 
 signals:
     //窗口大小调节按钮
@@ -105,9 +94,23 @@ signals:
     void sig_sendUrlAdvance();
     void sig_sendUrlRefreshen();
     void sig_sendUrlHome();
+    void sig_sendCanGoBack();
+    void sig_sendCanForward();
     //登录部分
     void sig_userLogin();
     void sig_userRegister();
+
+private:
+    QTimer          *m_timer3               = nullptr;
+    QMenu           *pmenu_help1            = nullptr;
+    QMenu           *pmenu_help2            = nullptr;
+    WebDownLoadList *m_downlist             = nullptr;
+    SearchForm      *m_searchForm           = nullptr;
+    Login           *m_loginForm            = nullptr;
+    MySkin          *m_mySkin               = nullptr;
+    QListWidget     *m_listWdgt_colloect    = nullptr;//收藏列表
+    QListWidget     *m_listWdgt_history     = nullptr;//历史记录
+    Ui::TitleBar    *ui;
 };
 
 #endif // TITLEBAR_H

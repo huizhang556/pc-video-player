@@ -693,10 +693,12 @@ border-image: url(:/images/icon/returnhome_hover.png);
 border-image: url(:/images/icon/back.png);
 }
 
+/*
 QPushButton:hover
 {
 border-image: url(:/images/icon/back_hover.png);
-}</string>
+}
+*/</string>
              </property>
              <property name="text">
               <string/>
@@ -783,10 +785,13 @@ border-image: url(:/images/icon/refreshen_hover.png);
 {
 border-image: url(:/images/icon/advance.png);
 }
+
+/*
 QPushButton:hover
 {
 border-image: url(:/images/icon/advance_hover.png);
-}</string>
+}
+*/</string>
              </property>
              <property name="text">
               <string/>

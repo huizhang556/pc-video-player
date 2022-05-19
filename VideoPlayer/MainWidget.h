@@ -119,6 +119,10 @@ private slots:
 
     void help_aboutNetworklFile();//播放网络资源
 
+    //浏览器
+    void slot_canGoForward();
+    void slot_canGoBack();
+
     //托盘
     void tray_showMainWidget();
     void tray_showDesktopLyric();
@@ -135,6 +139,14 @@ private slots:
     int   countRow(QPoint p);             //获取光标在窗口所在区域的 行   返回行数
     int   countFlag(QPoint p,int row);    //获取光标在窗口所在区域的 列  返回行列坐标
     void  setCursorType(int flag);        //根据传入的坐标，设置光标样式
+
+signals:
+    void sig_winStatus(bool);
+    void sig_trayPlayOrder(int order);
+    void sig_startCloseAppliction();//主窗口关闭信号
+    void sig_canGoBack(bool status);
+    void sig_canGoForward(bool status);
+
 private:
     QStackedWidget      *m_stackWidget_center      = nullptr;//中心显示区域
     QStackedWidget      *m_stackWidget_left        = nullptr;//左侧边栏区域
@@ -169,11 +181,6 @@ private:
     bool                _isleftpressed             = false;      //判断是否是左键点击
     int                 _curpos = 0;                             //鼠标左键按下时光标所在区域
     QPoint              _plast;                                  //获取鼠标左键按下时光标在全局(屏幕而非窗口)的位置
-
-signals:
-    void sig_winStatus(bool);
-    void sig_trayPlayOrder(int order);
-    void sig_startCloseAppliction();//主窗口关闭信号
 };
 
 #endif // MAINWIDGET_H
