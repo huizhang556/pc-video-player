@@ -34,8 +34,8 @@ NewWork::~NewWork()
 
 void NewWork::initWorkUI()
 {
-    ui->lineEdit_savepath->setText(QString::fromLocal8Bit("C:/Users/24939/Downloads/"));//默认的路径
-
+    ui->lineEdit_savepath->setText(Global::appDirPath + QString::fromLocal8Bit("/download/"));//默认的路径
+    ui->lineEdit_savepath->setCursorPosition(0);
     m_clearBtn = new QPushButton(QString::fromLocal8Bit("清除历史记录"));
     m_clearBtn->setObjectName(QString::fromLocal8Bit("newwork_m_clearBtn"));
     m_clearBtn->setFixedHeight(26);
@@ -109,6 +109,7 @@ void NewWork::chandleSignalsAndSlots()
     connect(m_listWdgt_path,&QListWidget::itemClicked,[=](QListWidgetItem *item)
     {
         slot_setLineEditText(ui->lineEdit_savepath,item->text());
+        ui->lineEdit_savepath->setCursorPosition(0);
     });
 }
 
