@@ -91,9 +91,6 @@ void TitleBar::initWorker()
     m_mySkin = new MySkin();
     m_mySkin->setObjectName(QString::fromLocal8Bit("m_mySkin"));
 
-    m_downlist = new WebDownLoadList();
-    m_downlist->setObjectName(QString::fromLocal8Bit("m_downlist"));
-
     //收藏列表
     m_listWdgt_colloect = new QListWidget();
     m_listWdgt_colloect->setObjectName(QString::fromLocal8Bit("m_listWdgt_colloect"));
@@ -221,22 +218,13 @@ void TitleBar::chandleSignalAndSLots()
     //网络文件下载
     connect(ui->pushButton_webdownload,&QPushButton::clicked,[=](){
         qDebug() << QString::fromLocal8Bit("网络文件下载");
-        if(m_downlist)
-        {
-            if(m_downlist->isHidden())
-            {
-                m_downlist->setWindowModality(Qt::ApplicationModal);
-                m_downlist->show();
-            }
-            else
-            {
-                m_downlist->hide();
-            }
-        }
+
+        WebDownLoadList::getInstance()->setWindowModality(Qt::ApplicationModal);
+        WebDownLoadList::getInstance()->show();
     });
 
     //下载设置
-    connect(m_downlist,&WebDownLoadList::sig_setConfig,[=](){
+    connect(WebDownLoadList::getInstance(),&WebDownLoadList::sig_setConfig,[=](){
         emit sig_settingHelpItem(1);//1  代表系统设置
     });
 

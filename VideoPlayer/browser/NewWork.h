@@ -1,8 +1,12 @@
 ﻿#ifndef NEWWORK_H
 #define NEWWORK_H
 #include "global/Global.h"
+#include "mythread/Worker.h"
+#include "WebDownLoadList.h"
+#include <QUrl>
 #include <QDialog>
 #include <QAction>
+#include <QThread>
 #include <QBoxLayout>
 #include <QPushButton>
 #include <QMouseEvent>
@@ -24,7 +28,6 @@ public:
     static NewWork* getInstance();
 public slots:
     QString openLocalFileSystem();
-    void slot_receivedNewWorkInfo(const QString &adress, const QString &filename);
     void slot_receiveDownloadRequested(QWebEngineDownloadItem* item);
 //    void slot_downLoad_progress(qint64 bytesReceived, qint64 bytesTotal);
 //    void slot_downLoad_finished();
@@ -41,15 +44,20 @@ private slots:
 private:
     explicit NewWork(QWidget *parent = nullptr);
     Ui::NewWork *ui;
+    QUrl                    m_fileUrl;
+    QString                 m_savePath;
+    QString                 m_fileName;
     QPoint                  m_mvPos;
     QAction                 *m_spaceSize            =   nullptr;
     QAction                 *m_fileSize             =   nullptr;
     QListWidget             *m_listWdgt_path        =   nullptr;
     QPushButton             *m_clearBtn             =   nullptr;
     QWidget                 *m_hisWdgt              =   nullptr;
+    QWebEngineDownloadItem  *m_downItem             =   nullptr;
     static  NewWork         *m_pInstance;
 signals:
-    void        sig_download(const QString& filename, const QString& savepath);
+    void        sig_download_start();
+    void        sig_download(const QUrl& url,const QString& filename, const QString& savepath);
     void        sig_downloadOpen();
     void        sig_cancel();
 };

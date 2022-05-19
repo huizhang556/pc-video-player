@@ -465,6 +465,9 @@ border-bottom-right-radius:5px;
                  <height>28</height>
                 </size>
                </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
                <property name="text">
                 <string>下载并打开</string>
                </property>
@@ -484,6 +487,9 @@ border-bottom-right-radius:5px;
                  <height>28</height>
                 </size>
                </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
                <property name="text">
                 <string>下载</string>
                </property>
@@ -502,6 +508,9 @@ border-bottom-right-radius:5px;
                  <width>16777215</width>
                  <height>28</height>
                 </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string>取消</string>

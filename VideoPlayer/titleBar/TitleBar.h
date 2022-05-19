@@ -104,7 +104,6 @@ private:
     QTimer          *m_timer3               = nullptr;
     QMenu           *pmenu_help1            = nullptr;
     QMenu           *pmenu_help2            = nullptr;
-    WebDownLoadList *m_downlist             = nullptr;
     SearchForm      *m_searchForm           = nullptr;
     Login           *m_loginForm            = nullptr;
     MySkin          *m_mySkin               = nullptr;

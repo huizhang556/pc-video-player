@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QFileDialog>
 
+WebDownLoadList* WebDownLoadList::m_pInstance = nullptr;
+
 WebDownLoadList::WebDownLoadList(QWidget *parent) :
     QWidget(parent),
     m_start(true),//默认是开始下载状态
@@ -19,6 +21,11 @@ WebDownLoadList::WebDownLoadList(QWidget *parent) :
 WebDownLoadList::~WebDownLoadList()
 {
     delete ui;
+    if(m_pInstance != nullptr)
+    {
+        delete m_pInstance;
+        m_pInstance = nullptr;
+    }
 }
 
 void WebDownLoadList::initWorkUI()
@@ -26,8 +33,6 @@ void WebDownLoadList::initWorkUI()
     ui->lineEdit_search->setPlaceholderText(QString::fromLocal8Bit("搜索下载内容"));
     ui->lineEdit_inputurl->setPlaceholderText(QString::fromLocal8Bit("请输入下载地址"));
     ui->listWidget_list->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-    for(int i = 0; i<20; i++)
-    slot_addDownLoadRecordToList(i+1);
 }
 
 void WebDownLoadList::chandleSignalsAndSLots()
@@ -42,14 +47,23 @@ void WebDownLoadList::chandleSignalsAndSLots()
     connect(ui->pushButton_downsetting,&QPushButton::clicked,[=](){emit sig_setConfig();});
 }
 
-bool WebDownLoadList::slot_addDownLoadRecordToList(int order)
+WebDownLoadList *WebDownLoadList::getInstance()
 {
-    QLabel *num = new QLabel(QString::number(order));
+    if(m_pInstance == nullptr)
+    {
+        m_pInstance = new WebDownLoadList();
+    }
+    return m_pInstance;
+}
+
+bool WebDownLoadList::slot_addDownLoadRecordToList()
+{
+    QLabel *num = new QLabel(QString::number(0));
     num->setObjectName(QString::fromLocal8Bit("dl_num"));
     num->setAlignment(Qt::AlignCenter);//文字居中
     QProgressBar *progressbar = new QProgressBar();
     progressbar->setObjectName(QString::fromLocal8Bit("dl_progressbar"));
-    progressbar->setValue(20);
+    progressbar->setValue(0);
     QPushButton *stopbtn = new QPushButton();
     stopbtn->setObjectName(QString::fromLocal8Bit("dl_stopbtn"));
     stopbtn->setToolTip(QString::fromLocal8Bit("暂停"));
@@ -95,6 +109,7 @@ bool WebDownLoadList::slot_addDownLoadRecordToList(int order)
     connect(deletebtn,&QPushButton::clicked,[=](){ qDebug()<< QString::fromLocal8Bit("删除") << num->text();  });
     connect(downloadlbtn,&QPushButton::clicked,[=](){ qDebug() << QString::fromLocal8Bit("下载") << num->text();  });
     connect(openbtn,&QPushButton::clicked,[=](){ slot_openFile("/"); qDebug() << QString::fromLocal8Bit("打开") << num->text();  });
+    connect(this,SIGNAL(sig_receiveProgressbar(int)),progressbar,SLOT(setValue(int)));
     return true;
 }
 
@@ -114,9 +129,14 @@ void WebDownLoadList::slot_searchDownloadHirtory(QString text)
 
 }
 
-void WebDownLoadList::slot_setDownloadProgressbar(int value)
+void WebDownLoadList::slot_setDownloadProgressbar(qint64 bytesReceived, qint64 bytesTotal)
 {
+   emit sig_receiveProgressbar(bytesReceived*100/bytesTotal);
+}
 
+void WebDownLoadList::slot_receivedNewWorkFinished()
+{
+    qDebug() << QString::fromLocal8Bit("任务栏已经收到下载结束信号！");
 }
 
 void WebDownLoadList::mousePressEvent(QMouseEvent *event)

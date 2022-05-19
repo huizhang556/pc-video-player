@@ -146,7 +146,7 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QUrl &url)
     //加载网页进度
     connect(browser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
     //网页下载请求1
-    connect(browser->page()->profile(),SIGNAL(downloadRequested(QWebEngineDownloadItem*)),NewWork::getInstance(),SLOT(slot_receiveDownloadRequested(QWebEngineDownloadItem*)),Qt::UniqueConnection);//都五个参数，防止多次请求
+    connect(browser->page()->profile(),SIGNAL(downloadRequested(QWebEngineDownloadItem*)),NewWork::getInstance(),SLOT(slot_receiveDownloadRequested(QWebEngineDownloadItem*)),Qt::UniqueConnection);//第五个参数，防止多次请求
     //可回退
     connect(m_titleBar,SIGNAL(sig_sendCanGoBack()),this,SLOT(slot_canGoBack()));
     connect(this,SIGNAL(sig_canGoBack(bool)),m_titleBar,SLOT(slot_setCanGoBack(bool)));
