@@ -59,6 +59,7 @@ private slots:
     void slot_paste();
     void slot_cut();
     void slot_undo();
+    void slot_copyImageUrl();
     void slot_saveImage();
     void slot_savePage();
     void slot_browserPageSource();

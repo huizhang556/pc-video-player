@@ -1,9 +1,8 @@
 ﻿#include "Worker.h"
 #include <QDebug>
 
-Worker::Worker(QObject *parent) : m_count(0)
+Worker::Worker(QObject *parent)
 {
-    m_count++;
     m_netManager = new QNetworkAccessManager(this);
 }
 
@@ -67,6 +66,7 @@ void Worker::slot_receiveData_accept(QUrl url,QString filename, QString savepath
     connect(reply, &QNetworkReply::finished,[=]()
     {
         reply->deleteLater();
+      emit  sig_receiveData_finished();//数据接收完毕
     });
     m_file->close(); //关闭文件
 }
@@ -91,15 +91,15 @@ void Worker::slot_receiveData_resume()
 
 void Worker::slot_receiveData_progressbar(qint64 bytesReceived, qint64 bytesTotal)
 {
-    qDebug()<< QString::fromLocal8Bit("第%1个下载任务，").arg(m_count)
-            << QString::fromLocal8Bit("线程中已接受数据：")<<bytesReceived
-            << QString::fromLocal8Bit("百分比：%1%").arg((bytesReceived*100)/bytesTotal)
-            << QString::fromLocal8Bit("文件总大小：") << bytesTotal;
+//    qDebug()<< QString::fromLocal8Bit("第%1个下载任务，").arg(m_count)
+//            << QString::fromLocal8Bit("线程中已接受数据：")<<bytesReceived
+//            << QString::fromLocal8Bit("百分比：%1%").arg((bytesReceived*100)/bytesTotal)
+//            << QString::fromLocal8Bit("文件总大小：") << bytesTotal;
     emit sig_receiveData_progressbar(bytesReceived,bytesTotal);//向外发射进度
 }
 
 void Worker::slot_receiveData_finished()
 {
-    qDebug() << QString::fromLocal8Bit("第%1个任务下载结束！").arg(m_count);
+    qDebug() << QString::fromLocal8Bit("任务下载结束！");
     emit sig_receiveData_finished();
 }

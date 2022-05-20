@@ -41,7 +41,6 @@ private:
     QWebEngineDownloadItem      *m_workItem     =   nullptr;
     QNetworkAccessManager       *m_netManager   =   nullptr;
     QFile                       *m_file         =   nullptr;
-    int                         m_count;
 
 };
 

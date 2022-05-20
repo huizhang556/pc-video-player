@@ -186,7 +186,7 @@ void CusWebBrowser::slot_createCustomRightMenu()
 {
 //    qDebug() << QString::fromLocal8Bit("右键菜单");
     QMenu *rmenu = new QMenu(this);
-    rmenu->setObjectName(QString::fromLocal8Bit("rmenu"));
+    rmenu->setObjectName(QString::fromLocal8Bit("browser_rmenu"));
     rmenu->addAction(QIcon(""),QString::fromLocal8Bit("返回"),this,SLOT(slot_back()));
     rmenu->addAction(QIcon(""),QString::fromLocal8Bit("前进"),this,SLOT(slot_forward()));
     rmenu->addAction(QIcon(""),QString::fromLocal8Bit("重新加载"),this,SLOT(slot_reload()));
@@ -199,7 +199,8 @@ void CusWebBrowser::slot_createCustomRightMenu()
     rmenu->addAction(QIcon(""),QString::fromLocal8Bit("查找"),this,SLOT(slot_find()));
     rmenu->addSeparator();
     rmenu->addAction(QIcon(""),QString::fromLocal8Bit("复制网页地址"),this,SLOT(slot_copyWebUrl()));
-    rmenu->addAction(QIcon(""),QString::fromLocal8Bit("保存图片"),this,SLOT(slot_saveImage()));
+    rmenu->addAction(QIcon(""),QString::fromLocal8Bit("复制图片链接"),this,SLOT(slot_copyImageUrl()));
+    rmenu->addAction(QIcon(""),QString::fromLocal8Bit("复制图片至剪切板"),this,SLOT(slot_saveImage()));
     rmenu->addAction(QIcon(""),QString::fromLocal8Bit("保存网页"),this,SLOT(slot_savePage()));
     rmenu->addAction(QIcon(""),QString::fromLocal8Bit("审查源码"),this,SLOT(slot_browserPageSource()));
     rmenu->exec(QCursor::pos());
@@ -255,6 +256,11 @@ void CusWebBrowser::slot_cut()
 void CusWebBrowser::slot_undo()
 {
     this->pageAction(QWebEnginePage::WebAction::Undo)->trigger();
+}
+
+void CusWebBrowser::slot_copyImageUrl()
+{
+    this->pageAction(QWebEnginePage::WebAction::CopyImageUrlToClipboard)->trigger();
 }
 
 void CusWebBrowser::slot_saveImage()

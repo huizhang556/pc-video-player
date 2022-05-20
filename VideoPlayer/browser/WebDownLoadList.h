@@ -22,6 +22,7 @@ public:
     void initWorkUI();
     void chandleSignalsAndSLots();
     static  WebDownLoadList* getInstance();
+
 public slots:
     bool        slot_addDownLoadRecordToList();//添加下载记录
     bool        slot_setDownLoadStatus();
@@ -53,6 +54,7 @@ private slots:
     void        slot_receiveData_pause();
     void        slot_receiveData_delete();
     void        slot_receiveData_openFile(const QString &filepath);
+
 signals:
     void        sig_setConfig();
     void        sig_open(int num,QString path);
@@ -61,6 +63,8 @@ signals:
     void        sig_delete(int num);
     void        sig_download(int num);
     void        sig_receiveProgressbar(int value);
+    void        sig_receiveFinished();
+    void        sig_newDownloadRequest(const QString &address);
 };
 
 #endif // WEBDOWNLOADLIST_H

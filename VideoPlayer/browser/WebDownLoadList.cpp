@@ -1,6 +1,7 @@
 ﻿#include "WebDownLoadList.h"
 #include "ui_WebDownLoadList.h"
 #include <QDebug>
+#include <QFileInfo>
 #include <QFileDialog>
 
 WebDownLoadList* WebDownLoadList::m_pInstance = nullptr;
@@ -33,14 +34,22 @@ WebDownLoadList::~WebDownLoadList()
 void WebDownLoadList::initWorkUI()
 {
     ui->lineEdit_search->setPlaceholderText(QString::fromLocal8Bit("搜索下载内容"));
-    ui->lineEdit_inputurl->setPlaceholderText(QString::fromLocal8Bit("请输入下载地址"));
+    ui->lineEdit_inputurl->setPlaceholderText(QString::fromLocal8Bit("请输入下载地址,按Enter键下载"));
     ui->listWidget_list->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget_bottom->setCurrentIndex(0);
 }
 
 void WebDownLoadList::chandleSignalsAndSLots()
 {
-    //新建下载
+    //新建下载---调出界面
     connect(ui->pushButton_addrecord,&QPushButton::clicked,[=](){ui->stackedWidget_bottom->setCurrentIndex(1);});
+    //新建下载--发送下载信息
+    connect(ui->lineEdit_inputurl,&QLineEdit::returnPressed,[=](){
+        QString netAddress   = ui->lineEdit_inputurl->text().trimmed();
+        if(netAddress.isEmpty()) return;
+        emit sig_newDownloadRequest(netAddress);//发送下载地址，文件名
+    });
     //返回
     connect(ui->pushButton_return,&QPushButton::clicked,[=](){ui->stackedWidget_bottom->setCurrentIndex(0);});
     //清空列表
@@ -165,6 +174,11 @@ void WebDownLoadList::slot_searchDownloadHirtory(QString text)
 void WebDownLoadList::slot_setDownloadProgressbar(qint64 bytesReceived, qint64 bytesTotal)
 {
    emit sig_receiveProgressbar(bytesReceived*100/bytesTotal);
+    if(bytesReceived*100/bytesTotal == 100)
+    {
+        emit sig_receiveFinished();
+        qDebug() <<QString::fromLocal8Bit("下载完成信号已发出！");
+    }
 }
 
 void WebDownLoadList::slot_receivedNewWorkFinished()

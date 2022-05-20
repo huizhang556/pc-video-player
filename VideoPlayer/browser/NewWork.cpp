@@ -11,6 +11,7 @@ NewWork* NewWork::m_pInstance = nullptr;
 
 NewWork::NewWork(QWidget *parent) :
     QDialog(parent),
+    m_count(0),
     ui(new Ui::NewWork)
 {
     ui->setupUi(this);
@@ -30,6 +31,21 @@ NewWork::~NewWork()
         delete m_pInstance;
         m_pInstance = nullptr;
     }
+
+    if(m_workThread != nullptr)
+    {
+        m_workThread->quit();
+    }
+    m_workThread->wait();
+}
+
+NewWork *NewWork::getInstance()
+{
+    if(m_pInstance == nullptr)
+    {
+        m_pInstance = new NewWork();
+    }
+    return m_pInstance;
 }
 
 void NewWork::initWorkUI()
@@ -84,19 +100,25 @@ void NewWork::chandleSignalsAndSlots()
     connect(m_spaceSize,&QAction::triggered,[=](){ qDebug() << QString::fromLocal8Bit("剩余空间");});
     connect(ui->pushButton_his,&QPushButton::clicked,this,&NewWork::slot_updateShowListPathWidget);
     connect(m_clearBtn,&QPushButton::clicked,[=](){m_listWdgt_path->clear();});
+    //确定下载---确定按钮点击
     connect(ui->pushButton_download,&QPushButton::clicked,[=](){
+        qDebug() <<QString::fromLocal8Bit("当前UI线程id:") << QThread::currentThreadId();
+        slot_createNewDownloadWork();
         //路径要获取到修改完以后的最新的
-        emit sig_download(m_fileUrl,ui->lineEdit_filename->text(),ui->lineEdit_savepath->text());
-        qDebug() << "emit sig_download_start();";
+        emit sig_download(ui->lineEdit_address->text().trimmed(),ui->lineEdit_filename->text().trimmed(),ui->lineEdit_savepath->text());
         this->hide();
     });
+
+    //新建下载请求---回车
+    connect(WebDownLoadList::getInstance(),&WebDownLoadList::sig_newDownloadRequest,[=](QString address){
+        slot_receiveDownloadRequested(address);//弹出选择对话框
+    });
+
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){
         emit sig_cancel();this->close(); qDebug() << "emit sig_close();";
-//        m_downItem->cancel();
     });
     connect(ui->pushButton_cancel,&QPushButton::clicked,[=](){
         emit  sig_cancel();this->hide(); qDebug() << "emit  sig_cancel();";
-        m_downItem->cancel();
     });
     connect(ui->pushButton_lookin,&QPushButton::clicked,[=](){
         QString path = openLocalFileSystem();
@@ -128,29 +150,43 @@ void NewWork::slot_receiveDownloadRequested(QWebEngineDownloadItem *item)
      m_savePath = QString(ui->lineEdit_savepath->text() + info.fileName());
      m_fileName = info.fileName();
      m_fileUrl = item->url();
-    qDebug() <<QString::fromLocal8Bit("下载保存路径为：") << m_savePath;
-    qDebug() <<QString::fromLocal8Bit("当前UI线程id:") << QThread::currentThreadId();
-    Worker *m_worker = new Worker();
-    QThread *m_workThread = new QThread();
+     qDebug() <<QString::fromLocal8Bit("下载保存路径为：") << m_savePath;
+}
+
+void NewWork::slot_receiveDownloadRequested(const QUrl url)
+{
+    qDebug() << QString::fromLocal8Bit("已接收到请求...");
+    qDebug() << QString::fromLocal8Bit("请求地址：") << url.toString();
+    QFileInfo info(url.toString());
+    ui->lineEdit_address->setText(url.toString());
+    ui->lineEdit_address->setCursorPosition(0);
+    ui->lineEdit_filename->setText(info.fileName());
+    ui->lineEdit_filename->setCursorPosition(0);
+    this->setWindowModality(Qt::ApplicationModal);
+    this->show();
+     m_savePath = QString(ui->lineEdit_savepath->text() + info.fileName());
+     m_fileName = info.fileName();
+     m_fileUrl = url;
+     qDebug() <<QString::fromLocal8Bit("下载保存路径为：") << m_savePath;
+}
+
+//进行下载任务创建
+void NewWork::slot_createNewDownloadWork()
+{
+    m_worker = new Worker();
+    m_workThread = new QThread();
     m_worker->moveToThread(m_workThread);
     m_workThread->start();
     qDebug() << QString::fromLocal8Bit("新的子线程id:") <<m_workThread->currentThreadId();
-    connect(m_workThread,&QThread::finished,m_worker,&Worker::deleteLater);
-    connect(m_workThread,&QThread::finished,m_workThread,&QThread::deleteLater);
+    connect(m_workThread,&QThread::finished,m_worker,&Worker::deleteLater);//线程结束时，自动删除
+    connect(m_workThread,&QThread::finished,m_workThread,&QThread::deleteLater);//线程结束时，线程内对象自动删除
     connect(this,SIGNAL(sig_download(QUrl,QString,QString)),m_worker,SLOT(slot_receiveData_accept(QUrl,QString,QString)));//收到下载信号，创建线程下载
     connect(this,SIGNAL(sig_download(QUrl,QString,QString)),WebDownLoadList::getInstance(),SLOT(slot_addDownLoadRecordToList()));//收到下载信号，下载列表创建任务
     connect(m_worker,&Worker::sig_receiveData_progressbar,WebDownLoadList::getInstance(),&WebDownLoadList::slot_setDownloadProgressbar);
     connect(m_worker,&Worker::sig_receiveData_finished,WebDownLoadList::getInstance(),&WebDownLoadList::slot_receivedNewWorkFinished);//任务栏接收下载完成信号
 }
 
-NewWork *NewWork::getInstance()
-{
-    if(m_pInstance == nullptr)
-    {
-        m_pInstance = new NewWork();
-    }
-    return m_pInstance;
-}
+
 
 QString NewWork::openLocalFileSystem()
 {
@@ -233,6 +269,11 @@ void NewWork::slot_updateShowListPathWidget()
            m_hisWdgt->hide();
        }
     }
+}
+
+void NewWork::slot_receiveWorkerFinished()
+{
+    QString::fromLocal8Bit("第%1个任务下载结束").arg(m_count);
 }
 
 void NewWork::slot_addPathToList(const QString &path)
