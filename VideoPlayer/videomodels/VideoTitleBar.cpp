@@ -41,7 +41,8 @@ void VideoTitleBar::chandleSignalsAndSlots()
     connect(ui->lineEdit_url,&QLineEdit::returnPressed,[=]()
     {
         QString input = ui->lineEdit_url->text().trimmed();//去除两端的空格
-//        emit sig_inputSourceUrl(input);
+        if(input.isEmpty()) return;
+        emit sig_inputSourceUrl(input);
     });
 }
 

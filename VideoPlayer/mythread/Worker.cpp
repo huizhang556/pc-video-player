@@ -11,6 +11,20 @@ Worker::~Worker()
 
 }
 
+bool Worker::isDirExist(QString fullpath)
+{
+    QDir dir(fullpath);
+    if(dir.exists())
+    {
+        return true;
+    }
+    else
+    {
+        bool ok = dir.mkpath(fullpath);//创建多级目录
+        return ok;
+    }
+}
+
 void Worker::slot_receiveData_accept(QWebEngineDownloadItem *item, QString filename, QString savepath)
 {
     item->setPath(savepath + filename);//保存路径是路径+文件名
@@ -43,18 +57,29 @@ void Worker::slot_receiveData_accept(QUrl url,QString filename, QString savepath
     QNetworkRequest request;
     request.setUrl(url);
     QNetworkReply *reply = m_netManager->get(request);
-    qDebug() << QString::fromLocal8Bit("接收到的指定保存路径：") << savepath+filename;
-    m_file = new QFile(savepath+filename);//指定保存路径
-    m_file->open(QIODevice::WriteOnly);
-    //   file.remove();//删除已经有的
+    QString fileSavePath = QString(savepath+"/"+filename).toUtf8();
+    qDebug() << QString::fromLocal8Bit("接收到的指定保存路径：") << fileSavePath;
+    if(isDirExist(savepath))//路径要存在才执行
+    {
+        qDebug() << QString::fromLocal8Bit("文件存在");
+        m_file = new QFile(fileSavePath);//指定保存路径,注意保存路径与文件名之间分割符
+        m_file->open(QIODevice::WriteOnly);
+//        m_file->remove();//删除已经有的
+    }
+
     //数据可读
     connect(reply, &QNetworkReply::readyRead,[=](){
-        if(!m_file->isOpen())
+        if(m_file->isOpen())//文件打开了
         {
-            //            qDebug() << "file open error";
+            m_file->write(reply->readAll());
+
+        }
+        else//文件没打开
+        {
+            qDebug() << m_file->errorString();
             return;
         }
-        m_file->write(reply->readAll());
+    qDebug() <<QString::fromLocal8Bit("reply触发");
     });
 
     //下载进度
@@ -68,7 +93,8 @@ void Worker::slot_receiveData_accept(QUrl url,QString filename, QString savepath
         reply->deleteLater();
       emit  sig_receiveData_finished();//数据接收完毕
     });
-    m_file->close(); //关闭文件
+    m_file->flush();//强制将未写满的缓存写入文件
+    m_file->close(); //关闭文件，也会将缓存写入文件
 }
 
 void Worker::slot_receiveData_pause()
@@ -91,10 +117,9 @@ void Worker::slot_receiveData_resume()
 
 void Worker::slot_receiveData_progressbar(qint64 bytesReceived, qint64 bytesTotal)
 {
-//    qDebug()<< QString::fromLocal8Bit("第%1个下载任务，").arg(m_count)
-//            << QString::fromLocal8Bit("线程中已接受数据：")<<bytesReceived
-//            << QString::fromLocal8Bit("百分比：%1%").arg((bytesReceived*100)/bytesTotal)
-//            << QString::fromLocal8Bit("文件总大小：") << bytesTotal;
+    qDebug() << QString::fromLocal8Bit("线程中已接受数据：")<<bytesReceived
+             << QString::fromLocal8Bit("百分比：%1%").arg((bytesReceived*100)/bytesTotal)
+             << QString::fromLocal8Bit("文件总大小：") << bytesTotal;
     emit sig_receiveData_progressbar(bytesReceived,bytesTotal);//向外发射进度
 }
 

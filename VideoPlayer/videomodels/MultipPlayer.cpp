@@ -517,10 +517,10 @@ void MultipPlayer::chandleSignalAndSLots()
     //接受发过来的网络资源链接
     connect(m_videoTitleBar,&VideoTitleBar::sig_inputSourceUrl,[=](QString newurl)
     {
-//        QFileInfo info(newurl);
-//        QUrl url = QUrl::fromLocalFile(newurl);
-//        player->setMedia(url);
-//        player->play();
+        QUrl url = QUrl::fromLocalFile(newurl);
+        player->setMedia(url);
+        player->play();
+        fileType(newurl);
     });
 
     //收藏按钮
@@ -701,6 +701,27 @@ bool MultipPlayer::fileType(QStringList &filenames, int index)
 bool MultipPlayer::fileType(int index)
 {
     QString filename = m_mapList2[index];
+    m_curMediaName = filename;
+    bool mp3 = filename.endsWith(QString::fromLocal8Bit(".mp3"),Qt::CaseInsensitive);//判断是否以.mp3结尾，去除大小写敏感
+    if(mp3)
+    {
+        //音乐显示3，音乐界面
+        emit sig_sendSwitchToMusicPage(filename);
+        ui->stackedWidget->setCurrentIndex(2);
+        return true;//这里true代表以.mp3结尾的文件
+    }
+    else
+    {
+        //视屏显示4，视屏界面
+        emit sig_sendSwitchToMusicPage(filename);
+        ui->stackedWidget->setCurrentIndex(1);
+        return false;//这里false代表非.mp3结尾的文件，默认为视频文件
+    }
+}
+
+/*判断文件类型3*/
+bool MultipPlayer::fileType(QString filename)
+{
     m_curMediaName = filename;
     bool mp3 = filename.endsWith(QString::fromLocal8Bit(".mp3"),Qt::CaseInsensitive);//判断是否以.mp3结尾，去除大小写敏感
     if(mp3)
@@ -2507,7 +2528,7 @@ void MultipPlayer::setPlayOrderButtonStyleSheet(int index)
 
 void MultipPlayer::setVideTitleBar(int index)
 {
-//    m_videoTitleBar->setTitleStackWidgetPage(index);
+    m_videoTitleBar->setTitleStackWidgetPage(index);
 }
 
 /*监听事件*/

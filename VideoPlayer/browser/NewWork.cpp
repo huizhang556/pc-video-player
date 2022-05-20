@@ -50,7 +50,7 @@ NewWork *NewWork::getInstance()
 
 void NewWork::initWorkUI()
 {
-    ui->lineEdit_savepath->setText(Global::appDirPath + QString::fromLocal8Bit("/download/"));//默认的路径
+    ui->lineEdit_savepath->setText(Global::appDirPath + QString::fromLocal8Bit("/download"));//默认的路径
     ui->lineEdit_savepath->setCursorPosition(0);
     m_clearBtn = new QPushButton(QString::fromLocal8Bit("清除历史记录"));
     m_clearBtn->setObjectName(QString::fromLocal8Bit("newwork_m_clearBtn"));
@@ -195,7 +195,7 @@ QString NewWork::openLocalFileSystem()
                                                 QString::fromLocal8Bit("C:\\Users\\24939\\Desktop"));
     if(!fpath.isEmpty())//不为空
     {
-        fpath = fpath + QString(tr("/"));
+//        fpath = fpath + QString(tr("/"));
         return fpath;
     }
     else

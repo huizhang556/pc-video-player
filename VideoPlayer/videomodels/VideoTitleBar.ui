@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1186</width>
+    <width>1286</width>
     <height>43</height>
    </rect>
   </property>
@@ -141,7 +141,12 @@ color: rgb(255, 85, 0);
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color:#263446;</string>
+        <string notr="true">#frame_chand
+{
+background-color:#263446;
+
+}
+</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
@@ -267,7 +272,13 @@ padding-left:40px;
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>36</height>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>30</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -281,11 +292,13 @@ background-color: #3c3842;
 selection-background-color: #D1DBCB;
 border-right:transparent;
 /*border:1px solid #ff5c38;*/
-border-top-left-radius:18;
-border-top-right-radius:18;
-border-bottom-right-radius:18;
-border-bottom-left-radius:18;
+border-top-left-radius:14;
+border-top-right-radius:14;
+border-bottom-right-radius:14;
+border-bottom-left-radius:14;
 padding-left:15px;
+margin-left:100px;
+margin-right:50px;
 }
 
 QLineEdit:hover

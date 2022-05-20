@@ -1,6 +1,7 @@
 ﻿#ifndef WORKER_H
 #define WORKER_H
 
+#include <QDir>
 #include <QUrl>
 #include <QFile>
 #include <QObject>
@@ -15,7 +16,7 @@ class Worker : public QObject
 public:
     explicit Worker(QObject *parent = nullptr);
     ~Worker();
-
+    bool    isDirExist(QString fullpath);
 public slots:
     void    slot_receiveData_accept(QWebEngineDownloadItem *item, QString filename, QString savepath);
     void    slot_receiveData_pause(QWebEngineDownloadItem *item);

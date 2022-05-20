@@ -72,7 +72,9 @@ public:
 
     bool fileType(int index);// 重载函数1  判断文件类型显示视频还是音乐
 
-    bool fileType(QStringList &filenames,int index);// 重载函数2  判断文件类型显示视频还是音乐
+    bool fileType(QString filename);// 重载函数2  判断文件类型显示视频还是音乐
+
+    bool fileType(QStringList &filenames,int index);// 重载函数3  判断文件类型显示视频还是音乐
 
     void get_fileFromServer();
 

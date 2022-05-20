@@ -799,7 +799,7 @@ void TitleBar::slot_setButtonHelpEmitItem()
     }
     else if(action->text() == QString::fromLocal8Bit("网络视频"))
     {
-        emit sig_settingHelpItem(5);
+//        emit sig_settingHelpItem(5);
     }
     else if(action->text() == QString::fromLocal8Bit("软件下载"))
     {
