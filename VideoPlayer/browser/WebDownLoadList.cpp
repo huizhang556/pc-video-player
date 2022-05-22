@@ -49,6 +49,7 @@ void WebDownLoadList::chandleSignalsAndSLots()
         QString netAddress   = ui->lineEdit_inputurl->text().trimmed();
         if(netAddress.isEmpty()) return;
         emit sig_newDownloadRequest(netAddress);//发送下载地址，文件名
+        this->hide();
     });
     //返回
     connect(ui->pushButton_return,&QPushButton::clicked,[=](){ui->stackedWidget_bottom->setCurrentIndex(0);});

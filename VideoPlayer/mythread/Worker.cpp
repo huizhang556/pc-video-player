@@ -25,6 +25,7 @@ bool Worker::isDirExist(QString fullpath)
     }
 }
 
+//网页下载链接
 void Worker::slot_receiveData_accept(QWebEngineDownloadItem *item, QString filename, QString savepath)
 {
     item->setPath(savepath + filename);//保存路径是路径+文件名
@@ -52,34 +53,37 @@ void Worker::slot_receiveData_resume(QWebEngineDownloadItem *item)
     qDebug() <<QString::fromLocal8Bit("继续");
 }
 
+//自建下载链接
 void Worker::slot_receiveData_accept(QUrl url,QString filename, QString savepath)
 {
     QNetworkRequest request;
     request.setUrl(url);
     QNetworkReply *reply = m_netManager->get(request);
-    QString fileSavePath = QString(savepath+"/"+filename).toUtf8();
-    qDebug() << QString::fromLocal8Bit("接收到的指定保存路径：") << fileSavePath;
-    if(isDirExist(savepath))//路径要存在才执行
+    QString fileSavePath = QDir::toNativeSeparators(savepath + "/" + filename);
+    qDebug() << QString::fromLocal8Bit("线程接收到的指定保存路径：") << fileSavePath ;
+    if(isDirExist(savepath))//路径要存在才执行,savepath没有 / 分割符号
     {
-        qDebug() << QString::fromLocal8Bit("文件存在");
-        m_file = new QFile(fileSavePath);//指定保存路径,注意保存路径与文件名之间分割符
-        m_file->open(QIODevice::WriteOnly);
-//        m_file->remove();//删除已经有的
+        qDebug() << QString::fromLocal8Bit("存储路径 %1 已经存在！").arg(savepath);
     }
 
+    //关于QFile报错打不开磁盘的问题
+    //00.构造QFile时，如果指定文件名，则先创建一个大小为0size的空文件，之后再往里面写数据；如果没有指定文件名称，则在工作目录下建立默认的文件
+    //01.QFile需要注意，报错not open device，先检查文件权限问题，再检查打开方式；
+    //02.QFile请求下载的文件内容，先存储在缓存中，存储到一定大小，缓存内容才被写入文件中，除非每次调用flush刷新；
+    //03.如果QFile没有close,直到程序关闭，文件才从缓存中被写入。
+    //04.readyRead信号的触发速度，比downloadProgress触发的频繁；
+    //05.如果存在一个一模一样已经存在的下载文件，会在原文件追加，不会新建；
     //数据可读
     connect(reply, &QNetworkReply::readyRead,[=](){
-        if(m_file->isOpen())//文件打开了
-        {
-            m_file->write(reply->readAll());
+        if(reply == nullptr) return;
 
-        }
-        else//文件没打开
+        if(!m_file.isOpen())//文件没打开
         {
-            qDebug() << m_file->errorString();
-            return;
+            m_file.setFileName(fileSavePath);
+            m_file.open(QIODevice::WriteOnly|QIODevice::Append);
         }
-    qDebug() <<QString::fromLocal8Bit("reply触发");
+
+            m_file.write(reply->readAll());//先存储在缓存中，然后缓存满了才往文件中写入
     });
 
     //下载进度
@@ -91,10 +95,10 @@ void Worker::slot_receiveData_accept(QUrl url,QString filename, QString savepath
     connect(reply, &QNetworkReply::finished,[=]()
     {
         reply->deleteLater();
+        m_file.flush();
+        m_file.close(); //关闭文件，也会将缓存写入文件
       emit  sig_receiveData_finished();//数据接收完毕
     });
-    m_file->flush();//强制将未写满的缓存写入文件
-    m_file->close(); //关闭文件，也会将缓存写入文件
 }
 
 void Worker::slot_receiveData_pause()

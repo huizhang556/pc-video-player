@@ -4,6 +4,7 @@
 #include "mythread/Worker.h"
 #include "WebDownLoadList.h"
 #include <QUrl>
+#include <QFile>
 #include <QDialog>
 #include <QAction>
 #include <QThread>
@@ -37,12 +38,15 @@ protected:
     bool        eventFilter(QObject *watched, QEvent *event) override;
     void        mousePressEvent(QMouseEvent *event) override;
     void        mouseMoveEvent(QMouseEvent *event) override;
+    bool        isFileExist(QString fullFileName);
 private slots:
     void        slot_addPathToList(const QString &path);
     void        slot_setLineEditText(QLineEdit *edit, const QString &text);
     bool        slot_judgePathExist(const QString &path);
     void        slot_updateShowListPathWidget();
     void        slot_receiveWorkerFinished();
+    void        slot_receiveThreadStarted();
+    void        slot_receiveThreadFinished();
 private:
     explicit NewWork(QWidget *parent = nullptr);
     Ui::NewWork *ui;
@@ -58,8 +62,8 @@ private:
     QWidget                 *m_hisWdgt              =   nullptr;
     QWebEngineDownloadItem  *m_downItem             =   nullptr;
     static  NewWork         *m_pInstance;
-    Worker                  *m_worker;
-    QThread                 *m_workThread;
+//    Worker                  *m_worker;
+//    QThread                 *m_workThread;
 signals:
     void        sig_download_start();
     void        sig_download(const QUrl& url,const QString& filename, const QString& savepath);

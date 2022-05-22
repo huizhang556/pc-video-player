@@ -1,6 +1,7 @@
 ﻿#include "NewWork.h"
 #include "ui_NewWork.h"
 #include <QDebug>
+#include <QDateTime>
 #include <QFileInfo>
 #include <QScrollBar>
 #include <QFileDialog>
@@ -26,17 +27,17 @@ NewWork::NewWork(QWidget *parent) :
 NewWork::~NewWork()
 {
     delete ui;
-    if(m_pInstance != nullptr)
-    {
-        delete m_pInstance;
-        m_pInstance = nullptr;
-    }
+//    if(m_pInstance != nullptr)
+//    {
+//        delete m_pInstance;
+//        m_pInstance = nullptr;
+//    }
 
-    if(m_workThread != nullptr)
-    {
-        m_workThread->quit();
-    }
-    m_workThread->wait();
+//    if(m_workThread != nullptr)
+//    {
+//        m_workThread->quit();
+//    }
+//    m_workThread->wait();
 }
 
 NewWork *NewWork::getInstance()
@@ -104,12 +105,12 @@ void NewWork::chandleSignalsAndSlots()
     connect(ui->pushButton_download,&QPushButton::clicked,[=](){
         qDebug() <<QString::fromLocal8Bit("当前UI线程id:") << QThread::currentThreadId();
         slot_createNewDownloadWork();
-        //路径要获取到修改完以后的最新的
+        //确定下载（下载地址--文件名--保存路径）
         emit sig_download(ui->lineEdit_address->text().trimmed(),ui->lineEdit_filename->text().trimmed(),ui->lineEdit_savepath->text());
         this->hide();
     });
 
-    //新建下载请求---回车
+    //自建下载请求--回车--弹出对话框--上显下载信息
     connect(WebDownLoadList::getInstance(),&WebDownLoadList::sig_newDownloadRequest,[=](QString address){
         slot_receiveDownloadRequested(address);//弹出选择对话框
     });
@@ -120,22 +121,42 @@ void NewWork::chandleSignalsAndSlots()
     connect(ui->pushButton_cancel,&QPushButton::clicked,[=](){
         emit  sig_cancel();this->hide(); qDebug() << "emit  sig_cancel();";
     });
+    //选择存储文件夹
     connect(ui->pushButton_lookin,&QPushButton::clicked,[=](){
         QString path = openLocalFileSystem();
         if(path.isEmpty()) return;
         ui->lineEdit_savepath->setText(path);
+        m_savePath = ui->lineEdit_savepath->text()+"/"+m_fileName;
         slot_addPathToList(path);
     });
 
     //单击回显选择的文字
     connect(m_listWdgt_path,&QListWidget::itemClicked,[=](QListWidgetItem *item)
     {
-        slot_setLineEditText(ui->lineEdit_savepath,item->text());
-        ui->lineEdit_savepath->setCursorPosition(0);
+        slot_setLineEditText(ui->lineEdit_savepath,item->text());//上显的同时m_savePath也改变
+    });
+
+    //存储路径改变
+    connect(ui->lineEdit_savepath,&QLineEdit::textChanged,[=](QString text){
+        m_savePath = text + "/" + m_fileName;
+        if(isFileExist(m_savePath))//指定路径下存在同名文件
+        {
+            QString reName = QDateTime::currentDateTime().toString("yyyyMMddhhmmss") + m_fileName;
+//            m_fileName = reName;
+            ui->lineEdit_filename->setText(reName);//加上当前时间
+            ui->lineEdit_filename->setToolTip(reName);
+            ui->lineEdit_filename->setCursorPosition(0);
+        }
+        else
+        {
+            ui->lineEdit_filename->setText(m_fileName);//加上当前时间
+            ui->lineEdit_filename->setToolTip(m_fileName);
+            ui->lineEdit_filename->setCursorPosition(0);
+        }
     });
 }
 
-//收到请求---弹出对话框
+//收到浏览器点击下载请求---弹出对话框
 void NewWork::slot_receiveDownloadRequested(QWebEngineDownloadItem *item)
 {
     qDebug() << QString::fromLocal8Bit("已接收到请求...");
@@ -145,41 +166,66 @@ void NewWork::slot_receiveDownloadRequested(QWebEngineDownloadItem *item)
     ui->lineEdit_address->setCursorPosition(0);
     ui->lineEdit_filename->setText(info.fileName());
     ui->lineEdit_filename->setCursorPosition(0);
+    m_savePath = QString(ui->lineEdit_savepath->text() + "/" + info.fileName());
+    m_fileName = info.fileName();
+    m_fileUrl = item->url();
     this->setWindowModality(Qt::ApplicationModal);
     this->show();
-     m_savePath = QString(ui->lineEdit_savepath->text() + info.fileName());
-     m_fileName = info.fileName();
-     m_fileUrl = item->url();
-     qDebug() <<QString::fromLocal8Bit("下载保存路径为：") << m_savePath;
+
+     if(isFileExist(m_savePath))//指定路径下存在同名文件
+     {
+         QString reName = QDateTime::currentDateTime().toString("yyyyMMddhhmmss") + info.fileName();
+//         m_fileName = reName;
+         ui->lineEdit_filename->setText(reName);//加上当前时间
+         ui->lineEdit_filename->setToolTip(reName);
+         ui->lineEdit_filename->setCursorPosition(0);
+     }
+     qDebug() <<QString::fromLocal8Bit("QWebEngineDownloadItem下，下载保存路径为：") << m_savePath;
 }
 
+//收到自建的连接请求---弹出对话框
 void NewWork::slot_receiveDownloadRequested(const QUrl url)
 {
     qDebug() << QString::fromLocal8Bit("已接收到请求...");
     qDebug() << QString::fromLocal8Bit("请求地址：") << url.toString();
     QFileInfo info(url.toString());
     ui->lineEdit_address->setText(url.toString());
+    ui->lineEdit_address->setToolTip(url.toString());
     ui->lineEdit_address->setCursorPosition(0);
+
     ui->lineEdit_filename->setText(info.fileName());
+    ui->lineEdit_address->setToolTip(info.fileName());
     ui->lineEdit_filename->setCursorPosition(0);
+    m_savePath = QString(ui->lineEdit_savepath->text() + "/" + info.fileName());
+    m_fileName = info.fileName();
+    m_fileUrl = url;
+
     this->setWindowModality(Qt::ApplicationModal);
     this->show();
-     m_savePath = QString(ui->lineEdit_savepath->text() + info.fileName());
-     m_fileName = info.fileName();
-     m_fileUrl = url;
-     qDebug() <<QString::fromLocal8Bit("下载保存路径为：") << m_savePath;
+
+    if(isFileExist(m_savePath))//指定路径下存在同名文件
+    {
+        QString reName = QDateTime::currentDateTime().toString("yyyyMMddhhmmss") + info.fileName();
+//        m_fileName = reName;
+        ui->lineEdit_filename->setText(reName);//加上当前时间
+        ui->lineEdit_filename->setToolTip(reName);
+        ui->lineEdit_filename->setCursorPosition(0);
+    }
+    qDebug() <<QString::fromLocal8Bit("QUrl下，下载保存路径为：") << m_savePath;
 }
 
 //进行下载任务创建
 void NewWork::slot_createNewDownloadWork()
 {
-    m_worker = new Worker();
-    m_workThread = new QThread();
+    Worker *m_worker = new Worker();
+    QThread *m_workThread = new QThread();
     m_worker->moveToThread(m_workThread);
     m_workThread->start();
     qDebug() << QString::fromLocal8Bit("新的子线程id:") <<m_workThread->currentThreadId();
-    connect(m_workThread,&QThread::finished,m_worker,&Worker::deleteLater);//线程结束时，自动删除
+    connect(m_workThread,&QThread::finished,m_worker,&QObject::deleteLater);//线程结束时，自动删除
     connect(m_workThread,&QThread::finished,m_workThread,&QThread::deleteLater);//线程结束时，线程内对象自动删除
+    connect(m_workThread,&QThread::started,this,&NewWork::slot_receiveThreadStarted);//打印以下线程完毕是否结束
+    connect(m_workThread,&QThread::finished,this,&NewWork::slot_receiveThreadFinished);//打印以下线程完毕是否结束了
     connect(this,SIGNAL(sig_download(QUrl,QString,QString)),m_worker,SLOT(slot_receiveData_accept(QUrl,QString,QString)));//收到下载信号，创建线程下载
     connect(this,SIGNAL(sig_download(QUrl,QString,QString)),WebDownLoadList::getInstance(),SLOT(slot_addDownLoadRecordToList()));//收到下载信号，下载列表创建任务
     connect(m_worker,&Worker::sig_receiveData_progressbar,WebDownLoadList::getInstance(),&WebDownLoadList::slot_setDownloadProgressbar);
@@ -242,6 +288,22 @@ void NewWork::mouseMoveEvent(QMouseEvent *event)
     this->move(event->globalPos() - m_mvPos);
 }
 
+//判断指定路径下文件是否存在
+bool NewWork::isFileExist(QString fullFileName)
+{
+    QFile file(fullFileName);
+    if(file.exists())
+    {
+        qDebug() <<QString::fromLocal8Bit("文件已经存在");
+        return true;
+    }
+    else
+    {
+        qDebug() <<QString::fromLocal8Bit("文件不存在");
+        return false;
+    }
+}
+
 bool NewWork::slot_judgePathExist(const QString &path)
 {
     for(int i = 0; i < m_listWdgt_path->count(); i++)
@@ -273,7 +335,17 @@ void NewWork::slot_updateShowListPathWidget()
 
 void NewWork::slot_receiveWorkerFinished()
 {
-    QString::fromLocal8Bit("第%1个任务下载结束").arg(m_count);
+    qDebug() << QString::fromLocal8Bit("第%1个任务下载结束").arg(m_count);
+}
+
+void NewWork::slot_receiveThreadStarted()
+{
+    qDebug() << QString::fromLocal8Bit("线程开始！");
+}
+
+void NewWork::slot_receiveThreadFinished()
+{
+    qDebug() << QString::fromLocal8Bit("线程结束！");
 }
 
 void NewWork::slot_addPathToList(const QString &path)
@@ -295,5 +367,7 @@ void NewWork::slot_addPathToList(const QString &path)
 void NewWork::slot_setLineEditText(QLineEdit *edit, const QString &text)
 {
     edit->setText(text);
+    ui->lineEdit_savepath->setToolTip(QString::fromLocal8Bit("text"));
     edit->setCursorPosition(0);//字符串过长时，显示的依旧是最左端文字
+    m_savePath = ui->lineEdit_savepath->text()+"/"+m_fileName;//重新设置m_savePath
 }
