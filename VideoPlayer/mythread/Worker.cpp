@@ -80,7 +80,8 @@ void Worker::slot_receiveData_accept(QUrl url,QString filename, QString savepath
         if(!m_file.isOpen())//文件没打开
         {
             m_file.setFileName(fileSavePath);
-            m_file.open(QIODevice::WriteOnly|QIODevice::Append);
+            //断点续传的时候，需要使用size()计算已经下载的大小；采用append的形式继续写入；下载新文件则不需要
+            m_file.open(QIODevice::WriteOnly);
         }
 
             m_file.write(reply->readAll());//先存储在缓存中，然后缓存满了才往文件中写入

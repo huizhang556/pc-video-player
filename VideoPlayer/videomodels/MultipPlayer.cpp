@@ -2391,6 +2391,10 @@ void MultipPlayer::closeCurrentWindow()
     clearListWidgetList_collection();//收藏列表清空
     clearListWidgetList_history();//历史列表清空
     clearUserInputSearchInfo();//登陆列表以往输入的信息清空
+    if(VideoProgressBar::getInstance())
+    {
+        VideoProgressBar::getInstance()->close();
+    }
 //    this->close();
     emit sig_mainPlayerClose();//主界面处理内存删除
 }
