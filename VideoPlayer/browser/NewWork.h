@@ -62,8 +62,8 @@ private:
     QWidget                 *m_hisWdgt              =   nullptr;
     QWebEngineDownloadItem  *m_downItem             =   nullptr;
     static  NewWork         *m_pInstance;
-//    Worker                  *m_worker;
-//    QThread                 *m_workThread;
+    Worker                  *m_worker;
+    QThread                 *m_workThread;
 signals:
     void        sig_download_start();
     void        sig_download(const QUrl& url,const QString& filename, const QString& savepath);

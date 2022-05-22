@@ -2395,7 +2395,6 @@ void MultipPlayer::closeCurrentWindow()
     {
         VideoProgressBar::getInstance()->close();
     }
-//    this->close();
     emit sig_mainPlayerClose();//主界面处理内存删除
 }
 

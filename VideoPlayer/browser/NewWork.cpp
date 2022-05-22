@@ -51,6 +51,9 @@ NewWork *NewWork::getInstance()
 
 void NewWork::initWorkUI()
 {
+    m_worker = new Worker();
+    m_workThread = new QThread();
+
     ui->lineEdit_savepath->setText(Global::appDirPath + QString::fromLocal8Bit("/download"));//默认的路径
     ui->lineEdit_savepath->setCursorPosition(0);
     m_clearBtn = new QPushButton(QString::fromLocal8Bit("清除历史记录"));
@@ -101,6 +104,16 @@ void NewWork::chandleSignalsAndSlots()
     connect(m_spaceSize,&QAction::triggered,[=](){ qDebug() << QString::fromLocal8Bit("剩余空间");});
     connect(ui->pushButton_his,&QPushButton::clicked,this,&NewWork::slot_updateShowListPathWidget);
     connect(m_clearBtn,&QPushButton::clicked,[=](){m_listWdgt_path->clear();});
+
+    connect(m_workThread,&QThread::finished,m_worker,&QObject::deleteLater);//线程结束时，自动删除
+    connect(m_workThread,&QThread::finished,m_workThread,&QThread::deleteLater);//线程结束时，线程内对象自动删除
+    connect(m_workThread,&QThread::started,this,&NewWork::slot_receiveThreadStarted);//打印以下线程完毕是否结束
+    connect(m_workThread,&QThread::finished,this,&NewWork::slot_receiveThreadFinished);//打印以下线程完毕是否结束了
+    connect(this,SIGNAL(sig_download(QUrl,QString,QString)),m_worker,SLOT(slot_receiveData_accept(QUrl,QString,QString)));//收到下载信号，创建线程下载
+    connect(this,SIGNAL(sig_download(QUrl,QString,QString)),WebDownLoadList::getInstance(),SLOT(slot_addDownLoadRecordToList()));//收到下载信号，下载列表创建任务
+    connect(m_worker,&Worker::sig_receiveData_progressbar,WebDownLoadList::getInstance(),&WebDownLoadList::slot_setDownloadProgressbar);
+    connect(m_worker,&Worker::sig_receiveData_finished,WebDownLoadList::getInstance(),&WebDownLoadList::slot_receivedNewWorkFinished);//任务栏接收下载完成信号
+
     //确定下载---确定按钮点击
     connect(ui->pushButton_download,&QPushButton::clicked,[=](){
         qDebug() <<QString::fromLocal8Bit("当前UI线程id:") << QThread::currentThreadId();
@@ -154,6 +167,24 @@ void NewWork::chandleSignalsAndSlots()
             ui->lineEdit_filename->setCursorPosition(0);
         }
     });
+}
+
+//进行下载任务创建
+void NewWork::slot_createNewDownloadWork()
+{
+//    Worker *m_worker = new Worker();
+//    QThread *m_workThread = new QThread();
+    m_worker->moveToThread(m_workThread);
+    m_workThread->start();
+    qDebug() << QString::fromLocal8Bit("新的子线程id:") <<m_workThread->currentThreadId();
+//    connect(m_workThread,&QThread::finished,m_worker,&QObject::deleteLater);//线程结束时，自动删除
+//    connect(m_workThread,&QThread::finished,m_workThread,&QThread::deleteLater);//线程结束时，线程内对象自动删除
+//    connect(m_workThread,&QThread::started,this,&NewWork::slot_receiveThreadStarted);//打印以下线程完毕是否结束
+//    connect(m_workThread,&QThread::finished,this,&NewWork::slot_receiveThreadFinished);//打印以下线程完毕是否结束了
+//    connect(this,SIGNAL(sig_download(QUrl,QString,QString)),m_worker,SLOT(slot_receiveData_accept(QUrl,QString,QString)));//收到下载信号，创建线程下载
+//    connect(this,SIGNAL(sig_download(QUrl,QString,QString)),WebDownLoadList::getInstance(),SLOT(slot_addDownLoadRecordToList()));//收到下载信号，下载列表创建任务
+//    connect(m_worker,&Worker::sig_receiveData_progressbar,WebDownLoadList::getInstance(),&WebDownLoadList::slot_setDownloadProgressbar);
+//    connect(m_worker,&Worker::sig_receiveData_finished,WebDownLoadList::getInstance(),&WebDownLoadList::slot_receivedNewWorkFinished);//任务栏接收下载完成信号
 }
 
 //收到浏览器点击下载请求---弹出对话框
@@ -213,26 +244,6 @@ void NewWork::slot_receiveDownloadRequested(const QUrl url)
     }
     qDebug() <<QString::fromLocal8Bit("QUrl下，下载保存路径为：") << m_savePath;
 }
-
-//进行下载任务创建
-void NewWork::slot_createNewDownloadWork()
-{
-    Worker *m_worker = new Worker();
-    QThread *m_workThread = new QThread();
-    m_worker->moveToThread(m_workThread);
-    m_workThread->start();
-    qDebug() << QString::fromLocal8Bit("新的子线程id:") <<m_workThread->currentThreadId();
-    connect(m_workThread,&QThread::finished,m_worker,&QObject::deleteLater);//线程结束时，自动删除
-    connect(m_workThread,&QThread::finished,m_workThread,&QThread::deleteLater);//线程结束时，线程内对象自动删除
-    connect(m_workThread,&QThread::started,this,&NewWork::slot_receiveThreadStarted);//打印以下线程完毕是否结束
-    connect(m_workThread,&QThread::finished,this,&NewWork::slot_receiveThreadFinished);//打印以下线程完毕是否结束了
-    connect(this,SIGNAL(sig_download(QUrl,QString,QString)),m_worker,SLOT(slot_receiveData_accept(QUrl,QString,QString)));//收到下载信号，创建线程下载
-    connect(this,SIGNAL(sig_download(QUrl,QString,QString)),WebDownLoadList::getInstance(),SLOT(slot_addDownLoadRecordToList()));//收到下载信号，下载列表创建任务
-    connect(m_worker,&Worker::sig_receiveData_progressbar,WebDownLoadList::getInstance(),&WebDownLoadList::slot_setDownloadProgressbar);
-    connect(m_worker,&Worker::sig_receiveData_finished,WebDownLoadList::getInstance(),&WebDownLoadList::slot_receivedNewWorkFinished);//任务栏接收下载完成信号
-}
-
-
 
 QString NewWork::openLocalFileSystem()
 {

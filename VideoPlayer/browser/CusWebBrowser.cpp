@@ -7,7 +7,8 @@ CusWebBrowser::CusWebBrowser(QWidget *parent) :
     qputenv("QTWEBENGINE_REMOTE_DEBUGGING","8999"); //调试窗口, 需重新编译生效
     this->showMaximized();
     installEventFilter(this);
-    this->load(QUrl("http://www.baidu.com"));
+//    this->load(QUrl("http://www.baidu.com"));
+    this->load(QUrl("http://82.156.175.81/study/index.html"));
     this->page()->setAudioMuted(false);//不自动静音
     this->settings()->setAttribute(QWebEngineSettings::PluginsEnabled,true);//支持插件
     this->settings()->setAttribute(QWebEngineSettings::SpatialNavigationEnabled, true);

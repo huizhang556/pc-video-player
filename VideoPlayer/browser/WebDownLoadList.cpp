@@ -31,6 +31,17 @@ WebDownLoadList::~WebDownLoadList()
     }
 }
 
+//获取单例
+WebDownLoadList *WebDownLoadList::getInstance()
+{
+    if(m_pInstance == nullptr)
+    {
+        m_pInstance = new WebDownLoadList();
+    }
+    return m_pInstance;
+}
+
+
 void WebDownLoadList::initWorkUI()
 {
     ui->lineEdit_search->setPlaceholderText(QString::fromLocal8Bit("搜索下载内容"));
@@ -57,35 +68,41 @@ void WebDownLoadList::chandleSignalsAndSLots()
     connect(ui->pushButton_clearlist,&QPushButton::clicked,[=](){ ui->listWidget_list->clear(); });
     //下载设置
     connect(ui->pushButton_downsetting,&QPushButton::clicked,[=](){emit sig_setConfig();});
-}
-
-WebDownLoadList *WebDownLoadList::getInstance()
-{
-    if(m_pInstance == nullptr)
+    //停止
+    connect(stopbtn,&QPushButton::clicked,[=]()
     {
-        m_pInstance = new WebDownLoadList();
-    }
-    return m_pInstance;
+//        QPushButton *stopbtn = qobject_cast<QPushButton*>(sender());
+//        QLabel *num = stopbtn->parentWidget()->findChild<QLabel*>();
+//        emit sig_pause(num->text().toInt());
+        slot_setStartStatus(stopbtn,m_start);
+        qDebug()<< QString::fromLocal8Bit("暂停") << num->text();
+    });
 }
 
 bool WebDownLoadList::slot_addDownLoadRecordToList()
 {
-    QLabel *num = new QLabel(QString::number(m_count));
+//    QLabel *num = new QLabel(QString::number(m_count));
+    num = new QLabel(QString::number(m_count));
     num->setObjectName(QString::fromLocal8Bit("dl_num"));
     num->setAlignment(Qt::AlignCenter);//文字居中
-    QProgressBar *progressbar = new QProgressBar();
+//    QProgressBar *progressbar = new QProgressBar();
+    progressbar = new QProgressBar();
     progressbar->setObjectName(QString::fromLocal8Bit("dl_progressbar"));
     progressbar->setValue(0);
-    QPushButton *stopbtn = new QPushButton();
+//    QPushButton *stopbtn = new QPushButton();
+    stopbtn = new QPushButton();
     stopbtn->setObjectName(QString::fromLocal8Bit("dl_stopbtn"));
     stopbtn->setToolTip(QString::fromLocal8Bit("暂停"));
-    QPushButton *downloadlbtn = new QPushButton();
+//    QPushButton *downloadlbtn = new QPushButton();
+    downloadlbtn = new QPushButton();
     downloadlbtn->setObjectName(QString::fromLocal8Bit("dl_downloadlbtn"));
     downloadlbtn->setToolTip(QString::fromLocal8Bit("下载"));
-    QPushButton *deletebtn = new QPushButton();
+//    QPushButton *deletebtn = new QPushButton();
+    deletebtn = new QPushButton();
     deletebtn->setObjectName(QString::fromLocal8Bit("dl_deletebtn"));
     deletebtn->setToolTip(QString::fromLocal8Bit("删除"));
-    QPushButton *openbtn = new QPushButton();
+//    QPushButton *openbtn = new QPushButton();
+    openbtn = new QPushButton();
     openbtn->setObjectName(QString::fromLocal8Bit("dl_openbtn"));
     openbtn->setToolTip(QString::fromLocal8Bit("打开文件"));
     num->setFixedSize(QSize(26,26));
@@ -94,8 +111,10 @@ bool WebDownLoadList::slot_addDownLoadRecordToList()
     deletebtn->setFixedSize(QSize(18,18));
     downloadlbtn->setFixedSize(QSize(18,18));
     openbtn->setFixedSize(QSize(18,18));
-    QHBoxLayout *hblayout1 = new QHBoxLayout();
-    QHBoxLayout *hblayout2 = new QHBoxLayout();
+//    QHBoxLayout *hblayout1 = new QHBoxLayout();
+    hblayout1 = new QHBoxLayout();
+//    QHBoxLayout *hblayout2 = new QHBoxLayout();
+    hblayout2 = new QHBoxLayout();
     hblayout2->addWidget(stopbtn);//暂停
     hblayout2->addWidget(downloadlbtn);//下载
     hblayout2->addWidget(deletebtn);//删除
@@ -106,66 +125,20 @@ bool WebDownLoadList::slot_addDownLoadRecordToList()
     hblayout1->addSpacerItem(new QSpacerItem(5, 18, QSizePolicy::Fixed));//最小 30 26，可扩大
     hblayout1->addLayout(hblayout2);//操作按钮
     hblayout1->addSpacerItem(new QSpacerItem(5,18,QSizePolicy::Fixed));//右边界固定
-    QWidget *tempwdt = new QWidget();
+//    QWidget *tempwdt = new QWidget();
+    tempwdt = new QWidget();
     tempwdt->setFixedSize(600,40);
     tempwdt->setLayout(hblayout1);
     tempwdt->layout()->setContentsMargins(0,0,0,0);
     tempwdt->layout()->setMargin(0);
-    QListWidgetItem *item = new QListWidgetItem();
+//    QListWidgetItem *item = new QListWidgetItem();
+    item = new QListWidgetItem();
     item->setSizeHint(tempwdt->size());
     ui->listWidget_list->addItem(item);
     ui->listWidget_list->setItemWidget(item,tempwdt);
     m_count++;
-
-    //信号与槽函数关联
-    connect(stopbtn,&QPushButton::clicked,[=]()
-    {
-        QPushButton *stopbtn = qobject_cast<QPushButton*>(sender());
-        QLabel *num = stopbtn->parentWidget()->findChild<QLabel*>("#dl_num");
-        emit sig_pause(num->text().toInt());
-        slot_setStartStatus(stopbtn,m_start);
-        qDebug()<< QString::fromLocal8Bit("暂停") << num->text();
-    });
-    connect(deletebtn,&QPushButton::clicked,[=]()
-    {
-        QPushButton *delbtn = qobject_cast<QPushButton*>(sender());
-        QLabel *num = delbtn->parentWidget()->findChild<QLabel*>("#dl_num");
-        emit sig_delete(num->text().toInt());
-        qDebug()<< QString::fromLocal8Bit("删除") << num->text();
-    });
-    connect(downloadlbtn,&QPushButton::clicked,[=]()
-    {
-        QPushButton *downbtn = qobject_cast<QPushButton*>(sender());
-        QLabel *num = downbtn->parentWidget()->findChild<QLabel*>("#dl_num");
-        emit sig_download(num->text().toInt());
-        qDebug() << QString::fromLocal8Bit("下载") << num->text();
-    });
-    connect(openbtn,&QPushButton::clicked,[=]()
-    {
-        QPushButton *openbtn = qobject_cast<QPushButton*>(sender());
-        QLabel *num = openbtn->parentWidget()->findChild<QLabel*>("#dl_num");
-        emit sig_open(num->text().toInt(),"/"); qDebug() << QString::fromLocal8Bit("打开") << num->text();
-    });
-    connect(this,SIGNAL(sig_receiveProgressbar(int)),progressbar,SLOT(setValue(int)));
-    connect(this,&WebDownLoadList::sig_delete,[=](int value)
-    {
-        QWidget *item = ui->listWidget_list->itemWidget(ui->listWidget_list->item(value));
-        delete item;
-    });
-    connect(this,SIGNAL(sig_open(int,QString)),this,SLOT(slot_receiveData_openFile(QString)));
     return true;
 }
-
-bool WebDownLoadList::slot_setDownLoadStatus()
-{
-    return true;
-}
-
-bool WebDownLoadList::slot_chandleCancel()
-{
-    return true;
-}
-
 
 void WebDownLoadList::slot_searchDownloadHirtory(QString text)
 {
@@ -174,7 +147,7 @@ void WebDownLoadList::slot_searchDownloadHirtory(QString text)
 
 void WebDownLoadList::slot_setDownloadProgressbar(qint64 bytesReceived, qint64 bytesTotal)
 {
-   emit sig_receiveProgressbar(bytesReceived*100/bytesTotal);
+    progressbar->setValue(bytesReceived*100/bytesTotal);
     if(bytesReceived*100/bytesTotal == 100)
     {
         emit sig_receiveFinished();
@@ -185,32 +158,6 @@ void WebDownLoadList::slot_setDownloadProgressbar(qint64 bytesReceived, qint64 b
 void WebDownLoadList::slot_receivedNewWorkFinished()
 {
     qDebug() << QString::fromLocal8Bit("任务栏已经收到下载结束信号！");
-}
-
-void WebDownLoadList::slot_receiveSignal_cancel()
-{
-    emit sig_cancel(0);
-}
-
-void WebDownLoadList::slot_receiveSignal_pause()
-{
-    emit sig_pause(0);
-}
-
-void WebDownLoadList::slot_receiveSignal_delete()
-{
-    QPushButton *delbtn = qobject_cast<QPushButton*>(sender());
-    QLabel *num = delbtn->parentWidget()->findChild<QLabel*>("#dl_num");
-    qDebug() << num->text();
-    emit sig_delete(num->text().toInt());
-}
-
-void WebDownLoadList::slot_receiveSignal_open()
-{
-    QPushButton *openbtn = qobject_cast<QPushButton*>(sender());
-    QLabel *num = openbtn->parentWidget()->findChild<QLabel*>("#dl_num");
-    qDebug() << num->text();
-    emit sig_open(num->text().toInt(),"/");
 }
 
 void WebDownLoadList::mousePressEvent(QMouseEvent *event)
@@ -256,21 +203,6 @@ void WebDownLoadList::slot_setStartStatus(QPushButton *button, bool status)
     m_start = !m_start;//状态置反
 }
 
-void WebDownLoadList::slot_receiveData_cancel()
-{
-
-}
-
-void WebDownLoadList::slot_receiveData_pause()
-{
-
-}
-
-void WebDownLoadList::slot_receiveData_delete()
-{
-
-}
-
 //打开文件
 void WebDownLoadList::slot_receiveData_openFile(const QString &filepath)
 {
@@ -279,5 +211,4 @@ void WebDownLoadList::slot_receiveData_openFile(const QString &filepath)
                                   filepath,
                                   QString::fromLocal8Bit("Videos(*avi *mp4 *flv *mp3 *wmv)"),
                                                          0);
-
 }

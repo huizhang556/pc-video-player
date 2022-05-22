@@ -25,34 +25,18 @@ public:
 
 public slots:
     bool        slot_addDownLoadRecordToList();//添加下载记录
-    bool        slot_setDownLoadStatus();
-    bool        slot_chandleCancel();
     void        slot_searchDownloadHirtory(QString text);
     void        slot_setDownloadProgressbar(qint64 bytesReceived, qint64 bytesTotal);
     void        slot_receivedNewWorkFinished();
-    void        slot_receiveSignal_cancel();
-    void        slot_receiveSignal_pause();
-    void        slot_receiveSignal_delete();
-    void        slot_receiveSignal_open();
-protected:
-    void mousePressEvent(QMouseEvent *event) override;
 
-    void mouseMoveEvent(QMouseEvent *event) override;
-private:
-    explicit WebDownLoadList(QWidget *parent = nullptr);
-    Ui::WebDownLoadList *ui;
-    QPoint              m_mvPos;
-    bool                m_start;
-    int                 m_count;
-    static  WebDownLoadList* m_pInstance;
+protected:
+    void        mousePressEvent(QMouseEvent *event) override;
+    void        mouseMoveEvent(QMouseEvent *event) override;
 
 private slots:
     void        on_pushButton_min_clicked();
     void        on_pushButton_close_clicked();
     void        slot_setStartStatus(QPushButton *button,bool status);
-    void        slot_receiveData_cancel();
-    void        slot_receiveData_pause();
-    void        slot_receiveData_delete();
     void        slot_receiveData_openFile(const QString &filepath);
 
 signals:
@@ -65,6 +49,25 @@ signals:
     void        sig_receiveProgressbar(int value);
     void        sig_receiveFinished();
     void        sig_newDownloadRequest(const QString &address);
+private:
+    explicit WebDownLoadList(QWidget *parent = nullptr);
+    Ui::WebDownLoadList *ui;
+    QPoint              m_mvPos;
+    bool                m_start;
+    int                 m_count;
+
+    QLabel              *num                =   nullptr;
+    QProgressBar        *progressbar        =   nullptr;
+    QPushButton         *stopbtn            =   nullptr;
+    QPushButton         *downloadlbtn       =   nullptr;
+    QPushButton         *deletebtn          =   nullptr;
+    QPushButton         *openbtn            =   nullptr;
+    QHBoxLayout         *hblayout1          =   nullptr;
+    QHBoxLayout         *hblayout2          =   nullptr;
+    QWidget             *tempwdt            =   nullptr;
+    QListWidgetItem     *item               =   nullptr;
+
+    static  WebDownLoadList* m_pInstance;
 };
 
 #endif // WEBDOWNLOADLIST_H
