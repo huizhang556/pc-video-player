@@ -25,12 +25,13 @@
 #include "mainwidget/GalleryItemForm.h"
 #include "videomodels/VideoProgressBar.h"
 #include "videomodels/PlayCtlAdjustForm.h"
+#include "browser/DownLoadItem.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     loadGlobalQss::loadAllUIQss();//加载全局样式
-    dataBase::creatConnection();//连接数据库
+//    dataBase::creatConnection();//连接数据库
     MainWidget w1;
     w1.show();
 

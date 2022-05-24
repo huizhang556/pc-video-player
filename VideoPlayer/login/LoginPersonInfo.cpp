@@ -101,6 +101,13 @@ void LoginPersonInfo::initWorkUI()
     ui->gis_lineEditEmail->setPlaceholderText(QString::fromLocal8Bit("找回密码用"));
     QRegExp regExp5("^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$");
     ui->gis_lineEditEmail->setValidator(new QRegExpValidator(regExp5, this));
+
+    //重置--账号重置
+    ui->reset_lineEditUser->setPlaceholderText(QString::fromLocal8Bit("重置的账号"));
+    //重置--密码重置
+    ui->reset_lineEditPasswd->setPlaceholderText(QString::fromLocal8Bit("重置的密码"));
+    //重置--验证邮箱
+    ui->reset_lineEditEmail->setPlaceholderText(QString::fromLocal8Bit("验证邮箱"));
 }
 
 void LoginPersonInfo::chandleSignalsAndSLots()

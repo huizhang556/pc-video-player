@@ -252,16 +252,11 @@
         <file>images/skin/myskin_checkbtn.png</file>
         <file>images/skin/myskin_checkbtn_hover.png</file>
         <file>images/icon/title_webdownload_hover.png</file>
-        <file>images/icon/title_webdownload.png</file>
-        <file>images/function/download_delete.png</file>
-        <file>images/function/download_download.png</file>
         <file>images/function/download_pause.png</file>
         <file>images/function/download_start.png</file>
         <file>images/function/download_jpg.png</file>
         <file>images/function/download_mp3.png</file>
         <file>images/function/download_openfile.png</file>
-        <file>images/function/download_png.png</file>
-        <file>images/function/download_video.png</file>
         <file>images/function/download_wav.png</file>
         <file>images/function/new_disc.png</file>
         <file>images/function/download_arrow_hover.png</file>
@@ -274,5 +269,42 @@
         <file>images/function/history_list_item_hover.png</file>
         <file>images/bgpic/login.png</file>
         <file>images/bgpic/newwork.png</file>
+        <file>images/function/download_AI.png</file>
+        <file>images/function/download_avi.png</file>
+        <file>images/function/download_bmp.png</file>
+        <file>images/function/download_cdr.png</file>
+        <file>images/function/download_doc.png</file>
+        <file>images/function/download_eps.png</file>
+        <file>images/function/download_exe.png</file>
+        <file>images/function/download_gif.png</file>
+        <file>images/function/download_html.png</file>
+        <file>images/function/download_mov.png</file>
+        <file>images/function/download_mp31.png</file>
+        <file>images/function/download_mp4.png</file>
+        <file>images/function/download_pdf.png</file>
+        <file>images/function/download_ppt.png</file>
+        <file>images/function/download_pr.png</file>
+        <file>images/function/download_psd.png</file>
+        <file>images/function/download_rar.png</file>
+        <file>images/function/download_svg.png</file>
+        <file>images/function/download_tif.png</file>
+        <file>images/function/download_zip.png</file>
+        <file>images/function/download_excel.png</file>
+        <file>images/function/download_png.png</file>
+        <file>images/function/download_unknow.png</file>
+        <file>images/function/download_xlsx.png</file>
+        <file>images/function/download_cancel.png</file>
+        <file>images/function/download_cancel_hover.png</file>
+        <file>images/function/download_deleteitem.png</file>
+        <file>images/function/download_deleteitem_hover.png</file>
+        <file>images/function/download_dldelete.png</file>
+        <file>images/function/download_dldelete_hover.png</file>
+        <file>images/function/download_redown.png</file>
+        <file>images/function/download_redown_hover.png</file>
+        <file>images/function/download_openfile_hover.png</file>
+        <file>images/function/download_start_hover.png</file>
+        <file>images/icon/title_webdownload.png</file>
+        <file>images/function/download_deleted.png</file>
+        <file>images/function/download_txt.png</file>
     </qresource>
 </RCC>

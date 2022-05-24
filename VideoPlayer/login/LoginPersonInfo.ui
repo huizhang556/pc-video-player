@@ -6,16 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>387</width>
-    <height>337</height>
+    <width>432</width>
+    <height>330</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-	</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_10">
    <property name="spacing">
@@ -1821,6 +1820,9 @@ border:2px solid #ff5c38;
 }
 
 </string>
+                     </property>
+                     <property name="placeholderText">
+                      <string/>
                      </property>
                     </widget>
                    </item>

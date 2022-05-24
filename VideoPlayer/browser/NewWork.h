@@ -3,6 +3,7 @@
 #include "global/Global.h"
 #include "mythread/Worker.h"
 #include "WebDownLoadList.h"
+
 #include <QUrl>
 #include <QFile>
 #include <QDialog>
@@ -12,7 +13,6 @@
 #include <QPushButton>
 #include <QMouseEvent>
 #include <QListWidget>
-#include <QWebEngineDownloadItem>
 
 namespace Ui {
 class NewWork;
@@ -60,7 +60,6 @@ private:
     QListWidget             *m_listWdgt_path        =   nullptr;
     QPushButton             *m_clearBtn             =   nullptr;
     QWidget                 *m_hisWdgt              =   nullptr;
-    QWebEngineDownloadItem  *m_downItem             =   nullptr;
     static  NewWork         *m_pInstance;
     Worker                  *m_worker;
     QThread                 *m_workThread;

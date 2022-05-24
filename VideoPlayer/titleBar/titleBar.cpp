@@ -67,7 +67,7 @@ void TitleBar::initWorker()
     ui->pushButton_advance->installEventFilter(this);
 
     ui->lineEdit_webSearch->setFixedHeight(28);
-    ui->lineEdit_webSearch->setText(QString::fromLocal8Bit("https://www.baidu.com/"));//默认显示的网址
+    ui->lineEdit_webSearch->setText(QString::fromLocal8Bit("http://82.156.175.81/study/index.html"));//默认显示的网址
     ui->lineEdit_webSearch->setPlaceholderText(QString::fromLocal8Bit("请输入有效网址或要搜索的内容-_-"));
     //正则校验  url校验
 //    QRegExp regExp("^[a-zA-z]+://(\w+(-\w+)*)(\.(\w+(-\w+)*))*(\?\S*)?$");

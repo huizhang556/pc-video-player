@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>audio/browser/finished.wav</file>
+        <file>audio/browser/completed.wav</file>
+    </qresource>
+</RCC>

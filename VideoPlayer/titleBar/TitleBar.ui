@@ -586,7 +586,7 @@ padding:-1px;
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">QProgressBar
+              <string notr="true">#webProgressBar
 {
 font:9pt;
 color:white;
@@ -596,7 +596,7 @@ border:1px solid #E8EDF2;
 background-color:#2a2a31;
 border-color: rgb(180, 180, 180);
 }
-QProgressBar:chunk
+#webProgressBar:chunk
 {
 width:5px;
 margin:0.5px;

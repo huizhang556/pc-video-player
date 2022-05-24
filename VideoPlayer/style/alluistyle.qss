@@ -110,7 +110,7 @@ background: white;
 /*序号*/
 #dl_num
 {
-border-image:url(://images/function/download_video.png);
+/*border-image:url(://images/function/download_video.png);*/
 }
 
 /*进度条*/
@@ -611,7 +611,7 @@ opacity: 50;
 }
 */
 
-QLCDNumber
+#lcdNumber
 {
 border:none;
 /*font:bold italic 18px "微软雅黑";*/

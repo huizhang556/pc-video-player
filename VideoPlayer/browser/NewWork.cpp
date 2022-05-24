@@ -110,14 +110,15 @@ void NewWork::chandleSignalsAndSlots()
     connect(m_workThread,&QThread::started,this,&NewWork::slot_receiveThreadStarted);//打印以下线程完毕是否结束
     connect(m_workThread,&QThread::finished,this,&NewWork::slot_receiveThreadFinished);//打印以下线程完毕是否结束了
     connect(this,SIGNAL(sig_download(QUrl,QString,QString)),m_worker,SLOT(slot_receiveData_accept(QUrl,QString,QString)));//收到下载信号，创建线程下载
-    connect(this,SIGNAL(sig_download(QUrl,QString,QString)),WebDownLoadList::getInstance(),SLOT(slot_addDownLoadRecordToList()));//收到下载信号，下载列表创建任务
+    connect(this,SIGNAL(sig_download(QUrl,QString,QString)),WebDownLoadList::getInstance(),SLOT(slot_addDownLoadRecordToList(QUrl,QString,QString)));//收到下载信号，下载列表创建任务
+//    connect(m_worker,SIGNAL(sig_receiveData_progressbar(qint64,qint64)),WebDownLoadList::getInstance()->getDownloadItem(),SLOT(slot_setItemDownProgress(qint64,qint64)));
+//    connect(m_worker,SIGNAL(sig_receiveData_finished()),WebDownLoadList::getInstance()->getDownloadItem(),SLOT(slot_receive_finished()));
     connect(m_worker,&Worker::sig_receiveData_progressbar,WebDownLoadList::getInstance(),&WebDownLoadList::slot_setDownloadProgressbar);
-    connect(m_worker,&Worker::sig_receiveData_finished,WebDownLoadList::getInstance(),&WebDownLoadList::slot_receivedNewWorkFinished);//任务栏接收下载完成信号
-
+    connect(m_worker,&Worker::sig_receiveData_finished,WebDownLoadList::getInstance(),&WebDownLoadList::slot_receivedNewWorkFinished);
     //确定下载---确定按钮点击
     connect(ui->pushButton_download,&QPushButton::clicked,[=](){
         qDebug() <<QString::fromLocal8Bit("当前UI线程id:") << QThread::currentThreadId();
-        slot_createNewDownloadWork();
+        slot_createNewDownloadWork();//创建线程
         //确定下载（下载地址--文件名--保存路径）
         emit sig_download(ui->lineEdit_address->text().trimmed(),ui->lineEdit_filename->text().trimmed(),ui->lineEdit_savepath->text());
         this->hide();

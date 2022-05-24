@@ -24,8 +24,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-CONFIG += c++11
+#调试窗口必须要release才能生效
+#CONFIG += console pro
 
 SOURCES += \
         main.cpp \
@@ -64,4 +64,5 @@ DISTFILES += \
     titleBar
 
 RESOURCES += \
-    res.qrc
+    res_audio.qrc \
+    res_image.qrc

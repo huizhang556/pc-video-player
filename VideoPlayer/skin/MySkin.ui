@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>617</width>
+    <width>634</width>
     <height>348</height>
    </rect>
   </property>
@@ -14,8 +14,10 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:rgba(239, 239, 239,0.5);
-
+   <string notr="true">#MySkin
+{
+background-color:rgba(239, 239, 239,0.5);
+}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
