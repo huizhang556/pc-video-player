@@ -29,7 +29,7 @@ public:
     static  WebDownLoadList* getInstance();
     DownLoadItem*    getDownloadItem();
 public slots:
-    bool        slot_addDownLoadRecordToList(const QUrl &url, const QString &filename, const QString &savepath);//添加下载记录
+    bool        slot_addDownLoadRecordToList(const QUrl &url, const QString &filename, const QString &savepath, bool openStatus);//添加下载记录
     void        slot_searchDownloadHirtory(QString text);
     void        slot_setDownloadProgressbar(qint64 bytesReceived, qint64 bytesTotal);
     void        slot_receivedNewWorkFinished();

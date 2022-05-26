@@ -65,8 +65,7 @@ private:
     QThread                 *m_workThread;
 signals:
     void        sig_download_start();
-    void        sig_download(const QUrl& url,const QString& filename, const QString& savepath);
-    void        sig_downloadOpen();
+    void        sig_download(const QUrl& url,const QString& filename, const QString& savepath,bool open);
     void        sig_cancel();
 };
 

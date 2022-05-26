@@ -193,6 +193,9 @@ border-bottom-color:#a0a0a0;
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <layout class="QVBoxLayout" name="verticalLayout">
+             <property name="spacing">
+              <number>10</number>
+             </property>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout">
                <item>
@@ -227,6 +230,15 @@ border-bottom-color:#a0a0a0;
                    <width>16777215</width>
                    <height>24</height>
                   </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">#lineEdit_address
+{
+padding:0px 2px;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string/>
                  </property>
                  <property name="cursorPosition">
                   <number>0</number>
@@ -273,6 +285,12 @@ border-bottom-color:#a0a0a0;
                    <height>24</height>
                   </size>
                  </property>
+                 <property name="styleSheet">
+                  <string notr="true">#lineEdit_filename
+{
+padding:0px 2px;
+}</string>
+                 </property>
                 </widget>
                </item>
               </layout>
@@ -316,6 +334,12 @@ border-bottom-color:#a0a0a0;
                      <width>16777215</width>
                      <height>24</height>
                     </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">#lineEdit_savepath
+{
+padding:0px 2px;
+}</string>
                    </property>
                   </widget>
                  </item>

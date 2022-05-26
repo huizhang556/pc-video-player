@@ -3,6 +3,7 @@
 
 #include <QUrl>
 #include <QWidget>
+#include <QProcess>
 #include <QFileInfo>
 #include <QFileDialog>
 
@@ -15,7 +16,7 @@ class DownLoadItem : public QWidget
     Q_OBJECT
 
 public:
-    explicit DownLoadItem(QUrl url,QString fileName,QString path,QWidget *parent = nullptr);
+    explicit DownLoadItem(QUrl url,QString fileName,QString path,bool open,QWidget *parent = nullptr);
     ~DownLoadItem();
     void            initWorkUI();
     void            chandleSignalsAndSlots();
@@ -33,6 +34,7 @@ public slots:
     void            slot_setItemExistStatus(int status);//设置文件状态
     void            slot_receive_start();//下载开始
     void            slot_receive_finished();//文件接收完成
+    void            slot_receive_openDir(bool open);//下载完打开目录
 protected:
     bool            eventFilter(QObject *watched, QEvent *event) override;
     bool            checkItemFileIsExist(QString fullpath);//检查文件是否存在
@@ -41,6 +43,7 @@ private slots:
 
 private:
     Ui::DownLoadItem *ui;
+    bool            m_open;//下载完成是否直接打开
     bool            m_start;
     QString         m_fileUrl;
     QString         m_fileType;

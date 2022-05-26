@@ -85,7 +85,7 @@ void WebDownLoadList::chandleSignalsAndSLots()
     });
 }
 
-bool WebDownLoadList::slot_addDownLoadRecordToList(const QUrl &url, const QString &filename, const QString &savepath)
+bool WebDownLoadList::slot_addDownLoadRecordToList(const QUrl &url, const QString &filename, const QString &savepath,bool openStatus)
 {
     QFileInfo info(url.toString());
     m_fileSuffix = info.suffix();
@@ -174,7 +174,7 @@ bool WebDownLoadList::slot_addDownLoadRecordToList(const QUrl &url, const QStrin
 //    tempwdt->layout()->setMargin(0);
 ////    QListWidgetItem *item = new QListWidgetItem();
     item = new QListWidgetItem();
-    m_downLoadItem = new DownLoadItem(url,filename,savepath);
+    m_downLoadItem = new DownLoadItem(url,filename,savepath,openStatus);
     item->setSizeHint(m_downLoadItem->size());
     ui->listWidget_list->addItem(item);
     ui->listWidget_list->setItemWidget(item,m_downLoadItem);

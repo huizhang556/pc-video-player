@@ -2,8 +2,9 @@
 #include "ui_DownLoadItem.h"
 #include <QDebug>
 
-DownLoadItem::DownLoadItem(QUrl url, QString fileName, QString path, QWidget *parent) :
+DownLoadItem::DownLoadItem(QUrl url, QString fileName, QString path, bool open, QWidget *parent) :
     QWidget(parent),
+    m_open(open),
     m_start(true),
     m_fileUrl(url.toString()),
     m_fileName(fileName),
@@ -226,6 +227,18 @@ bool DownLoadItem::setItemFileType(const QString &suffix)
                            "border-image:url(://images/function/download_txt.png);"
                            "}");
     }
+    else if("crx" == suffix)
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_crx.png);"
+                           "}");
+    }
+    else if("deb" == suffix)
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_deb.png);"
+                           "}");
+    }
     else if("deleted" == suffix)
     {
         ui->label_icon->setStyleSheet("#label_icon{"
@@ -244,11 +257,16 @@ bool DownLoadItem::setItemFileType(const QString &suffix)
 void DownLoadItem::openLocalFileSaveDirectory(const QString &dir)
 {
     if(!checkItemFileIsExist(dir+"/"+m_fileName)) return;//不存在
-    QFileDialog::getOpenFileName(this,//不指定父窗口，设置自己的样式
-                                 QString::fromLocal8Bit("选择文件"),
-                                 dir,
-                                 QString::fromLocal8Bit("ALL(*)")
-                                 );
+//    QFileDialog::getOpenFileName(this,//不指定父窗口，设置自己的样式
+//                                 QString::fromLocal8Bit("选择文件"),
+//                                 dir,
+//                                 QString::fromLocal8Bit("ALL(*)")
+//                                 );
+    QProcess process;
+    QString filePath = (dir+"/"+m_fileName);
+    filePath.replace("/", "\\"); // 只能识别 "\"
+    QString cmd = QString("explorer.exe /select,\"%1\"").arg(filePath);
+    process.startDetached(cmd);
 }
 
 void DownLoadItem::slot_setItemDownProgress(qint64 bytesReceived, qint64 bytesTotal)
@@ -261,7 +279,8 @@ void DownLoadItem::slot_setItemDownProgress(qint64 bytesReceived, qint64 bytesTo
         slot_setItemFileSize(calCurrentItemSize(bytesTotal));
         slot_setItemFileName();
         slot_setItemExistStatus(0);
-        slot_receive_finished();//转换界面
+        slot_receive_openDir(m_open);
+        slot_receive_finished();//转换界面,文件信息，文件控制界面
     }
 }
 
@@ -307,7 +326,7 @@ bool DownLoadItem::checkItemFileIsExist(QString fullpath)
     {
         qDebug() <<QString::fromLocal8Bit("文件不存在");
         setItemFileType("deleted");//删除图标
-        slot_setItemExistStatus(1);
+        slot_setItemExistStatus(1);//0--存在 1--删除
         return false;
     }
 }
@@ -325,6 +344,18 @@ void DownLoadItem::slot_receive_finished()
     ui->stackedWidget_progressbar->setCurrentIndex(1);
     ui->stackedWidget_control->setCurrentIndex(1);
     qDebug() << QString::fromLocal8Bit("文件下载已完成！");
+}
+
+void DownLoadItem::slot_receive_openDir(bool open)
+{
+    if(open)
+    {
+        openLocalFileSaveDirectory(m_savePath);
+    }
+    else
+    {
+        return;
+    }
 }
 
 bool DownLoadItem::eventFilter(QObject *watched, QEvent *event)

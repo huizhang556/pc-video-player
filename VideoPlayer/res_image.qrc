@@ -306,5 +306,7 @@
         <file>images/icon/title_webdownload.png</file>
         <file>images/function/download_deleted.png</file>
         <file>images/function/download_txt.png</file>
+        <file>images/function/download_crx.png</file>
+        <file>images/function/download_deb.png</file>
     </qresource>
 </RCC>
