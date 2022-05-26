@@ -142,7 +142,7 @@ bool DownLoadItem::setItemFileType(const QString &suffix)
                            "border-image:url(://images/function/download_pdf.png);"
                            "}");
     }
-    else if("doc" == suffix)
+    else if("doc" == suffix ||"docx" == suffix)
     {
         ui->label_icon->setStyleSheet("#label_icon{"
                            "border-image:url(://images/function/download_doc.png);"
