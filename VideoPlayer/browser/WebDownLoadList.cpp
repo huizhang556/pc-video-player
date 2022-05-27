@@ -21,6 +21,14 @@ WebDownLoadList::WebDownLoadList(QWidget *parent) :
     chandleSignalsAndSLots();
 }
 
+void WebDownLoadList::getButtonInfo()
+{
+    qDebug() <<QString::fromLocal8Bit("接收到信号！");
+    QPushButton *btn = qobject_cast<QPushButton*>(sender());
+    qDebug() << btn->parentWidget();
+    qDebug() << btn->objectName()<<btn;
+}
+
 WebDownLoadList::~WebDownLoadList()
 {
     delete ui;
@@ -83,6 +91,17 @@ void WebDownLoadList::chandleSignalsAndSLots()
         slot_setStartStatus(stopbtn,m_start);
         qDebug()<< QString::fromLocal8Bit("暂停") << lab_num->text();
     });
+
+    //暂停
+    connect(m_downLoadItem,SIGNAL(sig_downloadStatus(bool)),this,SLOT(getButtonInfo()));
+    //取消
+    connect(m_downLoadItem,SIGNAL(sig_download_cancel()),this,SLOT(getButtonInfo()));
+    //删除
+    connect(m_downLoadItem,SIGNAL(sig_download_delete()),this,SLOT(getButtonInfo()));
+    //重新下载
+    connect(m_downLoadItem,SIGNAL(sig_download_reload()),this,SLOT(getButtonInfo()));
+    //从列表中删除任务
+    connect(m_downLoadItem,SIGNAL(sig_download_deleteItem()),this,SLOT(getButtonInfo()));
 }
 
 bool WebDownLoadList::slot_addDownLoadRecordToList(const QUrl &url, const QString &filename, const QString &savepath,bool openStatus)
@@ -175,8 +194,10 @@ bool WebDownLoadList::slot_addDownLoadRecordToList(const QUrl &url, const QStrin
 ////    QListWidgetItem *item = new QListWidgetItem();
     item = new QListWidgetItem();
     m_downLoadItem = new DownLoadItem(url,filename,savepath,openStatus);
+    //堆变量每次分配不同的地址
+    qDebug() <<QString::fromLocal8Bit("新分配的堆变量地址：") << m_downLoadItem;
     item->setSizeHint(m_downLoadItem->size());
-    ui->listWidget_list->addItem(item);
+    ui->listWidget_list->insertItem(0,item);
     ui->listWidget_list->setItemWidget(item,m_downLoadItem);
     qDebug() << QString::fromLocal8Bit("已经创建item!");
     return true;

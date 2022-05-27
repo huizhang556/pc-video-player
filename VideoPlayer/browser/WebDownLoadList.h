@@ -6,6 +6,7 @@
 #include <QLayout>
 #include <QLabel>
 #include <QSound>
+#include <QMetaType>
 #include <QFileInfo>
 #include <QSoundEffect>
 #include <QMouseEvent>
@@ -48,6 +49,8 @@ private slots:
     void        slot_openLocalFile();
     void        slot_deleteFile();
 
+    void        getButtonInfo();
+
 signals:
     void        sig_setConfig();
     void        sig_open(int num,QString path);
@@ -86,6 +89,7 @@ private:
     QListWidgetItem     *item               =   nullptr;
     DownLoadItem        *m_downLoadItem     =   nullptr;
     static  WebDownLoadList* m_pInstance;
+
 };
 
 #endif // WEBDOWNLOADLIST_H

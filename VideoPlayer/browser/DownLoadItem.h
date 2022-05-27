@@ -16,6 +16,7 @@ class DownLoadItem : public QWidget
     Q_OBJECT
 
 public:
+    explicit DownLoadItem(QWidget *parent = nullptr);
     explicit DownLoadItem(QUrl url,QString fileName,QString path,bool open,QWidget *parent = nullptr);
     ~DownLoadItem();
     void            initWorkUI();
@@ -25,7 +26,9 @@ public:
     QString         calCurrentItemSize(qint64 bytesTotal);//总大小
     bool            setItemFileType(const QString& suffix);//判断文件类型
     void            openLocalFileSaveDirectory(const QString& dir);//打开目录
+
 public slots:
+    void            slot_judgeDeleteWorkItem();//判断删除的是哪个item
     void            slot_setItemIcon();//设置文件类型
     void            slot_setItemDownProgress(qint64 bytesReceived, qint64 bytesTotal);//设置下载进度
     void            slot_setItemByteLoad(qint64 bytesReceived, qint64 bytesTotal);//设置已下载的大小

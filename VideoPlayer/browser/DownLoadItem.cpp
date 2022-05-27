@@ -2,6 +2,16 @@
 #include "ui_DownLoadItem.h"
 #include <QDebug>
 
+DownLoadItem::DownLoadItem(QWidget *parent):
+    QWidget(parent)
+{
+    ui->setupUi(this);
+    ui->setupUi(this);
+    setFixedSize(600,40);
+    initWorkUI();
+    chandleSignalsAndSlots();
+}
+
 DownLoadItem::DownLoadItem(QUrl url, QString fileName, QString path, bool open, QWidget *parent) :
     QWidget(parent),
     m_open(open),
@@ -28,13 +38,13 @@ void DownLoadItem::initWorkUI()
     ui->stackedWidget_progressbar->setCurrentIndex(0);
     ui->stackedWidget_control->setCurrentIndex(0);
     ui->progressBar->setValue(0);
-    ui->pushButton_dl_pause->setToolTip(QString::fromLocal8Bit("暂停"));
+    ui->pushButton_dl_pause->setToolTip(QString::fromLocal8Bit("暂停任务"));
     setItemDownloadStatus(m_start);
-    ui->pushButton_dl_cancel->setToolTip(QString::fromLocal8Bit("取消"));
-    ui->pushButton_dl_delete->setToolTip(QString::fromLocal8Bit("删除"));
-    ui->pushButton_dl_openfile->setToolTip(QString::fromLocal8Bit("打开文件"));
+    ui->pushButton_dl_cancel->setToolTip(QString::fromLocal8Bit("取消任务"));
+    ui->pushButton_dl_delete->setToolTip(QString::fromLocal8Bit("删除任务"));
+    ui->pushButton_dl_openfile->setToolTip(QString::fromLocal8Bit("打开目录"));
     ui->pushButton_dl_redown->setToolTip(QString::fromLocal8Bit("重新下载"));
-    ui->pushButton_dl_deleteItem->setToolTip(QString::fromLocal8Bit("删除下载"));
+    ui->pushButton_dl_deleteItem->setToolTip(QString::fromLocal8Bit("从列表中删除"));
 }
 
 void DownLoadItem::chandleSignalsAndSlots()
@@ -51,6 +61,7 @@ void DownLoadItem::chandleSignalsAndSlots()
     connect(ui->pushButton_dl_redown,&QPushButton::clicked,[=](){emit sig_download_reload();});
     //删除视图item
     connect(ui->pushButton_dl_deleteItem,&QPushButton::clicked,[=](){emit sig_download_deleteItem();});
+    connect(ui->pushButton_dl_deleteItem,SIGNAL(clicked(bool)),this,SLOT(slot_judgeDeleteWorkItem()));//必须使用Qt4方式连接
 }
 
 void DownLoadItem::setItemDownloadStatus(bool status)
@@ -215,6 +226,12 @@ bool DownLoadItem::setItemFileType(const QString &suffix)
                            "border-image:url(://images/function/download_exe.png);"
                            "}");
     }
+    else if("iso" == suffix)
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_system.png);"
+                           "}");
+    }
     else if("mov" == suffix)
     {
         ui->label_icon->setStyleSheet("#label_icon{"
@@ -263,10 +280,21 @@ void DownLoadItem::openLocalFileSaveDirectory(const QString &dir)
 //                                 QString::fromLocal8Bit("ALL(*)")
 //                                 );
     QProcess process;
-    QString filePath = (dir+"/"+m_fileName);
+    QString filePath = (dir+"/"+m_fileName);//路径有空格不能打开路径
+    qDebug() << QString::fromLocal8Bit("打开路径:") << filePath;
     filePath.replace("/", "\\"); // 只能识别 "\"
     QString cmd = QString("explorer.exe /select,\"%1\"").arg(filePath);
     process.startDetached(cmd);
+}
+
+
+//判断删除的是哪个item
+void DownLoadItem::slot_judgeDeleteWorkItem()
+{
+    QPushButton *pButton = qobject_cast<QPushButton*>(sender());
+    qDebug() <<  pButton <<pButton->text();
+    QWidget *widget = pButton->nativeParentWidget();
+    qDebug() << widget->objectName()<<QString::fromLocal8Bit("父亲地址:") << widget;
 }
 
 void DownLoadItem::slot_setItemDownProgress(qint64 bytesReceived, qint64 bytesTotal)
@@ -286,7 +314,7 @@ void DownLoadItem::slot_setItemDownProgress(qint64 bytesReceived, qint64 bytesTo
 
 void DownLoadItem::slot_setItemByteLoad(qint64 bytesReceived, qint64 bytesTotal)
 {
-
+    qDebug() << calCurrentItemLoadedSize(bytesReceived)<<"------"<<calCurrentItemSize(bytesTotal);
     ui->label_prosize->setText(calCurrentItemLoadedSize(bytesReceived) + "/" + calCurrentItemSize(bytesTotal));
 }
 

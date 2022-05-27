@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>450</width>
-    <height>200</height>
+    <width>471</width>
+    <height>265</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -403,6 +403,25 @@ background: rbga(240, 240, 240,0.6) url(:/images/function/download_arrow_hover.p
             </layout>
            </item>
           </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_warning">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
          </widget>
         </item>
         <item>
