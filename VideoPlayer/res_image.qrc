@@ -308,5 +308,6 @@
         <file>images/function/download_txt.png</file>
         <file>images/function/download_crx.png</file>
         <file>images/function/download_deb.png</file>
+        <file>images/function/download_apk.png</file>
     </qresource>
 </RCC>

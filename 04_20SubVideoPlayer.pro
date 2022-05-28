@@ -5,6 +5,7 @@ SUBDIRS += \
 
 
 #2022-02-07  allcount = 11424 rows
+#2022-05-27  allcount = 14616 rows
 
 #release编译之前（已使用模式选择(release|debug)解决）：
 #1.MusicPlayShow.cpp文件中，修改picture路径；

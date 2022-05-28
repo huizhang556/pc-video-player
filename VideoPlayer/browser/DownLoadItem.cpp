@@ -93,57 +93,146 @@ void DownLoadItem::slot_setItemIcon()
 QString DownLoadItem::calCurrentItemLoadedSize(qint64 bytesReceived)
 {
     //bytesReceived按字节数统计的
-    if(0 <= bytesReceived < 1024)//B
-    {
-        return QString::number(bytesReceived)+"B";
+//    if(0 <= bytesReceived < 1024)//B
+//    {
+//        return QString::number(bytesReceived)+"B";
+//    }
+//    else if(1024 <= bytesReceived < (1024*1024))//KB 1024*1024=1048576
+//    {
+//        QString KB = QString::number(bytesReceived/1024);
+//        return KB + "KB";
+//    }
+//    else if((1024*1024) <= bytesReceived < (1024*1024*1024))//MB 1024*1024*1024=1073741824
+//    {
+//        QString MB = QString::number(bytesReceived/(1024*1024));
+//        return MB + "MB";
+//    }
+//    else if((1024*1024*1024) <= bytesReceived < (1024*1024*1024*1024))//GB
+//    {
+//        QString GB = QString::number(bytesReceived/(1024*1024*1024));
+//        return GB + "GB";
+//    }
+//    else
+//    {
+//        return "unknow size";
+//    }
+    int integer = 0;  //整数位
+    int decimal = 0;  //小数位，保留三位
+    char unit ='B';
+    qint64 standardSize = bytesReceived;
+    qint64 curSize = bytesReceived;
+
+    if(standardSize > 1024) {
+        curSize = standardSize * 1000;
+        curSize /= 1024;
+        integer = curSize / 1000;
+        decimal = curSize % 1000;
+        standardSize /= 1024;
+        unit = 'K';
+        if(standardSize > 1024) {
+            curSize = standardSize * 1000;
+            curSize /= 1024;
+            integer = curSize / 1000;
+            decimal = curSize % 1000;
+            standardSize /= 1024;
+            unit = 'M';
+            if(standardSize > 1024) {
+                curSize = standardSize * 1000;
+                curSize /= 1024;
+                integer = curSize / 1000;
+                decimal = curSize % 1000;
+                unit = 'G';
+            }
+        }
     }
-    else if(1024 <= bytesReceived < (1024*1024))//KB 1024*1024=1048576
-    {
-        QString KB = QString::number(bytesReceived/1024);
-        return KB + "KB";
+
+    QString dec = "0";
+    if (0 <= decimal && decimal <= 9) {
+        dec = dec + dec + QString::number(decimal);
     }
-    else if((1024*1024) <= bytesReceived < (1024*1024*1024))//MB 1024*1024*1024=1073741824
-    {
-        QString MB = QString::number(bytesReceived/(1024*1024));
-        return MB + "MB";
+
+    if (10 <= decimal && decimal <= 99) {
+        dec = "0" + QString::number(decimal);
     }
-    else if((1024*1024*1024) <= bytesReceived < (1024*1024*1024*1024))//GB
-    {
-        QString GB = QString::number(bytesReceived/(1024*1024*1024));
-        return GB + "GB";
+
+    if (100 <= decimal && decimal <= 999) {
+        dec = QString::number(decimal);
     }
-    else
-    {
-        return "unknow size";
-    }
+
+    return QString::number(integer) + "." + dec + unit;
 }
 
 QString DownLoadItem::calCurrentItemSize(qint64 bytesTotal)
 {
-    //bytesTotal按字节计，number不四舍五入
-    if(0 <= bytesTotal < 1024)//B
-    {
-        return QString::number(bytesTotal)+"B";
+//    //bytesTotal按字节计，number不四舍五入
+//    if(0 <= bytesTotal < 1024)//B
+//    {
+//        return QString::number(bytesTotal)+"B";
+//    }
+//    else if(1024 <= bytesTotal < (1024*1024))//KB   1048576
+//    {
+//        QString KB = QString::number(bytesTotal/1024);
+//        return KB + "KB";
+//    }
+//    else if((1024*1024) <= bytesTotal < (1024*1024*1024))//MB   1073 741 824
+//    {
+//        QString MB = QString::number(bytesTotal/(1024*1024));
+//        return MB + "MB";
+//    }
+//    else if((1024*1024*1024) <= bytesTotal < 1024*1024*1024*1024)//GB  1099 511 627 776
+//    {
+//        QString GB = QString::number(bytesTotal/(1024*1024*1024));
+//        return GB + "GB";
+//    }
+//    else
+//    {
+//        return "unknow size";
+//    }
+
+    int integer = 0;  //整数位
+    int decimal = 0;  //小数位，保留三位
+    char unit ='B';
+    qint64 standardSize = bytesTotal;//qint64 long long int
+    qint64 curSize = bytesTotal;
+
+    if(standardSize > 1024) {
+        curSize = standardSize * 1000;//目的是扩大为整数求取小数部分好计算
+        curSize /= 1024;//curSize = curSize/1024 curSize单位为（B）
+        integer = curSize / 1000;//变为B大小后，求整数部分
+        decimal = curSize % 1000;//求余数mod()
+        standardSize /= 1024;//整正的大小 standardSize
+        unit = 'K';
+        if(standardSize > 1024) {//KB大大小大于1024
+            curSize = standardSize * 1000;
+            curSize /= 1024;
+            integer = curSize / 1000;
+            decimal = curSize % 1000;
+            standardSize /= 1024;
+            unit = 'M';
+            if(standardSize > 1024) {
+                curSize = standardSize * 1000;
+                curSize /= 1024;
+                integer = curSize / 1000;
+                decimal = curSize % 1000;
+                unit = 'G';
+            }
+        }
     }
-    else if(1024 <= bytesTotal < (1024*1024))//KB
-    {
-        QString KB = QString::number(bytesTotal/1024);
-        return KB + "KB";
+
+    QString dec = "0";
+    if (0 <= decimal && decimal <= 9) {
+        dec = dec + dec + QString::number(decimal);
     }
-    else if((1024*1024) <= bytesTotal < (1024*1024*1024))//MB
-    {
-        QString MB = QString::number(bytesTotal/(1024*1024));
-        return MB + "MB";
+
+    if (10 <= decimal && decimal <= 99) {
+        dec = "0" + QString::number(decimal);
     }
-    else if((1024*1024*1024) <= bytesTotal < 1024*1024*1024*1024)//GB
-    {
-        QString GB = QString::number(bytesTotal/(1024*1024*1024));
-        return GB + "GB";
+
+    if (100 <= decimal && decimal <= 999) {
+        dec = QString::number(decimal);
     }
-    else
-    {
-        return "unknow size";
-    }
+
+    return QString::number(integer) + "." + dec + unit;
 }
 
 bool DownLoadItem::setItemFileType(const QString &suffix)
@@ -190,10 +279,11 @@ bool DownLoadItem::setItemFileType(const QString &suffix)
                            "border-image:url(://images/function/download_mp31.png);"
                            "}");
     }
-    else if("zip" == suffix)
+
+    else if("apk" == suffix)
     {
         ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_zip.png);"
+                           "border-image:url(://images/function/download_apk.png);"
                            "}");
     }
     else if("png" == suffix)
@@ -321,7 +411,7 @@ void DownLoadItem::slot_setItemByteLoad(qint64 bytesReceived, qint64 bytesTotal)
 void DownLoadItem::slot_setItemFileSize(QString size)
 {
     ui->label_total->setText(size);//文件总大小
-    ui->label_completed->setText(QString::fromLocal8Bit("--完成"));
+    ui->label_completed->setText(QString::fromLocal8Bit("-- 完成"));
 }
 
 void DownLoadItem::slot_setItemFileName()
@@ -338,7 +428,7 @@ void DownLoadItem::slot_setItemExistStatus(int status)
     }
     else
     {
-        ui->label_completed->setText(QString::fromLocal8Bit("--文件已删除"));
+        ui->label_completed->setText(QString::fromLocal8Bit("-- 文件已删除"));
     }
 }
 

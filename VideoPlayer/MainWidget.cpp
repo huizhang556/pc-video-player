@@ -94,7 +94,7 @@ void MainWidget::initOtherWidgetUi()
     //托盘
     QIcon icno(":/images/icon/tray.png");
     m_tray = new QSystemTrayIcon(icno,this);
-    m_tray->setToolTip(QString::fromLocal8Bit("辉婕播放器"));
+    m_tray->setToolTip(QString::fromLocal8Bit("subplayer"));
     m_tray->show();
     createTrayMenu();
 
