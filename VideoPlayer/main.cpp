@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     loadGlobalQss::loadAllUIQss();//加载全局样式
 //    dataBase::creatConnection();//连接数据库
     MainWidget w1;
-    w1.show();
+    w1.show();  
 
 //    WebDownLoadList f;
 //    f.show();

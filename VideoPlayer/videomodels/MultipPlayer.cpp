@@ -283,7 +283,6 @@ void MultipPlayer::initMainWindow()
     m_widget1->layout()->setContentsMargins(1,0,0,0);//包裹m_widget1的布局 左 上 右 下
 //    m_widget1->setHidden(true);//测试使用
 
-
     m_hboxlayout_rlist = new QHBoxLayout;
     m_hboxlayout_rlist->addWidget(ui->stackedWidget);
     m_hboxlayout_rlist->addWidget(m_widget1);
@@ -323,6 +322,10 @@ void MultipPlayer::initMainWindow()
     m_foldBtn->setFixedSize(40,60);
 //    m_foldBtn->setAttribute(Qt::WA_TranslucentBackground,true);//没效果，得定制
     m_foldBtn->setHidden(true);//初始化隐藏按钮
+
+    //快捷键
+    ui->pushButton_pauseStart->setShortcut(QKeySequence(tr("space")));//空格键
+    m_searchBtn->setShortcut(QKeySequence(tr("Ctrl+O")));//Ctrl + O 组合键
 }
 
 /*处理信号与槽函数*/
