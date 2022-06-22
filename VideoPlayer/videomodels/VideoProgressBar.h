@@ -15,8 +15,6 @@ class VideoProgressBar : public QWidget
 public:
     ~VideoProgressBar();
     static  VideoProgressBar* getInstance();
-public slots:
-
 
 protected:
     void paintEvent(QPaintEvent * event) override;
@@ -27,7 +25,7 @@ private slots:
 private:
     explicit VideoProgressBar(QWidget *parent = nullptr);
     Ui::VideoProgressBar *ui;
-    int    rotation;
+    int     rotation;
     static  VideoProgressBar* m_pInstance;
 };
 

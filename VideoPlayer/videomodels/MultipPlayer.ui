@@ -375,7 +375,7 @@ color:#484848; font-size:12px;
                <number>15</number>
               </property>
               <item>
-               <widget class="QLabel" name="label_media_pic">
+               <widget class="RotatePic" name="widget_media_pic" native="true">
                 <property name="minimumSize">
                  <size>
                   <width>50</width>
@@ -389,10 +389,7 @@ color:#484848; font-size:12px;
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">border-image: url(:/images/skin/title1.jpg);</string>
-                </property>
-                <property name="text">
-                 <string/>
+                 <string notr="true"/>
                 </property>
                </widget>
               </item>
@@ -967,6 +964,14 @@ color:#484848; font-size:12px;
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>RotatePic</class>
+   <extends>QWidget</extends>
+   <header location="global">videomodels/RotatePic.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

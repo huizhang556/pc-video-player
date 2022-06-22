@@ -423,6 +423,10 @@ void MultipPlayer::chandleSignalAndSLots()
     connect(this,SIGNAL(sig_sendSwitchToMusicPage(QString)),m_videoTitleBar,SLOT(setTitleText(QString)));
     //进度条上方显示当前播放媒体歌名
     connect(this,SIGNAL(sig_sendSwitchToMusicPage(QString)),this,SLOT(setCurrentMediaName(QString)));
+    //旋转时钟改变
+    connect(this,&MultipPlayer::sig_sendSwitchToMusicPage,[this](){
+        ui->widget_media_pic->resetRoate(0);
+    });
 
     //窗口关闭按钮
     connect(m_videoTitleBar,&VideoTitleBar::sig_winVClose,[=]()
@@ -1178,6 +1182,7 @@ void MultipPlayer::checkChandleMediaPlayerStatus(QMediaPlayer::State newState)
     {
         ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/playhover.png"));//播放
         ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
+        ui->widget_media_pic->pause();
         qDebug() << QString::fromLocal8Bit("QMediaPlayer::PausedState");
         emit sig_currentMediaPlayStatus(false);//false 代表暂停状态
     }
@@ -1185,12 +1190,13 @@ void MultipPlayer::checkChandleMediaPlayerStatus(QMediaPlayer::State newState)
     {
         ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/pausehover.png"));
         ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("暂停"));
+        ui->widget_media_pic->start();
         qDebug() << QString::fromLocal8Bit("QMediaPlayer::PlayingState");
         emit sig_currentMediaPlayStatus(true);//true 代表播放状态
     }
     else if(newState == QMediaPlayer::StoppedState)
     {
-
+        ui->widget_media_pic->pause();
         qDebug() << QString::fromLocal8Bit("QMediaPlayer::StoppedState");
         emit sig_currentMediaPlayStatus(false);//false 代表暂停状态
     }
@@ -2449,7 +2455,7 @@ void MultipPlayer::setCurrentMediaName(QString name)
 /*当前媒体的图片*/
 void MultipPlayer::setCurrentMediaNamePicture(const QPixmap &pix)
 {
-    ui->label_media_pic->setPixmap(pix);
+//    ui->widget_media_pic->setPixmap(pix);
 }
 
 void MultipPlayer::setFoldButtonStyle()

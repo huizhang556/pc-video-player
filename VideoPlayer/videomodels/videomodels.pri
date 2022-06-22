@@ -14,7 +14,9 @@ SOURCES += \
     $$PWD/PersonFileForm.cpp \
     $$PWD/DramaListForm.cpp \
     $$PWD/PlayOrderForm.cpp \
-    $$PWD/PlayCtlAdjustForm.cpp
+    $$PWD/PlayCtlAdjustForm.cpp \
+    $$PWD/RotatePic.cpp \
+    $$PWD/Widget.cpp
 
 
 HEADERS += \
@@ -33,7 +35,9 @@ HEADERS += \
     $$PWD/PersonFileForm.h \
     $$PWD/DramaListForm.h \
     $$PWD/PlayOrderForm.h \
-    $$PWD/PlayCtlAdjustForm.h
+    $$PWD/PlayCtlAdjustForm.h \
+    $$PWD/RotatePic.h \
+    $$PWD/Widget.h
 
 
 FORMS += \
@@ -51,5 +55,6 @@ FORMS += \
     $$PWD/PersonFileForm.ui \
     $$PWD/DramaListForm.ui \
     $$PWD/PlayOrderForm.ui \
-    $$PWD/PlayCtlAdjustForm.ui
+    $$PWD/PlayCtlAdjustForm.ui \
+    $$PWD/Widget.ui
 

@@ -22,11 +22,14 @@ public:
 
     void setIni(); 
 
+public:
     bool   isShow;//必须为公有成员
+
 protected:
     void mousePressEvent(QMouseEvent *event) override;
 
     void mouseMoveEvent(QMouseEvent *event) override;
+
 signals:
     void sig_SendNotcloseMain();
 

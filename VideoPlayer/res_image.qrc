@@ -309,5 +309,8 @@
         <file>images/function/download_crx.png</file>
         <file>images/function/download_deb.png</file>
         <file>images/function/download_apk.png</file>
+        <file>images/bgpic/dieji.png</file>
+        <file>images/bgpic/dieji2.png</file>
+        <file>images/bgpic/dieji3.png</file>
     </qresource>
 </RCC>
