@@ -202,12 +202,17 @@ void NewWork::slot_receiveDownloadRequested(QWebEngineDownloadItem *item)
     qDebug() << QString::fromLocal8Bit("已接收到请求...");
     qDebug() << QString::fromLocal8Bit("请求地址：") << item->url().toString();
     QFileInfo info(item->url().toString());
+    //pos截取不到，返回-1，截取到，返回具体的位置
+    int pos = item->url().toString().indexOf("?");//以从左往右第一个?的位置往左边截取
+//    qDebug() << QString::fromLocal8Bit("截取的位置：") << pos;
+    QString t_fileName = item->url().toString().left(pos);
+    QFileInfo t_info(t_fileName);
     ui->lineEdit_address->setText(item->url().toString());
     ui->lineEdit_address->setToolTip(item->url().toString());
     ui->lineEdit_address->setCursorPosition(0);
-    ui->lineEdit_filename->setText(info.fileName());
+    ui->lineEdit_filename->setText(t_info.fileName());
     ui->lineEdit_filename->setCursorPosition(0);
-    ui->lineEdit_filename->setToolTip(info.fileName());
+    ui->lineEdit_filename->setToolTip(t_info.fileName());
     m_savePath = QString(ui->lineEdit_savepath->text() + "/" + info.fileName());
     m_fileName = info.fileName();
     m_fileUrl = item->url();
@@ -231,12 +236,16 @@ void NewWork::slot_receiveDownloadRequested(const QUrl url)
     qDebug() << QString::fromLocal8Bit("已接收到请求...");
     qDebug() << QString::fromLocal8Bit("请求地址：") << url.toString();
     QFileInfo info(url.toString());
+    //pos截取不到，返回-1，截取到，返回具体的位置
+    int pos = url.toString().indexOf("?");
+    QString t_fileName = url.toString().left(pos);
+    QFileInfo t_info(t_fileName);
     ui->lineEdit_address->setText(url.toString());
     ui->lineEdit_address->setToolTip(url.toString());
     ui->lineEdit_address->setCursorPosition(0);
 
-    ui->lineEdit_filename->setText(info.fileName());
-    ui->lineEdit_address->setToolTip(info.fileName());
+    ui->lineEdit_filename->setText(t_info.fileName());
+    ui->lineEdit_address->setToolTip(t_info.fileName());
     ui->lineEdit_filename->setCursorPosition(0);
     m_savePath = QString(ui->lineEdit_savepath->text() + "/" + info.fileName());
     m_fileName = info.fileName();

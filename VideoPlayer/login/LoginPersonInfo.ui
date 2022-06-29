@@ -2177,10 +2177,10 @@ color:black;
          <property name="styleSheet">
           <string notr="true">background-color: transparent;</string>
          </property>
-         <widget class="QLabel" name="label_7">
+         <widget class="QLabel" name="label_network">
           <property name="geometry">
            <rect>
-            <x>20</x>
+            <x>10</x>
             <y>50</y>
             <width>60</width>
             <height>21</height>
@@ -2196,10 +2196,10 @@ color:white;
            <string>网络设置</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_8">
+         <widget class="QLabel" name="label_server">
           <property name="geometry">
            <rect>
-            <x>20</x>
+            <x>10</x>
             <y>190</y>
             <width>70</width>
             <height>21</height>
@@ -2215,10 +2215,10 @@ color:white;
            <string>登录服务器</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_11">
+         <widget class="QLabel" name="label_nettype">
           <property name="geometry">
            <rect>
-            <x>30</x>
+            <x>20</x>
             <y>90</y>
             <width>37</width>
             <height>25</height>
@@ -2249,12 +2249,12 @@ color:white;
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
-         <widget class="QComboBox" name="set_comboBox_dl">
+         <widget class="QComboBox" name="comboBox_net_type">
           <property name="geometry">
            <rect>
-            <x>70</x>
+            <x>60</x>
             <y>90</y>
-            <width>100</width>
+            <width>110</width>
             <height>25</height>
            </rect>
           </property>
@@ -2309,7 +2309,7 @@ font-size:14px;
            </property>
           </item>
          </widget>
-         <widget class="QLabel" name="label_12">
+         <widget class="QLabel" name="label_net_address">
           <property name="geometry">
            <rect>
             <x>181</x>
@@ -2343,7 +2343,7 @@ color:white;
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
-         <widget class="QLabel" name="label_13">
+         <widget class="QLabel" name="label_net_port">
           <property name="geometry">
            <rect>
             <x>301</x>
@@ -2377,12 +2377,12 @@ color:white;
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit">
+         <widget class="QLineEdit" name="lineEdit_net_address">
           <property name="geometry">
            <rect>
             <x>221</x>
             <y>90</y>
-            <width>70</width>
+            <width>68</width>
             <height>25</height>
            </rect>
           </property>
@@ -2399,7 +2399,7 @@ color:white;
            </size>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_2">
+         <widget class="QLineEdit" name="lineEdit_net_port">
           <property name="geometry">
            <rect>
             <x>340</x>
@@ -2421,7 +2421,7 @@ color:white;
            </size>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_3">
+         <widget class="QLineEdit" name="lineEdit_net_region">
           <property name="geometry">
            <rect>
             <x>340</x>
@@ -2443,10 +2443,10 @@ color:white;
            </size>
           </property>
          </widget>
-         <widget class="QLabel" name="label_14">
+         <widget class="QLabel" name="label_net_user">
           <property name="geometry">
            <rect>
-            <x>20</x>
+            <x>10</x>
             <y>140</y>
             <width>47</width>
             <height>25</height>
@@ -2477,12 +2477,12 @@ color:white;
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_4">
+         <widget class="QLineEdit" name="lineEdit_net_passwd">
           <property name="geometry">
            <rect>
             <x>221</x>
             <y>140</y>
-            <width>70</width>
+            <width>68</width>
             <height>25</height>
            </rect>
           </property>
@@ -2499,7 +2499,7 @@ color:white;
            </size>
           </property>
          </widget>
-         <widget class="QLabel" name="label_15">
+         <widget class="QLabel" name="label_net_passwd">
           <property name="geometry">
            <rect>
             <x>181</x>
@@ -2533,7 +2533,7 @@ color:white;
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
-         <widget class="QLabel" name="label_16">
+         <widget class="QLabel" name="label_net_region">
           <property name="geometry">
            <rect>
             <x>301</x>
@@ -2567,12 +2567,12 @@ color:white;
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
-         <widget class="QComboBox" name="set_comboBox_xx">
+         <widget class="QComboBox" name="comboBox_ser_type">
           <property name="geometry">
            <rect>
-            <x>70</x>
+            <x>60</x>
             <y>230</y>
-            <width>98</width>
+            <width>108</width>
             <height>25</height>
            </rect>
           </property>
@@ -2616,7 +2616,7 @@ font-size:14px;
            </property>
           </item>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_5">
+         <widget class="QLineEdit" name="lineEdit_ser_port">
           <property name="geometry">
            <rect>
             <x>340</x>
@@ -2632,10 +2632,10 @@ font-size:14px;
            </size>
           </property>
          </widget>
-         <widget class="QLabel" name="label_17">
+         <widget class="QLabel" name="label_sertype">
           <property name="geometry">
            <rect>
-            <x>30</x>
+            <x>20</x>
             <y>230</y>
             <width>40</width>
             <height>25</height>
@@ -2660,7 +2660,7 @@ color:white;
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
-         <widget class="QLabel" name="label_18">
+         <widget class="QLabel" name="label_ser_address">
           <property name="geometry">
            <rect>
             <x>181</x>
@@ -2716,7 +2716,7 @@ color:white;
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
-         <widget class="QComboBox" name="set_comboBox_addr">
+         <widget class="QComboBox" name="comboBox_net_address">
           <property name="geometry">
            <rect>
             <x>221</x>
@@ -2775,7 +2775,7 @@ font-size:14px;
            </property>
           </item>
          </widget>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="pushButton_test">
           <property name="geometry">
            <rect>
             <x>340</x>
@@ -2806,13 +2806,16 @@ color: rgb(0, 0, 0);
           <property name="text">
            <string>测试</string>
           </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_6">
+         <widget class="QLineEdit" name="lineEdit_net_user">
           <property name="geometry">
            <rect>
-            <x>70</x>
+            <x>60</x>
             <y>140</y>
-            <width>97</width>
+            <width>110</width>
             <height>25</height>
            </rect>
           </property>
@@ -2883,6 +2886,19 @@ border-image: url(:/images/icon/return_hover.png);
             </widget>
            </item>
           </layout>
+         </widget>
+         <widget class="QLabel" name="label_message">
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>270</y>
+            <width>365</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
          </widget>
         </widget>
        </widget>

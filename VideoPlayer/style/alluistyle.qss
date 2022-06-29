@@ -192,8 +192,10 @@ height:24px;
 #m_webTabBar::tab
 {
 background-color:#4969c7;
+/*
 border-top-left-radius: 8px;
 border-top-right-radius: 8px;
+*/
 min-width: 120px;
 height:24px;
 margin-left: 0px;
@@ -229,6 +231,17 @@ image: url(://images/icon/tab_closebtn.png);
 #m_webTabBar::close-button:hover
 {
 image: url(://images/icon/tab_closebtn_hover.png);
+}
+
+#m_addWebButton
+{
+margin-left:15px;
+background-color:white;
+}
+
+#m_addWebButton:hover
+{
+background-color:green;
 }
 /*浏览器----stackwidget-----end*/
 

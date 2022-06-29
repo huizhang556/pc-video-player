@@ -29,6 +29,36 @@ void WebDownLoadList::getButtonInfo()
     qDebug() << btn->objectName()<<btn;
 }
 
+//暂停/开始下载
+void WebDownLoadList::item_pause(int num, bool status)
+{
+    qDebug() << QString::fromLocal8Bit("第%1个item").arg(num);
+}
+
+//取消下载
+void WebDownLoadList::item_cancel(int num)
+{
+
+}
+
+//重新下载
+void WebDownLoadList::item_reload(int num)
+{
+
+}
+
+//删除正在下载的item
+void WebDownLoadList::item_workingItem(int num)
+{
+
+}
+
+//删除已经下载完成的item
+void WebDownLoadList::item_workedItem(int num)
+{
+
+}
+
 WebDownLoadList::~WebDownLoadList()
 {
     delete ui;
@@ -93,15 +123,15 @@ void WebDownLoadList::chandleSignalsAndSLots()
     });
 
     //暂停
-    connect(m_downLoadItem,SIGNAL(sig_downloadStatus(bool)),this,SLOT(getButtonInfo()));
+    connect(m_downLoadItem,SIGNAL(sig_downloadStatus(int,bool)),this,SLOT(item_pause(int,bool)));
     //取消
-    connect(m_downLoadItem,SIGNAL(sig_download_cancel()),this,SLOT(getButtonInfo()));
+    connect(m_downLoadItem,SIGNAL(sig_download_cancel(int)),this,SLOT(item_cancel()));
     //删除
-    connect(m_downLoadItem,SIGNAL(sig_download_delete()),this,SLOT(getButtonInfo()));
+    connect(m_downLoadItem,SIGNAL(sig_download_delete(int)),this,SLOT(item_workingItem()));
     //重新下载
-    connect(m_downLoadItem,SIGNAL(sig_download_reload()),this,SLOT(getButtonInfo()));
+    connect(m_downLoadItem,SIGNAL(sig_download_reload(int)),this,SLOT(item_reload()));
     //从列表中删除任务
-    connect(m_downLoadItem,SIGNAL(sig_download_deleteItem()),this,SLOT(getButtonInfo()));
+    connect(m_downLoadItem,SIGNAL(sig_download_deleteItem(int)),this,SLOT(item_workedItem()));
 }
 
 bool WebDownLoadList::slot_addDownLoadRecordToList(const QUrl &url, const QString &filename, const QString &savepath,bool openStatus)
@@ -192,7 +222,7 @@ bool WebDownLoadList::slot_addDownLoadRecordToList(const QUrl &url, const QStrin
 //    tempwdt->layout()->setContentsMargins(0,0,0,0);
 //    tempwdt->layout()->setMargin(0);
 ////    QListWidgetItem *item = new QListWidgetItem();
-    item = new QListWidgetItem();
+    item = new QListWidgetItem();//每次在堆上分配一块内存，每个item的地址都是不一样的
     m_downLoadItem = new DownLoadItem(url,filename,savepath,openStatus);
     //堆变量每次分配不同的地址
     qDebug() <<QString::fromLocal8Bit("新分配的堆变量地址：") << m_downLoadItem;

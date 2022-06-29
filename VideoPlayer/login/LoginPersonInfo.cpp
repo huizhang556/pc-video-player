@@ -1,6 +1,7 @@
 ﻿#include "LoginPersonInfo.h"
 #include "ui_LoginPersonInfo.h"
 #include <QDebug>
+#include <QTimer>
 #include <QListView>
 #include <QCompleter>
 #include <QMouseEvent>
@@ -46,11 +47,12 @@ LoginPersonInfo* LoginPersonInfo::getInstance()
 
 void LoginPersonInfo::initWorkUI()
 {
+    ui->label_message->setAlignment(Qt::AlignCenter);//文字居中
     ui->stackedWidget_login->setCurrentIndex(0);
 
-    ui->set_comboBox_dl->setView(new QListView());
-    ui->set_comboBox_xx->setView(new QListView());
-    ui->set_comboBox_addr->setView(new QListView());
+    ui->comboBox_net_address->setView(new QListView());
+    ui->comboBox_net_type->setView(new QListView());
+    ui->comboBox_ser_type->setView(new QListView());
 
     ui->login_BtnRegis->setToolTip(QString::fromLocal8Bit("注册用户"));
     ui->login_BtnQR->setToolTip(QString::fromLocal8Bit("二维码登录"));
@@ -273,6 +275,8 @@ void LoginPersonInfo::chandleSignalsAndSLots()
 
     /*重置密码按钮*/
     connect(ui->login_BtnResetPwd,&QPushButton::clicked,[=](){ui->stackedWidget_login->setCurrentIndex(3);});
+    /*服务测试按钮*/
+    connect(ui->pushButton_test,&QPushButton::clicked,[=](){ slot_showWaringText(QString::fromLocal8Bit("正在测试连接中...")); });
 }
 
 
@@ -287,10 +291,12 @@ void LoginPersonInfo::showLoginWindow(int index)
     if(index ==0)//登录
     {
         ui->stackedWidget_login->setCurrentIndex(0);
+        ui->login_lineEditUser->setFocus();
     }
     else if(index ==1)//注册
     {
         ui->stackedWidget_login->setCurrentIndex(1);
+        ui->gis_lineEditUser->setFocus();
     }
     else if(index ==2)//二维码
     {
@@ -299,6 +305,7 @@ void LoginPersonInfo::showLoginWindow(int index)
     else if(index ==3)//重置
     {
         ui->stackedWidget_login->setCurrentIndex(3);
+        ui->reset_lineEditUser->setFocus();
     }
     else if(index ==4)//设置
     {
@@ -326,19 +333,27 @@ void LoginPersonInfo::mousePressEvent(QMouseEvent *event)
 void LoginPersonInfo::mouseMoveEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);
-//    this->move(event->globalPos() - m_mvPos);
+    //    this->move(event->globalPos() - m_mvPos);
+}
+
+void LoginPersonInfo::showEvent(QShowEvent *event)
+{
+    Q_UNUSED(event);
+    ui->login_lineEditUser->setFocus();
 }
 
 /*page2返回*/
 void LoginPersonInfo::on_pushButton_return_page2_clicked()
 {
     ui->stackedWidget_login->setCurrentIndex(0);
+    ui->login_lineEditUser->setFocus();
 }
 
 /*page3返回*/
 void LoginPersonInfo::on_pushButton_return_page3_clicked()
 {
     ui->stackedWidget_login->setCurrentIndex(0);
+    ui->login_lineEditUser->setFocus();
 }
 
 /*注册按钮*/
@@ -363,5 +378,16 @@ void LoginPersonInfo::on_pushButton_return_page4_clicked()
 void LoginPersonInfo::on_set_BtnReturn_clicked()
 {
     ui->stackedWidget_login->setCurrentIndex(0);
+}
+
+void LoginPersonInfo::slot_showWaringText(const QString &text)
+{
+    ui->label_message->setText(text);
+    QTimer::singleShot(3000,this,SLOT(slot_clearWarningText()));//只显示3秒，过后清除显示
+}
+
+void LoginPersonInfo::slot_clearWarningText()
+{
+    ui->label_message->clear();
 }
 

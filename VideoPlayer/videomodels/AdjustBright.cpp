@@ -112,7 +112,6 @@ AdjustBright::~AdjustBright()
     delete ui;
 }
 
-
 void AdjustBright::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);

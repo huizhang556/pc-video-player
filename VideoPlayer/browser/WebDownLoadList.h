@@ -61,6 +61,13 @@ signals:
     void        sig_receiveProgressbar(int value);
     void        sig_receiveFinished();
     void        sig_newDownloadRequest(const QString &address);
+private slots:
+    void        item_pause(int num, bool status);
+    void        item_cancel(int num);
+    void        item_reload(int num);
+    void        item_workingItem(int num);
+    void        item_workedItem(int num);
+
 private:
     explicit WebDownLoadList(QWidget *parent = nullptr);
     Ui::WebDownLoadList *ui;

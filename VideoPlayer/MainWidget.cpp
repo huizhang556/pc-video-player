@@ -67,6 +67,10 @@ void MainWidget::initOtherWidgetUi()
     m_videoBlank->setHideOpenButton(false);//隐藏打开文件按钮
     m_videoBlank->setObjectName(QString::fromLatin1("m_videoBlank"));
 
+    m_addWebButton = new QPushButton("add");
+    m_addWebButton->setObjectName(QString::fromLocal8Bit("m_addWebButton"));
+    m_addWebButton->setFixedSize(36,36);
+
     m_webBrowser = new CusWebBrowser();
     m_webBrowser->setObjectName(QString::fromLatin1("m_webBrowser"));
 
@@ -76,6 +80,8 @@ void MainWidget::initOtherWidgetUi()
     m_webTabWidget->insertTab(0,m_webBrowser,QString::fromLocal8Bit("default"));
     m_webTabWidget->setTabsClosable(true);//打开关闭按钮
     m_webTabWidget->setMovable(true);//标签可拖动
+//    m_webTabWidget->tabBar()->setTabButton(0,QTabBar::RightSide,m_addWebButton);
+//    m_webTabWidget->setCornerWidget(m_addWebButton,Qt::TopRightCorner);
 //    m_webTabWidget->setTabShape(QTabWidget::Triangular);//设置样式后，不起作用
 
     m_personForm = new PersonFileForm();
@@ -140,8 +146,9 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QUrl &url)
     browser->setObjectName(QString::fromLocal8Bit("browser"));
     browser->load(url);
     m_titleBar->slot_setWebLineEditCurentUrl(url);
-    m_webTabWidget->insertTab(m_webTabWidget->currentIndex()+1,browser,QString::fromLocal8Bit("New Page"));
+    m_webTabWidget->insertTab(m_webTabWidget->currentIndex()+1,browser,"new page");
     m_webTabWidget->setCurrentIndex(m_webTabWidget->currentIndex()+1);
+    updateAddWebButtonPosition();
     connect(browser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
     //加载网页进度
     connect(browser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
@@ -179,8 +186,9 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QString &url)
     m_titleBar->slot_setWebLineEditCurentUrl(url);
     int current = m_webTabWidget->currentIndex();
     qDebug() <<QString::fromLocal8Bit("当前要插入的行号:") <<current;
-    m_webTabWidget->insertTab(m_webTabWidget->currentIndex()+1,browser,QString::fromLocal8Bit("New Page"));
-    m_webTabWidget->setCurrentIndex(m_webTabWidget->currentIndex()+1);
+    m_webTabWidget->insertTab(m_webTabWidget->currentIndex()+1,browser,"new page");//当前选中项的隔壁插入
+    m_webTabWidget->setCurrentIndex(m_webTabWidget->currentIndex()+1);//新插入的为当前选中项
+    updateAddWebButtonPosition();
     connect(browser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
     //加载网页进度
     connect(browser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
@@ -274,7 +282,7 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_titleBar,SIGNAL(sig_sendCanForward()),this,SLOT(slot_canGoForward()));
     connect(this,SIGNAL(sig_canGoForward(bool)),m_titleBar,SLOT(slot_setCanGoForward(bool)));
     //网页下载请求3
-    connect(m_webBrowser->page()->profile(),SIGNAL(downloadRequested(QWebEngineDownloadItem*)),NewWork::getInstance(),SLOT(slot_receiveDownloadRequested(QWebEngineDownloadItem*)),Qt::UniqueConnection);//都五个参数，防止多次请求
+    connect(m_webBrowser->page()->profile(),SIGNAL(downloadRequested(QWebEngineDownloadItem*)),NewWork::getInstance(),SLOT(slot_receiveDownloadRequested(QWebEngineDownloadItem*)),Qt::UniqueConnection);//第五个参数，防止多次请求
     //显示当前页面的地址
     connect(m_webBrowser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(setLineEditAddress(QUrl)));
     //添加一个browser
@@ -376,6 +384,15 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_systemTray,SIGNAL(sig_playProgressValue(int)),m_mainPlayer,SLOT(receiveSystemTraySendSoundValue(int)));
     //静音按钮
     connect(m_systemTray,SIGNAL(sig_playStatusMuted(bool)),m_mainPlayer,SLOT(on_setCurrentMediaSoundSatus()));
+}
+
+//更新新增网页按钮的位置
+void MainWidget::updateAddWebButtonPosition()
+{
+    //count:从1开始；
+//    qDebug() << QString::fromLocal8Bit("插入的序号：") << m_webTabWidget->count();
+//    QWidget *button = m_webTabWidget->tabBar()->tabButton(m_webTabWidget->count()-1,QTabBar::RightSide);
+//    m_webTabWidget->tabBar()->setTabButton(m_webTabWidget->count()-1,QTabBar::RightSide,button);
 }
 
 /*槽函数：托盘菜单*/

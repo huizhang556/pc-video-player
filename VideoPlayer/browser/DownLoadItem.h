@@ -25,6 +25,8 @@ public:
     QString         calCurrentItemLoadedSize(qint64 bytesReceived);//已加载大小
     QString         calCurrentItemSize(qint64 bytesTotal);//总大小
     bool            setItemFileType(const QString& suffix);//判断文件类型
+    void            setItemOrder(int num);
+    int             getItemOrder();
     void            openLocalFileSaveDirectory(const QString& dir);//打开目录
 
 public slots:
@@ -54,11 +56,11 @@ private:
     QString         m_savePath;
 
 signals:
-    void            sig_downloadStatus(bool status);
-    void            sig_download_cancel();
-    void            sig_download_delete();
-    void            sig_download_reload();
-    void            sig_download_deleteItem();
+    void            sig_downloadStatus(int num,bool status);
+    void            sig_download_cancel(int num);
+    void            sig_download_delete(int num);
+    void            sig_download_reload(int num);
+    void            sig_download_deleteItem(int num);
 };
 
 #endif // DOWNLOADITEM_H

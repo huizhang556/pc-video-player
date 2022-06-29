@@ -63,7 +63,7 @@ void RotatePic::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
     pix.load(":/images/bgpic/dieji3.png");
-    m_roate = m_roate >= 360 ? 0 : m_roate;
+//    m_roate = m_roate >= 360 ? 0 : m_roate;
     int imageWidth = pix.width();
     int imageHeight = pix.height();
     QPixmap temp(pix.size());

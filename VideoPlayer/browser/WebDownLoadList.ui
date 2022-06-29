@@ -263,7 +263,7 @@ background-color:#e2f5ff;
 
 QListWidget::item:selected
 {
-background-color:#80aede;
+background-color:#80c342;
 }
 
 /*垂直滚动条整体样式*/

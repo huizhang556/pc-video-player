@@ -68,7 +68,7 @@ private:
 
     void chandleSignalAndSlots();
 
-//    void loadAllUIQss();//加载UI样式文件
+    void updateAddWebButtonPosition();//更新新增网页按钮的位置
 
     void setStackedWidgetPage();//添加界面
 
@@ -165,6 +165,7 @@ private:
     CusTabWidget        *m_tabWidget               = nullptr;
     VideoBlank          *m_videoBlank              = nullptr;
     QTabWidget          *m_webTabWidget            = nullptr;
+    QPushButton         *m_addWebButton            = nullptr;
     CusWebBrowser       *m_webBrowser              = nullptr;
     SystemSetting       *m_systemSetting           = nullptr;
     SystemTray          *m_systemTray              = nullptr;

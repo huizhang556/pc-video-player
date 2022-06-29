@@ -13,6 +13,7 @@ GalleryItemForm::GalleryItemForm(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->listWidget_itempic->setMinimumHeight(440);
+    ui->listWidget_itempic->installEventFilter(this);
 //    ui->widget_rec_title->setFixedHeight(60);
     this->setMinimumHeight(500);
     initWorkUI();
@@ -96,6 +97,18 @@ void GalleryItemForm::setHeaderTitle(QString title)
 void GalleryItemForm::resizeEvent(QResizeEvent *event)
 {
     //    adjustListWidgetItemsSize();
+}
+
+bool GalleryItemForm::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == ui->listWidget_itempic)
+    {
+        if( event->type() == QEvent::Wheel)
+        {
+            ui->listWidget_itempic->horizontalScrollBar()->setEnabled(false);
+        }
+    }
+    return  QWidget::eventFilter(watched,event);
 }
 
 //下一个item

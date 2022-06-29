@@ -24,13 +24,13 @@ public slots:
     void showLoginWindow(int index);
 
     void receiveLoginAppClose();
+
 protected:
     void mousePressEvent(QMouseEvent *event) override;
 
     void mouseMoveEvent(QMouseEvent *event) override;
 
-signals:
-
+    void showEvent(QShowEvent *event) override;
 
 private slots:
     void on_pushButton_return_page2_clicked();
@@ -44,6 +44,10 @@ private slots:
     void on_pushButton_return_page4_clicked();
 
     void on_set_BtnReturn_clicked();
+
+    void slot_showWaringText(const QString &text);
+
+    void slot_clearWarningText();
 
 
 private:

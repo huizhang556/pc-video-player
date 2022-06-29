@@ -37,14 +37,14 @@ void StackItemForm::initWorkUI()
 
     for(int i = 0; i < 10; i++)
     {
-        QLabel *label = new QLabel();
+        QLabel *label = new QLabel();//显示图片
         QString path = QString(Global::appDirPath +"/pictures/stackwall/stack%1.png").arg(i);
         QPixmap pix(path);
         label->setPixmap(pix);
         label->setScaledContents(true);//图片自适应
-        m_mapLabel.insert(i, label);
+        m_mapLabel.insert(i, label);//将label控件放入map容器
     }
-    addLabelToStackWidget();
+    addLabelToStackWidget();//从容其中添加label到stackwidget
     addCusWidgetToList();
     ui->listWidget_reclist->setCurrentRow(0);
     ui->stackedWidget_itempic->setCurrentIndex(0);//默认显示第一项
@@ -85,7 +85,6 @@ void StackItemForm::addCusWidgetToList()
             ui->stackedWidget_itempic->setCurrentIndex(index);
         });
     }
-
 }
 
 void StackItemForm::slot_switchPageToStackWidget(QListWidgetItem *item)
