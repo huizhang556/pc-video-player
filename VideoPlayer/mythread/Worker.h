@@ -41,8 +41,8 @@ signals:
 private:
     QWebEngineDownloadItem      *m_workItem     =   nullptr;
     QNetworkAccessManager       *m_netManager   =   nullptr;
-    QFile                        m_file;
-
+    QFile                       m_file;
+    QByteArray                  m_array;
 };
 
 #endif // WORKER_H

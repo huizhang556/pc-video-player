@@ -18,6 +18,7 @@ PersonFileForm::~PersonFileForm()
 
 void PersonFileForm::initWorkUI()
 {
+    //设置bar四个图标
     ui->tabWidget->tabBar()->setTabIcon(0,QIcon(":/images/icon/his_pic.png"));
     ui->tabWidget->tabBar()->setTabIcon(1,QIcon(":/images/icon/collect_video_hover.png"));
     ui->tabWidget->tabBar()->setTabIcon(2,QIcon(":/images/icon/dingyue_hover.png"));
@@ -39,22 +40,22 @@ void PersonFileForm::chandleSignalsAndSLots()
     //看过---全部清空
     connect(ui->pushButton_his_alldelete,&QPushButton::clicked,[=](){qDebug() << "HIS_DELETE_FILES"; });
 
-    //收藏---全部收藏
+    //收藏---全部收藏按钮
     connect(ui->pushButton_coll_all,&QPushButton::clicked,[=](){ ui->stackedWidget_collect->setCurrentIndex(0);});
-    //收藏---电影收藏
+    //收藏---电影收藏按钮
     connect(ui->pushButton_coll_movies,&QPushButton::clicked,[=](){ ui->stackedWidget_collect->setCurrentIndex(1);});
-    //收藏---其他收藏
+    //收藏---其他收藏按钮
     connect(ui->pushButton_coll_other,&QPushButton::clicked,[=](){ui->stackedWidget_collect->setCurrentIndex(2); });
-    //收藏---选择文件
+    //收藏---选择文件按钮
     connect(ui->pushButton_coll_select,&QPushButton::clicked,[=](){ qDebug() << "COLL_SELECT_FILES";});
-    //收藏---全部清空
+    //收藏---全部清空按钮
     connect(ui->pushButton_coll_alldelete,&QPushButton::clicked,[=](){qDebug() << "COLL_DELETE_FILES"; });
 
-    //订阅---电影订阅
+    //订阅---电影订阅按钮
     connect(ui->pushButton_order_videos,&QPushButton::clicked,[=](){ ui->stackedWidget_order->setCurrentIndex(0);});
-    //订阅---音乐订阅
+    //订阅---音乐订阅按钮
     connect(ui->pushButton_order_musics,&QPushButton::clicked,[=](){ ui->stackedWidget_order->setCurrentIndex(1);});
-    //订阅---删除
+    //订阅---删除按钮
     connect(ui->pushButton_order_delete,&QPushButton::clicked,[=](){qDebug() << "ORDER_DELETE_FILES"; });
 
     //换肤---电影

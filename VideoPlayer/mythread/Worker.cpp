@@ -74,17 +74,17 @@ void Worker::slot_receiveData_accept(QUrl url,QString filename, QString savepath
     //04.readyRead信号的触发速度，比downloadProgress触发的频繁；
     //05.如果存在一个一模一样已经存在的下载文件，会在原文件追加，不会新建；
     //数据可读
+
     connect(reply, &QNetworkReply::readyRead,[=](){
         if(reply == nullptr) return;
-
         if(!m_file.isOpen())//文件没打开
         {
             m_file.setFileName(fileSavePath);
             //断点续传的时候，需要使用size()计算已经下载的大小；采用append的形式继续写入；下载新文件则不需要
             m_file.open(QIODevice::WriteOnly);
         }
-
-            m_file.write(reply->readAll());//先存储在缓存中，然后缓存满了才往文件中写入
+            m_array.append(reply->readAll());
+//            m_file.write(reply->readAll());//先存储在缓存中，然后缓存满了才往文件中写入
     });
 
     //下载进度
@@ -96,8 +96,10 @@ void Worker::slot_receiveData_accept(QUrl url,QString filename, QString savepath
     connect(reply, &QNetworkReply::finished,[=]()
     {
         reply->deleteLater();
-        m_file.flush();
+        m_file.write(m_array);
+        m_file.resize(m_array.size());
         m_file.close(); //关闭文件，也会将缓存写入文件
+        m_array.clear();//清除原先的数据，否则下次数据写入是叠加在以前数据之上
       emit  sig_receiveData_finished();//数据接收完毕
     });
 }
