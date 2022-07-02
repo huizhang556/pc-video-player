@@ -121,8 +121,8 @@ void NewWork::chandleSignalsAndSlots()
     connect(ui->pushButton_dlandopen,&QPushButton::clicked,[=](){
         qDebug() <<QString::fromLocal8Bit("当前UI线程id:") << QThread::currentThreadId();
         slot_createNewDownloadWork();//创建线程
-        //确定下载（下载地址--文件名--保存路径）
-        emit sig_download(ui->lineEdit_address->text().trimmed(),ui->lineEdit_filename->text().trimmed(),ui->lineEdit_savepath->text(),true);
+        //确定下载并打开（下载地址--文件名--保存路径）
+        emit sig_download(ui->lineEdit_address->text().trimmed(),ui->lineEdit_filename->text().replace(" ","_"),ui->lineEdit_savepath->text(),true);
         this->hide();
     });
     //确定下载---确定按钮点击
@@ -130,7 +130,7 @@ void NewWork::chandleSignalsAndSlots()
         qDebug() <<QString::fromLocal8Bit("当前UI线程id:") << QThread::currentThreadId();
         slot_createNewDownloadWork();//创建线程
         //确定下载（下载地址--文件名--保存路径）
-        emit sig_download(ui->lineEdit_address->text().trimmed(),ui->lineEdit_filename->text().trimmed(),ui->lineEdit_savepath->text(),false);
+        emit sig_download(ui->lineEdit_address->text().trimmed(),ui->lineEdit_filename->text().replace(" ","_"),ui->lineEdit_savepath->text(),false);
         this->hide();
     });
 
@@ -210,11 +210,12 @@ void NewWork::slot_receiveDownloadRequested(QWebEngineDownloadItem *item)
     ui->lineEdit_address->setText(item->url().toString());
     ui->lineEdit_address->setToolTip(item->url().toString());
     ui->lineEdit_address->setCursorPosition(0);
-    ui->lineEdit_filename->setText(t_info.fileName());
+    //文件名中的空格使用_代替
+    ui->lineEdit_filename->setText(t_info.fileName().replace(" ","_"));
     ui->lineEdit_filename->setCursorPosition(0);
-    ui->lineEdit_filename->setToolTip(t_info.fileName());
-    m_savePath = QString(ui->lineEdit_savepath->text() + "/" + info.fileName());
-    m_fileName = info.fileName();
+    ui->lineEdit_filename->setToolTip(t_info.fileName().replace(" ","_"));
+    m_fileName = t_info.fileName().replace(" ","_");
+    m_savePath = QString(ui->lineEdit_savepath->text() + "/" + m_fileName);
     m_fileUrl = item->url();
     this->setWindowModality(Qt::ApplicationModal);
     this->show();
@@ -243,12 +244,12 @@ void NewWork::slot_receiveDownloadRequested(const QUrl url)
     ui->lineEdit_address->setText(url.toString());
     ui->lineEdit_address->setToolTip(url.toString());
     ui->lineEdit_address->setCursorPosition(0);
-
+    //下载文件名不能有空格
     ui->lineEdit_filename->setText(t_info.fileName());
     ui->lineEdit_address->setToolTip(t_info.fileName());
     ui->lineEdit_filename->setCursorPosition(0);
-    m_savePath = QString(ui->lineEdit_savepath->text() + "/" + info.fileName());
-    m_fileName = info.fileName();
+    m_fileName = t_info.fileName();
+    m_savePath = QString(ui->lineEdit_savepath->text() + "/" + m_fileName);
     m_fileUrl = url;
 
     this->setWindowModality(Qt::ApplicationModal);

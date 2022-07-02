@@ -97,10 +97,10 @@ void Worker::slot_receiveData_accept(QUrl url,QString filename, QString savepath
     {
         reply->deleteLater();
         m_file.write(m_array);
-        m_file.resize(m_array.size());
+        m_file.resize(m_array.size());//重置大小，QFile写入文件会额外增加一些东西
         m_file.close(); //关闭文件，也会将缓存写入文件
         m_array.clear();//清除原先的数据，否则下次数据写入是叠加在以前数据之上
-      emit  sig_receiveData_finished();//数据接收完毕
+      emit  sig_receiveData_finished();//数据接收完毕，转换界面
     });
 }
 
