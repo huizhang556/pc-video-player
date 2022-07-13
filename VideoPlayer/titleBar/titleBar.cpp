@@ -11,6 +11,7 @@
 
 TitleBar::TitleBar(QWidget *parent) :
     QWidget(parent),
+    m_headUrl("https://www.baidu.com/s?wd="),
     ui(new Ui::TitleBar)
 {
     ui->setupUi(this);
@@ -65,22 +66,38 @@ void TitleBar::initWorker()
     ui->pushButton_advance->setFixedSize(20,20);
     ui->pushButton_advance->setFlat(true);
     ui->pushButton_advance->installEventFilter(this);
-
+    //网址栏
     ui->lineEdit_webSearch->setFixedHeight(28);
     ui->lineEdit_webSearch->setText(QString::fromLocal8Bit("http://82.156.175.81/study/index.html"));//默认显示的网址
     ui->lineEdit_webSearch->setPlaceholderText(QString::fromLocal8Bit("请输入有效网址或要搜索的内容-_-"));
+    ui->lineEdit_webSearch->setCursorPosition(0);
     //正则校验  url校验
 //    QRegExp regExp("^[a-zA-z]+://(\w+(-\w+)*)(\.(\w+(-\w+)*))*(\?\S*)?$");
 //    QRegExpValidator *expval = new QRegExpValidator(regExp,this);
 //    ui->lineEdit_webSearch->setValidator(expval);
-    ui->pushButton_webhislist->setFixedSize(18,28);
+    //快速搜索栏
+    ui->lineEdit_simpSearch->setPlaceholderText(QString::fromLocal8Bit("快速搜索^_^"));
+    //网址栏目中的小按钮
+    m_actSafeMode = new QAction(QIcon("://images/icon/safelocked.png"),"");
+    m_actSafeMode->setObjectName(QString::fromLocal8Bit("m_actSafeMode"));
+    m_actCollect = new QAction(QIcon(":/images/icon/url_collection.png"),"");
+    m_actCollect->setObjectName(QString::fromLocal8Bit("m_actCollect"));
+    m_actRecords = new QAction(QIcon(":/images/icon/downwards_hover.png"),"");
+    m_actRecords->setObjectName(QString::fromLocal8Bit("m_actRecords"));
+    ui->lineEdit_webSearch->addAction(m_actSafeMode, QLineEdit::LeadingPosition);
+    ui->lineEdit_webSearch->addAction(m_actRecords, QLineEdit::TrailingPosition);
+    ui->lineEdit_webSearch->addAction(m_actCollect, QLineEdit::TrailingPosition);
+    //简要搜索栏中的小按钮
+    m_actEngine = new QAction(QIcon("://images/function/engine_baidu.png"),"");
+    m_actEngine->setObjectName(QString::fromLocal8Bit("m_actEngine"));
+    m_actSSearch = new QAction(QIcon(":/images/icon/sousuo.png"),"");
+    m_actSSearch->setObjectName(QString::fromLocal8Bit("m_actSSearch"));
+    ui->lineEdit_simpSearch->addAction(m_actEngine, QLineEdit::LeadingPosition);//左侧
+    ui->lineEdit_simpSearch->addAction(m_actSSearch, QLineEdit::TrailingPosition);//右侧
 
-    ui->pushButton_webhislist->setFlat(true);
-    ui->pushButton_webhislist->setToolTip(QString::fromLocal8Bit("搜索历史"));
     ui->lineEditSearch->installEventFilter(this);//输入检索字
     ui->BtnSearch->installEventFilter(this);
     ui->lineEdit_webSearch->installEventFilter(this);//输入网址
-    ui->pushButton_webcollect->installEventFilter(this);
 
     m_searchForm = new SearchForm();//不指定父控件，也不加布局，需要手动删除
     m_searchForm->setObjectName(QString::fromLocal8Bit("m_searchForm"));
@@ -107,6 +124,19 @@ void TitleBar::initWorker()
     m_listWdgt_history->setWindowFlags(Qt::FramelessWindowHint);
     m_listWdgt_history->installEventFilter(this);
 
+    //引擎列表
+    m_listWdgt_engine = new QListWidget();
+    m_listWdgt_engine->setObjectName(QString::fromLocal8Bit("m_listWdgt_engine"));
+    m_listWdgt_engine->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_listWdgt_engine->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_listWdgt_engine->setWindowFlags(Qt::FramelessWindowHint);
+    m_listWdgt_engine->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    m_listWdgt_engine->installEventFilter(this);
+    m_engineSetBtn = new QPushButton(QString::fromLocal8Bit("设置"));
+    m_engineSetBtn->setObjectName(QString::fromLocal8Bit("m_engineSetBtn"));
+    m_engineSetBtn->setFixedHeight(26);
+    slot_addWebEngine();
+
     slot_switchToLoginPage(1,QString::fromLocal8Bit("测试测名称8020"));
 }
 
@@ -114,10 +144,6 @@ void TitleBar::initWorker()
 /*处理信号与槽函数*/
 void TitleBar::chandleSignalAndSLots()
 {
-    //历史记录
-    connect(ui->pushButton_webhislist,&QPushButton::clicked,this,&TitleBar::slot_updateShowListHistoryWidget);
-    //浏览器设置
-    connect(ui->pushButton_more,&QPushButton::clicked,this,&TitleBar::slot_updateShowListSettigMenu);
     //登录位置转换
     connect(ui->pushButton_logo,&QPushButton::clicked,[=](){ ui->stackedWidget_login->setCurrentIndex(1);});
     connect(ui->pushButton_logo2,&QPushButton::clicked,[=](){ ui->stackedWidget_login->setCurrentIndex(0);});
@@ -178,7 +204,12 @@ void TitleBar::chandleSignalAndSLots()
     connect(ui->Btnlogin,&QPushButton::clicked,[=](){qDebug() << "login had clicked!"; showLoginForm();});
     //历史记录记录搜索历史
 //    connect(this,&TitleBar::sig_sendNewSearch,m_searchForm,&SearchForm::addHistoryItem);
-
+    //显示搜索历史记录
+    connect(m_actRecords,&QAction::triggered,this,&TitleBar::slot_updateShowListHistoryWidget);
+    //显示可用搜索引擎
+    connect(m_actEngine,&QAction::triggered,this,&TitleBar::slot_updateShowListEngineWidget);
+    //浏览器设置
+    connect(ui->pushButton_more,&QPushButton::clicked,this,&TitleBar::slot_updateShowListSettigMenu);
     //网址输入框---回车键处理
     connect(ui->lineEdit_webSearch,&QLineEdit::returnPressed,[=](){
         QString newurl = judgeUrlType(ui->lineEdit_webSearch->text().trimmed());
@@ -186,6 +217,14 @@ void TitleBar::chandleSignalAndSLots()
         slot_addToListHistoryWidget(ui->lineEdit_webSearch->text().trimmed());//添加进历史记录
         emit sig_sendInputNewUrl(newurl);//补充的url
         qDebug() << "emit sig_sendInputNewUrl(url);"<< newurl;
+    });
+
+    //快速搜索框---搜索处理
+    connect(m_actSSearch,&QAction::triggered,this,[=](){
+        QString newurl = judgeUrlType(ui->lineEdit_simpSearch->text().trimmed());
+        if(newurl.isEmpty()) return;
+        slot_addToListHistoryWidget(ui->lineEdit_simpSearch->text().trimmed());//添加进历史记录
+        emit sig_sendInputNewUrl(newurl);//补充的url
     });
 
     //网址输入框---文本改变,判断是否收藏当前网址
@@ -203,7 +242,7 @@ void TitleBar::chandleSignalAndSLots()
     });
 
     //网址收藏----单击收藏，双击显示列表
-    connect(ui->pushButton_webcollect,&QPushButton::clicked,[=](){
+    connect(m_actCollect,&QAction::triggered,this,[=](){
         bool valid = judgeCollectUrlType(ui->lineEdit_webSearch->text());
         if(valid)
         {
@@ -245,6 +284,17 @@ void TitleBar::chandleSignalAndSLots()
         emit sig_sendInputNewUrl(item->text());
     });
 
+    //引擎选择
+    connect(m_listWdgt_engine,&QListWidget::itemClicked,[=](QListWidgetItem *item)
+    {
+        if(item->text().isEmpty()) return;
+        slot_changeEngineIcon(item->text());
+    });
+
+    //引擎设置
+    connect(m_engineSetBtn,&QPushButton::clicked,this,[=](){
+        emit sig_settingHelpItem(1);//转到系统设置
+    });
 }
 
 /*创建菜单*/
@@ -291,7 +341,7 @@ QString TitleBar::judgeUrlType(QString url)
     }
     else
     {
-        return QString::fromLocal8Bit("https://www.baidu.com/s?wd=") + url;
+        return m_headUrl + url;
     }
 }
 
@@ -365,15 +415,17 @@ void TitleBar::slot_setCurrentWebSiteCollectStatus(const QString &url)
     bool valid = judgeCollectUrlExist(url);
     if(valid)
     {
-        ui->pushButton_webcollect->setStyleSheet("#pushButton_webcollect{"
-                                                 "border-image: url(:/images/icon/url_collect_hover.png);"
-                                                 "}");
+//        ui->pushButton_webcollect->setStyleSheet("#pushButton_webcollect{"
+//                                                 "border-image: url(:/images/icon/url_collect_hover.png);"
+//                                                 "}");
+        m_actCollect->setIcon(QIcon(":/images/icon/url_collect_hover.png"));
     }
     else
     {
-        ui->pushButton_webcollect->setStyleSheet("#pushButton_webcollect{"
-                                                 "border-image: url(:/images/icon/url_collection.png);"
-                                                 "}");
+//        ui->pushButton_webcollect->setStyleSheet("#pushButton_webcollect{"
+//                                                 "border-image: url(:/images/icon/url_collection.png);"
+//                                                 "}");
+        m_actCollect->setIcon(QIcon(":/images/icon/url_collection.png"));
     }
 }
 
@@ -383,8 +435,8 @@ void TitleBar::slot_updateShowListCollectWidget()
     if(m_listWdgt_colloect)
         if(m_listWdgt_colloect->isHidden())
         {
-            int x = ui->pushButton_webcollect->parentWidget()->mapToGlobal(ui->pushButton_webcollect->pos()).x();
-            int y = ui->pushButton_webcollect->parentWidget()->mapToGlobal(ui->pushButton_webcollect->pos()).y();
+            int x = ui->pushButton_more->parentWidget()->mapToGlobal(ui->pushButton_more->pos()).x();
+            int y = ui->pushButton_more->parentWidget()->mapToGlobal(ui->pushButton_more->pos()).y();
             m_listWdgt_colloect->setGeometry(x - 130,y + 58,
                                              300,500);
             m_listWdgt_colloect->raise();
@@ -422,7 +474,7 @@ void TitleBar::slot_updateShowListHistoryWidget()
             int x = ui->lineEdit_webSearch->parentWidget()->mapToGlobal(ui->lineEdit_webSearch->pos()).x();
             int y = ui->lineEdit_webSearch->parentWidget()->mapToGlobal(ui->lineEdit_webSearch->pos()).y();
             m_listWdgt_history->setGeometry(x,y + ui->lineEdit_webSearch->height(),
-                                            ui->lineEdit_webSearch->width()+ui->pushButton_webhislist->width(),200);
+                                            ui->lineEdit_webSearch->width(),200);
             m_listWdgt_history->raise();
             m_listWdgt_history->show();
         }
@@ -440,6 +492,56 @@ void TitleBar::slot_addToListHistoryWidget(const QString &text)
         QListWidgetItem *item = new QListWidgetItem(QIcon("://images/function/history_list_item.png"),text);
         m_listWdgt_history->addItem(item);
     }
+}
+
+void TitleBar::slot_updateShowListEngineWidget()
+{
+    if(m_listWdgt_engine)
+        if(m_listWdgt_engine->isHidden())
+        {
+            int x = ui->lineEdit_simpSearch->parentWidget()->mapToGlobal(ui->lineEdit_simpSearch->pos()).x();
+            int y = ui->lineEdit_simpSearch->parentWidget()->mapToGlobal(ui->lineEdit_simpSearch->pos()).y();
+            m_listWdgt_engine->setGeometry(x,y + ui->lineEdit_simpSearch->height(),
+                                            ui->lineEdit_simpSearch->width(),130);
+            m_listWdgt_engine->raise();
+            m_listWdgt_engine->show();
+        }
+        else
+        {
+            m_listWdgt_engine->hide();
+        }
+}
+
+void TitleBar::slot_changeEngineIcon(const QString &text)
+{
+    if(!text.isEmpty())
+    {
+        if(text == QString::fromLocal8Bit("360搜索"))
+        {
+            m_actEngine->setIcon(QIcon("://images/function/engine_360.png"));
+            m_headUrl = "https://www.so.com/s?q=";
+        }
+        else if(text == QString::fromLocal8Bit("百度搜索"))
+        {
+            m_actEngine->setIcon(QIcon("://images/function/engine_baidu.png"));
+            m_headUrl = "https://www.baidu.com/s?wd=";
+        }
+        else if(text == QString::fromLocal8Bit("Google搜索"))
+        {
+            m_actEngine->setIcon(QIcon("://images/function/engine_google.png"));
+            m_headUrl = "https://www.sogou.com/web?query=";
+        }
+        else if(text == QString::fromLocal8Bit("必应搜索"))
+        {
+            m_actEngine->setIcon(QIcon("://images/function/engine_biying.png"));
+            m_headUrl = "https://cn.bing.com/search?q=";
+        }
+        else
+        {
+
+        }
+    }
+
 }
 
 //显示浏览器设置
@@ -528,6 +630,27 @@ void TitleBar::slot_clearSearchListHistory()
     m_listWdgt_history->clear();
 }
 
+//添加搜索引擎
+void TitleBar::slot_addWebEngine()
+{
+        QListWidgetItem *item_0 = new QListWidgetItem(QIcon("://images/function/engine_baidu.png"),QString::fromLocal8Bit("百度搜索"));
+        QListWidgetItem *item_1 = new QListWidgetItem(QIcon("://images/function/engine_360.png"),QString::fromLocal8Bit("360搜索"));
+        QListWidgetItem *item_2 = new QListWidgetItem(QIcon("://images/function/engine_biying.png"),QString::fromLocal8Bit("必应搜索"));
+        QListWidgetItem *item_3 = new QListWidgetItem(QIcon("://images/function/engine_google.png"),QString::fromLocal8Bit("Google搜索"));
+        QListWidgetItem *item_4 = new QListWidgetItem();
+        item_0->setSizeHint(QSize(m_listWdgt_engine->width(),26));
+        item_1->setSizeHint(QSize(m_listWdgt_engine->width(),26));
+        item_2->setSizeHint(QSize(m_listWdgt_engine->width(),26));
+        item_3->setSizeHint(QSize(m_listWdgt_engine->width(),26));
+        item_4->setSizeHint(QSize(m_listWdgt_engine->width(),26));
+        m_listWdgt_engine->addItem(item_0);
+        m_listWdgt_engine->addItem(item_1);
+        m_listWdgt_engine->addItem(item_2);
+        m_listWdgt_engine->addItem(item_3);
+        m_listWdgt_engine->addItem(item_4);
+        m_listWdgt_engine->setItemWidget(item_4,m_engineSetBtn);
+}
+
 /*设置tooltip*/
 void TitleBar::setShowToolTip()
 {
@@ -564,6 +687,13 @@ bool TitleBar::eventFilter(QObject *watched, QEvent *event)
         if(event->type() == QEvent::Leave)
         {
             m_listWdgt_colloect->hide();
+        }
+    }
+    if(watched == m_listWdgt_engine)
+    {
+        if(event->type() == QEvent::Leave)
+        {
+            m_listWdgt_engine->hide();
         }
     }
     if(watched == ui->pushButton_back)//返回按钮

@@ -2,6 +2,7 @@
 #define DOWNLOADITEM_H
 
 #include <QUrl>
+#include <QTime>
 #include <QWidget>
 #include <QProcess>
 #include <QFileInfo>
@@ -34,6 +35,7 @@ public slots:
     void            slot_setItemIcon();//设置文件类型
     void            slot_setItemDownProgress(qint64 bytesReceived, qint64 bytesTotal);//设置下载进度
     void            slot_setItemByteLoad(qint64 bytesReceived, qint64 bytesTotal);//设置已下载的大小
+    void            slot_setItemDownSpeed(qint64 bytesReceived, qint64 bytesTotal);//设置下载网速
     void            slot_setItemFileSize(QString size);//设置文件大小
     void            slot_setItemFileName();//设置文件名
     void            slot_setItemExistStatus(int status);//设置文件状态
@@ -48,6 +50,7 @@ private slots:
 
 private:
     Ui::DownLoadItem *ui;
+    QTime           m_speedTime;
     bool            m_open;//下载完成是否直接打开
     bool            m_start;
     QString         m_fileUrl;

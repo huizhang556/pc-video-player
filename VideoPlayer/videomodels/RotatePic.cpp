@@ -71,7 +71,7 @@ void RotatePic::paintEvent(QPaintEvent *event)
     QPainter  painter(&temp);
     painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
     painter.translate(imageWidth / 2, imageHeight / 2); //让图片的中心作为旋转的中心
-    painter.rotate(m_roate); //这个是将绘制坐标旋转到一定的角度
+    painter.rotate(m_roate); //这个是将绘制坐标旋转到指定的角度
     painter.translate(-(imageWidth / 2), -(imageHeight / 2)); //使原点复原
     QRegion maskRegion(temp.rect(),QRegion::Ellipse);
     painter.setClipRegion(maskRegion);

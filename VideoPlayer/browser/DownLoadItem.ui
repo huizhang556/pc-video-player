@@ -125,7 +125,7 @@ color:transparent;
         </size>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page_progressbar">
         <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -178,7 +178,7 @@ background-color:#cce8cf;
 #progressBar:chunk
 {
 border-radius:6px;
-background-color:#92bd6c;
+background-color:#3288e8;
 }</string>
              </property>
              <property name="value">
@@ -188,6 +188,19 @@ background-color:#92bd6c;
            </item>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QLabel" name="label_speed">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
              <item>
               <spacer name="horizontalSpacer_3">
                <property name="orientation">

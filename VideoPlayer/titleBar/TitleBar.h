@@ -64,6 +64,9 @@ private slots:
     void slot_addToListCollectWidget(const QString &text);//选中回显
     void slot_updateShowListHistoryWidget();//显示历史记录界面
     void slot_addToListHistoryWidget(const QString &text);//选中回显
+    void slot_updateShowListEngineWidget();//显示历史记录界面
+    void slot_changeEngineIcon(const QString &text);//选中回显
+    void slot_addWebEngine();//添加引擎
     void slot_updateShowListSettigMenu();//显示设置右键菜单
     void slot_setCanGoForward(bool status);
     void slot_setCanGoBack(bool status);
@@ -101,14 +104,24 @@ signals:
     void sig_userRegister();
 
 private:
-    QTimer          *m_timer3               = nullptr;
-    QMenu           *pmenu_help1            = nullptr;
-    QMenu           *pmenu_help2            = nullptr;
-    SearchForm      *m_searchForm           = nullptr;
-    Login           *m_loginForm            = nullptr;
-    MySkin          *m_mySkin               = nullptr;
-    QListWidget     *m_listWdgt_colloect    = nullptr;//收藏列表
-    QListWidget     *m_listWdgt_history     = nullptr;//历史记录
+    //网址搜索栏目
+    QAction         *m_actSafeMode          =   nullptr;//浏览模式
+    QAction         *m_actCollect           =   nullptr;//收藏网址
+    QAction         *m_actRecords           =   nullptr;//搜索记录
+    //简要搜索栏目
+    QAction         *m_actEngine            =   nullptr;//搜索引擎
+    QAction         *m_actSSearch           =   nullptr;//简要搜索
+    QTimer          *m_timer3               =   nullptr;
+    QMenu           *pmenu_help1            =   nullptr;
+    QMenu           *pmenu_help2            =   nullptr;
+    SearchForm      *m_searchForm           =   nullptr;
+    Login           *m_loginForm            =   nullptr;
+    MySkin          *m_mySkin               =   nullptr;
+    QListWidget     *m_listWdgt_colloect    =   nullptr;//收藏列表
+    QListWidget     *m_listWdgt_history     =   nullptr;//历史记录
+    QListWidget     *m_listWdgt_engine      =   nullptr;//搜索引擎
+    QPushButton     *m_engineSetBtn         =   nullptr;//引擎设置按钮
+    QString         m_headUrl;
     Ui::TitleBar    *ui;
 };
 

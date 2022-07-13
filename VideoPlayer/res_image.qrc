@@ -312,5 +312,11 @@
         <file>images/bgpic/dieji.png</file>
         <file>images/bgpic/dieji2.png</file>
         <file>images/bgpic/dieji3.png</file>
+        <file>images/icon/safelocked.png</file>
+        <file>images/icon/engine.png</file>
+        <file>images/function/engine_360.png</file>
+        <file>images/function/engine_baidu.png</file>
+        <file>images/function/engine_biying.png</file>
+        <file>images/function/engine_google.png</file>
     </qresource>
 </RCC>

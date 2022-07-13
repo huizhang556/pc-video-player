@@ -407,6 +407,7 @@ int DownLoadItem::getItemOrder()
 
 void DownLoadItem::slot_setItemDownProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
+    m_speedTime.start();//开始计时
     qDebug() << QString::fromLocal8Bit("单个item已经接收到数据！");
     slot_setItemByteLoad(bytesReceived,bytesTotal);//下载占比
     ui->progressBar->setValue(bytesReceived*100/bytesTotal);//下载进度
@@ -424,6 +425,16 @@ void DownLoadItem::slot_setItemByteLoad(qint64 bytesReceived, qint64 bytesTotal)
 {
     qDebug() << calCurrentItemLoadedSize(bytesReceived)<<"------"<<calCurrentItemSize(bytesTotal);
     ui->label_prosize->setText(calCurrentItemLoadedSize(bytesReceived) + "/" + calCurrentItemSize(bytesTotal));
+//    slot_setItemDownSpeed(bytesReceived,bytesTotal);
+}
+
+void DownLoadItem::slot_setItemDownSpeed(qint64 bytesReceived, qint64 bytesTotal)
+{
+    float   useTime = m_speedTime.elapsed();//返回自上次start（）或者restart()调用，经过的毫秒数
+    qDebug() << QString::fromLocal8Bit("耗时时间:") <<useTime;
+//    double speed = (double)(bytesTotal-bytesReceived)/1024/1024;
+    double speed = bytesReceived / useTime;
+    ui->label_speed->setText(QString("%1M/S").arg((speed*1000)/(1024*1024),0,'f',2));
 }
 
 void DownLoadItem::slot_setItemFileSize(QString size)

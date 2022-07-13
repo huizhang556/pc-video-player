@@ -444,7 +444,8 @@ void MainWidget::createTrayMenu()
     m_menuTray->addAction(QIcon("://images/tray/tray_home.png"),QString::fromLocal8Bit("显示主界面"),this,SLOT(tray_showMainWidget()));
     m_menuTray->addMenu(m_playMode);//添加 子菜单 播放模式
     m_menuTray->addAction(QIcon("://images/tray/tray_lyric.png"),QString::fromLocal8Bit("显示桌面歌词"),this,SLOT(tray_showDesktopLyric()));
-    m_menuTray->addAction(QIcon("://images/tray/tray_setting.png"),QString::fromLocal8Bit("设置"),this,SLOT(tray_systemSettting()));
+    m_menuTray->addSeparator();
+    m_menuTray->addAction(QIcon("://images/tray/tray_setting.png"),QString::fromLocal8Bit("系统设置"),this,SLOT(tray_systemSettting()));
     m_menuTray->addAction(QIcon("://images/tray/tray_upgrade.png"),QString::fromLocal8Bit("在线升级"),this,SLOT(tray_onlineUpgrade()));//注意消息阻塞
     m_menuTray->addAction(QIcon("://images/tray/tray_logout.png"),QString::fromLocal8Bit("退出登录"),this,SLOT(tray_systemLogout()));
     m_menuTray->addSeparator();

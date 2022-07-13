@@ -82,6 +82,51 @@ background-color: #ffffff;
 color:#2b2b2b;
 }
 
+/*浏览器---搜索引擎*/
+#m_listWdgt_engine
+{
+border:none;
+color:#979aa4;
+background-color: #f8f8f8;
+border-bottom-left-radius:6px;
+border-bottom-right-radius:6px;
+}
+
+#m_listWdgt_engine::item
+{
+padding: 2px;
+background-color:#f0f0f0;
+background-color: rgb(33, 33, 33);
+}
+
+#m_listWdgt_engine::item:selected
+{
+color:#3385ff;
+}
+
+#m_listWdgt_engine::item:hover
+{
+background-color:#e5e5e5;
+color:#2b2b2b;
+}
+
+#m_engineSetBtn
+{
+text-align:left;
+border:0px solid #bbbbbb;
+border-top-width:1px;
+color:#979aa4;
+background-color: rgb(33, 33, 33);
+padding-left:30px;
+}
+
+#m_engineSetBtn:hover
+{
+border:0px solid #bbbbbb;
+background-color:#e5e5e5;
+color:#2b2b2b;
+}
+
 /*新建任务---清除历史路径*/
 #newwork_m_clearBtn
 {
