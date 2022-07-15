@@ -493,7 +493,7 @@ void MusicPlaylist::slots_rightMenu_openFilePath()
 bool MusicPlaylist::slots_addSonersToPage2(const QStringList &list)
 {
     Q_UNUSED(list);
-    for(int i = 0; i < 60; i++)
+    for(int i = 0; i < 10; i++)
     {
         QListWidgetItem  *item  = new QListWidgetItem(ui->listWidget_songer);
         SongItemForm *son_item = new SongItemForm(QString::fromLocal8Bit("%1").arg(i+1),

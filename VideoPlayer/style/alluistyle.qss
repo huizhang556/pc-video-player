@@ -17,6 +17,124 @@ color: rgb(85, 255, 0);
 background-color: #2a2a31;
 }
 
+/*浏览器---收藏栏*/
+#m_webWidget
+{
+
+}
+
+#m_cusTabbar
+{
+background-color: #ffffff;
+}
+
+/*tabbar样式*/
+#m_tabBar
+{
+background-color:#ffffff;
+color: #4c4c4c;
+}
+
+#m_tabBar::tab
+{
+background-color:#ffffff;
+min-width: 120px;
+max-width: 120px;
+/*magin-top和height实现tab居中，留下tabbar的大背景*/
+height:18px;
+margin-top:3px;
+margin-left:3px;
+margin-right:3px;
+border-radius:3px;
+border:0px solid black;
+border-right-width:1px;
+}
+
+#m_tabBar::tab:first
+{
+margin-left: 0px;
+}
+
+#m_tabBar::tab:last
+{
+margin-right: 0px;
+border-right-width:0px;
+}
+
+#m_tabBar::tab:selected
+{
+background-color: #ffffff;
+}
+
+#m_tabBar::tab:hover
+{
+background-color: #f2f2f2;
+}
+
+#m_tabBar::tab:!selected
+{
+background-color: #ffffff;
+}
+
+#m_tabBar::tab::tab:only-one
+{
+border-right-width:0px;
+}
+
+#m_tabBar QToolButton
+{
+background-color:transparent;
+}
+
+#m_tabBar QToolButton::right-arrow
+{
+background-color:transparent;
+}
+
+#m_tabBar QToolButton::left-arrow
+{
+background-color:transparent;
+}
+
+/*添加标签addweb按钮*/
+#m_addTabBtn
+{
+border: 1px solid transparent;
+background-color: #337ab7;
+color:white;
+font-size:26px;
+}
+
+#m_addTabBtn:hover
+{
+background-color: #286090;
+color:white;
+}
+
+/*展开标签栏按钮*/
+#m_webExpandBtn
+{
+background-color: #ffffff;
+color: #7394d2;
+}
+
+#m_webExpandBtn:hover
+{
+background-color: #f2f2f2;
+}
+
+/*标签隐藏按钮*/
+#m_webHideBtn
+{
+background-color: #ffffff;
+color: #7394d2;
+}
+
+#m_webHideBtn:hover
+{
+background-color: #f2f2f2;
+}
+
 /*浏览器---收藏列表*/
 #m_listWdgt_colloect
 {
@@ -127,6 +245,102 @@ background-color:#e5e5e5;
 color:#2b2b2b;
 }
 
+/*浏览器----stackwidget-----start*/
+#m_webTabWidget
+{
+background-color:#4969c7;
+}
+
+#m_webTabWidget::pane
+{
+background-color:#009999;
+background-color:green;
+}
+
+#m_webTabWidget::tab-bar
+{
+left:0px;
+background-color:#009999;
+height:24px;
+}
+
+/*tabbar样式*/
+#m_webTabBar::tab
+{
+background-color: #4666b9;
+/*
+border-top-left-radius: 8px;
+border-top-right-radius: 8px;
+*/
+min-width: 120px;
+height:24px;
+margin-left: 0px;
+margin-right: 0px;
+}
+
+#m_webTabBar::tab:first
+{
+margin-left: 0px;
+}
+
+#m_webTabBar::tab:last
+{
+margin-right: 0px;
+}
+
+#m_webTabBar::tab:hover
+{
+background-color: #3399cc;
+}
+
+#m_webTabBar::tab:selected
+{
+background-color: #f05033;
+}
+
+#m_webTabBar::tab:!selected
+{
+margin-top: 0px;
+background-color: #118860;
+}
+
+#m_webTabBar::close-button
+{
+image: url(://images/icon/tab_closebtn.png);
+}
+
+#m_webTabBar::close-button:hover
+{
+image: url(://images/icon/tab_closebtn_hover.png);
+}
+
+#m_webTabBar QToolButton
+{
+background-color:transparent;
+}
+
+#m_webTabBar QToolButton::right-arrow
+{
+background-color:transparent;
+}
+
+#m_webTabBar QToolButton::left-arrow
+{
+background-color:transparent;
+}
+
+#m_addWebButton
+{
+margin-left:15px;
+background-color:white;
+}
+
+#m_addWebButton:hover
+{
+background-color:green;
+}
+/*浏览器----stackwidget-----end*/
+
 /*新建任务---清除历史路径*/
 #newwork_m_clearBtn
 {
@@ -214,81 +428,6 @@ QFileDialog QScrollBar::add-page:vertical,QScrollBar::add-page:horizontal
 {
 background-color:#f0f0f0;
 }
-
-/*浏览器----stackwidget-----start*/
-#m_webTabWidget
-{
-background-color:#4969c7;
-}
-
-#m_webTabWidgetr::pane
-{
-background-color:#009999;
-}
-
-#m_webTabWidget::tab-bar
-{
-left:0px;
-background-color:#009999;
-height:24px;
-}
-
-/*tabbar样式*/
-#m_webTabBar::tab
-{
-background-color:#4969c7;
-/*
-border-top-left-radius: 8px;
-border-top-right-radius: 8px;
-*/
-min-width: 120px;
-height:24px;
-margin-left: 0px;
-margin-right: 0px;
-}
-
-#m_webTabBar::tab:first
-{
-margin-left: 0px;
-}
-
-#m_webTabBar::tab:last
-{
-margin-right: 0px;
-}
-
-#m_webTabBar::tab:selected,#m_webTabBar::tab:hover
-{
-background-color:#3385ff;
-}
-
-#m_webTabBar::tab:!selected
-{
-margin-top: 0px;
-background-color:#4969c7;
-}
-
-#m_webTabBar::close-button
-{
-image: url(://images/icon/tab_closebtn.png);
-}
-
-#m_webTabBar::close-button:hover
-{
-image: url(://images/icon/tab_closebtn_hover.png);
-}
-
-#m_addWebButton
-{
-margin-left:15px;
-background-color:white;
-}
-
-#m_addWebButton:hover
-{
-background-color:green;
-}
-/*浏览器----stackwidget-----end*/
 
 /*主界面底部按钮*/
 #m_bottomBtn

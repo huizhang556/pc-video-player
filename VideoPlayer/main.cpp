@@ -27,6 +27,7 @@
 #include "videomodels/PlayCtlAdjustForm.h"
 #include "videomodels/RotatePic.h"
 #include "browser/DownLoadItem.h"
+#include "browser/CusTabBar.h"
 
 
 int main(int argc, char *argv[])
@@ -36,6 +37,9 @@ int main(int argc, char *argv[])
     dataBase::creatConnection();//连接数据库
     MainWidget w1;
     w1.show();
+
+//    CusTabBar t;
+//    t.show();
 
 //    RotatePic p;
 //    p.show();

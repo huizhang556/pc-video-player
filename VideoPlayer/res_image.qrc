@@ -318,5 +318,8 @@
         <file>images/function/engine_baidu.png</file>
         <file>images/function/engine_biying.png</file>
         <file>images/function/engine_google.png</file>
+        <file>images/icon/web_more.png</file>
+        <file>images/icon/addTab.png</file>
+        <file>images/icon/addTab_hover.png</file>
     </qresource>
 </RCC>

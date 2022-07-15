@@ -4,7 +4,8 @@ SOURCES += \
     $$PWD/ArrowWidget.cpp \
     $$PWD/CusLineEdit.cpp \
     $$PWD/SystemTray.cpp \
-    $$PWD/CusFileDialog.cpp
+    $$PWD/CusFileDialog.cpp \
+    $$PWD/CustomTabStyle.cpp
 
 HEADERS += \
     $$PWD/CusTabWidget.h \
@@ -12,7 +13,8 @@ HEADERS += \
     $$PWD/ArrowWidget.h \
     $$PWD/CusLineEdit.h \
     $$PWD/SystemTray.h \
-    $$PWD/CusFileDialog.h
+    $$PWD/CusFileDialog.h \
+    $$PWD/CustomTabStyle.h
 
 FORMS += \
     $$PWD/CusTabWidget.ui \

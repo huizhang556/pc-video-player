@@ -208,6 +208,7 @@ void CusWebBrowser::slot_createCustomRightMenu()
     delete rmenu;
 }
 
+
 void CusWebBrowser::slot_back()
 {
     this->pageAction(QWebEnginePage::WebAction::Back)->trigger();

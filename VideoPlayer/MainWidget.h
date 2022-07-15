@@ -4,12 +4,16 @@
 
 #include "browser/NewWork.h"
 #include "titleBar/TitleBar.h"
+#include "browser/CusTabBar.h"
+#include "browser/WebHistory.h"
 #include "customer/SystemTray.h"
 #include "slidebar/LeftSideBar.h"
 #include "customer/CusTabWidget.h"
+#include "browser/WebMessageBox.h"
 #include "browser/CusWebBrowser.h"
 #include "messagebox/ExitDialog.h"
 #include "login/LoginPersonInfo.h"
+#include "browser/CollectRecords.h"
 #include "videomodels/VideoBlank.h"
 #include "messagebox/SystemSetting.h"
 #include "videomodels/MultipPlayer.h"
@@ -165,8 +169,14 @@ private:
     CusTabWidget        *m_tabWidget               = nullptr;
     VideoBlank          *m_videoBlank              = nullptr;
     QTabWidget          *m_webTabWidget            = nullptr;
-    QPushButton         *m_addWebButton            = nullptr;
+    QVBoxLayout         *m_webVblayout             = nullptr;
+    CusTabBar           *m_cusTabbar               = nullptr;
     CusWebBrowser       *m_webBrowser              = nullptr;
+    CollectRecords      *m_webRecords              = nullptr;//浏览器收藏标签界面
+    WebHistory          *m_webHistory              = nullptr;//浏览器历史记录界面
+    WebMessageBox       *m_webMessage              = nullptr;//浏览器标签修改界面
+    QStackedWidget      *m_webStackWgt             = nullptr;//关于浏览器所有界面的管理器
+    QWidget             *m_webWidget               = nullptr;
     SystemSetting       *m_systemSetting           = nullptr;
     SystemTray          *m_systemTray              = nullptr;
     QSystemTrayIcon     *m_tray                    = nullptr;

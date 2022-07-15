@@ -14,7 +14,7 @@ class CusMessageBox : public QMessageBox
 
 public:
     explicit CusMessageBox(QWidget *parent = nullptr);
-    explicit CusMessageBox(QString title,QString prompt, QWidget *parent = nullptr);
+    explicit CusMessageBox(int type, QString title, QString checktext, QString prompt, QString btntext2, QWidget *parent = nullptr);
     ~CusMessageBox();
 
 private:

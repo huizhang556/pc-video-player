@@ -67,13 +67,10 @@ void MainWidget::initOtherWidgetUi()
     m_videoBlank->setHideOpenButton(false);//隐藏打开文件按钮
     m_videoBlank->setObjectName(QString::fromLatin1("m_videoBlank"));
 
-    m_addWebButton = new QPushButton("add");
-    m_addWebButton->setObjectName(QString::fromLocal8Bit("m_addWebButton"));
-    m_addWebButton->setFixedSize(36,36);
-
     m_webBrowser = new CusWebBrowser();
     m_webBrowser->setObjectName(QString::fromLatin1("m_webBrowser"));
-
+    m_cusTabbar = new CusTabBar();
+    m_cusTabbar->setObjectName(QString::fromLocal8Bit("m_cusTabbar"));
     m_webTabWidget = new QTabWidget();
     m_webTabWidget->setObjectName(QString::fromLocal8Bit("m_webTabWidget"));
     m_webTabWidget->tabBar()->setObjectName(QString::fromLocal8Bit("m_webTabBar"));
@@ -83,6 +80,31 @@ void MainWidget::initOtherWidgetUi()
 //    m_webTabWidget->tabBar()->setTabButton(0,QTabBar::RightSide,m_addWebButton);
 //    m_webTabWidget->setCornerWidget(m_addWebButton,Qt::TopRightCorner);
 //    m_webTabWidget->setTabShape(QTabWidget::Triangular);//设置样式后，不起作用
+    m_webVblayout = new QVBoxLayout();
+    m_webVblayout->setSpacing(0);
+    m_webVblayout->setContentsMargins(0,0,0,0);
+    m_webVblayout->setMargin(0);
+    m_webVblayout->addWidget(m_cusTabbar);
+    m_webVblayout->addWidget(m_webTabWidget);
+    m_webWidget  = new QWidget();
+    m_webWidget->setObjectName(QString::fromLocal8Bit("m_webWidget"));
+    m_webWidget->setLayout(m_webVblayout);
+
+    m_webRecords = new CollectRecords();
+    m_webRecords->setObjectName(QString::fromLocal8Bit("m_webRecords"));
+
+    m_webHistory = new WebHistory();
+    m_webHistory->setObjectName(QString::fromLocal8Bit("m_webHistory"));
+
+    m_webMessage = new WebMessageBox();
+    m_webMessage->setObjectName(QString::fromLocal8Bit("m_webMessage"));
+
+    m_webStackWgt = new QStackedWidget();
+    m_webStackWgt->setObjectName(QString::fromLocal8Bit("m_webStackWgt"));
+    m_webStackWgt->addWidget(m_webWidget);// 0 浏览器
+    m_webStackWgt->addWidget(m_webRecords);//1 浏览器收藏记录
+    m_webStackWgt->addWidget(m_webHistory);//2 浏览器浏览历史
+    m_webStackWgt->setCurrentWidget(m_webWidget);
 
     m_personForm = new PersonFileForm();
     m_personForm->setObjectName(QString::fromLatin1("m_personForm"));
@@ -131,7 +153,7 @@ void MainWidget::initOtherWidgetUi()
 void MainWidget::setStackedWidgetPage()
 {
     m_stackWidget_center->insertWidget(0,m_homeWdgt);//m_mainShowForm
-    m_stackWidget_center->insertWidget(1,m_webTabWidget);//m_webTabWidget
+    m_stackWidget_center->insertWidget(1,m_webStackWgt);//m_webStackWgt
     m_stackWidget_center->insertWidget(2,m_tabWidget);//m_tabWidget
     m_stackWidget_center->insertWidget(3,m_musicShow);//musicshow
     m_stackWidget_center->insertWidget(4,m_musicList);//musiclist
@@ -148,7 +170,7 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QUrl &url)
     m_titleBar->slot_setWebLineEditCurentUrl(url);
     m_webTabWidget->insertTab(m_webTabWidget->currentIndex()+1,browser,"new page");
     m_webTabWidget->setCurrentIndex(m_webTabWidget->currentIndex()+1);
-    updateAddWebButtonPosition();
+//    updateAddWebButtonPosition();
     connect(browser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
     //加载网页进度
     connect(browser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
@@ -188,7 +210,7 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QString &url)
     qDebug() <<QString::fromLocal8Bit("当前要插入的行号:") <<current;
     m_webTabWidget->insertTab(m_webTabWidget->currentIndex()+1,browser,"new page");//当前选中项的隔壁插入
     m_webTabWidget->setCurrentIndex(m_webTabWidget->currentIndex()+1);//新插入的为当前选中项
-    updateAddWebButtonPosition();
+//    updateAddWebButtonPosition();
     connect(browser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
     //加载网页进度
     connect(browser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
@@ -275,38 +297,22 @@ void MainWidget::slot_removeTabWidgetTab(int index)
 //处理信号与槽函数
 void MainWidget::chandleSignalAndSlots()
 {
-    //可回退
-    connect(m_titleBar,SIGNAL(sig_sendCanGoBack()),this,SLOT(slot_canGoBack()));
-    connect(this,SIGNAL(sig_canGoBack(bool)),m_titleBar,SLOT(slot_setCanGoBack(bool)));
-    //可前进
-    connect(m_titleBar,SIGNAL(sig_sendCanForward()),this,SLOT(slot_canGoForward()));
-    connect(this,SIGNAL(sig_canGoForward(bool)),m_titleBar,SLOT(slot_setCanGoForward(bool)));
-    //网页下载请求3
-    connect(m_webBrowser->page()->profile(),SIGNAL(downloadRequested(QWebEngineDownloadItem*)),NewWork::getInstance(),SLOT(slot_receiveDownloadRequested(QWebEngineDownloadItem*)),Qt::UniqueConnection);//第五个参数，防止多次请求
-    //显示当前页面的地址
-    connect(m_webBrowser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(setLineEditAddress(QUrl)));
-    //添加一个browser
-    connect(m_webBrowser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
-    //加载网页进度
-    connect(m_webBrowser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
-    //当前项改变
-    connect(m_webBrowser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(slot_setWebLineEditCurentUrl(QUrl)));
-    //tabbar点击改变
-    connect(m_webTabWidget,SIGNAL(tabBarClicked(int)),this,SLOT(slot_switchCurrentTab_URL(int)));
-    //tab关闭
-    connect(m_webTabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(slot_removeTabWidgetTab(int)));
-
-    //标题栏窗口控制按钮
+    /************************************标题栏窗口控制按钮************************************/
     connect(this,&MainWidget::sig_startCloseAppliction,m_mainPlayer,&MultipPlayer::closeCurrentWindow);//转到重写事件
     connect(m_titleBar,&TitleBar::sig_winClose,this,&MainWidget::close);//转到重写事件
     connect(m_titleBar,&TitleBar::sig_winNormal,this,&MainWidget::chandleRestoreWindow);//根据不同状态处理窗口
     connect(m_titleBar,&TitleBar::sig_winMinimum,[=](){this->showMinimized();});
     connect(m_titleBar,&TitleBar::sig_doubleClick,[=](){chandleRestoreWindow();});
-
     //响应 标题栏 帮助设置发来信号，弹出右键菜单
     connect(m_titleBar,SIGNAL(sig_settingHelpItem(int)),this,SLOT(chandleSetHelpItem(int)));
 
-    //处理标题栏信号与浏览器槽函数
+
+    /************************************浏览器部分************************************/
+    //可回退
+    connect(m_titleBar,SIGNAL(sig_sendCanGoBack()),this,SLOT(slot_canGoBack()));
+    connect(this,SIGNAL(sig_canGoBack(bool)),m_titleBar,SLOT(slot_setCanGoBack(bool)));
+    //可前进
+    //处理浏览器部分发来的信号
     //回车
     connect(m_titleBar,SIGNAL(sig_sendInputNewUrl(QString)),this,SLOT(slot_judgeCurrentBrowserIsActive_load(QString)));
     //后退
@@ -317,6 +323,8 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_titleBar,SIGNAL(sig_sendUrlAdvance()),this,SLOT(slot_judgeCurrentBrowserIsActive_advance()));
     //返回主页
     connect(m_titleBar,SIGNAL(sig_sendUrlHome()),this,SLOT(slot_judgeCurrentBrowserIsActive_home()));
+    connect(m_titleBar,SIGNAL(sig_sendCanForward()),this,SLOT(slot_canGoForward()));
+    connect(this,SIGNAL(sig_canGoForward(bool)),m_titleBar,SLOT(slot_setCanGoForward(bool)));
     //上传下载
     connect(m_titleBar,&TitleBar::sig_filesUploadDownLoad,[=](int index1,int index2){
        m_stackWidget_center->setCurrentIndex(index1);//个人信息界面
@@ -327,7 +335,43 @@ void MainWidget::chandleSignalAndSlots()
         m_stackWidget_center->setCurrentIndex(index1);//个人信息界面
         m_personForm->getCurrentShowWidget_TW()->setCurrentIndex(index2);
     });
+    //网页下载请求3
+    connect(m_webBrowser->page()->profile(),SIGNAL(downloadRequested(QWebEngineDownloadItem*)),NewWork::getInstance(),SLOT(slot_receiveDownloadRequested(QWebEngineDownloadItem*)),Qt::UniqueConnection);//第五个参数，防止多次请求
+    //显示当前页面的地址
+    connect(m_webBrowser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(setLineEditAddress(QUrl)));
+    //添加一个browser
+    connect(m_webBrowser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
+    //加载网页进度
+    connect(m_webBrowser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
+    /*网页tab改变信号*/
+    //当前项改变
+    connect(m_webBrowser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(slot_setWebLineEditCurentUrl(QUrl)));
+    //tabbar点击改变
+    connect(m_webTabWidget,SIGNAL(tabBarClicked(int)),this,SLOT(slot_switchCurrentTab_URL(int)));
+    //tab关闭
+    connect(m_webTabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(slot_removeTabWidgetTab(int)));
+    /************************************浏览器---右键部分处理************************************/
+    //显示收藏栏
+    connect(m_titleBar,&TitleBar::sig_sendBrowserShowCollectRecords,[=](){m_cusTabbar->show(); qDebug() <<"show collectmarks";});
+    //显示历史记录
+    connect(m_titleBar,&TitleBar::sig_sendBrowserShowHistories,[=](){m_webStackWgt->setCurrentIndex(2);});
+    //显示收藏菜单
+     connect(m_titleBar,&TitleBar::sig_sendBrowserShowCollectList,[=](){m_webStackWgt->setCurrentIndex(1);});
+     //添加空白网页（原意可以关联m_cusTabbar与m_webBrowser，改为sig_sendTabAddWebTabBar触发m_titleBar，中转触发m_webBrowser）
+    connect(m_cusTabbar,&CusTabBar::sig_sendTabAddWebTabBar,m_titleBar,&TitleBar::slot_receiveBlankWebTab);
+    //此处注意：qt4,qt5写法不能接收信号，只有拉姆达表达式可以，主要还无法区分槽函数（重载的时候）
+    connect(m_titleBar,&TitleBar::sig_sendBlankUrl,[=](QString url){
+        slot_addToWebTabwidgetBrowser(url);
+        m_titleBar->slot_clearWebLineEditText();//清除输入框文字（无用）
+    });
+     //标签栏---展开收藏菜单
+    connect(m_cusTabbar,&CusTabBar::sig_sendTabShowRecords,[=](){m_webStackWgt->setCurrentIndex(1);});
+    //历史记录---返回按钮
+    connect(m_webHistory,&WebHistory::sig_returnPage,[=](){m_webStackWgt->setCurrentIndex(0);});
+    //收藏菜单---返回按钮
+    connect(m_webRecords,&CollectRecords::sig_returnPage,[=](){m_webStackWgt->setCurrentIndex(0);});
 
+    /************************************主窗口关闭关联窗口动作************************************/
     //收到主窗口关闭信号
     connect(m_pExitDlg,&ExitDialog::sig_SendcloseMain,[=](){m_isClose = true;});
     //没收到主窗口关闭信号
@@ -352,16 +396,12 @@ void MainWidget::chandleSignalAndSlots()
         m_mainPlayer->openLocalFile();
 //        m_mainPlayer->show();
     });
-    //托盘action组
-    connect(m_actionGroup,&QActionGroup::triggered,[=](QAction *action)
-    {
-        tray_getCurrentPlayOrder(action);//发送信号
-        tray_setCurrentPlayOrderStatus(action);
-    });
 
+
+    /************************************托盘部分信号处理************************************/
     //播放次序选择界面接收信号
     connect(this,SIGNAL(sig_trayPlayOrder(int)),PlayOrderForm::getInstance(),SLOT(clearAndSetButtonCheckedStatus(int)));
-    //接收西蹙选择界面发送过来信号
+    //接收播放次序选择界面发送过来信号
     connect(PlayOrderForm::getInstance(),SIGNAL(sig_playerOrder(int)),this,SLOT(tray_setCurrentPlayOrderStatus(int)));
     //托盘---上一首
     connect(m_systemTray,SIGNAL(sig_playStatusPrevious()),m_mainPlayer,SLOT(on_pushButton_previous_clicked()));
@@ -369,7 +409,20 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_systemTray,SIGNAL(sig_playStatusNext()),m_mainPlayer,SLOT(on_pushButton_next_clicked()));
     //托盘---播放/暂停
     connect(m_systemTray,SIGNAL(sig_playStatusPause(bool)),m_mainPlayer,SLOT(on_pushButton_pauseStart_clicked()));
-    //接收播放器关闭--
+    //托盘---音量值改变-->播放界面值改变
+    connect(m_systemTray,SIGNAL(sig_playProgressValue(int)),m_mainPlayer,SLOT(receiveSystemTraySendSoundValue(int)));
+    //静音按钮
+    connect(m_systemTray,SIGNAL(sig_playStatusMuted(bool)),m_mainPlayer,SLOT(on_setCurrentMediaSoundSatus()));
+    //托盘action组
+    connect(m_actionGroup,&QActionGroup::triggered,[=](QAction *action)
+    {
+        tray_getCurrentPlayOrder(action);//发送信号
+        tray_setCurrentPlayOrderStatus(action);
+    });
+
+
+    /************************************播放器部分信号处理************************************/
+    //接收播放器关闭
     connect(m_mainPlayer,&MultipPlayer::sig_mainPlayerClose,[=](){
         if(m_mainPlayer!=nullptr)
         {
@@ -380,10 +433,7 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_mainPlayer,SIGNAL(sig_currentMediaPlayStatus(bool)),m_systemTray,SLOT(slot_setCurrentPlayStatus(bool)));
     //接收主界面（实际是音量界面发过来的值，做了中转）的音量值
     connect(m_mainPlayer,SIGNAL(sig_currentMediaSoundValueChange(int)),m_systemTray,SLOT(slot_setCurrentPlaySoundValue(int)));
-    //托盘---音量值改变-->播放界面值改变
-    connect(m_systemTray,SIGNAL(sig_playProgressValue(int)),m_mainPlayer,SLOT(receiveSystemTraySendSoundValue(int)));
-    //静音按钮
-    connect(m_systemTray,SIGNAL(sig_playStatusMuted(bool)),m_mainPlayer,SLOT(on_setCurrentMediaSoundSatus()));
+
 }
 
 //更新新增网页按钮的位置

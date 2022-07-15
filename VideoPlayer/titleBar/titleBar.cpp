@@ -430,23 +430,23 @@ void TitleBar::slot_setCurrentWebSiteCollectStatus(const QString &url)
 }
 
 //显示收藏列表
-void TitleBar::slot_updateShowListCollectWidget()
-{
-    if(m_listWdgt_colloect)
-        if(m_listWdgt_colloect->isHidden())
-        {
-            int x = ui->pushButton_more->parentWidget()->mapToGlobal(ui->pushButton_more->pos()).x();
-            int y = ui->pushButton_more->parentWidget()->mapToGlobal(ui->pushButton_more->pos()).y();
-            m_listWdgt_colloect->setGeometry(x - 130,y + 58,
-                                             300,500);
-            m_listWdgt_colloect->raise();
-            m_listWdgt_colloect->show();
-        }
-        else
-        {
-            m_listWdgt_colloect->hide();
-        }
-}
+//void TitleBar::slot_updateShowListCollectWidget()
+//{
+//    if(m_listWdgt_colloect)
+//        if(m_listWdgt_colloect->isHidden())
+//        {
+//            int x = ui->pushButton_more->parentWidget()->mapToGlobal(ui->pushButton_more->pos()).x();
+//            int y = ui->pushButton_more->parentWidget()->mapToGlobal(ui->pushButton_more->pos()).y();
+//            m_listWdgt_colloect->setGeometry(x - 130,y + 58,
+//                                             300,500);
+//            m_listWdgt_colloect->raise();
+//            m_listWdgt_colloect->show();
+//        }
+//        else
+//        {
+//            m_listWdgt_colloect->hide();
+//        }
+//}
 
 void TitleBar::slot_addToListCollectWidget(const QString &text)
 {
@@ -551,31 +551,29 @@ void TitleBar::slot_updateShowListSettigMenu()
     pmenu_funclist->setObjectName(QString::fromLocal8Bit("pmenu_funclist"));
     QMenu *pmenu_func_tool = new QMenu(QString::fromLocal8Bit("工具"));
     pmenu_func_tool->setObjectName(QString::fromLocal8Bit("pmenu_func_tool"));
-    pmenu_funclist->addAction(QIcon("://images/icon/help_account.png"),QString::fromLocal8Bit("新建窗口"),this,SLOT(slot_browser_setting_newWindows()));
-    pmenu_funclist->addAction(QIcon("://images/icon/help_account.png"),QString::fromLocal8Bit("新建隐身窗口"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_account.png"),QString::fromLocal8Bit("新建窗口"),this,SLOT(slot_browser_setMenu_createTab()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_account.png"),QString::fromLocal8Bit("新建隐身窗口"),this,SLOT(slot_browser_setMenu_createHiddenTab()));
     pmenu_funclist->addSeparator();
-    pmenu_funclist->addAction(QIcon("://images/icon/setlogin.png"),QString::fromLocal8Bit("保存网页"),this,SLOT(slot_browser_setting_newWindows()));//注意：槽函数不加分号，且不能带参数
-    pmenu_funclist->addAction(QIcon("://images/icon/help_internet.png"),QString::fromLocal8Bit("查找"),this,SLOT(slot_browser_setting_newWindows()));
-    pmenu_funclist->addAction(QIcon("://images/icon/help_qahelp.png"),QString::fromLocal8Bit("全屏"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_funclist->addAction(QIcon("://images/icon/setlogin.png"),QString::fromLocal8Bit("保存网页"),this,SLOT(slot_browser_setMenu_savePage()));//注意：槽函数不加分号，且不能带参数
+    pmenu_funclist->addAction(QIcon("://images/icon/help_internet.png"),QString::fromLocal8Bit("查找"),this,SLOT(slot_browser_setMenu_findText()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_qahelp.png"),QString::fromLocal8Bit("全屏"),this,SLOT(slot_browser_setMenu_fullScreen()));
     pmenu_funclist->addSeparator();
-    pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("清空搜索"),this,SLOT(slot_clearSearchListHistory()));
-    pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("收藏列表"),this,SLOT(slot_updateShowListCollectWidget()));
-    pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("历史记录"),this,SLOT(slot_browser_setting_newWindows()));
-    pmenu_funclist->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("下载任务管理"),this,SLOT(slot_browser_setting_newWindows()));
-    pmenu_funclist->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("代理服务器"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("显示收藏栏"),this,SLOT(slot_browser_setMenu_showCollectRecords()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("清空搜索记录"),this,SLOT(slot_browser_setMenu_clearSearchRecords()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("显示收藏夹"),this,SLOT(slot_browser_setMenu_showCollectList()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("显示历史记录"),this,SLOT(slot_browser_setMenu_showHistories()));
     pmenu_funclist->addMenu(pmenu_func_tool);
-    pmenu_func_tool->addAction(QIcon("://images/icon/help_download.png"),QString::fromLocal8Bit("管理扩展"),this,SLOT(slot_browser_setting_newWindows()));
-    pmenu_func_tool->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("清除上网痕迹"),this,SLOT(slot_browser_setting_newWindows()));
-    pmenu_func_tool->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("清除搜索记录"),this,SLOT(slot_browser_setting_clearSearchHistory()));
-    pmenu_func_tool->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("查看源代码"),this,SLOT(slot_browser_setting_newWindows()));
-    pmenu_func_tool->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("任务管理器"),this,SLOT(slot_browser_setting_newWindows()));
-    pmenu_func_tool->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("控制台选项"),this,SLOT(slot_browser_setting_newWindows()));
-    pmenu_func_tool->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("internet选项"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_func_tool->addAction(QIcon("://images/icon/help_download.png"),QString::fromLocal8Bit("管理扩展"),this,SLOT(slot_browser_setMenu_manageExtensions()));
+    pmenu_func_tool->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("清除上网痕迹"),this,SLOT(slot_browser_setMenu_clearHistories()));
+    pmenu_func_tool->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("查看源代码"),this,SLOT(slot_browser_setMenu_viewSourceCode()));
+    pmenu_func_tool->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("任务管理器"),this,SLOT(slot_browser_setMenu_workerManager()));
+    pmenu_func_tool->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("控制台选项"),this,SLOT(slot_browser_setMenu_consoleOptions()));
+    pmenu_func_tool->addAction(QIcon("://images/icon/help_exit.png"),QString::fromLocal8Bit("internet选项"),this,SLOT(slot_browser_setMenu_internetOptions()));
     pmenu_funclist->addSeparator();
-    pmenu_funclist->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("退出登录"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("退出登录"),this,SLOT(slot_browser_setMenu_logOut()));
     pmenu_funclist->addSeparator();
-    pmenu_funclist->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("常见问题"),this,SLOT(slot_browser_setting_newWindows()));
-    pmenu_funclist->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("帮助"),this,SLOT(slot_browser_setting_newWindows()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("常见问题"),this,SLOT(slot_browser_setMenu_FAQ()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("帮助"),this,SLOT(slot_browser_setMenu_help()));
 
     int x = ui->pushButton_more->parentWidget()->mapToGlobal(ui->pushButton_more->pos()).x();
     int y = ui->pushButton_more->parentWidget()->mapToGlobal(ui->pushButton_more->pos()).y();
@@ -614,20 +612,111 @@ void TitleBar::slot_setCanGoBack(bool status)
     }
 }
 
-
-void TitleBar::slot_browser_setting_newWindows()
+//新建窗口
+void TitleBar::slot_browser_setMenu_createTab()
 {
-    emit sig_sendInputNewUrl("http://www.baidu.com");
+    emit sig_sendBrowserCreateTab();
 }
 
-void TitleBar::slot_browser_setting_clearSearchHistory()
+void TitleBar::slot_browser_setMenu_createHiddenTab()
 {
-    m_listWdgt_history->clear();
+    emit sig_sendBrowserCreateHiddenTab();
 }
 
-void TitleBar::slot_clearSearchListHistory()
+//保存网页
+void TitleBar::slot_browser_setMenu_savePage()
 {
-    m_listWdgt_history->clear();
+    emit sig_sendBrowserSavePage();
+}
+
+//网页查找
+void TitleBar::slot_browser_setMenu_findText()
+{
+    emit sig_sendBrowserFindText();
+}
+
+//网页全屏
+void TitleBar::slot_browser_setMenu_fullScreen()
+{
+    emit sig_sendBrowserFullScreen();
+}
+
+//显示收藏栏
+void TitleBar::slot_browser_setMenu_showCollectRecords()
+{
+    emit sig_sendBrowserShowCollectRecords();
+}
+
+//清空搜索记录
+void TitleBar::slot_browser_setMenu_clearSearchRecords()
+{
+    emit sig_sendBrowserClearSearchRecords();
+}
+
+//显示收藏列表
+void TitleBar::slot_browser_setMenu_showCollectList()
+{
+    emit sig_sendBrowserShowCollectList();
+}
+
+//显示历史记录
+void TitleBar::slot_browser_setMenu_showHistories()
+{
+    emit sig_sendBrowserShowHistories();
+}
+
+//管理扩展
+void TitleBar::slot_browser_setMenu_manageExtensions()
+{
+    emit sig_sendBrowserManageExtensions();
+}
+
+//清除上网痕迹
+void TitleBar::slot_browser_setMenu_clearHistories()
+{
+    emit sig_sendBrowserClearHistories();
+}
+
+//查看源代码
+void TitleBar::slot_browser_setMenu_viewSourceCode()
+{
+    emit sig_sendBrowserViewSourceCode();
+}
+
+//任务管理器
+void TitleBar::slot_browser_setMenu_workerManager()
+{
+    emit sig_sendBrowserWorkerManager();
+}
+
+//控制台选项
+void TitleBar::slot_browser_setMenu_consoleOptions()
+{
+    emit sig_sendBrowserConsoleOptions();
+}
+
+//internet选项
+void TitleBar::slot_browser_setMenu_internetOptions()
+{
+    emit sig_sendBrowserInternetOptions();
+}
+
+//退出登录
+void TitleBar::slot_browser_setMenu_logOut()
+{
+    emit sig_sendBrowserLogOut();
+}
+
+//常见问题
+void TitleBar::slot_browser_setMenu_FAQ()
+{
+    emit sig_sendBrowserFAQ();
+}
+
+//帮助
+void TitleBar::slot_browser_setMenu_help()
+{
+    emit sig_sendBrowserHelp();
 }
 
 //添加搜索引擎
@@ -951,6 +1040,12 @@ void TitleBar::slot_setWebLineEditCurentUrl(QUrl url)
     }
 }
 
+void TitleBar::slot_clearWebLineEditText()
+{
+    ui->lineEdit_webSearch->clear();
+    ui->lineEdit_webSearch->setCursorPosition(0);
+}
+
 void TitleBar::slot_setWebProgressBarValue(int value)
 {
     ui->webProgressBar->setValue(value);
@@ -972,6 +1067,15 @@ void TitleBar::slot_resetWebProgressBarValue()
     opacityAnimation->setStartValue(0);
     opacityAnimation->setEndValue(1);
     opacityAnimation->start();
+}
+
+//接收tabbar添加一个空白网页的请求
+void TitleBar::slot_receiveBlankWebTab()
+{
+    QString blankUrl = judgeUrlType("");//无搜索内容
+    if(blankUrl.isEmpty()) return;
+    emit sig_sendBlankUrl(blankUrl);
+    qDebug() << "m_titleBar received add blankurl = " << blankUrl;
 }
 
 
