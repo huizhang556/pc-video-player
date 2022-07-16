@@ -1,4 +1,4 @@
-#ifndef WEBMESSAGEBOX_H
+﻿#ifndef WEBMESSAGEBOX_H
 #define WEBMESSAGEBOX_H
 
 #include <QDialog>
@@ -15,8 +15,14 @@ public:
     explicit WebMessageBox(QWidget *parent = nullptr);
     ~WebMessageBox();
 
+    void    chandleSignalsAndSLots();
+
 private:
     Ui::WebMessageBox *ui;
+
+signals:
+//    void    sig_message_close();
+
 };
 
 #endif // WEBMESSAGEBOX_H

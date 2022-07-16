@@ -24,10 +24,10 @@
 #include "mainwidget/StackItemForm.h"
 #include "mainwidget/GalleryItemForm.h"
 #include "videomodels/VideoProgressBar.h"
-#include "videomodels/PlayCtlAdjustForm.h"
 #include "videomodels/RotatePic.h"
 #include "browser/DownLoadItem.h"
 #include "browser/CusTabBar.h"
+#include "videomodels/FloatPlayCtl.h"
 
 
 int main(int argc, char *argv[])
@@ -37,6 +37,9 @@ int main(int argc, char *argv[])
     dataBase::creatConnection();//连接数据库
     MainWidget w1;
     w1.show();
+
+//    FloatPlayCtl f;
+//    f.show();
 
 //    CusTabBar t;
 //    t.show();
@@ -60,9 +63,6 @@ int main(int argc, char *argv[])
 //    s.show();
 
 //    VideoProgressBar::getInstance()->show();
-
-//    PlayCtlAdjustForm p;
-//    p.show();
 
 //    StackItemForm s;
 //    s.show();

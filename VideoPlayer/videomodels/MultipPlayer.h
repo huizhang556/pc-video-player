@@ -6,6 +6,7 @@
 #include "videomodels/VideoBlank.h"
 #include "videomodels/muteDialog.h"
 #include "videomodels/CommentTab.h"
+#include "videomodels/FloatPlayCtl.h"
 #include "videomodels/AdjustBright.h"
 #include "musicmodels/MusicPlayShow.h"
 #include "videomodels/MyVideoWidget.h"
@@ -58,216 +59,220 @@ public:
     explicit MultipPlayer(QWidget *parent = nullptr);
     ~MultipPlayer();
 
-    void initMainWindow();
+    void    initMainWindow();
 
-    void chandleSignalAndSLots();
+    void    chandleSignalAndSLots();
 
-    void addToPlaylist(const QStringList& fileNames);
+    void    addToPlaylist(const QStringList& fileNames);
 
-    void createLoginMenu();//登录菜单
+    void    createLoginMenu();//登录菜单
 
-    void createSwitchSkinMenu();//切换皮肤
+    void    createSwitchSkinMenu();//切换皮肤
 
-    void addFileToList(const QStringList &strList);//浮动歌曲列表
+    void    addFileToList(const QStringList &strList);//浮动歌曲列表
 
-    bool fileType(int index);// 重载函数1  判断文件类型显示视频还是音乐
+    bool    fileType(int index);// 重载函数1  判断文件类型显示视频还是音乐
 
-    bool fileType(QString filename);// 重载函数2  判断文件类型显示视频还是音乐
+    bool    fileType(QString filename);// 重载函数2  判断文件类型显示视频还是音乐
 
-    bool fileType(QStringList &filenames,int index);// 重载函数3  判断文件类型显示视频还是音乐
+    bool    fileType(QStringList &filenames,int index);// 重载函数3  判断文件类型显示视频还是音乐
 
-    void get_fileFromServer();
+    void    get_fileFromServer();
 
-    void removeTabwidgetTabBar(QTabWidget *tabwidget);
+    void    removeTabwidgetTabBar(QTabWidget *tabwidget);
 
-    void set_showTwoTabBar(QTabWidget *tabwidget, int index1, QWidget *obj1,QString tabtext1);
+    void    set_showTwoTabBar(QTabWidget *tabwidget, int index1, QWidget *obj1,QString tabtext1);
 
-    void set_showTwoTabBar(QTabWidget *tabwidget, int index1, QWidget *obj1,QString tabtext1, int index2, QWidget *obj2, QString tabtext2);
+    void    set_showTwoTabBar(QTabWidget *tabwidget, int index1, QWidget *obj1,QString tabtext1, int index2, QWidget *obj2, QString tabtext2);
 
-    void set_fileTolistWidget(QString item);//将服务器获取到的文件列表显
+    void    set_fileTolistWidget(QString item);//将服务器获取到的文件列表显
 
-    void showMediaCommentTab();
+    void    showMediaCommentTab();
 
     QString getCurrentMediaPlayFileName();
 
-    QRect getDesktopScreenGeometry();
+    QRect   getDesktopScreenGeometry();
 protected:
-    bool eventFilter(QObject *watched, QEvent *event) override;
+    bool    eventFilter(QObject *watched, QEvent *event) override;
 
-    void mousePressEvent(QMouseEvent *event) override;
+    void    mousePressEvent(QMouseEvent *event) override;
 
-    void mouseMoveEvent(QMouseEvent *event) override;
+    void    mouseMoveEvent(QMouseEvent *event) override;
 
-    void mouseReleaseEvent(QMouseEvent *event) override;
+    void    mouseReleaseEvent(QMouseEvent *event) override;
 
-    void changeEvent(QEvent *event) override;
+    void    changeEvent(QEvent *event) override;
 
-    void showEvent(QShowEvent *event) override;
+    void    showEvent(QShowEvent *event) override;
 
-    void resizeEvent(QResizeEvent *event) override;
+    void    resizeEvent(QResizeEvent *event) override;
 
-    void keyPressEvent(QKeyEvent *event) override;
+    void    keyPressEvent(QKeyEvent *event) override;
 
 public slots:
-    void loadFileInfoToWinTitle(int index);//标题栏显示视频名称
+    void    loadFileInfoToWinTitle(int index);//标题栏显示视频名称
 
-    void findFileFromLineEdit( QString name);//浮动曲库查找搜索内容
+    void    findFileFromLineEdit( QString name);//浮动曲库查找搜索内容
 
-    void itemDoubleClick(QListWidgetItem *item);
+    void    itemDoubleClick(QListWidgetItem *item);
 
-    void openLocalFile();
+    void    openLocalFile();
 
-    void setMainCurrentIndex(const int index);
+    void    setMainCurrentIndex(const int index);
 
-    void closeCurrentWindow();
+    void    closeCurrentWindow();
 
-//    void clearListWidgetList_user();//清空用户信息
+    void    showNormalWindows();
 
-    void clearListWidgetList_playlist();//清空播放列表
+//    void  clearListWidgetList_user();//清空用户信息
 
-    void clearListWidgetList_collection();//清空收藏列表
+    void    clearListWidgetList_playlist();//清空播放列表
 
-    void clearListWidgetList_history();//清空历史记录
+    void    clearListWidgetList_collection();//清空收藏列表
 
-    void clearUserInputSearchInfo();//清空用户输入的搜索字
+    void    clearListWidgetList_history();//清空历史记录
 
-    void setCurrentMediaName(QString name);//进度条上显示媒体名称
+    void    clearUserInputSearchInfo();//清空用户输入的搜索字
 
-    void setCurrentMediaNamePicture(const QPixmap &pix);//进度条上显示媒体图片
+    void    setCurrentMediaName(QString name);//进度条上显示媒体名称
 
-    void updateFoldButtonGeometry();//更显显示/隐藏按钮的位置
+    void    setCurrentMediaNamePicture(const QPixmap &pix);//进度条上显示媒体图片
 
-    void setFoldButtonStyle();//判断箭头的方向
+    void    updateFoldButtonGeometry();//更显显示/隐藏按钮的位置
 
-    void judgeFoldBtnOfRightDockList();//判断右侧停靠栏指示按钮位置
+    void    setFoldButtonStyle();//判断箭头的方向
 
-    void setMainWindowShowFullgreen();
+    void    judgeFoldBtnOfRightDockList();//判断右侧停靠栏指示按钮位置
 
-    void setPlayOrderButtonStyleSheet(int index);
+    void    setMainWindowShowFullgreen();
 
-    void setVideTitleBar(int index);
+    void    setPlayOrderButtonStyleSheet(int index);
 
-    void on_pushButton_pauseStart_clicked();//暂停、播放
+    void    setVideTitleBar(int index);
 
-    void updateRateTypeUiLayout();
+    void    on_pushButton_pauseStart_clicked();//暂停、播放
 
-    void on_pushButton_next_clicked();//下一首
+    void    updateRateTypeUiLayout();
 
-    void on_pushButton_previous_clicked();//上一首
+    void    on_pushButton_next_clicked();//下一首
 
-    void receiveSystemTraySendSoundValue(int value);//接收托盘发过来的音量信号
+    void    on_pushButton_previous_clicked();//上一首
 
-    void on_setCurrentMediaSoundSatus();
+    void    receiveSystemTraySendSoundValue(int value);//接收托盘发过来的音量信号
+
+    void    on_setCurrentMediaSoundSatus();
 
 private slots:
-    void on_time();
+    void    on_time();
 
-    void checkChandleMediaPlayerStatus(QMediaPlayer::State newState);//监测处理媒体播放状态
+    void    checkChandleMediaPlayerStatus(QMediaPlayer::State newState);//监测处理媒体播放状态
 
-    void checkChandleMediaStatus();//监测处理媒体状态
+    void    checkChandleMediaStatus();//监测处理媒体状态
 
-    void loadDefaultLogo();//加载默认图标
+    void    loadDefaultLogo();//加载默认图标
 
-    void on_pushButton_5_clicked();//打开文件
+    void    on_pushButton_5_clicked();//打开文件
 
-    void on_pushButton_6_clicked();//重新打开
+    void    on_pushButton_6_clicked();//重新打开
 
-    void switchListPage(int index);
+    void    switchListPage(int index);
 
-    void setVideoRate(int value);
+    void    setVideoRate(int value);
 
-    void on_moreBtn_clicked();
+    void    on_moreBtn_clicked();
 
-    void set_adjustBright();
+    void    set_adjustBright();
 
-    void searchMouseEnterLeaveShow(QObject *watched, QEvent *event);
+    void    searchMouseEnterLeaveShow(QObject *watched, QEvent *event);
 
-    bool videoDouleExit(QObject *watched, QEvent *event);
+    bool    videoDouleExit(QObject *watched, QEvent *event);
 
-    void volumeAdjustShowUi(QObject *watched, QEvent *event);
+    void    volumeAdjustShowUi(QObject *watched, QEvent *event);
 
-    void stackWidgetSliderButtonEventFilter(QObject *watched, QEvent *event);
+    void    stackWidgetSliderButtonEventFilter(QObject *watched, QEvent *event);
 
-    void playlistMouseEnterLeave(QObject *watched, QEvent *event);
+    void    floatPlayCtrlEnterLeave(QObject *watched, QEvent *event);
+
+    void    playlistMouseEnterLeave(QObject *watched, QEvent *event);
 
 
     //帮助菜单槽函数
-    void help_aboutLocalFile();//本地文件
+    void    help_aboutLocalFile();//本地文件
 
-    void adjust_playBackMode(int index);//调节播放模式
+    void    adjust_playBackMode(int index);//调节播放模式
 
-    void adjust_aspectRatioMode(int index);//调节屏幕占比
+    void    adjust_aspectRatioMode(int index);//调节屏幕占比
 
-    void update_adjustBright();
+    void    update_adjustBright();
 
-    void downloadInternetPathRecource();
+    void    downloadInternetPathRecource();
 
-    void playHttpRequireRecourse(const QString &url);
+    void    playHttpRequireRecourse(const QString &url);
 
-//    void on_pushButton_danmu_clicked();//弹幕按钮
+//    void  on_pushButton_danmu_clicked();//弹幕按钮
 
-    void chandleRestoreWindow();
+    void    chandleRestoreWindow();
 
-    bool loadCollectListWidgetList();//加载收藏菜单
+    bool    loadCollectListWidgetList();//加载收藏菜单
 
-    bool setCollectBtnShowStatus();//设置收藏按钮显示状态
+    bool    setCollectBtnShowStatus();//设置收藏按钮显示状态
 
-    bool findCollectListStatus(QListWidget* listdgt, QString name);//遍历列表，没有则添加
+    bool    findCollectListStatus(QListWidget* listdgt, QString name);//遍历列表，没有则添加
 
-    int getCurrentMediaRowOfCollectList(QListWidget* listdgt,QString name);
+    int     getCurrentMediaRowOfCollectList(QListWidget* listdgt,QString name);
 
-    void addCurrentMediaToList_Collect(QListWidget *destList);//重载函数1：添加进收藏列表1
+    void    addCurrentMediaToList_Collect(QListWidget *destList);//重载函数1：添加进收藏列表1
 
-    void addCurrentMediaToList_Collect(QListWidget *destList,QString text);//重载函数2：添加进收藏列表1
+    void    addCurrentMediaToList_Collect(QListWidget *destList,QString text);//重载函数2：添加进收藏列表1
 
-    void addCurrentMediaToList_History(QListWidget *destList);//添加进历史记录
+    void    addCurrentMediaToList_History(QListWidget *destList);//添加进历史记录
 
-    void mediaLoadingStatusProgressBar_Start();
+    void    mediaLoadingStatusProgressBar_Start();
 
-    void mediaLoadingStatusProgressBar_End();
+    void    mediaLoadingStatusProgressBar_End();
 
-    bool updateProgressBarGeometry();
+    bool    updateProgressBarGeometry();
 
-    void slot_createRight_playListTable(const QPoint &pos);//播放列表右键菜单
+    void    slot_createRight_playListTable(const QPoint &pos);//播放列表右键菜单
 
-    void slot_createRight_playCollectTable(const QPoint &pos);//收藏列表右键菜单
+    void    slot_createRight_playCollectTable(const QPoint &pos);//收藏列表右键菜单
 
-    void slot_createRight_playHistoryTable(const QPoint &pos);//历史列表右键菜单
+    void    slot_createRight_playHistoryTable(const QPoint &pos);//历史列表右键菜单
 
-    void slot_clearListAllRecords(QListWidget *obj);//清空列表
+    void    slot_clearListAllRecords(QListWidget *obj);//清空列表
 
-    void slot_deleteListRecords(QListWidget *obj,int start,int end);//多选删除
+    void    slot_deleteListRecords(QListWidget *obj,int start,int end);//多选删除
 
-    void slot_deleteListRecord(QListWidget *obj,int index);//删除某条记录
+    void    slot_deleteListRecord(QListWidget *obj,int index);//删除某条记录
 
-    void slot_addListRecordItems(QListWidget *obj);//批量添加
+    void    slot_addListRecordItems(QListWidget *obj);//批量添加
 
-    void slot_addListRecordItem(QListWidget *obj);//单个添加
+    void    slot_addListRecordItem(QListWidget *obj);//单个添加
 
-    void slot_playCurrentListItem(QListWidget *obj,int index);//播放选中的某条记录
+    void    slot_playCurrentListItem(QListWidget *obj,int index);//播放选中的某条记录
 
-    void slot_playNextListItem(QListWidget *obj,int index);//播放选中的某条记录的吓一条
+    void    slot_playNextListItem(QListWidget *obj,int index);//播放选中的某条记录的吓一条
 
-    void slot_downloadListItem(QListWidget *obj,int index);//下载选中的某条记录
+    void    slot_downloadListItem(QListWidget *obj,int index);//下载选中的某条记录
 
-    void slot_collectListItem(QListWidget *obj,QString text);//收藏选中的某条记录
+    void    slot_collectListItem(QListWidget *obj,QString text);//收藏选中的某条记录
 
-    void slot_selectAllListItem(QListWidget *obj);//全选
+    void    slot_selectAllListItem(QListWidget *obj);//全选
 
 signals:
-    void sig_sendSwitchToMusicPage(QString name);
+    void    sig_sendSwitchToMusicPage(QString name);
 
-    void sig_startCloseAppliction();
+    void    sig_startCloseAppliction();
 
-    void sig_sendToMusicList();
+    void    sig_sendToMusicList();
 
-    void sig_winVStatus(bool);
+    void    sig_winVStatus(bool);
 
-    void sig_currentMediaPlayStatus(bool status);
+    void    sig_currentMediaPlayStatus(bool status);
 
-    void sig_currentMediaSoundValueChange(int value);
+    void    sig_currentMediaSoundValueChange(int value);
 
-    void sig_mainPlayerClose();
+    void    sig_mainPlayerClose();
 
 
 private:
@@ -305,6 +310,7 @@ private:
     MyVideoWidget               *videoWidget        = nullptr;
     QMediaPlaylist              *playlist           = nullptr;
     QStackedWidget              *m_introStack       = nullptr;
+
 
     int                         m_voice;                        //静音之前的值
     bool                        m_winMax;                       //默认非最大化

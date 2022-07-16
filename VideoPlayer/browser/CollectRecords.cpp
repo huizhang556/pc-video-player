@@ -18,4 +18,5 @@ CollectRecords::~CollectRecords()
 void CollectRecords::chandleSignalsAndSlots()
 {
     connect(ui->pushButton_return,&QPushButton::clicked,[=](){emit sig_returnPage();});
+    connect(ui->pushButton_change,&QPushButton::clicked,[=](){emit sig_changeRecord();});
 }

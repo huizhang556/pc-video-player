@@ -21,6 +21,7 @@ private:
 
 signals:
     void    sig_returnPage();
+    void    sig_changeRecord();
 };
 
 #endif // COLLECTRECORDS_H

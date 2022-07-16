@@ -304,6 +304,7 @@ void MultipPlayer::initMainWindow()
     loadDefaultLogo();//加载默认图标
 
     VideoProgressBar::getInstance()->hide();
+    FloatPlayCtl::getInstance()->installEventFilter(this);
 
     m_pTimer  = new QTimer(this);
     m_pTimer2 = new QTimer(this);
@@ -324,7 +325,9 @@ void MultipPlayer::initMainWindow()
     m_foldBtn->setHidden(true);//初始化隐藏按钮
 
     //快捷键
+    ui->pushButton_previous->setShortcut(QKeySequence(tr("left")));//<-键
     ui->pushButton_pauseStart->setShortcut(QKeySequence(tr("space")));//空格键
+    ui->pushButton_next->setShortcut(QKeySequence(tr("right")));//->键
     m_searchBtn->setShortcut(QKeySequence(tr("Ctrl+O")));//Ctrl + O 组合键
 }
 
@@ -348,12 +351,24 @@ void MultipPlayer::chandleSignalAndSLots()
     connect(player,&QMediaPlayer::durationChanged,[=](){
         m_times = player->duration()/1000;//持续时间,毫秒为单位，转化为秒为单位
         ui->horizontalSlider->setRange(0,m_times);
+        FloatPlayCtl::getInstance()->setHorzontalSlider_PlayerRange(0,m_times);
     });
 
     /*移动---拖动进度条，设置媒体的播放进度*/
     connect(ui->horizontalSlider,&QSlider::sliderMoved,[=](int pos){
         if(m_bPress)
+        {
             player->setPosition(pos*1000);//position单位是ms,所以需要*1000转换为ms
+        }
+    });
+
+//    connect(ui->horizontalSlider,&QSlider::valueChanged,[=](int pos){
+//        player->setPosition(pos*1000);//position单位是ms,所以需要*1000转换为ms
+//    });
+
+    /*浮动窗口---调节进度条*/
+    connect(FloatPlayCtl::getInstance(),&FloatPlayCtl::sig_sendProgress_player,[=](int pos){
+//        ui->horizontalSlider->setValue(pos);//不能直接操作player,间接操作mainplayer的进度条达到统一
     });
 
     /*按下*/
@@ -436,7 +451,8 @@ void MultipPlayer::chandleSignalAndSLots()
 
     //窗口最小化按钮
     connect(m_videoTitleBar,&VideoTitleBar::sig_winVMinimum,this,&MultipPlayer::showMinimized);
-
+    //全屏下窗口还原
+    connect(FloatPlayCtl::getInstance(),&FloatPlayCtl::sig_sendExitFullscreen,this,&MultipPlayer::showNormalWindows);
     //窗口还原按钮
     connect(this,SIGNAL(sig_winVStatus(bool)),m_videoTitleBar,SLOT(chandleVMainWinStatus(bool)));
     connect(m_videoTitleBar,&VideoTitleBar::sig_doubleClick,[=](){chandleRestoreWindow();});
@@ -576,7 +592,7 @@ void MultipPlayer::chandleSignalAndSLots()
     //播放顺序 -- 单曲1 顺序2 循环3 随机4
     connect(PlayOrderForm::getInstance(),SIGNAL(sig_playerOrder(int)),this,SLOT(setPlayOrderButtonStyleSheet(int)));
 
-    //显示 列表
+    //显示列表
     connect(ui->pushButton_curlist,&QPushButton::clicked,[=](){setMainWindowShowFullgreen();});
 
     //播放列表右键
@@ -1115,7 +1131,8 @@ void MultipPlayer::on_time()
 {
     //方法1
     int pos  = player->position()/1000;//最新的进度
-    ui->horizontalSlider->setValue(pos);//设置进度显示
+    ui->horizontalSlider->setValue(pos);//设置主播放界面进度显示
+    FloatPlayCtl::getInstance()->slot_setProgressbar_player(pos);//设置全屏时浮动控制界面进度
 //    QDateTime dt1 = QDateTime::fromSecsSinceEpoch(m_times);
 //    QString str = dt1.toString("hh:mm:ss");
 //    int min = pos/60;
@@ -1150,7 +1167,7 @@ void MultipPlayer::on_time()
     QString qTime = hour + ":" + min + ":" + sec;
 //    qDebug() <<QString::fromLocal8Bit("进度时间：")<< qTime;
     ui->label_time->setText(qTime+ "/" +qTZ);
-
+    FloatPlayCtl::getInstance()->slot_setMediaPlayTime(qTime+ "/" +qTZ);
     //方法3
 //    int ss = 1000;
 //        int mi = ss * 60;
@@ -1384,6 +1401,7 @@ void MultipPlayer::keyPressEvent(QKeyEvent *event)
     {
         chandleRestoreWindow();
     }
+    qDebug() << event->key();
 }
 
 //鼠标移动事件
@@ -1565,6 +1583,31 @@ void MultipPlayer::stackWidgetSliderButtonEventFilter(QObject *watched, QEvent *
         {
             m_foldBtn->hide();
 //            qDebug() << "stackwidget leave";
+        }
+    }
+}
+
+void MultipPlayer::floatPlayCtrlEnterLeave(QObject *watched, QEvent *event)
+{
+    if(isMaximized() && m_videoTitleBar->isHidden())
+    {
+        if(watched == ui->stackedWidget)
+        {
+            if(event->type() == QEvent::Enter)
+            {
+                FloatPlayCtl::getInstance()->show();
+            }
+            else  if(event->type() == QEvent::Leave)
+            {
+                FloatPlayCtl::getInstance()->hide();
+            }
+        }
+        if(watched == FloatPlayCtl::getInstance())
+        {
+            if(event->type() ==QEvent::Enter)
+            {
+                FloatPlayCtl::getInstance()->show();
+            }
         }
     }
 }
@@ -1844,15 +1887,17 @@ void MultipPlayer::chandleRestoreWindow()
     {
         this->showMaximized();
         emit sig_winVStatus(m_winMax);//向标题栏发送最大化状态信号
+
     }
     else
     {
-        this->showNormal();
-        if(m_videoTitleBar->isHidden()) m_videoTitleBar->show();
-        if(ui->stackedWidget_player->isHidden()) ui->stackedWidget_player->show();
-        emit sig_winVStatus(m_winMax);//向窗口发送正常状态信号
+        showNormalWindows();
     }
     m_winMax = !m_winMax;
+    //其他窗口关闭
+    if(!FloatPlayCtl::getInstance()->isHidden()) FloatPlayCtl::getInstance()->hide();
+    if(!m_adjustBright->isHidden()) m_adjustBright->hide();//所有窗口调整，必须隐藏
+    if(!VideoProgressBar::getInstance()->isHidden()) VideoProgressBar::getInstance()->hide();//所有窗口调整，必须隐藏
 }
 
 bool MultipPlayer::loadCollectListWidgetList()
@@ -2407,6 +2452,16 @@ void MultipPlayer::closeCurrentWindow()
     emit sig_mainPlayerClose();//主界面处理内存删除
 }
 
+//全屏退出统一操作
+void MultipPlayer::showNormalWindows()
+{
+    this->showNormal();
+    if(m_videoTitleBar->isHidden()) m_videoTitleBar->show();
+    if(ui->stackedWidget_player->isHidden()) ui->stackedWidget_player->show();
+    if(!FloatPlayCtl::getInstance()->isHidden()) FloatPlayCtl::getInstance()->hide();
+    emit sig_winVStatus(m_winMax);//向窗口发送正常状态信号
+}
+
 //清空用户信息
 //void MultipPlayer::clearListWidgetList_user()
 //{
@@ -2450,6 +2505,7 @@ void MultipPlayer::setCurrentMediaName(QString name)
     int pos  = name.indexOf(".");
     QString filename = name.left(pos);//从pos位置向左侧截取
     ui->label_media_name->setText(filename);
+    FloatPlayCtl::getInstance()->slot_setMediaPlayName(filename);
 }
 
 /*当前媒体的图片*/
@@ -2476,6 +2532,7 @@ void MultipPlayer::setFoldButtonStyle()
 /*判断右侧停靠栏指示按钮位置*/
 void MultipPlayer::judgeFoldBtnOfRightDockList()
 {
+    if(!FloatPlayCtl::getInstance()->isHidden()) return;
     if(m_isHide)//点击按钮发现，界面处于隐藏状态
     {
         m_widget1->show();//点击后则显示界面
@@ -2501,7 +2558,16 @@ void MultipPlayer::setMainWindowShowFullgreen()
     ui->stackedWidget_player->hide();
     m_widget1->hide();
     m_isHide = true;
-    chandleRestoreWindow();//相当于双击标题栏效果
+    chandleRestoreWindow();//相当加上于双击标题栏效果
+    if(isMaximized() && FloatPlayCtl::getInstance())
+    {
+//        int x = ui->stackedWidget->parentWidget()->mapToGlobal(this->pos()).x();
+//        int y = ui->stackedWidget->parentWidget()->mapToGlobal(this->pos()).y();
+//        qDebug() << "x="<<x<<"y="<<y;
+        QRect deskRect = QApplication::desktop()->availableGeometry();
+        FloatPlayCtl::getInstance()->setGeometry(0,deskRect.height()-70,deskRect.width(),60);
+        FloatPlayCtl::getInstance()->show();
+    }
 }
 
 /*播放次序按钮*/
@@ -2550,6 +2616,7 @@ bool MultipPlayer::eventFilter(QObject *watched, QEvent *event)
     volumeAdjustShowUi(watched,mousevent);//视频参数调节界面
     playlistMouseEnterLeave(watched,mousevent);//节目列表搜索框
     stackWidgetSliderButtonEventFilter(watched,mousevent);//箭头显示影藏动作
+    floatPlayCtrlEnterLeave(watched,mousevent);//浮动播放
 //    videoDouleExit(watched,mousevent);
     return QWidget::eventFilter(watched,event);
 }

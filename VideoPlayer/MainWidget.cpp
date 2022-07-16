@@ -77,6 +77,7 @@ void MainWidget::initOtherWidgetUi()
     m_webTabWidget->insertTab(0,m_webBrowser,QString::fromLocal8Bit("default"));
     m_webTabWidget->setTabsClosable(true);//打开关闭按钮
     m_webTabWidget->setMovable(true);//标签可拖动
+//    m_webTabWidget->tabBar()->hide();
 //    m_webTabWidget->tabBar()->setTabButton(0,QTabBar::RightSide,m_addWebButton);
 //    m_webTabWidget->setCornerWidget(m_addWebButton,Qt::TopRightCorner);
 //    m_webTabWidget->setTabShape(QTabWidget::Triangular);//设置样式后，不起作用
@@ -350,6 +351,7 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_webTabWidget,SIGNAL(tabBarClicked(int)),this,SLOT(slot_switchCurrentTab_URL(int)));
     //tab关闭
     connect(m_webTabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(slot_removeTabWidgetTab(int)));
+
     /************************************浏览器---右键部分处理************************************/
     //显示收藏栏
     connect(m_titleBar,&TitleBar::sig_sendBrowserShowCollectRecords,[=](){m_cusTabbar->show(); qDebug() <<"show collectmarks";});
@@ -364,12 +366,21 @@ void MainWidget::chandleSignalAndSlots()
         slot_addToWebTabwidgetBrowser(url);
         m_titleBar->slot_clearWebLineEditText();//清除输入框文字（无用）
     });
-     //标签栏---展开收藏菜单
-    connect(m_cusTabbar,&CusTabBar::sig_sendTabShowRecords,[=](){m_webStackWgt->setCurrentIndex(1);});
-    //历史记录---返回按钮
-    connect(m_webHistory,&WebHistory::sig_returnPage,[=](){m_webStackWgt->setCurrentIndex(0);});
+
+    /************************************浏览器---收藏栏************************************/
     //收藏菜单---返回按钮
     connect(m_webRecords,&CollectRecords::sig_returnPage,[=](){m_webStackWgt->setCurrentIndex(0);});
+    //收藏菜单---修改按钮
+    connect(m_webRecords,&CollectRecords::sig_changeRecord,[=](){m_webMessage->exec();});
+
+    /************************************浏览器---历史记录栏************************************/
+    //历史记录---返回按钮
+    connect(m_webHistory,&WebHistory::sig_returnPage,[=](){m_webStackWgt->setCurrentIndex(0);});
+     //标签栏---展开收藏菜单
+    connect(m_cusTabbar,&CusTabBar::sig_sendTabShowRecords,[=](){m_webStackWgt->setCurrentIndex(1);});
+
+    /************************************浏览器---添加记录消息窗口************************************/
+
 
     /************************************主窗口关闭关联窗口动作************************************/
     //收到主窗口关闭信号
@@ -398,21 +409,36 @@ void MainWidget::chandleSignalAndSlots()
     });
 
 
-    /************************************托盘部分信号处理************************************/
+    /************************************托盘+浮动控制界面---信号处理************************************/
     //播放次序选择界面接收信号
     connect(this,SIGNAL(sig_trayPlayOrder(int)),PlayOrderForm::getInstance(),SLOT(clearAndSetButtonCheckedStatus(int)));
     //接收播放次序选择界面发送过来信号
     connect(PlayOrderForm::getInstance(),SIGNAL(sig_playerOrder(int)),this,SLOT(tray_setCurrentPlayOrderStatus(int)));
     //托盘---上一首
     connect(m_systemTray,SIGNAL(sig_playStatusPrevious()),m_mainPlayer,SLOT(on_pushButton_previous_clicked()));
+    //浮动控制---上一首
+    connect(FloatPlayCtl::getInstance(),SIGNAL(sig_sendPlayPrevious()),m_mainPlayer,SLOT(on_pushButton_previous_clicked()));
+
     //托盘---下一首
     connect(m_systemTray,SIGNAL(sig_playStatusNext()),m_mainPlayer,SLOT(on_pushButton_next_clicked()));
+    //浮动控制---下一首
+    connect(FloatPlayCtl::getInstance(),SIGNAL(sig_sendPlayNext()),m_mainPlayer,SLOT(on_pushButton_next_clicked()));
+
     //托盘---播放/暂停
     connect(m_systemTray,SIGNAL(sig_playStatusPause(bool)),m_mainPlayer,SLOT(on_pushButton_pauseStart_clicked()));
+    //浮动控制---播放/暂停
+    connect(FloatPlayCtl::getInstance(),SIGNAL(sig_sendPlayStartPause()),m_mainPlayer,SLOT(on_pushButton_pauseStart_clicked()));
+
     //托盘---音量值改变-->播放界面值改变
     connect(m_systemTray,SIGNAL(sig_playProgressValue(int)),m_mainPlayer,SLOT(receiveSystemTraySendSoundValue(int)));
-    //静音按钮
+    //浮动控制---音量值改变-->播放界面值改变
+    connect(FloatPlayCtl::getInstance(),SIGNAL(sig_sendProgress_voice(int)),m_mainPlayer,SLOT(receiveSystemTraySendSoundValue(int)));
+
+    //托盘---静音按钮
     connect(m_systemTray,SIGNAL(sig_playStatusMuted(bool)),m_mainPlayer,SLOT(on_setCurrentMediaSoundSatus()));
+    //浮动控制---静音按钮
+    connect(FloatPlayCtl::getInstance(),SIGNAL(sig_sendPlayMute(bool)),m_mainPlayer,SLOT(on_setCurrentMediaSoundSatus()));
+
     //托盘action组
     connect(m_actionGroup,&QActionGroup::triggered,[=](QAction *action)
     {
@@ -429,11 +455,15 @@ void MainWidget::chandleSignalAndSlots()
             m_mainPlayer->close();//实际没有删除，需要手动delete
         }
     });
-    //接收播放器发送的播放暂停
+    //托盘---接收播放器发送的播放暂停
     connect(m_mainPlayer,SIGNAL(sig_currentMediaPlayStatus(bool)),m_systemTray,SLOT(slot_setCurrentPlayStatus(bool)));
+    //浮动控制---接收播放器发送的播放暂停
+    connect(m_mainPlayer,SIGNAL(sig_currentMediaPlayStatus(bool)),FloatPlayCtl::getInstance(),SLOT(slot_setCurrentPlayStatus(bool)));
+
     //接收主界面（实际是音量界面发过来的值，做了中转）的音量值
     connect(m_mainPlayer,SIGNAL(sig_currentMediaSoundValueChange(int)),m_systemTray,SLOT(slot_setCurrentPlaySoundValue(int)));
-
+    //浮动控制---接收音量值改变（01.主界面调节 02.托盘调节）
+    connect(m_mainPlayer,SIGNAL(sig_currentMediaSoundValueChange(int)),FloatPlayCtl::getInstance(),SLOT(slot_setProgressbar_voice(int)));
 }
 
 //更新新增网页按钮的位置

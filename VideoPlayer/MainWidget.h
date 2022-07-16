@@ -15,6 +15,7 @@
 #include "login/LoginPersonInfo.h"
 #include "browser/CollectRecords.h"
 #include "videomodels/VideoBlank.h"
+#include "videomodels/FloatPlayCtl.h"
 #include "messagebox/SystemSetting.h"
 #include "videomodels/MultipPlayer.h"
 #include "musicmodels/MusicPlaylist.h"
@@ -51,106 +52,106 @@ public:
     ~MainWidget();
 
 protected:
-    bool   eventFilter(QObject *watched, QEvent *event) override;
+    bool        eventFilter(QObject *watched, QEvent *event) override;
 
-    void   mousePressEvent(QMouseEvent *event) override;
+    void        mousePressEvent(QMouseEvent *event) override;
 
-    void   mouseMoveEvent(QMouseEvent *event) override;
+    void        mouseMoveEvent(QMouseEvent *event) override;
 
-    void   mouseReleaseEvent(QMouseEvent *event) override;
+    void        mouseReleaseEvent(QMouseEvent *event) override;
 
-    void   changeEvent(QEvent *event) override;
+    void        changeEvent(QEvent *event) override;
 
-    void   showEvent(QShowEvent *event) override;
+    void        showEvent(QShowEvent *event) override;
 
-    void   closeEvent(QCloseEvent *event) override;
+    void        closeEvent(QCloseEvent *event) override;
 
-    void   resizeEvent(QResizeEvent *event) override;
+    void        resizeEvent(QResizeEvent *event) override;
 
 private:
-    void initOtherWidgetUi();
+    void        initOtherWidgetUi();
 
-    void chandleSignalAndSlots();
+    void        chandleSignalAndSlots();
 
-    void updateAddWebButtonPosition();//更新新增网页按钮的位置
+    void        updateAddWebButtonPosition();//更新新增网页按钮的位置
 
-    void setStackedWidgetPage();//添加界面
+    void        setStackedWidgetPage();//添加界面
 
-    void createTrayMenu();//托盘菜单
+    void        createTrayMenu();//托盘菜单
 
-    void setGlobalToolTip();
+    void        setGlobalToolTip();
 
 
 private slots:
-    void slot_setRemoveTabLineEditText(int index);//删除某个tab后，标题栏显示URL
+    void        slot_setRemoveTabLineEditText(int index);//删除某个tab后，标题栏显示URL
 
-    void slot_switchCurrentTab_URL(int index);//转换到当前索引
+    void        slot_switchCurrentTab_URL(int index);//转换到当前索引
 
-    void slot_setCurrentTabWidgetEnable();//设置可用不可用
+    void        slot_setCurrentTabWidgetEnable();//设置可用不可用
 
-    void slot_judgeCurrentBrowserIsActive_home();//过滤不是当前活跃的窗口--返回主页
+    void        slot_judgeCurrentBrowserIsActive_home();//过滤不是当前活跃的窗口--返回主页
 
-    void slot_judgeCurrentBrowserIsActive_back();//返回上一级
+    void        slot_judgeCurrentBrowserIsActive_back();//返回上一级
 
-    void slot_judgeCurrentBrowserIsActive_freshen();//刷新
+    void        slot_judgeCurrentBrowserIsActive_freshen();//刷新
 
-    void slot_judgeCurrentBrowserIsActive_advance();//下一页
+    void        slot_judgeCurrentBrowserIsActive_advance();//下一页
 
-    void slot_judgeCurrentBrowserIsActive_load(QString newUrl);//加载输入框地址
+    void        slot_judgeCurrentBrowserIsActive_load(QString newUrl);//加载输入框地址
 
-    void slot_addToWebTabwidgetBrowser(QUrl &url);//重载1
+    void        slot_addToWebTabwidgetBrowser(QUrl &url);//重载1
 
-    void slot_addToWebTabwidgetBrowser(QString &url);//重载2
+    void        slot_addToWebTabwidgetBrowser(QString &url);//重载2
 
-    void slot_removeTabWidgetTab(int index);//删除某一个tab
+    void        slot_removeTabWidgetTab(int index);//删除某一个tab
 
-    void slot_on_leftButton_clicked();//左侧边栏点击判断
+    void        slot_on_leftButton_clicked();//左侧边栏点击判断
 
-    void setLeftButtonStyleSheetStatus();//更新左侧边栏按钮样式
+    void        setLeftButtonStyleSheetStatus();//更新左侧边栏按钮样式
 
-    void updateLeftButtonGeometry();//更新左侧边栏按钮位置
+    void        updateLeftButtonGeometry();//更新左侧边栏按钮位置
 
-    void chandleRestoreWindow();
+    void        chandleRestoreWindow();
 
-    void chandleSetHelpItem(int index);
+    void        chandleSetHelpItem(int index);
 
-    void help_stemAboutSetting();//系统设置
+    void        help_stemAboutSetting();//系统设置
 
-    void help_questionAnswer();//问题帮助
+    void        help_questionAnswer();//问题帮助
 
-    void help_openWebSite();//门户网站
+    void        help_openWebSite();//门户网站
 
-    void help_aboutLocalFile();//播放本地资源
+    void        help_aboutLocalFile();//播放本地资源
 
-    void help_aboutNetworklFile();//播放网络资源
+    void        help_aboutNetworklFile();//播放网络资源
 
     //浏览器
-    void slot_canGoForward();
-    void slot_canGoBack();
+    void        slot_canGoForward();
+    void        slot_canGoBack();
 
     //托盘
-    void tray_showMainWidget();
-    void tray_showDesktopLyric();
-    void tray_systemSettting();
-    void tray_onlineUpgrade();
-    void tray_systemLogout();
-    void tray_systemExitSoftware();
-    void tray_getCurrentPlayOrder(QAction *sendAction);
-    void tray_setCurrentPlayOrderStatus(QAction *sendAction);//重载1
-    void tray_setCurrentPlayOrderStatus(int index);//重载2
+    void        tray_showMainWidget();
+    void        tray_showDesktopLyric();
+    void        tray_systemSettting();
+    void        tray_onlineUpgrade();
+    void        tray_systemLogout();
+    void        tray_systemExitSoftware();
+    void        tray_getCurrentPlayOrder(QAction *sendAction);
+    void        tray_setCurrentPlayOrderStatus(QAction *sendAction);//重载1
+    void        tray_setCurrentPlayOrderStatus(int index);//重载2
 
 
     //界面拉伸私有成员函数
-    int   countRow(QPoint p);             //获取光标在窗口所在区域的 行   返回行数
-    int   countFlag(QPoint p,int row);    //获取光标在窗口所在区域的 列  返回行列坐标
-    void  setCursorType(int flag);        //根据传入的坐标，设置光标样式
+    int         countRow(QPoint p);             //获取光标在窗口所在区域的 行   返回行数
+    int         countFlag(QPoint p,int row);    //获取光标在窗口所在区域的 列  返回行列坐标
+    void        setCursorType(int flag);        //根据传入的坐标，设置光标样式
 
 signals:
-    void sig_winStatus(bool);
-    void sig_trayPlayOrder(int order);
-    void sig_startCloseAppliction();//主窗口关闭信号
-    void sig_canGoBack(bool status);
-    void sig_canGoForward(bool status);
+    void        sig_winStatus(bool);
+    void        sig_trayPlayOrder(int order);
+    void        sig_startCloseAppliction();//主窗口关闭信号
+    void        sig_canGoBack(bool status);
+    void        sig_canGoForward(bool status);
 
 private:
     QStackedWidget      *m_stackWidget_center      = nullptr;//中心显示区域
