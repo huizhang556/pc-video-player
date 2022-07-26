@@ -28,18 +28,25 @@
 #include "browser/DownLoadItem.h"
 #include "browser/CusTabBar.h"
 #include "videomodels/FloatPlayCtl.h"
+#include "customer/CustomFileDialog.h"
 
+#include <QTranslator>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QTranslator translator1;
+    translator1.load(":/font/qt_zh_CN.qm");
+    a.installTranslator(&translator1);
     loadGlobalQss::loadAllUIQss();//加载全局样式
     dataBase::creatConnection();//连接数据库
     MainWidget w1;
     w1.show();
 
-//    FloatPlayCtl f;
-//    f.show();
+//    CustomFileDialog s;
+//    s.show();
+
+//    FloatPlayCtl::getInstance()->show();
 
 //    CusTabBar t;
 //    t.show();

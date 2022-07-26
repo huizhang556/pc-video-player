@@ -5,6 +5,7 @@ RotatePic::RotatePic(QWidget *parent) :
     QWidget(parent),
     m_roate(0)
 {
+    setWindowFlags(Qt::FramelessWindowHint);
     m_timer = new QTimer(this);
     m_labelpic = new QLabel();
     QVBoxLayout *vlayout = new QVBoxLayout(this);

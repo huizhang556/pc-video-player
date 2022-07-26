@@ -13,7 +13,7 @@ SystemSetting::SystemSetting(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setFixedSize(700,520);
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool);
     loadDefaultConfig();
     initWorkUI();
     chandleSignalAndSlot();//处理信号与槽函数

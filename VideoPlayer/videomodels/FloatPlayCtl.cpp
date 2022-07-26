@@ -12,8 +12,9 @@ FloatPlayCtl::FloatPlayCtl(QWidget *parent) :
 {
     ui->setupUi(this);
     //去掉标题栏,窗口始终在最前面（鼠标点击也在最前面）
-    this->setWindowFlags(Qt::FramelessWindowHint|Qt::WindowStaysOnTopHint);
-    this->setFixedHeight(65);
+    this->setWindowFlags(Qt::FramelessWindowHint| Qt::Tool | Qt::WindowStaysOnTopHint);
+    this->setFixedHeight(80);
+    this->setMouseTracking(true);
     initWorkUI();
     chandleSignalsAndSlots();
 }
@@ -65,6 +66,8 @@ void FloatPlayCtl::initWorkUI()
     ui->horizontalSlider_voiceProgress->setValue(10);
     //初始播放状态
     ui->pushButton_start->setStyleSheet("QPushButton{"
+                                        "border-radius:20px;"
+                                        "background-color: rgba(255,255,255,0.1);"
                                         "border-image: url(:/images/tray/tray_pause.png);"
                                         "}");
     //初始非静音状态
@@ -139,6 +142,8 @@ void FloatPlayCtl::slot_setCurrentPlayStatus(bool status)
     if(!status)//播放
     {
         ui->pushButton_start->setStyleSheet("QPushButton{"
+                                            "border-radius:20px;"
+                                            "background-color: rgba(255,255,255,0.1);"
                                             "border-image: url(:/images/tray/tray_pause.png);"
                                             "}");
         m_playStatus = false;//暂停状态
@@ -146,6 +151,8 @@ void FloatPlayCtl::slot_setCurrentPlayStatus(bool status)
     else
     {
         ui->pushButton_start->setStyleSheet("QPushButton{"
+                                            "border-radius:20px;"
+                                            "background-color: rgba(255,255,255,0.1);"
                                             "border-image: url(:/images/tray/tray_play.png);"
                                             "}");
         m_playStatus = true;//播放状态

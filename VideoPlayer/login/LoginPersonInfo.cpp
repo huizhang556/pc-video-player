@@ -19,7 +19,7 @@ LoginPersonInfo::LoginPersonInfo(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setFixedSize(430,328);
-    setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowStaysOnTopHint);
     setAttribute(Qt::WA_TranslucentBackground);
     initWorkUI();
     chandleSignalsAndSLots();
@@ -47,6 +47,9 @@ LoginPersonInfo* LoginPersonInfo::getInstance()
 
 void LoginPersonInfo::initWorkUI()
 {
+    ui->login_Btnmin->setVisible(false);
+    ui->login_Btnmin->setEnabled(false);
+
     ui->label_message->setAlignment(Qt::AlignCenter);//文字居中
     ui->stackedWidget_login->setCurrentIndex(0);
 

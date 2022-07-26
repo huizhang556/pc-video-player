@@ -8,6 +8,7 @@
 #include "videomodels/CommentTab.h"
 #include "videomodels/FloatPlayCtl.h"
 #include "videomodels/AdjustBright.h"
+#include "customer/CustomFileDialog.h"
 #include "musicmodels/MusicPlayShow.h"
 #include "videomodels/MyVideoWidget.h"
 #include "musicmodels/MusicPlaylist.h"
@@ -65,10 +66,6 @@ public:
 
     void    addToPlaylist(const QStringList& fileNames);
 
-    void    createLoginMenu();//登录菜单
-
-    void    createSwitchSkinMenu();//切换皮肤
-
     void    addFileToList(const QStringList &strList);//浮动歌曲列表
 
     bool    fileType(int index);// 重载函数1  判断文件类型显示视频还是音乐
@@ -92,6 +89,7 @@ public:
     QString getCurrentMediaPlayFileName();
 
     QRect   getDesktopScreenGeometry();
+
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
 
@@ -182,6 +180,8 @@ private slots:
     void    on_moreBtn_clicked();
 
     void    set_adjustBright();
+
+    void    slot_hideFloatPlayCtl();
 
     void    searchMouseEnterLeaveShow(QObject *watched, QEvent *event);
 
@@ -286,8 +286,9 @@ private:
     QLineEdit                   *m_lineEdit         = nullptr;
     muteDialog                  *m_muteDlg          = nullptr;
     VideoBlank                  *m_videoBlank       = nullptr;
-    QTabWidget                  *m_tabWidget1        = nullptr; //节目列表选项
+    QTabWidget                  *m_tabWidget1       = nullptr; //节目列表选项
     CommentTab                  *m_commentTab       = nullptr;
+    CustomFileDialog            *m_cusDialog        = nullptr;//自定义选择框界面
 //    QListWidget                 *m_listWisget1      = nullptr;
     QListWidget                 *m_listWisget2      = nullptr;
     QListWidget                 *m_listWisget3      = nullptr;
@@ -328,6 +329,7 @@ private:
     qint64                      m_times;                        //文件长度
     QPoint                      m_mvPos;
     QPoint                      m_videoPos;
+    QPoint                      m_fullScrPos;                   //全屏时记录鼠标位置
     QStringList                 m_fileNames;                    //文件名称列表
     QMap<int,QString>           m_mapList;                      //存储歌名路径
     QMap<int,QString>           m_mapList2;                     //存储歌名带后缀

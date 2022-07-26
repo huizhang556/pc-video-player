@@ -14,7 +14,7 @@ ExitDialog::ExitDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     //去掉边框
-    this->setWindowFlag(Qt::FramelessWindowHint);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
     this->setFixedSize(404,152);
 
 //    QPixmap pixmap(":/images/icon/cursor.png");

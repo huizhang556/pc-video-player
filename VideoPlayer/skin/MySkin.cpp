@@ -8,7 +8,7 @@ MySkin::MySkin(QWidget *parent) :
 {
     ui->setupUi(this);
     installEventFilter(this);
-    setWindowFlags(Qt::FramelessWindowHint);//自动消失 Popup
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);//自动消失 Popup
     this->setFixedSize(751,500);//记得留出10px 的滚动条宽度
     initWorkUI();
     chandleSignalAndSlot();

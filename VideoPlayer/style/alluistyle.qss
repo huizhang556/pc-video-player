@@ -1,13 +1,14 @@
 /*所有控件需要有明确的对象名称，需要设置共同样式，指明控件的层次次序*/
 MainWidget
 {
-background-color:#2a2a31;
+background-color: #2a2a31;
 }
 
 /*类选择器在代码里有效，样式表中无效，防止子控件继承样式*/
 MultipPlayer
 {
-background-color:#2a2a31;
+/*包含2px的margin*/
+background-color: #2a2a31;
 }
 
 /*标题栏*/
@@ -401,33 +402,40 @@ border-image:url(://images/function/download_delete.png);
 border-image:url(://images/function/download_openfile.png);
 }
 
+
 /*文件对话框*/
+/*
 QFileDialog 
 {
 background-color:#f0f0f0;
 }
-
+*/
+/*
 QFileDialog QScrollBar::handle:vertical,QScrollBar::handle:horizontal
 {
 border-radius:0px;
 background-color:#cdcdcd;
 }
-
+*/
+/*
 QFileDialog QScrollBar::handle:vertical:hover,QScrollBar::handle:horizontal:hover
 {
 border-radius:0px;
 background-color:#cdcdcd;
 }
-
+*/
+/*
 QFileDialog QScrollBar::sub-page:vertical,QScrollBar::sub-page:horizontal
 {
 background-color:#f0f0f0;
 }
-
+*/
+/*
 QFileDialog QScrollBar::add-page:vertical,QScrollBar::add-page:horizontal
 {
 background-color:#f0f0f0;
 }
+*/
 
 /*主界面底部按钮*/
 #m_bottomBtn

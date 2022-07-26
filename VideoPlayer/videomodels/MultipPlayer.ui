@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1308</width>
-    <height>339</height>
+    <width>1227</width>
+    <height>337</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -60,6 +60,7 @@
        <property name="styleSheet">
         <string notr="true">QStackedWidget
 {
+border:none;
 margin:0px;
 background-color:#2a2a31;
 }
@@ -197,9 +198,7 @@ border: 1px solid transparent;
 
 QToolTip
 {
-border:1px solid rgb(118, 118, 118); 
 background-color: #ffffff;
-color:#484848; font-size:12px;
 }</string>
                 </property>
                 <property name="text">
@@ -255,9 +254,7 @@ border: 1px solid transparent;
 
 QToolTip
 {
-border:1px solid rgb(118, 118, 118); 
 background-color: #ffffff;
-color:#484848; font-size:12px;
 }</string>
                 </property>
                 <property name="text">
@@ -315,10 +312,10 @@ border: 1px solid transparent;
 
 QToolTip
 {
-border:1px solid rgb(118, 118, 118); 
 background-color: #ffffff;
-color:#484848; font-size:12px;
-}</string>
+}
+
+</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -484,42 +481,31 @@ margin-left:10px;
                    <string notr="true">/*整个进度条*/
 QSlider::groove:horizontal 
 {
-background:transparent;
-height: 6px;
-border-radius:3px;
+background-color: rgba(255,255,255,0.1);
+height: 2px;
+border-radius:1px;
 }
 
 
 /*整个进度条-hover*/
 QSlider::groove:horizontal:hover
 {
-background:transparent;
-height: 6px;
-border-radius:3px;
+background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
+stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+height: 2px;
+border-radius:1px;
 }
 
 /*J拖动按钮*/
 QSlider::handle:horizontal 
 {
-
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
-stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+background-color:#46a0ef;
 height:8px;
-width:8px;
-margin-top: -2px;
-margin-bottom: -2px;
-padding-right:1px;
-border-radius:4px;
-border:1px solid white;
-
-/*
-border-image: url(:/images/Slider.png);
-width: 20px;          
-height:20px;           
-margin-top: -4px;      
+width:10px;
+margin-top: -4px;
 margin-bottom: -4px;
-border-radius: 10px;  
-*/
+padding-right:1px;
+border-radius:5px;
 }
 
 /*J拖动按钮-hover,只跟groove的hover时高度影响*/
@@ -535,7 +521,7 @@ border-radius:2px;
 background-color: rgb(87, 97, 106); 
 }
 
-/*已划过的区域，右边界线*/
+/*已划过的区域，左边界线*/
 QSlider::sub-page:horizontal,QSlider::sub-line:horizontal
 {
 border-radius:2px;
@@ -594,52 +580,24 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_8">
-            <property name="spacing">
-             <number>6</number>
-            </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
             <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
              <number>0</number>
             </property>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_7">
-              <property name="spacing">
-               <number>5</number>
-              </property>
-              <item>
-               <spacer name="horizontalSpacer_6">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
               <item>
                <widget class="QPushButton" name="pushButton_playOrder">
                 <property name="minimumSize">
                  <size>
-                  <width>25</width>
-                  <height>25</height>
+                  <width>22</width>
+                  <height>22</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>20</width>
-                  <height>20</height>
+                  <width>22</width>
+                  <height>22</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -657,35 +615,19 @@ border-image: url(:/images/icon/player_xunhuan.png);
                  <string/>
                 </property>
                </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_10">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Expanding</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>10</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_comments">
                 <property name="minimumSize">
                  <size>
-                  <width>25</width>
-                  <height>25</height>
+                  <width>22</width>
+                  <height>22</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>20</width>
-                  <height>20</height>
+                  <width>22</width>
+                  <height>22</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -705,42 +647,26 @@ border-image: url(:/images/icon/comment_message.png);
                </widget>
               </item>
               <item>
-               <spacer name="horizontalSpacer_9">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Expanding</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>10</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
                <widget class="QPushButton" name="Btn_adjust">
                 <property name="minimumSize">
                  <size>
-                  <width>24</width>
-                  <height>20</height>
+                  <width>22</width>
+                  <height>22</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>24</width>
-                  <height>20</height>
+                  <width>22</width>
+                  <height>22</height>
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QPushButton
+                 <string notr="true">#Btn_adjust
 {
 border-image: url(:/images/icon/set.png);
 }
 
-QPushButton:hover
+#Btn_adjust:hover
 {
 border-image: url(:/images/icon/set_hover.png);
 }</string>
@@ -751,33 +677,17 @@ border-image: url(:/images/icon/set_hover.png);
                </widget>
               </item>
               <item>
-               <spacer name="horizontalSpacer_14">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Expanding</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>12</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
                <widget class="QPushButton" name="pushButton_sound">
                 <property name="minimumSize">
                  <size>
-                  <width>20</width>
-                  <height>20</height>
+                  <width>18</width>
+                  <height>18</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>20</width>
-                  <height>20</height>
+                  <width>18</width>
+                  <height>18</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -789,33 +699,17 @@ border-image: url(:/images/icon/set_hover.png);
                </widget>
               </item>
               <item>
-               <spacer name="horizontalSpacer_8">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Expanding</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>10</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
                <widget class="QPushButton" name="pushButton_collect">
                 <property name="minimumSize">
                  <size>
-                  <width>20</width>
-                  <height>20</height>
+                  <width>18</width>
+                  <height>18</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>20</width>
-                  <height>20</height>
+                  <width>18</width>
+                  <height>18</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -842,42 +736,26 @@ border-image: url(:/images/icon/play_collect_unchecked.png);
                </widget>
               </item>
               <item>
-               <spacer name="horizontalSpacer_7">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Expanding</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>8</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
                <widget class="QPushButton" name="pushButton_download">
                 <property name="minimumSize">
                  <size>
-                  <width>24</width>
+                  <width>22</width>
                   <height>22</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>24</width>
+                  <width>22</width>
                   <height>22</height>
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QPushButton
+                 <string notr="true">#pushButton_download
 {
 border-image: url(:/images/icon/media_download.png);
 }
 
-QPushButton:hover
+#pushButton_download:hover
 {
 border-image: url(:/images/icon/media_download_hover.png);
 }</string>
@@ -891,18 +769,18 @@ border-image: url(:/images/icon/media_download_hover.png);
                <widget class="QPushButton" name="pushButton_curlist">
                 <property name="minimumSize">
                  <size>
-                  <width>26</width>
-                  <height>26</height>
+                  <width>22</width>
+                  <height>22</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>26</width>
-                  <height>26</height>
+                  <width>22</width>
+                  <height>22</height>
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QPushButton
+                 <string notr="true">#pushButton_curlist
 {
 	
 	/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));*/
@@ -910,11 +788,13 @@ background-color: transparent;
 border-image: url(:/images/icon/media_fullgreen.png);
 border:none;
 }
-QPushButton:pressed
+
+#pushButton_curlist:pressed
 {
 	border: 1px solid #5F92B2;
 }
-QPushButton:hover{
+
+#pushButton_curlist:hover{
 /*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
 	stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
 border: 1px solid #3C80B1;
@@ -922,33 +802,12 @@ border-image: url(:/images/icon/media_fullgreen_hover.png);
 border:none;
 }
 
-QToolTip
-{
-border:1px solid rgb(118, 118, 118); 
-background-color: #ffffff;
-color:#484848; font-size:12px;
-}</string>
+</string>
                 </property>
                 <property name="text">
                  <string/>
                 </property>
                </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_21">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Expanding</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>6</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
               </item>
              </layout>
             </item>

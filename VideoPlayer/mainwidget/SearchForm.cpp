@@ -7,7 +7,7 @@ SearchForm::SearchForm(QWidget *parent) :
     ui(new Ui::SearchForm)
 {
     ui->setupUi(this);
-    this->setWindowFlags(Qt::FramelessWindowHint);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::Popup);//无标题栏 无任务图标 鼠标单击空白自动hide()
     initWorkUi();
     chandleSignalsAndSlot();
 

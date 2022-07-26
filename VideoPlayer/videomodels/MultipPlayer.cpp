@@ -11,7 +11,6 @@
 #include <QDateTime>
 #include <QFileInfo>
 #include <QScrollBar>
-#include <QFileDialog>
 #include <QMessageBox>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -31,11 +30,15 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
     ui->setupUi(this);
     this->setMinimumSize(1240,800);//1400,800
     this->setMouseTracking(true);//开启鼠标跟踪，适应捕捉屏幕
-    this->setWindowFlags(Qt::FramelessWindowHint);//去掉标题栏
+    this->setWindowFlags(Qt::FramelessWindowHint| //去掉标题栏
+                         Qt::WindowSystemMenuHint|
+                         Qt::WindowMinMaxButtonsHint);
+
     this->setWindowTitle(QString::fromLocal8Bit("Qt简易视频播放器"));
     initMainWindow();//初始化界面
     chandleSignalAndSLots();//处理信号与槽函数
     //设置监听
+    installEventFilter(this);
     ui->pushButton_sound->installEventFilter(this);//音量调节按钮设置监听
     ui->stackedWidget->installEventFilter(this);//侧边按钮显隐用
     videoWidget->installEventFilter(this);//视频界面
@@ -110,6 +113,7 @@ MultipPlayer::~MultipPlayer()
     delete m_widget1;
     delete m_musicUi;
     delete m_muteDlg;
+    delete m_cusDialog;
     delete videoWidget;
     delete m_videoBlank;
     delete m_adjustBright;
@@ -125,6 +129,17 @@ void MultipPlayer::initMainWindow()
 //    ui->pushButton_danmu->setChecked(false);
 //    ui->pushButton_collect->setChecked(true);//收藏按钮可以checked
 //    ui->pushButton_collect->setCheckable(false);//默认没有选中
+
+    m_cusDialog = new CustomFileDialog;
+    m_cusDialog->setObjectName(QString::fromLocal8Bit("m_cusDialog"));
+    m_cusDialog->setFileMode(QFileDialog::ExistingFiles);//多选
+    m_cusDialog->setTitleName(QString::fromLocal8Bit("选择文件"));
+    m_cusDialog->setDirectory(Global::appDirPath);
+    QStringList strList = {QString::fromLocal8Bit("所有文件(*)"),
+                           QString::fromLocal8Bit("视频文件(*avi *mp4 *flv *mov *wmv *rmvb *asf *3gp *mpg *vob)"),
+                           QString::fromLocal8Bit("音频文件(*.mp3 *.wma *.wave *acc *ogg *arm *aac"),
+                           QString::fromLocal8Bit("图像文件(*.jpg *.png *bmp *gif *jpeg *psd *svg *ico)")};
+    m_cusDialog->setNameFilters(strList);
 
     player = new QMediaPlayer(this);
     playlist = new QMediaPlaylist(this);
@@ -284,8 +299,8 @@ void MultipPlayer::initMainWindow()
 //    m_widget1->setHidden(true);//测试使用
 
     m_hboxlayout_rlist = new QHBoxLayout;
-    m_hboxlayout_rlist->addWidget(ui->stackedWidget);
-    m_hboxlayout_rlist->addWidget(m_widget1);
+    m_hboxlayout_rlist->addWidget(ui->stackedWidget);//中心界面
+    m_hboxlayout_rlist->addWidget(m_widget1);//右侧列表整体父亲
     m_hboxlayout_rlist->setSpacing(0);
     m_hboxlayout_rlist->setStretch(0,7);
     m_hboxlayout_rlist->setStretch(1,3);
@@ -299,12 +314,12 @@ void MultipPlayer::initMainWindow()
     ui->verticalLayout_main->setStretch(2,1);
     ui->verticalLayout_main->setContentsMargins(0,0,0,0);
     ui->verticalLayout_main->setSpacing(0);
-    ui->verticalLayout_main->setMargin(2);
+    ui->verticalLayout_main->setMargin(MARWIDTH);//注意边线的颜色
     this->setLayout(ui->verticalLayout_main);
     loadDefaultLogo();//加载默认图标
 
     VideoProgressBar::getInstance()->hide();
-    FloatPlayCtl::getInstance()->installEventFilter(this);
+//    FloatPlayCtl::getInstance()->installEventFilter(this);
 
     m_pTimer  = new QTimer(this);
     m_pTimer2 = new QTimer(this);
@@ -335,9 +350,7 @@ void MultipPlayer::initMainWindow()
 void MultipPlayer::chandleSignalAndSLots()
 {
     //列表折叠指示按钮
-    connect(m_foldBtn,&QPushButton::clicked,[=](){
-        judgeFoldBtnOfRightDockList();
-    });
+    connect(m_foldBtn,&QPushButton::clicked,[=](){judgeFoldBtnOfRightDockList();});
 
     //查看评论
     connect(ui->pushButton_comments,&QPushButton::clicked,[=](){ showMediaCommentTab();});
@@ -428,7 +441,6 @@ void MultipPlayer::chandleSignalAndSLots()
         int row = m_listWisget2->row(item);
 //        m_playerState = QMediaPlayer::PlayingState;
 //        ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/pausehover.png"));//播放
-
         playlist->setCurrentIndex(row);
         fileType(row);
         player->play();
@@ -443,26 +455,25 @@ void MultipPlayer::chandleSignalAndSLots()
         ui->widget_media_pic->resetRoate(0);
     });
 
-    //窗口关闭按钮
-    connect(m_videoTitleBar,&VideoTitleBar::sig_winVClose,[=]()
-    {
-        closeCurrentWindow();
-    });
-
-    //窗口最小化按钮
+    //标题栏---窗口最小化按钮
     connect(m_videoTitleBar,&VideoTitleBar::sig_winVMinimum,this,&MultipPlayer::showMinimized);
-    //全屏下窗口还原
-    connect(FloatPlayCtl::getInstance(),&FloatPlayCtl::sig_sendExitFullscreen,this,&MultipPlayer::showNormalWindows);
-    //窗口还原按钮
+    //标题栏改变窗口大小--->主界面控制大小（并发送信号）--->标题栏修改样式
     connect(this,SIGNAL(sig_winVStatus(bool)),m_videoTitleBar,SLOT(chandleVMainWinStatus(bool)));
+    //标题栏--->双击标题栏改变窗口大小
     connect(m_videoTitleBar,&VideoTitleBar::sig_doubleClick,[=](){chandleRestoreWindow();});
-    //窗口还原，关闭视频配置调节界面
-    connect(m_videoTitleBar,&VideoTitleBar::sig_winVRestore,[=](){m_adjustBright->close();});
-    //窗口还原
+    //标题栏--窗口还原
     connect(m_videoTitleBar,&VideoTitleBar::sig_winVRestore,[=](){chandleRestoreWindow();});
-    //窗口关闭
+    //标题栏---窗口还原按钮--->关闭视频配置调节界面
+    connect(m_videoTitleBar,&VideoTitleBar::sig_winVRestore,[=](){m_adjustBright->close();});
+    //标题栏--->窗口关闭按钮--->视频调节界面关闭
     connect(m_videoTitleBar,&VideoTitleBar::sig_winVClose,[=](){m_adjustBright->close();});
+    //标题栏--->窗口关闭按钮--->主界面关闭视屏界面
+    connect(m_videoTitleBar,&VideoTitleBar::sig_winVClose,[=](){closeCurrentWindow();});
+    //退出全屏（按钮发出信号）
+    connect(FloatPlayCtl::getInstance(),&FloatPlayCtl::sig_sendExitFullscreen,this,&MultipPlayer::showNormalWindows);
 
+    //全屏显示
+    connect(ui->pushButton_curlist,&QPushButton::clicked,[=](){setMainWindowShowFullgreen();});
 
     connect(ui->Btn_adjust,&QPushButton::clicked,[=](){set_adjustBright();});
     //通知播放列表加载信息
@@ -591,10 +602,6 @@ void MultipPlayer::chandleSignalAndSLots()
 
     //播放顺序 -- 单曲1 顺序2 循环3 随机4
     connect(PlayOrderForm::getInstance(),SIGNAL(sig_playerOrder(int)),this,SLOT(setPlayOrderButtonStyleSheet(int)));
-
-    //显示列表
-    connect(ui->pushButton_curlist,&QPushButton::clicked,[=](){setMainWindowShowFullgreen();});
-
     //播放列表右键
     connect(m_listWisget2,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(slot_createRight_playListTable(QPoint)));
     //收藏列表右键
@@ -610,7 +617,7 @@ void MultipPlayer::loadDefaultLogo()
     ui->pushButton_sound->setToolTip(QString::fromLocal8Bit("音量"));
     ui->pushButton_collect->setToolTip(QString::fromLocal8Bit("收藏"));
     ui->pushButton_download->setToolTip(QString::fromLocal8Bit("下载"));
-    ui->pushButton_curlist->setToolTip(QString::fromLocal8Bit("全屏(ESC键退出)"));
+    ui->pushButton_curlist->setToolTip(QString::fromLocal8Bit("全屏"));
 
     m_lineEdit->setPlaceholderText(QString::fromLocal8Bit("输入要搜索的内容^_^"));
     m_lineEdit->setEnabled(false);
@@ -619,7 +626,7 @@ void MultipPlayer::loadDefaultLogo()
     m_searchBtn->setToolTip(QString::fromLocal8Bit("打开文件"));
 
     ui->pushButton_sound->setIcon(QIcon(":/images/icon/yingling.png"));//图标是正常音量
-    ui->pushButton_sound->setIconSize(QSize(20,20));//以后所有显示图片都是此大小
+    ui->pushButton_sound->setIconSize(QSize(18,18));//以后所有显示图片都是此大小
     ui->pushButton_sound->setFlat(true);
 
 //    ui->pushButton_5->setIcon(QIcon(":/images/icon/openhover.png"));//打开
@@ -688,17 +695,6 @@ void MultipPlayer::addToPlaylist(const QStringList &fileNames)
     }
 }
 
-/*登录菜单*/
-void MultipPlayer::createLoginMenu()
-{
-
-}
-
-/*换肤菜单*/
-void MultipPlayer::createSwitchSkinMenu()
-{
-
-}
 
 /*判断文件类型1*/
 bool MultipPlayer::fileType(QStringList &filenames, int index)
@@ -982,13 +978,14 @@ void MultipPlayer::on_pushButton_5_clicked()
 {
     if(!m_newStart)
     {
-        m_fileNames =  QFileDialog::getOpenFileNames(0,//不指定父窗口，设置自己的样式
-                                                     QString::fromLocal8Bit("选择文件"),
-                                                     QString::fromLocal8Bit("/"),
-                                                     QString::fromLocal8Bit("Videos(*avi *mp4 *flv *mp3 *wmv)"),
-                                                     0,
-                                                     QFileDialog::DontUseNativeDialog);
-
+//        m_fileNames =  CusFileDialog::getOpenFileNames(0,//不指定父窗口，设置自己的样式
+//                                                     QString::fromLocal8Bit("选择文件"),
+//                                                     QString::fromLocal8Bit("/"),
+//                                                     QString::fromLocal8Bit("Videos(*avi *mp4 *flv *mp3 *wmv)"),
+//                                                     0,
+//                                                     QFileDialog::DontUseNativeDialog);
+        m_cusDialog->exec();
+        m_fileNames = m_cusDialog->selectedFiles();
         //测试功能
         m_fileNames = list_temp;
 //        ui->pushButton_5->setFocusPolicy(Qt::NoFocus);//点击按钮后去掉虚线框
@@ -1028,12 +1025,14 @@ void MultipPlayer::on_pushButton_6_clicked()
         player->pause();
         ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/playhover.png"));//播放
         ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
-        m_fileNames =  QFileDialog::getOpenFileNames(0,//不指定父窗口，设置自己的样式,
-                                                     QString::fromLocal8Bit("选择文件"),
-                                                     QString::fromLocal8Bit("/"),
-                                                     QString::fromLocal8Bit("Videos(*avi *mp4 *flv *mp3 *wmv)"),
-                                                     0,
-                                                     QFileDialog::DontUseNativeDialog);
+//        m_fileNames =  QFileDialog::getOpenFileNames(0,//不指定父窗口，设置自己的样式,
+//                                                     QString::fromLocal8Bit("选择文件"),
+//                                                     QString::fromLocal8Bit("/"),
+//                                                     QString::fromLocal8Bit("Videos(*avi *mp4 *flv *mp3 *wmv)"),
+//                                                     0,
+//                                                     QFileDialog::DontUseNativeDialog);
+        m_cusDialog->exec();
+        m_fileNames = m_cusDialog->selectedFiles();
         if(!m_fileNames.isEmpty())
         {
             QSqlQuery query;
@@ -1397,17 +1396,17 @@ void MultipPlayer::resizeEvent(QResizeEvent *event)
 /*键盘事件*/
 void MultipPlayer::keyPressEvent(QKeyEvent *event)
 {
-    if(event->key() == Qt::Key_Escape)//ESC键盘
+    if(isFullScreen() && event->key() == Qt::Key_Escape)//全屏时按下ESC键盘
     {
-        chandleRestoreWindow();
+        showNormalWindows();
     }
-    qDebug() << event->key();
+//    qDebug() << event->key();
 }
 
 //鼠标移动事件
 void MultipPlayer::mouseMoveEvent(QMouseEvent *event)
 {
-    //拖动之前判断是否串口处于最大化
+    //拖动之前判断是否处于最大化
     if(this->isMaximized())
     {
         return;
@@ -1567,7 +1566,7 @@ void MultipPlayer::volumeAdjustShowUi(QObject *watched, QEvent *event)
 
 void MultipPlayer::stackWidgetSliderButtonEventFilter(QObject *watched, QEvent *event)
 {
-    if(watched == ui->stackedWidget)
+    if(watched == ui->stackedWidget && !isFullScreen())
     {
         //01.注意区分界面隐藏和按钮隐藏是两个不同的状态,
         //02.按钮的样式取决于m_isHide状态，显隐取决于进入还是离开
@@ -1589,27 +1588,21 @@ void MultipPlayer::stackWidgetSliderButtonEventFilter(QObject *watched, QEvent *
 
 void MultipPlayer::floatPlayCtrlEnterLeave(QObject *watched, QEvent *event)
 {
-    if(isMaximized() && m_videoTitleBar->isHidden())
-    {
-        if(watched == ui->stackedWidget)
-        {
-            if(event->type() == QEvent::Enter)
-            {
-                FloatPlayCtl::getInstance()->show();
-            }
-            else  if(event->type() == QEvent::Leave)
-            {
-                FloatPlayCtl::getInstance()->hide();
-            }
-        }
-        if(watched == FloatPlayCtl::getInstance())
-        {
-            if(event->type() ==QEvent::Enter)
-            {
-                FloatPlayCtl::getInstance()->show();
-            }
-        }
-    }
+//    if(this->isFullScreen() && watched == this)
+//    {
+
+//        if(event->type() == QEvent::Enter)
+//        {
+//            FloatPlayCtl::getInstance()->raise();
+//            FloatPlayCtl::getInstance()->show();
+//            qDebug() <<"ui->stackWidget enter@!";
+//        }
+//        else if(event->type() == QEvent::Leave)
+//        {
+//            FloatPlayCtl::getInstance()->hide();
+//            qDebug() <<"ui->stackWidget leave@!";
+//        }
+//    }
 }
 
 /*播放列表界面搜索框鼠标进入离开*/
@@ -1801,6 +1794,11 @@ void MultipPlayer::set_adjustBright()
 
 }
 
+void MultipPlayer::slot_hideFloatPlayCtl()
+{
+    FloatPlayCtl::getInstance()->hide();
+}
+
 /*调节播放模式*/
 void MultipPlayer::adjust_playBackMode(int index)
 {
@@ -1891,7 +1889,8 @@ void MultipPlayer::chandleRestoreWindow()
     }
     else
     {
-        showNormalWindows();
+        showNormal();
+        emit sig_winVStatus(m_winMax);//向窗口发送正常状态信号
     }
     m_winMax = !m_winMax;
     //其他窗口关闭
@@ -2455,11 +2454,16 @@ void MultipPlayer::closeCurrentWindow()
 //全屏退出统一操作
 void MultipPlayer::showNormalWindows()
 {
-    this->showNormal();
+    showNormal();//主界面正常显示
+    //设置还原按钮样式&&改变窗口大小标志
+    m_winMax = false;
+    m_videoTitleBar->chandleVMainWinStatus(true);
+    //标题栏、播放控制栏等显示出来
+    ui->verticalLayout_main->setMargin(MARWIDTH);//2px边界
     if(m_videoTitleBar->isHidden()) m_videoTitleBar->show();
     if(ui->stackedWidget_player->isHidden()) ui->stackedWidget_player->show();
     if(!FloatPlayCtl::getInstance()->isHidden()) FloatPlayCtl::getInstance()->hide();
-    emit sig_winVStatus(m_winMax);//向窗口发送正常状态信号
+
 }
 
 //清空用户信息
@@ -2535,7 +2539,7 @@ void MultipPlayer::judgeFoldBtnOfRightDockList()
     if(!FloatPlayCtl::getInstance()->isHidden()) return;
     if(m_isHide)//点击按钮发现，界面处于隐藏状态
     {
-        m_widget1->show();//点击后则显示界面
+        m_widget1->show();//点击后则显示右侧界面
         updateFoldButtonGeometry();
         setFoldButtonStyle();
         m_foldBtn->hide();
@@ -2554,20 +2558,26 @@ void MultipPlayer::judgeFoldBtnOfRightDockList()
 /*左侧列表控制显隐*/
 void MultipPlayer::setMainWindowShowFullgreen()
 {
-    m_videoTitleBar->hide();
-    ui->stackedWidget_player->hide();
-    m_widget1->hide();
-    m_isHide = true;
-    chandleRestoreWindow();//相当加上于双击标题栏效果
-    if(isMaximized() && FloatPlayCtl::getInstance())
+    if(!(ui->stackedWidget->currentWidget() == videoWidget || ui->stackedWidget->currentWidget() == m_musicUi)) return;
+    ui->verticalLayout_main->setMargin(0);//去掉2px边界
+    m_videoTitleBar->hide();//头部标题栏隐藏
+    ui->stackedWidget_player->hide();//底部控制栏隐藏
+    m_widget1->hide();//侧边栏隐藏
+    m_isHide = true;//侧边栏隐藏标志
+    showFullScreen();
+    if(isFullScreen() && FloatPlayCtl::getInstance())
     {
 //        int x = ui->stackedWidget->parentWidget()->mapToGlobal(this->pos()).x();
 //        int y = ui->stackedWidget->parentWidget()->mapToGlobal(this->pos()).y();
 //        qDebug() << "x="<<x<<"y="<<y;
-        QRect deskRect = QApplication::desktop()->availableGeometry();
-        FloatPlayCtl::getInstance()->setGeometry(0,deskRect.height()-70,deskRect.width(),60);
+        QRect deskRect = QApplication::desktop()->frameGeometry();//注意区分：availableGeometry()
+        FloatPlayCtl::getInstance()->setGeometry(0,deskRect.height()-FloatPlayCtl::getInstance()->height(),
+                                                 deskRect.width(),FloatPlayCtl::getInstance()->height());
+        clearFocus();//全局清除聚焦
         FloatPlayCtl::getInstance()->show();
+        FloatPlayCtl::getInstance()->setFocus();
     }
+    this->resize(QApplication::desktop()->size());
 }
 
 /*播放次序按钮*/

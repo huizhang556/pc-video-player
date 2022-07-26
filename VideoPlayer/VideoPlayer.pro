@@ -65,4 +65,5 @@ DISTFILES += \
 
 RESOURCES += \
     res_audio.qrc \
-    res_image.qrc
+    res_image.qrc \
+    res_font.qrc

@@ -26,6 +26,7 @@ public:
     ~TitleBar();
     void    initWorker();
     void    chandleSignalAndSLots();
+
 protected:
     void    mouseDoubleClickEvent(QMouseEvent *event) override;
     bool    eventFilter(QObject *watched, QEvent *event) override;
@@ -41,6 +42,7 @@ public slots:
     void    serarchLineEditFacous(QObject *watched, QEvent *event);
     void    slot_switchToLoginPage(int mark,QString nick);
     void    slot_setButtonHelpEmitItem();
+    void    slot_receivedListItemText(QString text);
     void    slot_setWebLineEditCurentUrl(QUrl url);//设置当前url
     void    slot_clearWebLineEditText();//清除weblineedit文字
     void    slot_setWebProgressBarValue(int value);//网页加载时，显示加载进度
@@ -64,7 +66,7 @@ private slots:
     void    slot_setCurrentWebSiteCollectStatus(const QString &url);//判断当前的网址是显示收藏还是未收藏
     void    slot_addToListCollectWidget(const QString &text);//选中回显
     void    slot_updateShowListHistoryWidget();//显示历史记录界面
-    void    slot_addToListHistoryWidget(const QString &text);//选中回显
+    void    slot_addToListHistoryWidget(const QString &text);
     void    slot_updateShowListEngineWidget();//显示历史记录界面
     void    slot_changeEngineIcon(const QString &text);//选中回显
     void    slot_addWebEngine();//添加引擎

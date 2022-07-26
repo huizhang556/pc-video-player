@@ -321,5 +321,12 @@
         <file>images/icon/web_more.png</file>
         <file>images/icon/addTab.png</file>
         <file>images/icon/addTab_hover.png</file>
+        <file>images/dialog/back.png</file>
+        <file>images/dialog/drop-down.png</file>
+        <file>images/dialog/drop-up.png</file>
+        <file>images/dialog/sysclose.png</file>
+        <file>images/dialog/sysclose_hover.png</file>
+        <file>images/dialog/sysmin.png</file>
+        <file>images/dialog/sysmin_hover.png</file>
     </qresource>
 </RCC>

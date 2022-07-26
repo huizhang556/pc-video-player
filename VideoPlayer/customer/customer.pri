@@ -5,7 +5,8 @@ SOURCES += \
     $$PWD/CusLineEdit.cpp \
     $$PWD/SystemTray.cpp \
     $$PWD/CusFileDialog.cpp \
-    $$PWD/CustomTabStyle.cpp
+    $$PWD/CustomTabStyle.cpp \
+    $$PWD/CustomFileDialog.cpp
 
 HEADERS += \
     $$PWD/CusTabWidget.h \
@@ -14,12 +15,14 @@ HEADERS += \
     $$PWD/CusLineEdit.h \
     $$PWD/SystemTray.h \
     $$PWD/CusFileDialog.h \
-    $$PWD/CustomTabStyle.h
+    $$PWD/CustomTabStyle.h \
+    $$PWD/CustomFileDialog.h
 
 FORMS += \
     $$PWD/CusTabWidget.ui \
     $$PWD/SystemTray.ui \
-    $$PWD/CusFileDialog.ui
+    $$PWD/CusFileDialog.ui \
+    $$PWD/CustomFileDialog.ui
 
 SUBDIRS +=
 

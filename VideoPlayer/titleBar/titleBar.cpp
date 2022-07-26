@@ -15,6 +15,7 @@ TitleBar::TitleBar(QWidget *parent) :
     ui(new Ui::TitleBar)
 {
     ui->setupUi(this);
+    installEventFilter(this);
     this->setFixedHeight(40);
     initWorker();//初始化
     chandleSignalAndSLots();
@@ -529,7 +530,7 @@ void TitleBar::slot_changeEngineIcon(const QString &text)
         else if(text == QString::fromLocal8Bit("Google搜索"))
         {
             m_actEngine->setIcon(QIcon("://images/function/engine_google.png"));
-            m_headUrl = "https://www.sogou.com/web?query=";
+            m_headUrl = "https://www.google.com/search?q=";
         }
         else if(text == QString::fromLocal8Bit("必应搜索"))
         {
@@ -761,6 +762,12 @@ void TitleBar::mouseDoubleClickEvent(QMouseEvent *event)
 /*监听事件*/
 bool TitleBar::eventFilter(QObject *watched, QEvent *event)
 {
+    if(event->type() == QEvent::MouseButtonPress && watched == this)
+    {
+       //鼠标单击空白处，获得焦点
+        ui->lineEditSearch->clearFocus();
+        this->setFocus();
+    }
     QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);//转换为鼠标事件
     mouseIsEnterLeaveLineEdit(watched,mouseEvent);//搜索框鼠标进入离开,处理样式
     mouseIsPressReleaseLineEdit(watched,mouseEvent);//搜索框鼠标按下释放，处理历史记录
@@ -969,6 +976,10 @@ void TitleBar::mouseIsPressReleaseLineEdit(QObject *watched, QEvent *event)
             m_searchForm->raise();//必须提升界面所处层次
             m_searchForm->show();
         }
+        else if(event->type() == QEvent::FocusOut)
+        {
+            m_searchForm->hide();
+        }
     }
 }
 
@@ -1028,6 +1039,14 @@ void TitleBar::slot_setButtonHelpEmitItem()
     {
         emit sig_settingHelpItem(7);
     }
+}
+
+void TitleBar::slot_receivedListItemText(QString text)
+{
+    if(text.isEmpty()) return;
+    QString addUrl = judgeUrlType(text);//加head
+    ui->lineEdit_webSearch->setText(addUrl);
+    emit sig_sendInputNewUrl(addUrl);
 }
 
 void TitleBar::slot_setWebLineEditCurentUrl(QUrl url)

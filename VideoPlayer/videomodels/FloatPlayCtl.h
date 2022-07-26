@@ -19,6 +19,7 @@ public:
     static  FloatPlayCtl* getInstance();
     void    setHorzontalSlider_PlayerRange(int start,int end);
     void    setHorzontalSlider_VoiceRange(int start,int end);
+
 public slots:
     void    slot_setProgressbar_player(int value);
     void    slot_setProgressbar_voice(int value);
@@ -28,12 +29,13 @@ public slots:
     void    slot_setCurrentPlayStatus(bool status);
     void    slot_setCurrentMediaMutedStyleSheet();
     void    slot_setCurrentPlayMutedStatus(int value);
+
 private:
     Ui::FloatPlayCtl *ui;
     explicit FloatPlayCtl(QWidget *parent = nullptr);
-    static  FloatPlayCtl* m_pInstance;
-    bool        m_playStatus;
-    bool        m_soundStatus;
+    static  FloatPlayCtl    *m_pInstance;
+    bool                    m_playStatus;
+    bool                    m_soundStatus;
 
 signals:
     void    sig_sendExitFullscreen();

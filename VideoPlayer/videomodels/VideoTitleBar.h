@@ -19,12 +19,12 @@ public:
     void chandleSignalsAndSlots();
 public slots:
     void setTitleStackWidgetPage(int index);
+    void chandleVMainWinStatus(bool status);
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 private slots:
-    void chandleVMainWinStatus(bool status);
     void setTitleText(const QString & text);
     void clearTitleText();
 

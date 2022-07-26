@@ -13,7 +13,7 @@ MainWidget::MainWidget(QWidget *parent) :
 {
     setMinimumSize(1300,800);
     setMouseTracking(true);
-    this->setWindowFlags(Qt::FramelessWindowHint);//去掉标题栏
+    this->setWindowFlags(Qt::FramelessWindowHint);
     this->setWindowTitle(QString::fromLocal8Bit("Qt简易视频播放器主界面"));
     initOtherWidgetUi();//初始化界面
     setStackedWidgetPage();//设置StackedWidget布局每个page界面
@@ -69,6 +69,7 @@ void MainWidget::initOtherWidgetUi()
 
     m_webBrowser = new CusWebBrowser();
     m_webBrowser->setObjectName(QString::fromLatin1("m_webBrowser"));
+
     m_cusTabbar = new CusTabBar();
     m_cusTabbar->setObjectName(QString::fromLocal8Bit("m_cusTabbar"));
     m_webTabWidget = new QTabWidget();
@@ -309,6 +310,10 @@ void MainWidget::chandleSignalAndSlots()
 
 
     /************************************浏览器部分************************************/
+    //收藏网址
+
+    //新增历史记录
+    connect(m_titleBar,SIGNAL(sig_sendInputNewUrl(QString)),m_webHistory,SLOT(slot_addToListHistoryWidget(QString)));
     //可回退
     connect(m_titleBar,SIGNAL(sig_sendCanGoBack()),this,SLOT(slot_canGoBack()));
     connect(this,SIGNAL(sig_canGoBack(bool)),m_titleBar,SLOT(slot_setCanGoBack(bool)));
