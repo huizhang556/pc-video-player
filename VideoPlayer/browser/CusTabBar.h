@@ -26,7 +26,7 @@ public slots:
     void            slot_setTabIcon(const int index, const QIcon &icon);//设置标签图标
 private:
     QTabBar         *m_tabBar       =   nullptr;
-    QPushButton     *m_addTabBtn    =   nullptr;//添加空白标签按钮
+//    QPushButton     *m_addTabBtn    =   nullptr;//添加空白标签按钮
     QPushButton     *m_expandBtn    =   nullptr;//展开收藏标签按钮
     QPushButton     *m_hideBtn      =   nullptr;//隐藏标签栏按钮
     QHBoxLayout     *m_hblayout     =   nullptr;

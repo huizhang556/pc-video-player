@@ -3,6 +3,7 @@
 CusTabBar::CusTabBar(QWidget *parent) :
     QWidget(parent)
 {
+//    this->setAttribute(Qt::WA_TranslucentBackground);
     initWorkUI();
     chandleSignalsAndSlots();
 }
@@ -14,20 +15,19 @@ CusTabBar::~CusTabBar()
 
 void CusTabBar::initWorkUI()
 {
-
     m_tabBar = new QTabBar(this);
     m_tabBar->setFixedHeight(24);
     m_tabBar->setMovable(true);
     m_tabBar->setObjectName(QString::fromLocal8Bit("m_tabBar"));
 //    m_tabBar->setStyle(new CustomTabStyle);
-    m_addTabBtn = new QPushButton(QString::fromLocal8Bit("+"),this);
-    m_addTabBtn->setFixedSize(26,24);
-    m_addTabBtn->setFlat(true);
-    m_addTabBtn->setToolTip(QString::fromLocal8Bit("新建页面"));
-    m_addTabBtn->setObjectName(QString::fromLocal8Bit("m_addTabBtn"));
+//    m_addTabBtn = new QPushButton(QString::fromLocal8Bit("+"),this);
+//    m_addTabBtn->setFixedSize(26,24);
+//    m_addTabBtn->setFlat(true);
+//    m_addTabBtn->setToolTip(QString::fromLocal8Bit("新建页面"));
+//    m_addTabBtn->setObjectName(QString::fromLocal8Bit("m_addTabBtn"));
 
     m_expandBtn = new QPushButton(QString::fromLocal8Bit(">>"),this);
-    m_expandBtn->setFixedSize(20,24);
+    m_expandBtn->setFixedSize(40,24);
     m_expandBtn->setFlat(true);
     m_expandBtn->setToolTip(QString::fromLocal8Bit("展开收藏夹"));
     m_expandBtn->setObjectName(QString::fromLocal8Bit("m_webExpandBtn"));
@@ -36,6 +36,8 @@ void CusTabBar::initWorkUI()
     m_hideBtn->setFixedSize(40,24);
     m_hideBtn->setFlat(true);
     m_hideBtn->setToolTip(QString::fromLocal8Bit("隐藏收藏栏"));
+//    m_hideBtn->setIcon(QIcon("://images/icon/tabbar_hide.png"));
+//    m_hideBtn->setIconSize(QSize());
     m_hideBtn->setObjectName(QString::fromLocal8Bit("m_webHideBtn"));
 
 //    this->setTabButton(0,QTabBar::RightSide,m_closeBtn);//这个是在tab内部设置的按钮
@@ -44,13 +46,13 @@ void CusTabBar::initWorkUI()
     m_hblayout->setContentsMargins(0,0,0,0);
     m_hblayout->setMargin(0);
     m_hblayout->addWidget(m_tabBar);
-    m_hblayout->addWidget(m_addTabBtn);
-    m_hblayout->addSpacerItem(new QSpacerItem(40,24, QSizePolicy::MinimumExpanding));
+//    m_hblayout->addWidget(m_addTabBtn);
+    m_hblayout->addSpacerItem(new QSpacerItem(15,24, QSizePolicy::MinimumExpanding));
     m_hblayout->addWidget(m_expandBtn);
     m_hblayout->addWidget(m_hideBtn);
     this->setLayout(m_hblayout);
 
-    for(int i = 0; i<20;i++)
+    for(int i = 0; i<10;i++)
     {
         slot_addMarkToTabBar(QString::fromLocal8Bit("://images/icon/engine.png"),
                              QString::fromLocal8Bit("qtcn社区广泛爱好者"),
@@ -60,7 +62,7 @@ void CusTabBar::initWorkUI()
 
 void CusTabBar::chandleSignalsAndSlots()
 {
-    connect(m_addTabBtn,&QPushButton::clicked,[=](){ emit sig_sendTabAddWebTabBar();});
+//    connect(m_addTabBtn,&QPushButton::clicked,[=](){ emit sig_sendTabAddWebTabBar();});
     connect(m_expandBtn,&QPushButton::clicked,[=](){ emit sig_sendTabShowRecords();});
     connect(m_hideBtn,&QPushButton::clicked,[=](){ slot_setMarksHidden(true);});
 }

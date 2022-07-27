@@ -171,8 +171,8 @@ private:
     VideoBlank          *m_videoBlank              = nullptr;
     QTabWidget          *m_webTabWidget            = nullptr;
     QVBoxLayout         *m_webVblayout             = nullptr;
-    CusTabBar           *m_cusTabbar               = nullptr;
-    CusWebBrowser       *m_webBrowser              = nullptr;
+    CusTabBar           *m_cusTabbar               = nullptr;//自定义tabbar标题栏
+    CusWebBrowser       *m_webBrowser              = nullptr;//自定义浏览器
     CollectRecords      *m_webRecords              = nullptr;//浏览器收藏标签界面
     WebHistory          *m_webHistory              = nullptr;//浏览器历史记录界面
     WebMessageBox       *m_webMessage              = nullptr;//浏览器标签修改界面

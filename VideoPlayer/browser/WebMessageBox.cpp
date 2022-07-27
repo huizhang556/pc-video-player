@@ -6,7 +6,7 @@ WebMessageBox::WebMessageBox(QWidget *parent) :
     ui(new Ui::WebMessageBox)
 {
     ui->setupUi(this);
-    this->setFixedSize(400,450);
+    this->setFixedSize(520,465);
     setWindowFlags(Qt::FramelessWindowHint);
     chandleSignalsAndSLots();
 }

@@ -138,6 +138,9 @@ void TitleBar::initWorker()
     m_engineSetBtn->setFixedHeight(26);
     slot_addWebEngine();
 
+    //快捷键
+
+
     slot_switchToLoginPage(1,QString::fromLocal8Bit("测试测名称8020"));
 }
 
@@ -575,7 +578,15 @@ void TitleBar::slot_updateShowListSettigMenu()
     pmenu_funclist->addSeparator();
     pmenu_funclist->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("常见问题"),this,SLOT(slot_browser_setMenu_FAQ()));
     pmenu_funclist->addAction(QIcon("://images/icon/help_v_net.png"),QString::fromLocal8Bit("帮助"),this,SLOT(slot_browser_setMenu_help()));
-
+    //设置快捷键
+//    QList<QAction*> actions = pmenu_funclist->actions();
+//    foreach (QAction* arg, actions)
+//    {
+//        if(arg->text() == QString::fromLocal8Bit("新建窗口(Ctrl+N)"))
+//                {
+//                    arg->setShortcut(QKeySequence(tr("Ctrl+N")));
+//                }
+//    }
     int x = ui->pushButton_more->parentWidget()->mapToGlobal(ui->pushButton_more->pos()).x();
     int y = ui->pushButton_more->parentWidget()->mapToGlobal(ui->pushButton_more->pos()).y();
     pmenu_funclist->setGeometry(x-50, y + 30,
@@ -616,12 +627,15 @@ void TitleBar::slot_setCanGoBack(bool status)
 //新建窗口
 void TitleBar::slot_browser_setMenu_createTab()
 {
-    emit sig_sendBrowserCreateTab();
+//    emit sig_sendBrowserCreateTab();
+    slot_receiveBlankWebTab();
 }
 
+//新建隐身窗口
 void TitleBar::slot_browser_setMenu_createHiddenTab()
 {
     emit sig_sendBrowserCreateHiddenTab();
+    slot_receiveBlankWebTab();
 }
 
 //保存网页

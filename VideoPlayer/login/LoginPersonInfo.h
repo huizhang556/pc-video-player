@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QPoint>
 #include <QAction>
+#include <QPushButton>
+#include <QListWidget>
 
 namespace Ui {
 class LoginPersonInfo;
@@ -54,6 +56,7 @@ private:
     //构造函数私有化  实现单例
     explicit LoginPersonInfo(QWidget *parent = nullptr);
     Ui::LoginPersonInfo *ui;
+    QListWidget         *m_listWgt_UserList     =   nullptr;
     QPoint              m_mvPos;
     QAction             *clearAction1;
     QAction             *clearAction2;

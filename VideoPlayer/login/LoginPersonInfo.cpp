@@ -47,6 +47,10 @@ LoginPersonInfo* LoginPersonInfo::getInstance()
 
 void LoginPersonInfo::initWorkUI()
 {
+    //user列表
+    m_listWgt_UserList = new QListWidget();
+    m_listWgt_UserList->setObjectName(QString::fromLocal8Bit("m_listWgt_UserList"));
+
     ui->login_Btnmin->setVisible(false);
     ui->login_Btnmin->setEnabled(false);
 

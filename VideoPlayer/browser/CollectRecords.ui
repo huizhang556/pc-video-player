@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
     <number>0</number>
@@ -36,6 +39,9 @@
      </property>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="spacing">
+        <number>15</number>
+       </property>
        <item>
         <spacer name="horizontalSpacer_3">
          <property name="minimumSize">
@@ -219,11 +225,6 @@ border:0px solid #e1e1e1;
 border-right-width:2px;
 }</string>
          </property>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
          <item>
           <property name="text">
            <string>http:82.156.175.81/study/index.html</string>

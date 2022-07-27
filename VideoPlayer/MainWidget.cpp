@@ -34,10 +34,22 @@ void MainWidget::initOtherWidgetUi()
          << QString::fromLocal8Bit("浏览器2")
          << QString::fromLocal8Bit("视频页3")
          << QString::fromLocal8Bit("视频页4")
-         << QString::fromLocal8Bit("图片页5")
-         << QString::fromLocal8Bit("主界面6")
-         << QString::fromLocal8Bit("主界面7")
-         << QString::fromLocal8Bit("主界面8");
+         << QString::fromLocal8Bit("副界面5")
+         << QString::fromLocal8Bit("副界面6")
+         << QString::fromLocal8Bit("副界面7")
+         << QString::fromLocal8Bit("副界面8")
+         << QString::fromLocal8Bit("副界面9")
+         << QString::fromLocal8Bit("副界面10")
+         << QString::fromLocal8Bit("副界面11")
+         << QString::fromLocal8Bit("副界面12")
+         << QString::fromLocal8Bit("副界面13")
+         << QString::fromLocal8Bit("副界面14")
+         << QString::fromLocal8Bit("副界面15")
+         << QString::fromLocal8Bit("副界面16")
+         << QString::fromLocal8Bit("副界面17")
+         << QString::fromLocal8Bit("副界面18")
+         << QString::fromLocal8Bit("副界面19")
+         << QString::fromLocal8Bit("副界面20");
     m_leftSideBar->setSlideBarListText(list);
     m_leftSideBar->setFixedWidth(170);
 
@@ -72,6 +84,8 @@ void MainWidget::initOtherWidgetUi()
 
     m_cusTabbar = new CusTabBar();
     m_cusTabbar->setObjectName(QString::fromLocal8Bit("m_cusTabbar"));
+    m_cusTabbar->hide();
+
     m_webTabWidget = new QTabWidget();
     m_webTabWidget->setObjectName(QString::fromLocal8Bit("m_webTabWidget"));
     m_webTabWidget->tabBar()->setObjectName(QString::fromLocal8Bit("m_webTabBar"));
@@ -88,6 +102,7 @@ void MainWidget::initOtherWidgetUi()
     m_webVblayout->setMargin(0);
     m_webVblayout->addWidget(m_cusTabbar);
     m_webVblayout->addWidget(m_webTabWidget);
+
     m_webWidget  = new QWidget();
     m_webWidget->setObjectName(QString::fromLocal8Bit("m_webWidget"));
     m_webWidget->setLayout(m_webVblayout);

@@ -18,24 +18,39 @@ color: rgb(85, 255, 0);
 background-color: #2a2a31;
 }
 
-/*浏览器---收藏栏*/
-#m_webWidget
-{
-
-}
-
-#m_cusTabbar
+/*收藏记录---修改*/
+WebMessageBox
 {
 background-color: #ffffff;
 }
 
-/*tabbar样式*/
+/*中心控件承载区域*/
+#m_webStackWgt
+{
+background-color: #9bcffa;
+}
+
+/*浏览器---整个收藏栏(包括展开按钮、隐藏按钮)样式*/
+#m_cusTabbar
+{
+background-color: #9bcffa;
+border-bottom:1px solid black;
+}
+
+/*浏览器---收藏栏和浏览器承载的widget界面*/
+#m_webWidget
+{
+background-color: #9bcffa;
+}
+
+/*浏览器---收藏栏tabbar样式*/
 #m_tabBar
 {
-background-color:#ffffff;
+background-color: #9bcffa;
 color: #4c4c4c;
 }
 
+/*浏览器---收藏栏tab样式*/
 #m_tabBar::tab
 {
 background-color:#ffffff;
@@ -44,22 +59,18 @@ max-width: 120px;
 /*magin-top和height实现tab居中，留下tabbar的大背景*/
 height:18px;
 margin-top:3px;
-margin-left:3px;
-margin-right:3px;
-border-radius:3px;
-border:0px solid black;
-border-right-width:1px;
+margin-left:1px;
+margin-right:1px;
 }
 
 #m_tabBar::tab:first
 {
-margin-left: 0px;
+margin-left: 2px;
 }
 
 #m_tabBar::tab:last
 {
-margin-right: 0px;
-border-right-width:0px;
+margin-right: 2px;
 }
 
 #m_tabBar::tab:selected
@@ -113,27 +124,36 @@ color:white;
 }
 
 /*展开标签栏按钮*/
-#m_webExpandBtn
+#m_webExpandBtn,#m_webExpandBtn::pressed
 {
-background-color: #ffffff;
-color: #7394d2;
+background-color: transparent;
+color: black;
+border:1px solid #6768ee;
+border-radius:3px;
+margin:3px;
+text-align:center;
 }
 
 #m_webExpandBtn:hover
 {
 background-color: #f2f2f2;
+color: #6768ee;
 }
 
 /*标签隐藏按钮*/
-#m_webHideBtn
+#m_webHideBtn,#m_webHideBtn::pressed
 {
-background-color: #ffffff;
-color: #7394d2;
+background-color: transparent;
+color: black;
+border:1px solid #6768ee;
+border-radius:3px;
+margin:3px;
 }
 
 #m_webHideBtn:hover
 {
 background-color: #f2f2f2;
+color: #6768ee;
 }
 
 /*浏览器---收藏列表*/
@@ -246,7 +266,7 @@ background-color:#e5e5e5;
 color:#2b2b2b;
 }
 
-/*浏览器----stackwidget-----start*/
+/**浏览器承载QTabWidget整体设置---start**/
 #m_webTabWidget
 {
 background-color:#4969c7;
@@ -265,7 +285,7 @@ background-color:#009999;
 height:24px;
 }
 
-/*tabbar样式*/
+/*浏览器页面承载QTabWidget自定义Tab样式*/
 #m_webTabBar::tab
 {
 background-color: #4666b9;
@@ -305,16 +325,19 @@ margin-top: 0px;
 background-color: #118860;
 }
 
+/**关闭按钮**/
 #m_webTabBar::close-button
 {
 image: url(://images/icon/tab_closebtn.png);
 }
 
+/**关闭按钮---hover**/
 #m_webTabBar::close-button:hover
 {
 image: url(://images/icon/tab_closebtn_hover.png);
 }
 
+/*浏览器承载界面工具栏*/
 #m_webTabBar QToolButton
 {
 background-color:transparent;
@@ -329,7 +352,9 @@ background-color:transparent;
 {
 background-color:transparent;
 }
+/**浏览器承载QTabWidget整体设置---end**/
 
+/*添加网页按钮*/
 #m_addWebButton
 {
 margin-left:15px;

@@ -308,7 +308,7 @@ private:
     IntroduceForm               *m_introduceForm    = nullptr;
     RecomVideoTab               *m_recomTab         = nullptr;
 //    PlayOrderForm               *m_playOrderForm    = nullptr;
-    MyVideoWidget               *videoWidget        = nullptr;
+    MyVideoWidget               *videoWidget        = nullptr;//视频播放界面
     QMediaPlaylist              *playlist           = nullptr;
     QStackedWidget              *m_introStack       = nullptr;
 

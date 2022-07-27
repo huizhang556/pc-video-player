@@ -328,5 +328,6 @@
         <file>images/dialog/sysclose_hover.png</file>
         <file>images/dialog/sysmin.png</file>
         <file>images/dialog/sysmin_hover.png</file>
+        <file>images/icon/tabbar_hide.png</file>
     </qresource>
 </RCC>

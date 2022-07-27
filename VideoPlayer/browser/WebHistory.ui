@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <property name="spacing">
     <number>0</number>
@@ -61,13 +64,13 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <property name="spacing">
-           <number>15</number>
+           <number>0</number>
           </property>
           <item>
            <widget class="QPushButton" name="pushButton_title">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>130</width>
               <height>26</height>
              </size>
             </property>
@@ -96,13 +99,20 @@
               <height>26</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">#lineEdit_searchHis
+{
+;
+
+}</string>
+            </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="pushButton_searchHis">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>80</width>
               <height>26</height>
              </size>
             </property>
@@ -111,6 +121,12 @@
               <width>16777215</width>
               <height>26</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#pushButton_searchHis
+{
+margin-left: 0px;
+}</string>
             </property>
             <property name="text">
              <string>搜索历史记录</string>
@@ -146,7 +162,7 @@
            <widget class="QRadioButton" name="radioButton_broTime">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>120</width>
               <height>26</height>
              </size>
             </property>
@@ -155,6 +171,12 @@
               <width>16777215</width>
               <height>26</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#radioButton_broTime
+{
+margin-right:15px;
+}</string>
             </property>
             <property name="text">
              <string>按浏览时间排序</string>
@@ -165,7 +187,7 @@
            <widget class="QRadioButton" name="radioButton_zhanDian">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>95</width>
               <height>26</height>
              </size>
             </property>
@@ -174,6 +196,12 @@
               <width>16777215</width>
               <height>26</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#radioButton_zhanDian
+{
+margin-right:15px;
+}</string>
             </property>
             <property name="text">
              <string>按站点排序</string>
@@ -184,7 +212,7 @@
            <widget class="QPushButton" name="pushButton_clearPage">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>95</width>
               <height>26</height>
              </size>
             </property>
@@ -193,6 +221,12 @@
               <width>16777215</width>
               <height>26</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#pushButton_clearPage
+{
+margin-right: 15px;
+}</string>
             </property>
             <property name="text">
              <string>清除此页</string>
@@ -203,7 +237,7 @@
            <widget class="QPushButton" name="pushButton_clearRecords">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>95</width>
               <height>26</height>
              </size>
             </property>
@@ -212,6 +246,12 @@
               <width>16777215</width>
               <height>26</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#pushButton_clearRecords
+{
+margin-right: 15px;
+}</string>
             </property>
             <property name="text">
              <string>清除上网痕迹</string>

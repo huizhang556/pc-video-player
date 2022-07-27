@@ -1010,6 +1010,10 @@ void MultipPlayer::on_pushButton_5_clicked()
             player->play();//调试暂停2022-05-14
             setMainCurrentIndex(1);
         }
+        else
+        {
+            return;
+        }
     }
 }
 
@@ -1055,6 +1059,7 @@ void MultipPlayer::on_pushButton_6_clicked()
         else
         {
             m_playerState = QMediaPlayer::PausedState;
+            return;
         }
     }
 }
