@@ -245,121 +245,391 @@ QString DownLoadItem::calCurrentItemSize(qint64 bytesTotal)
 
 bool DownLoadItem::setItemFileType(const QString &suffix)
 {
-    if("pdf" == suffix)
+    if("3gp" == suffix)     //001
     {
         ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_pdf.png);"
+                           "border-image:url(://images/function/download_3gp.png);"
                            "}");
     }
-    else if("doc" == suffix ||"docx" == suffix)
+    else if("7z" == suffix) //002
     {
         ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_doc.png);"
+                           "border-image:url(://images/function/download_7z.png);"
                            "}");
     }
-    else if("ppt" == suffix)
+    else if("aac" == suffix) //003
     {
         ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_ppt.png);"
+                           "border-image:url(://images/function/download_aac.png);"
                            "}");
     }
-    else if("xlsx" == suffix)
+    else if("ai" == suffix) //004
     {
         ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_xlsx.png);"
+                           "border-image:url(://images/function/download_ai.png);"
                            "}");
     }
-    else if("html" == suffix)
+    else if("avi" == suffix) //005
     {
         ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_html.png);"
+                           "border-image:url(://images/function/download_avi.png);"
                            "}");
     }
-    else if("mp4" == suffix)
+    else if("bat" == suffix) //006
     {
         ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_mp4.png);"
+                           "border-image:url(://images/function/download_bat.png);"
                            "}");
     }
-    else if("mp3" == suffix)
+    else if("bmp" == suffix) //007
     {
         ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_mp31.png);"
+                           "border-image:url(://images/function/download_bmp.png);"
                            "}");
     }
-    else if("zip" == suffix)
+    else if("cdr" == suffix) //008
     {
         ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_zip.png);"
+                           "border-image:url(://images/function/download_cdr.png);"
                            "}");
     }
-    else if("apk" == suffix)
+    else if("cpp" == suffix) //009
     {
         ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_apk.png);"
+                           "border-image:url(://images/function/download_cpp.png);"
                            "}");
     }
-    else if("png" == suffix)
-    {
-        ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_png.png);"
-                           "}");
-    }
-    else if("jpg" == suffix)
-    {
-        ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_jpg.png);"
-                           "}");
-    }
-    else if("psd" == suffix)
-    {
-        ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_psd.png);"
-                           "}");
-    }
-    else if("rar" == suffix)
-    {
-        ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_rar.png);"
-                           "}");
-    }
-    else if("exe" == suffix)
-    {
-        ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_exe.png);"
-                           "}");
-    }
-    else if("iso" == suffix)
-    {
-        ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_system.png);"
-                           "}");
-    }
-    else if("mov" == suffix)
-    {
-        ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_mov.png);"
-                           "}");
-    }
-    else if("txt" == suffix)
-    {
-        ui->label_icon->setStyleSheet("#label_icon{"
-                           "border-image:url(://images/function/download_txt.png);"
-                           "}");
-    }
-    else if("crx" == suffix)
+    else if("crx" == suffix) //010
     {
         ui->label_icon->setStyleSheet("#label_icon{"
                            "border-image:url(://images/function/download_crx.png);"
                            "}");
     }
-    else if("deb" == suffix)
+    else if("css" == suffix) //011
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_css.png);"
+                           "}");
+    }
+    else if("csv" == suffix) //012
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_csv.png);"
+                           "}");
+    }
+    else if("dll" == suffix) //013
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_dll.png);"
+                           "}");
+    }
+    else if("doc" == suffix) //014
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_doc.png);"
+                           "}");
+    }
+    else if("docx" == suffix) //015
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_docx.png);"
+                           "}");
+    }
+    else if("eps" == suffix) //016
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_eps.png);"
+                           "}");
+    }
+    else if("exe" == suffix) //017
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_exe.png);"
+                           "}");
+    }
+    else if("flv" == suffix) //018
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_flv.png);"
+                           "}");
+    }
+    else if("gif" == suffix) //019
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_gif.png);"
+                           "}");
+    }
+    else if("htm" == suffix) //020
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_htm.png);"
+                           "}");
+    }
+    else if("html" == suffix) //021
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_html.png);"
+                           "}");
+    }
+    else if("iso" == suffix) //022
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_iso.png);"
+                           "}");
+    }
+    else if("jar" == suffix) //023
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_jar.png);"
+                           "}");
+    }
+    else if("java" == suffix) //024
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_java.png);"
+                           "}");
+    }
+    else if("jpeg" == suffix) //025
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_jpeg.png);"
+                           "}");
+    }
+    else if("jpg" == suffix) //026
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_jpg.png);"
+                           "}");
+    }
+    else if("js" == suffix) //027
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_js.png);"
+                           "}");
+    }
+    else if("json" == suffix) //028
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_json.png);"
+                           "}");
+    }
+    else if("jsp" == suffix) //029
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_jsp.png);"
+                           "}");
+    }
+    else if("key" == suffix) //030
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_key.png);"
+                           "}");
+    }
+    else if("lib" == suffix) //031
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_lib.png);"
+                           "}");
+    }
+    else if("mov" == suffix) //032
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_mov.png);"
+                           "}");
+    }
+    else if("mp3" == suffix) //033
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_mp3.png);"
+                           "}");
+    }
+    else if("mp4" == suffix) //034
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_mp4.png);"
+                           "}");
+    }
+    else if("pdf" == suffix) //035
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_pdf.png);"
+                           "}");
+    }
+    else if("php" == suffix) //036
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_php.png);"
+                           "}");
+    }
+    else if("png" == suffix) //037
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_png.png);"
+                           "}");
+    }
+    else if("ppt" == suffix) //038
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_ppt.png);"
+                           "}");
+    }
+    else if("pptx" == suffix) //039
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_pptx.png);"
+                           "}");
+    }
+    else if("psb" == suffix) //040
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_psb.png);"
+                           "}");
+    }
+    else if("psd" == suffix) //041
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_psd.png);"
+                           "}");
+    }
+    else if("py" == suffix) //042
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_py.png);"
+                           "}");
+    }
+    else if("rar" == suffix) //043
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_rar.png);"
+                           "}");
+    }
+    else if("rm" == suffix) //044
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_rm.png);"
+                           "}");
+    }
+    else if("rmvb" == suffix) //045
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_rmvb.png);"
+                           "}");
+    }
+    else if("rp" == suffix) //046
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_rp.png);"
+                           "}");
+    }
+    else if("sql" == suffix) //047
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_sql.png);"
+                           "}");
+    }
+    else if("svg" == suffix) //048
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_svg.png);"
+                           "}");
+    }
+    else if("swf" == suffix) //049
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_swf.png);"
+                           "}");
+    }
+    else if("tar" == suffix) //050
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_tar.png);"
+                           "}");
+    }
+    else if("tif" == suffix) //051
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_tif.png);"
+                           "}");
+    }
+    else if("tmp" == suffix) //052
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_tmp.png);"
+                           "}");
+    }
+    else if("txt" == suffix) //053
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_txt.png);"
+                           "}");
+    }
+    else if("wav" == suffix) //054
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_wav.png);"
+                           "}");
+    }
+    else if("wma" == suffix) //055
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_wma.png);"
+                           "}");
+    }
+    else if("wmv" == suffix) //056
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_wmv.png);"
+                           "}");
+    }
+    else if("wps" == suffix) //057
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_wps.png);"
+                           "}");
+    }
+    else if("xls" == suffix) //058
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_xls.png);"
+                           "}");
+    }
+    else if("xml" == suffix) //059
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_xml.png);"
+                           "}");
+    }
+    else if("xlsl" == suffix) //060
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_xlsl.png);"
+                           "}");
+    }
+    else if("xsl" == suffix) //061
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_xsl.png);"
+                           "}");
+    }
+    else if("zip" == suffix) //062
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_zip.png);"
+                           "}");
+    }
+    else if("apk" == suffix) //063
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_apk.png);"
+                           "}");
+    }
+    else if("deb" == suffix) //064
     {
         ui->label_icon->setStyleSheet("#label_icon{"
                            "border-image:url(://images/function/download_deb.png);"
                            "}");
     }
-    else if("deleted" == suffix)
+    else if("deleted" == suffix) //065
     {
         ui->label_icon->setStyleSheet("#label_icon{"
                            "border-image:url(://images/function/download_deleted.png);"

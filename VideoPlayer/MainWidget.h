@@ -89,6 +89,10 @@ private slots:
 
     void        slot_setCurrentTabWidgetEnable();//设置可用不可用
 
+    void        slot_setCurrentWebBarTitle(int index,const QString &title);//设置标题
+
+    void        slot_setCurrentWebBarIcon(int index,const QIcon &icon);//设置图标
+
     void        slot_judgeCurrentBrowserIsActive_home();//过滤不是当前活跃的窗口--返回主页
 
     void        slot_judgeCurrentBrowserIsActive_back();//返回上一级

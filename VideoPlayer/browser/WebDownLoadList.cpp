@@ -44,6 +44,7 @@ void WebDownLoadList::slot_receiveThreadFinished()
 //删除已经下载完成的item
 void WebDownLoadList::slot_itemRemove(int num)
 {
+    //QListWidget删除一个item,会自动对索引进行排序，且索引是连续的。
 //    QPoint pPoint = ui->listWidget_list->mapFromGlobal(QCursor::pos());
 //    auto item = ui->listWidget_list->itemAt(pPoint);
 //    ui->listWidget_list->removeItemWidget(item);

@@ -269,7 +269,6 @@
         <file>images/function/history_list_item_hover.png</file>
         <file>images/bgpic/login.png</file>
         <file>images/bgpic/newwork.png</file>
-        <file>images/function/download_AI.png</file>
         <file>images/function/download_avi.png</file>
         <file>images/function/download_bmp.png</file>
         <file>images/function/download_cdr.png</file>
@@ -329,5 +328,44 @@
         <file>images/dialog/sysmin.png</file>
         <file>images/dialog/sysmin_hover.png</file>
         <file>images/icon/tabbar_hide.png</file>
+        <file>images/function/download_3gp.png</file>
+        <file>images/function/download_7z.png</file>
+        <file>images/function/download_aac.png</file>
+        <file>images/function/download_bat.png</file>
+        <file>images/function/download_cpp.png</file>
+        <file>images/function/download_css.png</file>
+        <file>images/function/download_csv.png</file>
+        <file>images/function/download_dll.png</file>
+        <file>images/function/download_docx.png</file>
+        <file>images/function/download_flv.png</file>
+        <file>images/function/download_htm.png</file>
+        <file>images/function/download_iso.png</file>
+        <file>images/function/download_jar.png</file>
+        <file>images/function/download_java.png</file>
+        <file>images/function/download_jpeg.png</file>
+        <file>images/function/download_js.png</file>
+        <file>images/function/download_json.png</file>
+        <file>images/function/download_jsp.png</file>
+        <file>images/function/download_key.png</file>
+        <file>images/function/download_lib.png</file>
+        <file>images/function/download_php.png</file>
+        <file>images/function/download_pptx.png</file>
+        <file>images/function/download_psb.png</file>
+        <file>images/function/download_py.png</file>
+        <file>images/function/download_rm.png</file>
+        <file>images/function/download_rmvb.png</file>
+        <file>images/function/download_rp.png</file>
+        <file>images/function/download_sql.png</file>
+        <file>images/function/download_swf.png</file>
+        <file>images/function/download_system.png</file>
+        <file>images/function/download_tar.png</file>
+        <file>images/function/download_tmp.png</file>
+        <file>images/function/download_wma.png</file>
+        <file>images/function/download_wmv.png</file>
+        <file>images/function/download_wps.png</file>
+        <file>images/function/download_xls.png</file>
+        <file>images/function/download_xlsl.png</file>
+        <file>images/function/download_xml.png</file>
+        <file>images/function/download_xsl.png</file>
     </qresource>
 </RCC>
