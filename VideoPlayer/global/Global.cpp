@@ -11,3 +11,12 @@ Global::Global(QObject *parent) : QObject(parent)
 {
 
 }
+
+//注册LAV播放器
+void Global::registerLAVplayer()
+{
+    QProcess p(NULL);
+    p.setWorkingDirectory(Global::appDirPath + "/lav64");
+    p.start(Global::appDirPath + "/lav64/install_video.bat");
+    p.waitForFinished();//默认3000ms
+}

@@ -1,5 +1,6 @@
 ﻿#include "WebDownLoadList.h"
 #include "ui_WebDownLoadList.h"
+
 #include <QDebug>
 #include <QFileInfo>
 #include <QFileDialog>
@@ -14,9 +15,10 @@ WebDownLoadList::WebDownLoadList(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle(QString::fromLocal8Bit("下载栏"));
-    setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 //    setAttribute(Qt::WA_TranslucentBackground,true);
     this->setFixedSize(615,400);//记得滚动条的10px宽度
+    ui->listWidget_list->installEventFilter(this);
     initWorkUI();
     chandleSignalsAndSLots();
 }
@@ -29,34 +31,33 @@ void WebDownLoadList::getButtonInfo()
     qDebug() << btn->objectName()<<btn;
 }
 
-//暂停/开始下载
-void WebDownLoadList::item_pause(int num, bool status)
+void WebDownLoadList::slot_receiveThreadStarted()
 {
-    qDebug() << QString::fromLocal8Bit("第%1个item").arg(num);
+    qDebug() << QString::fromLocal8Bit("线程开始！");
 }
 
-//取消下载
-void WebDownLoadList::item_cancel(int num)
+void WebDownLoadList::slot_receiveThreadFinished()
 {
-
-}
-
-//重新下载
-void WebDownLoadList::item_reload(int num)
-{
-
-}
-
-//删除正在下载的item
-void WebDownLoadList::item_workingItem(int num)
-{
-
+    qDebug() << QString::fromLocal8Bit("线程结束！");
 }
 
 //删除已经下载完成的item
-void WebDownLoadList::item_workedItem(int num)
+void WebDownLoadList::slot_itemRemove(int num)
 {
-
+//    QPoint pPoint = ui->listWidget_list->mapFromGlobal(QCursor::pos());
+//    auto item = ui->listWidget_list->itemAt(pPoint);
+//    ui->listWidget_list->removeItemWidget(item);
+    if(0 == ui->listWidget_list->count()) return;
+    if(nullptr != ui->listWidget_list->currentItem())
+        qDebug()<< QString::fromLocal8Bit("当前选中行：") << ui->listWidget_list->currentRow();
+    qDebug()<< QString::fromLocal8Bit("当前m_workItem：") << m_workItem;
+    qDebug()<< QString::fromLocal8Bit("当前m_downLoadItem：") << m_downLoadItem;
+    if(nullptr != m_selectedItem)
+    {
+        ui->listWidget_list->takeItem(ui->listWidget_list->row(m_selectedItem));
+        delete m_selectedItem;
+        m_selectedItem = nullptr;
+    }
 }
 
 WebDownLoadList::~WebDownLoadList()
@@ -67,6 +68,12 @@ WebDownLoadList::~WebDownLoadList()
         delete m_pInstance;
         m_pInstance = nullptr;
     }
+
+    if(m_workThread != nullptr)
+    {
+        m_workThread->quit();
+    }
+    m_workThread->wait();
 }
 
 //获取单例
@@ -87,6 +94,7 @@ DownLoadItem *WebDownLoadList::getDownloadItem()
 
 void WebDownLoadList::initWorkUI()
 {
+    m_selectedItem = new QListWidgetItem();
     ui->lineEdit_search->setPlaceholderText(QString::fromLocal8Bit("搜索下载内容"));
     ui->lineEdit_inputurl->setPlaceholderText(QString::fromLocal8Bit("请输入下载地址,按Enter键下载"));
     ui->listWidget_list->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
@@ -106,34 +114,20 @@ void WebDownLoadList::chandleSignalsAndSLots()
         ui->lineEdit_inputurl->clear();
         this->hide();
     });
-    //返回
+    //自定义下载---返回
     connect(ui->pushButton_return,&QPushButton::clicked,[=](){ui->stackedWidget_bottom->setCurrentIndex(0);});
-    //清空列表
+    //清空下载记录列表
     connect(ui->pushButton_clearlist,&QPushButton::clicked,[=](){ ui->listWidget_list->clear();ui->stackedWidget_center->setCurrentIndex(1);});
-    //下载设置
+    //下载设置（存储目录）
     connect(ui->pushButton_downsetting,&QPushButton::clicked,[=](){emit sig_setConfig();});
-    //停止
-    connect(stopbtn,&QPushButton::clicked,[=]()
-    {
-//        QPushButton *stopbtn = qobject_cast<QPushButton*>(sender());
-//        QLabel *num = stopbtn->parentWidget()->findChild<QLabel*>();
-//        emit sig_pause(num->text().toInt());
-        slot_setStartStatus(stopbtn,m_start);
-        qDebug()<< QString::fromLocal8Bit("暂停") << lab_num->text();
-    });
 
-    //暂停
-    connect(m_downLoadItem,SIGNAL(sig_downloadStatus(int,bool)),this,SLOT(item_pause(int,bool)));
-    //取消
-    connect(m_downLoadItem,SIGNAL(sig_download_cancel(int)),this,SLOT(item_cancel()));
-    //删除
-    connect(m_downLoadItem,SIGNAL(sig_download_delete(int)),this,SLOT(item_workingItem()));
-    //重新下载
-    connect(m_downLoadItem,SIGNAL(sig_download_reload(int)),this,SLOT(item_reload()));
-    //从列表中删除任务
-    connect(m_downLoadItem,SIGNAL(sig_download_deleteItem(int)),this,SLOT(item_workedItem()));
+    connect(ui->listWidget_list,&QListWidget::itemEntered,[=](QListWidgetItem *item){
+        m_selectedItem = item;
+        qDebug() << QString::fromLocal8Bit("当前item:")<< m_selectedItem;
+    });
 }
 
+//收到下载信号，创建下载列表任务，列表添加一条下载记录
 bool WebDownLoadList::slot_addDownLoadRecordToList(const QUrl &url, const QString &filename, const QString &savepath,bool openStatus)
 {
     QFileInfo info(url.toString());
@@ -142,94 +136,39 @@ bool WebDownLoadList::slot_addDownLoadRecordToList(const QUrl &url, const QStrin
     m_fileName   = filename;
     m_filePath = savepath + "/" + filename;
     ui->stackedWidget_center->setCurrentIndex(0);
-//    m_barStackWgt = new QStackedWidget();
-//    m_barStackWgt->setObjectName(QString::fromLocal8Bit("m_barStackWgt"));
 
-//    m_ctlStackWgt = new QStackedWidget();
-//    m_ctlStackWgt->setObjectName(QString::fromLocal8Bit("m_ctlStackWgt"));
-
-////    QLabel *num = new QLabel(QString::number(m_count));
-//    lab_num = new QLabel(QString::number(m_count));
-//    lab_num->setObjectName(QString::fromLocal8Bit("dl_num"));
-//    lab_num->setAlignment(Qt::AlignCenter);//文字居
-//    slot_setItemPicture();//设置图标
-
-////    QProgressBar *progressbar = new QProgressBar();
-//    progressbar = new QProgressBar();
-//    progressbar->setObjectName(QString::fromLocal8Bit("dl_progressbar"));
-//    progressbar->setValue(0);
-
-//    lab_fileSize = new QLabel();
-//    lab_fileSize->setObjectName(QString::fromLocal8Bit("dl_fileSize"));
-//    slot_setItemFileSize();
-
-//    lab_fileName = new QLabel();
-//    lab_fileName->setObjectName(QString::fromLocal8Bit("dl_fileName"));
-//    slot_setItemFileName();
-
-//    hblayout0 = new QHBoxLayout();
-//    hblayout0->addSpacerItem(new QSpacerItem(5, 18, QSizePolicy::Fixed));
-//    hblayout0->addWidget(lab_fileName);
-//    hblayout0->addWidget(lab_fileSize);
-//    hblayout0->setContentsMargins(0,0,0,0);
-
-//    vblayout0 = new QVBoxLayout();
-//    vblayout0->addWidget(progressbar);
-//    vblayout0->addLayout(hblayout0);
-//    vblayout0->setContentsMargins(0,0,0,0);
-
-////    QPushButton *stopbtn = new QPushButton();
-//    stopbtn = new QPushButton();
-//    stopbtn->setObjectName(QString::fromLocal8Bit("dl_stopbtn"));
-//    stopbtn->setToolTip(QString::fromLocal8Bit("暂停"));
-////    QPushButton *downloadlbtn = new QPushButton();
-//    downloadlbtn = new QPushButton();
-//    downloadlbtn->setObjectName(QString::fromLocal8Bit("dl_downloadlbtn"));
-//    downloadlbtn->setToolTip(QString::fromLocal8Bit("下载"));
-////    QPushButton *deletebtn = new QPushButton();
-//    deletebtn = new QPushButton();
-//    deletebtn->setObjectName(QString::fromLocal8Bit("dl_deletebtn"));
-//    deletebtn->setToolTip(QString::fromLocal8Bit("删除"));
-////    QPushButton *openbtn = new QPushButton();
-//    openbtn = new QPushButton();
-//    openbtn->setObjectName(QString::fromLocal8Bit("dl_openbtn"));
-//    openbtn->setToolTip(QString::fromLocal8Bit("打开文件"));
-//    lab_num->setFixedSize(QSize(26,26));
-//    progressbar->setFixedSize(360,18);
-//    stopbtn->setFixedSize(QSize(18,18));
-//    deletebtn->setFixedSize(QSize(18,18));
-//    downloadlbtn->setFixedSize(QSize(18,18));
-//    openbtn->setFixedSize(QSize(18,18));
-////    QHBoxLayout *hblayout1 = new QHBoxLayout();
-//    hblayout1 = new QHBoxLayout();
-////    QHBoxLayout *hblayout2 = new QHBoxLayout();
-//    hblayout2 = new QHBoxLayout();
-//    hblayout2->addWidget(stopbtn);//暂停
-//    hblayout2->addWidget(downloadlbtn);//下载
-//    hblayout2->addWidget(deletebtn);//删除
-//    hblayout2->addWidget(openbtn);//打开
-//    hblayout2->setSpacing(10);
-
-//    hblayout1->addWidget(lab_num);//序号
-//    hblayout1->addLayout(vblayout0);//进度条整体
-//    hblayout1->addSpacerItem(new QSpacerItem(5, 18, QSizePolicy::Fixed));//最小 30 26，可扩大
-//    hblayout1->addLayout(hblayout2);//操作按钮
-//    hblayout1->addSpacerItem(new QSpacerItem(5,18,QSizePolicy::Fixed));//右边界固定
-////    QWidget *tempwdt = new QWidget();
-//    tempwdt = new QWidget();
-//    tempwdt->setFixedSize(600,40);
-//    tempwdt->setLayout(hblayout1);
-//    tempwdt->layout()->setContentsMargins(0,0,0,0);
-//    tempwdt->layout()->setMargin(0);
-////    QListWidgetItem *item = new QListWidgetItem();
-    item = new QListWidgetItem();//每次在堆上分配一块内存，每个item的地址都是不一样的
+    //00:创建线程 01.创建工作 02.开始线程
+    slot_createNewDownloadWork();//必须在关联之前创建
+    //收到下载信号，创建线程下载
+    m_workItem   = new QListWidgetItem();
     m_downLoadItem = new DownLoadItem(url,filename,savepath,openStatus);
+    m_worker->slot_receiveData_accept(url,filename,savepath);//创建变量必须在使用之前（比如有信号链接）
     //堆变量每次分配不同的地址
-    qDebug() <<QString::fromLocal8Bit("新分配的堆变量地址：") << m_downLoadItem;
-    item->setSizeHint(m_downLoadItem->size());
-    ui->listWidget_list->insertItem(0,item);
-    ui->listWidget_list->setItemWidget(item,m_downLoadItem);
-    qDebug() << QString::fromLocal8Bit("已经创建item!");
+    qDebug() <<QString::fromLocal8Bit("新分配DownLoadItem堆变量地址：") << m_downLoadItem;
+    qDebug() <<QString::fromLocal8Bit("新分配线程变量地址：") << m_worker;
+    m_workItem->setSizeHint(m_downLoadItem->size());
+    ui->listWidget_list->insertItem(0,m_workItem);
+    ui->listWidget_list->setItemWidget(m_workItem,m_downLoadItem);
+
+    //有关文件操作的信号与槽函数
+    connect(m_workThread,&QThread::finished,m_worker,&QObject::deleteLater);//线程结束时，自动删除
+    connect(m_workThread,&QThread::finished,m_workThread,&QThread::deleteLater);//线程结束时，线程内对象自动删除
+    connect(m_workThread,&QThread::started,this,&WebDownLoadList::slot_receiveThreadStarted);//打印以下线程完毕是否结束
+    connect(m_workThread,&QThread::finished,this,&WebDownLoadList::slot_receiveThreadFinished);//打印以下线程完毕是否结束了
+    //关联文件下载进度
+    connect(m_worker,SIGNAL(sig_receiveData_progressbar(qint64,qint64)),m_downLoadItem,SLOT(slot_setItemDownProgress(qint64,qint64)));
+    //文件完成提示音
+    connect(m_worker,&Worker::sig_receiveData_finished,m_downLoadItem,&DownLoadItem::slot_receive_finished);
+    //继续/暂停
+    connect(m_downLoadItem,SIGNAL(sig_downloadStatus(int,bool)),m_worker,SLOT(slot_receiveData_pause(int,bool)));
+    //取消
+    connect(m_downLoadItem,SIGNAL(sig_download_cancel(int)),m_worker,SLOT(slot_receiveData_cancel(int)));
+    //删除
+    connect(m_downLoadItem,SIGNAL(sig_download_delete(int)),m_worker,SLOT(slot_receiveData_deleteWork(int)));
+    //重新下载
+    connect(m_downLoadItem,SIGNAL(sig_download_reload(int)),m_worker,SLOT(slot_receiveData_itemReDownload(int)));
+    //从列表中删除任务
+    connect(m_downLoadItem,SIGNAL(sig_download_deleteItem(int)),this,SLOT(slot_itemRemove(int)));
     return true;
 }
 
@@ -238,138 +177,18 @@ void WebDownLoadList::slot_searchDownloadHirtory(QString text)
 
 }
 
-void WebDownLoadList::slot_setDownloadProgressbar(qint64 bytesReceived, qint64 bytesTotal)
+//创建线程以及工作对象
+void WebDownLoadList::slot_createNewDownloadWork()
 {
-//    progressbar->setValue(bytesReceived*100/bytesTotal);
-//    if(bytesReceived*100/bytesTotal == 100)
-//    {
-//        emit sig_receiveFinished();
-//        qDebug() <<QString::fromLocal8Bit("下载完成信号已发出！");
-//    }
-    m_downLoadItem->slot_setItemDownProgress(bytesReceived,bytesTotal);
+    //01.工作处理对象
+    m_worker = new Worker();
+    //02.创建一个新的线程对象
+    m_workThread = new QThread();
+    m_worker->moveToThread(m_workThread);
+    m_workThread->start();
+    qDebug() << QString::fromLocal8Bit("新的线程已经启动！") << QString::fromLocal8Bit("新的线程地址=")<< m_workThread;
 }
 
-void WebDownLoadList::slot_receivedNewWorkFinished()
-{
-    qDebug() << QString::fromLocal8Bit("任务栏已经收到下载结束信号！");
-    //播放音频几种方式：
-    //01.QSound,       播放wav格式
-    //02.QSoundEffect, 可以调整音量大小，播放wav格式
-    //03.QMediaPlayer，播放格式多种
-//    QSoundEffect *sound = new QSoundEffect(":/audio/browser/finished.wav",this);
-//    sound->setLoops(1);//循环次数
-//    sound->play();
-    m_downLoadItem->slot_receive_finished();
-    QSoundEffect *effect = new QSoundEffect;
-    effect->setSource(QUrl::fromLocalFile(":/audio/browser/finished.wav"));
-    effect->setLoopCount(1);  //循环次数
-    effect->setVolume(0.25f); //音量  0~1之间
-    effect->play();
-}
-
-void WebDownLoadList::slot_setItemPicture()
-{
-    if("pdf" == m_fileSuffix)
-    {
-        lab_num->setStyleSheet("#dl_num{"
-                           "border-image:url(://images/function/download_pdf.png);"
-                           "}");
-    }
-    else if("doc" == m_fileSuffix)
-    {
-        lab_num->setStyleSheet("#dl_num{"
-                           "border-image:url(://images/function/download_doc.png);"
-                           "}");
-    }
-    else if("ppt" == m_fileSuffix)
-    {
-        lab_num->setStyleSheet("#dl_num{"
-                           "border-image:url(://images/function/download_ppt.png);"
-                           "}");
-    }
-    else if("xlsx" == m_fileSuffix)
-    {
-        lab_num->setStyleSheet("#dl_num{"
-                           "border-image:url(://images/function/download_xlsx.png);"
-                           "}");
-    }
-    else if("html" == m_fileSuffix)
-    {
-        lab_num->setStyleSheet("#dl_num{"
-                           "border-image:url(://images/function/download_html.png);"
-                           "}");
-    }
-    else if("mp4" == m_fileSuffix)
-    {
-        lab_num->setStyleSheet("#dl_num{"
-                           "border-image:url(://images/function/download_mp4.png);"
-                           "}");
-    }
-    else if("mp3" == m_fileSuffix)
-    {
-        lab_num->setStyleSheet("#dl_num{"
-                           "border-image:url(://images/function/download_mp31.png);"
-                           "}");
-    }
-    else if("zip" == m_fileSuffix)
-    {
-        lab_num->setStyleSheet("#dl_num{"
-                           "border-image:url(://images/function/download_zip.png);"
-                           "}");
-    }
-    else if("png" == m_fileSuffix)
-    {
-        lab_num->setStyleSheet("#dl_num{"
-                           "border-image:url(://images/function/download_png.png);"
-                           "}");
-    }
-    else if("jpg" == m_fileSuffix)
-    {
-        lab_num->setStyleSheet("#dl_num{"
-                           "border-image:url(://images/function/download_jpg.png);"
-                           "}");
-    }
-    else if("psd" == m_fileSuffix)
-    {
-        lab_num->setStyleSheet("#dl_num{"
-                           "border-image:url(://images/function/download_psd.png);"
-                           "}");
-    }
-    else if("rar" == m_fileSuffix)
-    {
-        lab_num->setStyleSheet("#dl_num{"
-                           "border-image:url(://images/function/download_rar.png);"
-                           "}");
-    }
-    else if("exe" == m_fileSuffix)
-    {
-        lab_num->setStyleSheet("#dl_num{"
-                           "border-image:url(://images/function/download_exe.png);"
-                           "}");
-    }
-    else if("mov" == m_fileSuffix)
-    {
-        lab_num->setStyleSheet("#dl_num{"
-                           "border-image:url(://images/function/download_mov.png);"
-                           "}");
-    }
-    else
-    {
-        lab_num->setStyleSheet("#dl_num{"
-                           "border-image:url(://images/function/download_unknow.png);"
-                           "}");
-    }
-}
-
-void WebDownLoadList::slot_setItemFileName()
-{
-    lab_fileName->setText(m_fileName);
-}
-
-void WebDownLoadList::slot_setItemFileSize()
-{
-    lab_fileSize->setText(QString::number(m_fileSize));
-}
 
 void WebDownLoadList::mousePressEvent(QMouseEvent *event)
 {
@@ -385,6 +204,20 @@ void WebDownLoadList::mouseMoveEvent(QMouseEvent *event)
     this->move(event->globalPos() - m_mvPos);
 }
 
+bool WebDownLoadList::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == ui->listWidget_list)
+        if(event->type() == QEvent::Enter)
+        {
+
+        }
+    else if(event->type() == QEvent::Leave)
+        {
+            m_selectedItem = nullptr;
+        }
+    return QWidget::eventFilter(watched,event);
+}
+
 void WebDownLoadList::on_pushButton_min_clicked()
 {
     this->showMinimized();
@@ -395,31 +228,4 @@ void WebDownLoadList::on_pushButton_close_clicked()
     this->hide();
 }
 
-void WebDownLoadList::slot_setStartStatus(QPushButton *button, bool status)
-{
-    if(status)
-    {
-        button->setStyleSheet("#dl_stopbtn{"
-                               "border-image:url(://images/function/download_start.png);"
-                               "}");
-        button->setToolTip(QString::fromLocal8Bit("开始"));
-    }
-    else
-    {
-        button->setStyleSheet("#dl_stopbtn{"
-                               "border-image:url(://images/function/download_pause.png);"
-                               "}");
-        button->setToolTip(QString::fromLocal8Bit("暂停"));
-    }
-    m_start = !m_start;//状态置反
-}
 
-void WebDownLoadList::slot_openLocalFile()
-{
-
-}
-
-void WebDownLoadList::slot_deleteFile()
-{
-
-}

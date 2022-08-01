@@ -488,6 +488,7 @@ void TitleBar::slot_updateShowListHistoryWidget()
         }
 }
 
+/*搜索历史记录*/
 void TitleBar::slot_addToListHistoryWidget(const QString &text)
 {
     if(text.isEmpty()) return;
@@ -792,13 +793,7 @@ bool TitleBar::eventFilter(QObject *watched, QEvent *event)
             m_listWdgt_history->hide();
         }
     }
-    if(watched == m_listWdgt_colloect)
-    {
-        if(event->type() == QEvent::Leave)
-        {
-            m_listWdgt_colloect->hide();
-        }
-    }
+
     if(watched == m_listWdgt_engine)
     {
         if(event->type() == QEvent::Leave)

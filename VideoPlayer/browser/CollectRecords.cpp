@@ -20,3 +20,9 @@ void CollectRecords::chandleSignalsAndSlots()
     connect(ui->pushButton_return,&QPushButton::clicked,[=](){emit sig_returnPage();});
     connect(ui->pushButton_change,&QPushButton::clicked,[=](){emit sig_changeRecord();});
 }
+
+//添加一条收藏记录
+void CollectRecords::slot_addRecordToListWgt_history()
+{
+
+}

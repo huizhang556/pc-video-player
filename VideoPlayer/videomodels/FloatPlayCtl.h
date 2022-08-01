@@ -30,13 +30,17 @@ public slots:
     void    slot_setCurrentMediaMutedStyleSheet();
     void    slot_setCurrentPlayMutedStatus(int value);
 
+protected:
+    bool    eventFilter(QObject *watched, QEvent *event) override;
+
+
 private:
     Ui::FloatPlayCtl *ui;
     explicit FloatPlayCtl(QWidget *parent = nullptr);
     static  FloatPlayCtl    *m_pInstance;
     bool                    m_playStatus;
     bool                    m_soundStatus;
-
+    bool                    m_bPress         =      false;//默认没有按下
 signals:
     void    sig_sendExitFullscreen();
     void    sig_sendPlayPrevious();

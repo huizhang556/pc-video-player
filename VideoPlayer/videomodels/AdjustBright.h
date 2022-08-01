@@ -23,6 +23,12 @@ protected:
 
     void leaveEvent(QEvent *event) override;
 
+public slots:
+    void slot_setProgressBarValue_brightness(int value);//亮度
+    void slot_setProgressBarValue_contrast(int value);//对比度
+    void slot_setProgressBarValue_saturation(int value);//饱和度
+    void slot_setProgressBarValue_hue(int value);//色相
+
 private slots:
     void setPlayRate();
 

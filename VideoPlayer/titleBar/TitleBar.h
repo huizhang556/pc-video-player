@@ -159,7 +159,7 @@ private:
     Login           *m_loginForm            =   nullptr;
     MySkin          *m_mySkin               =   nullptr;
     QListWidget     *m_listWdgt_colloect    =   nullptr;//收藏列表
-    QListWidget     *m_listWdgt_history     =   nullptr;//历史记录
+    QListWidget     *m_listWdgt_history     =   nullptr;//搜索历史记录
     QListWidget     *m_listWdgt_engine      =   nullptr;//搜索引擎
     QPushButton     *m_engineSetBtn         =   nullptr;//引擎设置按钮
     QString         m_headUrl;

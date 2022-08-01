@@ -19,17 +19,16 @@ public:
     bool    isDirExist(QString fullpath);
 public slots:
     void    slot_receiveData_accept(QWebEngineDownloadItem *item, QString filename, QString savepath);
-    void    slot_receiveData_pause(QWebEngineDownloadItem *item);
-    void    slot_receiveData_cancel(QWebEngineDownloadItem *item);
-    void    slot_receiveData_resume(QWebEngineDownloadItem *item);
 
     void    slot_receiveData_accept(QUrl url, QString filename, QString savepath);
-    void    slot_receiveData_pause();
-    void    slot_receiveData_cancel();
-    void    slot_receiveData_resume();
+    void    slot_receiveData_pause(int order,bool status);      //01---暂停/继续
+    void    slot_receiveData_cancel(int order);                 //02---取消
+    void    slot_receiveData_deleteWork(int order);             //03---删除正在下载的任务
+    void    slot_receiveData_itemOpenFile(QString order);       //04---打开文件所在位置
+    void    slot_receiveData_itemReDownload(int order);         //05---重新下载文件
 
     void    slot_receiveData_progressbar(qint64 bytesReceived, qint64 bytesTotal);
-    void    slot_receiveData_finished();
+    void    slot_receiveData_finished();//项目完成
 
 signals:
     void    sig_receiveData_progressbar(qint64 bytesReceived, qint64 bytesTotal);

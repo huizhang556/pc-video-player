@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1227</width>
-    <height>337</height>
+    <height>363</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -535,20 +535,23 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba
                  </widget>
                 </item>
                 <item>
-                 <spacer name="verticalSpacer">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
+                 <widget class="QLabel" name="label_error">
+                  <property name="minimumSize">
                    <size>
-                    <width>20</width>
-                    <height>15</height>
+                    <width>0</width>
+                    <height>20</height>
                    </size>
                   </property>
-                 </spacer>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>TextLabel</string>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>

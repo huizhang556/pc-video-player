@@ -16,6 +16,9 @@ public:
     ~CollectRecords();
     void    chandleSignalsAndSlots();
 
+public slots:
+    void    slot_addRecordToListWgt_history();//添加一条收藏记录
+
 private:
     Ui::CollectRecords *ui;
 

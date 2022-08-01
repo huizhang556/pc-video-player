@@ -1,4 +1,5 @@
 ﻿#include "loadGlobalQss.h"
+
 #include <QFile>
 #include <QDebug>
 #include <QApplication>
@@ -32,3 +33,5 @@ void loadGlobalQss::loadAllUIQss()
     }
     file.close();
 }
+
+

@@ -49,19 +49,19 @@ void DownLoadItem::initWorkUI()
 
 void DownLoadItem::chandleSignalsAndSlots()
 {
-    //暂停/开始
+    //01---暂停/开始
     connect(ui->pushButton_dl_pause,&QPushButton::clicked,[=](){setItemDownloadStatus(m_start); emit sig_downloadStatus(getItemOrder(),m_start);});
-    //取消下载
+    //02---取消下载
     connect(ui->pushButton_dl_cancel,&QPushButton::clicked,[=](){emit sig_download_cancel(getItemOrder());});
-    //删除任务
+    //03---删除任务
     connect(ui->pushButton_dl_delete,&QPushButton::clicked,[=](){emit sig_download_delete(getItemOrder());});
-    //打开文件所在路径
+    //04---打开文件所在路径
     connect(ui->pushButton_dl_openfile,&QPushButton::clicked,[=](){openLocalFileSaveDirectory(m_savePath);});
-    //重新下载
+    //05---重新下载
     connect(ui->pushButton_dl_redown,&QPushButton::clicked,[=](){emit sig_download_reload(getItemOrder());});
-    //删除视图item
+    //06---删除视图item
     connect(ui->pushButton_dl_deleteItem,&QPushButton::clicked,[=](){emit sig_download_deleteItem(getItemOrder());});
-    connect(ui->pushButton_dl_deleteItem,SIGNAL(clicked(bool)),this,SLOT(slot_judgeDeleteWorkItem()));//必须使用Qt4方式连接
+//    connect(ui->pushButton_dl_deleteItem,SIGNAL(clicked(bool)),this,SLOT(slot_judgeDeleteWorkItem()));//必须使用Qt4方式连接
 }
 
 void DownLoadItem::setItemDownloadStatus(bool status)
@@ -287,7 +287,12 @@ bool DownLoadItem::setItemFileType(const QString &suffix)
                            "border-image:url(://images/function/download_mp31.png);"
                            "}");
     }
-
+    else if("zip" == suffix)
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_zip.png);"
+                           "}");
+    }
     else if("apk" == suffix)
     {
         ui->label_icon->setStyleSheet("#label_icon{"
@@ -390,7 +395,6 @@ void DownLoadItem::openLocalFileSaveDirectory(const QString &dir)
 void DownLoadItem::slot_judgeDeleteWorkItem()
 {
     QPushButton *pButton = qobject_cast<QPushButton*>(sender());
-    qDebug() <<  pButton <<pButton->text();
     QWidget *widget = pButton->nativeParentWidget();
     qDebug() << widget->objectName()<<QString::fromLocal8Bit("父亲地址:") << widget;
 }
@@ -414,7 +418,7 @@ void DownLoadItem::slot_setItemDownProgress(qint64 bytesReceived, qint64 bytesTo
     if(bytesReceived*100/bytesTotal == 100)//表示结束完所有数据
     {
         slot_setItemFileSize(calCurrentItemSize(bytesTotal));
-        slot_setItemFileName();
+        slot_setItemFileName(m_fileName);
         slot_setItemExistStatus(0);
         slot_receive_openDir(m_open);
         slot_receive_finished();//转换界面,文件信息，文件控制界面
@@ -443,9 +447,10 @@ void DownLoadItem::slot_setItemFileSize(QString size)
     ui->label_completed->setText(QString::fromLocal8Bit("-- 完成"));
 }
 
-void DownLoadItem::slot_setItemFileName()
+void DownLoadItem::slot_setItemFileName(const QString &filename)
 {
-    ui->label_fileName->setText(m_fileName);
+    ui->label_speed->setText(filename);
+    ui->label_fileName->setText(filename);
 }
 
 void DownLoadItem::slot_setItemExistStatus(int status)
@@ -472,7 +477,7 @@ bool DownLoadItem::checkItemFileIsExist(QString fullpath)
     else
     {
         qDebug() <<QString::fromLocal8Bit("文件不存在");
-        setItemFileType("deleted");//删除图标
+        ("deleted");//删除图标
         slot_setItemExistStatus(1);//0--存在 1--删除
         return false;
     }
@@ -484,10 +489,23 @@ void DownLoadItem::slot_receive_start()
     slot_setItemIcon();
     //02.设置进度条
     //03.设置接收进度
+    slot_setItemFileName(m_fileName);
 }
 
 void DownLoadItem::slot_receive_finished()
 {
+    //播放音频几种方式：
+    //01.QSound,       播放wav格式
+    //02.QSoundEffect, 可以调整音量大小，播放wav格式
+    //03.QMediaPlayer，播放格式多种
+//    QSoundEffect *sound = new QSoundEffect(":/audio/browser/finished.wav",this);
+//    sound->setLoops(1);//循环次数
+//    sound->play();
+    QSoundEffect *effect = new QSoundEffect;
+    effect->setSource(QUrl::fromLocalFile(":/audio/browser/finished.wav"));
+    effect->setLoopCount(1);  //循环次数
+    effect->setVolume(0.25f); //音量  0~1之间
+    effect->play();
     ui->stackedWidget_progressbar->setCurrentIndex(1);
     ui->stackedWidget_control->setCurrentIndex(1);
     qDebug() << QString::fromLocal8Bit("文件下载已完成！");

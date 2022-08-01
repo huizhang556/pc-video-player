@@ -35,24 +35,6 @@ void Worker::slot_receiveData_accept(QWebEngineDownloadItem *item, QString filen
     connect(item,SIGNAL(finished()),this,SLOT(slot_receiveData_finished()));
 }
 
-void Worker::slot_receiveData_pause(QWebEngineDownloadItem *item)
-{
-    item->pause();
-    qDebug() <<QString::fromLocal8Bit("暂停");
-}
-
-void Worker::slot_receiveData_cancel(QWebEngineDownloadItem *item)
-{
-    item->cancel();
-    qDebug() <<QString::fromLocal8Bit("取消");
-}
-
-void Worker::slot_receiveData_resume(QWebEngineDownloadItem *item)
-{
-    item->resume();
-    qDebug() <<QString::fromLocal8Bit("继续");
-}
-
 //自建下载链接
 void Worker::slot_receiveData_accept(QUrl url,QString filename, QString savepath)
 {
@@ -70,7 +52,7 @@ void Worker::slot_receiveData_accept(QUrl url,QString filename, QString savepath
     //00.构造QFile时，如果指定文件名，则先创建一个大小为0size的空文件，之后再往里面写数据；如果没有指定文件名称，则在工作目录下建立默认的文件
     //01.QFile需要注意，报错not open device，先检查文件权限问题，再检查打开方式；
     //02.QFile请求下载的文件内容，先存储在缓存中，存储到一定大小，缓存内容才被写入文件中，除非每次调用flush刷新；
-    //03.如果QFile没有close,直到程序关闭，文件才从缓存中被写入。
+    //03.如果QFile没有close,直到程序关闭，文件才从缓存中被写入；
     //04.readyRead信号的触发速度，比downloadProgress触发的频繁；
     //05.如果存在一个一模一样已经存在的下载文件，会在原文件追加，不会新建；
     //数据可读
@@ -104,23 +86,50 @@ void Worker::slot_receiveData_accept(QUrl url,QString filename, QString savepath
     });
 }
 
-void Worker::slot_receiveData_pause()
+//下载/暂停
+void Worker::slot_receiveData_pause(int order,bool status)
 {
-    m_workItem->pause();
-    qDebug() <<QString::fromLocal8Bit("暂停");
+    qDebug() << QString::fromLocal8Bit("当前选中的item序号") << order;
+    if(status)//正在下载
+    {
+        m_workItem->pause();
+        qDebug() <<QString::fromLocal8Bit("下载项目暂停");
+    }
+    else//暂停中
+    {
+        m_workItem->resume();
+        qDebug() <<QString::fromLocal8Bit("下载项目继续");
+    }
+
 }
 
-void Worker::slot_receiveData_cancel()
+//取消下载
+void Worker::slot_receiveData_cancel(int order)
+{
+    qDebug() << QString::fromLocal8Bit("当前选中的item序号") << order;
+    m_workItem->cancel();
+    qDebug() <<QString::fromLocal8Bit("下载项目取消");
+}
+
+//删除正在下载的任务
+void Worker::slot_receiveData_deleteWork(int order)
 {
     m_workItem->cancel();
-    qDebug() <<QString::fromLocal8Bit("取消");
+    qDebug() <<QString::fromLocal8Bit("下载项目取消并删除");
 }
 
-void Worker::slot_receiveData_resume()
+//打开文件所在位置
+void Worker::slot_receiveData_itemOpenFile(QString order)
 {
-    m_workItem->resume();
-    qDebug() <<QString::fromLocal8Bit("继续");
+
 }
+
+//重新下载文件
+void Worker::slot_receiveData_itemReDownload(int order)
+{
+
+}
+
 
 void Worker::slot_receiveData_progressbar(qint64 bytesReceived, qint64 bytesTotal)
 {

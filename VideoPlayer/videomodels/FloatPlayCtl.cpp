@@ -59,10 +59,13 @@ void FloatPlayCtl::initWorkUI()
     //    QGraphicsOpacityEffect *goe = new QGraphicsOpacityEffect();
     //    this->setGraphicsEffect(goe);
     //    goe->setOpacity(0.0);
-        setAttribute(Qt::WA_TranslucentBackground, true);//背景透明
+    setAttribute(Qt::WA_TranslucentBackground, true);//背景透明
     //    setWindowOpacity(0.2);//子控件内所有的透明度都会变（不好用）
-        ui->horizontalSlider_voiceProgress->setRange(0,100);
-        ui->horizontalSlider_voiceProgress->setPageStep(5);
+    ui->horizontalSlider_playProgress->installEventFilter(this);
+//    ui->horizontalSlider_playProgress->setTickInterval(1);//间隔为1（100份，间隔为2，分为50个间隔）
+
+    ui->horizontalSlider_voiceProgress->setRange(0,100);
+    ui->horizontalSlider_voiceProgress->setPageStep(5);
     ui->horizontalSlider_voiceProgress->setValue(10);
     //初始播放状态
     ui->pushButton_start->setStyleSheet("QPushButton{"
@@ -93,9 +96,24 @@ void FloatPlayCtl::chandleSignalsAndSlots()
         slot_setCurrentMediaMutedStyleSheet();
         emit sig_sendPlayMute(m_soundStatus);
     });
-    //播放进度改变
-    connect(ui->horizontalSlider_playProgress,&QSlider::valueChanged,[=](int value){
-        emit sig_sendProgress_player(value);
+
+    /*按下*/
+    connect(ui->horizontalSlider_playProgress,&QSlider::sliderPressed,[=](){
+        m_bPress = true;
+    });
+
+    /*释放*/
+    connect(ui->horizontalSlider_playProgress,&QSlider::sliderReleased,[=](){
+        m_bPress = false;
+    });
+
+    //播放进度改变,不用valuechange因为有延迟，导致数据不统一
+    connect(ui->horizontalSlider_playProgress,&QSlider::sliderMoved,[=](int pos){
+        if(m_bPress)
+        {
+            emit sig_sendProgress_player(pos);
+            qDebug() << QString::fromLocal8Bit("浮动窗口拖动进度值已发送：")<< pos;
+        }
     });
     //音量调节进度改变
     connect(ui->horizontalSlider_voiceProgress,&QSlider::valueChanged,[=](int value){
@@ -192,4 +210,20 @@ void FloatPlayCtl::slot_setCurrentPlayMutedStatus(int value)
                                            "}");
         m_soundStatus = true;
     }
+}
+
+bool FloatPlayCtl::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == ui->horizontalSlider_playProgress)
+    {
+//        if(event->type() == QEvent::Enter)
+//        {
+//            ui->horizontalSlider_playProgress->setToolTip(QString::number(ui->horizontalSlider_playProgress->tickInterval()));
+//        }
+//        else if(event->type() == QEvent::Leave)
+//        {
+
+//        }
+    }
+    return QWidget::eventFilter(watched,event);
 }

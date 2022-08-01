@@ -108,60 +108,64 @@ protected:
     void    keyPressEvent(QKeyEvent *event) override;
 
 public slots:
-    void    loadFileInfoToWinTitle(int index);//标题栏显示视频名称
+    void    slot_loadFileInfoToWinTitle(int index);//标题栏显示视频名称
 
-    void    findFileFromLineEdit( QString name);//浮动曲库查找搜索内容
+    void    slot_findFileFromLineEdit( QString name);//浮动曲库查找搜索内容
 
-    void    itemDoubleClick(QListWidgetItem *item);
+    void    slot_itemDoubleClick(QListWidgetItem *item);
 
-    void    openLocalFile();
+    void    slot_openLocalFile();
 
-    void    setMainCurrentIndex(const int index);
+    void    slot_setMainCurrentIndex(const int index);
 
-    void    closeCurrentWindow();
+    void    slot_closeCurrentWindow();
 
-    void    showNormalWindows();
+    void    slot_showNormalWindows();
 
 //    void  clearListWidgetList_user();//清空用户信息
 
-    void    clearListWidgetList_playlist();//清空播放列表
+    void    slot_clearListWidgetList_playlist();//清空播放列表
 
-    void    clearListWidgetList_collection();//清空收藏列表
+    void    slot_clearListWidgetList_collection();//清空收藏列表
 
-    void    clearListWidgetList_history();//清空历史记录
+    void    slot_clearListWidgetList_history();//清空历史记录
 
-    void    clearUserInputSearchInfo();//清空用户输入的搜索字
+    void    slot_clearUserInputSearchInfo();//清空用户输入的搜索字
 
-    void    setCurrentMediaName(QString name);//进度条上显示媒体名称
+    void    slot_setCurrentMediaName(QString name);//进度条上显示媒体名称
 
-    void    setCurrentMediaNamePicture(const QPixmap &pix);//进度条上显示媒体图片
+    void    slot_setCurrentMediaNamePicture(const QPixmap &pix);//进度条上显示媒体图片
 
-    void    updateFoldButtonGeometry();//更显显示/隐藏按钮的位置
+    void    slot_updateFoldButtonGeometry();//更显显示/隐藏按钮的位置
 
-    void    setFoldButtonStyle();//判断箭头的方向
+    void    slot_setFoldButtonStyle();//判断箭头的方向
 
-    void    judgeFoldBtnOfRightDockList();//判断右侧停靠栏指示按钮位置
+    void    slot_judgeFoldBtnOfRightDockList();//判断右侧停靠栏指示按钮位置
 
-    void    setMainWindowShowFullgreen();
+    void    slot_setMainWindowShowFullgreen();
 
-    void    setPlayOrderButtonStyleSheet(int index);
+    void    slot_setPlayOrderButtonStyleSheet(int index);
 
-    void    setVideTitleBar(int index);
+    void    slot_setVideTitleBar(int index);
 
     void    on_pushButton_pauseStart_clicked();//暂停、播放
 
-    void    updateRateTypeUiLayout();
+    void    slot_updateRateTypeUiLayout();
 
     void    on_pushButton_next_clicked();//下一首
 
     void    on_pushButton_previous_clicked();//上一首
 
-    void    receiveSystemTraySendSoundValue(int value);//接收托盘发过来的音量信号
+    void    slot_receiveSystemTraySendSoundValue(int value);//接收托盘发过来的音量信号
 
     void    on_setCurrentMediaSoundSatus();
 
+    void    slot_showPlayerErrot(QMediaPlayer::Error error);//播放错误提示
+
 private slots:
     void    on_time();
+
+    void    slot_setMediaPlayPosition(int value);//设置播放点
 
     void    checkChandleMediaPlayerStatus(QMediaPlayer::State newState);//监测处理媒体播放状态
 
@@ -180,6 +184,8 @@ private slots:
     void    on_moreBtn_clicked();
 
     void    set_adjustBright();
+
+    void    slot_setPlayStatusStyle_main(bool status);//设置主界面的播放按钮样式
 
     void    slot_hideFloatPlayCtl();
 
@@ -277,7 +283,6 @@ signals:
 
 private:
     Ui::MultipPlayer *ui;
-    QDesktopWidget              *system_screen      = nullptr;
     QTimer                      *m_pTimer           = nullptr; //进度滚动条更新
     QTimer                      *m_pTimer2          = nullptr; //延迟ui界面
     QWidget                     *m_widget1          = nullptr;
@@ -300,14 +305,13 @@ private:
     QVBoxLayout                 *m_vHlayout_jieshao = nullptr; //视频介绍布局
     QPushButton                 *m_searchBtn        = nullptr;
     QPushButton                 *m_foldBtn          = nullptr;
-    QMediaPlayer                *player             = nullptr;
+    QMediaPlayer                *m_player           = nullptr;
     AdjustBright                *m_adjustBright     = nullptr;
     MusicPlayShow               *m_musicUi          = nullptr;
     MusicPlaylist               *m_musicShowList    = nullptr;
     VideoTitleBar               *m_videoTitleBar    = nullptr;
     IntroduceForm               *m_introduceForm    = nullptr;
     RecomVideoTab               *m_recomTab         = nullptr;
-//    PlayOrderForm               *m_playOrderForm    = nullptr;
     MyVideoWidget               *videoWidget        = nullptr;//视频播放界面
     QMediaPlaylist              *playlist           = nullptr;
     QStackedWidget              *m_introStack       = nullptr;

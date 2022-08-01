@@ -135,7 +135,7 @@ void CustomFileDialog::setTitleName(const QString& titleName)
 
 QStringList CustomFileDialog::selectedFiles() const
 {
-	return m_fileDialog->selectedFiles();
+    return m_fileDialog->selectedFiles();
 }
 
 void CustomFileDialog::setFileMode(QFileDialog::FileMode mode)

@@ -125,6 +125,30 @@ void AdjustBright::leaveEvent(QEvent *event)
     this->close();
 }
 
+//亮度
+void AdjustBright::slot_setProgressBarValue_brightness(int value)
+{
+    ui->horizontalSlider_liangdu->setValue(value);
+}
+
+//对比度
+void AdjustBright::slot_setProgressBarValue_contrast(int value)
+{
+    ui->horizontalSlider_duibidu->setValue(value);
+}
+
+//饱和度
+void AdjustBright::slot_setProgressBarValue_saturation(int value)
+{
+    ui->horizontalSlider_baohedu->setValue(value);
+}
+
+//色相
+void AdjustBright::slot_setProgressBarValue_hue(int value)
+{
+    ui->horizontalSlider_sediao->setValue(value);
+}
+
 void AdjustBright::clearAllRateButtonChecked()
 {
     ui->BtnRate_1->setChecked(false);//设置为为未选中状态

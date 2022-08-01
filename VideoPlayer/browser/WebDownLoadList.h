@@ -1,14 +1,15 @@
 ﻿#ifndef WEBDOWNLOADLIST_H
 #define WEBDOWNLOADLIST_H
+#include "mythread/Worker.h"
 #include "browser/DownLoadItem.h"
 
 #include <QWidget>
 #include <QLayout>
 #include <QLabel>
 #include <QSound>
+#include <QThread>
 #include <QMetaType>
 #include <QFileInfo>
-#include <QSoundEffect>
 #include <QMouseEvent>
 #include <QProgressBar>
 #include <QPushButton>
@@ -25,48 +26,31 @@ class WebDownLoadList : public QWidget
 
 public:    
     ~WebDownLoadList();
-    void initWorkUI();
-    void chandleSignalsAndSLots();
+    void        initWorkUI();
+    void        chandleSignalsAndSLots();
     static  WebDownLoadList* getInstance();
     DownLoadItem*    getDownloadItem();
 public slots:
-    bool        slot_addDownLoadRecordToList(const QUrl &url, const QString &filename, const QString &savepath, bool openStatus);//添加下载记录
-    void        slot_searchDownloadHirtory(QString text);
-    void        slot_setDownloadProgressbar(qint64 bytesReceived, qint64 bytesTotal);
-    void        slot_receivedNewWorkFinished();
-    void        slot_setItemPicture();
-    void        slot_setItemFileName();
-    void        slot_setItemFileSize();
+    bool        slot_addDownLoadRecordToList(const QUrl &url, const QString &filename, const QString &savepath, bool openStatus);//创建下载
 
 protected:
     void        mousePressEvent(QMouseEvent *event) override;
     void        mouseMoveEvent(QMouseEvent *event) override;
-
-private slots:
-    void        on_pushButton_min_clicked();
-    void        on_pushButton_close_clicked();
-    void        slot_setStartStatus(QPushButton *button,bool status);
-    void        slot_openLocalFile();
-    void        slot_deleteFile();
-
-    void        getButtonInfo();
+    bool        eventFilter(QObject *watched, QEvent *event) override;
 
 signals:
     void        sig_setConfig();
-    void        sig_open(int num,QString path);
-    void        sig_cancel(int num);
-    void        sig_pause(int num);
-    void        sig_delete(int num);
-    void        sig_download(int num);
-    void        sig_receiveProgressbar(int value);
-    void        sig_receiveFinished();
     void        sig_newDownloadRequest(const QString &address);
+
 private slots:
-    void        item_pause(int num, bool status);
-    void        item_cancel(int num);
-    void        item_reload(int num);
-    void        item_workingItem(int num);
-    void        item_workedItem(int num);
+    void        slot_createNewDownloadWork();
+    void        slot_receiveThreadStarted();
+    void        slot_receiveThreadFinished();
+    void        slot_searchDownloadHirtory(QString text);
+    void        slot_itemRemove(int num);
+    void        on_pushButton_min_clicked();
+    void        on_pushButton_close_clicked();
+    void        getButtonInfo();
 
 private:
     explicit WebDownLoadList(QWidget *parent = nullptr);
@@ -78,23 +62,12 @@ private:
     QString             m_fileSuffix;
     QString             m_fileName;
     QString             m_filePath;
-//    QStackedWidget      *m_barStackWgt      =   nullptr;
-//    QStackedWidget      *m_ctlStackWgt      =   nullptr;
-    QLabel              *lab_num                =   nullptr;
-    QProgressBar        *progressbar        =   nullptr;
-    QLabel              *lab_fileName       =   nullptr;
-    QLabel              *lab_fileSize       =   nullptr;
-    QPushButton         *stopbtn            =   nullptr;
-    QPushButton         *downloadlbtn       =   nullptr;
-    QPushButton         *deletebtn          =   nullptr;
-    QPushButton         *openbtn            =   nullptr;
-    QVBoxLayout         *vblayout0          =   nullptr;
-    QHBoxLayout         *hblayout0          =   nullptr;
-    QHBoxLayout         *hblayout1          =   nullptr;
-    QHBoxLayout         *hblayout2          =   nullptr;
-    QWidget             *tempwdt            =   nullptr;
-    QListWidgetItem     *item               =   nullptr;
-    DownLoadItem        *m_downLoadItem     =   nullptr;
+
+    QListWidgetItem     *m_selectedItem     =   nullptr;//当前选中的QListWidgetItem
+    QListWidgetItem     *m_workItem         =   nullptr;//QListWidget中的item
+    Worker              *m_worker           =   nullptr;//真正处理工作
+    QThread             *m_workThread       =   nullptr;//工作线程
+    DownLoadItem        *m_downLoadItem     =   nullptr;//QListWidget中的itemWidget
     static  WebDownLoadList* m_pInstance;
 
 };

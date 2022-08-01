@@ -7,6 +7,7 @@
 #include <QProcess>
 #include <QFileInfo>
 #include <QFileDialog>
+#include <QSoundEffect>
 
 namespace Ui {
 class DownLoadItem;
@@ -37,7 +38,7 @@ public slots:
     void            slot_setItemByteLoad(qint64 bytesReceived, qint64 bytesTotal);//设置已下载的大小
     void            slot_setItemDownSpeed(qint64 bytesReceived, qint64 bytesTotal);//设置下载网速
     void            slot_setItemFileSize(QString size);//设置文件大小
-    void            slot_setItemFileName();//设置文件名
+    void            slot_setItemFileName(const QString &filename);//设置文件名
     void            slot_setItemExistStatus(int status);//设置文件状态
     void            slot_receive_start();//下载开始
     void            slot_receive_finished();//文件接收完成
@@ -59,11 +60,11 @@ private:
     QString         m_savePath;
 
 signals:
-    void            sig_downloadStatus(int num,bool status);
-    void            sig_download_cancel(int num);
-    void            sig_download_delete(int num);
-    void            sig_download_reload(int num);
-    void            sig_download_deleteItem(int num);
+    void            sig_downloadStatus(int num,bool status);//暂停/继续
+    void            sig_download_cancel(int num);//取消下载
+    void            sig_download_delete(int num);//删除正在下载的item
+    void            sig_download_reload(int num);//重新下载
+    void            sig_download_deleteItem(int num);//删除已经完成的item
 };
 
 #endif // DOWNLOADITEM_H

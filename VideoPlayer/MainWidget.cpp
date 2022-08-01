@@ -315,7 +315,7 @@ void MainWidget::slot_removeTabWidgetTab(int index)
 void MainWidget::chandleSignalAndSlots()
 {
     /************************************标题栏窗口控制按钮************************************/
-    connect(this,&MainWidget::sig_startCloseAppliction,m_mainPlayer,&MultipPlayer::closeCurrentWindow);//转到重写事件
+    connect(this,&MainWidget::sig_startCloseAppliction,m_mainPlayer,&MultipPlayer::slot_closeCurrentWindow);//转到重写事件
     connect(m_titleBar,&TitleBar::sig_winClose,this,&MainWidget::close);//转到重写事件
     connect(m_titleBar,&TitleBar::sig_winNormal,this,&MainWidget::chandleRestoreWindow);//根据不同状态处理窗口
     connect(m_titleBar,&TitleBar::sig_winMinimum,[=](){this->showMinimized();});
@@ -424,7 +424,7 @@ void MainWidget::chandleSignalAndSlots()
     //空白页---打开文件
     connect(m_videoBlank,&VideoBlank::sig_openLocalFile,[=]()
     {
-        m_mainPlayer->openLocalFile();
+        m_mainPlayer->slot_openLocalFile();
 //        m_mainPlayer->show();
     });
 
@@ -444,15 +444,22 @@ void MainWidget::chandleSignalAndSlots()
     //浮动控制---下一首
     connect(FloatPlayCtl::getInstance(),SIGNAL(sig_sendPlayNext()),m_mainPlayer,SLOT(on_pushButton_next_clicked()));
 
+    //01-播放器主界面---接收播放器发送的播放/暂停
+    connect(m_mainPlayer,SIGNAL(sig_currentMediaPlayStatus(bool)),m_mainPlayer,SLOT(slot_setPlayStatusStyle_main(bool)));
+    //02-托盘---接收播放器发送的播放/暂停
+    connect(m_mainPlayer,SIGNAL(sig_currentMediaPlayStatus(bool)),m_systemTray,SLOT(slot_setCurrentPlayStatus(bool)));
+    //03-浮动控制---接收播放器发送的播放/暂停
+    connect(m_mainPlayer,SIGNAL(sig_currentMediaPlayStatus(bool)),FloatPlayCtl::getInstance(),SLOT(slot_setCurrentPlayStatus(bool)));
+
     //托盘---播放/暂停
     connect(m_systemTray,SIGNAL(sig_playStatusPause(bool)),m_mainPlayer,SLOT(on_pushButton_pauseStart_clicked()));
     //浮动控制---播放/暂停
     connect(FloatPlayCtl::getInstance(),SIGNAL(sig_sendPlayStartPause()),m_mainPlayer,SLOT(on_pushButton_pauseStart_clicked()));
 
     //托盘---音量值改变-->播放界面值改变
-    connect(m_systemTray,SIGNAL(sig_playProgressValue(int)),m_mainPlayer,SLOT(receiveSystemTraySendSoundValue(int)));
+    connect(m_systemTray,SIGNAL(sig_playProgressValue(int)),m_mainPlayer,SLOT(slot_receiveSystemTraySendSoundValue(int)));
     //浮动控制---音量值改变-->播放界面值改变
-    connect(FloatPlayCtl::getInstance(),SIGNAL(sig_sendProgress_voice(int)),m_mainPlayer,SLOT(receiveSystemTraySendSoundValue(int)));
+    connect(FloatPlayCtl::getInstance(),SIGNAL(sig_sendProgress_voice(int)),m_mainPlayer,SLOT(slot_receiveSystemTraySendSoundValue(int)));
 
     //托盘---静音按钮
     connect(m_systemTray,SIGNAL(sig_playStatusMuted(bool)),m_mainPlayer,SLOT(on_setCurrentMediaSoundSatus()));
@@ -475,10 +482,7 @@ void MainWidget::chandleSignalAndSlots()
             m_mainPlayer->close();//实际没有删除，需要手动delete
         }
     });
-    //托盘---接收播放器发送的播放暂停
-    connect(m_mainPlayer,SIGNAL(sig_currentMediaPlayStatus(bool)),m_systemTray,SLOT(slot_setCurrentPlayStatus(bool)));
-    //浮动控制---接收播放器发送的播放暂停
-    connect(m_mainPlayer,SIGNAL(sig_currentMediaPlayStatus(bool)),FloatPlayCtl::getInstance(),SLOT(slot_setCurrentPlayStatus(bool)));
+
 
     //接收主界面（实际是音量界面发过来的值，做了中转）的音量值
     connect(m_mainPlayer,SIGNAL(sig_currentMediaSoundValueChange(int)),m_systemTray,SLOT(slot_setCurrentPlaySoundValue(int)));
@@ -616,7 +620,7 @@ void MainWidget::help_openWebSite()
 void MainWidget::help_aboutLocalFile()
 {
 //    m_mainPlayer->openLocalFile();
-    m_mainPlayer->setMainCurrentIndex(0);//视频播放界面
+    m_mainPlayer->slot_setMainCurrentIndex(0);//视频播放界面
     m_mainPlayer->show();//只显示播放器界面
 }
 
@@ -625,7 +629,7 @@ void MainWidget::help_aboutNetworklFile()
 {
     qDebug() <<"PLAY NETWORK RESOURCE";
     m_mainPlayer->show();
-    m_mainPlayer->setVideTitleBar(1);//转到网络播放标题栏
+    m_mainPlayer->slot_setVideTitleBar(1);//转到网络播放标题栏
 }
 
 void MainWidget::slot_canGoForward()

@@ -25,6 +25,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_7">
    <property name="spacing">
     <number>0</number>
@@ -157,28 +160,34 @@ color:transparent;
              <property name="minimumSize">
               <size>
                <width>300</width>
-               <height>14</height>
+               <height>12</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
                <width>16777215</width>
-               <height>14</height>
+               <height>12</height>
               </size>
              </property>
              <property name="styleSheet">
               <string notr="true">#progressBar
 {
+border: none;
+color:#ffffff;
 margin-top:2px;
-border-radius:6px;
-text-align:center;
-background-color:#cce8cf;
+border-radius:5px;
+text-align: center;
+font-size:12px;
+background-color:#444549;
 }
 
 #progressBar:chunk
 {
-border-radius:6px;
-background-color:#3288e8;
+border: none;
+width:5px;
+margin:2px;
+border-radius:2px;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #01FAFF,stop:1  #26B4FF);
 }</string>
              </property>
              <property name="value">
@@ -192,7 +201,7 @@ background-color:#3288e8;
               <widget class="QLabel" name="label_speed">
                <property name="minimumSize">
                 <size>
-                 <width>80</width>
+                 <width>200</width>
                  <height>0</height>
                 </size>
                </property>
@@ -206,9 +215,12 @@ background-color:#3288e8;
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Minimum</enum>
+               </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>40</width>
+                 <width>10</width>
                  <height>20</height>
                 </size>
                </property>
@@ -218,36 +230,23 @@ background-color:#3288e8;
               <widget class="QLabel" name="label_prosize">
                <property name="minimumSize">
                 <size>
-                 <width>70</width>
+                 <width>95</width>
                  <height>14</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>16777215</width>
+                 <width>95</width>
                  <height>14</height>
                 </size>
                </property>
                <property name="text">
                 <string/>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
               </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_5">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>3</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
             </layout>
            </item>
