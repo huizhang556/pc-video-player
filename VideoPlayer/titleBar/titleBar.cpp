@@ -260,10 +260,15 @@ void TitleBar::chandleSignalAndSLots()
     });
     //网络文件下载
     connect(ui->pushButton_webdownload,&QPushButton::clicked,[=](){
-        qDebug() << QString::fromLocal8Bit("网络文件下载");
-
-        WebDownLoadList::getInstance()->setWindowModality(Qt::ApplicationModal);
-        WebDownLoadList::getInstance()->show();
+//        WebDownLoadList::getInstance()->setWindowModality(Qt::ApplicationModal);
+        if(WebDownLoadList::getInstance()->isHidden())
+        {
+            WebDownLoadList::getInstance()->show();
+        }
+        else
+        {
+            WebDownLoadList::getInstance()->hide();
+        }
     });
 
     //下载设置

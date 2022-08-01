@@ -15,7 +15,7 @@ WebDownLoadList::WebDownLoadList(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle(QString::fromLocal8Bit("下载栏"));
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::FramelessWindowHint);
 //    setAttribute(Qt::WA_TranslucentBackground,true);
     this->setFixedSize(615,400);//记得滚动条的10px宽度
     ui->listWidget_list->installEventFilter(this);
