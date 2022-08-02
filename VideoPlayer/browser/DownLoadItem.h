@@ -26,6 +26,7 @@ public:
     void            setItemDownloadStatus(bool status);
     QString         calCurrentItemLoadedSize(qint64 bytesReceived);//已加载大小
     QString         calCurrentItemSize(qint64 bytesTotal);//总大小
+    QString         calCurrentUnitSize(qreal bytes);//计算网速
     bool            setItemFileType(const QString& suffix);//判断文件类型
     void            setItemOrder(int num);
     int             getItemOrder();
@@ -64,7 +65,7 @@ signals:
     void            sig_download_cancel(int num);//取消下载
     void            sig_download_delete(int num);//删除正在下载的item
     void            sig_download_reload(int num);//重新下载
-    void            sig_download_deleteItem(int num);//删除已经完成的item
+    void            sig_download_deleteItem(DownLoadItem *item);//删除已经完成的item
 };
 
 #endif // DOWNLOADITEM_H

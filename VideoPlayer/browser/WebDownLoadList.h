@@ -29,7 +29,7 @@ public:
     void        initWorkUI();
     void        chandleSignalsAndSLots();
     static  WebDownLoadList* getInstance();
-    DownLoadItem*    getDownloadItem();
+
 public slots:
     bool        slot_addDownLoadRecordToList(const QUrl &url, const QString &filename, const QString &savepath, bool openStatus);//创建下载
 
@@ -47,7 +47,8 @@ private slots:
     void        slot_receiveThreadStarted();
     void        slot_receiveThreadFinished();
     void        slot_searchDownloadHirtory(QString text);
-    void        slot_itemRemove(int num);
+    void        slot_itemRemove(DownLoadItem *item);
+    void        slot_freeItem(QListWidget *listWidget, QWidget *itemWidget, QListWidgetItem *item);
     void        on_pushButton_min_clicked();
     void        on_pushButton_close_clicked();
     void        getButtonInfo();
@@ -63,11 +64,8 @@ private:
     QString             m_fileName;
     QString             m_filePath;
 
-    QListWidgetItem     *m_selectedItem     =   nullptr;//当前选中的QListWidgetItem
-    QListWidgetItem     *m_workItem         =   nullptr;//QListWidget中的item
     Worker              *m_worker           =   nullptr;//真正处理工作
     QThread             *m_workThread       =   nullptr;//工作线程
-    DownLoadItem        *m_downLoadItem     =   nullptr;//QListWidget中的itemWidget
     static  WebDownLoadList* m_pInstance;
 
 };

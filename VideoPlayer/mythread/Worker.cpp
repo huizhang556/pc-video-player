@@ -86,10 +86,24 @@ void Worker::slot_receiveData_accept(QUrl url,QString filename, QString savepath
     });
 }
 
-//下载/暂停
+//下载/暂停1
 void Worker::slot_receiveData_pause(int order,bool status)
 {
     qDebug() << QString::fromLocal8Bit("当前选中的item序号") << order;
+    if(status)//正在下载
+    {
+        qDebug() <<QString::fromLocal8Bit("下载项目暂停");
+    }
+    else//暂停中
+    {
+        qDebug() <<QString::fromLocal8Bit("下载项目继续");
+    }
+
+}
+
+//下载/暂停2
+void Worker::slot_receiveData_pause(bool status, QWebEngineDownloadItem *item)
+{
     if(status)//正在下载
     {
         m_workItem->pause();
@@ -100,42 +114,54 @@ void Worker::slot_receiveData_pause(int order,bool status)
         m_workItem->resume();
         qDebug() <<QString::fromLocal8Bit("下载项目继续");
     }
-
 }
 
-//取消下载
+//取消下载1
 void Worker::slot_receiveData_cancel(int order)
 {
     qDebug() << QString::fromLocal8Bit("当前选中的item序号") << order;
-    m_workItem->cancel();
     qDebug() <<QString::fromLocal8Bit("下载项目取消");
 }
 
-//删除正在下载的任务
+//取消下载2
+void Worker::slot_receiveData_cancel(QWebEngineDownloadItem *item)
+{
+    m_workItem->cancel();
+}
+
+//删除正在下载的任务1
 void Worker::slot_receiveData_deleteWork(int order)
+{
+    qDebug() << QString::fromLocal8Bit("当前选中的item序号") << order;
+    qDebug() <<QString::fromLocal8Bit("下载项目取消并删除");
+}
+
+//删除正在下载的任务2
+void Worker::slot_receiveData_deleteWork(QWebEngineDownloadItem *item)
 {
     m_workItem->cancel();
     qDebug() <<QString::fromLocal8Bit("下载项目取消并删除");
 }
 
-//打开文件所在位置
-void Worker::slot_receiveData_itemOpenFile(QString order)
-{
-
-}
-
-//重新下载文件
+//重新下载文件1
 void Worker::slot_receiveData_itemReDownload(int order)
 {
+    qDebug() << QString::fromLocal8Bit("当前选中的item序号") << order;
+    qDebug() << QString::fromLocal8Bit("重新下载文件！");
+}
 
+//重新下载文件2
+void Worker::slot_receiveData_itemReDownload(QWebEngineDownloadItem *item)
+{
+    qDebug() << QString::fromLocal8Bit("重新下载文件！");
 }
 
 
 void Worker::slot_receiveData_progressbar(qint64 bytesReceived, qint64 bytesTotal)
 {
-    qDebug() << QString::fromLocal8Bit("线程中已接受数据：")<<bytesReceived
-             << QString::fromLocal8Bit("百分比：%1%").arg((bytesReceived*100)/bytesTotal)
-             << QString::fromLocal8Bit("文件总大小：") << bytesTotal;
+//    qDebug() << QString::fromLocal8Bit("线程中已接受数据：")<<bytesReceived
+//             << QString::fromLocal8Bit("百分比：%1%").arg((bytesReceived*100)/bytesTotal)
+//             << QString::fromLocal8Bit("文件总大小：") << bytesTotal;
     emit sig_receiveData_progressbar(bytesReceived,bytesTotal);//向外发射进度
 }
 

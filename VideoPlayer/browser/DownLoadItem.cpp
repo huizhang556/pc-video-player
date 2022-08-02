@@ -7,7 +7,7 @@ DownLoadItem::DownLoadItem(QWidget *parent):
 {
     ui->setupUi(this);
     ui->setupUi(this);
-    setFixedSize(600,40);
+    setFixedSize(600,50);
     initWorkUI();
     chandleSignalsAndSlots();
 }
@@ -16,13 +16,14 @@ DownLoadItem::DownLoadItem(QUrl url, QString fileName, QString path, bool open, 
     QWidget(parent),
     m_open(open),
     m_start(true),
-    m_fileUrl(url.toString()),
+    m_fileUrl(url.toDisplayString()),
     m_fileName(fileName),
     m_savePath(path),
+    m_speedTime(QTime::currentTime()),
     ui(new Ui::DownLoadItem)
 {
     ui->setupUi(this);
-    setFixedSize(600,40);
+    setFixedSize(600,50);
     initWorkUI();
     chandleSignalsAndSlots();
     slot_receive_start();
@@ -60,7 +61,7 @@ void DownLoadItem::chandleSignalsAndSlots()
     //05---重新下载
     connect(ui->pushButton_dl_redown,&QPushButton::clicked,[=](){emit sig_download_reload(getItemOrder());});
     //06---删除视图item
-    connect(ui->pushButton_dl_deleteItem,&QPushButton::clicked,[=](){emit sig_download_deleteItem(getItemOrder());});
+    connect(ui->pushButton_dl_deleteItem,&QPushButton::clicked,[=](){emit sig_download_deleteItem(this);});
 //    connect(ui->pushButton_dl_deleteItem,SIGNAL(clicked(bool)),this,SLOT(slot_judgeDeleteWorkItem()));//必须使用Qt4方式连接
 }
 
@@ -241,6 +242,19 @@ QString DownLoadItem::calCurrentItemSize(qint64 bytesTotal)
     }
 
     return QString::number(integer) + "." + dec + unit;
+}
+
+//计算网速
+QString DownLoadItem::calCurrentUnitSize(qreal bytes)
+{
+    if (bytes < (1 << 10))
+        return tr("%L1 B").arg(bytes);
+    else if (bytes < (1 << 20))
+        return tr("%L1 KB").arg(bytes / (1 << 10), 0, 'f', 2);
+    else if (bytes < (1 << 30))
+        return tr("%L1 MB").arg(bytes / (1 << 20), 0, 'f', 2);
+    else
+        return tr("%L1 GB").arg(bytes / (1 << 30), 0, 'f', 2);
 }
 
 bool DownLoadItem::setItemFileType(const QString &suffix)
@@ -681,11 +695,11 @@ int DownLoadItem::getItemOrder()
 
 void DownLoadItem::slot_setItemDownProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
-    m_speedTime.start();//开始计时
-    qDebug() << QString::fromLocal8Bit("单个item已经接收到数据！");
-    slot_setItemByteLoad(bytesReceived,bytesTotal);//下载占比
-    ui->progressBar->setValue(bytesReceived*100/bytesTotal);//下载进度
-    if(bytesReceived*100/bytesTotal == 100)//表示结束完所有数据
+//    qDebug() << QString::fromLocal8Bit("单个item已经接收到数据！");
+    slot_setItemByteLoad(bytesReceived,bytesTotal);//已经下载/全部数据
+    slot_setItemDownSpeed(bytesReceived,bytesTotal);//下载网速
+    ui->progressBar->setValue(bytesReceived*100/bytesTotal);//下载进度百分比（进度条）
+    if(bytesReceived*100/bytesTotal == 100)//表示结束,接收完所有数据
     {
         slot_setItemFileSize(calCurrentItemSize(bytesTotal));
         slot_setItemFileName(m_fileName);
@@ -697,18 +711,21 @@ void DownLoadItem::slot_setItemDownProgress(qint64 bytesReceived, qint64 bytesTo
 
 void DownLoadItem::slot_setItemByteLoad(qint64 bytesReceived, qint64 bytesTotal)
 {
-    qDebug() << calCurrentItemLoadedSize(bytesReceived)<<"------"<<calCurrentItemSize(bytesTotal);
     ui->label_prosize->setText(calCurrentItemLoadedSize(bytesReceived) + "/" + calCurrentItemSize(bytesTotal));
-//    slot_setItemDownSpeed(bytesReceived,bytesTotal);
 }
 
 void DownLoadItem::slot_setItemDownSpeed(qint64 bytesReceived, qint64 bytesTotal)
 {
-    float   useTime = m_speedTime.elapsed();//返回自上次start（）或者restart()调用，经过的毫秒数
-    qDebug() << QString::fromLocal8Bit("耗时时间:") <<useTime;
-//    double speed = (double)(bytesTotal-bytesReceived)/1024/1024;
-    double speed = bytesReceived / useTime;
-    ui->label_speed->setText(QString("%1M/S").arg((speed*1000)/(1024*1024),0,'f',2));
+//    float   useTime = m_speedTime.elapsed();//返回自上次start（）或者restart()调用，经过的毫秒数
+//    qDebug() << QString::fromLocal8Bit("耗时时间:") <<useTime;
+////    double speed = (double)(bytesTotal-bytesReceived)/1024/1024;
+//    double speed = bytesReceived / useTime;
+//    ui->label_speed->setText(QString("%1M/S").arg((speed*1000)/(1024*1024),0,'f',2));
+    if(bytesTotal >= 0)
+    {
+        qreal bytesPerSecond = (bytesReceived / m_speedTime.elapsed() * 1000);
+        ui->label_speed->setText(QString("%1/s").arg(calCurrentUnitSize(bytesPerSecond)));
+    }
 }
 
 void DownLoadItem::slot_setItemFileSize(QString size)
@@ -719,7 +736,7 @@ void DownLoadItem::slot_setItemFileSize(QString size)
 
 void DownLoadItem::slot_setItemFileName(const QString &filename)
 {
-    ui->label_speed->setText(filename);
+    ui->label_url->setText(filename);
     ui->label_fileName->setText(filename);
 }
 
@@ -747,7 +764,7 @@ bool DownLoadItem::checkItemFileIsExist(QString fullpath)
     else
     {
         qDebug() <<QString::fromLocal8Bit("文件不存在");
-        ("deleted");//删除图标
+        setItemFileType("deleted");//设置图标删除图标
         slot_setItemExistStatus(1);//0--存在 1--删除
         return false;
     }
@@ -778,7 +795,7 @@ void DownLoadItem::slot_receive_finished()
     effect->play();
     ui->stackedWidget_progressbar->setCurrentIndex(1);
     ui->stackedWidget_control->setCurrentIndex(1);
-    qDebug() << QString::fromLocal8Bit("文件下载已完成！");
+//    qDebug() << QString::fromLocal8Bit("文件下载已完成！");
 }
 
 void DownLoadItem::slot_receive_openDir(bool open)

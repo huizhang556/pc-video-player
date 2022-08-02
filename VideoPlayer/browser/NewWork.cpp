@@ -104,6 +104,9 @@ void NewWork::chandleSignalsAndSlots()
     connect(ui->pushButton_dlandopen,&QPushButton::clicked,[=](){
         //确定下载并打开（下载地址--文件名--保存路径）
         emit sig_download(ui->lineEdit_address->text().trimmed(),ui->lineEdit_filename->text().replace(" ","_"),ui->lineEdit_savepath->text(),true);
+        qDebug() << QString::fromLocal8Bit("下载网址：") << ui->lineEdit_address->text().trimmed();
+        qDebug() << QString::fromLocal8Bit("文件名称：") << ui->lineEdit_filename->text().replace(" ","_");
+        qDebug() << QString::fromLocal8Bit("保存地址：") << ui->lineEdit_savepath->text();
         this->hide();
     });
     //确定下载---确定按钮点击
@@ -111,6 +114,9 @@ void NewWork::chandleSignalsAndSlots()
         qDebug() <<QString::fromLocal8Bit("当前UI线程id:") << QThread::currentThreadId();
         //确定下载（下载地址--文件名--保存路径）
         emit sig_download(ui->lineEdit_address->text().trimmed(),ui->lineEdit_filename->text().replace(" ","_"),ui->lineEdit_savepath->text(),false);
+        qDebug() << QString::fromLocal8Bit("下载网址：") << ui->lineEdit_address->text().trimmed();
+        qDebug() << QString::fromLocal8Bit("文件名称：") << ui->lineEdit_filename->text().replace(" ","_");
+        qDebug() << QString::fromLocal8Bit("保存地址：") << ui->lineEdit_savepath->text();
         this->hide();
     });
 
