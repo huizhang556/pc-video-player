@@ -29,6 +29,7 @@
 #include <QLayout>
 #include <QThread>
 #include <QWidget>
+#include <QStatusBar>
 #include <QShowEvent>
 #include <QTabWidget>
 #include <QPushButton>
@@ -132,6 +133,7 @@ private slots:
     //浏览器
     void        slot_canGoForward();
     void        slot_canGoBack();
+    void        slot_showLinkOnStatusBar(const QString &text);
 
     //托盘
     void        tray_showMainWidget();
@@ -177,6 +179,7 @@ private:
     QVBoxLayout         *m_webVblayout             = nullptr;
     CusTabBar           *m_cusTabbar               = nullptr;//自定义tabbar标题栏
     CusWebBrowser       *m_webBrowser              = nullptr;//自定义浏览器
+    QStatusBar          *m_statusBar               = nullptr;//浏览器状态栏
     CollectRecords      *m_webRecords              = nullptr;//浏览器收藏标签界面
     WebHistory          *m_webHistory              = nullptr;//浏览器历史记录界面
     WebMessageBox       *m_webMessage              = nullptr;//浏览器标签修改界面

@@ -86,6 +86,9 @@ void MainWidget::initOtherWidgetUi()
     m_cusTabbar->setObjectName(QString::fromLocal8Bit("m_cusTabbar"));
     m_cusTabbar->hide();
 
+    m_statusBar = new QStatusBar();
+    m_statusBar->setObjectName(QString::fromLocal8Bit("m_statusBar"));
+
     m_webTabWidget = new QTabWidget();
     m_webTabWidget->setObjectName(QString::fromLocal8Bit("m_webTabWidget"));
     m_webTabWidget->tabBar()->setObjectName(QString::fromLocal8Bit("m_webTabBar"));
@@ -102,6 +105,7 @@ void MainWidget::initOtherWidgetUi()
     m_webVblayout->setMargin(0);
     m_webVblayout->addWidget(m_cusTabbar);
     m_webVblayout->addWidget(m_webTabWidget);
+    m_webVblayout->addWidget(m_statusBar);
 
     m_webWidget  = new QWidget();
     m_webWidget->setObjectName(QString::fromLocal8Bit("m_webWidget"));
@@ -222,6 +226,10 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QUrl &url)
     connect(browser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(slot_setWebLineEditCurentUrl(QUrl)));
     //当前网页自己显示
 //    connect(browser->page(),SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(slot_setWebLineEditCurentUrl(QUrl)));
+    //鼠标link
+    connect(browser->page(),&QWebEnginePage::linkHovered,this,&MainWidget::slot_showLinkOnStatusBar);
+    //URL改变
+    connect(browser,&CusWebBrowser::urlChanged,[=](QUrl url){slot_showLinkOnStatusBar(url.toDisplayString());});
 }
 
 //重载函数2：添加一个browser---参数为QString
@@ -261,6 +269,10 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QString &url)
     connect(m_titleBar,SIGNAL(sig_sendUrlHome()),this,SLOT(slot_judgeCurrentBrowserIsActive_home()));
     //当前项改变
     connect(browser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(slot_setWebLineEditCurentUrl(QUrl)));
+    //鼠标link
+    connect(browser->page(),&QWebEnginePage::linkHovered,this,&MainWidget::slot_showLinkOnStatusBar);
+    //URL改变
+    connect(browser,&CusWebBrowser::urlChanged,[=](QUrl url){slot_showLinkOnStatusBar(url.toDisplayString());});
 }
 
 //过滤不是当前活跃的窗口--返回主页
@@ -374,6 +386,10 @@ void MainWidget::chandleSignalAndSlots()
 //    connect(m_webBrowser,SIGNAL(titleChanged(QString)),m_webTabWidget,SLOT());
     //browser 图标 改变
 //    connect(m_webBrowser,SIGNAL(iconChanged(QIcon)),m_webTabWidget,SLOT());
+    //URL改变
+    connect(m_webBrowser,&CusWebBrowser::urlChanged,[=](QUrl url){slot_showLinkOnStatusBar(url.toDisplayString());});
+    //鼠标link
+    connect(m_webBrowser->page(),&QWebEnginePage::linkHovered,this,&MainWidget::slot_showLinkOnStatusBar);
     //添加一个browser
     connect(m_webBrowser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
     //加载网页进度
@@ -385,6 +401,7 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_webTabWidget,SIGNAL(tabBarClicked(int)),this,SLOT(slot_switchCurrentTab_URL(int)));
     //tab关闭
     connect(m_webTabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(slot_removeTabWidgetTab(int)));
+
 
     /************************************浏览器---右键部分处理************************************/
     //显示收藏栏
@@ -670,6 +687,12 @@ void MainWidget::slot_canGoBack()
     {
         emit sig_canGoBack(false);
     }
+}
+
+//显示link
+void MainWidget::slot_showLinkOnStatusBar(const QString &text)
+{
+    m_statusBar->showMessage(text);
 }
 
 /*私有槽函数：显示主界面*/
