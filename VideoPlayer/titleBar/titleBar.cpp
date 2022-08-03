@@ -170,6 +170,11 @@ void TitleBar::chandleSignalAndSLots()
     connect(ui->pushButton_min,&QPushButton::clicked,[=](){emit sig_winMinimum();});
     //关闭程序关闭历史搜索框
     connect(this,&TitleBar::sig_winClose,m_searchForm,&SearchForm::closeSearchForm);
+    //关闭搜索历史记录、引擎记录
+    connect(this,&TitleBar::sig_winClose,[=](){
+        if(!m_listWdgt_history->isHidden()) m_listWdgt_history->close();
+        if(!m_listWdgt_engine->isHidden()) m_listWdgt_engine->close();
+    });
     //还原时，关闭历史搜索框
     connect(this,&TitleBar::sig_winNormal,m_searchForm,&SearchForm::closeSearchForm);
     //还原时，关闭登录界面

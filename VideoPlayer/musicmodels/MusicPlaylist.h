@@ -90,7 +90,7 @@ private slots:
 
    void slot_listWidget_songer_Download();//下载
 
-   void slot_listWidget_songer_Delete();//删除
+   void slot_listWidget_songer_Delete(QListWidget *listWgt, QWidget *itemWgt, QListWidgetItem *item);//删除
 
    void slot_listWidget_songer_More();//更多信息
 

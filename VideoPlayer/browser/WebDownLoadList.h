@@ -52,6 +52,7 @@ private slots:
     void        on_pushButton_min_clicked();
     void        on_pushButton_close_clicked();
     void        getButtonInfo();
+    void        slot_findFileFromLineEdit( QString name);
 
 private:
     explicit WebDownLoadList(QWidget *parent = nullptr);

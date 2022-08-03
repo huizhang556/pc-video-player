@@ -416,9 +416,11 @@ void MusicPlaylist::slot_listWidget_songer_Download()
 }
 
 //删除
-void MusicPlaylist::slot_listWidget_songer_Delete()
+void MusicPlaylist::slot_listWidget_songer_Delete(QListWidget *listWgt, QWidget *itemWgt, QListWidgetItem *item)
 {
-
+    itemWgt->deleteLater();
+    listWgt->takeItem(listWgt->row(item));
+    delete item;
 }
 
 //更多信息
@@ -459,6 +461,7 @@ void MusicPlaylist::slots_rightMenu_download()
 /*清空整张列表*/
 void MusicPlaylist::slots_rightMenu_clearAllList()
 {
+    ui->listWidget_songer->clear();
     qDebug()<<"this is the clearAllList";
 }
 
@@ -493,7 +496,7 @@ void MusicPlaylist::slots_rightMenu_openFilePath()
 bool MusicPlaylist::slots_addSonersToPage2(const QStringList &list)
 {
     Q_UNUSED(list);
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < 50; i++)
     {
         QListWidgetItem  *item  = new QListWidgetItem(ui->listWidget_songer);
         SongItemForm *son_item = new SongItemForm(QString::fromLocal8Bit("%1").arg(i+1),
@@ -524,7 +527,7 @@ bool MusicPlaylist::slots_addSonersToPage2(const QStringList &list)
         });
         //删除
         connect(son_item,&SongItemForm::sig_son_deletebtn_clicked,[=](int index){//index总是比真实索引大1
-            slot_listWidget_songer_Delete();
+            slot_listWidget_songer_Delete(ui->listWidget_songer,son_item,item);
             qDebug() << "received on_son_deletebtn_clicked = " << index;
 
 //            sortCurrentIndex(index);

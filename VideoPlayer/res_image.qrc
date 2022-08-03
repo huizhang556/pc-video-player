@@ -367,5 +367,6 @@
         <file>images/function/download_xlsl.png</file>
         <file>images/function/download_xml.png</file>
         <file>images/function/download_xsl.png</file>
+        <file>images/function/download_ico.png</file>
     </qresource>
 </RCC>

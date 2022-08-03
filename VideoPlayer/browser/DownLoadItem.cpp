@@ -385,7 +385,13 @@ bool DownLoadItem::setItemFileType(const QString &suffix)
                            "border-image:url(://images/function/download_html.png);"
                            "}");
     }
-    else if("iso" == suffix) //022
+    else if("ico" == suffix) //022
+    {
+        ui->label_icon->setStyleSheet("#label_icon{"
+                           "border-image:url(://images/function/download_ico.png);"
+                           "}");
+    }
+    else if("iso" == suffix) //022_1
     {
         ui->label_icon->setStyleSheet("#label_icon{"
                            "border-image:url(://images/function/download_iso.png);"

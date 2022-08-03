@@ -236,7 +236,7 @@ border-top-width:0px;
 </string>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page_download">
            <layout class="QVBoxLayout" name="verticalLayout">
@@ -262,6 +262,7 @@ border-top-width:0px;
 {
 border:none;
 background-color:#f6f6f6;
+color:transparent;
 }
 
 QListWidget::item
@@ -275,11 +276,13 @@ QListWidget::item:hover
 border:1px solid transparent;
 border-bottom-color:#cccccc;
 background-color:#e2f5ff;
+color:transparent;
 }
 
 QListWidget::item:selected
 {
 background-color:#80c342;
+color:transparent;
 }
 
 /*垂直滚动条整体样式*/
