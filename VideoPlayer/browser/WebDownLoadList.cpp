@@ -6,11 +6,11 @@
 #include <QFileDialog>
 
 WebDownLoadList* WebDownLoadList::m_pInstance = nullptr;
+int WebDownLoadList::m_count = 0;
 
 WebDownLoadList::WebDownLoadList(QWidget *parent) :
     QWidget(parent),
     m_start(true),//默认是开始下载状态
-    m_count(0),
     ui(new Ui::WebDownLoadList)
 {
     ui->setupUi(this);
@@ -31,6 +31,7 @@ void WebDownLoadList::getButtonInfo()
     qDebug() << btn->objectName()<<btn;
 }
 
+//查找下载内容
 void WebDownLoadList::slot_findFileFromLineEdit(QString name)
 {
     name.remove(QRegExp("\\s"));
@@ -60,9 +61,16 @@ void WebDownLoadList::slot_findFileFromLineEdit(QString name)
     }
 }
 
+//设置日任务数量
+void WebDownLoadList::slot_setCurrentWorkCounts(int count)
+{
+    ui->label_count->setText(QString::fromLocal8Bit("当前任务总数：%1，剩余任务：%2").arg(ui->listWidget_list->count()).arg(m_count));
+}
+
 void WebDownLoadList::slot_receiveThreadStarted()
 {
     qDebug() << QString::fromLocal8Bit("线程开始！");
+    slot_setCurrentWorkCounts(m_count);
 }
 
 void WebDownLoadList::slot_receiveThreadFinished()
@@ -98,6 +106,25 @@ void WebDownLoadList::slot_itemRemove(DownLoadItem *item)
 
 }
 
+//要删除的文件夹或文件的路径
+bool WebDownLoadList::slot_deleteFileOrFolder(const QString &strPath)
+{
+    if (strPath.isEmpty() || !QDir().exists(strPath))//是否传入了空的路径||路径是否存在
+        return false;
+
+    QFileInfo FileInfo(strPath);
+
+    if (FileInfo.isFile())//如果是文件
+        QFile::remove(strPath);
+    else if (FileInfo.isDir())//如果是文件夹
+    {
+        QDir qDir(strPath);
+        qDir.removeRecursively();
+    }
+    return true;
+}
+
+//qlistwidgetitem删除、释放
 void WebDownLoadList::slot_freeItem(QListWidget *listWidget,QWidget *itemWidget,QListWidgetItem *item)
 {
     //注意删除顺序，先删除itemWidget，再删除QListWidgetItem，最后释放内存空间
@@ -132,6 +159,11 @@ WebDownLoadList *WebDownLoadList::getInstance()
         m_pInstance = new WebDownLoadList();
     }
     return m_pInstance;
+}
+
+int WebDownLoadList::getWorkCounts()
+{
+    return m_count;
 }
 
 
@@ -192,22 +224,33 @@ bool WebDownLoadList::slot_addDownLoadRecordToList(const QUrl &url, const QStrin
     //有关文件操作的信号与槽函数
     connect(m_workThread,&QThread::finished,m_worker,&QObject::deleteLater);//线程结束时，自动删除
     connect(m_workThread,&QThread::finished,m_workThread,&QThread::deleteLater);//线程结束时，线程内对象自动删除
-    connect(m_workThread,&QThread::started,this,&WebDownLoadList::slot_receiveThreadStarted);//打印以下线程完毕是否结束
+    connect(m_workThread,&QThread::started,this,&WebDownLoadList::slot_receiveThreadStarted);//线程开始
     connect(m_workThread,&QThread::finished,this,&WebDownLoadList::slot_receiveThreadFinished);//打印以下线程完毕是否结束了
     //关联文件下载进度
     connect(m_worker,SIGNAL(sig_receiveData_progressbar(qint64,qint64)),m_downLoadItem,SLOT(slot_setItemDownProgress(qint64,qint64)));
     //文件完成提示音
     connect(m_worker,&Worker::sig_receiveData_finished,m_downLoadItem,&DownLoadItem::slot_receive_finished);
-    //继续/暂停
+    connect(m_worker,&Worker::sig_receiveData_finished,[=](){
+      if(m_count >0)  m_count--;
+      slot_setCurrentWorkCounts(m_count);
+    });
+    //01-继续/暂停
     connect(m_downLoadItem,SIGNAL(sig_downloadStatus(int,bool)),m_worker,SLOT(slot_receiveData_pause(int,bool)));
-    //取消
+    //02-取消
     connect(m_downLoadItem,SIGNAL(sig_download_cancel(int)),m_worker,SLOT(slot_receiveData_cancel(int)));
-    //删除
-    connect(m_downLoadItem,SIGNAL(sig_download_delete(int)),m_worker,SLOT(slot_receiveData_deleteWork(int)));
-    //重新下载
+    //03-删除(删除item和文件)
+    connect(m_downLoadItem,&DownLoadItem::sig_download_delete,[=](){
+        slot_freeItem(ui->listWidget_list,m_downLoadItem,m_workItem);//删除item
+    });
+    //05-重新下载
     connect(m_downLoadItem,SIGNAL(sig_download_reload(int)),m_worker,SLOT(slot_receiveData_itemReDownload(int)));
     //从列表中删除任务
-    connect(m_downLoadItem,&DownLoadItem::sig_download_deleteItem,[=](){slot_freeItem(ui->listWidget_list,m_downLoadItem,m_workItem);});
+    connect(m_downLoadItem,&DownLoadItem::sig_download_deleteItem,[=](){
+        slot_deleteFileOrFolder(m_filePath);//删除文件
+        slot_freeItem(ui->listWidget_list,m_downLoadItem,m_workItem);});//删除item
+    //任务计数
+    m_count++;
+    qDebug() <<QString::fromLocal8Bit("添加本次任务后任务总数：%1个").arg(m_count);
     return true;
 }
 

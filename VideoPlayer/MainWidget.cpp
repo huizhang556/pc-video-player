@@ -86,13 +86,23 @@ void MainWidget::initOtherWidgetUi()
     m_cusTabbar->setObjectName(QString::fromLocal8Bit("m_cusTabbar"));
     m_cusTabbar->hide();
 
+    m_progressBar = new QProgressBar();
+    m_progressBar->setFixedSize(100,14);
+    m_progressBar->setObjectName(QString::fromLocal8Bit("m_progressBar"));
+
+    opacity = new QGraphicsOpacityEffect(m_progressBar);
+
     m_statusBar = new QStatusBar();
+    m_statusBar->setFixedHeight(20);
     m_statusBar->setObjectName(QString::fromLocal8Bit("m_statusBar"));
+    m_statusBar->setSizeGripEnabled(false);
+    m_statusBar->addPermanentWidget(m_progressBar);//右侧插入，永久性消息
+//    m_statusBar->addWidget(m_progressBar);//左侧插入，临时性消息
 
     m_webTabWidget = new QTabWidget();
     m_webTabWidget->setObjectName(QString::fromLocal8Bit("m_webTabWidget"));
     m_webTabWidget->tabBar()->setObjectName(QString::fromLocal8Bit("m_webTabBar"));
-    m_webTabWidget->insertTab(0,m_webBrowser,QString::fromLocal8Bit("default"));
+    m_webTabWidget->insertTab(0,m_webBrowser,QIcon("://images/icon/engine.png"),m_webBrowser->title());
     m_webTabWidget->setTabsClosable(true);//打开关闭按钮
     m_webTabWidget->setMovable(true);//标签可拖动
 //    m_webTabWidget->tabBar()->hide();
@@ -189,21 +199,24 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QUrl &url)
     browser->setObjectName(QString::fromLocal8Bit("browser"));
     browser->load(url);
     m_titleBar->slot_setWebLineEditCurentUrl(url);
-    qDebug() <<QString::fromLocal8Bit("当前browser:") <<browser->icon()<<browser->title();
-    m_webTabWidget->insertTab(m_webTabWidget->currentIndex()+1,browser,browser->icon(),browser->title());
+    m_webTabWidget->insertTab(m_webTabWidget->currentIndex()+1,browser,QIcon("://images/icon/engine.png"),"new page");
     m_webTabWidget->setCurrentIndex(m_webTabWidget->currentIndex()+1);
 //    updateAddWebButtonPosition();
-//    //标题改变
-//    connect(browser,&CusWebBrowser::titleChanged,[=](QString &title){
-//        slot_setCurrentWebBarTitle(m_webTabWidget->indexOf(browser),title);
-//    });
-//    //图标改变
-//    connect(browser,&CusWebBrowser::iconChanged,[=](QIcon &icon){
-//        slot_setCurrentWebBarIcon(m_webTabWidget->indexOf(browser),icon);
-//    });
+    connect(browser,&CusWebBrowser::loadFinished,[=](){
+        qDebug() <<QString::fromLocal8Bit("图标")<<browser->icon()<<QString::fromLocal8Bit("标题")<<browser->title();
+    });
+    //标题改变
+    connect(browser,&CusWebBrowser::titleChanged,[=](const QString &title){
+        slot_setCurrentWebBarTitle(m_webTabWidget->indexOf(browser),title);
+    });
+    //图标改变
+    connect(browser,&CusWebBrowser::iconChanged,[=](const QIcon &icon){
+        slot_setCurrentWebBarIcon(m_webTabWidget->indexOf(browser),icon);
+    });
     connect(browser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
     //加载网页进度
     connect(browser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
+    connect(browser,SIGNAL(loadProgress(int)),this,SLOT(slot_setWebProgreeBarValue(int)));
     //网页下载请求1
     connect(browser->page()->profile(),SIGNAL(downloadRequested(QWebEngineDownloadItem*)),NewWork::getInstance(),SLOT(slot_receiveDownloadRequested(QWebEngineDownloadItem*)),Qt::UniqueConnection);//第五个参数，防止多次请求
     //可回退
@@ -242,13 +255,24 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QString &url)
     m_titleBar->slot_setWebLineEditCurentUrl(url);
     int current = m_webTabWidget->currentIndex();
     qDebug() <<QString::fromLocal8Bit("当前要插入的行号:") <<current;
-    qDebug() <<QString::fromLocal8Bit("当前browser:") <<browser->icon()<<browser->title();
-    m_webTabWidget->insertTab(m_webTabWidget->currentIndex()+1,browser,browser->icon(),browser->title());//当前选中项的隔壁插入
+    m_webTabWidget->insertTab(m_webTabWidget->currentIndex()+1,browser,QIcon("://images/icon/engine.png"),"new page");
     m_webTabWidget->setCurrentIndex(m_webTabWidget->currentIndex()+1);//新插入的为当前选中项
 //    updateAddWebButtonPosition();
+    connect(browser,&CusWebBrowser::loadFinished,[=](){
+        qDebug() <<QString::fromLocal8Bit("图标")<<browser->icon()<<QString::fromLocal8Bit("标题")<<browser->title();
+    });
+    //标题改变
+    connect(browser,&CusWebBrowser::titleChanged,[=](const QString &title){
+        slot_setCurrentWebBarTitle(m_webTabWidget->indexOf(browser),title);
+    });
+    //图标改变
+    connect(browser,&CusWebBrowser::iconChanged,[=](const QIcon &icon){
+        slot_setCurrentWebBarIcon(m_webTabWidget->indexOf(browser),icon);
+    });
     connect(browser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
     //加载网页进度
     connect(browser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
+    connect(browser,SIGNAL(loadProgress(int)),this,SLOT(slot_setWebProgreeBarValue(int)));
     //网页下载请求2
     connect(browser->page()->profile(),SIGNAL(downloadRequested(QWebEngineDownloadItem*)),NewWork::getInstance(),SLOT(slot_receiveDownloadRequested(QWebEngineDownloadItem*)),Qt::UniqueConnection);//都五个参数，防止多次请求
     //可回退
@@ -382,18 +406,25 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_webBrowser->page()->profile(),SIGNAL(downloadRequested(QWebEngineDownloadItem*)),NewWork::getInstance(),SLOT(slot_receiveDownloadRequested(QWebEngineDownloadItem*)),Qt::UniqueConnection);//第五个参数，防止多次请求
     //标题栏---显示当前页面的地址
     connect(m_webBrowser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(setLineEditAddress(QUrl)));
-    //browser 标题 改变
-//    connect(m_webBrowser,SIGNAL(titleChanged(QString)),m_webTabWidget,SLOT());
-    //browser 图标 改变
-//    connect(m_webBrowser,SIGNAL(iconChanged(QIcon)),m_webTabWidget,SLOT());
-    //URL改变
     connect(m_webBrowser,&CusWebBrowser::urlChanged,[=](QUrl url){slot_showLinkOnStatusBar(url.toDisplayString());});
     //鼠标link
     connect(m_webBrowser->page(),&QWebEnginePage::linkHovered,this,&MainWidget::slot_showLinkOnStatusBar);
     //添加一个browser
     connect(m_webBrowser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
+    connect(m_webBrowser,&CusWebBrowser::loadFinished,[=](){
+        qDebug() <<QString::fromLocal8Bit("图标")<<m_webBrowser->icon()<<QString::fromLocal8Bit("标题")<<m_webBrowser->title();
+    });
+    //标题改变
+    connect(m_webBrowser,&CusWebBrowser::titleChanged,[=](const QString &title){
+        slot_setCurrentWebBarTitle(m_webTabWidget->indexOf(m_webBrowser),title);
+    });
+    //图标改变
+    connect(m_webBrowser,&CusWebBrowser::iconChanged,[=](const QIcon &icon){
+        slot_setCurrentWebBarIcon(m_webTabWidget->indexOf(m_webBrowser),icon);
+    });
     //加载网页进度
     connect(m_webBrowser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
+    connect(m_webBrowser,SIGNAL(loadProgress(int)),this,SLOT(slot_setWebProgreeBarValue(int)));
     /*网页tab改变信号*/
     //当前项改变
     connect(m_webBrowser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(slot_setWebLineEditCurentUrl(QUrl)));
@@ -768,6 +799,29 @@ void MainWidget::setGlobalToolTip()
 
 }
 
+void MainWidget::slot_setWebProgreeBarValue(int value)
+{
+    opacity->setOpacity(1);//恢复透明度值
+    m_progressBar->setValue(value);
+    if(value == 100)
+        slot_resetWebProgressBarValue();
+}
+
+void MainWidget::slot_resetWebProgressBarValue()
+{
+    opacity->setOpacity(0.5); //设置透明度0.5,透明范围：[0,1]
+    m_progressBar->setGraphicsEffect(opacity);//应用到需要透明变化的控件；
+    //使用属性动画类让控件在透明度范围内变化
+    QPropertyAnimation *opacityAnimation = new QPropertyAnimation(opacity,"opacity",m_progressBar);//Opacity代表属性（透明度）
+    opacityAnimation->setDuration(2000); //动效时长2s
+    opacityAnimation->setStartValue(1);//Opacity(透明度)开始值
+    opacityAnimation->setEndValue(0);//结束值
+    opacityAnimation->start();//停止时删除动画QAbstractAnimation::DeleteWhenStopped
+    connect(opacityAnimation,&QPropertyAnimation::finished,[=](){
+    opacityAnimation->deleteLater();
+    });
+}
+
 
 /*私有槽函数：点击tabbar,转化到当前的索引界面*/
 void MainWidget::slot_switchCurrentTab_URL(int index)
@@ -809,13 +863,27 @@ void MainWidget::slot_setCurrentTabWidgetEnable()
 //web设置标题
 void MainWidget::slot_setCurrentWebBarTitle(int index, const QString &title)
 {
-    m_webTabWidget->setTabText(index,title);
+    if(title.isNull())
+    {
+        m_webTabWidget->setTabText(index,QString::fromLocal8Bit("新标题页"));
+    }
+    else
+    {
+        m_webTabWidget->setTabText(index,title);
+    }
 }
 
 //web设置图标
 void MainWidget::slot_setCurrentWebBarIcon(int index, const QIcon &icon)
 {
-    m_webTabWidget->setTabIcon(index,icon);
+    if(icon.isNull())
+    {
+        m_webTabWidget->setTabIcon(index,QIcon("://images/icon/engine.png"));
+    }
+    else
+    {
+        m_webTabWidget->setTabIcon(index,icon);
+    }
 }
 
 /*删除某个tab后，标题栏显示URL*/

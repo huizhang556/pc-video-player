@@ -46,7 +46,6 @@ public slots:
     void    slot_setWebLineEditCurentUrl(QUrl url);//设置当前url
     void    slot_clearWebLineEditText();//清除weblineedit文字
     void    slot_setWebProgressBarValue(int value);//网页加载时，显示加载进度
-    void    slot_resetWebProgressBarValue();
     void    slot_receiveBlankWebTab();//接收tabbar添加一个空白网页的请求
 
 //私有槽函数，外部不能直接访问
@@ -73,6 +72,7 @@ private slots:
     void    slot_updateShowListSettigMenu();//显示设置右键菜单
     void    slot_setCanGoForward(bool status);
     void    slot_setCanGoBack(bool status);
+    void    slot_resetWebProgressBarValue();
     //浏览器设置---右键菜单
     void    slot_browser_setMenu_createTab();               //新建窗口
     void    slot_browser_setMenu_createHiddenTab();         //新建隐身窗口

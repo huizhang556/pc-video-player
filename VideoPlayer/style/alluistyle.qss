@@ -294,6 +294,7 @@ border-top-left-radius: 8px;
 border-top-right-radius: 8px;
 */
 min-width: 120px;
+max-width: 120px;
 height:24px;
 margin-left: 0px;
 margin-right: 0px;

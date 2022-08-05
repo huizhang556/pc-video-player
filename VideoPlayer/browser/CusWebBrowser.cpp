@@ -33,7 +33,8 @@ CusWebBrowser::CusWebBrowser(QWidget *parent) :
 //    this->pageAction(QWebEnginePage::Paste)->setText(QString::fromLocal8Bit("粘贴"));
 //    this->pageAction(QWebEnginePage::PasteAndMatchStyle)->setText(QString::fromLocal8Bit("按样式粘贴"));
 //    this->pageAction(QWebEnginePage::SelectAll)->setText(QString::fromLocal8Bit("全选"));
-
+//    qDebug()<< QString::fromLocal8Bit("标题--->") <<this->title();
+//    qDebug()<< QString::fromLocal8Bit("图标--->") <<this->icon();
 }
 
 CusWebBrowser::~CusWebBrowser()

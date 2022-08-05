@@ -4,7 +4,9 @@
 #include <QObject>
 #include <QString>
 #include <QProcess>
+#include <QHostInfo>
 #include <QApplication>
+#include <QNetworkConfigurationManager>
 
 class Global : public QObject
 {
@@ -13,11 +15,17 @@ public:
     explicit Global(QObject *parent = nullptr);
     static void registerLAVplayer();//注册播放器
 
+    bool    isNetWorkOnline();//判断是否在线
+    void    checkNetWorkOnline();//判断是都连接互联网
+
     //声明共有静态变量
     static QString appDirPath;
-signals:
 
 public slots:
+    void    onLookupHost(QHostInfo host);
+
+signals:
+    void    sig_sendLookUpHostResult(bool);
 };
 
 #endif // GLOBAL_H

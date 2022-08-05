@@ -36,9 +36,12 @@
 #include <QMouseEvent>
 #include <QCloseEvent>
 #include <QResizeEvent>
+#include <QProgressBar>
 #include <QApplication>
 #include <QStackedWidget>
 #include <QSystemTrayIcon>
+#include <QPropertyAnimation>
+#include <QGraphicsOpacityEffect>
 
 namespace Ui {
 class MainWidget;
@@ -84,6 +87,10 @@ private:
 
 
 private slots:
+    void        slot_setWebProgreeBarValue(int value);//网页进度
+
+    void        slot_resetWebProgressBarValue();
+
     void        slot_setRemoveTabLineEditText(int index);//删除某个tab后，标题栏显示URL
 
     void        slot_switchCurrentTab_URL(int index);//转换到当前索引
@@ -160,6 +167,7 @@ signals:
     void        sig_canGoForward(bool status);
 
 private:
+    QGraphicsOpacityEffect *opacity                = nullptr;
     QStackedWidget      *m_stackWidget_center      = nullptr;//中心显示区域
     QStackedWidget      *m_stackWidget_left        = nullptr;//左侧边栏区域
     QPushButton         *m_leftButton              = nullptr;//控制显示还是隐藏的按钮
@@ -180,6 +188,7 @@ private:
     CusTabBar           *m_cusTabbar               = nullptr;//自定义tabbar标题栏
     CusWebBrowser       *m_webBrowser              = nullptr;//自定义浏览器
     QStatusBar          *m_statusBar               = nullptr;//浏览器状态栏
+    QProgressBar        *m_progressBar             = nullptr;//浏览器网页加载进度
     CollectRecords      *m_webRecords              = nullptr;//浏览器收藏标签界面
     WebHistory          *m_webHistory              = nullptr;//浏览器历史记录界面
     WebMessageBox       *m_webMessage              = nullptr;//浏览器标签修改界面

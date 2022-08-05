@@ -16,6 +16,7 @@ class Worker : public QObject
 public:
     explicit Worker(QObject *parent = nullptr);
     ~Worker();
+    static  int getWorkCounts();//获取现有任务
     bool    isDirExist(QString fullpath);
 public slots:
     //以下函数进行重载
@@ -37,6 +38,7 @@ public slots:
     void    slot_receiveData_progressbar(qint64 bytesReceived, qint64 bytesTotal);
     void    slot_receiveData_finished();//项目完成
 
+
 signals:
     void    sig_receiveData_progressbar(qint64 bytesReceived, qint64 bytesTotal);
     void    sig_receiveData_finished();
@@ -48,7 +50,7 @@ private:
     QWebEngineDownloadItem      *m_workItem     =   nullptr;
     QNetworkAccessManager       *m_netManager   =   nullptr;
     QFile                       m_file;
-    QByteArray                  m_array;
+    QByteArray                  m_array;//临时存储
 };
 
 #endif // WORKER_H

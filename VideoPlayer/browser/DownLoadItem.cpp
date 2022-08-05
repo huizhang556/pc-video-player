@@ -704,7 +704,7 @@ void DownLoadItem::slot_setItemDownProgress(qint64 bytesReceived, qint64 bytesTo
 //    qDebug() << QString::fromLocal8Bit("单个item已经接收到数据！");
     slot_setItemByteLoad(bytesReceived,bytesTotal);//已经下载/全部数据
     slot_setItemDownSpeed(bytesReceived,bytesTotal);//下载网速
-    ui->progressBar->setValue(bytesReceived*100/bytesTotal);//下载进度百分比（进度条）
+    slot_setItemProgressBarValue(bytesReceived,bytesTotal);
     if(bytesReceived*100/bytesTotal == 100)//表示结束,接收完所有数据
     {
         slot_setItemFileSize(calCurrentItemSize(bytesTotal));
@@ -715,8 +715,15 @@ void DownLoadItem::slot_setItemDownProgress(qint64 bytesReceived, qint64 bytesTo
     }
 }
 
+void DownLoadItem::slot_setItemProgressBarValue(qint64 bytesReceived, qint64 bytesTotal)
+{
+    if(bytesReceived > 0 && bytesTotal != 0 )
+    ui->progressBar->setValue(bytesReceived*100/bytesTotal);//下载进度百分比（进度条）
+}
+
 void DownLoadItem::slot_setItemByteLoad(qint64 bytesReceived, qint64 bytesTotal)
 {
+    if(bytesReceived > 0 && bytesTotal != 0 )
     ui->label_prosize->setText(calCurrentItemLoadedSize(bytesReceived) + "/" + calCurrentItemSize(bytesTotal));
 }
 

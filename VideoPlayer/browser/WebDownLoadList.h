@@ -28,8 +28,8 @@ public:
     ~WebDownLoadList();
     void        initWorkUI();
     void        chandleSignalsAndSLots();
-    static  WebDownLoadList* getInstance();
-
+    static      WebDownLoadList* getInstance();
+    static      int getWorkCounts();//获取任务数量
 public slots:
     bool        slot_addDownLoadRecordToList(const QUrl &url, const QString &filename, const QString &savepath, bool openStatus);//创建下载
 
@@ -53,13 +53,14 @@ private slots:
     void        on_pushButton_close_clicked();
     void        getButtonInfo();
     void        slot_findFileFromLineEdit( QString name);
+    void        slot_setCurrentWorkCounts(int count);
+    bool        slot_deleteFileOrFolder(const QString &strPath);//要删除的文件夹或文件的路径
 
 private:
     explicit WebDownLoadList(QWidget *parent = nullptr);
     Ui::WebDownLoadList *ui;
     QPoint              m_mvPos;
     bool                m_start;
-    int                 m_count;
     qint64              m_fileSize;
     QString             m_fileSuffix;
     QString             m_fileName;
@@ -68,7 +69,7 @@ private:
     Worker              *m_worker           =   nullptr;//真正处理工作
     QThread             *m_workThread       =   nullptr;//工作线程
     static  WebDownLoadList* m_pInstance;
-
+    static  int m_count;//任务数量
 };
 
 #endif // WEBDOWNLOADLIST_H

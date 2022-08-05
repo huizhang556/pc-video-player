@@ -126,6 +126,7 @@ void Worker::slot_receiveData_cancel(int order)
 //取消下载2
 void Worker::slot_receiveData_cancel(QWebEngineDownloadItem *item)
 {
+
     m_workItem->cancel();
 }
 
@@ -170,3 +171,4 @@ void Worker::slot_receiveData_finished()
     qDebug() << QString::fromLocal8Bit("任务下载结束！");
     emit sig_receiveData_finished();
 }
+

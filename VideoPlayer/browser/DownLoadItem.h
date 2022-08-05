@@ -36,6 +36,7 @@ public slots:
     void            slot_judgeDeleteWorkItem();//判断删除的是哪个item
     void            slot_setItemIcon();//设置文件类型
     void            slot_setItemDownProgress(qint64 bytesReceived, qint64 bytesTotal);//设置下载进度
+    void            slot_setItemProgressBarValue(qint64 bytesReceived, qint64 bytesTotal);//设置进度条进度
     void            slot_setItemByteLoad(qint64 bytesReceived, qint64 bytesTotal);//设置已下载的大小
     void            slot_setItemDownSpeed(qint64 bytesReceived, qint64 bytesTotal);//设置下载网速
     void            slot_setItemFileSize(QString size);//设置文件大小

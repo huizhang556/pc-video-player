@@ -36,6 +36,7 @@ void TitleBar::initWorker()
     ui->pushButton_userlogin->setFlat(true);
     ui->pushButton_userregis->setFlat(true);
 
+    ui->webProgressBar->setHidden(true);
     //LCD数字显示
     ui->lcdNumber->setDigitCount(20);//显示数量（个数）
     ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);//设置数字字体
