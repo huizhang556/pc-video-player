@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>768</width>
-    <height>320</height>
+    <width>808</width>
+    <height>346</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -54,7 +54,7 @@
        <property name="maximumSize">
         <size>
          <width>16777215</width>
-         <height>320</height>
+         <height>16777215</height>
         </size>
        </property>
        <property name="styleSheet">
@@ -71,7 +71,7 @@ border:none;
       <widget class="QWidget" name="widget" native="true">
        <property name="minimumSize">
         <size>
-         <width>260</width>
+         <width>300</width>
          <height>0</height>
         </size>
        </property>
@@ -106,14 +106,14 @@ border:none;
            <widget class="QPushButton" name="pushButton_rec1">
             <property name="minimumSize">
              <size>
-              <width>260</width>
+              <width>300</width>
               <height>30</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>260</width>
-              <height>30</height>
+              <width>16777215</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -145,14 +145,14 @@ padding-left:15px;
            <widget class="QPushButton" name="pushButton_rec2">
             <property name="minimumSize">
              <size>
-              <width>250</width>
+              <width>300</width>
               <height>30</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>250</width>
-              <height>30</height>
+              <width>16777215</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -183,14 +183,14 @@ padding-left:15px;
            <widget class="QListWidget" name="listWidget_reclist">
             <property name="minimumSize">
              <size>
-              <width>260</width>
+              <width>300</width>
               <height>270</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>260</width>
-              <height>270</height>
+              <width>16777215</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="styleSheet">

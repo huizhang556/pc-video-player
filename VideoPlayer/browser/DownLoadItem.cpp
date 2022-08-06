@@ -664,6 +664,15 @@ bool DownLoadItem::setItemFileType(const QString &suffix)
     return true;
 }
 
+void DownLoadItem::setItemDownloadStatusText()
+{
+    //0 等待下载 1 正在下载
+    if(ui->progressBar->value() == 0)
+        ui->label_downStatus->setText(QString::fromLocal8Bit("等待下载..."));
+    else if(ui->progressBar->value() > 0)
+        ui->label_downStatus->setText(QString::fromLocal8Bit("下载中..."));
+}
+
 void DownLoadItem::openLocalFileSaveDirectory(const QString &dir)
 {
     if(!checkItemFileIsExist(dir+"/"+m_fileName)) return;//不存在
@@ -713,6 +722,7 @@ void DownLoadItem::slot_setItemDownProgress(qint64 bytesReceived, qint64 bytesTo
         slot_receive_openDir(m_open);
         slot_receive_finished();//转换界面,文件信息，文件控制界面
     }
+    setItemDownloadStatusText();
 }
 
 void DownLoadItem::slot_setItemProgressBarValue(qint64 bytesReceived, qint64 bytesTotal)

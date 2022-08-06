@@ -43,9 +43,15 @@ void CentralHomeForm::initWorkUI()
 
 void CentralHomeForm::chandleSignalsAndSLots()
 {
+    //滚动条调节
     connect(m_homeListWidget->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(makeBottomButton(int)));
     connect(m_bottomBtn,&QPushButton::clicked,[=](){
         m_homeListWidget->scrollToTop();//返回到顶部 scrollToBottom();
+    });
+
+    //接收 推荐部分 尺寸变化
+    connect(m_recommend,&RecommendForm::sig_sizeChange,[=](QSize size){
+        qDebug() << QString::fromLocal8Bit("接收到的推荐部分的尺寸：") << size;
     });
 }
 
@@ -53,75 +59,75 @@ void CentralHomeForm::addWidgetToListWidget()
 {
 
     QListWidgetItem *item0 = new QListWidgetItem();
-    item0->setSizeHint(m_recommend->size());
+    item0->setSizeHint(m_recommend->size());//推荐部分
     m_homeListWidget->addItem(item0);
     m_homeListWidget->setItemWidget(item0,m_recommend);
 
     QListWidgetItem *item1 = new QListWidgetItem();
-    GalleryItemForm *pitem1 = new GalleryItemForm();
+    GalleryItemForm *pitem1 = new GalleryItemForm();//分类介绍画廊1
     pitem1->setHeaderTitle(QString::fromLocal8Bit("个性推荐"));
     item1->setSizeHint(pitem1->size());
     m_homeListWidget->addItem(item1);
     m_homeListWidget->setItemWidget(item1,pitem1);
 
     QListWidgetItem *item2 = new QListWidgetItem();
-    GalleryItemForm *pitem2 = new GalleryItemForm();
+    GalleryItemForm *pitem2 = new GalleryItemForm();//分类介绍画廊2
     pitem2->setHeaderTitle(QString::fromLocal8Bit("推荐电台"));
     item2->setSizeHint(pitem2->size());
     m_homeListWidget->addItem(item2);
     m_homeListWidget->setItemWidget(item2,pitem2);
 
     QListWidgetItem *item3 = new QListWidgetItem();
-    GalleryItemForm *pitem3 = new GalleryItemForm();
+    GalleryItemForm *pitem3 = new GalleryItemForm();//分类介绍画廊3
     pitem3->setHeaderTitle(QString::fromLocal8Bit("最潮视频"));
     item3->setSizeHint(pitem3->size());
     m_homeListWidget->addItem(item3);
     m_homeListWidget->setItemWidget(item3,pitem3);
 
     QListWidgetItem *item4 = new QListWidgetItem();
-    GalleryItemForm *pitem4 = new GalleryItemForm();
+    GalleryItemForm *pitem4 = new GalleryItemForm();//分类介绍画廊4
     pitem4->setHeaderTitle(QString::fromLocal8Bit("新碟上架"));
     item4->setSizeHint(pitem4->size());
     m_homeListWidget->addItem(item4);
     m_homeListWidget->setItemWidget(item4,pitem4);
 
     QListWidgetItem *item5 = new QListWidgetItem();
-    GalleryItemForm *pitem5 = new GalleryItemForm();
+    GalleryItemForm *pitem5 = new GalleryItemForm();//分类介绍画廊5
     pitem5->setHeaderTitle(QString::fromLocal8Bit("音乐周边"));
     item5->setSizeHint(pitem5->size());
     m_homeListWidget->addItem(item5);
     m_homeListWidget->setItemWidget(item5,pitem5);
 
     QListWidgetItem *item6 = new QListWidgetItem();
-    GalleryItemForm *pitem6 = new GalleryItemForm();
+    GalleryItemForm *pitem6 = new GalleryItemForm();//分类介绍画廊6
     pitem6->setHeaderTitle(QString::fromLocal8Bit("我的附近"));
     item6->setSizeHint(pitem6->size());
     m_homeListWidget->addItem(item6);
     m_homeListWidget->setItemWidget(item6,pitem6);
 
     QListWidgetItem *item7 = new QListWidgetItem();
-    GalleryItemForm *pitem7 = new GalleryItemForm();
+    GalleryItemForm *pitem7 = new GalleryItemForm();//分类介绍画廊7
     pitem7->setHeaderTitle(QString::fromLocal8Bit("好剧推荐"));
     item7->setSizeHint(pitem7->size());
     m_homeListWidget->addItem(item7);
     m_homeListWidget->setItemWidget(item7,pitem7);
 
     QListWidgetItem *item8 = new QListWidgetItem();
-    GalleryItemForm *pitem8 = new GalleryItemForm();
+    GalleryItemForm *pitem8 = new GalleryItemForm();//分类介绍画廊8
     pitem8->setHeaderTitle(QString::fromLocal8Bit("热播大剧"));
     item8->setSizeHint(pitem8->size());
     m_homeListWidget->addItem(item8);
     m_homeListWidget->setItemWidget(item8,pitem8);
 
     QListWidgetItem *item9 = new QListWidgetItem();
-    GalleryItemForm *pitem9 = new GalleryItemForm();
+    GalleryItemForm *pitem9 = new GalleryItemForm();//分类介绍画廊9
     pitem9->setHeaderTitle(QString::fromLocal8Bit("抖音热歌"));
     item9->setSizeHint(pitem9->size());
     m_homeListWidget->addItem(item9);
     m_homeListWidget->setItemWidget(item9,pitem9);
 
     QListWidgetItem *item10 = new QListWidgetItem();
-    GalleryItemForm *pitem10 = new GalleryItemForm();
+    GalleryItemForm *pitem10 = new GalleryItemForm();//分类介绍画廊10
     pitem10->setHeaderTitle(QString::fromLocal8Bit("每日推荐"));
     item10->setSizeHint(pitem10->size());
     m_homeListWidget->addItem(item10);
@@ -146,13 +152,13 @@ void CentralHomeForm::addWidgetToListWidget()
     m_homeListWidget->setItemWidget(item_back,subWidget);
 }
 
+//page1的大小改变
 void CentralHomeForm::resizeEvent(QResizeEvent *event)
 {
-//    QListWidgetItem *item = m_homeListWidget->item(0);//得到第一项item
-////    m_homeListWidget->setMinimumHeight(m_homeListWidget->sizeHintForRow(0));
-//    item->setSizeHint(QSize(this->width(),m_homeListWidget->sizeHintForRow(0)));
-    //    m_homeListWidget->updateGeometries();//更新所有itemWidget的布局
     updateBottomButtonGeometry();
+//    qDebug() << QString::fromLocal8Bit("page 1的大小改变：")<<event->size();
+//    QListWidgetItem *item = m_homeListWidget->item(0);//得到第一项item
+//    item->setSizeHint(QSize(1300,400));
 }
 
 //判断滚动条位置，适时出现

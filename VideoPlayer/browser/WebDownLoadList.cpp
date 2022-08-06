@@ -64,7 +64,10 @@ void WebDownLoadList::slot_findFileFromLineEdit(QString name)
 //设置日任务数量
 void WebDownLoadList::slot_setCurrentWorkCounts(int count)
 {
-    ui->label_count->setText(QString::fromLocal8Bit("当前任务总数：%1，剩余任务：%2").arg(ui->listWidget_list->count()).arg(m_count));
+    ui->label_count->setText(QString::fromLocal8Bit("当前任务总数：%1个，已完成任务：%2个，剩余任务：%3个").
+                             arg(ui->listWidget_list->count()).
+                             arg(ui->listWidget_list->count()-m_count).
+                             arg(m_count));
 }
 
 void WebDownLoadList::slot_receiveThreadStarted()
@@ -76,6 +79,7 @@ void WebDownLoadList::slot_receiveThreadStarted()
 void WebDownLoadList::slot_receiveThreadFinished()
 {
     qDebug() << QString::fromLocal8Bit("线程结束！");
+    slot_setCurrentWorkCounts(m_count);
 }
 
 //删除已经下载完成的item
@@ -191,7 +195,12 @@ void WebDownLoadList::chandleSignalsAndSLots()
     //自定义下载---返回
     connect(ui->pushButton_return,&QPushButton::clicked,[=](){ui->stackedWidget_bottom->setCurrentIndex(0);});
     //清空下载记录列表
-    connect(ui->pushButton_clearlist,&QPushButton::clicked,[=](){ ui->listWidget_list->clear();ui->stackedWidget_center->setCurrentIndex(1);});
+    connect(ui->pushButton_clearlist,&QPushButton::clicked,[=](){
+        ui->listWidget_list->clear();
+        ui->stackedWidget_center->setCurrentIndex(1);
+        ui->label_count->setText(QString::fromLocal8Bit("当前任务总数：0个，已完成任务：0个，剩余任务：0个"));
+        m_count = 0;
+    });
     //下载设置（存储目录）
     connect(ui->pushButton_downsetting,&QPushButton::clicked,[=](){emit sig_setConfig();});
     //搜索下载记录
@@ -247,10 +256,13 @@ bool WebDownLoadList::slot_addDownLoadRecordToList(const QUrl &url, const QStrin
     //从列表中删除任务
     connect(m_downLoadItem,&DownLoadItem::sig_download_deleteItem,[=](){
         slot_deleteFileOrFolder(m_filePath);//删除文件
-        slot_freeItem(ui->listWidget_list,m_downLoadItem,m_workItem);});//删除item
+        slot_freeItem(ui->listWidget_list,m_downLoadItem,m_workItem);
+        slot_setCurrentWorkCounts(m_count);
+    });//删除item
     //任务计数
     m_count++;
-    qDebug() <<QString::fromLocal8Bit("添加本次任务后任务总数：%1个").arg(m_count);
+    qDebug() <<QString::fromLocal8Bit("删除本次任务后任务总数：%1个").arg(m_count);
+    slot_setCurrentWorkCounts(m_count);
     return true;
 }
 

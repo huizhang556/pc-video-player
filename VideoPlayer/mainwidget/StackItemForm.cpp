@@ -8,7 +8,7 @@ StackItemForm::StackItemForm(QWidget *parent) :
     ui(new Ui::StackItemForm)
 {
     ui->setupUi(this);
-    this->setFixedHeight(320);
+    this->setFixedHeight(360);
     initWorkUI();
     chandleSignalsAndSlots();
 }

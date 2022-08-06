@@ -19,7 +19,7 @@ void CustomTabStyle::drawItemText(QPainter *painter,
 {
     painter->save();
             flags = Qt::AlignLeft | Qt::AlignVCenter;
-            painter->translate(5, 0);
+            painter->translate(0, 0);
             QCommonStyle::drawItemText(painter, rect,
                                   flags,
                                   pal,
@@ -29,3 +29,4 @@ void CustomTabStyle::drawItemText(QPainter *painter,
 
             painter->restore();
 }
+

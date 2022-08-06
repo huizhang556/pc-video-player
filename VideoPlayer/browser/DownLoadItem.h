@@ -28,6 +28,7 @@ public:
     QString         calCurrentItemSize(qint64 bytesTotal);//总大小
     QString         calCurrentUnitSize(qreal bytes);//计算网速
     bool            setItemFileType(const QString& suffix);//判断文件类型
+    void            setItemDownloadStatusText();
     void            setItemOrder(int num);
     int             getItemOrder();
     void            openLocalFileSaveDirectory(const QString& dir);//打开目录

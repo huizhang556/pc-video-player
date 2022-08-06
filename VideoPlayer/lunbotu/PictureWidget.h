@@ -5,9 +5,9 @@
 #include <QSize>
 #include <QButtonGroup>
 #include <QGraphicsScene>
-//#define RAW_VIEW_SIZE QSize(750,198)
-#define RAW_VIEW_SIZE QSize(750,220)
-#define SCALE_VIEW_PIXMAP (qreal)1/1 //View与图片比例
+
+#define RAW_VIEW_SIZE QSize(620,260)
+#define SCALE_VIEW_PIXMAP (qreal)1/1 //承载图片的View与图片比例，此处是1:1填充
 #define SCALE_BIG_SMALL (qreal)1/1 //图片大小比例
 
 //P1-P10，10个位置，根据需要改动
@@ -42,9 +42,9 @@ public:
     };
     explicit PictureWidget(QWidget *parent = nullptr);
     ~PictureWidget();
-    void setButtonGroup();  //设置button组
+    void setButtonGroup();//设置button组
     void setInitList(); //设置相关图片信息
-    void setPictureScreen(); //
+    void setPictureScreen();
     void setTimerAndConnect(); //设置定时器与
     int getIndexByRules(int oldIndex,int rule);
     template<typename T>

@@ -1,4 +1,6 @@
 ﻿#include "MainWidget.h"
+#include "customer/CustomTabStyle.h"
+
 #include <QDebug>
 #include <QSqlQuery>
 #include <QMessageBox>
@@ -105,7 +107,8 @@ void MainWidget::initOtherWidgetUi()
     m_webTabWidget->insertTab(0,m_webBrowser,QIcon("://images/icon/engine.png"),m_webBrowser->title());
     m_webTabWidget->setTabsClosable(true);//打开关闭按钮
     m_webTabWidget->setMovable(true);//标签可拖动
-//    m_webTabWidget->tabBar()->hide();
+    m_webTabWidget->tabBar()->setStyle(new CustomTabStyle);//调整体字、图标
+
 //    m_webTabWidget->tabBar()->setTabButton(0,QTabBar::RightSide,m_addWebButton);
 //    m_webTabWidget->setCornerWidget(m_addWebButton,Qt::TopRightCorner);
 //    m_webTabWidget->setTabShape(QTabWidget::Triangular);//设置样式后，不起作用
@@ -1132,8 +1135,6 @@ void MainWidget::closeEvent(QCloseEvent *event)
 void MainWidget::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
-//    if(m_webBrowser!=nullptr)
-//    m_webBrowser->resize(this->size());
 }
 
 /*获取光标在窗口所在区域的 行   返回行数*/
