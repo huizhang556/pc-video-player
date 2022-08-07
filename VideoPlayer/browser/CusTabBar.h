@@ -30,6 +30,8 @@ private:
     QPushButton     *m_expandBtn    =   nullptr;//展开收藏标签按钮
     QPushButton     *m_hideBtn      =   nullptr;//隐藏标签栏按钮
     QHBoxLayout     *m_hblayout     =   nullptr;
+    QHBoxLayout     *m_hblayout2    =   nullptr;
+    QFrame          *m_frame        =   nullptr;
 
 signals:
     void            sig_sendTabAddWebTabBar();

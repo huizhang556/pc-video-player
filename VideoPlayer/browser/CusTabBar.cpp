@@ -42,7 +42,7 @@ void CusTabBar::initWorkUI()
 
 //    this->setTabButton(0,QTabBar::RightSide,m_closeBtn);//这个是在tab内部设置的按钮
     m_hblayout = new QHBoxLayout(this);
-    m_hblayout->setSpacing(0);
+    m_hblayout->setSpacing(10);
     m_hblayout->setContentsMargins(0,0,0,0);
     m_hblayout->setMargin(0);
     m_hblayout->addWidget(m_tabBar);
@@ -50,7 +50,15 @@ void CusTabBar::initWorkUI()
     m_hblayout->addSpacerItem(new QSpacerItem(15,24, QSizePolicy::MinimumExpanding));
     m_hblayout->addWidget(m_expandBtn);
     m_hblayout->addWidget(m_hideBtn);
-    this->setLayout(m_hblayout);
+    m_frame = new QFrame(this);
+    m_frame->setObjectName(QString::fromLocal8Bit("m_tabframe"));
+    m_frame->setLayout(m_hblayout);
+    m_hblayout2 = new QHBoxLayout(m_frame);
+    m_hblayout2->setSpacing(0);
+    m_hblayout2->setMargin(0);
+    m_hblayout2->setContentsMargins(0,0,0,0);
+    m_hblayout2->addWidget(m_frame);
+    this->setLayout(m_hblayout2);
 
     for(int i = 0; i<10;i++)
     {

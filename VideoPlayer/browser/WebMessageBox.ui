@@ -20,7 +20,10 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QDialog
+{
+border:1px solid #333333;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_7">
    <property name="spacing">
@@ -44,7 +47,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QFrame" name="frame_webmessage">
+      <widget class="QFrame" name="frame_title">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -142,8 +145,24 @@ color:white;
               <height>30</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+margin:5px;
+background-color: transparent;
+border-image: url(:/images/icon/close3.png);
+}
+
+QPushButton:hover{
+/*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
+	stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
+border-image: url(:/images/icon/closehover.png);
+border: 1px solid #3C80B1;
+
+}</string>
+            </property>
             <property name="text">
-             <string>X</string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -169,8 +188,7 @@ color:white;
        <property name="styleSheet">
         <string notr="true">QFrame
 {
-border:1px solid #333333;
-border-top-width:0px;
+margin:0px 8px;
 }</string>
        </property>
        <property name="frameShape">
@@ -204,7 +222,7 @@ border-top-width:0px;
            <widget class="QLabel" name="label_nickname">
             <property name="minimumSize">
              <size>
-              <width>40</width>
+              <width>50</width>
               <height>26</height>
              </size>
             </property>
@@ -213,6 +231,13 @@ border-top-width:0px;
               <width>16777215</width>
               <height>26</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#label_nickname
+{
+border:none;
+background-color: transparent;
+}</string>
             </property>
             <property name="text">
              <string>名字:</string>
@@ -226,15 +251,52 @@ border-top-width:0px;
            <widget class="QLineEdit" name="lineEdit_nickName">
             <property name="minimumSize">
              <size>
-              <width>468</width>
+              <width>440</width>
               <height>26</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>468</width>
+              <width>440</width>
               <height>26</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#lineEdit_nickName
+{
+color:#cccccc;
+font-family:&quot;微软雅黑&quot;;
+font-size:15px;
+background-color: white;
+selection-background-color: #D1DBCB;
+border-right-width:0px;
+border:0px solid #bbbbbb;
+border-top-left-radius:3;
+border-top-right-radius:3;
+border-bottom-right-radius:3;
+border-bottom-left-radius:3;
+padding-right:2px;
+padding-left:2px;
+border:2px solid #dadce0;
+}
+
+#lineEdit_nickName:hover
+{
+background-color:#f2f2f2;
+border-right:-2px;
+border:2px solid #59a8fa;
+color:black;
+}
+
+#lineEdit_nickName:selected
+{
+background-color:#f2f2f2;
+border-right:-2px;
+border:1px solid #59a8fa;
+color:black;
+}
+
+</string>
             </property>
            </widget>
           </item>
@@ -242,7 +304,7 @@ border-top-width:0px;
            <widget class="QLabel" name="label_address">
             <property name="minimumSize">
              <size>
-              <width>40</width>
+              <width>50</width>
               <height>26</height>
              </size>
             </property>
@@ -251,6 +313,13 @@ border-top-width:0px;
               <width>16777215</width>
               <height>26</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#label_address
+{
+border:none;
+background-color: transparent;
+}</string>
             </property>
             <property name="text">
              <string>网址:</string>
@@ -264,15 +333,52 @@ border-top-width:0px;
            <widget class="QLineEdit" name="lineEdit_address">
             <property name="minimumSize">
              <size>
-              <width>468</width>
+              <width>440</width>
               <height>26</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>468</width>
+              <width>440</width>
               <height>26</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#lineEdit_address
+{
+color:#cccccc;
+font-family:&quot;微软雅黑&quot;;
+font-size:15px;
+background-color: white;
+selection-background-color: #D1DBCB;
+border-right-width:0px;
+border:0px solid #bbbbbb;
+border-top-left-radius:3;
+border-top-right-radius:3;
+border-bottom-right-radius:3;
+border-bottom-left-radius:3;
+padding-right:2px;
+padding-left:2px;
+border:1px solid #dadce0;
+}
+
+#lineEdit_address:hover
+{
+background-color:#f2f2f2;
+border-right:-2px;
+border:2px solid #59a8fa;
+color:black;
+}
+
+#lineEdit_address:selected
+{
+background-color:#f2f2f2;
+border-right:-2px;
+border:2px solid #59a8fa;
+color:black;
+}
+
+</string>
             </property>
            </widget>
           </item>
@@ -287,7 +393,7 @@ border-top-width:0px;
         <string notr="true">QFrame
 {
 border:1px solid #333333;
-border-top-width:0px;
+margin:0px 8px;
 }</string>
        </property>
        <property name="frameShape">
@@ -339,7 +445,7 @@ border-top-width:0px;
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_3">
+             <spacer name="horizontalSpacer_7">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -351,21 +457,199 @@ border-top-width:0px;
               </property>
              </spacer>
             </item>
+            <item>
+             <widget class="QCheckBox" name="checkBox_addCollect">
+              <property name="text">
+               <string>CheckBox</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item>
            <widget class="QTreeWidget" name="treeWidget_marks">
+            <property name="minimumSize">
+             <size>
+              <width>505</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="styleSheet">
-             <string notr="true">QTreeWidget
+             <string notr="true">#treeWidget_marks
+{
+border:none;
+}
+
+QHeaderView
 {
 border:none;
 }</string>
             </property>
             <column>
              <property name="text">
-              <string notr="true">1</string>
+              <string notr="true">张辉的网络收藏夹</string>
              </property>
             </column>
+            <item>
+             <property name="text">
+              <string>项目类</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>Qt项目实战001</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Qt项目实战002</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Qt项目实战003</string>
+              </property>
+             </item>
+            </item>
+            <item>
+             <property name="text">
+              <string>技术类</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>Qt项目实战001</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Qt项目实战001</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Qt项目实战001</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Qt项目实战001</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Qt项目实战001</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Qt项目实战001</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Qt项目实战001</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Qt项目实战001</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Qt项目实战001</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Qt项目实战001</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Qt项目实战001</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Qt项目实战001</string>
+              </property>
+             </item>
+            </item>
+            <item>
+             <property name="text">
+              <string>数学类</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>数据结构</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>数据库</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>大杂烩</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>比较重要</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>c++基础类</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>古籍书</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>旧档案</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>书籍类</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>Qt项目实战001</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Qt项目实战003</string>
+              </property>
+             </item>
+            </item>
+            <item>
+             <property name="text">
+              <string>视频类</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>音乐类</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>Qt项目实战001</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>Qt项目实战001</string>
+               </property>
+              </item>
+             </item>
+            </item>
            </widget>
           </item>
          </layout>
@@ -390,8 +674,8 @@ border:none;
        <property name="styleSheet">
         <string notr="true">QFrame
 {
-border:1px solid #333333;
-border-top-width:0px;
+border:0px solid #333333;
+margin:0px 8px;
 }</string>
        </property>
        <property name="frameShape">
@@ -419,26 +703,10 @@ border-top-width:0px;
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <spacer name="horizontalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>10</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
            <widget class="QPushButton" name="pushButton_newFolder">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>75</width>
               <height>30</height>
              </size>
             </property>
@@ -451,7 +719,13 @@ border-top-width:0px;
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
-background-color:#fafafa;
+border:1px solid #adadad;
+background-color: transparent;
+}
+
+QPushButton:hover
+{
+background-color:#cccccc;
 }</string>
             </property>
             <property name="text">
@@ -476,7 +750,7 @@ background-color:#fafafa;
            <widget class="QPushButton" name="pushButton_sure">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>60</width>
               <height>30</height>
              </size>
             </property>
@@ -489,7 +763,13 @@ background-color:#fafafa;
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
-background-color:#fafafa;
+border:1px solid #adadad;
+background-color: transparent;
+}
+
+QPushButton:hover
+{
+background-color:#cccccc;
 }</string>
             </property>
             <property name="text">
@@ -517,7 +797,7 @@ background-color:#fafafa;
            <widget class="QPushButton" name="pushButton_cancel">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>60</width>
               <height>30</height>
              </size>
             </property>
@@ -530,29 +810,19 @@ background-color:#fafafa;
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
-background-color:#fafafa;
+border:1px solid #adadad;
+background-color: transparent;
+}
+
+QPushButton:hover
+{
+background-color:#cccccc;
 }</string>
             </property>
             <property name="text">
              <string>取消</string>
             </property>
            </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_6">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>10</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </item>

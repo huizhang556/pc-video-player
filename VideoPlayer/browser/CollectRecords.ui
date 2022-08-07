@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1236</width>
-    <height>569</height>
+    <width>1150</width>
+    <height>490</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -62,90 +62,253 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_export">
+        <widget class="QFrame" name="frame">
          <property name="minimumSize">
           <size>
-           <width>0</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>导入导出收藏夹</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_undo">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>撤回</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_delete">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>删除</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_change">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>修改</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_sure">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>确定</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_return">
-         <property name="minimumSize">
-          <size>
-           <width>75</width>
-           <height>26</height>
+           <width>500</width>
+           <height>28</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>75</width>
-           <height>26</height>
+           <width>500</width>
+           <height>28</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true"/>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
-         <property name="text">
-          <string>返回</string>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
          </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="spacing">
+             <number>15</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="pushButton_export">
+              <property name="minimumSize">
+               <size>
+                <width>95</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>95</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#pushButton_export
+{
+border-radius:5px;
+background-color: #404244;
+color:white;
+}
+#pushButton_export:hover
+{
+border-radius:5px;
+background-color: #262829;
+color:white;
+}</string>
+              </property>
+              <property name="text">
+               <string>导入导出收藏夹</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_undo">
+              <property name="minimumSize">
+               <size>
+                <width>60</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>60</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#pushButton_undo
+{
+border-radius:5px;
+background-color: #404244;
+color:white;
+}
+#pushButton_undo:hover
+{
+border-radius:5px;
+background-color: #262829;
+color:white;
+}</string>
+              </property>
+              <property name="text">
+               <string>撤回</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_delete">
+              <property name="minimumSize">
+               <size>
+                <width>60</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>60</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#pushButton_delete
+{
+border-radius:5px;
+background-color: #404244;
+color:white;
+}
+#pushButton_delete:hover
+{
+border-radius:5px;
+background-color: #262829;
+color:white;
+}</string>
+              </property>
+              <property name="text">
+               <string>删除</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_change">
+              <property name="minimumSize">
+               <size>
+                <width>60</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>60</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#pushButton_change
+{
+border-radius:5px;
+background-color: #404244;
+color:white;
+}
+#pushButton_change:hover
+{
+border-radius:5px;
+background-color: #262829;
+color:white;
+}</string>
+              </property>
+              <property name="text">
+               <string>修改</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_sure">
+              <property name="minimumSize">
+               <size>
+                <width>60</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>60</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#pushButton_sure
+{
+border-radius:5px;
+background-color: #404244;
+color:white;
+}
+#pushButton_sure:hover
+{
+border-radius:5px;
+background-color: #262829;
+color:white;
+}</string>
+              </property>
+              <property name="text">
+               <string>确定</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_return">
+              <property name="minimumSize">
+               <size>
+                <width>60</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>60</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#pushButton_return
+{
+border-radius:5px;
+background-color: #404244;
+color:white;
+}
+#pushButton_return:hover
+{
+border-radius:5px;
+background-color: #262829;
+color:white;
+}</string>
+              </property>
+              <property name="text">
+               <string>返回</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -164,56 +327,6 @@ border:0px solid #e1e1e1;
 border-right-width:2px;
 }</string>
          </property>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item>
@@ -225,56 +338,6 @@ border:0px solid #e1e1e1;
 border-right-width:2px;
 }</string>
          </property>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item>
@@ -286,56 +349,6 @@ border:0px solid #e1e1e1;
 border-right-width:2px;
 }</string>
          </property>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item>
@@ -347,56 +360,6 @@ border:0px solid #e1e1e1;
 border-right-width:2px;
 }</string>
          </property>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item>
@@ -408,56 +371,6 @@ border:0px solid #e1e1e1;
 border-right-width:2px;
 }</string>
          </property>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>http:82.156.175.81/study/index.html</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item>

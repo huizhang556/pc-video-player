@@ -119,7 +119,10 @@ signals:
     void    sig_sendUrlHome();//主页
     void    sig_sendCanGoBack();//是否可回退
     void    sig_sendCanForward();//是否可前进
-
+    void    sig_sendWebSkin();//皮肤
+    void    sig_sendFavorites();//收藏栏
+    void    sig_sendRecords();//历史记录
+    void    sig_sendResume();//恢复
     //浏览器右键部分信号
     void    sig_sendBrowserCreateTab();//新建窗口
     void    sig_sendBrowserCreateHiddenTab();//新建隐身窗口

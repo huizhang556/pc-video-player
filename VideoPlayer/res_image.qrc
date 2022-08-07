@@ -368,5 +368,9 @@
         <file>images/function/download_xml.png</file>
         <file>images/function/download_xsl.png</file>
         <file>images/function/download_ico.png</file>
+        <file>images/icon/title_his.png</file>
+        <file>images/icon/title_his_hover.png</file>
+        <file>images/icon/title_resume.png</file>
+        <file>images/icon/title_resume_hover.png</file>
     </qresource>
 </RCC>

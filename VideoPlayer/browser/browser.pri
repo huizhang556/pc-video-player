@@ -6,7 +6,8 @@ SOURCES += \
     $$PWD/CusTabBar.cpp \
     $$PWD/CollectRecords.cpp \
     $$PWD/WebMessageBox.cpp \
-    $$PWD/WebHistory.cpp
+    $$PWD/WebHistory.cpp \
+    $$PWD/RecordItem.cpp
 
 
 HEADERS += \
@@ -17,7 +18,8 @@ HEADERS += \
     $$PWD/CusTabBar.h \
     $$PWD/CollectRecords.h \
     $$PWD/WebMessageBox.h \
-    $$PWD/WebHistory.h
+    $$PWD/WebHistory.h \
+    $$PWD/RecordItem.h
 
 FORMS += \
     $$PWD/CusWebBrowser.ui \
@@ -26,5 +28,6 @@ FORMS += \
     $$PWD/DownLoadItem.ui \
     $$PWD/CollectRecords.ui \
     $$PWD/WebMessageBox.ui \
-    $$PWD/WebHistory.ui
+    $$PWD/WebHistory.ui \
+    $$PWD/RecordItem.ui
 

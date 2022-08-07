@@ -13,7 +13,7 @@ MainWidget::MainWidget(QWidget *parent) :
     m_winMax(false),
     m_firstOpen(true)
 {
-    setMinimumSize(1300,800);
+    setMinimumSize(1320,800);
     setMouseTracking(true);
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setWindowTitle(QString::fromLocal8Bit("Qt简易视频播放器主界面"));
@@ -104,6 +104,7 @@ void MainWidget::initOtherWidgetUi()
     m_webTabWidget = new QTabWidget();
     m_webTabWidget->setObjectName(QString::fromLocal8Bit("m_webTabWidget"));
     m_webTabWidget->tabBar()->setObjectName(QString::fromLocal8Bit("m_webTabBar"));
+    m_webTabWidget->tabBar()->setLayoutDirection(Qt::LayoutDirectionAuto);
     m_webTabWidget->insertTab(0,m_webBrowser,QIcon("://images/icon/engine.png"),m_webBrowser->title());
     m_webTabWidget->setTabsClosable(true);//打开关闭按钮
     m_webTabWidget->setMovable(true);//标签可拖动
@@ -246,6 +247,10 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QUrl &url)
     connect(browser->page(),&QWebEnginePage::linkHovered,this,&MainWidget::slot_showLinkOnStatusBar);
     //URL改变
     connect(browser,&CusWebBrowser::urlChanged,[=](QUrl url){slot_showLinkOnStatusBar(url.toDisplayString());});
+    //新增历史记录（浏览器点击链接跳转）
+    connect(browser,&CusWebBrowser::urlChanged,[=](QUrl url){m_webHistory->slot_addToListHistoryWidget(url);});//添加历史记录
+    //新添加的tab页面
+    connect(browser,&CusWebBrowser::sig_sendToNewUrl,[=](QUrl url){m_webHistory->slot_addToListHistoryWidget(url);});
 }
 
 //重载函数2：添加一个browser---参数为QString
@@ -300,6 +305,10 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QString &url)
     connect(browser->page(),&QWebEnginePage::linkHovered,this,&MainWidget::slot_showLinkOnStatusBar);
     //URL改变
     connect(browser,&CusWebBrowser::urlChanged,[=](QUrl url){slot_showLinkOnStatusBar(url.toDisplayString());});
+    //新增历史记录（浏览器点击链接跳转）
+    connect(browser,&CusWebBrowser::urlChanged,[=](QUrl url){m_webHistory->slot_addToListHistoryWidget(url);});//添加历史记录
+    //新添加的tab页面
+    connect(browser,&CusWebBrowser::sig_sendToNewUrl,[=](QUrl url){m_webHistory->slot_addToListHistoryWidget(url);});
 }
 
 //过滤不是当前活跃的窗口--返回主页
@@ -376,8 +385,8 @@ void MainWidget::chandleSignalAndSlots()
     /************************************浏览器部分************************************/
     //收藏网址
 
-    //新增历史记录
-    connect(m_titleBar,SIGNAL(sig_sendInputNewUrl(QString)),m_webHistory,SLOT(slot_addToListHistoryWidget(QString)));
+    //新增历史记录（手动搜索）
+    connect(m_titleBar,SIGNAL(sig_sendInputNewUrl(QString)),m_webHistory,SLOT(slot_addToListHistoryWidget(QString)));//添加历史记录
     //可回退
     connect(m_titleBar,SIGNAL(sig_sendCanGoBack()),this,SLOT(slot_canGoBack()));
     connect(this,SIGNAL(sig_canGoBack(bool)),m_titleBar,SLOT(slot_setCanGoBack(bool)));
@@ -413,7 +422,15 @@ void MainWidget::chandleSignalAndSlots()
     //鼠标link
     connect(m_webBrowser->page(),&QWebEnginePage::linkHovered,this,&MainWidget::slot_showLinkOnStatusBar);
     //添加一个browser
-    connect(m_webBrowser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));
+    connect(m_webBrowser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));// 创建浏览器tab
+    //新增历史记录（本页面内浏览器点击链接跳转）
+    connect(m_webBrowser,&CusWebBrowser::urlChanged,[=](QUrl url){m_webHistory->slot_addToListHistoryWidget(url);});//添加历史记录
+    //新添加的tab页面
+    connect(m_webBrowser,&CusWebBrowser::sig_sendToNewUrl,[=](QUrl url){m_webHistory->slot_addToListHistoryWidget(url);});
+    //历史记录回显
+    connect(m_webHistory,&WebHistory::sig_sendItemText,[=](QString url){
+        slot_addToWebTabwidgetBrowser(url);
+    });
     connect(m_webBrowser,&CusWebBrowser::loadFinished,[=](){
         qDebug() <<QString::fromLocal8Bit("图标")<<m_webBrowser->icon()<<QString::fromLocal8Bit("标题")<<m_webBrowser->title();
     });
@@ -428,9 +445,8 @@ void MainWidget::chandleSignalAndSlots()
     //加载网页进度
     connect(m_webBrowser,SIGNAL(loadProgress(int)),m_titleBar,SLOT(slot_setWebProgressBarValue(int)));
     connect(m_webBrowser,SIGNAL(loadProgress(int)),this,SLOT(slot_setWebProgreeBarValue(int)));
-    /*网页tab改变信号*/
-    //当前项改变
     connect(m_webBrowser,SIGNAL(urlChanged(QUrl)),m_titleBar,SLOT(slot_setWebLineEditCurentUrl(QUrl)));
+
     //tabbar点击改变
     connect(m_webTabWidget,SIGNAL(tabBarClicked(int)),this,SLOT(slot_switchCurrentTab_URL(int)));
     //tab关闭
@@ -448,8 +464,8 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_cusTabbar,&CusTabBar::sig_sendTabAddWebTabBar,m_titleBar,&TitleBar::slot_receiveBlankWebTab);
     //此处注意：qt4,qt5写法不能接收信号，只有拉姆达表达式可以，主要还无法区分槽函数（重载的时候）
     connect(m_titleBar,&TitleBar::sig_sendBlankUrl,[=](QString url){
-        slot_addToWebTabwidgetBrowser(url);
         m_titleBar->slot_clearWebLineEditText();//清除输入框文字（无用）
+        slot_addToWebTabwidgetBrowser(url);
     });
 
     /************************************浏览器---收藏栏************************************/

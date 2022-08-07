@@ -2,6 +2,10 @@
 #define WEBHISTORY_H
 
 #include <QWidget>
+#include <QUrl>
+#include <QLabel>
+#include <QLayout>
+#include <QPushButton>
 
 namespace Ui {
 class WebHistory;
@@ -18,16 +22,20 @@ public:
     void    chandleSignalsAndSLots();
 
 public slots:
+    void    slot_addToListHistoryWidget(QUrl url);
+
     void    slot_addToListHistoryWidget(const QString &text);
 
 private:
     Ui::WebHistory *ui;
-    bool    judgeHistoryUrlExist(const QString &url);//判断当前的网址是否已经在收藏栏
+    void        findSearchRecordsHittories(QString name);
+    bool        judgeHistoryUrlExist(const QString &url);//判断当前的网址是否已经在收藏栏
 
 
 signals:
     void    sig_returnPage();
     void    sig_sendItemText(QString text);
+
 };
 
 #endif // WEBHISTORY_H

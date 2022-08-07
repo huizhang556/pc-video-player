@@ -31,22 +31,37 @@ background-color: #9bcffa;
 }
 
 /*浏览器---整个收藏栏(包括展开按钮、隐藏按钮)样式*/
-#m_cusTabbar
+#m_tabframe
 {
-background-color: #9bcffa;
-border-bottom:1px solid black;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #01FAFF,stop:1  #26B4FF);
+border: 0px solid #f0f0f0;
+border-top-width:0px;
 }
 
 /*浏览器---收藏栏和浏览器承载的widget界面*/
 #m_webWidget
 {
-background-color: #9bcffa;
+background-color: #2b2b2b;
+border: 0px solid #f0f0f0;
+border-top-width: 0px;
+}
+
+/*浏览器---状态栏*/
+#m_statusBar
+{
+color: #cccccc;
+}
+
+/*浏览器---进度条*/
+#m_progressBar
+{
+color: #cccccc;
 }
 
 /*浏览器---收藏栏tabbar样式*/
 #m_tabBar
 {
-background-color: #9bcffa;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #01FAFF,stop:1  #26B4FF);
 color: #4c4c4c;
 }
 
@@ -81,6 +96,8 @@ background-color: #ffffff;
 #m_tabBar::tab:hover
 {
 background-color: #f2f2f2;
+border-radius:3px;
+border: 1px solid #4d3cff;
 }
 
 #m_tabBar::tab:!selected

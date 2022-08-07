@@ -14,7 +14,7 @@ class WebMessageBox : public QDialog
 public:
     explicit WebMessageBox(QWidget *parent = nullptr);
     ~WebMessageBox();
-
+    void    initWorkUI();
     void    chandleSignalsAndSLots();
 
 private:

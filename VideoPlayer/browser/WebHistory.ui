@@ -80,6 +80,12 @@
               <height>26</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">#pushButton_title
+{
+border:none;
+}</string>
+            </property>
             <property name="text">
              <string>历史记录</string>
             </property>
@@ -213,19 +219,28 @@ margin-right:15px;
             <property name="minimumSize">
              <size>
               <width>95</width>
-              <height>26</height>
+              <height>23</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>26</height>
+              <height>23</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">#pushButton_clearPage
 {
 margin-right: 15px;
+border-radius:5px;
+background-color: #404244;
+color:white;
+}
+#pushButton_clearPage:hover
+{
+border-radius:5px;
+background-color: #262829;
+color:white;
 }</string>
             </property>
             <property name="text">
@@ -238,19 +253,28 @@ margin-right: 15px;
             <property name="minimumSize">
              <size>
               <width>95</width>
-              <height>26</height>
+              <height>23</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>26</height>
+              <height>23</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">#pushButton_clearRecords
 {
 margin-right: 15px;
+border-radius:5px;
+background-color: #404244;
+color:white;
+}
+#pushButton_clearRecords:hover
+{
+border-radius:5px;
+background-color: #262829;
+color:white;
 }</string>
             </property>
             <property name="text">
@@ -259,21 +283,67 @@ margin-right: 15px;
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="pushButton_delete">
+            <property name="minimumSize">
+             <size>
+              <width>75</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#pushButton_delete
+{
+margin-right: 15px;
+border-radius:5px;
+background-color: #404244;
+color:white;
+}
+
+#pushButton_delete:hover
+{
+border-radius:5px;
+background-color: #262829;
+color:white;
+}</string>
+            </property>
+            <property name="text">
+             <string>删除</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="pushButton_return">
             <property name="minimumSize">
              <size>
               <width>75</width>
-              <height>26</height>
+              <height>23</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>75</width>
-              <height>26</height>
+              <height>23</height>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true"/>
+             <string notr="true">#pushButton_return
+{
+border-radius:5px;
+background-color: #404244;
+color:white;
+}
+#pushButton_return:hover
+{
+border-radius:5px;
+background-color: #262829;
+color:white;
+}</string>
             </property>
             <property name="text">
              <string>返回</string>
@@ -500,7 +570,36 @@ margin-right: 15px;
            </widget>
           </item>
           <item>
-           <widget class="QListWidget" name="listWidget_showHis"/>
+           <widget class="QListWidget" name="listWidget_showHis">
+            <property name="styleSheet">
+             <string notr="true">#listWidget_showHis
+{
+border:none;
+}
+
+#listWidget_showHis::item
+{
+color:transparent;
+background-color: white;
+}
+
+#listWidget_showHis::item:hover
+{
+background-color: #e5f3ff;
+}
+
+#listWidget_showHis::item:selected
+{
+color:transparent;
+background-color: white;
+}
+
+#listWidget_showHis::item:!selected
+{
+color:transparent;
+}</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>

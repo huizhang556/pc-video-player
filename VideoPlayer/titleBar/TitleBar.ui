@@ -1086,6 +1086,52 @@ border-image: url(:/images/icon/advance_hover.png);
             </widget>
            </item>
            <item>
+            <spacer name="horizontalSpacer_20">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>18</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_resume">
+             <property name="minimumSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+border-image: url(:/images/icon/title_resume.png);
+}
+
+QPushButton:hover
+{
+border-image: url(:/images/icon/title_resume_hover.png);
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
             <spacer name="horizontalSpacer_14">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
@@ -1227,14 +1273,14 @@ color:black;
             <widget class="QPushButton" name="pushButton_webdownload">
              <property name="minimumSize">
               <size>
-               <width>19</width>
-               <height>18</height>
+               <width>20</width>
+               <height>19</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>19</width>
-               <height>18</height>
+               <width>20</width>
+               <height>19</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -1273,14 +1319,14 @@ border-image: url(:/images/icon/title_webdownload_hover.png);
             <widget class="QPushButton" name="pushButton_webSkin">
              <property name="minimumSize">
               <size>
-               <width>19</width>
-               <height>18</height>
+               <width>20</width>
+               <height>19</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>19</width>
-               <height>18</height>
+               <width>20</width>
+               <height>19</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -1304,6 +1350,98 @@ border-image: url(:/images/icon/skin_hover.png);
            </item>
            <item>
             <spacer name="horizontalSpacer_26">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>16</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_favorites">
+             <property name="minimumSize">
+              <size>
+               <width>19</width>
+               <height>19</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>19</width>
+               <height>19</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+border-image: url(:/images/icon/url_collection.png);
+}
+
+QPushButton:hover
+{
+border-image: url(:/images/icon/url_collect_hover.png);
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_27">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>16</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_records">
+             <property name="minimumSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+border-image: url(:/images/icon/title_his.png);
+}
+
+QPushButton:hover
+{
+border-image: url(:/images/icon/title_his_hover.png);
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_28">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
@@ -1365,7 +1503,7 @@ border-image: url(:/images/icon/web_funclist.png);
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
+               <width>15</width>
                <height>20</height>
               </size>
              </property>

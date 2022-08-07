@@ -32,6 +32,14 @@ TitleBar::~TitleBar()
 /*初始化工作*/
 void TitleBar::initWorker()
 {
+    //tooltip
+    ui->pushButton_resume->setToolTip(QString::fromLocal8Bit("恢复"));
+    ui->pushButton_favorites->setToolTip(QString::fromLocal8Bit("收藏记录"));
+    ui->pushButton_records->setToolTip(QString::fromLocal8Bit("浏览历史"));
+    ui->pushButton_webSkin->setToolTip(QString::fromLocal8Bit("皮肤"));
+    ui->pushButton_more->setToolTip(QString::fromLocal8Bit("浏览控制"));
+    ui->pushButton_webdownload->setToolTip(QString::fromLocal8Bit("下载"));
+
     ui->stackedWidget_login->setCurrentIndex(0);//左上角登录stackwidget
     ui->pushButton_userlogin->setFlat(true);
     ui->pushButton_userregis->setFlat(true);
@@ -212,14 +220,34 @@ void TitleBar::chandleSignalAndSLots()
     connect(ui->pushButton_advance,&QPushButton::clicked,[=](){emit sig_sendUrlAdvance();});
     //显示登录窗口
     connect(ui->Btnlogin,&QPushButton::clicked,[=](){qDebug() << "login had clicked!"; showLoginForm();});
+    //恢复
+    connect(ui->pushButton_resume,&QPushButton::clicked,[=](){});
     //历史记录记录搜索历史
 //    connect(this,&TitleBar::sig_sendNewSearch,m_searchForm,&SearchForm::addHistoryItem);
     //显示搜索历史记录
     connect(m_actRecords,&QAction::triggered,this,&TitleBar::slot_updateShowListHistoryWidget);
     //显示可用搜索引擎
     connect(m_actEngine,&QAction::triggered,this,&TitleBar::slot_updateShowListEngineWidget);
-    //浏览器设置
-    connect(ui->pushButton_more,&QPushButton::clicked,this,&TitleBar::slot_updateShowListSettigMenu);
+    //网络文件下载记录
+    connect(ui->pushButton_webdownload,&QPushButton::clicked,[=](){
+//        WebDownLoadList::getInstance()->setWindowModality(Qt::ApplicationModal);
+        if(WebDownLoadList::getInstance()->isHidden())
+        {
+            WebDownLoadList::getInstance()->show();
+        }
+        else
+        {
+            WebDownLoadList::getInstance()->hide();
+        }
+    });
+    //皮肤
+    connect(ui->pushButton_webSkin,&QPushButton::clicked,[=](){ emit sig_sendWebSkin(); });
+    //收藏记录
+    connect(ui->pushButton_favorites,&QPushButton::clicked,[=](){ emit sig_sendBrowserShowCollectList(); });
+    //历史记录
+    connect(ui->pushButton_records,&QPushButton::clicked,[=](){ emit sig_sendBrowserShowHistories(); });
+    //浏览控制
+    connect(ui->pushButton_more,&QPushButton::clicked,this,&TitleBar::slot_updateShowListSettigMenu);//右键菜单显示
     //网址输入框---回车键处理
     connect(ui->lineEdit_webSearch,&QLineEdit::returnPressed,[=](){
         QString newurl = judgeUrlType(ui->lineEdit_webSearch->text().trimmed());
@@ -263,18 +291,6 @@ void TitleBar::chandleSignalAndSLots()
             return;
         }
 
-    });
-    //网络文件下载
-    connect(ui->pushButton_webdownload,&QPushButton::clicked,[=](){
-//        WebDownLoadList::getInstance()->setWindowModality(Qt::ApplicationModal);
-        if(WebDownLoadList::getInstance()->isHidden())
-        {
-            WebDownLoadList::getInstance()->show();
-        }
-        else
-        {
-            WebDownLoadList::getInstance()->hide();
-        }
     });
 
     //下载设置
@@ -1071,12 +1087,12 @@ void TitleBar::slot_receivedListItemText(QString text)
 
 void TitleBar::slot_setWebLineEditCurentUrl(QUrl url)
 {
-    qDebug() <<QString::fromLocal8Bit("接收到最新的地址是：")<< url;
+    qDebug() <<QString::fromLocal8Bit("标题栏地址显示接收到最新的地址是：")<< url;
     if(!url.isEmpty())
     {
         ui->lineEdit_webSearch->setText(url.toString());
         ui->lineEdit_webSearch->setCursorPosition(0);
-    }
+    }  
 }
 
 void TitleBar::slot_clearWebLineEditText()
