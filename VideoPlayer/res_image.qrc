@@ -372,5 +372,9 @@
         <file>images/icon/title_his_hover.png</file>
         <file>images/icon/title_resume.png</file>
         <file>images/icon/title_resume_hover.png</file>
+        <file>images/icon/record_change.png</file>
+        <file>images/icon/record_change_hover.png</file>
+        <file>images/icon/record_remove.png</file>
+        <file>images/icon/record_remove_hover.png</file>
     </qresource>
 </RCC>

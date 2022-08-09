@@ -9,7 +9,6 @@
 #include "customer/SystemTray.h"
 #include "slidebar/LeftSideBar.h"
 #include "customer/CusTabWidget.h"
-#include "browser/WebMessageBox.h"
 #include "browser/CusWebBrowser.h"
 #include "messagebox/ExitDialog.h"
 #include "login/LoginPersonInfo.h"
@@ -103,7 +102,9 @@ private slots:
 
     void        slot_judgeCurrentBrowserIsActive_home();//过滤不是当前活跃的窗口--返回主页
 
-    QIcon       slot_getCurrentBrowserIcon();//获取当前web图标和标题
+    QIcon       slot_getCurrentBrowserIcon();//获取当前web图标
+
+    QString     slot_getCurrentBrowserTitle();//获取当前web标题
 
     void        slot_judgeCurrentBrowserIsActive_back();//返回上一级
 

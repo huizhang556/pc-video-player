@@ -81,7 +81,7 @@ QPushButton:selected
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>40</width>
+         <width>20</width>
          <height>20</height>
         </size>
        </property>
@@ -157,7 +157,7 @@ QPushButton:selected
 }</string>
          </property>
          <property name="text">
-          <string>修改</string>
+          <string/>
          </property>
         </widget>
        </item>
@@ -199,7 +199,7 @@ QPushButton:selected
 }</string>
          </property>
          <property name="text">
-          <string>删除</string>
+          <string/>
          </property>
         </widget>
        </item>

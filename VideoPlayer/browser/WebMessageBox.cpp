@@ -32,6 +32,13 @@ void WebMessageBox::initWorkUI()
 void WebMessageBox::chandleSignalsAndSLots()
 {
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){this->hide();});
+    //确定
+    connect(ui->pushButton_sure,&QPushButton::clicked,[=](){
+        emit sig_sendTitleChanged(ui->lineEdit_address->text().trimmed(),ui->lineEdit_nickName->text().trimmed());
+        this->close();
+    });
+    //取消
+    connect(ui->pushButton_cancel,&QPushButton::clicked,[=](){this->close();});
 }
 
 WebMessageBox *WebMessageBox::getInstance()
@@ -41,4 +48,16 @@ WebMessageBox *WebMessageBox::getInstance()
         m_pInstance = new WebMessageBox();
     }
     return m_pInstance;
+}
+
+void WebMessageBox::showEvent(QShowEvent *event)
+{
+    Q_UNUSED(event);
+    ui->lineEdit_nickName->setFocus();
+}
+
+void WebMessageBox::setWebMessageInforation(QString address, QString name)
+{
+    ui->lineEdit_address->setText(address);
+    ui->lineEdit_nickName->setText(name);
 }

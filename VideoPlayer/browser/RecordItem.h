@@ -23,7 +23,7 @@ public slots:
 
 signals:
     void        sig_item_record(QString);
-    void        sig_item_modify();
+    void        sig_item_modify(QString);
     void        sig_item_delete();
 private:
     void        judgeType();

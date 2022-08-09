@@ -11,6 +11,7 @@ CONFIG += C++11 ##使用C++11某些新语法
 TARGET = VideoPlayer
 TEMPLATE = app
 RC_ICONS = favicon.ico
+# 以管理员运行
 #QMAKE_LFLAGS += /MANIFESTUAC:\"level=\'requireAdministrator\' uiAccess=\'false\'\"
 
 

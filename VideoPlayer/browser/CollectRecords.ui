@@ -14,9 +14,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-
-</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
@@ -400,14 +398,14 @@ background-color: #292a2d;
 {
 background-color: #292a2d;
 padding-right:5px;
-color: #d0d0d1;
+color: transparent;
 }
 
 #listWidget_record1::item:hover
 {
 background-color: #3e3f42;
 padding-right:5px;
-color: white;
+color: transparent;
 }</string>
              </property>
             </widget>
@@ -426,14 +424,14 @@ background-color: #292a2d;
 {
 background-color: #292a2d;
 padding-right:5px;
-color: #d0d0d1;
+color: transparent;
 }
 
 #listWidget_record2::item:hover
 {
 background-color: #3e3f42;
 padding-right:5px;
-color: white;
+color: transparent;
 }</string>
              </property>
             </widget>
@@ -452,14 +450,14 @@ background-color: #292a2d;
 {
 background-color: #292a2d;
 padding-right:5px;
-color: #d0d0d1;
+color: transparent;
 }
 
 #listWidget_record3::item:hover
 {
 background-color: #3e3f42;
 padding-right:5px;
-color: white;
+color: transparent;
 }</string>
              </property>
             </widget>
@@ -478,14 +476,14 @@ background-color: #292a2d;
 {
 background-color: #292a2d;
 padding-right:5px;
-color: #d0d0d1;
+color: transparent;
 }
 
 #listWidget_record4::item:hover
 {
 background-color: #3e3f42;
 padding-right:5px;
-color: white;
+color: transparent;
 }</string>
              </property>
             </widget>
@@ -504,14 +502,14 @@ background-color: #292a2d;
 {
 background-color: #292a2d;
 padding-right:5px;
-color: #d0d0d1;
+color: transparent;
 }
 
 #listWidget_record5::item:hover
 {
 background-color: #3e3f42;
 padding-right:5px;
-color: white;
+color: transparent;
 }</string>
              </property>
             </widget>
@@ -529,14 +527,14 @@ background-color: #292a2d;
 {
 background-color: #292a2d;
 padding-right:5px;
-color: #d0d0d1;
+color: transparent;
 }
 
 #listWidget_record6::item:hover
 {
 background-color: #3e3f42;
 padding-right:5px;
-color: white;
+color: transparent;
 }</string>
              </property>
             </widget>

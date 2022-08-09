@@ -16,6 +16,12 @@ public:
     void    initWorkUI();
     void    chandleSignalsAndSLots();
     static WebMessageBox* getInstance();
+
+protected:
+    void    showEvent(QShowEvent *event) override;
+
+public slots:
+    void    setWebMessageInforation(QString address,QString name);
 private:
     explicit WebMessageBox(QWidget *parent = nullptr);
     Ui::WebMessageBox *ui;
@@ -24,6 +30,7 @@ private:
 
 signals:
 //    void    sig_message_close();
+    void        sig_sendTitleChanged(QString,QString);
 
 };
 

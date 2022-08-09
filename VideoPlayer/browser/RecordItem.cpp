@@ -43,7 +43,7 @@ void RecordItem::chandleSignalAndSLots()
         qDebug() << QString::fromLocal8Bit("点击获得的历史地址:")<< ui->pushButton_record->text();
     });
     //修改
-    connect(ui->pushButton_modify,&QPushButton::clicked,[=](){ emit sig_item_modify(); });
+    connect(ui->pushButton_modify,&QPushButton::clicked,[=](){ emit sig_item_modify(ui->pushButton_record->text()); });
     //删除item
     connect(ui->pushButton_delete,&QPushButton::clicked,[=](){ emit sig_item_delete(); });
 }

@@ -1,6 +1,8 @@
 ﻿#include "CollectRecords.h"
 #include "ui_CollectRecords.h"
 #include "browser/RecordItem.h"
+#include "browser/WebMessageBox.h"
+#include "browser/MiniRecordItem.h"
 
 int CollectRecords::m_singleCount = 40;
 #include <QDebug>
@@ -62,7 +64,10 @@ void CollectRecords::chandleSignalsAndSlots()
     //03 删除
     connect(ui->pushButton_delete,&QPushButton::clicked,[=](){});
     //04 修改记录
-    connect(ui->pushButton_change,&QPushButton::clicked,[=](){emit sig_changeRecord();});
+    connect(ui->pushButton_change,&QPushButton::clicked,[=](){
+        WebMessageBox::getInstance()->exec();
+        emit sig_changeRecord();
+    });
     //05 确定
     connect(ui->pushButton_sure,&QPushButton::clicked,[=](){});
     //06 返回主页
@@ -82,24 +87,71 @@ void CollectRecords::chandleSignalsAndSlots()
     });
 }
 
+QString CollectRecords::getCurrentRecordItemText(QListWidget *listWidget, QString &text)
+{
+    for(int i = 0; i < listWidget->count(); i++)
+    {
+        QWidget *itemWidget = listWidget->itemWidget(listWidget->item(i));
+        if(nullptr != itemWidget)
+        {
+            QPushButton *itemBtn = itemWidget->findChild<QPushButton*>("pushButton_record");
+            if(nullptr != itemBtn && itemBtn->text() == text)
+                return listWidget->item(i)->text();
+        }
+    }
+}
+
 void CollectRecords::slot_addToRecordsListWidget(QUrl url)
 {
     qDebug() << QString::fromLocal8Bit("历史记录接收到地址：")<<url.toDisplayString();
-    slot_addToRecordsListWidget(url.toDisplayString(),QIcon(""));
+    slot_addToRecordsListWidget(url.toDisplayString(),QIcon(""),"");
 }
 
-void CollectRecords::slot_addToRecordsListWidget(const QString &text = "",QIcon icon = QIcon(""))//默认参数
+void CollectRecords::slot_showWebMessageWindow(QString url, QString name)
 {
-    if(text.isEmpty()) return;
-//    if(icon.isNull()) icon = QIcon("://images/icon/engine.png");//图片传不过来不及时
-    RecordItem *itemWidget = new RecordItem(3,icon,text);
-    QListWidgetItem *item1 = new QListWidgetItem(icon,text);
-    item1->setToolTip(text);
-    QListWidgetItem *item2 = new QListWidgetItem(text);
-    item2->setSizeHint(itemWidget->size()-QSize(50,0));
+    WebMessageBox::getInstance()->setWebMessageInforation(url,name);
+    WebMessageBox::getInstance()->exec();
+}
+
+void CollectRecords::slot_addToRecordsListWidget(const QString &url = "", QIcon icon = QIcon(""), const QString &title = "")//默认参数
+{
+    if(url.isEmpty()) return;
+    MiniRecordItem *itemWidget1 = new MiniRecordItem(title,icon);
+    QListWidgetItem *item1 = new QListWidgetItem(url); item1->setToolTip(url);
+    item1->setSizeHint(itemWidget1->size());
     getCurrentListWidget()->addItem(item1);//尾插法
+    getCurrentListWidget()->setItemWidget(item1,itemWidget1);
+
+    RecordItem *itemWidget2 = new RecordItem(3,icon,title);
+    QListWidgetItem *item2 = new QListWidgetItem(url);
+    item2->setSizeHint(itemWidget1->size()-QSize(50,0));
     ui->listWidget_findResults->addItem(item2);
-    ui->listWidget_findResults->setItemWidget(item2,itemWidget);
+    ui->listWidget_findResults->setItemWidget(item2,itemWidget2);
+    //信号与槽函数
+    //点击记录
+    connect(itemWidget1,&MiniRecordItem::sig_item_record,[=](QString text){
+//        QString itemText = getCurrentRecordItemText( text);
+    });
+    connect(itemWidget2,&RecordItem::sig_item_record,[=](QString text){
+
+    });
+    //修改
+    connect(itemWidget1,&MiniRecordItem::sig_item_modify,[=](QString text){
+
+    });
+    connect(itemWidget2,&RecordItem::sig_item_modify,[=](QString text){
+        QString itemText = getCurrentRecordItemText(ui->listWidget_findResults,text);
+        slot_showWebMessageWindow(itemText,text);
+    });
+    //删除
+    connect(itemWidget1,&MiniRecordItem::sig_item_delete,[=](){
+        itemWidget1->deleteLater();
+    });
+    connect(itemWidget2,&RecordItem::sig_item_delete,[=](){
+        itemWidget2->deleteLater();
+        QListWidgetItem *item = ui->listWidget_findResults->takeItem(ui->listWidget_findResults->row(item2));
+        delete item;
+    });
 }
 
 void CollectRecords::findSearchCollectRecords(QString name)

@@ -7,7 +7,8 @@ SOURCES += \
     $$PWD/CollectRecords.cpp \
     $$PWD/WebMessageBox.cpp \
     $$PWD/WebHistory.cpp \
-    $$PWD/RecordItem.cpp
+    $$PWD/RecordItem.cpp \
+    $$PWD/MiniRecordItem.cpp
 
 
 HEADERS += \
@@ -19,7 +20,8 @@ HEADERS += \
     $$PWD/CollectRecords.h \
     $$PWD/WebMessageBox.h \
     $$PWD/WebHistory.h \
-    $$PWD/RecordItem.h
+    $$PWD/RecordItem.h \
+    $$PWD/MiniRecordItem.h
 
 FORMS += \
     $$PWD/CusWebBrowser.ui \
@@ -29,5 +31,6 @@ FORMS += \
     $$PWD/CollectRecords.ui \
     $$PWD/WebMessageBox.ui \
     $$PWD/WebHistory.ui \
-    $$PWD/RecordItem.ui
+    $$PWD/RecordItem.ui \
+    $$PWD/MiniRecordItem.ui
 
