@@ -65,20 +65,21 @@ void LeftSideBar::initWidgetUi()
     m_listWidget->setObjectName(QString::fromLatin1("listWidget_playlist"));//对象名称用于设置样式
     m_listWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//关闭滚动条可见
     m_listWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_listWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);//像素滚动
     m_listWidget->setFocusPolicy(Qt::NoFocus);//作用是点击item去掉虚线边框
 
     m_expandBtn = new QPushButton(this);
     m_expandBtn->setFixedSize(170,40);
+    m_expandBtn->setCheckable(true);
     m_expandBtn->setText(QString::fromLocal8Bit("展开更多>>"));
     m_expandBtn->setObjectName(QString::fromLatin1("m_expandBtn"));
-
-
 
     m_vbayout = new QVBoxLayout(this);
     m_vbayout->setObjectName(QString::fromLatin1("m_vbayout"));
     m_vbayout->addWidget(m_listWidget);
     m_vbayout->addWidget(m_expandBtn);
     m_vbayout->setSpacing(0);
+    m_vbayout->setMargin(0);
     m_vbayout->setContentsMargins(0,0,0,0);
 }
 

@@ -32,6 +32,8 @@ TitleBar::~TitleBar()
 /*初始化工作*/
 void TitleBar::initWorker()
 {
+    ui->stackedWidget_title->setCurrentIndex(0);
+
     //tooltip
     ui->pushButton_resume->setToolTip(QString::fromLocal8Bit("恢复"));
     ui->pushButton_favorites->setToolTip(QString::fromLocal8Bit("收藏记录"));
@@ -78,6 +80,7 @@ void TitleBar::initWorker()
     ui->pushButton_advance->installEventFilter(this);
     //网址栏
     ui->lineEdit_webSearch->setFixedHeight(28);
+    ui->lineEdit_webSearch->installEventFilter(this);
     ui->lineEdit_webSearch->setText(QString::fromLocal8Bit("http://82.156.175.81/study/index.html"));//默认显示的网址
     ui->lineEdit_webSearch->setPlaceholderText(QString::fromLocal8Bit("请输入有效网址或要搜索的内容-_-"));
     ui->lineEdit_webSearch->setCursorPosition(0);
@@ -87,6 +90,7 @@ void TitleBar::initWorker()
 //    ui->lineEdit_webSearch->setValidator(expval);
     //快速搜索栏
     ui->lineEdit_simpSearch->setPlaceholderText(QString::fromLocal8Bit("快速搜索^_^"));
+    ui->lineEdit_simpSearch->installEventFilter(this);
     //网址栏目中的小按钮
     m_actSafeMode = new QAction(QIcon("://images/icon/safelocked.png"),"");
     m_actSafeMode->setObjectName(QString::fromLocal8Bit("m_actSafeMode"));
@@ -94,9 +98,9 @@ void TitleBar::initWorker()
     m_actCollect->setObjectName(QString::fromLocal8Bit("m_actCollect"));
     m_actRecords = new QAction(QIcon(":/images/icon/downwards_hover.png"),"");
     m_actRecords->setObjectName(QString::fromLocal8Bit("m_actRecords"));
-    ui->lineEdit_webSearch->addAction(m_actSafeMode, QLineEdit::LeadingPosition);
-    ui->lineEdit_webSearch->addAction(m_actRecords, QLineEdit::TrailingPosition);
-    ui->lineEdit_webSearch->addAction(m_actCollect, QLineEdit::TrailingPosition);
+    ui->lineEdit_webSearch->addAction(m_actSafeMode, QLineEdit::LeadingPosition);//安全锁
+    ui->lineEdit_webSearch->addAction(m_actRecords, QLineEdit::TrailingPosition);//显示搜索历史
+    ui->lineEdit_webSearch->addAction(m_actCollect, QLineEdit::TrailingPosition);//收藏网址
     //简要搜索栏中的小按钮
     m_actEngine = new QAction(QIcon("://images/function/engine_baidu.png"),"");
     m_actEngine->setObjectName(QString::fromLocal8Bit("m_actEngine"));
@@ -268,7 +272,7 @@ void TitleBar::chandleSignalAndSLots()
     //网址输入框---文本改变,判断是否收藏当前网址
     connect(ui->lineEdit_webSearch,&QLineEdit::textChanged,[=](QString text)
     {
-              slot_setCurrentWebSiteCollectStatus(text);
+              slot_setCurrentWebSiteCollectStatus(text);//设置样式
     });
 
     connect(ui->lineEditSearch,&QLineEdit::returnPressed,[=](){
@@ -290,7 +294,7 @@ void TitleBar::chandleSignalAndSLots()
         {
             return;
         }
-
+        emit sig_sendCollectRecord(ui->lineEdit_webSearch->text());//记录栏添加收藏记录
     });
 
     //下载设置
@@ -305,6 +309,7 @@ void TitleBar::chandleSignalAndSLots()
         QString addUrl = judgeUrlType(item->text());
         ui->lineEdit_webSearch->setText(item->text());
         emit sig_sendInputNewUrl(addUrl);
+        m_listWdgt_history->hide();
     });
 
     //收藏菜单选中回显----回显选择的记录到lineEdit
@@ -313,6 +318,7 @@ void TitleBar::chandleSignalAndSLots()
         if(item->text().isEmpty()) return;
         ui->lineEdit_webSearch->setText(item->text());
         emit sig_sendInputNewUrl(item->text());
+        m_listWdgt_colloect->hide();
     });
 
     //引擎选择
@@ -482,10 +488,10 @@ void TitleBar::slot_setCurrentWebSiteCollectStatus(const QString &url)
 void TitleBar::slot_addToListCollectWidget(const QString &text)
 {
     if(text.isEmpty()) return;
-    bool valid = judgeCollectUrlExist(text);
+    bool valid = judgeCollectUrlExist(text);//判断是否存在
     if(!valid)//没有则收藏
     {
-        QListWidgetItem *item = new QListWidgetItem(QIcon("://images/function/collect_list_item.png"),text);
+        QListWidgetItem *item = new QListWidgetItem(QIcon(":/images/function/collect_list_item.png"),text);
         m_listWdgt_colloect->insertItem(0,item);
     }
     else//有，则不做任何处理
@@ -522,7 +528,7 @@ void TitleBar::slot_addToListHistoryWidget(const QString &text)
     if(!judgeHistoryUrlExist(text))//没有找到才添加
     {
         QListWidgetItem *item = new QListWidgetItem(QIcon("://images/function/history_list_item.png"),text);
-        m_listWdgt_history->addItem(item);
+        m_listWdgt_history->insertItem(0,item);
     }
 }
 
@@ -813,6 +819,7 @@ bool TitleBar::eventFilter(QObject *watched, QEvent *event)
     QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);//转换为鼠标事件
     mouseIsEnterLeaveLineEdit(watched,mouseEvent);//搜索框鼠标进入离开,处理样式
     mouseIsPressReleaseLineEdit(watched,mouseEvent);//搜索框鼠标按下释放，处理历史记录
+    setSelectAllTextStatus(watched,mouseEvent);//lineedit选中文本
     if(watched == m_listWdgt_history)
     {
         if(event->type() == QEvent::Leave)
@@ -1217,6 +1224,26 @@ void TitleBar::receiveMainFormClose()
 {
     m_loginForm->close();
     m_loginForm->receiveMainWinCloseAppSignal();
+}
+
+//鼠标按下选中文字
+void TitleBar::setSelectAllTextStatus(QObject *watched, QEvent *event)
+{
+    if(watched == ui->lineEdit_webSearch)
+    {
+        if(event->type() == QEvent::FocusIn)
+        {
+            //FocusIn屏蔽全选功能
+            QTimer::singleShot(0,this,[=](){ui->lineEdit_webSearch->selectAll();});
+        }
+    }
+    if(watched == ui->lineEdit_simpSearch)
+    {
+        if(event->type() == QEvent::FocusIn)
+        {
+            QTimer::singleShot(0,this,[=](){ui->lineEdit_simpSearch->selectAll();});
+        }
+    }
 }
 
 

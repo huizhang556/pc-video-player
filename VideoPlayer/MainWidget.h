@@ -103,6 +103,8 @@ private slots:
 
     void        slot_judgeCurrentBrowserIsActive_home();//过滤不是当前活跃的窗口--返回主页
 
+    QIcon       slot_getCurrentBrowserIcon();//获取当前web图标和标题
+
     void        slot_judgeCurrentBrowserIsActive_back();//返回上一级
 
     void        slot_judgeCurrentBrowserIsActive_freshen();//刷新
@@ -191,7 +193,6 @@ private:
     QProgressBar        *m_progressBar             = nullptr;//浏览器网页加载进度
     CollectRecords      *m_webRecords              = nullptr;//浏览器收藏标签界面
     WebHistory          *m_webHistory              = nullptr;//浏览器历史记录界面
-    WebMessageBox       *m_webMessage              = nullptr;//浏览器标签修改界面
     QStackedWidget      *m_webStackWgt             = nullptr;//关于浏览器所有界面的管理器
     QWidget             *m_webWidget               = nullptr;
     SystemSetting       *m_systemSetting           = nullptr;

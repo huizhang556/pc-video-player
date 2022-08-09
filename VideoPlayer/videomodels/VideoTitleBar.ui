@@ -392,7 +392,6 @@ border:1px solid #ff5c38;
 {
 background-color: transparent;
 border-image: url(:/images/icon/min2.png);
-margin-bottom:3px;
 }
 
 QPushButton:hover{

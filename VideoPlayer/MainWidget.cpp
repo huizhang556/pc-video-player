@@ -131,9 +131,6 @@ void MainWidget::initOtherWidgetUi()
     m_webHistory = new WebHistory();
     m_webHistory->setObjectName(QString::fromLocal8Bit("m_webHistory"));
 
-    m_webMessage = new WebMessageBox();
-    m_webMessage->setObjectName(QString::fromLocal8Bit("m_webMessage"));
-
     m_webStackWgt = new QStackedWidget();
     m_webStackWgt->setObjectName(QString::fromLocal8Bit("m_webStackWgt"));
     m_webStackWgt->addWidget(m_webWidget);// 0 浏览器
@@ -316,7 +313,23 @@ void MainWidget::slot_judgeCurrentBrowserIsActive_home()
 {
    CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
        actWdgt->slots_home();
-//       delete actWdgt;
+       //       delete actWdgt;
+}
+
+QIcon MainWidget::slot_getCurrentBrowserIcon()
+{
+    CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
+    if(!actWdgt->icon().isNull())
+    {
+        return  actWdgt->icon();
+        qDebug() << QString::fromLocal8Bit("获取到的当前webicon")<<actWdgt->icon();
+    }
+    else
+    {
+        return  QIcon("://images/icon/engine.png");
+        qDebug() << QString::fromLocal8Bit("当前图标为固定图标");
+    }
+
 }
 
 void MainWidget::slot_judgeCurrentBrowserIsActive_back()
@@ -472,8 +485,12 @@ void MainWidget::chandleSignalAndSlots()
     //收藏菜单---返回按钮
     connect(m_webRecords,&CollectRecords::sig_returnPage,[=](){m_webStackWgt->setCurrentIndex(0);});
     //收藏菜单---修改按钮
-    connect(m_webRecords,&CollectRecords::sig_changeRecord,[=](){m_webMessage->exec();});
-
+    connect(m_webRecords,&CollectRecords::sig_changeRecord,[=](){WebMessageBox::getInstance()->exec();});
+    //标题栏---收藏地址
+    connect(m_titleBar,&TitleBar::sig_sendCollectRecord,[=](QString address){
+        QIcon icon = slot_getCurrentBrowserIcon();
+        m_webRecords->slot_addToRecordsListWidget(address,icon);
+    });
     /************************************浏览器---历史记录栏************************************/
     //历史记录---返回按钮
     connect(m_webHistory,&WebHistory::sig_returnPage,[=](){m_webStackWgt->setCurrentIndex(0);});

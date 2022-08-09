@@ -14,7 +14,9 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">
+
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
@@ -40,8 +42,43 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <property name="spacing">
-        <number>15</number>
+        <number>0</number>
        </property>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_search">
+         <property name="minimumSize">
+          <size>
+           <width>260</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>300</width>
+           <height>27</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_search">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>搜索</string>
+         </property>
+        </widget>
+       </item>
        <item>
         <spacer name="horizontalSpacer_3">
          <property name="minimumSize">
@@ -74,6 +111,9 @@
            <width>500</width>
            <height>28</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -314,77 +354,250 @@ color:white;
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <property name="spacing">
+      <widget class="QStackedWidget" name="stackedWidget">
+       <property name="styleSheet">
+        <string notr="true">#stackedWidget
+{
+border:none;
+}</string>
+       </property>
+       <property name="currentIndex">
         <number>0</number>
        </property>
-       <item>
-        <widget class="QListWidget" name="listWidget_record1">
-         <property name="styleSheet">
-          <string notr="true">QListWidget
-{
-border:0px solid #e1e1e1;
-border-right-width:2px;
-}</string>
+       <widget class="QWidget" name="page">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="spacing">
+          <number>0</number>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QListWidget" name="listWidget_record2">
-         <property name="styleSheet">
-          <string notr="true">QListWidget
-{
-border:0px solid #e1e1e1;
-border-right-width:2px;
-}</string>
+         <property name="leftMargin">
+          <number>0</number>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QListWidget" name="listWidget_record3">
-         <property name="styleSheet">
-          <string notr="true">QListWidget
-{
-border:0px solid #e1e1e1;
-border-right-width:2px;
-}</string>
+         <property name="topMargin">
+          <number>0</number>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QListWidget" name="listWidget_record4">
-         <property name="styleSheet">
-          <string notr="true">QListWidget
-{
-border:0px solid #e1e1e1;
-border-right-width:2px;
-}</string>
+         <property name="rightMargin">
+          <number>0</number>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QListWidget" name="listWidget_record5">
-         <property name="styleSheet">
-          <string notr="true">QListWidget
-{
-border:0px solid #e1e1e1;
-border-right-width:2px;
-}</string>
+         <property name="bottomMargin">
+          <number>0</number>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QListWidget" name="listWidget_record6">
-         <property name="styleSheet">
-          <string notr="true">QListWidget
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QListWidget" name="listWidget_record1">
+             <property name="styleSheet">
+              <string notr="true">#listWidget_record1
 {
-border:0px solid #e1e1e1;
-border-right-width:2px;
+border:0px solid #3f4042;
+border-right-width:1px;
+background-color: #292a2d;
+}
+
+#listWidget_record1::item
+{
+background-color: #292a2d;
+padding-right:5px;
+color: #d0d0d1;
+}
+
+#listWidget_record1::item:hover
+{
+background-color: #3e3f42;
+padding-right:5px;
+color: white;
 }</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QListWidget" name="listWidget_record2">
+             <property name="styleSheet">
+              <string notr="true">#listWidget_record2
+{
+border:0px solid #3f4042;
+border-right-width:1px;
+background-color: #292a2d;
+}
+
+#listWidget_record2::item
+{
+background-color: #292a2d;
+padding-right:5px;
+color: #d0d0d1;
+}
+
+#listWidget_record2::item:hover
+{
+background-color: #3e3f42;
+padding-right:5px;
+color: white;
+}</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QListWidget" name="listWidget_record3">
+             <property name="styleSheet">
+              <string notr="true">#listWidget_record3
+{
+border:0px solid #3f4042;
+border-right-width:1px;
+background-color: #292a2d;
+}
+
+#listWidget_record3::item
+{
+background-color: #292a2d;
+padding-right:5px;
+color: #d0d0d1;
+}
+
+#listWidget_record3::item:hover
+{
+background-color: #3e3f42;
+padding-right:5px;
+color: white;
+}</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QListWidget" name="listWidget_record4">
+             <property name="styleSheet">
+              <string notr="true">#listWidget_record4
+{
+border:0px solid #3f4042;
+border-right-width:1px;
+background-color: #292a2d;
+}
+
+#listWidget_record4::item
+{
+background-color: #292a2d;
+padding-right:5px;
+color: #d0d0d1;
+}
+
+#listWidget_record4::item:hover
+{
+background-color: #3e3f42;
+padding-right:5px;
+color: white;
+}</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QListWidget" name="listWidget_record5">
+             <property name="styleSheet">
+              <string notr="true">#listWidget_record5
+{
+border:0px solid #3f4042;
+border-right-width:1px;
+background-color: #292a2d;
+}
+
+#listWidget_record5::item
+{
+background-color: #292a2d;
+padding-right:5px;
+color: #d0d0d1;
+}
+
+#listWidget_record5::item:hover
+{
+background-color: #3e3f42;
+padding-right:5px;
+color: white;
+}</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QListWidget" name="listWidget_record6">
+             <property name="styleSheet">
+              <string notr="true">#listWidget_record6
+{
+border:0px solid #3f4042;
+background-color: #292a2d;
+}
+
+#listWidget_record6::item
+{
+background-color: #292a2d;
+padding-right:5px;
+color: #d0d0d1;
+}
+
+#listWidget_record6::item:hover
+{
+background-color: #3e3f42;
+padding-right:5px;
+color: white;
+}</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_2">
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="spacing">
+          <number>0</number>
          </property>
-        </widget>
-       </item>
-      </layout>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QListWidget" name="listWidget_findResults">
+           <property name="styleSheet">
+            <string notr="true">#listWidget_findResults
+{
+border:none;
+background-color: #292a2d;
+}
+
+#listWidget_findResults::item
+{
+color:transparent;
+background-color: #292a2d;
+}
+
+#listWidget_findResults::item:hover
+{
+background-color: #3e3f42;
+}
+
+#listWidget_findResults::item:selected
+{
+color:transparent;
+background-color: white;
+}
+
+#listWidget_findResults::item:!selected
+{
+color:transparent;
+}</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
      </item>
     </layout>
    </item>

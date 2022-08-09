@@ -18,13 +18,17 @@ class WebHistory : public QWidget
 public:
     explicit WebHistory(QWidget *parent = nullptr);
     ~WebHistory();
-
+    void    initWorkUI();
     void    chandleSignalsAndSLots();
 
 public slots:
     void    slot_addToListHistoryWidget(QUrl url);
 
     void    slot_addToListHistoryWidget(const QString &text);
+
+
+private slots:
+    void        slot_clearMarks();//清除痕迹
 
 private:
     Ui::WebHistory *ui;

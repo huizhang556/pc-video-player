@@ -5,6 +5,7 @@
 #include "mainwidget/SearchForm.h"
 #include "login/LoginPersonInfo.h"
 #include "browser/WebDownLoadList.h"
+
 #include <QMenu>
 #include <QPoint>
 #include <QTimer>
@@ -38,6 +39,7 @@ public slots:
     //处理鼠标进入离开输入框
     void    mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event);
     void    receiveMainFormClose();
+    void    setSelectAllTextStatus(QObject *watched, QEvent *event);//lineEdit按下
     void    mouseIsPressReleaseLineEdit(QObject *watched, QEvent *event);//搜索框点击事件
     void    serarchLineEditFacous(QObject *watched, QEvent *event);
     void    slot_switchToLoginPage(int mark,QString nick);
@@ -123,6 +125,8 @@ signals:
     void    sig_sendFavorites();//收藏栏
     void    sig_sendRecords();//历史记录
     void    sig_sendResume();//恢复
+    void    sig_sendCollectRecord(QString address);
+
     //浏览器右键部分信号
     void    sig_sendBrowserCreateTab();//新建窗口
     void    sig_sendBrowserCreateHiddenTab();//新建隐身窗口

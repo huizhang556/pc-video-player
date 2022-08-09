@@ -24,7 +24,6 @@ RecordItem::RecordItem(int type, QIcon icon, QString text, QWidget *parent) :
     chandleSignalAndSLots();
     ui->pushButton_record->setIcon(icon);
     ui->pushButton_record->setText(text);
-    ui->pushButton_record->setToolTip(text);
     ui->label_time->setText(m_dateTime);
     ui->pushButton_modify->setText(QString::fromLocal8Bit("修改"));
     ui->pushButton_delete->setText(QString::fromLocal8Bit("删除"));
@@ -51,18 +50,39 @@ void RecordItem::chandleSignalAndSLots()
 
 void RecordItem::judgeType()
 {
-    if(m_type == 0)
+    if(m_type == 0)//都不显示
     {
+        ui->pushButton_delete->setHidden(true);
         ui->pushButton_modify->setHidden(true);
         ui->label_time->setHidden(true);
     }
-    else if(m_type == 1)
+    else if(m_type == 1)//只有一个按钮（删除）
     {
+        ui->pushButton_delete->setHidden(false);
+        ui->pushButton_modify->setHidden(true);
+        ui->label_time->setHidden(true);
+    }
+    else if(m_type == 2)//有两个按钮
+    {
+        ui->pushButton_delete->setHidden(false);
+        ui->pushButton_modify->setHidden(false);
+        ui->label_time->setHidden(true);
+    }
+    else if(m_type == 3)//两个按钮+一个label
+    {
+        ui->pushButton_delete->setHidden(false);
         ui->pushButton_modify->setHidden(false);
         ui->label_time->setHidden(false);
     }
-    else if(m_type == 2)
+    else if(m_type == 4)//1个按钮+一个label
     {
+        ui->pushButton_delete->setHidden(false);
+        ui->pushButton_modify->setHidden(true);
+        ui->label_time->setHidden(false);
+    }
+    else if(m_type == 6)//1个label
+    {
+        ui->pushButton_delete->setHidden(true);
         ui->pushButton_modify->setHidden(true);
         ui->label_time->setHidden(false);
     }

@@ -14,7 +14,9 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">
+
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <property name="spacing">
@@ -83,7 +85,9 @@
             <property name="styleSheet">
              <string notr="true">#pushButton_title
 {
+color:white;
 border:none;
+font-weight:700;
 }</string>
             </property>
             <property name="text">
@@ -182,6 +186,7 @@ margin-left: 0px;
              <string notr="true">#radioButton_broTime
 {
 margin-right:15px;
+color:white;
 }</string>
             </property>
             <property name="text">
@@ -207,6 +212,7 @@ margin-right:15px;
              <string notr="true">#radioButton_zhanDian
 {
 margin-right:15px;
+color:white;
 }</string>
             </property>
             <property name="text">
@@ -392,6 +398,21 @@ color:white;
               <height>16777215</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">QHeaderView
+{
+font-size:12px;
+}
+
+#treeWidget_dateTime
+{
+border:0px solid #3f4042;
+border-right-width:1px;
+background-color: #313648;
+color: #899ee3;
+font-size:13px;
+}</string>
+            </property>
             <column>
              <property name="text">
               <string>时间节点</string>
@@ -575,17 +596,18 @@ color:white;
              <string notr="true">#listWidget_showHis
 {
 border:none;
+background-color: #292a2d;
 }
 
 #listWidget_showHis::item
 {
 color:transparent;
-background-color: white;
+background-color: #292a2d;
 }
 
 #listWidget_showHis::item:hover
 {
-background-color: #e5f3ff;
+background-color: #3e3f42;
 }
 
 #listWidget_showHis::item:selected
