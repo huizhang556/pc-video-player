@@ -91,7 +91,10 @@ margin:0px;
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(26, 26, 26);</string>
+        <string notr="true">#stackedWidget_player
+{
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0, stop:0 #1a1a1a, stop:1  #082552);
+}</string>
        </property>
        <widget class="QWidget" name="stackedWidget_playerPage1">
         <layout class="QHBoxLayout" name="horizontalLayout">
@@ -772,14 +775,14 @@ border-image: url(:/images/icon/media_download_hover.png);
                <widget class="QPushButton" name="pushButton_curlist">
                 <property name="minimumSize">
                  <size>
-                  <width>22</width>
-                  <height>22</height>
+                  <width>20</width>
+                  <height>20</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>22</width>
-                  <height>22</height>
+                  <width>20</width>
+                  <height>20</height>
                  </size>
                 </property>
                 <property name="styleSheet">

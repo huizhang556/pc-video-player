@@ -37,7 +37,7 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="stackedWidget_titlePage1" native="true">
+     <widget class="QWidget" name="stackedWidget_titlePage1">
       <layout class="QHBoxLayout" name="horizontalLayout_13">
        <property name="spacing">
         <number>0</number>
@@ -161,7 +161,9 @@ color:#ffffff;
 QPushButton:hover
 {
 color: #ff5500;
-}</string>
+}
+
+</string>
                  </property>
                  <property name="text">
                   <string>登录</string>

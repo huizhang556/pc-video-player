@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QTranslator translator1;
-    translator1.load(":/font/qt_zh_CN.qm");
+    translator1.load(":/font/qt_zh_CN.qm");//翻译为中文
     a.installTranslator(&translator1);
     loadGlobalQss::loadAllUIQss();//加载全局样式
     dataBase::creatConnection();//连接数据库

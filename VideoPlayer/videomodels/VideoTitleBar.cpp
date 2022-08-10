@@ -23,6 +23,9 @@ void VideoTitleBar::initUi()
     ui->pushButton_close->setFlat(true);
     ui->pushButton_min->setFlat(true);
     ui->lineEdit_url->setPlaceholderText(QString::fromLocal8Bit("请输入网络资源地址"));
+    ui->pushButton_return->installEventFilter(this);
+    ui->pushButton_return->setIcon(QIcon(":/images/icon/returnhome.png"));
+    ui->pushButton_return->setText(QString::fromLocal8Bit("返回主界面"));
 }
 
 void VideoTitleBar::chandleSignalsAndSlots()
@@ -78,6 +81,22 @@ void VideoTitleBar::mouseDoubleClickEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);
     emit sig_doubleClick();
+}
+
+bool VideoTitleBar::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == ui->pushButton_return)
+    {
+        if(event->type() == QEvent::Enter)
+        {
+            ui->pushButton_return->setIcon(QIcon(":/images/icon/returnhome_hover.png"));
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+            ui->pushButton_return->setIcon(QIcon(":/images/icon/returnhome.png"));
+        }
+    }
+    return QWidget::eventFilter(watched,event);
 }
 
 /*处理样式*/

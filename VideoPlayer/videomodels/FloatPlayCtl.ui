@@ -32,7 +32,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <property name="spacing">
-      <number>2</number>
+      <number>0</number>
      </property>
      <item>
       <widget class="QSlider" name="horizontalSlider_playProgress">
@@ -473,14 +473,14 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba
         <widget class="QPushButton" name="pushButton_fullScreen">
          <property name="minimumSize">
           <size>
-           <width>30</width>
-           <height>30</height>
+           <width>24</width>
+           <height>24</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>30</width>
-           <height>30</height>
+           <width>24</width>
+           <height>24</height>
           </size>
          </property>
          <property name="styleSheet">

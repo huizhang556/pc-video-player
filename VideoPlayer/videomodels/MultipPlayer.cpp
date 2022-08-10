@@ -28,7 +28,7 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
     m_playerState(QMediaPlayer::StoppedState)
 {
     ui->setupUi(this);
-    this->setMinimumSize(1240,800);//1400,800
+    this->setMinimumSize(1320,800);//1400,800
     this->setMouseTracking(true);//开启鼠标跟踪，适应捕捉屏幕
     this->setWindowFlags(Qt::FramelessWindowHint| //去掉标题栏
                          Qt::WindowSystemMenuHint|
@@ -172,11 +172,15 @@ void MultipPlayer::initMainWindow()
     ui->stackedWidget->setCurrentIndex(0);//默认显示空白界面
     ui->stackedWidget->setMinimumSize(976,700);//必须设置最小尺寸，否则播放控制栏位置不正确
 
-    //用户信息（暂时）
-//    m_listWisget1 = new QListWidget;
-//    m_listWisget1->setObjectName(QString::fromLocal8Bit("m_listWisget1"));
-//    m_listWisget1->setMinimumWidth(260);
-//    m_listWisget1->setAlternatingRowColors(false);//交替显示
+    //我的歌单（暂时）
+    m_listWisget1 = new QListWidget;
+    m_listWisget1->setObjectName(QString::fromLocal8Bit("m_listWisget1"));
+    m_listWisget1->setMinimumWidth(260);
+    m_listWisget1->setAlternatingRowColors(false);//交替显示
+    m_listWisget1->verticalScrollBar()->setObjectName(QString::fromUtf8("list1_vertical_scrollBar"));//单独设置样式
+    m_listWisget1->horizontalScrollBar()->setHidden(true);
+    m_listWisget1->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    m_listWisget1->clear();
 
     //播放列表
     m_listWisget2 = new QListWidget;
@@ -220,7 +224,6 @@ void MultipPlayer::initMainWindow()
     m_searchBtn = new QPushButton;//曲库列表搜索按钮
     m_searchBtn->setObjectName(QString::fromLocal8Bit("m_searchBtn"));
     m_searchBtn->setFixedSize(33,30);
-    m_searchBtn->installEventFilter(this);
 
     m_hLayout = new QHBoxLayout(this);
     m_hLayout->insertWidget(0,m_lineEdit);
@@ -240,13 +243,13 @@ void MultipPlayer::initMainWindow()
     //添加抽屉
     m_toolBox = new QToolBox;
     m_toolBox->setFixedWidth(260);
-    m_toolBox->setObjectName(QString::fromLocal8Bit("m_toolBox"));
+    m_toolBox->setObjectName(QString::fromLocal8Bit("m_toolBox_list)"));
 
     QIcon icon_playlist(":/images/icon/playerlist.png");
     QIcon icon_collect(":/images/icon/play_collect_checked.png");
     QIcon icon_internet(":/images/icon/playerinternet.png");
-
     m_toolBox->addItem(m_widget2,icon_playlist,QString::fromLocal8Bit("播放列表"));
+    m_toolBox->addItem(m_listWisget1,icon_playlist,QString::fromLocal8Bit("我的歌单"));
     m_toolBox->addItem(m_listWisget3,icon_collect,QString::fromLocal8Bit("我的收藏"));
     m_toolBox->addItem(m_listWisget4,icon_internet,QString::fromLocal8Bit("播放记录"));
     m_toolBox->layout()->setSpacing(3);//item之间的间距
@@ -587,7 +590,6 @@ void MultipPlayer::loadDefaultLogo()
     m_lineEdit->setPlaceholderText(QString::fromLocal8Bit("输入要搜索的内容^_^"));
     m_lineEdit->setEnabled(false);
 
-    m_searchBtn->setText(QString::fromLocal8Bit(""));
     m_searchBtn->setToolTip(QString::fromLocal8Bit("打开文件"));
 
     ui->pushButton_sound->setIcon(QIcon(":/images/icon/yingling.png"));//图标是正常音量
@@ -598,17 +600,17 @@ void MultipPlayer::loadDefaultLogo()
     ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/playhover.png"));//播放
     ui->pushButton_pauseStart->setFlat(true);
     ui->pushButton_pauseStart->setIconSize(QSize(45,45));
-    ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
+//    ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
 
     ui->pushButton_previous->setIcon(QIcon(":/images/icon/previoushover.png"));//上一首
     ui->pushButton_previous->setFlat(true);
     ui->pushButton_previous->setIconSize(QSize(40,40));
-    ui->pushButton_previous->setToolTip(QString::fromLocal8Bit("上一个"));
+//    ui->pushButton_previous->setToolTip(QString::fromLocal8Bit("上一个"));
 
     ui->pushButton_next->setIcon(QIcon(":/images/icon/nexthover.png"));//下一首
     ui->pushButton_next->setFlat(true);
     ui->pushButton_next->setIconSize(QSize(40,40));
-    ui->pushButton_next->setToolTip(QString::fromLocal8Bit("下一个"));
+//    ui->pushButton_next->setToolTip(QString::fromLocal8Bit("下一个"));
 
     //    QPalette* palette = new QPalette();
     //    palette->setBrush(QPalette::Background, Qt::black);
@@ -1589,28 +1591,13 @@ void MultipPlayer::playlistMouseEnterLeave(QObject *watched, QEvent *event)
         if(event->type() == QEvent::Leave)
         {
 //            qDebug() << "mouse Leave!";
-            m_searchBtn->setStyleSheet("QPushButton"
-                                         "{"
-                                         "color:#ff5c38;"
-                                         "background:rgb(75, 75, 75);"
-                                         "border-top-right-radius:0px;"
-                                         "border-bottom-right-radius:0px;"
-                                         "border-bottom-left-radius:0px;"
-                                         "border-top-left-radius:0px;"
-                                         "}"
-                                         );
-
             m_lineEdit->setStyleSheet("QLineEdit"
                                               "{"
                                               "color:#cccccc;"
                                               "font-size:14px;"
-                                              "background-color: rgb(81, 81, 81);"
-                                              "selection-background-color: #D1DBCB;"
-                                              "border:transparent;"
-                                              "border-top-left-radius:0px;"
-                                              "border-bottom-left-radius:0px;"
-                                              "border-bottom-right-radius:0px;"
-                                              "border-top-right-radius:0px;"
+                                              "background-color: #162a33;"
+                                              "selection-background-color: #eaeaea;"
+                                              "border-bottom-width:1px solid #a31233;"
                                               "padding-left:15px;"
                                               "}"
                                               );
@@ -1620,94 +1607,13 @@ void MultipPlayer::playlistMouseEnterLeave(QObject *watched, QEvent *event)
         if(event->type() == QEvent::Enter)
         {
 //             qDebug() << "mouse Enter!";
-            m_searchBtn->setStyleSheet("QPushButton"
-                                         "{"
-                                         "color:white;"
-                                         "border: 1px solid #ff5c38;"
-                                         "border-left:transparent;"
-                                         "border-top-right-radius:0px;"
-                                         "border-bottom-right-radius:0;px;"
-                                         "border-bottom-left-radius:0px;"
-                                         "border-top-left-radius:0px;"
-                                         "}"
-                                         );
             m_lineEdit->setStyleSheet("QLineEdit"
                                               "{"
-                                              "color:#cccccc;"
+                                              "color: white;"
                                               "font-size:14px;"
-                                              "background-color: rgb(33, 33, 33);"
-                                              "border:1px solid #ff5c38;"
-                                              "border-right:transparnet;"
-                                              "border-top-left-radius:0px;"
-                                              "border-bottom-left-radius:0px;"
-                                              "border-bottom-right-radius:0px;"
-                                              "border-top-right-radius:0px;"
-                                              "padding-left:15px;"
-                                              "}"
-                                              );
-
-        }
-    }
-
-    if(watched == m_searchBtn)//监视器每次只能监视一个对象，这里需要分开写
-    {
-        /*搜索框，搜索按钮鼠标离开*/
-        if(event->type() == QEvent::Leave)
-        {
-//            qDebug() << "mouse Leave!";
-            m_searchBtn->setStyleSheet("QPushButton"
-                                         "{"
-                                         "color:#ff5c38;"
-                                         "background:rgb(75, 75, 75);"
-                                         "border-top-right-radius:0px;"
-                                         "border-bottom-right-radius:0px;"
-                                         "border-bottom-left-radius:0px;"
-                                         "border-top-left-radius:0px;"
-                                         "}"
-                                         );
-
-            m_lineEdit->setStyleSheet("QLineEdit"
-                                              "{"
-                                              "color:#cccccc;"
-                                              "font-size:14px;"
-                                              "background-color: rgb(81, 81, 81);"
-                                              "selection-background-color: #D1DBCB;"
-                                              "border:transparent;"
-                                              "border-top-left-radius:0px;"
-                                              "border-bottom-left-radius:0px;"
-                                              "border-bottom-right-radius:0px;"
-                                              "border-top-right-radius:0px;"
-                                              "padding-left:15px;"
-                                              "}"
-                                              );
-
-        }
-        /*搜索框，搜索按钮鼠标进入*/
-        if(event->type() == QEvent::Enter)
-        {
-//            qDebug() << "mouse Enter!";
-            m_searchBtn->setStyleSheet("QPushButton"
-                                         "{"
-                                         "color:white;"
-                                         "border: 1px solid #ff5c38;"
-                                         "border-left:transparent;"
-                                         "border-top-right-radius:0px;"
-                                         "border-bottom-right-radius:0;px;"
-                                         "border-bottom-left-radius:0px;"
-                                         "border-top-left-radius:0px;"
-                                         "}"
-                                         );
-            m_lineEdit->setStyleSheet("QLineEdit"
-                                              "{"
-                                              "color:#cccccc;"
-                                              "font-size:14px;"
-                                              "background-color: rgb(33, 33, 33);"
-                                              "border:1px solid #ff5c38;"
-                                              "border-right:transparnet;"
-                                              "border-top-left-radius:0px;"
-                                              "border-bottom-left-radius:0px;"
-                                              "border-bottom-right-radius:0px;"
-                                              "border-top-right-radius:0px;"
+                                              "background-color: #162a33;"
+                                              "selection-background-color: #eaeaea;"
+                                              "border-bottom-width:1px solid #a31233;"
                                               "padding-left:15px;"
                                               "}"
                                               );
@@ -1775,13 +1681,13 @@ void MultipPlayer::slot_setPlayStatusStyle_main(bool status)
     if(status)//播放状态
     {
         ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/pausehover.png"));
-        ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("暂停"));
+//        ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("暂停"));
         ui->widget_media_pic->start();
     }
     else//非播放状态
     {
         ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/playhover.png"));//播放
-        ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
+//        ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
         ui->widget_media_pic->pause();
     }
 }

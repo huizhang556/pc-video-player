@@ -23,6 +23,7 @@ public slots:
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 private slots:
     void setTitleText(const QString & text);

@@ -16,34 +16,34 @@ LeftSideBar::~LeftSideBar()
 void LeftSideBar::setSlideBarListText(QStringList strList)
 {
     //节目列表
-//    QStringList strList;
-//    strList<<QString::fromLocal8Bit("最新视剧")
-//               <<QString::fromLocal8Bit("热播电影")
-//               <<QString::fromLocal8Bit("当前视频")
-//               <<QString::fromLocal8Bit("当前音乐")
-//               <<QString::fromLocal8Bit("播放列表")
-//               <<QString::fromLocal8Bit("少儿动漫")
-//               <<QString::fromLocal8Bit("世界纪录")
-//               <<QString::fromLocal8Bit("教育课堂")
-//               <<QString::fromLocal8Bit("游戏直播")
-//               <<QString::fromLocal8Bit("建党百年")
-//               <<QString::fromLocal8Bit("王者荣耀")
-//               <<QString::fromLocal8Bit("健康养生")
-//               <<QString::fromLocal8Bit("资讯速递")
-//               <<QString::fromLocal8Bit("生活解密")
-//               <<QString::fromLocal8Bit("世界地理")
-//               <<QString::fromLocal8Bit("人文艺术")
-//               <<QString::fromLocal8Bit("今日影院")
-//               <<QString::fromLocal8Bit("影视排行")
-//               <<QString::fromLocal8Bit("最新上架")
-//               <<QString::fromLocal8Bit("评分最高")
-//               <<QString::fromLocal8Bit("热门点播")
-//               <<QString::fromLocal8Bit("明星娱乐");//21项目
+    QStringList t_strList;
+    t_strList  <<QString::fromLocal8Bit("精彩推荐")
+               <<QString::fromLocal8Bit("新浏览器")
+               <<QString::fromLocal8Bit("当前视频")
+               <<QString::fromLocal8Bit("当前音乐")
+               <<QString::fromLocal8Bit("播放列表")
+               <<QString::fromLocal8Bit("少儿动漫")
+               <<QString::fromLocal8Bit("世界纪录")
+               <<QString::fromLocal8Bit("教育课堂")
+               <<QString::fromLocal8Bit("游戏直播")
+               <<QString::fromLocal8Bit("建党百年")
+               <<QString::fromLocal8Bit("王者荣耀")
+               <<QString::fromLocal8Bit("健康养生")
+               <<QString::fromLocal8Bit("资讯速递")
+               <<QString::fromLocal8Bit("生活解密")
+               <<QString::fromLocal8Bit("世界地理")
+               <<QString::fromLocal8Bit("人文艺术")
+               <<QString::fromLocal8Bit("今日影院")
+               <<QString::fromLocal8Bit("影视排行")
+               <<QString::fromLocal8Bit("最新上架")
+               <<QString::fromLocal8Bit("评分最高")
+               <<QString::fromLocal8Bit("热门点播")
+               <<QString::fromLocal8Bit("明星娱乐");//21项目
     //传统方法
-    for(int i = 0;i<strList.size();i++)
+    for(int i = 0;i<t_strList.size();i++)
     {
         QIcon strIcon = QIcon(QString(":/images/icon/hot%1.png").arg(i));
-        QString name = strList.at(i);
+        QString name = t_strList.at(i);
         QListWidgetItem *ppItem = new QListWidgetItem(strIcon,name);
         ppItem->setTextAlignment(Qt::AlignVCenter);
         m_listWidget->addItem(ppItem);

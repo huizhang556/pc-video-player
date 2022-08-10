@@ -294,7 +294,7 @@ private:
     QTabWidget                  *m_tabWidget1       = nullptr; //节目列表选项
     CommentTab                  *m_commentTab       = nullptr;
     CustomFileDialog            *m_cusDialog        = nullptr;//自定义选择框界面
-//    QListWidget                 *m_listWisget1      = nullptr;
+    QListWidget                 *m_listWisget1      = nullptr;//我的歌单
     QListWidget                 *m_listWisget2      = nullptr;
     QListWidget                 *m_listWisget3      = nullptr;
     QListWidget                 *m_listWisget4      = nullptr;

@@ -31,28 +31,8 @@ void MainWidget::initOtherWidgetUi()
 
     m_leftSideBar = new LeftSideBar(this);
     m_leftSideBar->setObjectName(QString::fromLatin1("m_leftSideBar"));
-    QStringList list;
-    list << QString::fromLocal8Bit("主界面1")
-         << QString::fromLocal8Bit("浏览器2")
-         << QString::fromLocal8Bit("视频页3")
-         << QString::fromLocal8Bit("视频页4")
-         << QString::fromLocal8Bit("副界面5")
-         << QString::fromLocal8Bit("副界面6")
-         << QString::fromLocal8Bit("副界面7")
-         << QString::fromLocal8Bit("副界面8")
-         << QString::fromLocal8Bit("副界面9")
-         << QString::fromLocal8Bit("副界面10")
-         << QString::fromLocal8Bit("副界面11")
-         << QString::fromLocal8Bit("副界面12")
-         << QString::fromLocal8Bit("副界面13")
-         << QString::fromLocal8Bit("副界面14")
-         << QString::fromLocal8Bit("副界面15")
-         << QString::fromLocal8Bit("副界面16")
-         << QString::fromLocal8Bit("副界面17")
-         << QString::fromLocal8Bit("副界面18")
-         << QString::fromLocal8Bit("副界面19")
-         << QString::fromLocal8Bit("副界面20");
-    m_leftSideBar->setSlideBarListText(list);
+    QStringList list = {};
+    m_leftSideBar->setSlideBarListText(list);//侧边栏目录
     m_leftSideBar->setFixedWidth(170);
 
     m_stackWidget_center = new QStackedWidget(this);
@@ -92,7 +72,7 @@ void MainWidget::initOtherWidgetUi()
     m_progressBar->setFixedSize(100,14);
     m_progressBar->setObjectName(QString::fromLocal8Bit("m_progressBar"));
 
-    opacity = new QGraphicsOpacityEffect(m_progressBar);
+    opacity = new QGraphicsOpacityEffect(m_progressBar);//状态栏进度条设置
 
     m_statusBar = new QStatusBar();
     m_statusBar->setFixedHeight(20);

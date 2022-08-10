@@ -18,11 +18,17 @@ background-color: #2a2a31;
 /*2px边界线颜色在这里设置*/
 }
 
-/*标题栏---内衬*/
+/*主界面标题栏---内衬*/
 #stackedWidget_title
 {
-background-color: #005b98;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #2f4359, stop:1  #03223a);
 color: rgb(85, 255, 0);
+}
+
+/*播放器界面标题栏---内衬*/
+#stackedWidget_videoTitle
+{
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0, stop:0 #055690, stop:1  #081f4a);
 }
 
 /*类选择器在代码里有效，样式表中无效，防止子控件继承样式*/
@@ -32,24 +38,26 @@ MultipPlayer
 background-color: #2a2a31;
 }
 
-/*---侧边栏列表---*/
+/*---左侧节目侧边栏列表---*/
 #listWidget_playlist
 {
-background-color: #005b98;
 font-family:"微软雅黑";
 border:none;
 icon-size:50px;
 font-size:14px;
 text-align:center;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #28405d, stop:1  #223a55);
 }
 
 /*侧边栏列表item*/
 #listWidget_playlist::item
 {
 color: #cccccc;
-background-color: #005b98;
+width:170px;
+height:50px;
 min-height:50px;/*有效设置item高度*/
 padding-left:20px;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #28405d, stop:1  #223a55);
 }
 
 #listWidget_playlist::item:hover
@@ -57,26 +65,26 @@ padding-left:20px;
 show-decoration-selected:5;
 border-style:outset;
 color:#FF7F24;
-background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #01FAFF,stop:1  #26B4FF);
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #630f34, stop:1  #c2152f);
 }
 
 #listWidget_playlist::item:selected
 {
-background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #01FAFF,stop:1  #26B4FF);
 color: #005e9e;
+font-weight: bold;
 }
 
 /*上次选择后保留的状态，鼠标离开后显示*/
 #listWidget_playlist::item:selected:!active
 {
-background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #01FAFF,stop:1  #26B4FF);
-color: #005e9e;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #0f2028, stop:1  #2d5364);
+color: #008bb5;
 }
 
 /*侧边栏底部--展开按钮*/
 #m_expandBtn
 {
-background-color: #005b98;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #28405d, stop:1  #223a55);
 text-align: center;
 icon-size:35px;
 font-family:"微软雅黑";
@@ -87,7 +95,7 @@ border:none;
 
 #m_expandBtn:hover
 {
-background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #01FAFF,stop:1  #26B4FF);
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #630f34, stop:1  #c2152f);
 color:#FF7F24;
 }
 
@@ -102,10 +110,10 @@ WebMessageBox
 background-color: #ffffff;
 }
 
-/*中心控件承载区域*/
+/*中心控件承载区域（历史和收藏的大背景）*/
 #m_webStackWgt
 {
-background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #081f4a,stop:1  #0079ff);
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #2f4359, stop:1  #03223a);
 border:none;
 }
 
@@ -773,19 +781,28 @@ background-color:rgb(101,210,105);
 padding-left: 5px;
 }
 
-/*通过icon-size来撑大item的高度*/
-QToolBox
+/*
+QToolTip
 {
-border-right:2px;
-background-color:#3d3d3d;
- icon-size: 25px; 
+border: 1px solid black;
+background-color: #D1DBCB;
+padding: 1px;
+border-radius: 3px;
+opacity: 50;
+}
+*/
+
+#lcdNumber
+{
+border:none;
+/*font:bold italic 18px "微软雅黑";*/
 }
 
-/*节目列表tabwidget*/
+/********节目列表tabwidget----开始**********/
 #m_tabWidget1
 {
+background-color: transparent;
 outline:none;
-background-color:#3d3d3d;
 color:black;
 }
 
@@ -815,13 +832,21 @@ font-weight:bold;
 border-bottom:2px solid #ff5c38;
 }
 
+/*通过icon-size来撑大item的高度*/
+QToolBox
+{
+border-right:2px;
+background-color:#3d3d3d;
+ icon-size: 25px; 
+}
+
 /*抽屉控件,有效*/
 QToolBox::tab
 {
-/*border: 2px groove transparent; */
 border-bottom:2px groove blue; 
 border-radius:2px;
 background-color:#3d3d3d;
+color: yellow;
 text-align: center; 
 }
 
@@ -829,120 +854,85 @@ text-align: center;
 QToolBox::tab:hover
 {
 background-color:rgb(101,210,105);
-color:lightgreen;
+color: white;
 }
 
 /*tab样式-selected*/
 QToolBox::tab:selected
 {
-/*background-color:#7f7f7f;*/
-background-color:rgb(101,210,105);
-/*color:lightgreen;*/
+background-color: #36a5c1;
+color: white;
+font-weight: bold;
 }
 
-/*
-QToolTip
-{
-border: 1px solid black;
-background-color: #D1DBCB;
-padding: 1px;
-border-radius: 3px;
-opacity: 50;
-}
-*/
-
-#lcdNumber
-{
-border:none;
-/*font:bold italic 18px "微软雅黑";*/
-}
-
-/*m_widget1*/
+/*右侧整个播放列表父亲m_widget1*/
 #m_widget1
 {
+background-color: #072957；
 border:1px solid transapent;
-border-left-color: #838383;
+border-left-color: #3f4042;
 }
 
-/*搜索框*/
+/*toolbox承载区域控件*/
+
+
+/*搜索框(事件监视器控制)*/
 QToolBox QWidget QLineEdit
 {
 color:#cccccc;
 font-family:"微软雅黑";
 font-size:14px;
-background-color: rgb(81, 81, 81);
-selection-background-color: #D1DBCB;
-/*border:2px solid #76797C;*/
-border:transparent;
-border-top-left-radius:0;
-border-top-right-radius:0;
-border-bottom-right-radius:0;
-border-bottom-left-radius:0;
-border-right:-1px;
-padding-right:-1px;
+background-color: #162a33;
+selection-background-color: #eaeaea;
 padding-left:15px;
+border:none;
 }
 
-QToolBox QWidget QLineEdit:hover
-{
-background-color: rgb(33, 33, 33);;
-border-right:-2px;
-border:1px solid transparent;
-}
-
-/*搜索按钮*/
+/*搜索按钮(事件监视器控制)*/
 QToolBox QWidget QPushButton
 {
-color:#ff5c38;
-border:1px solid transparent;
-background-color: rgb(75, 75, 75);
+border: none;
+background-color: #162a33;
 image: url(:/images/icon/file_open.png);
-padding:2px;
+padding:5px;
 }
 
 /*搜索按钮-按下*/
 QToolBox QWidget QPushButton:pressed
 {
 border-style: inset;
-background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
-stop:0.494318 rgba(134, 198, 233, 255), stop:0.5 rgba(206, 234, 248, 255));
-border: 1px solid #5F92B2;
+background-color: #162a33;
 }
 
 /*搜索按钮-鼠标滑过*/
 QToolBox QWidget QPushButton:hover
 {
-color:white;
-/*border: 1px solid #D1DBCB;*/
-padding:2px;
+padding:5px;
 image: url(:/images/icon/file_open_hover.png);
+background-color: #162a33;
 }
 
+/**************************播放器右侧列表设置---开始****************************/
 /*QListWidget播放列表*/
 QToolBox QWidget  QListWidget
 {
-/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0,
-stop:0 rgba(231,80,229, 255), 
-stop:1 rgba(7,208,255, 255));*/
-background-color:#3d3d3d;
 font-family:"Mircrosoft YaHei";
-border:none;/*去掉边框线*/
+border:none;
+background-color: #333333;
 }
 
 QToolBox QWidget  QListWidget::item
 {
 color:#cccccc;
-background-color:#3a3a3a;
 min-height:30px;
 font-size:15px;
+background-color: #333333;
 }
 
 QToolBox QWidget  QListWidget::item:hover
 {
 show-decoration-selected:5;
- /*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
-       stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
-background-color:#707070;
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #5104e4, stop:1  #8e2ce1);
 border-style:outset;
 color:white;
 font-size:18px;	
@@ -950,45 +940,47 @@ font-size:18px;
 
 QToolBox QWidget  QListWidget::item:selected
 {
-background:#382e15;
 padding:0px;
 margin:0px;
 color:#ff5c38;
 font-size:18px;
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #c11432, stop:1  #730f33);
 }
 
-/*上次选择后保留的状态，鼠标离开后显示*/
+/*上次选择后保留的状态，鼠标离开后显示,会影响selected*/
 QToolBox QWidget  QListWidget::item:selected:!active
 {
 border-width:0px;
-background:#382e15;
 padding:0px;
 margin:0px;
 color: rgb(85, 255, 0);
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #c11432, stop:1  #730f33);
 }
 
-/*单独的统一放在通用样式之前设置*/
-#list2_vertical_scrollBar::handle:vertical,#list3_vertical_scrollBar::handle:vertical,#list4_vertical_scrollBar::handle:vertical
+/**************************播放器右侧列表设置---完毕****************************/
+
+/*四个列表的滚动条---单独的统一放在通用样式之前设置*/
+#list1_vertical_scrollBar::handle:vertical,#list2_vertical_scrollBar::handle:vertical,#list3_vertical_scrollBar::handle:vertical,#list4_vertical_scrollBar::handle:vertical
 {
 background-color:#65d269;
 border-radius:5px;
 }
 
 /*鼠标放到滑块上面样式*/
-#list2_vertical_scrollBar::handle:vertical:hover,#list3_vertical_scrollBar::handle:vertical:hover,#list4_vertical_scrollBar::handle:vertical:hover
+#list1_vertical_scrollBar::handle:vertical:hover,#list2_vertical_scrollBar::handle:vertical:hover,#list3_vertical_scrollBar::handle:vertical:hover,#list4_vertical_scrollBar::handle:vertical:hover
 {
 background-color:#c0ff02;
 border-radius:5px;
 }
 
 /*滚动条滚过部分样式*/
-#list2_vertical_scrollBar::sub-page:vertical,#list3_vertical_scrollBar::sub-page:vertical,#list4_vertical_scrollBar::sub-page:vertical
+#list1_vertical_scrollBar::sub-page:vertical,#list2_vertical_scrollBar::sub-page:vertical,#list3_vertical_scrollBar::sub-page:vertical,#list4_vertical_scrollBar::sub-page:vertical
 {
 background-color:#038387;
 }
 
 /*滚动条未滚过部分样式*/
-#list2_vertical_scrollBar::add-page:vertical,#list3_vertical_scrollBar::add-page:vertical,#list4_vertical_scrollBar::add-page:vertical
+#list1_vertical_scrollBar::add-page:vertical,#list2_vertical_scrollBar::add-page:vertical,#list3_vertical_scrollBar::add-page:vertical,#list4_vertical_scrollBar::add-page:vertical
 {
 background-color:#038387;
 }
