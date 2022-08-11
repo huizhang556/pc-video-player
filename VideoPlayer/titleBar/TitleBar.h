@@ -49,6 +49,7 @@ public slots:
     void    slot_clearWebLineEditText();//清除weblineedit文字
     void    slot_setWebProgressBarValue(int value);//网页加载时，显示加载进度
     void    slot_receiveBlankWebTab();//接收tabbar添加一个空白网页的请求
+    void    slot_clearAllPopupUi();
 
 //私有槽函数，外部不能直接访问
 private slots:

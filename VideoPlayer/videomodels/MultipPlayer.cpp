@@ -1282,6 +1282,14 @@ void MultipPlayer::slot_showPlayerErrot(QMediaPlayer::Error error)
     }
 }
 
+void MultipPlayer::slot_clearAllPopupUi()
+{
+    if(!VideoProgressBar::getInstance()->isHidden()) VideoProgressBar::getInstance()->hide();
+    if(!PlayOrderForm::getInstance()->isHidden()) PlayOrderForm::getInstance()->hide();
+    if(!m_adjustBright->isHidden()) m_adjustBright->hide();
+    if(!m_muteDlg->isHidden()) m_muteDlg->hide();
+}
+
 /*下一首播放按钮*/
 void MultipPlayer::on_pushButton_next_clicked()
 {
@@ -2521,6 +2529,10 @@ void MultipPlayer::slot_setVideTitleBar(int index)
 /*监听事件*/
 bool MultipPlayer::eventFilter(QObject *watched, QEvent *event)
 {
+    if(event->type() == QEvent::MouseButtonPress && watched == this)
+    {
+        slot_clearAllPopupUi();
+    }
     QMouseEvent *mousevent = static_cast<QMouseEvent*>(event);
     volumeAdjustShowUi(watched,mousevent);//视频参数调节界面
     playlistMouseEnterLeave(watched,mousevent);//节目列表搜索框

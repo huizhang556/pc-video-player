@@ -815,6 +815,7 @@ bool TitleBar::eventFilter(QObject *watched, QEvent *event)
        //鼠标单击空白处，获得焦点
         ui->lineEditSearch->clearFocus();
         this->setFocus();
+        slot_clearAllPopupUi();
     }
     QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);//转换为鼠标事件
     mouseIsEnterLeaveLineEdit(watched,mouseEvent);//搜索框鼠标进入离开,处理样式
@@ -1138,6 +1139,14 @@ void TitleBar::slot_receiveBlankWebTab()
     if(blankUrl.isEmpty()) return;
     emit sig_sendBlankUrl(blankUrl);
     qDebug() << "m_titleBar received add blankurl = " << blankUrl;
+}
+
+void TitleBar::slot_clearAllPopupUi()
+{
+    if(!m_loginForm->isHidden()) m_loginForm->hide();
+    if(!m_searchForm->isHidden()) m_searchForm->hide();
+    if(!m_listWdgt_history->isHidden()) m_listWdgt_history->hide();
+    if(!m_listWdgt_engine->isHidden()) m_listWdgt_engine->hide();
 }
 
 

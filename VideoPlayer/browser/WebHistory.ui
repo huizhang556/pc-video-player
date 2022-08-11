@@ -14,9 +14,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-
-</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <property name="spacing">
@@ -112,9 +110,28 @@ font-weight:700;
             <property name="styleSheet">
              <string notr="true">#lineEdit_searchHis
 {
-;
+color:#cccccc;
+font-family:&quot;微软雅黑&quot;;
+font-size:15px;
+background-color: #5e5e61;
+selection-background-color:#aecbfa;
+border-right-width:0px;
+border-top-left-radius:0;
+border-top-right-radius:0;
+border-bottom-right-radius:0;
+border-bottom-left-radius:0;
+padding-right:2px;
+padding-left:2px;
+}
 
-}</string>
+#lineEdit_searchHis:hover
+{
+background-color: #48484c;
+border-right:-2px;
+color: #9094e9;
+}
+
+</string>
             </property>
            </widget>
           </item>
@@ -122,24 +139,36 @@ font-weight:700;
            <widget class="QPushButton" name="pushButton_searchHis">
             <property name="minimumSize">
              <size>
-              <width>80</width>
+              <width>75</width>
               <height>26</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>16777215</width>
+              <width>75</width>
               <height>26</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">#pushButton_searchHis
 {
-margin-left: 0px;
+background-color:#0189b6;
+border-left-width:0px;
+border-right-width:0px;
+border-top-left-radius:0;
+border-top-right-radius:0;
+border-bottom-right-radius:0;
+border-bottom-left-radius:0;
+color:white;
+}
+
+#pushButton_searchHis:hover
+{
+color: #b61432;
 }</string>
             </property>
             <property name="text">
-             <string>搜索历史记录</string>
+             <string>搜  索</string>
             </property>
            </widget>
           </item>
@@ -239,13 +268,19 @@ color:white;
 {
 margin-right: 15px;
 border-radius:5px;
-background-color: #404244;
 color:white;
+border-style:outset;
+background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+stop:0 		#2394b2, 
+stop:0.25 	#5ac3dd, 
+stop:0.5 	#46b4cf, 
+stop:0.75 	#2f9ebb, 
+stop:1 		#2093b1);
 }
 #pushButton_clearPage:hover
 {
 border-radius:5px;
-background-color: #262829;
+background-color: #274b5b;
 color:white;
 }</string>
             </property>
@@ -273,13 +308,19 @@ color:white;
 {
 margin-right: 15px;
 border-radius:5px;
-background-color: #404244;
 color:white;
+border-style:outset;
+background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+stop:0 		#2394b2, 
+stop:0.25 	#5ac3dd, 
+stop:0.5 	#46b4cf, 
+stop:0.75 	#2f9ebb, 
+stop:1 		#2093b1);
 }
 #pushButton_clearRecords:hover
 {
 border-radius:5px;
-background-color: #262829;
+background-color: #274b5b;
 color:white;
 }</string>
             </property>
@@ -307,14 +348,19 @@ color:white;
 {
 margin-right: 15px;
 border-radius:5px;
-background-color: #404244;
 color:white;
+border-style:outset;
+background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+stop:0 		#2394b2, 
+stop:0.25 	#5ac3dd, 
+stop:0.5 	#46b4cf, 
+stop:0.75 	#2f9ebb, 
+stop:1 		#2093b1);
 }
-
 #pushButton_delete:hover
 {
 border-radius:5px;
-background-color: #262829;
+background-color: #274b5b;
 color:white;
 }</string>
             </property>
@@ -327,27 +373,33 @@ color:white;
            <widget class="QPushButton" name="pushButton_return">
             <property name="minimumSize">
              <size>
-              <width>75</width>
+              <width>60</width>
               <height>23</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>75</width>
+              <width>60</width>
               <height>23</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">#pushButton_return
-{
+{;
 border-radius:5px;
-background-color: #404244;
 color:white;
+border-style:outset;
+background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+stop:0 		#2394b2, 
+stop:0.25 	#5ac3dd, 
+stop:0.5 	#46b4cf, 
+stop:0.75 	#2f9ebb, 
+stop:1 		#2093b1);
 }
 #pushButton_return:hover
 {
 border-radius:5px;
-background-color: #262829;
+background-color: #274b5b;
 color:white;
 }</string>
             </property>

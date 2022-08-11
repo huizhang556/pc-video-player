@@ -130,6 +130,8 @@ void CollectRecords::slot_addToRecordsListWidget(const QString &url = "", QIcon 
     //信号与槽函数
     //点击记录
     connect(itemWidget1,&MiniRecordItem::sig_item_record,[=](QString text){
+        QWidget *parentListWgt = itemWidget1->nativeParentWidget();
+        qDebug() <<parentListWgt->objectName();
 //        QString itemText = getCurrentRecordItemText( text);
     });
     connect(itemWidget2,&RecordItem::sig_item_record,[=](QString text){
@@ -160,25 +162,25 @@ void CollectRecords::findSearchCollectRecords(QString name)
     if(name.isEmpty())
     {
         for(int i = 0; i < ui->listWidget_findResults->model()->rowCount(); i++)
-            ui->listWidget_findResults->setRowHidden(i,false);
+            ui->listWidget_findResults->setRowHidden(i,false);//字符为空，全部不隐藏
 
     }
-    else
+    else//字符不为空
     {
         for(int i = 0; i <ui->listWidget_findResults->model()->rowCount(); i++)
         {
-            ui->listWidget_findResults->setRowHidden(i,true);
+            ui->listWidget_findResults->setRowHidden(i,true);//先全部隐藏
             QString curname = "";
             QAbstractItemModel *model = ui->listWidget_findResults->model();
-            QModelIndex index;
+            QModelIndex index;//索引是一种特殊的数据结构，需要row 和 col 表述出来
             for(int j = 0; j <ui->listWidget_findResults->model()->columnCount(); j++)
             {
                 index = model->index(i,j);
-                curname += model->data(index).toString();
+                curname += model->data(index).toString();//具体的item内容
             }
             curname.remove(QRegExp("\\s"));
-            if(curname.contains(name,Qt::CaseInsensitive)) //CaseSensitive:敏感
-               ui->listWidget_findResults->setRowHidden(i,false);
+            if(curname.contains(name,Qt::CaseInsensitive)) //CaseSensitive:敏感，如果item内容包含搜索的name
+               ui->listWidget_findResults->setRowHidden(i,false);//在隐藏的item中有符合的，再显示出来
         }
     }
 }

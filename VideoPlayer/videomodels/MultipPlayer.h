@@ -162,6 +162,8 @@ public slots:
 
     void    slot_showPlayerErrot(QMediaPlayer::Error error);//播放错误提示
 
+    void    slot_clearAllPopupUi();//清理所有弹出的界面
+
 private slots:
     void    on_time();
 

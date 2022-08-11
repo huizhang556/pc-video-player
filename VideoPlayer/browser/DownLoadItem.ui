@@ -254,13 +254,13 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #01FAFF,s
               <widget class="QLabel" name="label_prosize">
                <property name="minimumSize">
                 <size>
-                 <width>95</width>
+                 <width>110</width>
                  <height>14</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>95</width>
+                 <width>110</width>
                  <height>14</height>
                 </size>
                </property>

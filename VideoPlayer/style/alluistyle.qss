@@ -18,6 +18,17 @@ background-color: #2a2a31;
 /*2px边界线颜色在这里设置*/
 }
 
+/*********QWebEngineView********/
+QWebEngineView
+{
+border:none;
+}
+
+QWebEngineView:selected
+{
+border:none;
+}
+
 /*主界面标题栏---内衬*/
 #stackedWidget_title
 {
