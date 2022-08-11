@@ -77,7 +77,7 @@ ExitDialog::ExitDialog(QString title, QString warn, QWidget *parent) :
     ui->pushButton_ok->setStyleSheet("border:2px solid #9e9e9e;background-color:rgb(101,210,105);font-size:14px;");
     m_iniPath = Global::appDirPath + "/config/config.ini";
     ui->label->setText(title);
-    ui->label_3->setText(warn);
+    ui->label_warning->setText(warn);
     //确定关闭
     connect(ui->pushButton_ok,&QPushButton::clicked,[=](){
         /*可以做一些类似数据保存的其他操作*/
@@ -124,6 +124,11 @@ void ExitDialog::setIni()
         pSet = NULL;
     }
 
+}
+
+void ExitDialog::setCloseText(QString waring)
+{
+    ui->label_warning->setText(waring);
 }
 
 /*按下事件*/

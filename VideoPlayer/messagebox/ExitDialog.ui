@@ -54,12 +54,12 @@ border:2px solid rgb(64, 66, 68);
        <string/>
       </property>
      </widget>
-     <widget class="QLabel" name="label_3">
+     <widget class="QLabel" name="label_warning">
       <property name="geometry">
        <rect>
-        <x>130</x>
+        <x>100</x>
         <y>40</y>
-        <width>181</width>
+        <width>301</width>
         <height>30</height>
        </rect>
       </property>
@@ -71,7 +71,10 @@ color: rgb(0, 0, 0);
 }</string>
       </property>
       <property name="text">
-       <string>您确定要关闭当前界面吗？</string>
+       <string>您确定要退出软件？</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
      <widget class="QCheckBox" name="checkBox">

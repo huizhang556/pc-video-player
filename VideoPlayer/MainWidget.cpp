@@ -1138,6 +1138,16 @@ void MainWidget::closeEvent(QCloseEvent *event)
 {
     //重写关闭事件，就不需要关闭按钮的操作
     if(m_pExitDlg->isShow)
+    {
+        if(WebDownLoadList::getInstance()->getWorkCounts()>0)
+        {
+            m_pExitDlg->setCloseText(QString::fromLocal8Bit("当前有文件下载，是否确需关闭？"));
+        }
+        else
+        {
+            m_pExitDlg->setCloseText(QString::fromLocal8Bit("您确定要退出软件吗？"));
+        }
+    }
         m_pExitDlg->exec();
      if(!m_isClose)
      {

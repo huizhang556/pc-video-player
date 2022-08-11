@@ -23,6 +23,8 @@ public:
     void setIni(); 
 
 public:
+    void    setCloseText(QString waring);
+
     bool   isShow;//必须为公有成员
 
 protected:

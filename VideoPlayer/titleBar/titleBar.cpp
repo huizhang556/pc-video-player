@@ -4,6 +4,7 @@
 #include <QDateTime>
 #include <QRegExp>
 #include <QPalette>
+#include <QMessageBox>
 #include <QRegExpValidator>
 #include <QDesktopServices>
 #include <QPropertyAnimation>
@@ -187,6 +188,8 @@ void TitleBar::chandleSignalAndSLots()
     connect(this,&TitleBar::sig_winClose,[=](){
         if(!m_listWdgt_history->isHidden()) m_listWdgt_history->close();
         if(!m_listWdgt_engine->isHidden()) m_listWdgt_engine->close();
+        //这里需要做判断，是否有下载文件
+        if(!WebDownLoadList::getInstance()->isHidden()) WebDownLoadList::getInstance()->close();
     });
     //还原时，关闭历史搜索框
     connect(this,&TitleBar::sig_winNormal,m_searchForm,&SearchForm::closeSearchForm);
