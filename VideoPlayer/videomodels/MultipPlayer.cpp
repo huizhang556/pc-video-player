@@ -328,7 +328,7 @@ void MultipPlayer::initMainWindow()
 
     m_foldBtn = new QPushButton(ui->stackedWidget);//父亲必须指定，要不然显示不出来
     m_foldBtn->setObjectName(QString::fromLocal8Bit("m_foldBtn"));
-    m_foldBtn->setFixedSize(40,60);
+    m_foldBtn->setFixedSize(25,60);
 //    m_foldBtn->setAttribute(Qt::WA_TranslucentBackground,true);//没效果，得定制
     m_foldBtn->setHidden(true);//初始化隐藏按钮
 

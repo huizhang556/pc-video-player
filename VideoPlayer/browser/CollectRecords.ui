@@ -46,13 +46,13 @@
         <widget class="QLineEdit" name="lineEdit_search">
          <property name="minimumSize">
           <size>
-           <width>200</width>
+           <width>220</width>
            <height>27</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>300</width>
+           <width>245</width>
            <height>27</height>
           </size>
          </property>
@@ -134,9 +134,12 @@ color: #b61432;
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::MinimumExpanding</enum>
+         </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>40</width>
+           <width>300</width>
            <height>20</height>
           </size>
          </property>

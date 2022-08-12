@@ -1,11 +1,9 @@
 ﻿#include "CollectRecords.h"
 #include "ui_CollectRecords.h"
-#include "browser/RecordItem.h"
 #include "browser/WebMessageBox.h"
-#include "browser/MiniRecordItem.h"
 
-int CollectRecords::m_singleCount = 40;
 #include <QDebug>
+int CollectRecords::m_singleCount = 10;
 
 CollectRecords::CollectRecords(QWidget *parent) :
     QWidget(parent),
@@ -87,6 +85,19 @@ void CollectRecords::chandleSignalsAndSlots()
     });
 }
 
+/***********************对于findChild和findChildren说明************************/
+//函数原型：T QObject::findChild(const QString &name = QString(), Qt::FindChildOptions options = Qt::FindChildrenRecursively) const
+//函数原型：QList< T > QObject::findChildren(const QString &name = QString(), Qt::FindChildOptions options = Qt::FindChildrenRecursively) const
+//Qt::FindDirectChildrenOnly（只查看对象的直接子对象），Qt::FindChildrenRecursively（查看对象的所有子对象，递归搜索）
+//圆括号内不写明对象名，说明查找的是父对象下的所有子对象；写对象名，说明查找的是某一个特定的对象
+//查找父类下objectName为button1的直接子对象
+//QPushButton *button = parentWidget->findChild<QPushButton *>("button1", Qt::FindDirectChildrenOnly);
+//查找父类下所有的直接子对象
+//QListWidget *list = parentWidget->findChild<QListWidget *>(QString(), Qt::FindDirectChildrenOnly);
+//findChildren 跟 findChild 区别是findChildren 返回的是list
+/***********************对于findChild和findChildren说明************************/
+
+/**根据按钮文字查找listwidgetitem文字**/
 QString CollectRecords::getCurrentRecordItemText(QListWidget *listWidget, QString &text)
 {
     for(int i = 0; i < listWidget->count(); i++)
@@ -94,12 +105,51 @@ QString CollectRecords::getCurrentRecordItemText(QListWidget *listWidget, QStrin
         QWidget *itemWidget = listWidget->itemWidget(listWidget->item(i));
         if(nullptr != itemWidget)
         {
-            QPushButton *itemBtn = itemWidget->findChild<QPushButton*>("pushButton_record");
+            QPushButton *itemBtn = itemWidget->findChild<QPushButton*>("pushButton_record");//可以指定查找范围（最近一级的还是所有的）
             if(nullptr != itemBtn && itemBtn->text() == text)
                 return listWidget->item(i)->text();
         }
     }
 }
+
+/**根据按钮文字查找listwidgetitem**/
+QListWidgetItem *CollectRecords::getCurrentRecordParentItem(QListWidget *listWidget, QString &text)
+{
+    for(int i = 0; i < listWidget->count(); i++)
+    {
+        QWidget *itemWidget = listWidget->itemWidget(listWidget->item(i));
+        if(nullptr != itemWidget)
+        {
+            QPushButton *itemBtn = itemWidget->findChild<QPushButton*>("pushButton_record");//可以指定查找范围（最近一级的还是所有的）
+            if(nullptr != itemBtn && itemBtn->text() == text)
+                return listWidget->item(i);
+        }
+    }
+}
+
+/*根据listwidgetitem文本查找按钮文本*/
+QString CollectRecords::getCurrentRecordItemButtonText(QListWidgetItem *item)
+{
+    QWidget* itemWidget = ui->listWidget_findResults->itemWidget(item);
+    if(nullptr != itemWidget)
+    {
+        QPushButton *itemBtn = itemWidget->findChild<QPushButton*>("pushButton_record");//可以指定查找范围（最近一级的还是所有的）
+        if(nullptr != itemBtn)
+        return itemBtn->text();
+    }
+}
+
+QPushButton *CollectRecords::getCurrentRecordItemButton(QListWidgetItem *item)
+{
+    QWidget* itemWidget = item->listWidget()->itemWidget(item);
+    if(nullptr != itemWidget)
+    {
+        QPushButton *itemBtn = itemWidget->findChild<QPushButton*>("pushButton_record");//可以指定查找范围（最近一级的还是所有的）
+        if(nullptr != itemBtn)
+        return itemBtn;
+    }
+}
+
 
 void CollectRecords::slot_addToRecordsListWidget(QUrl url)
 {
@@ -111,6 +161,24 @@ void CollectRecords::slot_showWebMessageWindow(QString url, QString name)
 {
     WebMessageBox::getInstance()->setWebMessageInforation(url,name);
     WebMessageBox::getInstance()->exec();
+}
+
+void CollectRecords::slot_updateCurrentRecord_recordItem(QListWidgetItem *item, const QString &url, const QString &rename)
+{
+    //01 根据url（不变）找到listwidgetitem
+    //02 根据找到的listwidgetitem，查找pushbutton
+    //03 设置按钮文字
+    if(item->text() == url)//群发性的，必须判断哪一个item符合，否则所有都会改变
+    getCurrentRecordItemButton(item)->setText(rename);
+}
+
+void CollectRecords::slot_updateCurrentRecord_miniRecordItem(QListWidgetItem *item, const QString &url, const QString &rename)
+{
+    //01 根据url（不变）找到listwidgetitem
+    //02 根据找到的listwidgetitem，查找pushbutton
+    //03 设置按钮文字
+    if(item->text() == url)//群发性的，必须判断哪一个item符合，否则所有都会改变
+    getCurrentRecordItemButton(item)->setText(rename);
 }
 
 void CollectRecords::slot_addToRecordsListWidget(const QString &url = "", QIcon icon = QIcon(""), const QString &title = "")//默认参数
@@ -127,33 +195,88 @@ void CollectRecords::slot_addToRecordsListWidget(const QString &url = "", QIcon 
     item2->setSizeHint(itemWidget1->size()-QSize(50,0));
     ui->listWidget_findResults->addItem(item2);
     ui->listWidget_findResults->setItemWidget(item2,itemWidget2);
-    //信号与槽函数
-    //点击记录
+
+    /****************************信号与槽函数****************************************/
+    //点击记录1 跳转
     connect(itemWidget1,&MiniRecordItem::sig_item_record,[=](QString text){
-        QWidget *parentListWgt = itemWidget1->nativeParentWidget();
-        qDebug() <<parentListWgt->objectName();
-//        QString itemText = getCurrentRecordItemText( text);
+        emit sig_sendItemText(item1->text());//添加tab
+        emit sig_returnPage();//返回浏览器
+        qDebug() << QString::fromLocal8Bit("item1点击的存储名称：") << text<< QString::fromLocal8Bit("点击的存储url：") << item1->text();
+
     });
+     //点击记录2 跳转
     connect(itemWidget2,&RecordItem::sig_item_record,[=](QString text){
-
+        emit sig_sendItemText(item2->text());//添加tab
+        emit sig_returnPage();//返回浏览器
+        qDebug() << QString::fromLocal8Bit("item2点击的存储名称：") << text << QString::fromLocal8Bit("点击的存储url：") << item2->text();
     });
-    //修改
-    connect(itemWidget1,&MiniRecordItem::sig_item_modify,[=](QString text){
 
+    //修改思路：01.自己修改 02.查找修改 （统一使用url查找，再修改）
+    //修改1
+    connect(itemWidget1,&MiniRecordItem::sig_item_modify,[=](QString text,QPushButton *curBtn){
+        QString itemText = getCurrentRecordItemText(item1->listWidget(),text);
+        slot_showWebMessageWindow(itemText,text);//url nickname
     });
-    connect(itemWidget2,&RecordItem::sig_item_modify,[=](QString text){
+    //修改2
+    connect(itemWidget2,&RecordItem::sig_item_modify,[=](QString text,QPushButton *curBtn){
         QString itemText = getCurrentRecordItemText(ui->listWidget_findResults,text);
-        slot_showWebMessageWindow(itemText,text);
+        slot_showWebMessageWindow(itemText,text);//url nickname
     });
-    //删除
+
+    //修改生效
+    connect(WebMessageBox::getInstance(),&WebMessageBox::sig_sendTitleChanged,[=](QString url, QString rename){
+                slot_updateCurrentRecord_recordItem(item1,url,rename);
+                slot_updateCurrentRecord_miniRecordItem(item2,url,rename);
+    });
+
+    //删除思路：01.自己删除 02.查找删除 03.标题存储删除 （统一使用url）
+    //删除1
     connect(itemWidget1,&MiniRecordItem::sig_item_delete,[=](){
+        //03-标题存储删除(先发信号)
+        emit sig_sendDeleteItemUrl(item1->text());//标题栏自己删除
+        qDebug() << QString::fromLocal8Bit("item1删除点击的存储url：") << item1->text();
+
+        //01-自己删除
         itemWidget1->deleteLater();
-    });
-    connect(itemWidget2,&RecordItem::sig_item_delete,[=](){
+        QListWidgetItem *t_item1 = item1->listWidget()->takeItem(item1->listWidget()->row(item1));
+        delete t_item1;
+
+        //02-查找删除{
         itemWidget2->deleteLater();
-        QListWidgetItem *item = ui->listWidget_findResults->takeItem(ui->listWidget_findResults->row(item2));
-        delete item;
+        QListWidgetItem *t_item2 = ui->listWidget_findResults->takeItem(ui->listWidget_findResults->row(item2));
+        delete t_item2;
     });
+    //删除2
+    connect(itemWidget2,&RecordItem::sig_item_delete,[=](){
+        //03-标题存储删除(先发信号)
+       emit sig_sendDeleteItemUrl(item1->text());//标题栏自己删除
+       qDebug() << QString::fromLocal8Bit("item2删除点击的存储url：") << item2->text();
+
+        //01-查找删除
+        itemWidget2->deleteLater();
+        QListWidgetItem *t_item2 = ui->listWidget_findResults->takeItem(ui->listWidget_findResults->row(item2));
+        delete t_item2;
+
+        //02-自己删除
+        itemWidget1->deleteLater();
+        QListWidgetItem *t_item1 = item1->listWidget()->takeItem(item1->listWidget()->row(item1));
+        delete t_item1;
+    });
+    /****************************信号与槽函数****************************************/
+}
+
+QString CollectRecords::slot_getCurrentRecordItemText(const QString &text)
+{
+    for(int i = 0; i < ui->listWidget_findResults->count(); i++)
+    {
+        QWidget *itemWidget = ui->listWidget_findResults->itemWidget(ui->listWidget_findResults->item(i));
+        if(nullptr != itemWidget)
+        {
+            QPushButton *itemBtn = itemWidget->findChild<QPushButton*>("pushButton_record");//可以指定查找范围（最近一级的还是所有的）
+            if(nullptr != itemBtn && itemBtn->text() == text)
+                return ui->listWidget_findResults->item(i)->text();
+        }
+    }
 }
 
 void CollectRecords::findSearchCollectRecords(QString name)
@@ -161,23 +284,16 @@ void CollectRecords::findSearchCollectRecords(QString name)
     name.remove(QRegExp("\\s"));
     if(name.isEmpty())
     {
-        for(int i = 0; i < ui->listWidget_findResults->model()->rowCount(); i++)
+        for(int i = 0; i < ui->listWidget_findResults->count(); i++)
             ui->listWidget_findResults->setRowHidden(i,false);//字符为空，全部不隐藏
 
     }
     else//字符不为空
     {
-        for(int i = 0; i <ui->listWidget_findResults->model()->rowCount(); i++)
+        for(int i = 0; i <ui->listWidget_findResults->count(); i++)
         {
             ui->listWidget_findResults->setRowHidden(i,true);//先全部隐藏
-            QString curname = "";
-            QAbstractItemModel *model = ui->listWidget_findResults->model();
-            QModelIndex index;//索引是一种特殊的数据结构，需要row 和 col 表述出来
-            for(int j = 0; j <ui->listWidget_findResults->model()->columnCount(); j++)
-            {
-                index = model->index(i,j);
-                curname += model->data(index).toString();//具体的item内容
-            }
+            QString curname = getCurrentRecordItemButtonText(ui->listWidget_findResults->item(i));
             curname.remove(QRegExp("\\s"));
             if(curname.contains(name,Qt::CaseInsensitive)) //CaseSensitive:敏感，如果item内容包含搜索的name
                ui->listWidget_findResults->setRowHidden(i,false);//在隐藏的item中有符合的，再显示出来
@@ -200,7 +316,7 @@ bool CollectRecords::judgeCollectRecordsUrlExist(const QString &url)
 QListWidget *CollectRecords::getCurrentListWidget()
 {
     int counts = getCurrentRecordsCounts();
-    qDebug() <<QString::fromLocal8Bit("当前存储的标签数：")<<counts;
+    qDebug() <<QString::fromLocal8Bit("当前未插入前分开的单个的存储的标签数：")<<counts;
     if((counts < m_singleCount)) //小于SINGLECOUNTS条
     {
         m_currentListWidget = ui->listWidget_record1;

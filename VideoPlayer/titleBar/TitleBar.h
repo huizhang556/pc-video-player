@@ -66,7 +66,8 @@ private slots:
     bool    judgeHistorytUrlType(QString url);//判断要收藏的url是否有效类型
     bool    judgeHistoryUrlExist(const QString &url);//判断当前的网址是否已经在收藏栏
     void    slot_setCurrentWebSiteCollectStatus(const QString &url);//判断当前的网址是显示收藏还是未收藏
-    void    slot_addToListCollectWidget(const QString &text);//选中回显
+    void    slot_addToListCollectWidget(const QString &text);//添加一条
+    void    slot_deleteListCollectWidget(const QString &url);//删除一条
     void    slot_updateShowListHistoryWidget();//显示历史记录界面
     void    slot_addToListHistoryWidget(const QString &text);
     void    slot_updateShowListEngineWidget();//显示历史记录界面
@@ -76,6 +77,7 @@ private slots:
     void    slot_setCanGoForward(bool status);
     void    slot_setCanGoBack(bool status);
     void    slot_resetWebProgressBarValue();
+
     //浏览器设置---右键菜单
     void    slot_browser_setMenu_createTab();               //新建窗口
     void    slot_browser_setMenu_createHiddenTab();         //新建隐身窗口

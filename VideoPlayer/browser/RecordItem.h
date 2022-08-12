@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QIcon>
 #include <QDateTime>
+#include <QPushButton>
 
 namespace Ui {
 class RecordItem;
@@ -20,10 +21,11 @@ public:
     void        chandleSignalAndSLots();
 
 public slots:
+    void        slot_setRecordButtonText(QString text);
 
 signals:
     void        sig_item_record(QString);
-    void        sig_item_modify(QString);
+    void        sig_item_modify(QString,QPushButton*);
     void        sig_item_delete();
 private:
     void        judgeType();

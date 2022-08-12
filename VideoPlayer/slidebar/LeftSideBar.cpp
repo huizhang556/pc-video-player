@@ -48,6 +48,7 @@ void LeftSideBar::setSlideBarListText(QStringList strList)
         ppItem->setTextAlignment(Qt::AlignVCenter);
         m_listWidget->addItem(ppItem);
     }
+        m_listWidget->setCurrentRow(0);//默认选中第一个，必须在加载内容的情况下设置，否则无效
 }
 
 /*设置左侧边栏宽度*/

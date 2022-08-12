@@ -1,5 +1,6 @@
 ﻿#include "TitleBar.h"
 #include "ui_TitleBar.h"
+
 #include <QDebug>
 #include <QDateTime>
 #include <QRegExp>
@@ -289,7 +290,7 @@ void TitleBar::chandleSignalAndSLots()
     //网址收藏----单击收藏，双击显示列表
     connect(m_actCollect,&QAction::triggered,this,[=](){
         bool valid = judgeCollectUrlType(ui->lineEdit_webSearch->text());
-        if(valid)
+        if(valid)//有效地址
         {
             slot_addToListCollectWidget(ui->lineEdit_webSearch->text());
         }
@@ -297,7 +298,6 @@ void TitleBar::chandleSignalAndSLots()
         {
             return;
         }
-        emit sig_sendCollectRecord(ui->lineEdit_webSearch->text());//记录栏添加收藏记录
     });
 
     //下载设置
@@ -496,12 +496,30 @@ void TitleBar::slot_addToListCollectWidget(const QString &text)
     {
         QListWidgetItem *item = new QListWidgetItem(QIcon(":/images/function/collect_list_item.png"),text);
         m_listWdgt_colloect->insertItem(0,item);
+        emit sig_sendCollectRecord(ui->lineEdit_webSearch->text());//记录栏添加收藏记录
     }
     else//有，则不做任何处理
     {
-        return;
+        QMessageBox::information(this,QString::fromLocal8Bit("提示"),
+                                 QString::fromLocal8Bit("网址已收藏！"),
+                                 QString::fromLocal8Bit("是"));
     }
     slot_setCurrentWebSiteCollectStatus(text);//收藏以后，样式在做一次处理
+}
+
+
+//删除一条记录
+void TitleBar::slot_deleteListCollectWidget(const QString &url)
+{
+    for(int i = 0; i < m_listWdgt_colloect->count();i++)
+    {
+        if(m_listWdgt_colloect->item(i)->text() == url)
+        {
+            QListWidgetItem *t_item = m_listWdgt_colloect->takeItem(i);
+            delete t_item;
+        }
+    }
+    slot_setCurrentWebSiteCollectStatus(url);
 }
 
 

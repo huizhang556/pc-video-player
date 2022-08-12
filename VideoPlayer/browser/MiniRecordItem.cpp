@@ -30,7 +30,18 @@ MiniRecordItem::~MiniRecordItem()
 
 void MiniRecordItem::chandleSignalAndSLots()
 {
-    connect(ui->pushButton_record,&QPushButton::clicked,[=](){emit sig_item_record(ui->pushButton_record->text());});
-    connect(ui->pushButton_change,&QPushButton::clicked,[=](){emit sig_item_modify(ui->pushButton_record->text());});
-    connect(ui->pushButton_delete,&QPushButton::clicked,[=](){emit sig_item_delete();});
+    connect(ui->pushButton_record,&QPushButton::clicked,[=](){
+        emit sig_item_record(ui->pushButton_record->text());
+    });
+    connect(ui->pushButton_change,&QPushButton::clicked,[=](){
+        emit sig_item_modify(ui->pushButton_record->text(),ui->pushButton_change);
+    });
+    connect(ui->pushButton_delete,&QPushButton::clicked,[=](){
+        emit sig_item_delete();
+    });
+}
+
+void MiniRecordItem::slot_setRecordButtonText(QString text)
+{
+    ui->pushButton_record->setText(text);
 }

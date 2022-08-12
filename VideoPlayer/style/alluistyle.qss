@@ -115,6 +115,44 @@ color:#FF7F24;
 color: #005e9e;
 }
 
+/**主界面折叠按钮**/
+#m_leftButton
+{
+border-top-right-radius:10px;
+border-bottom-right-radius:10px;
+}
+
+/***播放器主界面折叠按钮***/
+#m_foldBtn
+{
+/*此处只做圆角修改，其他部分样式代码设置*/
+border-top-left-radius:10px;
+border-bottom-left-radius:10px;
+}
+
+/*推荐栏左右调节按钮*/
+#m_recLeftBtn
+{
+border-radius:20px;
+background: rbga(240, 240, 240,0.6) url(://images/icon/page_leftBtn.png) no-repeat no-repeat center center;
+}
+#m_recLeftBtn:hover
+{
+border-radius:20px;
+background: rbga(240, 240, 240,0.6) url(://images/icon/page_leftBtn_hover.png) no-repeat no-repeat center center;
+}
+
+#m_recRightBtn
+{
+border-radius:20px;
+background: rbga(240, 240, 240,0.6) url(://images/icon/page_rightBtn.png) no-repeat no-repeat center center;
+}
+#m_recRightBtn:hover
+{
+border-radius:20px;
+background: rbga(240, 240, 240,0.6) url(://images/icon/page_rightBtn_hover.png) no-repeat no-repeat center center;
+}
+
 /*收藏记录---修改*/
 WebMessageBox
 {
@@ -585,29 +623,6 @@ border-radius:25px;
 background: rbga(240, 240, 240,0.6) url(://images/icon/main_bottombtn.png) no-repeat no-repeat center center;
 }
 
-/*推荐栏左右调节按钮*/
-#m_recLeftBtn
-{
-border-radius:20px;
-background: rbga(240, 240, 240,0.6) url(://images/icon/page_leftBtn.png) no-repeat no-repeat center center;
-}
-#m_recLeftBtn:hover
-{
-border-radius:20px;
-background: rbga(240, 240, 240,0.6) url(://images/icon/page_leftBtn_hover.png) no-repeat no-repeat center center;
-}
-
-#m_recRightBtn
-{
-border-radius:20px;
-background: rbga(240, 240, 240,0.6) url(://images/icon/page_rightBtn.png) no-repeat no-repeat center center;
-}
-#m_recRightBtn:hover
-{
-border-radius:20px;
-background: rbga(240, 240, 240,0.6) url(://images/icon/page_rightBtn_hover.png) no-repeat no-repeat center center;
-}
-
 /*去白边*/
 #m_tabWdgt::pane 
 {
@@ -736,7 +751,7 @@ margin-left:10px;
 }
 /*帮助按钮菜单-----------------------样式结束*/
 
-/*歌曲右键菜------------------------------开始*/
+/*歌曲列表右键菜------------------------------开始*/
 #pmenu_songer,#pmenu_son_addto,#pmenu_son_sort,#pmenu_son_playmode,#pmenu_son_muctool
 {
 background: white;
@@ -762,7 +777,7 @@ width:20px;
 height:18px;
 margin-left:10px;
 }
-/*歌曲右键菜单-----------------------------结束*/
+/*歌曲列表右键菜单-----------------------------结束*/
 
 /*播放列表，收藏列表，历史列表右键菜单---开始*/
 #playlist_playMenu,#playlist_collectMenu,#playlist_historytMenu

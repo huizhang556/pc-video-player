@@ -26,6 +26,8 @@ WebMessageBox::~WebMessageBox()
 void WebMessageBox::initWorkUI()
 {
     ui->checkBox_addCollect->setText(QString::fromLocal8Bit("将本条收藏固定到快捷收藏栏"));
+    ui->checkBox_addCollect->setCheckable(true);
+    ui->checkBox_addCollect->setCheckState(Qt::Unchecked);
     ui->lineEdit_address->setReadOnly(true);
 }
 
@@ -35,6 +37,7 @@ void WebMessageBox::chandleSignalsAndSLots()
     //确定
     connect(ui->pushButton_sure,&QPushButton::clicked,[=](){
         emit sig_sendTitleChanged(ui->lineEdit_address->text().trimmed(),ui->lineEdit_nickName->text().trimmed());
+
         this->close();
     });
     //取消

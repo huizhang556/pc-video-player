@@ -43,7 +43,7 @@ void MainWidget::initOtherWidgetUi()
 
     m_leftButton = new QPushButton(m_stackWidget_center);
     m_leftButton->setObjectName(QString::fromLocal8Bit("m_leftButton"));
-    m_leftButton->setFixedSize(20,50);
+    m_leftButton->setFixedSize(25,60);
 
     m_mainPlayer = new MultipPlayer();
     m_mainPlayer->setObjectName(QString::fromLatin1("m_mainPlayer"));
@@ -430,14 +430,24 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_webBrowser->page(),&QWebEnginePage::linkHovered,this,&MainWidget::slot_showLinkOnStatusBar);
     //添加一个browser
     connect(m_webBrowser,SIGNAL(sig_sendToNewUrl(QUrl&)),this,SLOT(slot_addToWebTabwidgetBrowser(QUrl&)));// 创建浏览器tab
+
     //新增历史记录（本页面内浏览器点击链接跳转）
     connect(m_webBrowser,&CusWebBrowser::urlChanged,[=](QUrl url){m_webHistory->slot_addToListHistoryWidget(url);});//添加历史记录
     //新添加的tab页面
     connect(m_webBrowser,&CusWebBrowser::sig_sendToNewUrl,[=](QUrl url){m_webHistory->slot_addToListHistoryWidget(url);});
+
     //历史记录回显
     connect(m_webHistory,&WebHistory::sig_sendItemText,[=](QString url){
         slot_addToWebTabwidgetBrowser(url);
     });
+    //收藏记录回显（两部分的信号）
+    connect(m_webRecords,&CollectRecords::sig_sendItemText,[=](QString url){
+        slot_addToWebTabwidgetBrowser(url);
+    });
+
+    //收藏记录删除（收藏记录发送信号（同时自己、总收藏删除）--->标题栏接收删除item）
+    connect(m_webRecords,SIGNAL(sig_sendDeleteItemUrl(QString)),m_titleBar,SLOT(slot_deleteListCollectWidget(QString)));
+
     connect(m_webBrowser,&CusWebBrowser::loadFinished,[=](){
         qDebug() <<QString::fromLocal8Bit("图标")<<m_webBrowser->icon()<<QString::fromLocal8Bit("标题")<<m_webBrowser->title();
     });
@@ -480,7 +490,7 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_webRecords,&CollectRecords::sig_returnPage,[=](){m_webStackWgt->setCurrentIndex(0);});
     //收藏菜单---修改按钮
 //    connect(m_webRecords,&CollectRecords::sig_changeRecord,[=](){WebMessageBox::getInstance()->exec();});
-    //标题栏---收藏地址
+    //标题栏---收藏地址（标题栏已经判断过有效去重后的地址）
     connect(m_titleBar,&TitleBar::sig_sendCollectRecord,[=](QString address){
         QIcon icon = slot_getCurrentBrowserIcon();
         QString title = slot_getCurrentBrowserTitle();
