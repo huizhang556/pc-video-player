@@ -7,7 +7,7 @@ CommentForm::CommentForm(QWidget *parent) :
     ui(new Ui::CommentForm)
 {
     ui->setupUi(this);
-    this->setFixedSize(230,150);
+    this->setFixedHeight(150);
     ui->pushButton_zan->setFlat(true);
     ui->pushButton_huifu->setFlat(true);
     ui->pushButton_jubao->setFlat(true);

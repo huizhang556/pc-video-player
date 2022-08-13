@@ -262,6 +262,7 @@ void SystemSetting::loadDefaultConfig()
         pitem->setTextAlignment(Qt::AlignCenter);//文字水平和垂直方向都居中
         ui->listWidget->addItem(pitem);
     }
+    ui->listWidget->setCurrentRow(0);//内容填充完设置才生效
     qDebug() << "the file config are loaded!";
 }
 

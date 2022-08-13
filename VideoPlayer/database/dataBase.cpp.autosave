@@ -33,10 +33,25 @@ bool dataBase::creatConnection()
     }
 }
 
-//往数据库添加一条记录
-bool dataBase::browser_addRecordToList(const QString &ulr)
+//获取数据库全部记录
+QStringList dataBase::browser_loadAllRecordsToList(const QString &tableName)
 {
-     return true;
+    
+}
+
+//往数据库添加一条记录
+bool dataBase::browser_addRecordToList(const QString &ulr,const QString &ulr)
+{
+    return true;
+}
+
+//往数据库删除一条记录
+bool dataBase::browser_deleteRecordToList(const QString &ulr, const QString &ulr)
+{
+    if(m_mainSqlQuery.isSelect())
+    return true;
+    else
+        return false;
 }
 
 

@@ -3,7 +3,8 @@
 #include "browser/WebMessageBox.h"
 
 #include <QDebug>
-int CollectRecords::m_singleCount = 10;
+int CollectRecords::m_singleCount = 37;//一页最大化  37 rows
+
 
 CollectRecords::CollectRecords(QWidget *parent) :
     QWidget(parent),
@@ -150,7 +151,7 @@ QPushButton *CollectRecords::getCurrentRecordItemButton(QListWidgetItem *item)
     }
 }
 
-
+//重载函数1：添加记录
 void CollectRecords::slot_addToRecordsListWidget(QUrl url)
 {
     qDebug() << QString::fromLocal8Bit("历史记录接收到地址：")<<url.toDisplayString();
@@ -181,14 +182,15 @@ void CollectRecords::slot_updateCurrentRecord_miniRecordItem(QListWidgetItem *it
     getCurrentRecordItemButton(item)->setText(rename);
 }
 
+//重载函数2：添加记录
 void CollectRecords::slot_addToRecordsListWidget(const QString &url = "", QIcon icon = QIcon(""), const QString &title = "")//默认参数
 {
     if(url.isEmpty()) return;
     MiniRecordItem *itemWidget1 = new MiniRecordItem(title,icon);
     QListWidgetItem *item1 = new QListWidgetItem(url); item1->setToolTip(url);
     item1->setSizeHint(itemWidget1->size());
-    getCurrentListWidget()->addItem(item1);//尾插法
-    getCurrentListWidget()->setItemWidget(item1,itemWidget1);
+    getCurrentListWidget()->addItem(item1);//注意这里获取的lisiwidget，只要additem了，couunt就+1，导致下面获得的count不准确，导致插入的lisiwidget不一致
+    m_currentListWidget->setItemWidget(item1,itemWidget1);//这里的lisiwidget要与上面的lisiwidget一致（尤其最后一个的时候）
 
     RecordItem *itemWidget2 = new RecordItem(3,icon,title);
     QListWidgetItem *item2 = new QListWidgetItem(url);
@@ -240,11 +242,13 @@ void CollectRecords::slot_addToRecordsListWidget(const QString &url = "", QIcon 
         itemWidget1->deleteLater();
         QListWidgetItem *t_item1 = item1->listWidget()->takeItem(item1->listWidget()->row(item1));
         delete t_item1;
+        t_item1 = nullptr;
 
         //02-查找删除{
         itemWidget2->deleteLater();
         QListWidgetItem *t_item2 = ui->listWidget_findResults->takeItem(ui->listWidget_findResults->row(item2));
         delete t_item2;
+        t_item2 = nullptr;
     });
     //删除2
     connect(itemWidget2,&RecordItem::sig_item_delete,[=](){
@@ -256,11 +260,13 @@ void CollectRecords::slot_addToRecordsListWidget(const QString &url = "", QIcon 
         itemWidget2->deleteLater();
         QListWidgetItem *t_item2 = ui->listWidget_findResults->takeItem(ui->listWidget_findResults->row(item2));
         delete t_item2;
+        t_item2 = nullptr;
 
         //02-自己删除
         itemWidget1->deleteLater();
         QListWidgetItem *t_item1 = item1->listWidget()->takeItem(item1->listWidget()->row(item1));
         delete t_item1;
+        t_item1 = nullptr;
     });
     /****************************信号与槽函数****************************************/
 }
@@ -329,7 +335,6 @@ QListWidget *CollectRecords::getCurrentListWidget()
     {
         m_currentListWidget = ui->listWidget_record3;
     }
-
     else if((counts < m_singleCount*4))
     {
         m_currentListWidget = ui->listWidget_record4;
@@ -344,7 +349,7 @@ QListWidget *CollectRecords::getCurrentListWidget()
     }
     else
     {
-        qDebug() << QString::fromLocal8Bit("超过%1条收藏记录！").arg(m_singleCount*2);
+        qDebug() << QString::fromLocal8Bit("超过%1条收藏记录！").arg(m_singleCount*6);
     }
     qDebug() << QString::fromLocal8Bit("当前需要填充的QListWidget是:")<<m_currentListWidget->objectName();
     return m_currentListWidget;

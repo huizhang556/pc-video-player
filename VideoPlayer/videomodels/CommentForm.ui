@@ -32,7 +32,7 @@ background-color:#3c3842;
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>5</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>0</number>
@@ -183,7 +183,7 @@ color:#808082;
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
+            <width>20</width>
             <height>20</height>
            </size>
           </property>
@@ -233,8 +233,11 @@ p, li { white-space: pre-wrap; }
      <item>
       <widget class="QWidget" name="widget_func" native="true">
        <property name="styleSheet">
-        <string notr="true">border-bottom:1px solid #7f7f7f;
-color: rgb(98, 98, 98);</string>
+        <string notr="true">#widget_func
+{
+border-bottom:1px solid #7f7f7f;
+color: rgb(98, 98, 98);
+}</string>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <property name="leftMargin">

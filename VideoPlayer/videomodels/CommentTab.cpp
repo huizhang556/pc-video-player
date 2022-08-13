@@ -21,7 +21,7 @@ CommentTab::~CommentTab()
 void CommentTab::initWorkUI()
 {
     ui->textEdit_comment->setPlaceholderText(QString::fromLocal8Bit("说两句吧..."));
-
+    ui->listWidget_comlist->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->pushButton_hotcomment->setFlat(true);
     ui->pushButton_hotcomment->setCheckable(true);
     ui->pushButton_newcomment->setFlat(true);
@@ -89,7 +89,8 @@ void CommentTab::slot_insertNewCommentForm(QPixmap &pic, QString &nick, QString 
     commentForm->setUserCommentData(data);//内容
     commentForm->setCommentZanCount(count);//点赞
     item->setSizeHint(QSize(commentForm->width(),commentForm->height()));
-    ui->listWidget_comlist->addItem(item);
+//    ui->listWidget_comlist->addItem(item);
+    ui->listWidget_comlist->insertItem(0,item);
     ui->listWidget_comlist->setItemWidget(item,commentForm);
     setLabelCommentCounts(ui->listWidget_comlist->count());//总评论数更新
 }
