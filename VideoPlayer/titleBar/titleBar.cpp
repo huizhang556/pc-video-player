@@ -1170,6 +1170,12 @@ void TitleBar::slot_clearAllPopupUi()
     if(!m_listWdgt_engine->isHidden()) m_listWdgt_engine->hide();
 }
 
+void TitleBar::slot_initCollectRecordListWgt(const QString &text)
+{
+    slot_addToListCollectWidget(text);
+    slot_setCurrentWebSiteCollectStatus(text);
+}
+
 
 /*槽函数 --- 获取系统时间并且显示*/
 void TitleBar::getSystemTimeShow()

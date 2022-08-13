@@ -1,4 +1,5 @@
 ﻿#include "MainWidget.h"
+#include "database/dataBase.h"
 #include "customer/CustomTabStyle.h"
 
 #include <QDebug>
@@ -486,6 +487,10 @@ void MainWidget::chandleSignalAndSlots()
     });
 
     /************************************浏览器---收藏栏************************************/
+    //收藏记录初始化
+    connect(dataBase::getInstance(),&dataBase::sig_sendRecordInfo,[=](QString nick, QString url){
+        m_titleBar->slot_initCollectRecordListWgt(url);
+    });
     //收藏菜单---返回按钮
     connect(m_webRecords,&CollectRecords::sig_returnPage,[=](){m_webStackWgt->setCurrentIndex(0);});
     //收藏菜单---修改按钮

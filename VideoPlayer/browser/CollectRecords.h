@@ -1,5 +1,7 @@
 ﻿#ifndef COLLECTRECORDS_H
 #define COLLECTRECORDS_H
+
+#include "database/dataBase.h"
 #include "browser/RecordItem.h"
 #include "browser/MiniRecordItem.h"
 
@@ -27,6 +29,7 @@ public:
     QPushButton*        getCurrentRecordItemButton(QListWidgetItem* item);//传入QListWidgetItem，返回按钮
     QString             getCurrentRecordItemText(QListWidget *listWidget, QString &text);//传入按钮文本，返回QListWidgetItem文本
     QListWidgetItem*    getCurrentRecordParentItem(QListWidget *listWidget, QString &text);//传入按钮文本，返回QListWidgetItem
+    void                slot_initToRecordsListWidget(const QString &url, QIcon icon,const QString &title);//初始化历史记录
 
 public slots:
     void                slot_addToRecordsListWidget(QUrl url);
@@ -44,6 +47,7 @@ private:
     int                 m_count;
     static  int         m_singleCount;
     QListWidget*        m_currentListWidget     =   nullptr;
+    bool                m_isFirst;
 
 private:
     void                findSearchCollectRecords(QString name);

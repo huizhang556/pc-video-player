@@ -9,6 +9,7 @@ int CollectRecords::m_singleCount = 37;//一页最大化  37 rows
 CollectRecords::CollectRecords(QWidget *parent) :
     QWidget(parent),
     m_count(0),
+    m_isFirst(true),
     ui(new Ui::CollectRecords)
 {
     ui->setupUi(this);
@@ -52,10 +53,17 @@ void CollectRecords::initWorkUI()
     ui->listWidget_findResults->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);//像素滚动
     ui->listWidget_findResults->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_findResults->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
 }
 
 void CollectRecords::chandleSignalsAndSlots()
 {
+
+    //00- 加载历史收藏记录
+    connect(dataBase::getInstance(),&dataBase::sig_sendRecordInfo,[=](QString nick, QString url){
+        slot_initToRecordsListWidget(url,QIcon("://images/icon/engine.png"),nick);
+    });
+
     //01 导入导出收藏夹
     connect(ui->pushButton_export,&QPushButton::clicked,[=](){ui->stackedWidget->setCurrentIndex(1);});
     //02 撤回
@@ -68,7 +76,9 @@ void CollectRecords::chandleSignalsAndSlots()
         emit sig_changeRecord();
     });
     //05 确定
-    connect(ui->pushButton_sure,&QPushButton::clicked,[=](){});
+    connect(ui->pushButton_sure,&QPushButton::clicked,[=](){
+        dataBase::getInstance()->browser_loadAllRecordsToList();
+    });
     //06 返回主页
     connect(ui->pushButton_return,&QPushButton::clicked,[=](){emit sig_returnPage();});
 
@@ -126,6 +136,23 @@ QListWidgetItem *CollectRecords::getCurrentRecordParentItem(QListWidget *listWid
                 return listWidget->item(i);
         }
     }
+}
+
+//初始化历史记录
+void CollectRecords::slot_initToRecordsListWidget(const QString &url, QIcon icon, const QString &title)
+{
+    if(url.isEmpty()) return;
+    MiniRecordItem *itemWidget1 = new MiniRecordItem(title,icon);
+    QListWidgetItem *item1 = new QListWidgetItem(url); item1->setToolTip(url);
+    item1->setSizeHint(itemWidget1->size());
+    getCurrentListWidget()->addItem(item1);//注意这里获取的lisiwidget，只要additem了，couunt就+1，导致下面获得的count不准确，导致插入的lisiwidget不一致
+    m_currentListWidget->setItemWidget(item1,itemWidget1);//这里的lisiwidget要与上面的lisiwidget一致（尤其最后一个的时候）
+
+    RecordItem *itemWidget2 = new RecordItem(3,icon,title);
+    QListWidgetItem *item2 = new QListWidgetItem(url);
+    item2->setSizeHint(itemWidget1->size()-QSize(50,0));
+    ui->listWidget_findResults->addItem(item2);
+    ui->listWidget_findResults->setItemWidget(item2,itemWidget2);
 }
 
 /*根据listwidgetitem文本查找按钮文本*/
@@ -198,6 +225,9 @@ void CollectRecords::slot_addToRecordsListWidget(const QString &url = "", QIcon 
     ui->listWidget_findResults->addItem(item2);
     ui->listWidget_findResults->setItemWidget(item2,itemWidget2);
 
+    //数据库操作--插入记录
+    dataBase::browser_addRecordToList(title,url);//插入 别名 url
+
     /****************************信号与槽函数****************************************/
     //点击记录1 跳转
     connect(itemWidget1,&MiniRecordItem::sig_item_record,[=](QString text){
@@ -229,11 +259,15 @@ void CollectRecords::slot_addToRecordsListWidget(const QString &url = "", QIcon 
     connect(WebMessageBox::getInstance(),&WebMessageBox::sig_sendTitleChanged,[=](QString url, QString rename){
                 slot_updateCurrentRecord_recordItem(item1,url,rename);
                 slot_updateCurrentRecord_miniRecordItem(item2,url,rename);
+                dataBase::browser_updateRecordToList(url,rename);
     });
 
     //删除思路：01.自己删除 02.查找删除 03.标题存储删除 （统一使用url）
     //删除1
     connect(itemWidget1,&MiniRecordItem::sig_item_delete,[=](){
+        //04数据库
+        dataBase::browser_deleteRecordToList(item1->text());//根据 url 删除
+
         //03-标题存储删除(先发信号)
         emit sig_sendDeleteItemUrl(item1->text());//标题栏自己删除
         qDebug() << QString::fromLocal8Bit("item1删除点击的存储url：") << item1->text();
@@ -249,9 +283,13 @@ void CollectRecords::slot_addToRecordsListWidget(const QString &url = "", QIcon 
         QListWidgetItem *t_item2 = ui->listWidget_findResults->takeItem(ui->listWidget_findResults->row(item2));
         delete t_item2;
         t_item2 = nullptr;
+
     });
     //删除2
     connect(itemWidget2,&RecordItem::sig_item_delete,[=](){
+        //04数据库
+        dataBase::browser_deleteRecordToList(item1->text());//根据 url 删除
+
         //03-标题存储删除(先发信号)
        emit sig_sendDeleteItemUrl(item1->text());//标题栏自己删除
        qDebug() << QString::fromLocal8Bit("item2删除点击的存储url：") << item2->text();
