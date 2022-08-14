@@ -1172,10 +1172,21 @@ void TitleBar::slot_clearAllPopupUi()
 
 void TitleBar::slot_initCollectRecordListWgt(const QString &text)
 {
-    slot_addToListCollectWidget(text);
-    slot_setCurrentWebSiteCollectStatus(text);
+    if(text.isEmpty()) return;
+    bool valid = judgeCollectUrlExist(text);//判断是否存在
+    if(!valid)//没有则收藏
+    {
+        QListWidgetItem *item = new QListWidgetItem(QIcon(":/images/function/collect_list_item.png"),text);
+        m_listWdgt_colloect->insertItem(0,item);
+    }
+    else//有，则不做任何处理
+    {
+        QMessageBox::information(this,QString::fromLocal8Bit("提示"),
+                                 QString::fromLocal8Bit("网址已收藏！"),
+                                 QString::fromLocal8Bit("是"));
+    }
+    slot_setCurrentWebSiteCollectStatus(text);//收藏以后，样式在做一次处理
 }
-
 
 /*槽函数 --- 获取系统时间并且显示*/
 void TitleBar::getSystemTimeShow()

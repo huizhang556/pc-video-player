@@ -23,7 +23,7 @@ public:
 
 public slots:
     void    slot_addToListHistoryWidget(QUrl url);
-
+    void    slot_initHistoryRecordListWgt(const QString &text);//初始化
     void    slot_addToListHistoryWidget(const QString &text);
 
 

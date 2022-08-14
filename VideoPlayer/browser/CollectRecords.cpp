@@ -60,8 +60,9 @@ void CollectRecords::chandleSignalsAndSlots()
 {
 
     //00- 加载历史收藏记录
-    connect(dataBase::getInstance(),&dataBase::sig_sendRecordInfo,[=](QString nick, QString url){
-        slot_initToRecordsListWidget(url,QIcon("://images/icon/engine.png"),nick);
+    connect(dataBase::getInstance(),&dataBase::sig_sendRecordInfo,[=](QString urlnick, QString url){
+        slot_initToRecordsListWidget(url,QIcon("://images/icon/engine.png"),urlnick);
+//        qDebug() <<QString::fromLocal8Bit("收藏栏接收到：urlnick==")<<urlnick<<QString::fromLocal8Bit("url==")<<url;
     });
 
     //01 导入导出收藏夹
@@ -77,7 +78,7 @@ void CollectRecords::chandleSignalsAndSlots()
     });
     //05 确定
     connect(ui->pushButton_sure,&QPushButton::clicked,[=](){
-        dataBase::getInstance()->browser_loadAllRecordsToList();
+//        dataBase::getInstance()->browser_loadAllRecordsToList();
     });
     //06 返回主页
     connect(ui->pushButton_return,&QPushButton::clicked,[=](){emit sig_returnPage();});
@@ -153,9 +154,6 @@ void CollectRecords::slot_initToRecordsListWidget(const QString &url, QIcon icon
     item2->setSizeHint(itemWidget1->size()-QSize(50,0));
     ui->listWidget_findResults->addItem(item2);
     ui->listWidget_findResults->setItemWidget(item2,itemWidget2);
-
-    //数据库操作--插入记录
-//    dataBase::browser_addRecordToList(title,url);//插入 别名 url
 
     /****************************信号与槽函数****************************************/
     //点击记录1 跳转

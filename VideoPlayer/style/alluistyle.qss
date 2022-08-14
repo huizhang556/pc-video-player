@@ -126,8 +126,6 @@ border-bottom-right-radius:10px;
 #m_foldBtn
 {
 /*此处只做圆角修改，其他部分样式代码设置*/
-border-top-left-radius:10px;
-border-bottom-left-radius:10px;
 }
 
 /*推荐栏左右调节按钮*/

@@ -289,14 +289,6 @@ void MainWidget::slot_addToWebTabwidgetBrowser(QString &url)
     connect(browser,&CusWebBrowser::sig_sendToNewUrl,[=](QUrl url){m_webHistory->slot_addToListHistoryWidget(url);});
 }
 
-//过滤不是当前活跃的窗口--返回主页
-void MainWidget::slot_judgeCurrentBrowserIsActive_home()
-{
-   CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
-       actWdgt->slots_home();
-       //       delete actWdgt;
-}
-
 QIcon MainWidget::slot_getCurrentBrowserIcon()
 {
     CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
@@ -327,10 +319,20 @@ QString MainWidget::slot_getCurrentBrowserTitle()
     }
 }
 
+//过滤不是当前活跃的窗口--返回主页
+void MainWidget::slot_judgeCurrentBrowserIsActive_home()
+{
+   CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
+       actWdgt->slots_home();
+       m_webStackWgt->setCurrentWidget(m_webWidget);
+       //       delete actWdgt;
+}
+
 void MainWidget::slot_judgeCurrentBrowserIsActive_back()
 {
     CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
         actWdgt->slots_back();
+        m_webStackWgt->setCurrentWidget(m_webWidget);
 //        delete actWdgt;
 }
 
@@ -338,6 +340,7 @@ void MainWidget::slot_judgeCurrentBrowserIsActive_freshen()
 {
     CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
         actWdgt->slots_refreshen();
+        m_webStackWgt->setCurrentWidget(m_webWidget);
 //        delete actWdgt;
 }
 
@@ -345,6 +348,7 @@ void MainWidget::slot_judgeCurrentBrowserIsActive_advance()
 {
     CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
         actWdgt->slots_advance();
+        m_webStackWgt->setCurrentWidget(m_webWidget);
 //        delete actWdgt;
 }
 
@@ -502,6 +506,10 @@ void MainWidget::chandleSignalAndSlots()
         m_webRecords->slot_addToRecordsListWidget(address,icon,title);
     });
     /************************************浏览器---历史记录栏************************************/
+    //历史记录初始化
+    connect(dataBase::getInstance(),&dataBase::sig_sendHisRecordInfo,[=](QString url){
+        m_webHistory->slot_initHistoryRecordListWgt(url);
+    });
     //历史记录---返回按钮
     connect(m_webHistory,&WebHistory::sig_returnPage,[=](){m_webStackWgt->setCurrentIndex(0);});
      //标签栏---展开收藏菜单
