@@ -62,7 +62,7 @@ void LeftSideBar::setLeftSliderFixedWidth(int width)
 void LeftSideBar::initWidgetUi()
 {
     m_listWidget = new QListWidget(this);
-    m_listWidget->setFixedWidth(170);
+    m_listWidget->setFixedWidth(140);
     m_listWidget->setObjectName(QString::fromLatin1("listWidget_playlist"));//对象名称用于设置样式
     m_listWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//关闭滚动条可见
     m_listWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -70,7 +70,7 @@ void LeftSideBar::initWidgetUi()
     m_listWidget->setFocusPolicy(Qt::NoFocus);//作用是点击item去掉虚线边框
 
     m_expandBtn = new QPushButton(this);
-    m_expandBtn->setFixedSize(170,40);
+    m_expandBtn->setFixedSize(140,40);
     m_expandBtn->setCheckable(true);
     m_expandBtn->setText(QString::fromLocal8Bit("展开更多>>"));
     m_expandBtn->setObjectName(QString::fromLatin1("m_expandBtn"));

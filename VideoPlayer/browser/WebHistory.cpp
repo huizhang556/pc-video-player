@@ -93,7 +93,7 @@ void WebHistory::slot_initHistoryRecordListWgt(const QString &text)
     connect(itemWidget,&RecordItem::sig_item_delete,[=](){
         //00---数据库先操作
         dataBase::browser_deleteHisRecordToList(item->text());
-
+        //删除前应该先断开信号与槽函数连接，防止最后一个item删除出现bug
         itemWidget->deleteLater();
         ui->listWidget_showHis->takeItem(ui->listWidget_showHis->row(item));
         delete item;
@@ -138,7 +138,7 @@ void WebHistory::slot_addToListHistoryWidget(const QString &text)
     connect(itemWidget,&RecordItem::sig_item_delete,[=](){
         //00---数据库先操作
         dataBase::browser_deleteHisRecordToList(item->text());
-
+        //删除前应该先断开信号与槽函数连接，防止最后一个item删除出现bug
         itemWidget->deleteLater();
         ui->listWidget_showHis->takeItem(ui->listWidget_showHis->row(item));
         delete item;

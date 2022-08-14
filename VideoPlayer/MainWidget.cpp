@@ -34,7 +34,7 @@ void MainWidget::initOtherWidgetUi()
     m_leftSideBar->setObjectName(QString::fromLatin1("m_leftSideBar"));
     QStringList list = {};
     m_leftSideBar->setSlideBarListText(list);//侧边栏目录
-    m_leftSideBar->setFixedWidth(170);
+    m_leftSideBar->setFixedWidth(140);
 
     m_stackWidget_center = new QStackedWidget(this);
     m_stackWidget_center->setObjectName(QString::fromLatin1("m_stackWidget_center"));
@@ -141,7 +141,7 @@ void MainWidget::initOtherWidgetUi()
 
     m_stackWidget_left = new QStackedWidget(this);
     m_stackWidget_left->setObjectName(QString::fromLocal8Bit("m_stackWidget_left"));
-    m_stackWidget_left->setFixedWidth(170);//固定宽度170
+    m_stackWidget_left->setFixedWidth(140);//固定宽度170
     m_stackWidget_left->insertWidget(0,m_leftSideBar);
 
     m_vblayout = new QVBoxLayout(this);

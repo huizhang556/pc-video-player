@@ -13,6 +13,7 @@ PlayOrderForm::PlayOrderForm(QWidget *parent) :
     ui->setupUi(this);
     this->setFixedSize(114,138);
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::Tool);
+    this->setAttribute(Qt::WA_TranslucentBackground);    //重要
     initWorkUI();
     chandleSignalsAndSlots();
 }

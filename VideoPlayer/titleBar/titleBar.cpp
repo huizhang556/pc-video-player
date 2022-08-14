@@ -607,9 +607,15 @@ void TitleBar::slot_changeEngineIcon(const QString &text)
 void TitleBar::slot_updateShowListSettigMenu()
 {
     QMenu *pmenu_funclist = new QMenu(this);
+    pmenu_funclist->setWindowFlag(Qt::FramelessWindowHint);        //重要
+    pmenu_funclist->setAttribute(Qt::WA_TranslucentBackground);    //重要
     pmenu_funclist->setObjectName(QString::fromLocal8Bit("pmenu_funclist"));
+
     QMenu *pmenu_func_tool = new QMenu(QString::fromLocal8Bit("工具"));
+    pmenu_func_tool->setWindowFlag(Qt::FramelessWindowHint);        //重要
+    pmenu_func_tool->setAttribute(Qt::WA_TranslucentBackground);    //重要
     pmenu_func_tool->setObjectName(QString::fromLocal8Bit("pmenu_func_tool"));
+
     pmenu_funclist->addAction(QIcon("://images/icon/help_account.png"),QString::fromLocal8Bit("新建窗口"),this,SLOT(slot_browser_setMenu_createTab()));
     pmenu_funclist->addAction(QIcon("://images/icon/help_account.png"),QString::fromLocal8Bit("新建隐身窗口"),this,SLOT(slot_browser_setMenu_createHiddenTab()));
     pmenu_funclist->addSeparator();
@@ -644,7 +650,7 @@ void TitleBar::slot_updateShowListSettigMenu()
 //    }
     int x = ui->pushButton_more->parentWidget()->mapToGlobal(ui->pushButton_more->pos()).x();
     int y = ui->pushButton_more->parentWidget()->mapToGlobal(ui->pushButton_more->pos()).y();
-    pmenu_funclist->setGeometry(x-50, y + 30,
+    pmenu_funclist->setGeometry(x-60, y + 30,
                                  pmenu_funclist->width(),pmenu_funclist->height());
     pmenu_funclist->exec();
     delete pmenu_funclist;

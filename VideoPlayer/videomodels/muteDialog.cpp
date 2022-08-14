@@ -11,6 +11,7 @@ muteDialog::muteDialog(QWidget *parent) :
     ui->setupUi(this);
     this->setFixedSize(40,170);
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowStaysOnTopHint);//去掉标题栏
+    this->setAttribute(Qt::WA_TranslucentBackground);    //重要
     ui->verticalSlider->setRange(0,100);
     ui->verticalSlider->setPageStep(5);
     ui->verticalSlider->setValue(10);

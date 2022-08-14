@@ -130,7 +130,7 @@ bool WebDownLoadList::slot_deleteFileOrFolder(const QString &strPath)
 
 //qlistwidgetitem删除、释放
 void WebDownLoadList::slot_freeItem(QListWidget *listWidget,QWidget *itemWidget,QListWidgetItem *item)
-{
+{   //删除前应该先断开信号与槽函数连接，防止最后一个item删除出现bug
     //注意删除顺序，先删除itemWidget，再删除QListWidgetItem，最后释放内存空间
     itemWidget->deleteLater();
     listWidget->takeItem(listWidget->row(item));

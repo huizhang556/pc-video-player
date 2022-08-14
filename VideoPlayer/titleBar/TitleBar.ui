@@ -382,7 +382,7 @@ border:none;
 }</string>
            </property>
            <property name="currentIndex">
-            <number>1</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="page">
             <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -421,8 +421,17 @@ border:none;
                     <height>35</height>
                    </size>
                   </property>
+                  <property name="font">
+                   <font>
+                    <family>微软雅黑</family>
+                    <pointsize>9</pointsize>
+                    <weight>50</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
                   </property>
                  </widget>
                 </item>

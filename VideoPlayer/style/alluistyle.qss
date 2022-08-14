@@ -1,5 +1,5 @@
 /*所有控件需要有明确的对象名称，需要设置共同样式，指明控件的层次次序*/
-
+/**所有的注释不要使用双斜杠!!!**/
 /*全局通过用样式*/
 * {
 outline:none;
@@ -67,7 +67,7 @@ color: #cccccc;
 width:170px;
 height:50px;
 min-height:50px;/*有效设置item高度*/
-padding-left:20px;
+padding-left: 8px;
 background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #28405d, stop:1  #223a55);
 }
 
@@ -172,6 +172,88 @@ border: 0px solid #f0f0f0;
 border-top-width: 0px;
 }
 
+/*********************浏览器---标题栏右键菜单************************/
+/**一级菜单**/
+
+#pmenu_funclist
+{
+border-radius:4px;
+background-color: #ffffff;
+width: 135px;
+}
+
+#pmenu_func_tool
+{
+border-radius:4px;
+background-color: #ffffff;
+width: 100px;
+/*二级子菜单宽度是根据文字宽度决定，设置宽度item不会全部铺满*/
+}
+
+#pmenu_funclist::item
+{
+border-radius: 4px;
+height: 26px;
+padding-left:10px;
+}
+
+#pmenu_func_tool::item
+{
+border-radius: 4px;
+height: 26px;
+padding-left:10px;
+}
+
+#pmenu_funclist::item:selected
+{
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #6768ee, stop:1  #7184fb);
+}
+
+#pmenu_func_tool::item:selected
+{
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #6768ee, stop:1  #7184fb);
+}
+
+/**图标**/
+#pmenu_funclist::icon
+{
+position: absolute;
+top: 1px;
+right: 1px;
+bottom: 1px;
+left: 1px;
+}
+
+/**图标**/
+#pmenu_func_tool::icon
+{
+position: absolute;
+top: 1px;
+right: 1px;
+bottom: 1px;
+left: 1px;
+}
+
+/**分割线**/
+#pmenu_funclist::separator
+{
+height: 1px;
+background: #cccccc;
+margin-left: 5px;
+margin-right: 5px;
+}
+
+/**分割线**/
+#pmenu_func_tool::separator
+{
+height: 1px;
+background: #cccccc;
+margin-left: 5px;
+margin-right: 5px;
+
+}
+/*********************浏览器---标题栏右键菜单************************/
+
 /*浏览器---状态栏*/
 #m_statusBar
 {
@@ -189,7 +271,6 @@ color: #cccccc;
 {
 background-color: #454c59;
 border: none;
-
 }
 
 /*浏览器---收藏栏tabbar样式*/
@@ -211,7 +292,7 @@ height:18px;
 margin-top:3px;
 margin-left:1px;
 margin-right:1px;
-border-radius: 8px;
+border-radius: 4px;
 }
 
 #m_tabBar::tab:first
@@ -232,7 +313,7 @@ background-color: #ffffff;
 #m_tabBar::tab:hover
 {
 background-color: #ffffff;
-border-radius: 8px;
+border-radius: 4px;
 border: 1px solid #4d3cff;
 }
 
@@ -279,34 +360,34 @@ color:white;
 /*展开标签栏按钮*/
 #m_webExpandBtn,#m_webExpandBtn::pressed
 {
-background-color: #27282f;
-color:  #027ebd;
+background-color: #233b56;
+color:  #cccccc;
 border:1px solid #6768ee;
 border-radius:3px;
-margin:3px;
+margin:3px 0px;
 text-align:center;
 }
 
 #m_webExpandBtn:hover
 {
-background-color: #e4d0b5;
-color: #6768ee;
+background-color: #454c59;
+color: white;
 }
 
 /*标签隐藏按钮*/
 #m_webHideBtn,#m_webHideBtn::pressed
 {
-background-color: #27282f;
-color:  #027ebd;
+background-color: #233b56;
+color:  #cccccc;
 border:1px solid #6768ee;
 border-radius:3px;
-margin:3px;
+margin:3px 3px 3px 0px;
 }
 
 #m_webHideBtn:hover
 {
-background-color: #e4d0b5;
-color: #6768ee;
+background-color: #454c59;
+color: white;
 }
 
 /*浏览器---收藏列表*/
@@ -747,6 +828,7 @@ width:10px;
 height:20px;
 margin-left:10px;
 }
+
 /*帮助按钮菜单-----------------------样式结束*/
 
 /*歌曲列表右键菜------------------------------开始*/
@@ -754,7 +836,7 @@ margin-left:10px;
 {
 background: white;
 color:#2a2a31;
-font:normal normal 15px '微软雅黑';
+font: normal normal 15px '微软雅黑';
 }
 
 #pmenu_songer::item,#pmenu_son_addto::item,#pmenu_son_sort::item,#pmenu_son_playmode::item,#pmenu_son_muctool::item

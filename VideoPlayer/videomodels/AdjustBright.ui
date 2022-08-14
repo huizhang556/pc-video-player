@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>402</width>
+    <width>390</width>
     <height>340</height>
    </rect>
   </property>
@@ -14,106 +14,135 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: #2a2a31;
-</string>
+   <string notr="true">border-radius:6px;</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
-    <number>15</number>
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>15</number>
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,0,1,1,1,1,1">
-     <property name="spacing">
-      <number>5</number>
+    <widget class="QWidget" name="widget_grid" native="true">
+     <property name="styleSheet">
+      <string notr="true">background-color: #2a2a31;</string>
      </property>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>25</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>25</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font:bold normal 15px &quot;微软雅黑&quot;;
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,0,1,1,1,1,1">
+        <property name="spacing">
+         <number>5</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font:bold normal 15px &quot;微软雅黑&quot;;
 color: rgb(85, 255, 0);
 background-color: #2a2a31;</string>
-       </property>
-       <property name="text">
-        <string>设   置</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="Line" name="line">
-       <property name="styleSheet">
-        <string notr="true">background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));</string>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLabel" name="label_playRate">
-         <property name="minimumSize">
-          <size>
-           <width>50</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLabel
+          </property>
+          <property name="text">
+           <string>设   置</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line">
+          <property name="styleSheet">
+           <string notr="true">background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));</string>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QLabel" name="label_playRate">
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel
 {
 color: rgb(85, 255, 0);
 background-color: #2a2a31;
 }
 </string>
-         </property>
-         <property name="text">
-          <string>播放倍速</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="BtnRate_1">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>45</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"> QPushButton
+            </property>
+            <property name="text">
+             <string>播放倍速</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="BtnRate_1">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>45</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"> QPushButton
 {
 	border:1px solid white;
     background-color:gray;
@@ -134,44 +163,44 @@ QPushButton:checked
 }
  
  </string>
-         </property>
-         <property name="text">
-          <string>0.5x</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>10</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="BtnRate_5">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>45</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"> QPushButton
+            </property>
+            <property name="text">
+             <string>0.5x</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>10</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="BtnRate_5">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>45</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"> QPushButton
 {
 	border:1px solid white;
     background-color:gray;
@@ -192,44 +221,44 @@ QPushButton:checked
 }
  
  </string>
-         </property>
-         <property name="text">
-          <string>0.75x</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>10</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="BtnRate_2">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>45</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"> QPushButton
+            </property>
+            <property name="text">
+             <string>0.75x</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>10</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="BtnRate_2">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>45</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"> QPushButton
 {
 	border:1px solid white;
     background-color:gray;
@@ -250,44 +279,44 @@ QPushButton:checked
 }
  
  </string>
-         </property>
-         <property name="text">
-          <string>正常</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>10</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="BtnRate_3">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>45</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"> QPushButton
+            </property>
+            <property name="text">
+             <string>正常</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>10</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="BtnRate_3">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>45</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"> QPushButton
 {
 	border:1px solid white;
     background-color:gray;
@@ -308,44 +337,44 @@ QPushButton:checked
 }
  
  </string>
-         </property>
-         <property name="text">
-          <string>1.25x</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>10</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="BtnRate_4">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>45</width>
-           <height>27</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"> QPushButton
+            </property>
+            <property name="text">
+             <string>1.25x</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>10</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="BtnRate_4">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>45</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"> QPushButton
 {
 	border:1px solid white;
     background-color:gray;
@@ -366,87 +395,87 @@ QPushButton:checked
 }
  
  </string>
-         </property>
-         <property name="text">
-          <string>2x</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_8">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>5</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="Line" name="line_3">
-       <property name="styleSheet">
-        <string notr="true">background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));</string>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <property name="spacing">
-        <number>10</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="label_playSelect">
-         <property name="minimumSize">
-          <size>
-           <width>48</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 0);
+            </property>
+            <property name="text">
+             <string>2x</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>5</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_3">
+          <property name="styleSheet">
+           <string notr="true">background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));</string>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_playSelect">
+            <property name="minimumSize">
+             <size>
+              <width>48</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>48</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(85, 255, 0);
 background-color: #2a2a31;</string>
-         </property>
-         <property name="text">
-          <string>播放选择</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="radioButton_dcxh">
-         <property name="minimumSize">
-          <size>
-           <width>70</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>70</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QRadioButton
+            </property>
+            <property name="text">
+             <string>播放选择</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_dcxh">
+            <property name="minimumSize">
+             <size>
+              <width>70</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>70</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QRadioButton
 {
 color: rgb(42, 167, 247);
 margin-left:0px;
@@ -477,28 +506,28 @@ border-image: url(:/images/icon/radio_selected.png);
 }
 
 </string>
-         </property>
-         <property name="text">
-          <string>单次循环</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="radioButton_lbxh">
-         <property name="minimumSize">
-          <size>
-           <width>70</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>70</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">/*未选中的样式*/
+            </property>
+            <property name="text">
+             <string>单次循环</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_lbxh">
+            <property name="minimumSize">
+             <size>
+              <width>70</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>70</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">/*未选中的样式*/
 QRadioButton::indicator:unchecked
 {
 width:16px;
@@ -526,28 +555,28 @@ QRadioButton
 color: rgb(42, 167, 247);
 }
 </string>
-         </property>
-         <property name="text">
-          <string>列表循环</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="radioButton_sjbf">
-         <property name="minimumSize">
-          <size>
-           <width>70</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>70</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">/*未选中的样式*/
+            </property>
+            <property name="text">
+             <string>列表循环</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_sjbf">
+            <property name="minimumSize">
+             <size>
+              <width>70</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>70</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">/*未选中的样式*/
 QRadioButton::indicator:unchecked
 {
 width:16px;
@@ -575,28 +604,28 @@ QRadioButton
 color: rgb(42, 167, 247);
 }
 </string>
-         </property>
-         <property name="text">
-          <string>随机播放</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="radioButton_sxbf">
-         <property name="minimumSize">
-          <size>
-           <width>70</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>70</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">/*未选中的样式*/
+            </property>
+            <property name="text">
+             <string>随机播放</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_sxbf">
+            <property name="minimumSize">
+             <size>
+              <width>70</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>70</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">/*未选中的样式*/
 QRadioButton::indicator:unchecked
 {
 width:16px;
@@ -625,67 +654,67 @@ color: rgb(42, 167, 247);
 background-color: #2a2a31;
 }
 </string>
-         </property>
-         <property name="text">
-          <string>顺序播放</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QGridLayout" name="gridLayout">
-       <property name="topMargin">
-        <number>5</number>
-       </property>
-       <property name="bottomMargin">
-        <number>5</number>
-       </property>
-       <property name="horizontalSpacing">
-        <number>0</number>
-       </property>
-       <property name="verticalSpacing">
-        <number>20</number>
-       </property>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_bhd">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 0);
+            </property>
+            <property name="text">
+             <string>顺序播放</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QGridLayout" name="gridLayout">
+          <property name="topMargin">
+           <number>5</number>
+          </property>
+          <property name="bottomMargin">
+           <number>5</number>
+          </property>
+          <property name="horizontalSpacing">
+           <number>0</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>20</number>
+          </property>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_bhd">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(85, 255, 0);
 background-color: #2a2a31;</string>
-         </property>
-         <property name="text">
-          <string>饱 和 度</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QSlider" name="horizontalSlider_duibidu">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QSlider
+            </property>
+            <property name="text">
+             <string>饱 和 度</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QSlider" name="horizontalSlider_duibidu">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QSlider
 {
 background-color:#2a2a31;
 margin-left:13px;
@@ -734,75 +763,75 @@ background-color:rgb(255, 94, 30);
 border-radius:4px;
 }
 </string>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_sd">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 0);
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_sd">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(85, 255, 0);
 background-color: #2a2a31;</string>
-         </property>
-         <property name="text">
-          <string>色    调</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QLabel" name="label_baohedu">
-         <property name="minimumSize">
-          <size>
-           <width>35</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLabel
+            </property>
+            <property name="text">
+             <string>色    调</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLabel" name="label_baohedu">
+            <property name="minimumSize">
+             <size>
+              <width>35</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel
 {
 color: #f85a37;
 background-color:#2a2a31;
 margin-left:10px;
 }</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QSlider" name="horizontalSlider_baohedu">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QSlider
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSlider" name="horizontalSlider_baohedu">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QSlider
 {
 background-color:#2a2a31;
 margin-left:13px;
@@ -851,99 +880,99 @@ background-color:rgb(255, 94, 30);
 border-radius:4px;
 }
 </string>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_ld">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 0);
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_ld">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(85, 255, 0);
 background-color: #2a2a31;</string>
-         </property>
-         <property name="text">
-          <string>亮    度</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QLabel" name="label_duibidu">
-         <property name="minimumSize">
-          <size>
-           <width>35</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLabel
+            </property>
+            <property name="text">
+             <string>亮    度</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="label_duibidu">
+            <property name="minimumSize">
+             <size>
+              <width>35</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel
 {
 color: #f85a37;
 background-color:#2a2a31;
 margin-left:10px;
 }</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLabel" name="label_liangdu">
-         <property name="minimumSize">
-          <size>
-           <width>35</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLabel
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_liangdu">
+            <property name="minimumSize">
+             <size>
+              <width>35</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel
 {
 color: #f85a37;
 background-color:#2a2a31;
 margin-left:10px;
 }</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QSlider" name="horizontalSlider_sediao">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QSlider
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QSlider" name="horizontalSlider_sediao">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QSlider
 {
 background-color:#2a2a31;
 margin-left:13px;
@@ -992,75 +1021,75 @@ background-color:rgb(255, 94, 30);
 border-radius:4px;
 }
 </string>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QLabel" name="label_sediao">
-         <property name="minimumSize">
-          <size>
-           <width>35</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLabel
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLabel" name="label_sediao">
+            <property name="minimumSize">
+             <size>
+              <width>35</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel
 {
 color: #f85a37;
 background-color:#2a2a31;
 margin-left:10px;
 }</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_dbd">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 0);
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_dbd">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(85, 255, 0);
 background-color: #2a2a31;</string>
-         </property>
-         <property name="text">
-          <string>对 比 度</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QSlider" name="horizontalSlider_liangdu">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QSlider
+            </property>
+            <property name="text">
+             <string>对 比 度</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSlider" name="horizontalSlider_liangdu">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QSlider
 {
 background-color:#2a2a31;
 margin-left:13px;
@@ -1109,68 +1138,68 @@ background-color:rgb(255, 94, 30);
 border-radius:4px;
 }
 </string>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="Line" name="line_2">
-       <property name="styleSheet">
-        <string notr="true">background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));</string>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QLabel" name="label_hmbl">
-         <property name="minimumSize">
-          <size>
-           <width>50</width>
-           <height>35</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>35</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 0);
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_2">
+          <property name="styleSheet">
+           <string notr="true">background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));</string>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QLabel" name="label_hmbl">
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(85, 255, 0);
 background-color: #2a2a31;</string>
-         </property>
-         <property name="text">
-          <string>画面比例</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_1">
-         <property name="minimumSize">
-          <size>
-           <width>55</width>
-           <height>35</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>55</width>
-           <height>35</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QCheckBox
+            </property>
+            <property name="text">
+             <string>画面比例</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkBox_1">
+            <property name="minimumSize">
+             <size>
+              <width>55</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>55</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QCheckBox
 {
 /*font:11pt &quot;微软雅黑&quot;;*/
 color: rgb(42, 167, 247);
@@ -1208,44 +1237,44 @@ QCheckBox::indicator:checked
 image: url(:/images/icon/checked.png);
 }
 </string>
-         </property>
-         <property name="text">
-          <string>4:3</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_5">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Minimum</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>15</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_2">
-         <property name="minimumSize">
-          <size>
-           <width>55</width>
-           <height>35</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>55</width>
-           <height>35</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QCheckBox::indicator 
+            </property>
+            <property name="text">
+             <string>4:3</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Minimum</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>15</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkBox_2">
+            <property name="minimumSize">
+             <size>
+              <width>55</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>55</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QCheckBox::indicator 
 {
 width: 15px;
 height: 15px;
@@ -1283,44 +1312,44 @@ QCheckBox::indicator:checked
 image: url(:/images/icon/checked.png);
 }
 </string>
-         </property>
-         <property name="text">
-          <string>16:9</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_6">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Minimum</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>15</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_3">
-         <property name="minimumSize">
-          <size>
-           <width>55</width>
-           <height>35</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>55</width>
-           <height>35</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QCheckBox::indicator 
+            </property>
+            <property name="text">
+             <string>16:9</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Minimum</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>15</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkBox_3">
+            <property name="minimumSize">
+             <size>
+              <width>55</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>55</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QCheckBox::indicator 
 {
 width: 15px;
 height: 15px;
@@ -1358,44 +1387,44 @@ QCheckBox::indicator:checked
 image: url(:/images/icon/checked.png);
 }
 </string>
-         </property>
-         <property name="text">
-          <string>原始</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_7">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Minimum</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>15</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_4">
-         <property name="minimumSize">
-          <size>
-           <width>55</width>
-           <height>35</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>55</width>
-           <height>35</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QCheckBox::indicator 
+            </property>
+            <property name="text">
+             <string>原始</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Minimum</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>15</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkBox_4">
+            <property name="minimumSize">
+             <size>
+              <width>55</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>55</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QCheckBox::indicator 
 {
 width: 15px;
 height: 15px;
@@ -1433,15 +1462,18 @@ QCheckBox::indicator:checked
 image: url(:/images/icon/checked.png);
 }
 </string>
-         </property>
-         <property name="text">
-          <string>铺满</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
+            </property>
+            <property name="text">
+             <string>铺满</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
    </item>
   </layout>
  </widget>

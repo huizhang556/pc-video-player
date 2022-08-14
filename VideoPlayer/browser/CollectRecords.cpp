@@ -70,7 +70,10 @@ void CollectRecords::chandleSignalsAndSlots()
     //02 撤回
     connect(ui->pushButton_undo,&QPushButton::clicked,[=](){ui->stackedWidget->setCurrentIndex(0);});
     //03 删除
-    connect(ui->pushButton_delete,&QPushButton::clicked,[=](){});
+    connect(ui->pushButton_delete,&QPushButton::clicked,[=](){
+        //删除前应该先断开信号与槽函数连接，防止最后一个item删除出现bug
+
+    });
     //04 修改记录
     connect(ui->pushButton_change,&QPushButton::clicked,[=](){
         WebMessageBox::getInstance()->exec();
@@ -194,6 +197,7 @@ void CollectRecords::slot_initToRecordsListWidget(const QString &url, QIcon icon
     connect(itemWidget1,&MiniRecordItem::sig_item_delete,[=](){
         //04数据库
         dataBase::browser_deleteRecordToList(item1->text());//根据 url 删除
+        //删除前应该先断开信号与槽函数连接，防止最后一个item删除出现bug
 
         //03-标题存储删除(先发信号)
         emit sig_sendDeleteItemUrl(item1->text());//标题栏自己删除
@@ -216,6 +220,7 @@ void CollectRecords::slot_initToRecordsListWidget(const QString &url, QIcon icon
     connect(itemWidget2,&RecordItem::sig_item_delete,[=](){
         //04数据库
         dataBase::browser_deleteRecordToList(item1->text());//根据 url 删除
+        //删除前应该先断开信号与槽函数连接，防止最后一个item删除出现bug
 
         //03-标题存储删除(先发信号)
        emit sig_sendDeleteItemUrl(item1->text());//标题栏自己删除
@@ -348,6 +353,7 @@ void CollectRecords::slot_addToRecordsListWidget(const QString &url = "", QIcon 
     connect(itemWidget1,&MiniRecordItem::sig_item_delete,[=](){
         //04数据库
         dataBase::browser_deleteRecordToList(item1->text());//根据 url 删除
+        //删除前应该先断开信号与槽函数连接，防止最后一个item删除出现bug
 
         //03-标题存储删除(先发信号)
         emit sig_sendDeleteItemUrl(item1->text());//标题栏自己删除
@@ -370,6 +376,7 @@ void CollectRecords::slot_addToRecordsListWidget(const QString &url = "", QIcon 
     connect(itemWidget2,&RecordItem::sig_item_delete,[=](){
         //04数据库
         dataBase::browser_deleteRecordToList(item1->text());//根据 url 删除
+        //删除前应该先断开信号与槽函数连接，防止最后一个item删除出现bug
 
         //03-标题存储删除(先发信号)
        emit sig_sendDeleteItemUrl(item1->text());//标题栏自己删除
