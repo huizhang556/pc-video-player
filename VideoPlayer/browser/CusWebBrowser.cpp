@@ -9,6 +9,27 @@ CusWebBrowser::CusWebBrowser(QWidget *parent) :
     installEventFilter(this);
 //    this->load(QUrl("http://www.baidu.com"));
     this->load(QUrl("http://82.156.175.81/study/index.html"));
+    //加载外部文件方法1
+//    QString htmlPath = Global::appDirPath + QString::fromLocal8Bit("/html/study/index.html");
+//    QFile file(htmlPath);//直接加载本地html文件，外部对象由本地文件的相对路径查找，因此不需要设置
+//    if (!file.exists())
+//    {
+//        return;
+//    }
+//    this->load(QUrl("file:///" + htmlPath));
+
+    //加载外部文件方法2
+//    QString htmlPath = Global::appDirPath + QString::fromLocal8Bit("/html/Qt__Key键盘按键详细说明.html");//从此html文件中读取内容后写入webview
+//    QUrl baseUrl = Global::appDirPath + "/html/";//外部对象，包括以下CSS和js文件
+//    QFile file(htmlPath);
+//    if (!file.open(QIODevice::ReadOnly))
+//    {
+//        return;
+//    }
+//    QString htmlData = file.readAll().constData();
+//    file.close();
+//    this->setHtml(htmlData, baseUrl);
+
     this->page()->setAudioMuted(false);//不自动静音
     this->settings()->setAttribute(QWebEngineSettings::PluginsEnabled,true);//支持插件
     this->settings()->setAttribute(QWebEngineSettings::SpatialNavigationEnabled, true);

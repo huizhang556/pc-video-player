@@ -153,6 +153,89 @@ void CollectRecords::slot_initToRecordsListWidget(const QString &url, QIcon icon
     item2->setSizeHint(itemWidget1->size()-QSize(50,0));
     ui->listWidget_findResults->addItem(item2);
     ui->listWidget_findResults->setItemWidget(item2,itemWidget2);
+
+    //数据库操作--插入记录
+//    dataBase::browser_addRecordToList(title,url);//插入 别名 url
+
+    /****************************信号与槽函数****************************************/
+    //点击记录1 跳转
+    connect(itemWidget1,&MiniRecordItem::sig_item_record,[=](QString text){
+        emit sig_sendItemText(item1->text());//添加tab
+        emit sig_returnPage();//返回浏览器
+        qDebug() << QString::fromLocal8Bit("item1点击的存储名称：") << text<< QString::fromLocal8Bit("点击的存储url：") << item1->text();
+
+    });
+     //点击记录2 跳转
+    connect(itemWidget2,&RecordItem::sig_item_record,[=](QString text){
+        emit sig_sendItemText(item2->text());//添加tab
+        emit sig_returnPage();//返回浏览器
+        qDebug() << QString::fromLocal8Bit("item2点击的存储名称：") << text << QString::fromLocal8Bit("点击的存储url：") << item2->text();
+    });
+
+    //修改思路：01.自己修改 02.查找修改 （统一使用url查找，再修改）
+    //修改1
+    connect(itemWidget1,&MiniRecordItem::sig_item_modify,[=](QString text,QPushButton *curBtn){
+        QString itemText = getCurrentRecordItemText(item1->listWidget(),text);
+        slot_showWebMessageWindow(itemText,text);//url nickname
+    });
+    //修改2
+    connect(itemWidget2,&RecordItem::sig_item_modify,[=](QString text,QPushButton *curBtn){
+        QString itemText = getCurrentRecordItemText(ui->listWidget_findResults,text);
+        slot_showWebMessageWindow(itemText,text);//url nickname
+    });
+
+    //修改生效
+    connect(WebMessageBox::getInstance(),&WebMessageBox::sig_sendTitleChanged,[=](QString url, QString rename){
+                slot_updateCurrentRecord_recordItem(item1,url,rename);
+                slot_updateCurrentRecord_miniRecordItem(item2,url,rename);
+                dataBase::browser_updateRecordToList(url,rename);
+    });
+
+    //删除思路：01.自己删除 02.查找删除 03.标题存储删除 （统一使用url）
+    //删除1
+    connect(itemWidget1,&MiniRecordItem::sig_item_delete,[=](){
+        //04数据库
+        dataBase::browser_deleteRecordToList(item1->text());//根据 url 删除
+
+        //03-标题存储删除(先发信号)
+        emit sig_sendDeleteItemUrl(item1->text());//标题栏自己删除
+        qDebug() << QString::fromLocal8Bit("item1删除点击的存储url：") << item1->text();
+
+        //01-自己删除
+        itemWidget1->deleteLater();
+        QListWidgetItem *t_item1 = item1->listWidget()->takeItem(item1->listWidget()->row(item1));
+        delete t_item1;
+        t_item1 = nullptr;
+
+        //02-查找删除{
+        itemWidget2->deleteLater();
+        QListWidgetItem *t_item2 = ui->listWidget_findResults->takeItem(ui->listWidget_findResults->row(item2));
+        delete t_item2;
+        t_item2 = nullptr;
+
+    });
+    //删除2
+    connect(itemWidget2,&RecordItem::sig_item_delete,[=](){
+        //04数据库
+        dataBase::browser_deleteRecordToList(item1->text());//根据 url 删除
+
+        //03-标题存储删除(先发信号)
+       emit sig_sendDeleteItemUrl(item1->text());//标题栏自己删除
+       qDebug() << QString::fromLocal8Bit("item2删除点击的存储url：") << item2->text();
+
+        //01-查找删除
+        itemWidget2->deleteLater();
+        QListWidgetItem *t_item2 = ui->listWidget_findResults->takeItem(ui->listWidget_findResults->row(item2));
+        delete t_item2;
+        t_item2 = nullptr;
+
+        //02-自己删除
+        itemWidget1->deleteLater();
+        QListWidgetItem *t_item1 = item1->listWidget()->takeItem(item1->listWidget()->row(item1));
+        delete t_item1;
+        t_item1 = nullptr;
+    });
+    /****************************信号与槽函数****************************************/
 }
 
 /*根据listwidgetitem文本查找按钮文本*/

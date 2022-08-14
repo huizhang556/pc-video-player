@@ -34,6 +34,7 @@
 
 int main(int argc, char *argv[])
 {
+    QApplication::setAttribute(Qt::AA_UseOpenGLES);
     QApplication a(argc, argv);
     QTranslator translator1;
     translator1.load(":/font/qt_zh_CN.qm");//翻译为中文

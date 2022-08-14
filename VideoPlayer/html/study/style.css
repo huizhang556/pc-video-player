@@ -1,0 +1,589 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.body {
+    background-color: #f3f5f7;
+    /* 整个页面布局完成后，将高度注掉 */
+    /* height: 3000px; */
+}
+/* 版心样式 */
+.w {
+    width: 1200px;
+    margin:0 auto;
+}
+
+.fixed {
+    position: fixed;
+    z-index: 3;
+    width: 50px;
+    height: 80px;
+    bottom: 333px;
+    left: 50%;
+    margin-left: 620px;
+    background-color: #fff;
+    }
+
+.fixed a {
+    text-decoration: none;
+}
+
+.fixed a:hover {
+    color: #00a4ff;
+}
+
+.fixed h4 {
+    margin-left: 5px;
+}
+
+.fixed img {
+    margin: 5px 10px;
+}
+
+li {
+    list-style: none;
+}
+
+/* 清除浮动需要添加以下三行代码 */
+.clearfix:before, .clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom:1;
+}
+
+.header {
+    height: 42px;
+    /* background-color: pink; */
+    /* 样式层叠w中的margin */
+    margin: 30px auto;
+}
+
+.logo {
+    /* 全部浮动 */
+    float: left;
+    width: 198px;
+    height: 42px;
+    /* background-color: purple; */
+}
+
+.nav {
+    /* 不给宽度，便于以后扩展 */
+    float: left;
+    margin-left: 60px;
+}
+
+.nav li {
+    /* 相当于a可以横着显示 */
+    float: left;
+    margin:0 15px;
+}
+
+.nav ul li a {
+    /* 转换为块级元素 */
+    display: block;
+    height: 42px;
+    padding: 0 10px;
+    line-height: 42px;
+    font-size: 18px;
+    color: #050505;
+    text-decoration: none;
+}
+
+.nav ul li a:hover {
+        border-bottom: 2px solid #00a4ff;
+        color: #00a4ff;
+}
+
+.search {
+    float: left;
+    width: 412px;
+    height: 42px;
+    /* background-color: skyblue; */
+    margin-left: 70px;
+}
+
+.search input {
+    float: left;
+    width: 345px;
+    height: 40px;
+    border:1px solid #00a4ff;
+    /* 右边框没有 */
+    border-right: none;
+    font-size: 14px;
+    color: #bfbfbf;
+    /* 撑大盒子，width应该减15px */
+    padding-left: 15px;
+    /* 定光标，黑色轮廓线消失 */
+    outline: none;
+
+}
+
+.search button {
+    float: left;
+    width: 50px;
+    height: 42px;
+    background-image: url(images/btn.png);
+    /* 按钮默认有个边框 */
+    /* 行内块元素默认有缝隙，父容器容不下,但是加了浮动就会没有缝隙 */
+    border-width: 0;
+}
+
+.user {
+    float: right;
+    line-height: 42px;
+    margin-right: 30px;
+    color: #666;
+    font-size: 14px;
+}
+
+.banner {
+    height: 421px;
+    background-color: #1c036c;
+}
+
+.banner .w {
+    height: 421px;
+    /* background-color: purple; */
+    background: url(images/banner2_20190819_210028.png) no-repeat top center;
+}
+
+.subnav {
+    float: left;
+    width: 190px;
+    height: 421px;
+    background:rgba(0,0,0,0.3);
+}
+
+.subnav ul li {
+    height: 45px;
+    line-height: 45px;
+    /* 文字与左边距 */
+    padding:0 20px;
+}
+
+
+.subnav ul li a {
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.subnav ul li a span {
+    float: right;
+}
+
+.subnav ul li a:hover {
+    color: #00a4ff;
+}
+.course {
+    float: right;
+    width: 230px;
+    height: 300px;
+    background-color: #fff;
+    /* 浮动的盒子不会有外边距合并的问题 */
+    margin-top: 50px;
+}
+
+.course h2 {
+    height: 48px;
+    background-color:#9bceea;
+    text-align: center;
+    line-height: 48px;
+    font-size: 18px;
+    color: #fff;
+}
+
+.bd {
+    padding:0 20px;
+    background-color: #f3f5f7;
+}
+
+.bd ul li {
+    padding:14px 0;
+    border-bottom:1px solid #9bceea;
+}
+
+.bd ul li h4 {
+    font-size: 16px;
+    color: #4e4e4e;
+}
+
+.bd ul li p {
+    font-size: 12px;
+    color: #a5a5a5;
+}
+
+.bd a {
+    display: block;
+    height: 38px;
+    margin-top: 5px;
+    border:1px solid greenyellow;
+    text-align: center;
+    text-decoration: none;
+    line-height: 38px;
+    color: greenyellow;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.bd a:hover {
+    border:1px solid #00a4ff;
+    color: #00a4ff;
+}
+
+.goods {
+    height: 60px;
+    margin-top: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 3px 3px rgba(0,0,0,0.1);
+    /* 行高会继承给三个孩子 */
+    line-height: 60px;
+    /* border:5px solid greenyellow;
+    border-radius: 10px; */
+}
+
+.goods h3 {
+float: left;
+margin-left: 30px;
+font-size: 16px;
+color: #00a4ff;
+}
+
+.goods ul {
+    float: left;
+    margin-left: 30px;
+}
+.goods ul li {
+    float: left;
+}
+
+.goods ul li a {
+    border-left: 1px solid #ccc;
+    padding:0 30px;
+    font-size: 16px;
+    color: #050505;
+    text-decoration: none;
+}
+
+.goods ul li a:hover {
+    color: hotpink;
+}
+
+/* 友情链接 */
+.mod {
+    float: right;
+    margin-right: 3px;
+    font-size: 14px;
+    color: #00a4ff;
+    text-decoration: none;
+}
+
+.box {
+    margin-top: 30px;
+    background-color: #f3f5f7;
+}
+
+.box-hd {
+    height: 45px;
+    
+}
+
+.box-hd h3 {
+    float: left;
+    font-size: 20px;
+    color: #00a4ff;
+    margin-top: 7px;
+    /* 标题文字左内边距 */
+    padding-left: 15px;
+}
+
+.level {
+    /* 不给宽度，便于以后扩展 */
+    float: left;
+    margin:auto 330px;
+}
+
+.level li {
+    /* 相当于a可以横着显示 */
+    float: left;
+    margin:0 15px;
+}
+
+.level ul li a {
+    /* 转换为块级元素 */
+    display: block;
+    height: 42px;
+    padding: 0 10px;
+    line-height: 42px;
+    font-size: 18px;
+    color: #050505;
+    text-decoration: none;
+}
+
+.level ul li a:hover {
+        border-bottom: 2px solid red;
+        color: #00a4ff;
+}
+
+/* a为子代的a ，查看全部*/
+.box-hd>a {
+    float: right;
+    font-size: 12px;
+    color: red;
+    margin-top: 15px;
+    margin-right: 30px;
+    text-decoration: none;
+    line-height: 100%;
+}
+
+.box-hd>a:hover {
+    color: blue;
+}
+
+.box-bd {
+    background-color: #f3f5f7;
+    /* background-image: url(images/weixing.png); */
+}
+/* 把li的父亲修改的足够宽，能够一行装下所有的li */
+.box-bd ul {
+    width: 1225px;
+}
+
+.box-bd h4 {
+    text-align: center;
+}
+
+.box-bd ul li {
+    /* 相对定位 */
+    position: relative;
+    float: left;
+    width: 228px;
+    height: 270px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+
+/* hot标签 */
+.box-bd ul li em {
+    /* 父亲还需要加相对定位 */
+    position: absolute;
+    top: 4px;
+    right: -4px;
+}
+
+/* li下儿子img */
+.box-bd ul li>img {
+    width: 100%;
+}
+
+.box-bd ul li h4 {
+    /* 上 右 下 左 */
+    margin: 20px 20px 20px 25px;
+    font-size: 14px;
+    color: #050505;
+    font-weight: 400;
+}
+
+.info {
+    /* margin:0 20px 0 25px; */
+    margin-left: 65px;
+    font-size: 12px;
+    color:#999;
+}
+
+.info span {
+    color: #ff7c2d;
+}
+
+.info a {
+    color: #999;
+}
+
+.info a:hover {
+    color: blue;
+}
+
+.box-py {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: pink;
+}
+
+.newleft {
+    float: left;
+    width: 228px;
+    height: 392px;
+    /* background-color: pink; */
+    background-image: url(images/left.png);
+}
+
+.newright {
+    float: left;
+    width: 957px;
+    height: 392px;
+    margin-left: 15px;
+}
+
+.pytitle  {
+    width: 957px;
+    /* 总高度123px,顶部23px */
+    height: 100px;
+    background-image: url(images/python.png);
+    margin-bottom: 23px;
+}
+
+.pycourse {
+    width: 958px;
+    height: 269px;
+    background-color: #f3f5f7;
+}
+
+.pycourse ul li {
+    width: 226px;
+    height: 269px;
+    margin-right: 18px;
+}
+
+.footer {
+    /* footer高度 */
+    height: 300px;
+    margin-top: 40px;
+    background-color: #2e3340;
+}
+
+.footer .w {
+    /* 使用margin有外边距合并问题 */
+    /* margin-top: 35px; */
+    padding-top: 35px;
+
+}
+
+.copyright {
+    float: left;
+    width: 270px;
+    /* margin: 0 10px; */
+}
+
+.copyright p {
+    margin:20px 0 15px 0;
+    font-size: 12px;
+    color: #666;
+}
+
+.copyright .app {
+    display: block;
+    width: 118px;
+    height: 33px;
+    color: #00a4ff;
+    border:1px solid #00a4ff;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    line-height: 33px;
+    /* 返回顶部左边距，居中一下 */
+    margin-left: 40px;
+}
+
+.app:hover {
+    font-weight: bold;
+    color: greenyellow;
+}
+
+/* 二维码展示区 */
+.osinfo {
+    float: left;
+    width: 280px;
+    height: 215px;
+    margin:15px 15px 15px;
+    /* 竖线隔离 */
+    /* border-left: 2px solid #5a6789;
+    border-right: 2px solid #5a6789; */
+}
+
+.osinfo p {
+    margin-top: 5px;
+    text-align: center;
+}
+
+/* 二维码1,2区域样式得分开写，否则不生效 */
+.erweima1 {
+    float: left;
+    margin-top: 40px;
+    margin-left: 15px;
+}
+
+.erweima2 {
+    float: left;
+    margin-top: 40px;
+    margin-left: 15px;
+}
+
+.links {
+float: right;
+}
+
+/* 链接标题dt父级 */
+.links dl {
+    float: left;
+    margin-left: 10px;
+}
+
+/* 在dl下，dt和dd是兄弟关系 */
+.links dl dt {
+    font-size: 18px;
+    color: #deffff;
+    /*  */
+    margin-bottom: 5px;
+}
+
+/* 链接之间 */
+.links dl dd {
+    margin:8px;
+}
+
+.links dl dd a {
+font-size: 14px;
+color: #00a4ff;
+text-decoration: none;
+}
+
+.links dl dd a:hover {
+    color: #8ff51e;
+}
+
+/* 其他信息展示 */
+.other {
+    position: relative;
+    height: 30px;
+    background-color: #282d3a;
+}
+
+.oinfo {
+    width: 740px;
+    position: absolute;
+    /* 洽谈信息居中显示 */
+    left: 50%;
+    margin-left: -370px;
+}
+
+.other a {
+    /* a样式要生效，必须先转换为行内块元素 */
+    display: inline-block;
+    margin: 5px 10px;
+    color: #8ff51e;
+    text-indent: 30px;
+    text-align: center;
+}
+
+.other a:hover {
+    color:#00a4ff;
+}
+
