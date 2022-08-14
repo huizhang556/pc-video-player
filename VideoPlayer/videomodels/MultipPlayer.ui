@@ -697,7 +697,10 @@ border-image: url(:/images/icon/set_hover.png);
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true"/>
+                 <string notr="true">QPushButton
+{
+border-image: url(:/images/tray/tray_sound.png);
+}</string>
                 </property>
                 <property name="text">
                  <string/>

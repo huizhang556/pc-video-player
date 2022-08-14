@@ -93,7 +93,6 @@ void FloatPlayCtl::chandleSignalsAndSlots()
     //静音
     connect(ui->pushButton_voice,&QPushButton::clicked,[=](){
         if(ui->horizontalSlider_voiceProgress->value() == 0) return;
-        slot_setCurrentMediaMutedStyleSheet();
         emit sig_sendPlayMute(m_soundStatus);
     });
 
@@ -177,15 +176,15 @@ void FloatPlayCtl::slot_setCurrentPlayStatus(bool status)
     }
 }
 
-void FloatPlayCtl::slot_setCurrentMediaMutedStyleSheet()
+void FloatPlayCtl::slot_setCurrentMediaMutedStyleSheet(bool status)
 {
-    if(m_soundStatus)
+    if(status)
     {
         ui->pushButton_voice->setStyleSheet("QPushButton{"
                                            "border-image: url(:/images/tray/tray_muted.png);"
                                            "}");
     }
-    else if(!m_soundStatus)
+    else
     {
         ui->pushButton_voice->setStyleSheet("QPushButton{"
                                            "border-image: url(:/images/tray/tray_sound.png);"

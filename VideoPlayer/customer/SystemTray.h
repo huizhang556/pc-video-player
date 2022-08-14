@@ -20,7 +20,7 @@ public:
 public slots:
     void slot_setCurrentPlayStatus(bool status);//当前播放状态样式设置
     void slot_setCurrentPlaySoundValue(int value);//声音值
-    void slot_setCurrentMediaMutedStyleSheet();//设置静音
+    void slot_setCurrentMediaMutedStyleSheet(bool status);//设置静音样式
     void slot_setCurrentPlayMutedStatus(int value);//声音样式
     void slot_setCurrentMediaSoundShowToop(int value);
     void slot_updatePlayButtonStatusStyleSheet();

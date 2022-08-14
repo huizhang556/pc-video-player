@@ -578,10 +578,13 @@ void MainWidget::chandleSignalAndSlots()
     connect(FloatPlayCtl::getInstance(),SIGNAL(sig_sendProgress_voice(int)),m_mainPlayer,SLOT(slot_receiveSystemTraySendSoundValue(int)));
 
     //托盘---静音按钮
-    connect(m_systemTray,SIGNAL(sig_playStatusMuted(bool)),m_mainPlayer,SLOT(on_setCurrentMediaSoundSatus()));
+    connect(m_systemTray,SIGNAL(sig_playStatusMuted(bool)),m_mainPlayer,SLOT(slot_setCurrentMediaMuted()));
     //浮动控制---静音按钮
-    connect(FloatPlayCtl::getInstance(),SIGNAL(sig_sendPlayMute(bool)),m_mainPlayer,SLOT(on_setCurrentMediaSoundSatus()));
-
+    connect(FloatPlayCtl::getInstance(),SIGNAL(sig_sendPlayMute(bool)),m_mainPlayer,SLOT(slot_setCurrentMediaMuted()));
+    //托盘---静音样式改变
+    connect(m_mainPlayer,SIGNAL(sig_playerIsMutedStatus(bool)),m_systemTray,SLOT(slot_setCurrentMediaMutedStyleSheet(bool)));
+    //浮动控制---静音样式改变
+    connect(m_mainPlayer,SIGNAL(sig_playerIsMutedStatus(bool)),FloatPlayCtl::getInstance(),SLOT(slot_setCurrentMediaMutedStyleSheet(bool)));
     //托盘action组
     connect(m_actionGroup,&QActionGroup::triggered,[=](QAction *action)
     {

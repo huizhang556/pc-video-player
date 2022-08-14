@@ -158,7 +158,9 @@ public slots:
 
     void    slot_receiveSystemTraySendSoundValue(int value);//接收托盘发过来的音量信号
 
-    void    on_setCurrentMediaSoundSatus();
+    void    slot_setCurrentMediaSoundSatus(bool status);//设置静音样式状态
+
+    void    slot_setCurrentMediaMuted();//设置静音
 
     void    slot_showPlayerErrot(QMediaPlayer::Error error);//播放错误提示
 
@@ -276,11 +278,15 @@ signals:
 
     void    sig_winVStatus(bool);
 
+    void    sig_mediaIsMuted(bool);
+
     void    sig_currentMediaPlayStatus(bool status);
 
     void    sig_currentMediaSoundValueChange(int value);
 
     void    sig_mainPlayerClose();
+
+    void    sig_playerIsMutedStatus(bool);
 
 
 private:

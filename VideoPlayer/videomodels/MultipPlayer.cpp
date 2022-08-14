@@ -387,8 +387,20 @@ void MultipPlayer::chandleSignalAndSLots()
         m_bPress = false;
     });
 
+    //静音按钮
+    connect(ui->pushButton_sound,&QPushButton::clicked,[=](){
+        slot_setCurrentMediaMuted();
+    });
+
     //接收value值改变
     connect(this,SIGNAL(sig_currentMediaSoundValueChange(int)),m_muteDlg,SLOT(setSpliderValue(int)));
+
+    //静音状态改变
+    connect(m_player,&QMediaPlayer::mutedChanged,[=](bool status){
+        qDebug() <<QString::fromLocal8Bit("静音状态改变：")<<status;//静音 true 非静音 false
+        sig_playerIsMutedStatus(status);
+        slot_setCurrentMediaSoundSatus(status);//主界面样式改变
+    });
 
     /*音量值调节显示数值*/
     connect(m_muteDlg,&muteDialog::sig_SpliderValueChange,[=](int value){
@@ -592,7 +604,7 @@ void MultipPlayer::loadDefaultLogo()
 
     m_searchBtn->setToolTip(QString::fromLocal8Bit("打开文件"));
 
-    ui->pushButton_sound->setIcon(QIcon(":/images/icon/yingling.png"));//图标是正常音量
+    ui->pushButton_sound->setIcon(QIcon(":/images/icon/yingling.png"));
     ui->pushButton_sound->setIconSize(QSize(18,18));//以后所有显示图片都是此大小
     ui->pushButton_sound->setFlat(true);
 
@@ -1244,7 +1256,20 @@ void MultipPlayer::slot_receiveSystemTraySendSoundValue(int value)
 }
 
 //设置静音按钮
-void MultipPlayer::on_setCurrentMediaSoundSatus()
+void MultipPlayer::slot_setCurrentMediaSoundSatus(bool status)
+{
+    if(status)//静音
+    {
+       ui->pushButton_sound->setIcon(QIcon(":/images/icon/jingyin.png"));
+    }
+    else//非静音
+    {
+
+        ui->pushButton_sound->setIcon(QIcon(":/images/icon/yingling.png"));
+    }
+}
+
+void MultipPlayer::slot_setCurrentMediaMuted()
 {
     if(m_player->isMuted())
     {

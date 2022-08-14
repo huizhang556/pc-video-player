@@ -27,7 +27,7 @@ public slots:
     void    slot_setMediaPlayName(QString name);
     void    slot_setMediaPlayTime(QString time);
     void    slot_setCurrentPlayStatus(bool status);
-    void    slot_setCurrentMediaMutedStyleSheet();
+    void    slot_setCurrentMediaMutedStyleSheet(bool status);
     void    slot_setCurrentPlayMutedStatus(int value);
 
 protected:
