@@ -13,8 +13,9 @@ class Global : public QObject
     Q_OBJECT
 public:
     explicit Global(QObject *parent = nullptr);
+    ~Global();
     static void registerLAVplayer();//注册播放器
-
+    static void unRegisterLAVplayer();//卸载注册播放器
     bool    isNetWorkOnline();//判断是否在线
     void    checkNetWorkOnline();//判断是都连接互联网
 

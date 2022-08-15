@@ -1,5 +1,6 @@
 ﻿#include "Global.h"
 
+#include <QDebug>
 
 //类外初始化全局变量
 //不同模式下选择不同的路径,可通过变换模式查看（变红）
@@ -14,13 +15,104 @@ Global::Global(QObject *parent) : QObject(parent)
 
 }
 
+Global::~Global()
+{
+//    unRegisterLAVplayer();
+}
+
 //注册LAV播放器
 void Global::registerLAVplayer()
 {
-    QProcess p(NULL);
-    p.setWorkingDirectory(Global::appDirPath + "/lav64");
-    p.start(Global::appDirPath + "/lav64/install_video.bat");
-    p.waitForFinished();//默认3000ms
+//    QProcess p(NULL);
+//    p.setWorkingDirectory(Global::appDirPath + "/lav64");
+//    p.start(Global::appDirPath + "/lav64/install_video.bat");
+//    p.waitForFinished();//默认3000ms
+    QProcess process1;
+    process1.setWorkingDirectory(Global::appDirPath + "/lav64");
+    QString cmd1 = QString(Global::appDirPath + "/lav64/install_splitter.bat");
+    bool isOK1 = process1.startDetached(cmd1);
+    if(isOK1)
+    {
+        qDebug() << QString::fromLocal8Bit("注册splitter成功！");
+    }
+    else
+    {
+        qDebug() << QString::fromLocal8Bit("注册splitter失败！");
+    }
+
+    QProcess process2;
+    process2.setWorkingDirectory(Global::appDirPath + "/lav64");
+    QString cmd2 = QString(Global::appDirPath + "/lav64/install_audio.bat");
+//    process2.startDetached(cmd2);
+    bool isOK2 = process2.startDetached(cmd2);
+    if(isOK2)
+    {
+        qDebug() << QString::fromLocal8Bit("注册audio成功！");
+    }
+    else
+    {
+        qDebug() << QString::fromLocal8Bit("注册audio失败！");
+    }
+
+    QProcess process3;
+    process3.setWorkingDirectory(Global::appDirPath + "/lav64");
+    QString cmd3 = QString(Global::appDirPath + "/lav64/install_video.bat");
+//    process3.startDetached(cmd3);
+    bool isOK3 = process3.startDetached(cmd3);
+    if(isOK3)
+    {
+        qDebug() << QString::fromLocal8Bit("注册video成功！");
+    }
+    else
+    {
+        qDebug() << QString::fromLocal8Bit("注册video失败！");
+    }
+}
+
+//卸载注册
+void Global::unRegisterLAVplayer()
+{
+    QProcess process1;
+    process1.setWorkingDirectory(Global::appDirPath + "/lav64");
+    QString cmd1 = QString(Global::appDirPath + "/lav64/uninstall_splitter.bat");
+//    process1.startDetached(cmd1);
+    bool isOK1 = process1.startDetached(cmd1);
+    if(isOK1)
+    {
+        qDebug() << QString::fromLocal8Bit("卸载video成功！");
+    }
+    else
+    {
+        qDebug() << QString::fromLocal8Bit("卸载video失败！");
+    }
+
+    QProcess process2;
+    process2.setWorkingDirectory(Global::appDirPath + "/lav64");
+    QString cmd2 = QString(Global::appDirPath + "/lav64/uninstall_audio.bat");
+//    process2.startDetached(cmd2);
+    bool isOK2 = process2.startDetached(cmd2);
+    if(isOK2)
+    {
+        qDebug() << QString::fromLocal8Bit("卸载audio成功！");
+    }
+    else
+    {
+        qDebug() << QString::fromLocal8Bit("卸载audio失败！");
+    }
+
+    QProcess process3;
+    process3.setWorkingDirectory(Global::appDirPath + "/lav64");
+    QString cmd3 = QString(Global::appDirPath + "/lav64/uninstall_video.bat");
+//    process3.startDetached(cmd3);
+    bool isOK3 = process3.startDetached(cmd3);
+    if(isOK3)
+    {
+        qDebug() << QString::fromLocal8Bit("卸载video成功！");
+    }
+    else
+    {
+        qDebug() << QString::fromLocal8Bit("卸载video失败！");
+    }
 }
 
 //判断是否有网络连接（不一定能上网）

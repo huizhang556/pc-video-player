@@ -47,6 +47,9 @@ int main(int argc, char *argv[])
     dataBase::creatConnection();//连接数据库
     dataBase::getInstance()->initGlobalDate();//数据初始化
 
+    //播放器注册
+//    Global::registerLAVplayer();
+
 //    CustomFileDialog s;
 //    s.show();
 

@@ -1069,14 +1069,14 @@ background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #c11432,
 #list1_vertical_scrollBar::handle:vertical,#list2_vertical_scrollBar::handle:vertical,#list3_vertical_scrollBar::handle:vertical,#list4_vertical_scrollBar::handle:vertical
 {
 background-color:#65d269;
-border-radius:5px;
+border-radius:4px;
 }
 
 /*鼠标放到滑块上面样式*/
 #list1_vertical_scrollBar::handle:vertical:hover,#list2_vertical_scrollBar::handle:vertical:hover,#list3_vertical_scrollBar::handle:vertical:hover,#list4_vertical_scrollBar::handle:vertical:hover
 {
 background-color:#c0ff02;
-border-radius:5px;
+border-radius:4px;
 }
 
 /*滚动条滚过部分样式*/
@@ -1096,21 +1096,21 @@ background-color:#038387;
 QScrollBar:vertical
 {
 background-color:#3f3f48;/*背景颜色*/
-width:10px;/*整体宽度*/
+width:8px;/*整体宽度*/
 }
 
 /*水平滚动条整体样式*/
 QScrollBar:horizontal
 {
 background-color:#3f3f48;/*背景颜色*/
-height:10px;/*整体高度*/
+height:8px;/*整体高度*/
 }
 
 /*垂直滚动条内滑块样式*/
 QScrollBar::handle:vertical
 {
 min-height:20px;/*滑块宽度*/
-border-radius:5px;/*滑块角度弯曲*/
+border-radius:4px;/*滑块角度弯曲*/
 background-color:#038387;
 }
 
@@ -1118,7 +1118,7 @@ background-color:#038387;
 QScrollBar::handle:horizontal
 {
 min-width:20px;/*滑块高度*/
-border-radius:5px;/*滑块角度弯曲*/
+border-radius:4px;/*滑块角度弯曲*/
 background-color:#038387;
 }
 
@@ -1126,14 +1126,14 @@ background-color:#038387;
 QScrollBar::handle:vertical:hover
 {
 background-color:#6b9fa7;
-border-radius:5px;
+border-radius:4px;
 }
 
 /*水平滚动条内滑块样式--hover*/
 QScrollBar::handle:horizontal:hover
 {
 background-color:#6b9fa7;
-border-radius:5px;
+border-radius:4px;
 }
 
 /*垂直滚动条滑过上部分的样式*/
