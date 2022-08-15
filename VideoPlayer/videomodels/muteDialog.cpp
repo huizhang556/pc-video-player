@@ -1,6 +1,7 @@
 ﻿#include "muteDialog.h"
 #include "ui_muteDialog.h"
 #include <QDebug>
+#include <QPainterPath>
 
 //muteDialog* muteDialog::m_pInstance = NULL;
 
@@ -9,7 +10,7 @@ muteDialog::muteDialog(QWidget *parent) :
     ui(new Ui::muteDialog)
 {
     ui->setupUi(this);
-    this->setFixedSize(40,170);
+    this->setFixedSize(40,180);
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowStaysOnTopHint);//去掉标题栏
     this->setAttribute(Qt::WA_TranslucentBackground);    //重要
     ui->verticalSlider->setRange(0,100);
@@ -71,6 +72,25 @@ bool muteDialog::event(QEvent *event)
                 this->close();
             }
         }
-        return QWidget::event(event);
+    return QWidget::event(event);
+}
+
+//绘画
+void muteDialog::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event);
+    QPainter painter(this);
+    painter.drawPixmap(0,0,this->width(),this->height(),QPixmap(":/images/bgpic/voice_bgpic.png"));
+//    QPainterPath path;
+//    //设置圆角半径
+//    const qreal radius = 10;
+//    //设置起点为矩形左上圆角圆心
+//    path.moveTo(this->rect().topLeft().x() + radius, this->rect().topLeft().y() + radius);
+//    //绘制圆角 圆弧以外切圆的90度位置为起点，逆时针画圆弧运行90度结束（从12点钟方向 - 9点钟方向）
+//    path.arcTo(QRect(this->rect().topLeft(), QSize(radius * 2, radius * 2)), 90, 90);
+//    //画圆弧 (3点钟方向 - 12点钟方向)
+//    path.arcTo(QRect(QPoint(this->rect().topRight().x() - (radius * 2), this->rect().topRight().y()), QSize(radius * 2, radius * 2)), 0, 90);
+//    painter.drawPath(path);
+//    painter.save();
 }
 

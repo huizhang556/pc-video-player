@@ -42,6 +42,7 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
     ui->pushButton_sound->installEventFilter(this);//音量调节按钮设置监听
     ui->stackedWidget->installEventFilter(this);//侧边按钮显隐用
     videoWidget->installEventFilter(this);//视频界面
+    FloatPlayCtl::getInstance()->installEventFilter(this);
 
   //测试功能
   list_temp<<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/videos/xiashanshalajiang.flv")
@@ -110,6 +111,7 @@ MultipPlayer::~MultipPlayer()
     delete ui;
     delete m_pTimer;
     delete m_pTimer2;
+    delete m_showFloat;
     delete m_widget1;
     delete m_musicUi;
     delete m_muteDlg;
@@ -150,6 +152,7 @@ void MultipPlayer::initMainWindow()
     m_player->setPlaylist(playlist);
 
     videoWidget = new MyVideoWidget(ui->stackedWidget);
+    videoWidget->setMouseTracking(true);
     m_player->setVideoOutput(videoWidget);
 
     m_widget2 = new QWidget;//listwidget显示（暂时不用）
@@ -320,8 +323,11 @@ void MultipPlayer::initMainWindow()
 
     m_pTimer  = new QTimer(this);
     m_pTimer2 = new QTimer(this);
+    m_showFloat = new QTimer(this);
+
     m_pTimer2->setSingleShot(true);//只执行一次定时器
     m_pTimer->start(1000);//每1000毫秒执行一次
+    m_showFloat->start(5000);//每5000ms定时一次
 
     m_muteDlg = new muteDialog();//不加this
     m_muteDlg->setObjectName(QString::fromLocal8Bit("m_muteDlg"));
@@ -579,6 +585,14 @@ void MultipPlayer::chandleSignalAndSLots()
             PlayOrderForm::getInstance()->show();
         }
 
+    });
+
+    //浮动窗口定时检测
+    connect(m_showFloat,&QTimer::timeout,[=](){
+        if(isFullScreen() && !FloatPlayCtl::getInstance()->isHidden())
+        {
+            FloatPlayCtl::getInstance()->hide();
+        }
     });
 
     //播放顺序 -- 单曲1 顺序2 循环3 随机4
@@ -1551,26 +1565,33 @@ void MultipPlayer::volumeAdjustShowUi(QObject *watched, QEvent *event)
         /*音量调节显示*/
     if(watched == ui->pushButton_sound)
     {
-//        qDebug()<<"pushButton_sound enter!";
+
+        //        qDebug()<<"pushButton_sound enter!";
         if(event->type() == QEvent::Enter && this->isActiveWindow())
         {
-                    int x = ui->pushButton_sound->parentWidget()->mapToGlobal(ui->pushButton_sound->pos()).x();
-                    int y = ui->pushButton_sound->parentWidget()->mapToGlobal(ui->pushButton_sound->pos()).y();
-                    int h = m_muteDlg->height();
-//                    qDebug() << "QPont_g(" << x << "," << y << ")";
-                    m_muteDlg->setGeometry(x-11,y-h-6,m_muteDlg->width(),m_muteDlg->height());//
-                    m_muteDlg->raise();
-                    m_muteDlg->show();
+            this->clearFocus();
+            ui->pushButton_sound->setFocus();
+            int x = ui->pushButton_sound->parentWidget()->mapToGlobal(ui->pushButton_sound->pos()).x();
+            int y = ui->pushButton_sound->parentWidget()->mapToGlobal(ui->pushButton_sound->pos()).y();
+            int h = m_muteDlg->height();
+            //                    qDebug() << "QPont_g(" << x << "," << y << ")";
+            m_muteDlg->setGeometry(x-11,y-h-4,m_muteDlg->width(),m_muteDlg->height());
+            m_muteDlg->raise();
+            m_muteDlg->show();
         }
         else if(event->type() == QEvent::Leave)
         {
-//            qDebug() << "pushButton_sound leave!";
+            //            qDebug() << "pushButton_sound leave!";
             QRect tempRect = ui->pushButton_sound->geometry();
 //            qDebug() << "old rect:" << tempRect << "cursor:" << ui->pushButton_sound->parentWidget()->mapFromGlobal(QCursor::pos());
-            tempRect.moveTo(ui->pushButton_sound->pos().x(),ui->pushButton_sound->y()-ui->pushButton_sound->height());
+            //        tempRect.moveTo(ui->pushButton_sound->pos().x(),ui->pushButton_sound->pos().y()-ui->pushButton_sound->height());
+                        tempRect.setTop(ui->pushButton_sound->pos().y()-ui->pushButton_sound->height()+10);
+//                    tempRect.setSize(QSize(30,40));
 //            qDebug() << "new rect:" << tempRect;
+
             if(!tempRect.contains(ui->pushButton_sound->parentWidget()->mapFromGlobal(QCursor::pos())))//鼠标在固定的矩形区域外
-            m_muteDlg->hide();
+                m_muteDlg->hide();
+            ui->pushButton_sound->clearFocus();
         }
     }
 }
@@ -1584,7 +1605,7 @@ void MultipPlayer::stackWidgetSliderButtonEventFilter(QObject *watched, QEvent *
         //03.进入的时候更新坐标和样式，点击以后也要更新坐标和样式
         if(event->type() == QEvent::Enter)//鼠标进入监视对象
         {
-//            qDebug() << "stackwidget enter";
+            //            qDebug() << "stackwidget enter";
             slot_updateFoldButtonGeometry();
             slot_setFoldButtonStyle();
             m_foldBtn->show();
@@ -1592,28 +1613,33 @@ void MultipPlayer::stackWidgetSliderButtonEventFilter(QObject *watched, QEvent *
         else if(event->type() == QEvent::Leave)//鼠标离开监视对象
         {
             m_foldBtn->hide();
-//            qDebug() << "stackwidget leave";
+            //            qDebug() << "stackwidget leave";
         }
     }
 }
 
-void MultipPlayer::floatPlayCtrlEnterLeave(QObject *watched, QEvent *event)
+void MultipPlayer::floatPlayCtrlEnterLeave(QObject *watched, QMouseEvent *mousevent)
 {
-//    if(this->isFullScreen() && watched == this)
-//    {
-
-//        if(event->type() == QEvent::Enter)
-//        {
-//            FloatPlayCtl::getInstance()->raise();
-//            FloatPlayCtl::getInstance()->show();
-//            qDebug() <<"ui->stackWidget enter@!";
-//        }
-//        else if(event->type() == QEvent::Leave)
-//        {
-//            FloatPlayCtl::getInstance()->hide();
-//            qDebug() <<"ui->stackWidget leave@!";
-//        }
-//    }
+    if(watched == videoWidget)
+    {
+        if(mousevent->type() == QEvent::MouseButtonPress && isFullScreen() && mousevent->buttons() & Qt::LeftButton)
+        {
+            FloatPlayCtl::getInstance()->raise();
+            FloatPlayCtl::getInstance()->show();
+            FloatPlayCtl::getInstance()->setFocus();
+        }
+    }
+    if(watched == FloatPlayCtl::getInstance())
+    {
+        if(mousevent->type() == QEvent::Leave)
+        {
+            m_showFloat->start(5000);//定时器重新开始
+        }
+        else if(mousevent->type() == QEvent::Enter)
+        {
+            m_showFloat->stop();//定时器断开
+        }
+    }
 }
 
 /*播放列表界面搜索框鼠标进入离开*/

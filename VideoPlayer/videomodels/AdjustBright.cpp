@@ -12,7 +12,7 @@ AdjustBright::AdjustBright(QWidget *parent) :
 //    setFixedSize(300,245);
     ui->widget_grid->setContentsMargins(5,5,5,5);
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::Tool | Qt::WindowStaysOnTopHint);
-    this->setAttribute(Qt::WA_TranslucentBackground);    //重要
+//    this->setAttribute(Qt::WA_TranslucentBackground);    //重要
     //屏幕占比没啥用，屏蔽
 //    ui->label_hmbl->setVisible(false);
 //    ui->checkBox_1->setVisible(false);
@@ -117,7 +117,7 @@ void AdjustBright::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
     QPainter painter(this);
-    painter.drawPixmap(0,0,this->width(),this->height(),QPixmap(":/images/icon/mainback1.png"));
+    painter.drawPixmap(0,0,this->width(),this->height(),QPixmap("://images/bgpic/adjust_bgpic.png"));
 }
 
 void AdjustBright::leaveEvent(QEvent *event)

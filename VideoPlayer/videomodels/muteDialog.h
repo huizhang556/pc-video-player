@@ -2,8 +2,10 @@
 #define MUTEDIALOG_H
 
 #include <QDialog>
-#include <QMouseEvent>
 #include <QSlider>
+#include <QPainter>
+#include <QPaintEvent>
+#include <QMouseEvent>
 
 namespace Ui {
 class muteDialog;
@@ -27,6 +29,7 @@ public slots:
 protected:
     void leaveEvent(QEvent *event) override;
     bool event(QEvent *event) override;
+    void paintEvent(QPaintEvent *event) override;
 
 private:
     Ui::muteDialog *ui;

@@ -14,7 +14,7 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">border-radius:6px;</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <property name="spacing">
@@ -35,7 +35,8 @@
    <item>
     <widget class="QWidget" name="widget_grid" native="true">
      <property name="styleSheet">
-      <string notr="true">background-color: #2a2a31;</string>
+      <string notr="true">background-color: #2a2a31;
+</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">

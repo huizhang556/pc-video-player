@@ -201,7 +201,7 @@ private slots:
 
     void    stackWidgetSliderButtonEventFilter(QObject *watched, QEvent *event);
 
-    void    floatPlayCtrlEnterLeave(QObject *watched, QEvent *event);
+    void    floatPlayCtrlEnterLeave(QObject *watched, QMouseEvent *mousevent);
 
     void    playlistMouseEnterLeave(QObject *watched, QEvent *event);
 
@@ -293,6 +293,7 @@ private:
     Ui::MultipPlayer *ui;
     QTimer                      *m_pTimer           = nullptr; //进度滚动条更新
     QTimer                      *m_pTimer2          = nullptr; //延迟ui界面
+    QTimer                      *m_showFloat        = nullptr;//定时显示浮动界面
     QWidget                     *m_widget1          = nullptr;
     QWidget                     *m_widget2          = nullptr; //暂时不用
     QToolBox                    *m_toolBox          = nullptr;
@@ -341,7 +342,7 @@ private:
     qint64                      m_times;                        //文件长度
     QPoint                      m_mvPos;
     QPoint                      m_videoPos;
-    QPoint                      m_fullScrPos;                   //全屏时记录鼠标位置
+
     QStringList                 m_fileNames;                    //文件名称列表
     QMap<int,QString>           m_mapList;                      //存储歌名路径
     QMap<int,QString>           m_mapList2;                     //存储歌名带后缀

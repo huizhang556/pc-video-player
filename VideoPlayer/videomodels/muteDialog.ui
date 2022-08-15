@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>42</width>
+    <width>40</width>
     <height>170</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>40</width>
-    <height>130</height>
+    <height>170</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>42</width>
+    <width>40</width>
     <height>170</height>
    </size>
   </property>
@@ -26,12 +26,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget
-{
-border:5px bolid black;
-border-radius:5px;
-}
-</string>
+   <string notr="true">border-radius:6px;</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
@@ -51,8 +46,21 @@ border-radius:5px;
    </property>
    <item>
     <widget class="QWidget" name="widget_voice" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>40</width>
+       <height>170</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>40</width>
+       <height>170</height>
+      </size>
+     </property>
      <property name="styleSheet">
-      <string notr="true">background-color:#262829;</string>
+      <string notr="true">
+</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
@@ -75,13 +83,13 @@ border-radius:5px;
         <property name="minimumSize">
          <size>
           <width>40</width>
-          <height>25</height>
+          <height>20</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>40</width>
-          <height>25</height>
+          <height>20</height>
          </size>
         </property>
         <property name="styleSheet">
