@@ -37,8 +37,7 @@ void MainWidget::initOtherWidgetUi()
     m_leftSideBar->setFixedWidth(140);
 
     m_stackWidget_center = new QStackedWidget(this);
-    m_stackWidget_center->setObjectName(QString::fromLatin1("m_stackWidget_center"));
-    m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
+    m_stackWidget_center->setObjectName(QString::fromLatin1("m_stackWidget_center"));    
     m_stackWidget_center->installEventFilter(this);//安装事件监听器
     //QStackedWidget此处不能指定父参数，否则界面会出问题
 
@@ -171,6 +170,7 @@ void MainWidget::setStackedWidgetPage()
     m_stackWidget_center->insertWidget(3,m_musicShow);//musicshow
     m_stackWidget_center->insertWidget(4,m_musicList);//musiclist
     m_stackWidget_center->insertWidget(5,m_personForm);//personform 个人管理
+    m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
 }
 
 //重载函数1：添加一个browser---参数为QUrl

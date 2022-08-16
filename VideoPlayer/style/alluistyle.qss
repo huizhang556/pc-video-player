@@ -118,6 +118,7 @@ color: #005e9e;
 /**主界面折叠按钮**/
 #m_leftButton
 {
+/*宽度需要在20px以上*/
 border-top-right-radius:10px;
 border-bottom-right-radius:10px;
 }
