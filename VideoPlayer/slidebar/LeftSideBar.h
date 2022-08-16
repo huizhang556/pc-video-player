@@ -21,7 +21,6 @@ public:
     void setSlideBarListText(QStringList strList);
     void setLeftSliderFixedWidth(int width);
 
-
 private:
     //私有函数
     void initWidgetUi();

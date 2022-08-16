@@ -9,13 +9,13 @@
 #include <QProcess>
 #include <QKeyEvent>
 #include <QDateTime>
+#include <QSqlQuery>
 #include <QFileInfo>
 #include <QScrollBar>
 #include <QMessageBox>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QWidgetAction>
-#include <QtSql/QSqlQuery>
 
 MultipPlayer::MultipPlayer(QWidget *parent) :
     QWidget(parent),
@@ -120,7 +120,6 @@ MultipPlayer::~MultipPlayer()
     delete m_videoBlank;
     delete m_adjustBright;
     delete m_videoTitleBar;
-    delete m_musicShowList;
     delete m_hboxlayout_rlist;
 }
 
@@ -466,14 +465,6 @@ void MultipPlayer::chandleSignalAndSLots()
     connect(ui->pushButton_curlist,&QPushButton::clicked,[=](){slot_setMainWindowShowFullgreen();});
 
     connect(ui->Btn_adjust,&QPushButton::clicked,[=](){set_adjustBright();});
-    //通知播放列表加载信息
-    connect(this,&MultipPlayer::sig_sendToMusicList,m_musicShowList,&MusicPlaylist::addFileInfoToListView);
-    //播放列表界面传来播放歌曲的信息
-    connect(m_musicShowList,&MusicPlaylist::sig_selectRowIndex,[=](QModelIndex index)
-    {
-        QString name_song = index.data().toString();
-        qDebug()<<name_song;
-    });
 
 
     /*上一首，下一首按钮，对应m_listwidget项的变化*/
@@ -880,7 +871,7 @@ void MultipPlayer::addFileToList(const QStringList &strList)
 //        layout->setSpacing(0);
 //        w->setLayout(layout);
 
-        QSqlQuery query;
+        QSqlQuery query(dataBase::getSqlDataBase());
         query.exec(QString("insert into LocalMusic values(%1,'%2','%3','%4')").arg("NULL").arg(name).arg(path).arg((QString::fromLocal8Bit("高音品质"))));
         qDebug()<<"all data insert successful!";
 
@@ -1012,7 +1003,7 @@ void MultipPlayer::on_pushButton_6_clicked()
         qDebug() << QString::fromLocal8Bit("打开的文件（夹）是：") <<m_fileNames;
         if(!m_fileNames.isEmpty() && !QFileInfo(m_fileNames[0]).isDir())
         {
-            QSqlQuery query;
+            QSqlQuery query(dataBase::getSqlDataBase());
             //再次添加新数据，数据库先清空原有数据
             query.exec("delete from LocalMusic;");
             //sqlite不支持truncate清除主键自增id，只能手动清除id序列，使新数据id从0开始

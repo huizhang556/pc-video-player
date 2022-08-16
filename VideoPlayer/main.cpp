@@ -40,11 +40,12 @@ int main(int argc, char *argv[])
     translator1.load(":/font/qt_zh_CN.qm");//翻译为中文
     a.installTranslator(&translator1);
     loadGlobalQss::loadAllUIQss();//加载全局样式
+    //数据初始化（放在界面初始化完成以后）
+    dataBase::creatConnection();//连接数据库,有数据的必须先连接数据库
     MainWidget w1;
     w1.show();
 
-    //数据初始化（放在界面初始化完成以后）
-    dataBase::creatConnection();//连接数据库
+
     dataBase::getInstance()->initGlobalDate();//数据初始化
 
     //播放器注册

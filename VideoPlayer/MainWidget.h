@@ -80,6 +80,8 @@ private:
 
     void        setStackedWidgetPage();//添加界面
 
+    void setLeftSliderCurrentIndex(int index);
+
     void        createTrayMenu();//托盘菜单
 
     void        setGlobalToolTip();

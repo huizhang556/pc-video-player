@@ -3,6 +3,7 @@
 #define MARWIDTH 2 //窗口边距
 #include "network/MyHttp.h"
 
+#include "database/dataBase.h"
 #include "videomodels/VideoBlank.h"
 #include "videomodels/muteDialog.h"
 #include "videomodels/CommentTab.h"
@@ -11,7 +12,6 @@
 #include "customer/CustomFileDialog.h"
 #include "musicmodels/MusicPlayShow.h"
 #include "videomodels/MyVideoWidget.h"
-#include "musicmodels/MusicPlaylist.h"
 #include "videomodels/VideoTitleBar.h"
 #include "videomodels/RecomVideoTab.h"
 #include "videomodels/IntroduceForm.h"
@@ -317,7 +317,6 @@ private:
     QMediaPlayer                *m_player           = nullptr;
     AdjustBright                *m_adjustBright     = nullptr;
     MusicPlayShow               *m_musicUi          = nullptr;
-    MusicPlaylist               *m_musicShowList    = nullptr;
     VideoTitleBar               *m_videoTitleBar    = nullptr;
     IntroduceForm               *m_introduceForm    = nullptr;
     RecomVideoTab               *m_recomTab         = nullptr;

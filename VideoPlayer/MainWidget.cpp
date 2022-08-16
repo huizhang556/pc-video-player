@@ -16,9 +16,10 @@ MainWidget::MainWidget(QWidget *parent) :
 {
     setMinimumSize(1320,800);
     setMouseTracking(true);
-    this->setWindowFlags(Qt::FramelessWindowHint);
-    this->setWindowTitle(QString::fromLocal8Bit("Qt简易视频播放器主界面"));
+    setWindowFlags(Qt::FramelessWindowHint);
+    setWindowTitle(QString::fromLocal8Bit("Qt简易视频播放器主界面"));
     initOtherWidgetUi();//初始化界面
+    setLeftSliderCurrentIndex(0);//主界面左侧列表内容
     setStackedWidgetPage();//设置StackedWidget布局每个page界面
     chandleSignalAndSlots();//处理所有的信号与槽函数
 }
@@ -37,8 +38,7 @@ void MainWidget::initOtherWidgetUi()
     m_leftSideBar->setFixedWidth(140);
 
     m_stackWidget_center = new QStackedWidget(this);
-    m_stackWidget_center->setObjectName(QString::fromLatin1("m_stackWidget_center"));
-    m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
+    m_stackWidget_center->setObjectName(QString::fromLatin1("m_stackWidget_center"));    
     m_stackWidget_center->installEventFilter(this);//安装事件监听器
     //QStackedWidget此处不能指定父参数，否则界面会出问题
 
@@ -143,6 +143,7 @@ void MainWidget::initOtherWidgetUi()
     m_stackWidget_left->setObjectName(QString::fromLocal8Bit("m_stackWidget_left"));
     m_stackWidget_left->setFixedWidth(140);//固定宽度170
     m_stackWidget_left->insertWidget(0,m_leftSideBar);
+//    m_stackWidget_left->insertWidget(1,new CentralHomeForm());
 
     m_vblayout = new QVBoxLayout(this);
     m_hblayout = new QHBoxLayout(this);
@@ -171,6 +172,12 @@ void MainWidget::setStackedWidgetPage()
     m_stackWidget_center->insertWidget(3,m_musicShow);//musicshow
     m_stackWidget_center->insertWidget(4,m_musicList);//musiclist
     m_stackWidget_center->insertWidget(5,m_personForm);//personform 个人管理
+    m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
+}
+
+void MainWidget::setLeftSliderCurrentIndex(int index)
+{
+    m_stackWidget_left->setCurrentIndex(index);
 }
 
 //重载函数1：添加一个browser---参数为QUrl
@@ -607,6 +614,15 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_mainPlayer,SIGNAL(sig_currentMediaSoundValueChange(int)),m_systemTray,SLOT(slot_setCurrentPlaySoundValue(int)));
     //浮动控制---接收音量值改变（01.主界面调节 02.托盘调节）
     connect(m_mainPlayer,SIGNAL(sig_currentMediaSoundValueChange(int)),FloatPlayCtl::getInstance(),SLOT(slot_setProgressbar_voice(int)));
+
+    //MusicPlaylist显示数据(参数：QString--->QString)
+    connect(m_mainPlayer,&MultipPlayer::sig_sendToMusicList,m_musicList,&MusicPlaylist::addFileInfoToListView);
+    //播放列表界面传来播放歌曲的信息
+    connect(m_musicList,&MusicPlaylist::sig_selectRowIndex,[=](QModelIndex index)
+    {
+        QString name_song = index.data().toString();
+        qDebug()<<name_song;
+    });
 }
 
 //更新新增网页按钮的位置
@@ -1037,7 +1053,11 @@ MainWidget::~MainWidget()
         delete m_musicShow;
         m_musicShow = nullptr;
     }
-
+    if(m_musicList != nullptr)
+    {
+        delete m_musicList;
+        m_musicList = nullptr;
+    }
     if(m_tabWidget != nullptr)
     {
         delete m_tabWidget;
@@ -1186,7 +1206,7 @@ void MainWidget::closeEvent(QCloseEvent *event)
          m_pExitDlg->setIni();
          //此处最好做一个全局的通知信号
 //         m_tray->hide();
-         QSqlQuery query;
+         QSqlQuery query(dataBase::getSqlDataBase());
          //此处应该在数据库提供接口
          query.exec("DROP TABLE IF EXISTS 'LocalMusic'");
          query.exec("DROP TABLE IF EXISTS 'LoginInfo'");

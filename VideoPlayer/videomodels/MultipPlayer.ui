@@ -337,7 +337,7 @@ background-color: #ffffff;
           <widget class="QFrame" name="frame_slider">
            <property name="minimumSize">
             <size>
-             <width>780</width>
+             <width>520</width>
              <height>0</height>
             </size>
            </property>

@@ -15,6 +15,7 @@ class dataBase : public QObject
 public:    
     ~dataBase();
     static  dataBase*       getInstance();
+    static  QSqlDatabase    getSqlDataBase();
     static  bool            creatConnection();//创建连接
     bool                    initGlobalDate();//初始化全局数据
     //关于浏览器
@@ -29,12 +30,14 @@ public:
     static  bool            browser_deleteHisRecordToList(const QString &url);//往数据库删除一条历史记录
     static  bool            browser_deleteAllHisRecordToList();//往数据库删除所有历史记录
 
+public:
 protected:
 
 
 private:
     dataBase(QObject *parent = nullptr);
-    static  dataBase* m_pInstance;
+    static  dataBase*       m_pInstance;
+
 
 signals:
     void        sig_sendRecordInfo(QString,QString);
