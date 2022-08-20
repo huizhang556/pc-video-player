@@ -377,5 +377,8 @@
         <file>images/icon/record_remove.png</file>
         <file>images/icon/record_remove_hover.png</file>
         <file>images/icon/musiclist.png</file>
+        <file>images/icon/comment_vip.png</file>
+        <file>images/icon/recvideo_amount.png</file>
+        <file>images/tray/recvideo_play.png</file>
     </qresource>
 </RCC>

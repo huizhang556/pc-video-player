@@ -9,8 +9,17 @@ CommentForm::CommentForm(QWidget *parent) :
     ui->setupUi(this);
     this->setFixedHeight(150);
     ui->pushButton_zan->setFlat(true);
+    ui->pushButton_zan->setCheckable(true);
+    ui->pushButton_zan->setChecked(false);
+
     ui->pushButton_huifu->setFlat(true);
     ui->pushButton_jubao->setFlat(true);
+
+//    ui->pushButton_name->setLayoutDirection(Qt::RightToLeft);
+    ui->pushButton_name->setFlat(true);
+    ui->pushButton_name->setIcon(QIcon("://images/icon/comment_vip.png"));
+    ui->pushButton_name->setIconSize(QSize(30,20));
+
     chandleSignalsAndSLots();
 }
 
@@ -45,7 +54,7 @@ void CommentForm::setUserPicture(QPixmap &pix)
 
 void CommentForm::setUserNick(QString &nick)
 {
-    ui->label_name->setText(nick);
+    ui->pushButton_name->setText(nick);
 }
 
 void CommentForm::setUserCommitDataTime(QString &datatime)
@@ -60,5 +69,5 @@ void CommentForm::setUserCommentData(QString &data)
 
 void CommentForm::setCommentZanCount(int count)
 {
-    ui->pushButton_zan->setText(QString::number(count));
+//    ui->pushButton_zan->setText(QString::number(count));
 }

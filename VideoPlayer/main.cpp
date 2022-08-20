@@ -17,7 +17,6 @@
 #include "browser/WebDownLoadList.h"
 #include "messagebox/CusMessageBox.h"
 #include "mainwidget/RecommendForm.h"
-#include "videomodels/ControlForm.h"
 #include "videomodels/MultipPlayer.h"
 #include "videomodels/PersonFileForm.h"
 #include "musicmodels/SongItemForm.h"
@@ -29,6 +28,7 @@
 #include "browser/CusTabBar.h"
 #include "videomodels/FloatPlayCtl.h"
 #include "customer/CustomFileDialog.h"
+#include "videomodels/RecVideoItem.h"
 
 #include <QTranslator>
 
@@ -42,9 +42,8 @@ int main(int argc, char *argv[])
     loadGlobalQss::loadAllUIQss();//加载全局样式
     //数据初始化（放在界面初始化完成以后）
     dataBase::creatConnection();//连接数据库,有数据的必须先连接数据库
-    MainWidget w1;
-    w1.show();
-
+//    MainWidget w1;
+//    w1.show();
 
     dataBase::getInstance()->initGlobalDate();//数据初始化
 
@@ -53,6 +52,9 @@ int main(int argc, char *argv[])
 
 //    CustomFileDialog s;
 //    s.show();
+
+//    RecVideoItem r;
+//    r.show();
 
 //    FloatPlayCtl::getInstance()->show();
 
@@ -106,17 +108,16 @@ int main(int argc, char *argv[])
 //    CusLineEdit x("123");
 //    x.show();
 
-//    ControlForm v;
-//    v.show();
-
 //    Slideshow s;
 //    s.show();
 
 //    CusLineEdit c(QIcon(":/images/icon/checked.png"));
 //    c.show();
 
-//    MultipPlayer w;
-//    w.show();
+
+
+    MultipPlayer w;
+    w.show();
 
 //    TitleBar t;
 //    t.show();

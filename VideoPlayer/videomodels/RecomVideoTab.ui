@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>336</width>
-    <height>582</height>
+    <height>339</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -76,10 +76,10 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QLabel" name="label">
+           <widget class="QLabel" name="label_curvideo">
             <property name="minimumSize">
              <size>
-              <width>55</width>
+              <width>80</width>
               <height>36</height>
              </size>
             </property>
@@ -90,8 +90,13 @@
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">padding-left:5px;
-color:#e6e9f0;</string>
+             <string notr="true">#label_curvideo
+{
+padding-left:5px;
+color:#e6e9f0;
+font-size:15px;
+}
+</string>
             </property>
             <property name="text">
              <string>当前视频</string>
@@ -171,10 +176,10 @@ color:#e6e9f0;</string>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QLabel" name="label_2">
+           <widget class="QLabel" name="label_recforyou">
             <property name="minimumSize">
              <size>
-              <width>35</width>
+              <width>80</width>
               <height>36</height>
              </size>
             </property>
@@ -185,8 +190,13 @@ color:#e6e9f0;</string>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">padding-left:5px;
-color:#e6e9f0;</string>
+             <string notr="true">#label_recforyou
+{
+padding-left:5px;
+color:#e6e9f0;
+font-size:15px;
+}
+</string>
             </property>
             <property name="text">
              <string>为你推荐</string>
@@ -295,21 +305,30 @@ color:#484848; font-size:12px;
       </widget>
      </item>
      <item>
-      <widget class="QWidget" name="widget3" native="true">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>400</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>16777215</height>
-        </size>
-       </property>
+      <widget class="QListWidget" name="listWidget_recommend">
        <property name="styleSheet">
-        <string notr="true">background-color: #26262b;</string>
+        <string notr="true">#listWidget_recommend
+{
+border:0px solid #3f4042;
+border-right-width:1px;
+background-color: #292a2d;
+}
+
+#listWidget_recommend::item
+{
+background-color: #292a2d;
+}
+
+#listWidget_recommend::item:selected
+{
+border: 0px solid #4ea018;
+}
+
+#listWidget_recommend::item:hover
+{
+background-color: #3e3f42;
+border: 1px solid #4ea018;
+}</string>
        </property>
       </widget>
      </item>

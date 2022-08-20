@@ -351,6 +351,14 @@ void MultipPlayer::chandleSignalAndSLots()
     //列表折叠指示按钮
     connect(m_foldBtn,&QPushButton::clicked,[=](){slot_judgeFoldBtnOfRightDockList();});
 
+    //同类型视频推荐
+    connect(ui->pushButton_download,&QPushButton::clicked,[=](){
+        //    set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_commentTab,QString::fromLocal8Bit("讨论"));
+//            set_showTwoTabBar(m_tabWidget1,0,m_commentTab,QString::fromLocal8Bit("讨论"),1,m_commentTab,QString::fromLocal8Bit("讨论"));
+    });
+
+
+
     //查看评论
     connect(ui->pushButton_comments,&QPushButton::clicked,[=](){ showMediaCommentTab();});
     //应该在有影片播放的时候，执行定时器，否则就是无效；1s更新一次进度

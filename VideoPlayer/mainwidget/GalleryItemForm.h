@@ -2,6 +2,7 @@
 #define GALLERYITEMFORM_H
 #include "global/Global.h"
 #include "mainwidget/PicWallItem.h"
+
 #include <QWidget>
 #include <QPushButton>
 #include <QListWidgetItem>
@@ -21,6 +22,7 @@ public:
     void chandleSignalsAndSlots();
     void setHeaderTitle(QString title);
     void adjustListWidgetItemsSize();
+    void setItemPictures(int size,QString path);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;

@@ -50,6 +50,9 @@ background-color:#3c3842;
      </property>
      <item>
       <widget class="QWidget" name="widget_user" native="true">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <property name="spacing">
          <number>0</number>
@@ -95,11 +98,11 @@ margin-bottom:4px;
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_name">
+         <widget class="QPushButton" name="pushButton_name">
           <property name="minimumSize">
            <size>
             <width>80</width>
-            <height>0</height>
+            <height>40</height>
            </size>
           </property>
           <property name="maximumSize">
@@ -109,17 +112,30 @@ margin-bottom:4px;
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">QLabel
+           <string notr="true">#pushButton_name
 {
-padding-left:5px;
+border:0px solid transparent;
+text-align:left;
 color:#808082;
+padding-left:8px;
+}
+
+#pushButton_name:hover
+{
+text-decoration:underline;
+color: #ff3530;
+}
+
+#pushButton_name::pressed
+{
+
 }</string>
           </property>
           <property name="text">
            <string/>
           </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -183,7 +199,7 @@ color:#808082;
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>20</width>
+            <width>25</width>
             <height>20</height>
            </size>
           </property>
@@ -288,7 +304,17 @@ border-image: url(:/images/icon/comment_dianzan.png);
 QPushButton:hover
 {
 color: #ff5500;
+
+}
+
+QPushButton::checked
+{
 border-image: url(:/images/icon/comment_dianzan_hover.png);
+}
+
+QPushButton::unchecked
+{
+border-image: url(:/images/icon/comment_dianzan.png);
 }</string>
           </property>
           <property name="text">

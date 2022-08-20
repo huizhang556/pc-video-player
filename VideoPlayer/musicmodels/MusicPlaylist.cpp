@@ -180,6 +180,8 @@ void MusicPlaylist::addFileInfoToListView()
     ui->tableView_songList->verticalHeader()->hide();//隐藏第0列
     ui->tableView_songList->resizeRowsToContents();//行高度自适应
 
+    ui->tableView_songList->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);//垂直表头固定高度
+    ui->tableView_songList->verticalHeader()->setDefaultSectionSize(26);
 //    ui->tableView_songList->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);//自动调整列宽
     ui->tableView_songList->setSelectionBehavior(QAbstractItemView::SelectRows);//只能行选择
 

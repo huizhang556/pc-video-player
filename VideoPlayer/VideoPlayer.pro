@@ -49,12 +49,12 @@ include($$PWD/delegate/delegate.pri)
 include($$PWD/slidebar/slidebar.pri)
 include($$PWD/titlebar/titlebar.pri)
 include($$PWD/customer/customer.pri)
-include($$PWD/messagebox/messagebox.pri)
 include($$PWD/mainwidget/mainwidget.pri)
 include($$PWD/qcustomplot/qcustomplot.pri)
 include($$PWD/musicmodels/musicmodels.pri)
 include($$PWD/videomodels/videomodels.pri)
 include($$PWD/fileshandle/fileshandle.pri)
+include($$PWD/messagebox/messagebox.pri)
 
 
 # Default rules for deployment.

@@ -51,12 +51,50 @@ void GalleryItemForm::initWorkUI()
     ui->listWidget_itempic->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_itempic->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    for(int i = 0; i < 18; i=i+2)
+//    for(int i = 0; i < 18; i=i+2)
+//    {
+//        PicWallItem *pitem = new PicWallItem();
+//        QString path = QString(Global::appDirPath + "/pictures/recommend/recommend%1.png").arg(i);
+//        pitem->setPicItemWall(path);
+//        pitem->setPicItemWall2(path);
+//        pitem->setPicItemWallText(QString::fromLocal8Bit("美好的歌曲%1").arg(i+1));
+//        pitem->setPicItemWallText2(QString::fromLocal8Bit("美好的歌曲%1").arg(i+2));
+//        QListWidgetItem *item = new QListWidgetItem();
+//        item->setSizeHint(QSize(pitem->size().width()+10,pitem->size().height()));
+////        QPixmap pix(path);
+////        pix.scaled(200,170,Qt::KeepAspectRatio);
+////        item->icon().addPixmap(pix);
+////        item->setText(QString::fromLocal8Bit("美好的歌曲%1").arg(i+1));
+////        item->setSizeHint(QSize(270,350));
+////        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+////        item->setTextAlignment(Qt::AlignCenter);
+//        ui->listWidget_itempic->addItem(item);
+//        ui->listWidget_itempic->setItemWidget(item,pitem);
+//    }
+//    adjustListWidgetItemsSize();
+
+}
+
+void GalleryItemForm::adjustListWidgetItemsSize()
+{
+    int row = 0;
+    while(row < (ui->listWidget_itempic->count()))
+    {
+        QListWidgetItem *item = ui->listWidget_itempic->item(row);//在这里一个iconMode的item就是一个PicWallItem
+        QWidget* widget = ui->listWidget_itempic->itemWidget(item);
+        row++;
+    }
+}
+
+void GalleryItemForm::setItemPictures(int size,QString path)
+{
+    for(int i = 0; i < size; i=i+2)
     {
         PicWallItem *pitem = new PicWallItem();
-        QString path = QString(Global::appDirPath + "/pictures/recommend/recommend%1.png").arg(i);
-        pitem->setPicItemWall(path);
-        pitem->setPicItemWall2(path);
+        QString path1 = QString(Global::appDirPath + path + "/music%1.png").arg(i);
+        QString path2 = QString(Global::appDirPath + path + "/music%1.png").arg(i+1);
+        pitem->setPicItemWall(path1);
+        pitem->setPicItemWall2(path2);
         pitem->setPicItemWallText(QString::fromLocal8Bit("美好的歌曲%1").arg(i+1));
         pitem->setPicItemWallText2(QString::fromLocal8Bit("美好的歌曲%1").arg(i+2));
         QListWidgetItem *item = new QListWidgetItem();
@@ -70,19 +108,6 @@ void GalleryItemForm::initWorkUI()
 //        item->setTextAlignment(Qt::AlignCenter);
         ui->listWidget_itempic->addItem(item);
         ui->listWidget_itempic->setItemWidget(item,pitem);
-    }
-//    adjustListWidgetItemsSize();
-
-}
-
-void GalleryItemForm::adjustListWidgetItemsSize()
-{
-    int row = 0;
-    while(row < (ui->listWidget_itempic->count()))
-    {
-        QListWidgetItem *item = ui->listWidget_itempic->item(row);//在这里一个iconMode的item就是一个PicWallItem
-        QWidget* widget = ui->listWidget_itempic->itemWidget(item);
-        row++;
     }
 }
 

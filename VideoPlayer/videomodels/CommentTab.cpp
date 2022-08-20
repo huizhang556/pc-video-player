@@ -20,7 +20,7 @@ CommentTab::~CommentTab()
 
 void CommentTab::initWorkUI()
 {
-    ui->textEdit_comment->setPlaceholderText(QString::fromLocal8Bit("说两句吧..."));
+    ui->textEdit_comment->setPlaceholderText(QString::fromLocal8Bit("美好的评论由你而生^_^"));
     ui->listWidget_comlist->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->pushButton_hotcomment->setFlat(true);
     ui->pushButton_hotcomment->setCheckable(true);
@@ -68,6 +68,7 @@ void CommentTab::chandleSignalsAndSLots()
         QString comdata     = ui->textEdit_comment->toPlainText();
         qDebug()            << comdata;
         int count           = 1;
+        if(!comdata.isEmpty())
         slot_insertNewCommentForm(pix,nick,datetime,comdata,count);
         qDebug() << "comment new publish";
     });

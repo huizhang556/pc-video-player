@@ -14,6 +14,8 @@ class RecomVideoTab : public QWidget
 public:
     explicit RecomVideoTab(QWidget *parent = nullptr);
     ~RecomVideoTab();
+    void    initWorkUI();
+    void    handleSignalsAndSLots();
 
 private slots:
     void slots_switchTurn();

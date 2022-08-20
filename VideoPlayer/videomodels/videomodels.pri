@@ -6,7 +6,6 @@ SOURCES += \
     $$PWD/VideoBlank.cpp \
     $$PWD/MultipPlayer.cpp \
     $$PWD/RecomVideoTab.cpp \
-    $$PWD/ControlForm.cpp \
     $$PWD/VideoProgressBar.cpp \
     $$PWD/CommentTab.cpp \
     $$PWD/CommentForm.cpp \
@@ -15,7 +14,8 @@ SOURCES += \
     $$PWD/DramaListForm.cpp \
     $$PWD/PlayOrderForm.cpp \
     $$PWD/RotatePic.cpp \
-    $$PWD/FloatPlayCtl.cpp
+    $$PWD/FloatPlayCtl.cpp \
+    $$PWD/RecVideoItem.cpp
 
 
 HEADERS += \
@@ -26,7 +26,6 @@ HEADERS += \
     $$PWD/VideoBlank.h \
     $$PWD/MultipPlayer.h \
     $$PWD/RecomVideoTab.h \
-    $$PWD/ControlForm.h \
     $$PWD/VideoProgressBar.h \
     $$PWD/CommentTab.h \
     $$PWD/CommentForm.h \
@@ -35,7 +34,8 @@ HEADERS += \
     $$PWD/DramaListForm.h \
     $$PWD/PlayOrderForm.h \
     $$PWD/RotatePic.h \
-    $$PWD/FloatPlayCtl.h
+    $$PWD/FloatPlayCtl.h \
+    $$PWD/RecVideoItem.h
 
 
 FORMS += \
@@ -45,7 +45,6 @@ FORMS += \
     $$PWD/VideoBlank.ui \
     $$PWD/MultipPlayer.ui \
     $$PWD/RecomVideoTab.ui \
-    $$PWD/ControlForm.ui \
     $$PWD/VideoProgressBar.ui \
     $$PWD/CommentTab.ui \
     $$PWD/CommentForm.ui \
@@ -53,5 +52,6 @@ FORMS += \
     $$PWD/PersonFileForm.ui \
     $$PWD/DramaListForm.ui \
     $$PWD/PlayOrderForm.ui \
-    $$PWD/FloatPlayCtl.ui
+    $$PWD/FloatPlayCtl.ui \
+    $$PWD/RecVideoItem.ui
 

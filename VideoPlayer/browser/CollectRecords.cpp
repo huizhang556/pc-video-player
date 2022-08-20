@@ -3,7 +3,7 @@
 #include "browser/WebMessageBox.h"
 
 #include <QDebug>
-int CollectRecords::m_singleCount = 37;//一页最大化  37 rows
+int CollectRecords::m_singleCount = 37;//一页最大化 显示  37 rows
 
 
 CollectRecords::CollectRecords(QWidget *parent) :
@@ -25,6 +25,8 @@ CollectRecords::~CollectRecords()
 void CollectRecords::initWorkUI()
 {
     ui->stackedWidget->setCurrentIndex(0);
+    ui->pushButton_delete->hide();
+    ui->pushButton_change->hide();
 
     ui->listWidget_record1->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);//像素滚动
     ui->listWidget_record1->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -69,16 +71,16 @@ void CollectRecords::chandleSignalsAndSlots()
     connect(ui->pushButton_export,&QPushButton::clicked,[=](){ui->stackedWidget->setCurrentIndex(1);});
     //02 撤回
     connect(ui->pushButton_undo,&QPushButton::clicked,[=](){ui->stackedWidget->setCurrentIndex(0);});
-    //03 删除
-    connect(ui->pushButton_delete,&QPushButton::clicked,[=](){
-        //删除前应该先断开信号与槽函数连接，防止最后一个item删除出现bug
+//    //03 删除
+//    connect(ui->pushButton_delete,&QPushButton::clicked,[=](){
+//        //删除前应该先断开信号与槽函数连接，防止最后一个item删除出现bug
 
-    });
-    //04 修改记录
-    connect(ui->pushButton_change,&QPushButton::clicked,[=](){
-        WebMessageBox::getInstance()->exec();
-        emit sig_changeRecord();
-    });
+//    });
+//    //04 修改记录
+//    connect(ui->pushButton_change,&QPushButton::clicked,[=](){
+//        WebMessageBox::getInstance()->exec();
+//        emit sig_changeRecord();
+//    });
     //05 确定
     connect(ui->pushButton_sure,&QPushButton::clicked,[=](){
 //        dataBase::getInstance()->browser_loadAllRecordsToList();
