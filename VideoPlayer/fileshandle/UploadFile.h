@@ -14,7 +14,8 @@ class UploadFile : public QWidget
 public:
     explicit UploadFile(QWidget *parent = nullptr);
     ~UploadFile();
-
+    void    initWorkUI();
+    void    handleSignalsAndSlots();
 
 private:
     Ui::UploadFile *ui;

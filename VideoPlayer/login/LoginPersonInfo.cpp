@@ -47,6 +47,11 @@ LoginPersonInfo* LoginPersonInfo::getInstance()
 
 void LoginPersonInfo::initWorkUI()
 {
+    userAction = new QAction(QIcon(":/images/icon/loginuser.png"),"");
+    keybordAction = new QAction(QIcon(":/images/icon/loginpasswd.png"),"");
+    ui->login_lineEditUser->addAction(userAction, QLineEdit::LeadingPosition);
+    ui->login_lineEditPasswd->addAction(keybordAction, QLineEdit::LeadingPosition);
+
     //user列表
     m_listWgt_UserList = new QListWidget();
     m_listWgt_UserList->setObjectName(QString::fromLocal8Bit("m_listWgt_UserList"));

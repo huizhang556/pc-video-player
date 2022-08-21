@@ -380,5 +380,17 @@
         <file>images/icon/comment_vip.png</file>
         <file>images/icon/recvideo_amount.png</file>
         <file>images/tray/recvideo_play.png</file>
+        <file>images/fileitem/file_completed.png</file>
+        <file>images/fileitem/file_download.png</file>
+        <file>images/fileitem/file_upload.png</file>
+        <file>images/fileitem/fileitem_fastupload.png</file>
+        <file>images/fileitem/fileitem_upload.png</file>
+        <file>images/fileitem/fileitem_fastdownload.png</file>
+        <file>images/fileitem/fileitem_cancel.png</file>
+        <file>images/fileitem/fileitem_clear.png</file>
+        <file>images/fileitem/fileitem_directory.png</file>
+        <file>images/fileitem/fileitem_pause.png</file>
+        <file>images/fileitem/fileitem_resume.png</file>
+        <file>images/fileitem/fileitem_use.png</file>
     </qresource>
 </RCC>

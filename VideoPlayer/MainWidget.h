@@ -14,6 +14,7 @@
 #include "login/LoginPersonInfo.h"
 #include "browser/CollectRecords.h"
 #include "videomodels/VideoBlank.h"
+#include "fileshandle/FilesTrans.h"
 #include "videomodels/FloatPlayCtl.h"
 #include "messagebox/SystemSetting.h"
 #include "videomodels/MultipPlayer.h"
@@ -23,6 +24,7 @@
 #include "videomodels/VideoTitleBar.h"
 #include "mainwidget/CentralHomeForm.h"
 #include "videomodels/PersonFileForm.h"
+
 #include <QMenu>
 #include <QPoint>
 #include <QLayout>
@@ -186,6 +188,7 @@ private:
     LeftSideBar         *m_leftSideBar             = nullptr;
     MusicPlaylist       *m_musicList               = nullptr;
     MusicPlayShow       *m_musicShow               = nullptr;
+    FilesTrans          *m_fileTrans               = nullptr;//文件传输界面
     CusTabWidget        *m_tabWidget               = nullptr;
     VideoBlank          *m_videoBlank              = nullptr;
     QTabWidget          *m_webTabWidget            = nullptr;

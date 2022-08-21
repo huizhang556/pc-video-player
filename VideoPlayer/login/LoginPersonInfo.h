@@ -58,6 +58,8 @@ private:
     Ui::LoginPersonInfo *ui;
     QListWidget         *m_listWgt_UserList     =   nullptr;
     QPoint              m_mvPos;
+    QAction             *userAction;
+    QAction             *keybordAction;
     QAction             *clearAction1;
     QAction             *clearAction2;
     QAction             *clearAction3;

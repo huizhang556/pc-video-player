@@ -267,6 +267,22 @@ border-image: url(:/images/icon/closehover.png);
                  </property>
                 </spacer>
                </item>
+               <item row="1" column="2">
+                <spacer name="horizontalSpacer_5">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Expanding</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>170</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
                <item row="2" column="1">
                 <spacer name="verticalSpacer_2">
                  <property name="orientation">
@@ -289,22 +305,6 @@ border-image: url(:/images/icon/closehover.png);
                   <size>
                    <width>20</width>
                    <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="1" column="2">
-                <spacer name="horizontalSpacer_5">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Expanding</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>170</width>
-                   <height>20</height>
                   </size>
                  </property>
                 </spacer>
@@ -383,7 +383,7 @@ border-image: url(:/images/icon/logintouxiang.png);
                       <string notr="true">QLabel
 {
 background-color: transparent;
-border-image: url(:/images/icon/loginuser.png);
+/*border-image: url(:/images/icon/loginuser.png);*/
 }
 
 QLabel:hover
@@ -482,7 +482,7 @@ border:2px solid #ff5c38;
                       <string notr="true">QLabel
 {
 background-color: transparent;
-border-image: url(:/images/icon/loginpasswd.png);
+/*border-image: url(:/images/icon/loginpasswd.png);*/
 }</string>
                      </property>
                      <property name="text">

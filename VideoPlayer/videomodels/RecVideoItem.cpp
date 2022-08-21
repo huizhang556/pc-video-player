@@ -64,7 +64,7 @@ void RecVideoItem::setVideoPicture(const QString path)
 //    QPixmap pix(path);
 //    pix.scaled(ui->label_videoPic->size(),Qt::KeepAspectRatio,Qt::SmoothTransformation);
     manager->get(QNetworkRequest(QUrl(path)));
-    //获取网络图片
+    //获取网络图片(注意：使用的是manager的finished信号)
     connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(slot_replyFinished(QNetworkReply*)));
 }
 
@@ -101,9 +101,12 @@ void RecVideoItem::slot_replyFinished(QNetworkReply *reply)
         ui->label_videoPic->setPixmap(pixmap);
         ui->label_videoPic->setScaledContents(true);//内容自适应
     }
-    else
+    else//请求失败，加载默认图片
     {
         qDebug() <<  QString::fromLocal8Bit("请求错误：")<<reply->errorString();
+        QPixmap pixmap("://images/icon/createhover.png");
+        ui->label_videoPic->setPixmap(pixmap);
+        ui->label_videoPic->setScaledContents(true);//内容自适应
     }
 }
 

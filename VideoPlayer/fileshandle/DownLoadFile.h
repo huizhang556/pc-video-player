@@ -1,4 +1,4 @@
-#ifndef DOWNLOADFILE_H
+﻿#ifndef DOWNLOADFILE_H
 #define DOWNLOADFILE_H
 
 #include <QWidget>
@@ -14,6 +14,8 @@ class DownLoadFile : public QWidget
 public:
     explicit DownLoadFile(QWidget *parent = nullptr);
     ~DownLoadFile();
+    void    initWorkUI();
+    void    handleSignalsAndSlots();
 
 private:
     Ui::DownLoadFile *ui;

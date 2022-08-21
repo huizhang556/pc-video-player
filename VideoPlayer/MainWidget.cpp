@@ -119,6 +119,9 @@ void MainWidget::initOtherWidgetUi()
     m_webStackWgt->addWidget(m_webHistory);//2 浏览器浏览历史
     m_webStackWgt->setCurrentWidget(m_webWidget);
 
+    m_fileTrans = new FilesTrans();
+    m_fileTrans->setObjectName(QString::fromLocal8Bit("m_fileTrans"));
+
     m_personForm = new PersonFileForm();
     m_personForm->setObjectName(QString::fromLatin1("m_personForm"));
 
@@ -172,6 +175,7 @@ void MainWidget::setStackedWidgetPage()
     m_stackWidget_center->insertWidget(3,m_musicShow);//musicshow
     m_stackWidget_center->insertWidget(4,m_musicList);//musiclist
     m_stackWidget_center->insertWidget(5,m_personForm);//personform 个人管理
+    m_stackWidget_center->insertWidget(6,m_fileTrans);//文件传输
     m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
 }
 
