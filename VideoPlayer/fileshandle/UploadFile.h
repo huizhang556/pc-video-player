@@ -1,4 +1,4 @@
-#ifndef UPLOADFILE_H
+﻿#ifndef UPLOADFILE_H
 #define UPLOADFILE_H
 
 #include <QWidget>
@@ -14,6 +14,7 @@ class UploadFile : public QWidget
 public:
     explicit UploadFile(QWidget *parent = nullptr);
     ~UploadFile();
+
 
 private:
     Ui::UploadFile *ui;

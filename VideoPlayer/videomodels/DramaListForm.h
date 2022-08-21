@@ -16,6 +16,12 @@ public:
     ~DramaListForm();
     void initWorkUI();
     void chandleSignalsAndSLots();
+    void setDramaName(QString name);
+    void setDramaCommentGrade(double grade);
+    void setDramaSetCounts(int count);
+    void setDramaPlayCounts(int count);
+    void setCommentCheckabelCounts(int num);
+    void setCommentStarts(int starts);
 
 private:
     Ui::DramaListForm *ui;

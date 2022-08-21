@@ -1,10 +1,12 @@
 ﻿#include "dataBase.h"
+#include "videomodels/RecomVideoTab.h"
+#include <QMetaType>
 
 dataBase* dataBase::m_pInstance = nullptr;
 
 dataBase::dataBase(QObject *parent)
 {
-    browser_loadAllRecordsToList();
+     qRegisterMetaType<QVariant>("QVariant"); //写在构造函数里
 }
 
 dataBase::~dataBase()
@@ -66,6 +68,7 @@ bool dataBase::initGlobalDate()
 {
     bool isOK1 = browser_loadAllRecordsToList();
     bool isOK2 = browser_loadAllHisRecordsToList();
+    bool isOK3 = video_recDramaInfo();
     return true;
 }
 
@@ -211,6 +214,42 @@ bool dataBase::browser_deleteAllHisRecordToList()
     else
     {
         qDebug()<< QString::fromLocal8Bit("删除所有历史记录错误：") << query.lastError();
+        return false;
+    }
+}
+
+//查询推荐列表
+bool dataBase::video_recDramaInfo()
+{
+    QSqlQuery query(getSqlDataBase());
+    bool isOK = query.exec(QString("select id, alias, url, duration, cover, uplove from dramaList;"));
+    if(isOK)
+    {
+        while (query.next())
+        {
+            int id              =   query.value(0).toInt();
+            QString alias       =   query.value(1).toString();
+            QString url         =   query.value(2).toString();
+            QString duration    =   query.value(3).toString();
+            QString cover       =   query.value(4).toString();
+            QString uplove      =   query.value(5).toString();
+            MusicData musicData;//结构体定义的头文件一定要添加进来
+            musicData.id        =   id;
+            musicData.alias     =   alias;
+            musicData.url       =   url;
+            musicData.duration  =   duration;
+            musicData.cover     =   cover;
+            musicData.uplove    =   uplove;
+            QVariant musicdata;
+            musicdata.setValue(musicData);
+//            qDebug() << "finded drama video info = "
+//                     << id << alias <<url <<duration << cover << uplove;
+            emit sig_sendVideoDramaInfo(musicdata);
+        }
+    }
+    else
+    {
+        qDebug()<< QString::fromLocal8Bit("查找所有剧集信息记录错误：") << query.lastError();
         return false;
     }
 }

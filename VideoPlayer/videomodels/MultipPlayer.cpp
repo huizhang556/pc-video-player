@@ -257,15 +257,8 @@ void MultipPlayer::initMainWindow()
     m_toolBox->addItem(m_listWisget4,icon_internet,QString::fromLocal8Bit("播放记录"));
     m_toolBox->layout()->setSpacing(3);//item之间的间距
 
-    m_introduceForm = new IntroduceForm;
-    m_introduceForm->setObjectName(QString::fromLocal8Bit("m_introduceForm"));
-    m_introduceForm->setCommentStarts(4);//亮4颗星星
-
-    m_introStack = new QStackedWidget;//视频简介
-    m_introStack->setObjectName(QString::fromLocal8Bit("m_introStack"));
-    m_introStack->setFixedSize(260,100);
-    m_introStack->insertWidget(0,m_introduceForm);
-    m_introStack->setHidden(true);
+    m_dramaList = new DramaListForm;//系列推荐
+    m_dramaList->setObjectName(QString::fromLocal8Bit("m_dramaList"));
 
     m_recomTab = new RecomVideoTab;
     m_recomTab->setObjectName(QString::fromLocal8Bit("m_recomTab"));
@@ -280,15 +273,14 @@ void MultipPlayer::initMainWindow()
     m_tabWidget1->setObjectName(QString::fromLocal8Bit("m_tabWidget1"));
     m_tabWidget1->setFixedWidth(260);//固定宽度
     set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_recomTab,QString::fromLocal8Bit("推荐视频"));
-//    set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_commentTab,QString::fromLocal8Bit("讨论"));
+//    set_showTwoTabBar(m_tabWidget1,0,m_dramaList,QString::fromLocal8Bit("剧集介绍"),1,m_commentTab,QString::fromLocal8Bit("讨论"));
 //    set_showTwoTabBar(m_tabWidget1,0,m_commentTab,QString::fromLocal8Bit("讨论"),1,m_commentTab,QString::fromLocal8Bit("讨论"));
     m_tabWidget1->setCurrentIndex(0);
 
 
     m_vHlayout_jianjie = new QVBoxLayout;
     m_vHlayout_jianjie->setObjectName(QString::fromLocal8Bit("m_vHlayout_jianjie"));
-    m_vHlayout_jianjie->addWidget(m_introStack,2);
-    m_vHlayout_jianjie->addWidget(m_tabWidget1,8);
+    m_vHlayout_jianjie->addWidget(m_tabWidget1);
     m_vHlayout_jianjie->setSpacing(0);
 
     m_widget1 = new QWidget(this);//右侧列表整体父亲
@@ -352,13 +344,7 @@ void MultipPlayer::chandleSignalAndSLots()
     connect(m_foldBtn,&QPushButton::clicked,[=](){slot_judgeFoldBtnOfRightDockList();});
 
     //同类型视频推荐
-    connect(ui->pushButton_download,&QPushButton::clicked,[=](){
-        //    set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_commentTab,QString::fromLocal8Bit("讨论"));
-//            set_showTwoTabBar(m_tabWidget1,0,m_commentTab,QString::fromLocal8Bit("讨论"),1,m_commentTab,QString::fromLocal8Bit("讨论"));
-    });
-
-
-
+    connect(dataBase::getInstance(),SIGNAL(sig_sendVideoDramaInfo(QVariant)),m_recomTab,SLOT(slot_addRecVideoItem(QVariant)));
     //查看评论
     connect(ui->pushButton_comments,&QPushButton::clicked,[=](){ showMediaCommentTab();});
     //应该在有影片播放的时候，执行定时器，否则就是无效；1s更新一次进度
@@ -546,13 +532,19 @@ void MultipPlayer::chandleSignalAndSLots()
         }
     });
 
-    //接受发过来的网络资源链接
+    //接受标题栏发过来的网络资源链接
     connect(m_videoTitleBar,&VideoTitleBar::sig_inputSourceUrl,[=](QString newurl)
     {
-        QUrl url = QUrl::fromLocalFile(newurl);
-        m_player->setMedia(url);
-        m_player->play();
-        fileType(newurl);
+//        QUrl url = QUrl::fromLocalFile(newurl);
+//        m_player->setMedia(url);
+//        m_player->play();
+//        fileType(newurl);
+        slot_addPlayTempMedia(newurl);
+    });
+
+    //接收推荐列表发过来的请求
+    connect(m_recomTab,&RecomVideoTab::sig_sendVideoUrl,[=](QString url){
+        slot_addPlayTempMedia(url);
     });
 
     //收藏按钮
@@ -798,6 +790,7 @@ void MultipPlayer::showMediaCommentTab()
 {
             removeTabwidgetTabBar(m_tabWidget1);
             set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_commentTab,QString::fromLocal8Bit("讨论"));
+//            set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_dramaList,QString::fromLocal8Bit("剧集介绍"));
             m_tabWidget1->setCurrentWidget(m_commentTab);
 }
 
@@ -2422,6 +2415,23 @@ void MultipPlayer::slot_showNormalWindows()
     if(ui->stackedWidget_player->isHidden()) ui->stackedWidget_player->show();
     if(!FloatPlayCtl::getInstance()->isHidden()) FloatPlayCtl::getInstance()->hide();
 
+}
+
+//播放临时点击的媒体
+void MultipPlayer::slot_addPlayTempMedia(const QString url)
+{
+    qDebug() << QString::fromLocal8Bit(" 播放器主界面收到临时播放连接url：")<<url;
+    QStringList temp_list;
+    temp_list << url;
+    playlist->clear();
+    addToPlaylist(temp_list);//添加到媒体播放列表
+//    m_listWisget2->clear();//播放列表
+//    m_listWisget3->clear();//收藏列表
+//    addFileToList(temp_list);//添加到视图播放列表
+//    fileType(m_fileNames,0);//判断文件类型（转换显示界面）
+    m_player->play();//调试暂停 2022-05-14
+    slot_setMainCurrentIndex(1);//显示视频界面
+    m_playerState = QMediaPlayer::PlayingState;
 }
 
 //清空用户信息

@@ -14,7 +14,7 @@
 #include "videomodels/MyVideoWidget.h"
 #include "videomodels/VideoTitleBar.h"
 #include "videomodels/RecomVideoTab.h"
-#include "videomodels/IntroduceForm.h"
+#include "videomodels/DramaListForm.h"
 #include "videomodels/PlayOrderForm.h"
 #include "videomodels/VideoProgressBar.h"
 
@@ -23,6 +23,7 @@
 #include <QPoint>
 #include <QTimer>
 #include <QAction>
+#include <QVariant>
 #include <QToolBox>
 #include <QLineEdit>
 #include <QKeyEvent>
@@ -123,6 +124,8 @@ public slots:
     void    slot_showNormalWindows();
 
 //    void  clearListWidgetList_user();//清空用户信息
+
+    void    slot_addPlayTempMedia(const QString url);//播放临时点击添加的媒体
 
     void    slot_clearListWidgetList_playlist();//清空播放列表
 
@@ -318,11 +321,10 @@ private:
     AdjustBright                *m_adjustBright     = nullptr;
     MusicPlayShow               *m_musicUi          = nullptr;
     VideoTitleBar               *m_videoTitleBar    = nullptr;
-    IntroduceForm               *m_introduceForm    = nullptr;
+    DramaListForm               *m_dramaList        = nullptr;//系列推荐
     RecomVideoTab               *m_recomTab         = nullptr;
     MyVideoWidget               *videoWidget        = nullptr;//视频播放界面
     QMediaPlaylist              *playlist           = nullptr;
-    QStackedWidget              *m_introStack       = nullptr;
 
 
     int                         m_voice;                        //静音之前的值

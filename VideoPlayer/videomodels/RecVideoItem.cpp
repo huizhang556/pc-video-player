@@ -10,19 +10,20 @@ RecVideoItem::RecVideoItem(QWidget *parent) :
     ui(new Ui::RecVideoItem)
 {
     ui->setupUi(this);
-    this->setFixedHeight(90);
+    this->setFixedHeight(85);
     this->setFixedWidth(250);
-
-    ui->label_video->installEventFilter(this);
-    ui->label_video->hide();
+    handleSignalsAndSlots();
+    manager = new QNetworkAccessManager(this);
+    ui->label_videoPic->installEventFilter(this);
     ui->pushButton_videoInfo->setCheckable(true);
     ui->pushButton_videoInfo->setChecked(false);
 
     ui->pushButton_playAmount->setIcon(QIcon("://images/icon/recvideo_amount.png"));
 }
 
-RecVideoItem::RecVideoItem(const QString& path, const QString time, QString info, QString count, QWidget *parent) :
+RecVideoItem::RecVideoItem(const QString &url, const QString& path, const QString time, QString info, QString count, QWidget *parent) :
     QWidget(parent),
+    m_videoUrl(url),
     m_picPath(path),
     m_picTime(time),
     m_picInfo(info),
@@ -30,11 +31,11 @@ RecVideoItem::RecVideoItem(const QString& path, const QString time, QString info
     ui(new Ui::RecVideoItem)
 {
     ui->setupUi(this);
-    this->setFixedHeight(90);
+    this->setFixedHeight(85);
     this->setFixedWidth(250);
-
-    ui->label_video->installEventFilter(this);
-    ui->label_video->hide();
+    manager = new QNetworkAccessManager(this);
+    handleSignalsAndSlots();
+    ui->label_videoPic->installEventFilter(this);//获取点击事件
     ui->pushButton_videoInfo->setCheckable(true);
     ui->pushButton_videoInfo->setChecked(false);
 
@@ -50,12 +51,21 @@ RecVideoItem::~RecVideoItem()
     delete ui;
 }
 
+void RecVideoItem::handleSignalsAndSlots()
+{
+    //点击 信息部分 获取播放连接
+    connect(ui->pushButton_videoInfo,&QPushButton::clicked,[=](){emit sig_sendVideoUrl();});
+    //点击 播放部分 获取播放连接
+    connect(ui->pushButton_play,&QPushButton::clicked,[=](){emit sig_sendVideoUrl();});
+}
+
 void RecVideoItem::setVideoPicture(const QString path)
 {
-    qDebug() << "picture path =" << path;
-    QPixmap pix(path);
-    ui->label_video->setPixmap(pix);
-    ui->label_video->setScaledContents(true);//内容自适应
+//    QPixmap pix(path);
+//    pix.scaled(ui->label_videoPic->size(),Qt::KeepAspectRatio,Qt::SmoothTransformation);
+    manager->get(QNetworkRequest(QUrl(path)));
+    //获取网络图片
+    connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(slot_replyFinished(QNetworkReply*)));
 }
 
 void RecVideoItem::setVideoTime(const QString &time)
@@ -72,7 +82,7 @@ void RecVideoItem::setVideoText(QString &info)
     QFont font;
     font.setPixelSize(10);
     QFontMetrics fontMetric = QFontMetrics(font);
-    QString text = fontMetric.elidedText(info,Qt::ElideRight,210,0);//21个字宽以后，省略为...
+    QString text = fontMetric.elidedText(info,Qt::ElideRight,190,0);//19个字宽以后，省略为...(10x19，字号x字数)
     ui->pushButton_videoInfo->setText(text);
 }
 
@@ -81,18 +91,30 @@ void RecVideoItem::setVideoUpvoye(const QString &count)
     ui->pushButton_playAmount->setText(count);
 }
 
+void RecVideoItem::slot_replyFinished(QNetworkReply *reply)
+{
+    if (reply->error() == QNetworkReply::NoError)
+    {
+        //获取字节流构造 QPixmap 对象
+        QPixmap pixmap;
+        pixmap.loadFromData(reply->readAll());
+        ui->label_videoPic->setPixmap(pixmap);
+        ui->label_videoPic->setScaledContents(true);//内容自适应
+    }
+    else
+    {
+        qDebug() <<  QString::fromLocal8Bit("请求错误：")<<reply->errorString();
+    }
+}
+
 
 bool RecVideoItem::eventFilter(QObject *watched, QEvent *event)
 {
-    if(watched == ui->label_video)
+    if(watched == ui->label_videoPic)
     {
-        if(event->type() == QEvent::Enter)
+        if(event->type() == QEvent::MouseButtonPress)
         {
-            ui->pushButton_play->show();
-        }
-        else if(event->type() == QEvent::Leave)
-        {
-            ui->pushButton_play->hide();
+            emit sig_sendVideoUrl();
         }
     }
     return QWidget::eventFilter(watched,event);

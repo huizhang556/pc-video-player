@@ -94,7 +94,7 @@
 {
 padding-left:5px;
 color:#e6e9f0;
-font-size:15px;
+font: 25 10pt &quot;Microsoft YaHei&quot;;
 }
 </string>
             </property>
@@ -138,6 +138,90 @@ font-size:15px;
        <property name="styleSheet">
         <string notr="true">background-color: #26262b;</string>
        </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QLabel" name="label_currentPic">
+            <property name="minimumSize">
+             <size>
+              <width>110</width>
+              <height>100</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>80</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">border-image: url(:/images/bgpic/dieji3.png);</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_currentText">
+            <property name="minimumSize">
+             <size>
+              <width>140</width>
+              <height>100</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#pushButton_currentText
+{
+font-size: 13px;
+color: #e6e9f0;
+text-align:left;
+padding-left: 5px;
+padding-right: 5px;
+background-color: transparent;
+}
+
+#pushButton_currentText:hover
+{
+color: #ff4335;
+text-decoration:underline;
+}
+
+#pushButton_currentText:checked
+{
+
+}</string>
+            </property>
+            <property name="text">
+             <string>当前视频正在播放...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
      </item>
      <item>
@@ -194,7 +278,7 @@ font-size:15px;
 {
 padding-left:5px;
 color:#e6e9f0;
-font-size:15px;
+font: 25 10pt &quot;Microsoft YaHei&quot;;
 }
 </string>
             </property>
@@ -317,17 +401,22 @@ background-color: #292a2d;
 #listWidget_recommend::item
 {
 background-color: #292a2d;
+color: transparent;
+margin:1px;
 }
 
 #listWidget_recommend::item:selected
 {
-border: 0px solid #4ea018;
+background-color: #3e3f42;
+border: 1px solid #ff4335;
+color: transparent;
 }
 
 #listWidget_recommend::item:hover
 {
 background-color: #3e3f42;
 border: 1px solid #4ea018;
+color: transparent;
 }</string>
        </property>
       </widget>

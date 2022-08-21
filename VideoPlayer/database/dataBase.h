@@ -1,6 +1,7 @@
 ﻿#ifndef DATABASE_H
 #define DATABASE_H
 
+#include <QVariant>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QStringList>
@@ -30,6 +31,9 @@ public:
     static  bool            browser_deleteHisRecordToList(const QString &url);//往数据库删除一条历史记录
     static  bool            browser_deleteAllHisRecordToList();//往数据库删除所有历史记录
 
+    //推荐视频
+    bool                    video_recDramaInfo();//查询推荐列表
+
 public:
 protected:
 
@@ -40,6 +44,7 @@ private:
 
 
 signals:
+    void        sig_sendVideoDramaInfo(QVariant);
     void        sig_sendRecordInfo(QString,QString);
     void        sig_sendHisRecordInfo(QString);
 };

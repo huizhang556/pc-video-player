@@ -390,8 +390,8 @@ QListWidget::item:hover
 {
 border:none;
 background-color:#3c3842;
-
-}</string>
+}
+</string>
        </property>
       </widget>
      </item>
