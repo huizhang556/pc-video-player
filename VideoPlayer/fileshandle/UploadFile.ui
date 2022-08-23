@@ -253,6 +253,11 @@ border: none;
 text-align:left;
 border: 0px solid #f2f2f2;
 border-bottom-width:1px;
+}
+
+#listWidget_uploadlist::item:hover
+{
+background-color: #f7f7f7;
 }</string>
        </property>
       </widget>

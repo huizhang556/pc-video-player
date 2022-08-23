@@ -30,6 +30,7 @@
 #include <QLayout>
 #include <QThread>
 #include <QWidget>
+#include <QKeyEvent>
 #include <QStatusBar>
 #include <QShowEvent>
 #include <QTabWidget>
@@ -73,6 +74,8 @@ protected:
 
     void        resizeEvent(QResizeEvent *event) override;
 
+    void        keyPressEvent(QKeyEvent *event) override;
+
 private:
     void        initOtherWidgetUi();
 
@@ -82,7 +85,7 @@ private:
 
     void        setStackedWidgetPage();//添加界面
 
-    void setLeftSliderCurrentIndex(int index);
+    void        setLeftSliderCurrentIndex(int index);
 
     void        createTrayMenu();//托盘菜单
 
@@ -172,6 +175,7 @@ signals:
     void        sig_startCloseAppliction();//主窗口关闭信号
     void        sig_canGoBack(bool status);
     void        sig_canGoForward(bool status);
+    void        sig_createNewWebTab();//创建新的tab
 
 private:
     QGraphicsOpacityEffect *opacity                = nullptr;
@@ -217,9 +221,6 @@ private:
     bool                _isleftpressed             = false;      //判断是否是左键点击
     int                 _curpos = 0;                             //鼠标左键按下时光标所在区域
     QPoint              _plast;                                  //获取鼠标左键按下时光标在全局(屏幕而非窗口)的位置
-
-    //浏览器通信
-    QThread             *m_workThread           = nullptr;
 };
 
 #endif // MAINWIDGET_H

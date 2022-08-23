@@ -6,6 +6,7 @@
 #include "fileshandle/UploadFile.h"
 
 #include <QWidget>
+#include <QListWidgetItem>
 
 namespace Ui {
 class FilesTrans;
@@ -21,6 +22,7 @@ public:
     void    initWorkUI();
     void    handleSignalsAndSlots();
     void    setCurrentShowPage(QString page);
+    void    setCurrentShowPage(QListWidgetItem *item);
 
 private:
     Ui::FilesTrans *ui;

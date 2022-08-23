@@ -32,6 +32,7 @@ protected:
     void    mouseDoubleClickEvent(QMouseEvent *event) override;
     bool    eventFilter(QObject *watched, QEvent *event) override;
     void    showEvent(QShowEvent *event) override;
+    void    keyPressEvent(QKeyEvent *event) override;
 
 //公有槽函数以公共接口的形式暴露在外面，外部任何客户可以直接访问
 public slots:

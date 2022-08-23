@@ -31,24 +31,27 @@
 #include "videomodels/RecVideoItem.h"
 
 #include <QTranslator>
+#include <QTimer>
 
 int main(int argc, char *argv[])
 {
-    QApplication::setAttribute(Qt::AA_UseOpenGLES);
+//    QApplication::setAttribute(Qt::AA_UseOpenGLES);
     QApplication a(argc, argv);
     QTranslator translator1;
     translator1.load(":/font/qt_zh_CN.qm");//翻译为中文
     a.installTranslator(&translator1);
     loadGlobalQss::loadAllUIQss();//加载全局样式
     //数据初始化（放在界面初始化完成以后）
-    dataBase::creatConnection();//连接数据库,有数据的必须先连接数据库
+    dataBase::creatMysqlConnection();//连接数据库,有数据的必须先连接数据库
     MainWidget w1;
     w1.show();
 
 //    MultipPlayer w;
 //    w.show();
+    QTimer::singleShot(1500,0,[=](){
+        dataBase::getInstance()->initGlobalDate();//数据初始化
+    });
 
-    dataBase::getInstance()->initGlobalDate();//数据初始化
 
     //播放器注册
 //    Global::registerLAVplayer();

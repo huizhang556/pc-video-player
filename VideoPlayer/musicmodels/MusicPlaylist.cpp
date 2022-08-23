@@ -167,7 +167,7 @@ void MusicPlaylist::addFileInfoToListView()
 //    model_songInfo->clear();//加载前先清空上次模型中存放的内容,交给数据库
     //列名称必须与数据库中字段对应上，否则使用其他的只读模型
     model_songInfo = new QSqlTableModel(this,dataBase::getSqlDataBase());//数据库能连接上，且是打开的
-    model_songInfo->setTable("LocalMusic");
+    model_songInfo->setTable("localmusic");//注意表名区分大小写
     model_songInfo->setHeaderData(0,Qt::Horizontal,QString::fromLocal8Bit("歌曲序号"));
     model_songInfo->setHeaderData(1,Qt::Horizontal,QString::fromLocal8Bit("歌曲名称"));
     model_songInfo->setHeaderData(2,Qt::Horizontal,QString::fromLocal8Bit("本地路径"));

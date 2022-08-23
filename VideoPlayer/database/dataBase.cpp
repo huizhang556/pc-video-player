@@ -29,18 +29,109 @@ dataBase *dataBase::getInstance()
 
 QSqlDatabase dataBase::getSqlDataBase()
 {
-    return QSqlDatabase::database("connect_sqlite");//根据连接名获取
+    return QSqlDatabase::database("connect_mysql");//根据连接名获取
+}
+
+
+bool dataBase::creatMysqlConnection()
+{
+    qDebug() << QString::fromLocal8Bit("Qt现在支持的驱动：")<<QSqlDatabase::drivers();
+    QSqlDatabase db_mysql = QSqlDatabase::addDatabase("QMYSQL","connect_mysql");//连接数据库类型
+    db_mysql.setHostName("82.156.175.81");
+    db_mysql.setUserName("zhang");
+    db_mysql.setPassword("zhang_databases123");
+    db_mysql.setPort(3306);
+    db_mysql.setDatabaseName("client");//给数据库起名字
+    if(!db_mysql.open())
+    {
+       qDebug()<<"mysql database is not open!"<<db_mysql.lastError();
+       return false;
+    }
+    else
+    {
+        qDebug()<<"82.156.175.81 database is open!";
+        QSqlQuery query(getSqlDataBase());
+        //sqlite2.3.4 版本开始,主键自动为自增，但是主键不能设置字符长度，否则失效
+        //建表---收藏记录表
+        QString table_record = R"(
+                               CREATE TABLE IF NOT EXISTS `collectrecords`  (
+                                 `id` int(20) NOT NULL AUTO_INCREMENT,
+                                 `urlnick` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                 `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                 PRIMARY KEY (`id`) USING BTREE
+                               ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;)";
+        if(query.exec(table_record))
+            qDebug() << "create table collectrecords successfull";
+        else
+            qDebug() << "create table collectrecords failed";
+
+        //创建历史记录表
+        QString table_history = R"(
+                                CREATE TABLE IF NOT EXISTS `historyrecords`  (
+                                  `id` int(20) NOT NULL AUTO_INCREMENT,
+                                  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                  PRIMARY KEY (`id`) USING BTREE
+                                ) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;)";
+        if(query.exec(table_history))
+            qDebug() << "create table historyrecords successfull";
+        else
+            qDebug() << "create table historyrecords failed";
+
+        //创建本地音乐表
+        QString table_music = R"(
+                              CREATE TABLE IF NOT EXISTS `localmusic`  (
+                                `id` int(20) NOT NULL AUTO_INCREMENT,
+                                `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                `quality` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                PRIMARY KEY (`id`) USING BTREE
+                              ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;)";
+        if(query.exec(table_music))
+            qDebug() << "create table localmusic successfull";
+        else
+            qDebug() << "create table localmusic failed";
+
+        //创建登录信息表
+        QString table_logininfo = R"(
+                                  CREATE TABLE IF NOT EXISTS `logininfo`  (
+                                    `id` int(20) NOT NULL AUTO_INCREMENT,
+                                    `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                    `pwd` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                    PRIMARY KEY (`id`) USING BTREE
+                                  ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;)";
+        if(query.exec(table_logininfo))
+            qDebug() << "create table logininfo successfull";
+        else
+            qDebug() << "create table logininfo failed";
+
+        //创建剧集列表
+        QString table_drama = R"(
+                              CREATE TABLE IF NOT EXISTS `dramalist`  (
+                                `id` int(20) NOT NULL AUTO_INCREMENT,
+                                `alias` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                `duration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                `cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                `uplove` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                PRIMARY KEY (`id`) USING BTREE
+                              ) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;)";
+        if(query.exec(table_drama))
+            qDebug() << "create table dramalist successfull";
+        else
+            qDebug() << "create table dramalist failed";
+         return true;
+    }
 }
 
 /*连接数据库*/
-bool dataBase::creatConnection()
+bool dataBase::creatSqliteConnection()
 {
     qDebug() << QString::fromLocal8Bit("Qt现在支持的驱动：")<<QSqlDatabase::drivers();
     QSqlDatabase db_sqlite = QSqlDatabase::addDatabase("QSQLITE","connect_sqlite");//指定驱动 创建自己的连接名
     db_sqlite.setDatabaseName("mymusic.db");//给数据库起名字
     if(!db_sqlite.open())
     {
-       qDebug()<<"database is not open!"<<db_sqlite.lastError();
+       qDebug()<<"sqlite database is not open!"<<db_sqlite.lastError();
        return false;
     }
     else
@@ -63,6 +154,8 @@ bool dataBase::creatConnection()
     }
 }
 
+
+
 //初始化全局数据
 bool dataBase::initGlobalDate()
 {
@@ -72,11 +165,11 @@ bool dataBase::initGlobalDate()
     return true;
 }
 
-//获取数据库全部记录
+//获取数据库全部收藏记录
 bool dataBase::browser_loadAllRecordsToList()
 {
     QSqlQuery query(getSqlDataBase());
-    bool isOK = query.exec(QString("select urlnick, url from CollectRecords;"));
+    bool isOK = query.exec(QString("select urlnick, url from collectrecords;"));
     if(isOK)
     {
         while (query.next())
@@ -94,11 +187,11 @@ bool dataBase::browser_loadAllRecordsToList()
     }
 }
 
-//往数据库添加一条记录
+//往数据库添加一条收藏记录
 bool dataBase::browser_addRecordToList(const QString &urlnick, const QString &url)
 {
     QSqlQuery query(getSqlDataBase());
-    bool isOK = query.exec(QString("insert into CollectRecords values(%1,'%2','%3')").arg("NULL").arg(urlnick).arg(url));
+    bool isOK = query.exec(QString("insert into collectrecords values(%1,'%2','%3')").arg(0).arg(urlnick).arg(url));//id自增，插入时置为0
     if(isOK)
     {
         qDebug()<<"one data insert successful!";
@@ -111,11 +204,11 @@ bool dataBase::browser_addRecordToList(const QString &urlnick, const QString &ur
     }
 }
 
-//往数据库删除一条记录
+//往数据库删除一条收藏记录
 bool dataBase::browser_deleteRecordToList(const QString &url)
 {
     QSqlQuery query(getSqlDataBase());
-    bool isOK = query.exec(QString("delete from CollectRecords where url= '%1';").arg(url));
+    bool isOK = query.exec(QString("delete from collectrecords where url= '%1';").arg(url));
     if(isOK)
     {
         qDebug()<<"one data delete successful!";
@@ -128,11 +221,11 @@ bool dataBase::browser_deleteRecordToList(const QString &url)
     }
 }
 
-//往数据库更新一条记录
+//往数据库更新一条收藏记录
 bool dataBase::browser_updateRecordToList(const QString &url, const QString &urlnick)
 {
     QSqlQuery query(getSqlDataBase());
-    bool isOK = query.exec(QString("update CollectRecords set urlnick='%1' where url = '%2';").arg(urlnick).arg(url));
+    bool isOK = query.exec(QString("update collectrecords set urlnick='%1' where url = '%2';").arg(urlnick).arg(url));
     if(isOK)
     {
         qDebug()<<"one data update successful!";
@@ -149,7 +242,7 @@ bool dataBase::browser_updateRecordToList(const QString &url, const QString &url
 bool dataBase::browser_loadAllHisRecordsToList()
 {
     QSqlQuery query(getSqlDataBase());
-    bool isOK = query.exec(QString("select url from HistoryRecords;"));
+    bool isOK = query.exec(QString("select url from historyrecords;"));
     if(isOK)
     {
         while (query.next())
@@ -170,7 +263,7 @@ bool dataBase::browser_loadAllHisRecordsToList()
 bool dataBase::browser_addHisRecordToList(const QString &url)
 {
     QSqlQuery query(getSqlDataBase());
-    bool isOK = query.exec(QString("insert into HistoryRecords values(%1,'%2');").arg("NULL").arg(url));
+    bool isOK = query.exec(QString("insert into historyrecords values(%1,'%2');").arg(0).arg(url));
     if(isOK)
     {
         qDebug()<<"one history data insert successful!";
@@ -187,7 +280,7 @@ bool dataBase::browser_addHisRecordToList(const QString &url)
 bool dataBase::browser_deleteHisRecordToList(const QString &url)
 {
     QSqlQuery query(getSqlDataBase());
-    bool isOK = query.exec(QString("delete from HistoryRecords where url= '%1';").arg(url));
+    bool isOK = query.exec(QString("delete from historyrecords where url= '%1';").arg(url));
     if(isOK)
     {
         qDebug()<<"one history data delete successful!";
@@ -204,11 +297,11 @@ bool dataBase::browser_deleteHisRecordToList(const QString &url)
 bool dataBase::browser_deleteAllHisRecordToList()
 {
     QSqlQuery query(getSqlDataBase());
-    bool isOK1 = query.exec(QString("delete from HistoryRecords;"));//清除表所有记录
-    bool isOK2 = query.exec(QString("delete from sqlite_sequence where name = 'HistoryRecords';"));//重新设置主键自增
-    if(isOK1 && isOK2)
+    bool isOK1 = query.exec(QString("truncate table historyrecords;"));//清除表所有记录,主键重新设置递增
+//    bool isOK2 = query.exec(QString("delete from sqlite_sequence where name = 'historyrecords';"));//重新设置主键自增
+    if(isOK1)
     {
-        qDebug()<<"all history data delete successful!";
+        qDebug()<<"all history data truncate successful!";
         return true;
     }
     else
@@ -222,7 +315,7 @@ bool dataBase::browser_deleteAllHisRecordToList()
 bool dataBase::video_recDramaInfo()
 {
     QSqlQuery query(getSqlDataBase());
-    bool isOK = query.exec(QString("select id, alias, url, duration, cover, uplove from dramaList;"));
+    bool isOK = query.exec(QString("select id, alias, url, duration, cover, uplove from dramalist;"));
     if(isOK)
     {
         while (query.next())

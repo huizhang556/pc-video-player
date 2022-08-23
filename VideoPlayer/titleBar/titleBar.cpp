@@ -153,9 +153,6 @@ void TitleBar::initWorker()
     m_engineSetBtn->setFixedHeight(26);
     slot_addWebEngine();
 
-    //快捷键
-
-
     slot_switchToLoginPage(1,QString::fromLocal8Bit("测试测名称8020"));
 }
 
@@ -207,7 +204,7 @@ void TitleBar::chandleSignalAndSLots()
     //皮肤设置
     connect(ui->Btnskin,&QPushButton::clicked,[=](){showMySkin();});//显示皮肤
     //下载记录
-    connect(ui->BtnDownload,&QPushButton::clicked,[=](){emit sig_filesUploadDownLoad(5,4);});//上传下载
+    connect(ui->BtnDownload,&QPushButton::clicked,[=](){emit sig_filesUploadDownLoad(6,4);});//上传下载
     //历史记录
     connect(ui->BtnHistory,&QPushButton::clicked,[=](){emit sig_historyDownload(5,0);});//历史记录
     //截屏
@@ -616,14 +613,14 @@ void TitleBar::slot_updateShowListSettigMenu()
     pmenu_func_tool->setAttribute(Qt::WA_TranslucentBackground);    //重要
     pmenu_func_tool->setObjectName(QString::fromLocal8Bit("pmenu_func_tool"));
 
-    pmenu_funclist->addAction(QIcon("://images/icon/help_account.png"),QString::fromLocal8Bit("新建窗口"),this,SLOT(slot_browser_setMenu_createTab()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_account.png"),QString::fromLocal8Bit("新建窗口(Shift+C)"),this,SLOT(slot_browser_setMenu_createTab()));
     pmenu_funclist->addAction(QIcon("://images/icon/help_account.png"),QString::fromLocal8Bit("新建隐身窗口"),this,SLOT(slot_browser_setMenu_createHiddenTab()));
     pmenu_funclist->addSeparator();
     pmenu_funclist->addAction(QIcon("://images/icon/setlogin.png"),QString::fromLocal8Bit("保存网页"),this,SLOT(slot_browser_setMenu_savePage()));//注意：槽函数不加分号，且不能带参数
     pmenu_funclist->addAction(QIcon("://images/icon/help_internet.png"),QString::fromLocal8Bit("查找"),this,SLOT(slot_browser_setMenu_findText()));
     pmenu_funclist->addAction(QIcon("://images/icon/help_qahelp.png"),QString::fromLocal8Bit("全屏"),this,SLOT(slot_browser_setMenu_fullScreen()));
     pmenu_funclist->addSeparator();
-    pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("显示收藏栏"),this,SLOT(slot_browser_setMenu_showCollectRecords()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("显示收藏栏(Alt+S)"),this,SLOT(slot_browser_setMenu_showCollectRecords()));
     pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("清空搜索记录"),this,SLOT(slot_browser_setMenu_clearSearchRecords()));
     pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("显示收藏夹"),this,SLOT(slot_browser_setMenu_showCollectList()));
     pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("显示历史记录"),this,SLOT(slot_browser_setMenu_showHistories()));
@@ -900,6 +897,32 @@ void TitleBar::showEvent(QShowEvent *event)
     ui->lineEditSearch->setFocus();
     ui->lineEditSearch->setFocusPolicy(Qt::StrongFocus);
     ui->lineEdit_webSearch->setFocus();
+}
+
+void TitleBar::keyPressEvent(QKeyEvent *event)
+{
+    if(ui->stackedWidget->currentIndex() != 1) return;
+     //Shift +  C 组合键--->添加新web tab
+    if(event->key() == Qt::Key_C  &&  event->modifiers() == Qt::ShiftModifier)
+    {
+        slot_browser_setMenu_createTab();
+    }
+    //显示收藏栏
+    else if(event->key() == Qt::Key_S  &&  event->modifiers() == Qt::AltModifier)
+    {
+        slot_browser_setMenu_showCollectRecords();
+    }
+//    //显示收藏夹
+//    else if(event->key() == Qt::Key_D  &&  event->modifiers() == Qt::ShiftModifier)
+//    {
+//        slot_browser_setMenu_showCollectList();
+//    }
+//    //显示历史记录
+//    else if(event->key() == Qt::Key_Z  &&  event->modifiers() == Qt::ShiftModifier)
+//    {
+//        slot_browser_setMenu_showHistories();
+//    }
+    qDebug() << event->key();//78（key）需要鼠标焦点在标题栏
 }
 
 /*根据窗口状态设置样式*/

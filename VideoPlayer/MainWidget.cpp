@@ -406,8 +406,8 @@ void MainWidget::chandleSignalAndSlots()
 
 
     /************************************浏览器部分************************************/
-    //收藏网址
-
+    //创建一个新的tab
+//    connect(this,&MainWidget::sig_createNewWebTab,m_titleBar,&TitleBar::slot_receiveBlankWebTab);
     //新增历史记录（手动搜索）
     connect(m_titleBar,SIGNAL(sig_sendInputNewUrl(QString)),m_webHistory,SLOT(slot_addToListHistoryWidget(QString)));//添加历史记录
     //可回退
@@ -497,8 +497,9 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_cusTabbar,&CusTabBar::sig_sendTabAddWebTabBar,m_titleBar,&TitleBar::slot_receiveBlankWebTab);
     //此处注意：qt4,qt5写法不能接收信号，只有拉姆达表达式可以，主要还无法区分槽函数（重载的时候）
     connect(m_titleBar,&TitleBar::sig_sendBlankUrl,[=](QString url){
-        m_titleBar->slot_clearWebLineEditText();//清除输入框文字（无用）
+        if(m_stackWidget_center->currentWidget() == m_webStackWgt && m_webStackWgt->currentWidget() == m_webWidget)
         slot_addToWebTabwidgetBrowser(url);
+        m_titleBar->slot_clearWebLineEditText();//清除输入框文字（无用）
     });
 
     /************************************浏览器---收藏栏************************************/
@@ -1212,9 +1213,10 @@ void MainWidget::closeEvent(QCloseEvent *event)
 //         m_tray->hide();
          QSqlQuery query(dataBase::getSqlDataBase());
          //此处应该在数据库提供接口
-         query.exec("DROP TABLE IF EXISTS 'LocalMusic'");
-         query.exec("DROP TABLE IF EXISTS 'LoginInfo'");
-         qDebug()<<"LocalMusic,LoginInfo tables is drop!";
+//         query.exec("drop table if exists localmusic;");//sqlite
+//         query.exec("drop table if exists logininfo;");//sqlite
+         query.exec("truncate table localmusic;");//mysql
+         qDebug()<<"localmusic,logininfo tables is drop!";
          event->accept();
      }
 }
@@ -1223,6 +1225,16 @@ void MainWidget::closeEvent(QCloseEvent *event)
 void MainWidget::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
+}
+
+void MainWidget::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_N)//全屏时按下ESC键盘
+    {
+//        if(m_stackWidget_center->currentWidget() == m_webStackWgt && m_webStackWgt->currentWidget() == m_webWidget)
+//        emit sig_createNewWebTab();
+    }
+//    qDebug() << event->key();//78（key）需要鼠标焦点在标题栏
 }
 
 /*获取光标在窗口所在区域的 行   返回行数*/

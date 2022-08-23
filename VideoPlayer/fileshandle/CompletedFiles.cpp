@@ -24,7 +24,7 @@ void CompletedFiles::initWorkUI()
 //    ui->listWidget_completedlist->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_completedlist->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
-    for(int i = 0; i< 50; i++)
+    for(int i = 0; i< 10; i++)
     {
         QListWidgetItem *item = new QListWidgetItem();
         FileItem *fileItem = new FileItem();

@@ -272,9 +272,9 @@ void MultipPlayer::initMainWindow()
     m_tabWidget1 = new QTabWidget;//不用手动释放，有包含关系
     m_tabWidget1->setObjectName(QString::fromLocal8Bit("m_tabWidget1"));
     m_tabWidget1->setFixedWidth(260);//固定宽度
-    set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_recomTab,QString::fromLocal8Bit("推荐视频"));
+//    set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_recomTab,QString::fromLocal8Bit("推荐视频"));
 //    set_showTwoTabBar(m_tabWidget1,0,m_dramaList,QString::fromLocal8Bit("剧集介绍"),1,m_commentTab,QString::fromLocal8Bit("讨论"));
-//    set_showTwoTabBar(m_tabWidget1,0,m_commentTab,QString::fromLocal8Bit("讨论"),1,m_commentTab,QString::fromLocal8Bit("讨论"));
+    set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_dramaList,QString::fromLocal8Bit("剧集介绍"));
     m_tabWidget1->setCurrentIndex(0);
 
 
@@ -789,9 +789,10 @@ void MultipPlayer::set_fileTolistWidget(QString item)
 void MultipPlayer::showMediaCommentTab()
 {
             removeTabwidgetTabBar(m_tabWidget1);
-            set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_commentTab,QString::fromLocal8Bit("讨论"));
+            set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_recomTab,QString::fromLocal8Bit("推荐视频"));
 //            set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_dramaList,QString::fromLocal8Bit("剧集介绍"));
-            m_tabWidget1->setCurrentWidget(m_commentTab);
+//            set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_dramaList,QString::fromLocal8Bit("剧集介绍"));
+            m_tabWidget1->setCurrentWidget(m_recomTab);
 }
 
 QString MultipPlayer::getCurrentMediaPlayFileName()
@@ -873,8 +874,8 @@ void MultipPlayer::addFileToList(const QStringList &strList)
 //        w->setLayout(layout);
 
         QSqlQuery query(dataBase::getSqlDataBase());
-        query.exec(QString("insert into LocalMusic values(%1,'%2','%3','%4')").arg("NULL").arg(name).arg(path).arg((QString::fromLocal8Bit("高音品质"))));
-        qDebug()<<"all data insert successful!";
+        query.exec(QString("insert into localmusic values(%1,'%2','%3','%4')").arg(0).arg(name).arg(path).arg((QString::fromLocal8Bit("高音品质"))));
+        qDebug()<<"localmusic one data insert successful!";
 
         m_listWisget2->addItem(pItem);
     }
@@ -1005,10 +1006,17 @@ void MultipPlayer::on_pushButton_6_clicked()
         if(!m_fileNames.isEmpty() && !QFileInfo(m_fileNames[0]).isDir())
         {
             QSqlQuery query(dataBase::getSqlDataBase());
-            //再次添加新数据，数据库先清空原有数据
-            query.exec("delete from LocalMusic;");
+//            再次添加新数据，数据库先清空原有数据
+//            truncate与drop是DDL语句，执行后无法回滚；delete是DML语句，可回滚。
+//            truncate只能作用于表；delete，drop可作用于表、视图等。
+//            truncate会清空表中的所有行，但表结构及其约束、索引等保持不变；drop会删除表的结构及其所依赖的约束、索引等。
+//            truncate会重置表的自增值；delete不会。
+//            truncate不会激活与表有关的删除触发器；delete可以。
+//            truncate后会使表和索引所占用的空间会恢复到初始大小；delete操作不会减少表或索引所占用的空间，drop语句将表所占用的空间全释放掉。
+//            query.exec("delete from localmusic;");//sqlite
             //sqlite不支持truncate清除主键自增id，只能手动清除id序列，使新数据id从0开始
-            query.exec("delete from sqlite_sequence where name = 'LocalMusic';");
+//            query.exec("delete from sqlite_sequence where name = 'localmusic';");//sqlite
+            query.exec("truncate table localmusic;");//mysql
             playlist->clear();
             addToPlaylist(m_fileNames);
             m_listWisget2->clear();

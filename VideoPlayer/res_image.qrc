@@ -392,5 +392,11 @@
         <file>images/fileitem/fileitem_pause.png</file>
         <file>images/fileitem/fileitem_resume.png</file>
         <file>images/fileitem/fileitem_use.png</file>
+        <file>images/fileitem/fileitem_documents.png</file>
+        <file>images/fileitem/fileitem_files.png</file>
+        <file>images/fileitem/fileitem_images.png</file>
+        <file>images/fileitem/fileitem_musics.png</file>
+        <file>images/fileitem/fileitem_recent.png</file>
+        <file>images/fileitem/fileitem_videos.png</file>
     </qresource>
 </RCC>

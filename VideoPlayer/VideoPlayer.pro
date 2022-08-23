@@ -40,6 +40,7 @@ include($$PWD/skin/skin.pri)
 include($$PWD/style/style.pri)
 include($$PWD/login/login.pri)
 include($$PWD/global/global.pri)
+#include($$PWD/capture/capture.pri)
 include($$PWD/lunbotu/lunbotu.pri)
 include($$PWD/network/network.pri)
 include($$PWD/browser/browser.pri)
@@ -69,3 +70,5 @@ RESOURCES += \
     res_audio.qrc \
     res_image.qrc \
     res_font.qrc
+
+FORMS +=

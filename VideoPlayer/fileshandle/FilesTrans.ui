@@ -49,8 +49,8 @@
         <string notr="true">#listWidget_trans
 {
 border: 0px solid #f0f0f0;
-border-right-width:2px;
-icon-size:26px;
+border-right-width:0px;
+icon-size:35px;
 font-family:&quot;微软雅黑&quot;;
 font-size:13px;
 text-align:center;
@@ -60,14 +60,18 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #28405d, 
 #listWidget_trans::item
 {
 color: #cccccc;
-padding-left:15px;
+padding:5px 5px;
 background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #28405d, stop:1  #223a55);
+border: 0px solid #292a2d;
+border-bottom-width:1px;
 }
 
 #listWidget_trans::item:hover
 {
-padding-left:15px;
+padding:5px 5px;
 background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #0f2028, stop:1  #2d5364);
+border: 0px solid #292a2d;
+border-bottom-width:1px;
 }
 
 #listWidget_trans::item:selected

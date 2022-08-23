@@ -17,7 +17,8 @@ public:
     ~dataBase();
     static  dataBase*       getInstance();
     static  QSqlDatabase    getSqlDataBase();
-    static  bool            creatConnection();//创建连接
+    static  bool            creatSqliteConnection();//创建sqlite连接
+    static  bool            creatMysqlConnection();//创建mysql连接
     bool                    initGlobalDate();//初始化全局数据
     //关于浏览器
     //收藏记录操作
