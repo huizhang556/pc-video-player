@@ -14,19 +14,19 @@ RC_ICONS = favicon.ico
 # 以管理员运行
 #QMAKE_LFLAGS += /MANIFESTUAC:\"level=\'requireAdministrator\' uiAccess=\'false\'\"
 
-
-# The following define makes your compiler emit warnings if you use
-# any feature of Qt which has been marked as deprecated (the exact warnings
-# depend on your compiler). Please consult the documentation of the
-# deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
+#禁用qdebug打印输出
+#DEFINES     += QT_NO_DEBUG_OUTPUT
+#调试窗口必须要release才能生效，而后再使用debug
+CONFIG += console pro
+#关闭编译警告提示 眼不见为净
+#CONFIG      += warn_off
 
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-#调试窗口必须要release才能生效
-#CONFIG += console pro
+
 
 SOURCES += \
         main.cpp \

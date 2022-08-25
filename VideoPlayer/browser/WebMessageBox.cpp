@@ -36,7 +36,7 @@ void WebMessageBox::chandleSignalsAndSLots()
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){this->hide();});
     //确定
     connect(ui->pushButton_sure,&QPushButton::clicked,[=](){
-        emit sig_sendTitleChanged(ui->lineEdit_address->text().trimmed(),ui->lineEdit_nickName->text().trimmed());
+        emit sig_sendTitleChanged(ui->lineEdit_address->text().trimmed(),ui->lineEdit_nickName->text().trimmed());//类似于群发
 
         this->close();
     });

@@ -5,6 +5,15 @@
 outline:none;
 }
 
+/**依旧是万能大法所有可视化类的 Q_PROPERTY 包含的属性都可以这样设置**/
+/**对整个系统的选项卡设置无切换按钮**/
+QTabBar
+{
+/*对整个系统的选项卡设置无切换按钮*/
+/*等同于ui->tabWidget->tabBar()->setUsesScrollButtons(false);*/
+qproperty-usesScrollButtons: false;
+}
+
 /*去白边*/
 QTabWidget::pane 
 {
