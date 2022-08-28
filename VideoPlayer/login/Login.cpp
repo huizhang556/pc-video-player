@@ -8,9 +8,32 @@ Login::Login(QWidget *parent) :
 {
     ui->setupUi(this);
     installEventFilter(this);
-    this->setFixedSize(310,200);    
+    this->setFixedSize(260,200);
     setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    initWorkUI();
+    handleSignalsAndSlots();
 
+}
+
+Login::~Login()
+{
+    delete ui;
+}
+
+void Login::initWorkUI()
+{
+    ui->label_vipwarning->setAlignment(Qt::AlignCenter);
+    QListWidgetItem *item1 = new QListWidgetItem(QIcon("://images/user/user_zhuye.png"),QString::fromLocal8Bit("我的个人频道"));
+    QListWidgetItem *item2 = new QListWidgetItem(QIcon("://images/function/collect_list_item.png"),QString::fromLocal8Bit("我的订阅"));
+    QListWidgetItem *item3 = new QListWidgetItem(QIcon("://images/icon/url_collection.png"),QString::fromLocal8Bit("我的收藏"));
+    ui->listWidget_person->addItem(item1);
+    ui->listWidget_person->addItem(item2);
+    ui->listWidget_person->addItem(item3);
+    ui->stackwidget_login->setCurrentIndex(0);
+}
+
+void Login::handleSignalsAndSlots()
+{
     connect(ui->BtnLogin,&QPushButton::clicked,[=]()
     {
         if(LoginPersonInfo::getInstance())
@@ -30,12 +53,6 @@ Login::Login(QWidget *parent) :
     });
 
     connect(this,&Login::sig_LoginWinClose,LoginPersonInfo::getInstance(),&LoginPersonInfo::receiveLoginAppClose);
-
-}
-
-Login::~Login()
-{
-    delete ui;
 }
 
 
@@ -58,6 +75,11 @@ void Login::leaveEvent(QEvent *event)
 void Login::receiveMainWinCloseAppSignal()
 {
     emit sig_LoginWinClose();//向登录信息窗口发送信号
+}
+
+void Login::slot_setPersonVipPage(int index)
+{
+    ui->stackwidget_login->setCurrentIndex(index);
 }
 
 void Login::paintEvent(QPaintEvent *event)

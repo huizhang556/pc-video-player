@@ -1,5 +1,7 @@
 ﻿#include "LoginPersonInfo.h"
 #include "ui_LoginPersonInfo.h"
+#include "database/dataBase.h"
+
 #include <QDebug>
 #include <QTimer>
 #include <QListView>
@@ -94,22 +96,22 @@ void LoginPersonInfo::initWorkUI()
     ui->login_lineEditUser->setCompleter(completer);
     /*登录-登录账户*/
     ui->login_lineEditUser->setPlaceholderText(QString::fromLocal8Bit("账户"));
-    QRegExp regExp("[A-Za-z0-9]{4,16}");//英文字母、数字
-    ui->login_lineEditUser->setValidator(new QRegExpValidator(regExp, this));
+//    QRegExp regExp("[A-Za-z0-9]{4,16}");//英文字母、数字
+//    ui->login_lineEditUser->setValidator(new QRegExpValidator(regExp, this));
     ui->login_lineEditUser->setFocus();
     /*注册-注册账户*/
     ui->gis_lineEditUser->setPlaceholderText(QString::fromLocal8Bit("输入新账户"));
-    QRegExp regExp3("[A-Za-z0-9]{4,16}");
-    ui->gis_lineEditUser->setValidator(new QRegExpValidator(regExp3, this));
+//    QRegExp regExp3("[A-Za-z0-9]{4,16}");
+//    ui->gis_lineEditUser->setValidator(new QRegExpValidator(regExp3, this));
     ui->gis_lineEditUser->setFocus();
     /*登录-登录密码*/
     ui->login_lineEditPasswd->setPlaceholderText(QString::fromLocal8Bit("密码"));
-    QRegExp regExp2("[A-Za-z0-9]{6,10}");
-    ui->login_lineEditPasswd->setValidator(new QRegExpValidator(regExp2, this));
+//    QRegExp regExp2("[A-Za-z0-9]{6,10}");
+//    ui->login_lineEditPasswd->setValidator(new QRegExpValidator(regExp2, this));
     /*注册-注册密码*/
     ui->gis_lineEditPasswd->setPlaceholderText(QString::fromLocal8Bit("输入新密码"));
-    QRegExp regExp4("[A-Za-z0-9]{6,10}");
-    ui->gis_lineEditPasswd->setValidator(new QRegExpValidator(regExp4, this));
+//    QRegExp regExp4("[A-Za-z0-9]{6,10}");
+//    ui->gis_lineEditPasswd->setValidator(new QRegExpValidator(regExp4, this));
 
     /*注册---注册邮箱*/
     ui->gis_lineEditEmail->setPlaceholderText(QString::fromLocal8Bit("找回密码用"));
@@ -266,7 +268,33 @@ void LoginPersonInfo::chandleSignalsAndSLots()
     /*登录---登录按钮*/
     connect(ui->login_BtnLogin,&QPushButton::clicked,[=]()
     {
-        QMessageBox::information(this,QString::fromLocal8Bit("登录提示"),QString::fromLocal8Bit("请稍等，正在核验个人信息！"));
+        QString account = ui->login_lineEditUser->text().trimmed();
+        QString passwd  = ui->login_lineEditPasswd->text().trimmed();
+        if(account.isEmpty())
+        {
+            slot_showWarning_login(QString::fromLocal8Bit("账户不能为空！"));
+        }
+        else if(passwd.isEmpty())
+        {
+            slot_showWarning_login(QString::fromLocal8Bit("密码不能为空！"));
+        }
+        bool valiable = dataBase::getInstance()->login_checked_usernameAndPasswd(account,passwd);//核对账号是否存在
+        if(valiable)//信息核对成功！
+        {
+            //发送名称，头像连接, 等级
+            slot_showWarning_login(QString::fromLocal8Bit("登录成功！"));
+            this->close();
+            emit sig_sendClearTempRecords();//清除临时记录（如果用户不登录，则切换用户时会用到）
+            dataBase::getInstance()->login_verification(account,passwd);//将用户所有信息查询出来，并初始化
+            QString nickname =  dataBase::getInstance()->getCurrentUserName();
+            QString head     =  dataBase::getInstance()->getCurrentUserHead();
+            int     grade    =  dataBase::getInstance()->getCurrentUserGrade();
+            emit sig_sendLoginOK(nickname,head,grade);
+        }
+        else//信息核对失败！
+        {
+            slot_showWarning_login(QString::fromLocal8Bit("登录信息有误！"));
+        }
     });
 
     connect(ui->login_BtnRegis,&QPushButton::clicked,[=]()
@@ -371,7 +399,43 @@ void LoginPersonInfo::on_pushButton_return_page3_clicked()
 /*注册按钮*/
 void LoginPersonInfo::on_gis_BtnRegister_clicked()
 {
-    QMessageBox::information(this,"register","register");
+    QString name    = ui->gis_lineEditUser->text().trimmed();
+    QString pwd     = ui->gis_lineEditPasswd->text().trimmed();
+    QString email   = ui->gis_lineEditEmail->text().trimmed();
+    if(name.isEmpty())
+    {
+        slot_showWarning_gis(QString::fromLocal8Bit("账号不能为空！"));
+    }
+    else if(pwd.isEmpty())
+    {
+        slot_showWarning_gis(QString::fromLocal8Bit("密码不能为空！"));
+    }
+    else if(email.isEmpty())
+    {
+        slot_showWarning_gis(QString::fromLocal8Bit("邮箱不能为空！"));
+    }
+    else if(name.length()<6)
+    {
+        slot_showWarning_gis(QString::fromLocal8Bit("账号不能少于6个字符！"));
+    }
+    else if(pwd.length()<6)
+    {
+        slot_showWarning_gis(QString::fromLocal8Bit("密码不能少于6个字符！"));
+    }
+    else
+    {
+       bool isOK = dataBase::getInstance()->register_userInfo(name,pwd,email);
+       if(isOK)//插入成功
+       {
+           slot_showWarning_gis(QString::fromLocal8Bit("注册成功！"));
+           QTimer::singleShot(0,0,[=](){showLoginWindow(0);});//转到登录界面
+       }
+       else//插入失败
+       {
+           slot_showWarning_gis(QString::fromLocal8Bit("注册失败，请重新注册！"));
+       }
+    }
+
 }
 
 /*重置密码按钮*/
@@ -390,6 +454,36 @@ void LoginPersonInfo::on_pushButton_return_page4_clicked()
 void LoginPersonInfo::on_set_BtnReturn_clicked()
 {
     ui->stackedWidget_login->setCurrentIndex(0);
+}
+
+//登录界面提示
+void LoginPersonInfo::slot_showWarning_login(const QString &text)
+{
+    ui->label_loginwarning->setText(text);
+    QTimer::singleShot(2000,0,[=](){
+        slot_clearWarning_login();
+    });
+}
+
+//清除登录界面提示
+void LoginPersonInfo::slot_clearWarning_login()
+{
+    ui->label_loginwarning->clear();
+}
+
+//注册界面提示
+void LoginPersonInfo::slot_showWarning_gis(const QString &text)
+{
+    ui->label_warning->setText(text);
+    QTimer::singleShot(2000,0,[=](){
+        ui->label_warning->clear();
+    });
+}
+
+//清除注册界面提示
+void LoginPersonInfo::slot_clearWarning_gis()
+{
+    ui->label_warning->clear();
 }
 
 void LoginPersonInfo::slot_showWaringText(const QString &text)

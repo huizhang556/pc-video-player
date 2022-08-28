@@ -9,6 +9,41 @@
 #include <QDesktopWidget>
 #include <QDebug>
 
+//用户信息结构体
+struct UserInfo
+{
+    QString     m_userId;       //用户唯一标识
+    QString     m_userName;     //用户名称
+    QString     m_userPwd;      //用户密码
+    QString     m_userEmails;   //用户邮箱
+    QString     m_headPic;      //用户头像
+    int         m_vipType;      //会员类型
+    bool        m_userOnline;   //是否在线
+    QString     m_LoginTime;    //最近登录时间
+    QString     m_createTime;   //创建时间
+};
+Q_DECLARE_METATYPE(UserInfo)
+
+//回应信息结构体
+struct Message
+{
+    //消息类型
+    //0 身份信息
+    //1  登陆成功
+    //2 用户名不存在
+    //3 用户名不存在
+    //4  密码不正确
+    //5 在线
+    //6 不在线
+    //7 注册成功
+    //8 已存在相同账户
+    //9 邮箱被注册
+    int        m_mType;
+    QString    m_infoBody;
+};
+Q_DECLARE_METATYPE(Message)
+
+
 
 class dataBase : public QObject
 {
@@ -20,34 +55,77 @@ public:
     static  bool            creatSqliteConnection();//创建sqlite连接
     static  bool            creatMysqlConnection();//创建mysql连接
     bool                    initGlobalDate();//初始化全局数据
+    void                    handleSignalsAndSlots();//处理信号与槽函数
+    //获取用户信息
+    QString                 getCurrentUserID();
+    QString                 getCurrentUserName();
+    QString                 getCurrentUserHead();
+    int                     getCurrentUserGrade();
+
+public slots:
+    //通用计算
+
+    //表通用查询
+    int                     getTableRecordsCounts(const QString& tablename);//查询某张表记录总数
+    bool                    getUserExists(const QString& tablename,const QString& username);//查询用户是否存在
+    //关于个人信息部分
+    //登录部分
+    bool                    login_checked_usernameAndPasswd(const QString& name, const QString& pwd);//核查名称以及密码
+    bool                    login_verification(const QString& name, const QString& pwd);//查找个人信息
+    bool                    login_setLoginStatus(bool status);//设置在线状态
+    bool                    login_setUserGrade(int grade);//设置用户等级
+
+    //注册部分
+    bool                    register_userInfo(const QString& name, const QString& pwd,const QString& emails);//注册个人信息
+
+    //找回密码部分
+    QString                 getback_userPasswd(const QString& name,const QString& emails);//找回个人密码
+
+    //测试部分
+
+
     //关于浏览器
     //收藏记录操作
-    bool                    browser_loadAllRecordsToList();//获取数据库全部收藏记录
-    static  bool            browser_addRecordToList(const QString &urlnick,const QString &url);//往数据库添加一条记录
-    static  bool            browser_deleteRecordToList(const QString &url);//往数据库删除一条记录
-    static  bool            browser_updateRecordToList(const QString &url,const QString &urlnick);//往数据库更新一条记录
+    void                    browser_loadAllRecordsToList();//获取数据库全部收藏记录
+    void                    browser_addRecordToList(const QString &urlnick, const QString &url);//往数据库添加一条记录
+    void                    browser_deleteRecordToList(const QString &url);//往数据库删除一条记录
+    void                    browser_updateRecordToList(const QString &url,const QString &urlnick);//往数据库更新一条记录
     //历史记录操作
-    bool                    browser_loadAllHisRecordsToList();//获取数据库全部历史记录
-    static  bool            browser_addHisRecordToList(const QString &url);//往数据库添加一条历史记录
-    static  bool            browser_deleteHisRecordToList(const QString &url);//往数据库删除一条历史记录
-    static  bool            browser_deleteAllHisRecordToList();//往数据库删除所有历史记录
+    void                    browser_loadAllHisRecordsToList();//获取数据库全部历史记录
+    void                    browser_addHisRecordToList(const QString &url);//往数据库添加一条历史记录
+    void                    browser_deleteHisRecordToList(const QString &url);//往数据库删除一条历史记录
+    void                    browser_deleteAllHisRecordToList();//往数据库删除所有历史记录
 
     //推荐视频
     bool                    video_recDramaInfo();//查询推荐列表
 
 public:
+
+
 protected:
 
 
 private:
-    dataBase(QObject *parent = nullptr);
-    static  dataBase*       m_pInstance;
+    dataBase();
+    static  dataBase*       m_pInstance;//全局唯一
 
+    QString                 m_curUserID;//当前用户唯一识别id
+    QString                 m_curUserHead;//当前用户头像连接
+    QString                 m_curUserName;//当前用户名称
+    int                     m_curUserGrade;//当前用户等级 游客0 普通1 会员2 超级会员3
+    bool                    m_online;//是否在线
 
 signals:
+    void        sig_loginStatusChanged(bool);//0下线 1登录
     void        sig_sendVideoDramaInfo(QVariant);
-    void        sig_sendRecordInfo(QString,QString);
-    void        sig_sendHisRecordInfo(QString);
+    void        sig_sendRecordInfo(QString,QString,QString);//urlnick url createtiem
+    void        sig_sendHisRecordInfo(QString,QString);//url createtime
+    void        sig_sendMessage(int,QString);//信息类型 消息体
+
+    void        sig_errorMessage_login(int,QString);//登录消息
+    void        sig_errorMessage_register(int,QString);//注册消息
+    void        sig_errorMessage_recover(int,QString);//找回消息
+    void        sig_errorMessage_testing(int,QString);//测试消息
 };
 
 #endif // DATABASE_H

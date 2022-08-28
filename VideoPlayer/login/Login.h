@@ -16,18 +16,21 @@ class Login : public QDialog
 public:
     explicit Login(QWidget *parent = nullptr);
     ~Login();
-
+    void    initWorkUI();
+    void    handleSignalsAndSlots();
 
 protected:
 //    bool eventFilter(QObject *watch, QEvent *event) override;
-    void leaveEvent(QEvent *event) override;
+    void    leaveEvent(QEvent *event) override;
 
-    void  paintEvent(QPaintEvent *event) override;
+    void    paintEvent(QPaintEvent *event) override;
+
 public slots:
-    void receiveMainWinCloseAppSignal();
+    void    receiveMainWinCloseAppSignal();
+    void    slot_setPersonVipPage(int index);
 
 signals:
-    void sig_LoginWinClose();
+    void    sig_LoginWinClose();
 
 private:
     Ui::Login *ui;

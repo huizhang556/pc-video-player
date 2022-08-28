@@ -869,14 +869,14 @@ color:black;
                     <widget class="QPushButton" name="login_BtnRegis">
                      <property name="minimumSize">
                       <size>
-                       <width>25</width>
-                       <height>25</height>
+                       <width>30</width>
+                       <height>30</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>65</width>
-                       <height>16777215</height>
+                       <width>30</width>
+                       <height>30</height>
                       </size>
                      </property>
                      <property name="styleSheet">
@@ -897,13 +897,49 @@ border-image: url(:/images/icon/loginregishover.png);
                     </widget>
                    </item>
                    <item>
+                    <spacer name="horizontalSpacer_32">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeType">
+                      <enum>QSizePolicy::Maximum</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>15</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_loginwarning">
+                     <property name="styleSheet">
+                      <string notr="true">QLabel
+{
+padding-left:18px;
+color: #5500ff;
+}</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
                     <spacer name="horizontalSpacer">
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
                      </property>
+                     <property name="sizeType">
+                      <enum>QSizePolicy::Maximum</enum>
+                     </property>
                      <property name="sizeHint" stdset="0">
                       <size>
-                       <width>40</width>
+                       <width>15</width>
                        <height>20</height>
                       </size>
                      </property>
@@ -913,14 +949,14 @@ border-image: url(:/images/icon/loginregishover.png);
                     <widget class="QPushButton" name="login_BtnQR">
                      <property name="minimumSize">
                       <size>
-                       <width>25</width>
-                       <height>25</height>
+                       <width>30</width>
+                       <height>30</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>65</width>
-                       <height>16777215</height>
+                       <width>30</width>
+                       <height>30</height>
                       </size>
                      </property>
                      <property name="styleSheet">
@@ -1475,6 +1511,31 @@ color:black;
                  <property name="frameShadow">
                   <enum>QFrame::Raised</enum>
                  </property>
+                 <layout class="QHBoxLayout" name="horizontalLayout_16">
+                  <item>
+                   <widget class="QLabel" name="label_warning">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel
+{
+color: #5500ff;
+padding-left:46px;
+}</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
                 </widget>
                </item>
                <item>

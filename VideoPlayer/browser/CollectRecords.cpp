@@ -62,8 +62,8 @@ void CollectRecords::chandleSignalsAndSlots()
 {
 
     //00- 加载历史收藏记录
-    connect(dataBase::getInstance(),&dataBase::sig_sendRecordInfo,[=](QString urlnick, QString url){
-        slot_initToRecordsListWidget(url,QIcon("://images/icon/engine.png"),urlnick);
+    connect(dataBase::getInstance(),&dataBase::sig_sendRecordInfo,[=](QString urlnick, QString url,QString createtime){
+        slot_initToRecordsListWidget(url,QIcon("://images/icon/engine.png"),urlnick,createtime);
 //        qDebug() <<QString::fromLocal8Bit("收藏栏接收到：urlnick==")<<urlnick<<QString::fromLocal8Bit("url==")<<url;
     });
 
@@ -145,16 +145,17 @@ QListWidgetItem *CollectRecords::getCurrentRecordParentItem(QListWidget *listWid
 }
 
 //初始化历史记录
-void CollectRecords::slot_initToRecordsListWidget(const QString &url, QIcon icon, const QString &title)
+void CollectRecords::slot_initToRecordsListWidget(const QString &url, QIcon icon, const QString &title, const QString &createtime)
 {
     if(url.isEmpty()) return;
-    MiniRecordItem *itemWidget1 = new MiniRecordItem(title,icon);
+    MiniRecordItem *itemWidget1 = new MiniRecordItem(title,icon);//小的item
     QListWidgetItem *item1 = new QListWidgetItem(url); item1->setToolTip(url);
     item1->setSizeHint(itemWidget1->size());
     getCurrentListWidget()->addItem(item1);//注意这里获取的lisiwidget，只要additem了，couunt就+1，导致下面获得的count不准确，导致插入的lisiwidget不一致
     m_currentListWidget->setItemWidget(item1,itemWidget1);//这里的lisiwidget要与上面的lisiwidget一致（尤其最后一个的时候）
 
     RecordItem *itemWidget2 = new RecordItem(3,icon,title);
+    itemWidget2->slot_setRecordCreatetime(createtime);
     QListWidgetItem *item2 = new QListWidgetItem(url);
     item2->setSizeHint(itemWidget1->size()-QSize(50,0));
     ui->listWidget_findResults->addItem(item2);
@@ -187,18 +188,20 @@ void CollectRecords::slot_initToRecordsListWidget(const QString &url, QIcon icon
         slot_showWebMessageWindow(itemText,text);//url nickname
     });
 
-    //修改生效
+    //修改生效（点击确定按钮发射出的信号---存在一次信号触发多次，这个问题需要解决）
     connect(WebMessageBox::getInstance(),&WebMessageBox::sig_sendTitleChanged,[=](QString url, QString rename){
                 slot_updateCurrentRecord_recordItem(item1,url,rename);
                 slot_updateCurrentRecord_miniRecordItem(item2,url,rename);
-                dataBase::browser_updateRecordToList(url,rename);
+                qDebug() << "one record has changed";
     });
+    //修改---数据库生效(只执行一次，防止执行多次)
+    connect(WebMessageBox::getInstance(),SIGNAL(sig_sendTitleChanged(QString,QString)),dataBase::getInstance(),SLOT(browser_updateRecordToList(QString,QString)),Qt::UniqueConnection);
 
     //删除思路：01.自己删除 02.查找删除 03.标题存储删除 （统一使用url）
     //删除1
     connect(itemWidget1,&MiniRecordItem::sig_item_delete,[=](){
         //04数据库
-        dataBase::browser_deleteRecordToList(item1->text());//根据 url 删除
+        dataBase::getInstance()->browser_deleteRecordToList(item1->text());//根据 url 删除
         //删除前应该先断开信号与槽函数连接，防止最后一个item删除出现bug
 
         //03-标题存储删除(先发信号)
@@ -221,7 +224,7 @@ void CollectRecords::slot_initToRecordsListWidget(const QString &url, QIcon icon
     //删除2
     connect(itemWidget2,&RecordItem::sig_item_delete,[=](){
         //04数据库
-        dataBase::browser_deleteRecordToList(item1->text());//根据 url 删除
+        dataBase::getInstance()->browser_deleteRecordToList(item1->text());//根据 url 删除
         //删除前应该先断开信号与槽函数连接，防止最后一个item删除出现bug
 
         //03-标题存储删除(先发信号)
@@ -241,6 +244,18 @@ void CollectRecords::slot_initToRecordsListWidget(const QString &url, QIcon icon
         t_item1 = nullptr;
     });
     /****************************信号与槽函数****************************************/
+}
+
+//用户退出清除历史记录
+void CollectRecords::slot_clearUserRecords()
+{
+    ui->listWidget_record1->clear();
+    ui->listWidget_record2->clear();
+    ui->listWidget_record3->clear();
+    ui->listWidget_record4->clear();
+    ui->listWidget_record5->clear();
+    ui->listWidget_record6->clear();
+    ui->listWidget_findResults->clear();
 }
 
 /*根据listwidgetitem文本查找按钮文本*/
@@ -314,7 +329,7 @@ void CollectRecords::slot_addToRecordsListWidget(const QString &url = "", QIcon 
     ui->listWidget_findResults->setItemWidget(item2,itemWidget2);
 
     //数据库操作--插入记录
-    dataBase::browser_addRecordToList(title,url);//插入 别名 url
+    dataBase::getInstance()->browser_addRecordToList(title,url);//插入 别名 url
 
     /****************************信号与槽函数****************************************/
     //点击记录1 跳转
@@ -347,14 +362,14 @@ void CollectRecords::slot_addToRecordsListWidget(const QString &url = "", QIcon 
     connect(WebMessageBox::getInstance(),&WebMessageBox::sig_sendTitleChanged,[=](QString url, QString rename){
                 slot_updateCurrentRecord_recordItem(item1,url,rename);
                 slot_updateCurrentRecord_miniRecordItem(item2,url,rename);
-                dataBase::browser_updateRecordToList(url,rename);
+                dataBase::getInstance()->browser_updateRecordToList(url,rename);
     });
 
     //删除思路：01.自己删除 02.查找删除 03.标题存储删除 （统一使用url）
     //删除1
     connect(itemWidget1,&MiniRecordItem::sig_item_delete,[=](){
         //04数据库
-        dataBase::browser_deleteRecordToList(item1->text());//根据 url 删除
+        dataBase::getInstance()->browser_deleteRecordToList(item1->text());//根据 url 删除
         //删除前应该先断开信号与槽函数连接，防止最后一个item删除出现bug
 
         //03-标题存储删除(先发信号)
@@ -377,7 +392,7 @@ void CollectRecords::slot_addToRecordsListWidget(const QString &url = "", QIcon 
     //删除2
     connect(itemWidget2,&RecordItem::sig_item_delete,[=](){
         //04数据库
-        dataBase::browser_deleteRecordToList(item1->text());//根据 url 删除
+        dataBase::getInstance()->browser_deleteRecordToList(item1->text());//根据 url 删除
         //删除前应该先断开信号与槽函数连接，防止最后一个item删除出现bug
 
         //03-标题存储删除(先发信号)

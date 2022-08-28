@@ -22,7 +22,7 @@ public:
 
 public slots:
     void        slot_setRecordButtonText(QString text);
-
+    void        slot_setRecordCreatetime(const QString& time);
 signals:
     void        sig_item_record(QString);
     void        sig_item_modify(QString,QPushButton*);

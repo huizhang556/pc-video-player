@@ -398,5 +398,18 @@
         <file>images/fileitem/fileitem_musics.png</file>
         <file>images/fileitem/fileitem_recent.png</file>
         <file>images/fileitem/fileitem_videos.png</file>
+        <file>images/user/default_man00.png</file>
+        <file>images/user/default_man01.png</file>
+        <file>images/user/default_woman00.png</file>
+        <file>images/user/default_woman01.png</file>
+        <file>images/user/user_changepwd.png</file>
+        <file>images/user/user_exit.png</file>
+        <file>images/user/user_songlist.png</file>
+        <file>images/user/user_vipcenter.png</file>
+        <file>images/user/user_zhuye.png</file>
+        <file>images/user/user_suvip.png</file>
+        <file>images/user/user_vip.png</file>
+        <file>images/user/user_ssvip.png</file>
+        <file>images/user/user_visitor.png</file>
     </qresource>
 </RCC>

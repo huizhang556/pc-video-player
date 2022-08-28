@@ -91,6 +91,8 @@ private:
 
     void        setGlobalToolTip();
 
+    void        userSignIn();
+    void        userSignOut();
 
 private slots:
     void        slot_setWebProgreeBarValue(int value);//网页进度
@@ -162,7 +164,7 @@ private slots:
     void        tray_getCurrentPlayOrder(QAction *sendAction);
     void        tray_setCurrentPlayOrderStatus(QAction *sendAction);//重载1
     void        tray_setCurrentPlayOrderStatus(int index);//重载2
-
+    bool        tray_setUserLoginStatusText(const QString& previous, const QString& current);//设置用户登录状态
 
     //界面拉伸私有成员函数
     int         countRow(QPoint p);             //获取光标在窗口所在区域的 行   返回行数

@@ -8,6 +8,9 @@
 #include <QApplication>
 #include <QNetworkConfigurationManager>
 
+
+
+/*全局变量放在此处*/
 class Global : public QObject
 {
     Q_OBJECT

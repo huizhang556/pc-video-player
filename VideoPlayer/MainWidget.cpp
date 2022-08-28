@@ -395,6 +395,23 @@ void MainWidget::slot_removeTabWidgetTab(int index)
 //处理信号与槽函数
 void MainWidget::chandleSignalAndSlots()
 {
+
+    /*********************************标题栏----用户下线*************************************/
+    connect(m_titleBar,&TitleBar::sig_userSign_out,[=](){
+        userSignOut();
+    });
+
+    //登录
+    connect(m_titleBar,&TitleBar::sig_userSign_in,[=](){
+        userSignIn();
+    });
+
+    //清除临时记录
+    connect(m_titleBar,&TitleBar::sig_sendClearTempRecords,[=](){
+        m_webRecords->slot_clearUserRecords();//清除6个分栏，1个总栏
+        m_webHistory->slot_clearUserRecords();//清除用户历史记录
+    });
+
     /************************************标题栏窗口控制按钮************************************/
     connect(this,&MainWidget::sig_startCloseAppliction,m_mainPlayer,&MultipPlayer::slot_closeCurrentWindow);//转到重写事件
     connect(m_titleBar,&TitleBar::sig_winClose,this,&MainWidget::close);//转到重写事件
@@ -503,8 +520,8 @@ void MainWidget::chandleSignalAndSlots()
     });
 
     /************************************浏览器---收藏栏************************************/
-    //收藏记录初始化
-    connect(dataBase::getInstance(),&dataBase::sig_sendRecordInfo,[=](QString nick, QString url){
+    //收藏记录初始化(收藏栏隐藏部分)
+    connect(dataBase::getInstance(),&dataBase::sig_sendRecordInfo,[=](QString nick, QString url,QString createtime){
         m_titleBar->slot_initCollectRecordListWgt(url);
     });
     //收藏菜单---返回按钮
@@ -519,8 +536,8 @@ void MainWidget::chandleSignalAndSlots()
     });
     /************************************浏览器---历史记录栏************************************/
     //历史记录初始化
-    connect(dataBase::getInstance(),&dataBase::sig_sendHisRecordInfo,[=](QString url){
-        m_webHistory->slot_initHistoryRecordListWgt(url);
+    connect(dataBase::getInstance(),&dataBase::sig_sendHisRecordInfo,[=](QString url,QString createtime){
+        m_webHistory->slot_initHistoryRecordListWgt(url,createtime);
     });
     //历史记录---返回按钮
     connect(m_webHistory,&WebHistory::sig_returnPage,[=](){m_webStackWgt->setCurrentIndex(0);});
@@ -603,6 +620,7 @@ void MainWidget::chandleSignalAndSlots()
         tray_getCurrentPlayOrder(action);//发送信号
         tray_setCurrentPlayOrderStatus(action);
     });
+
 
 
     /************************************播放器部分信号处理************************************/
@@ -691,7 +709,7 @@ void MainWidget::createTrayMenu()
     m_menuTray->addSeparator();
     m_menuTray->addAction(QIcon("://images/tray/tray_setting.png"),QString::fromLocal8Bit("系统设置"),this,SLOT(tray_systemSettting()));
     m_menuTray->addAction(QIcon("://images/tray/tray_upgrade.png"),QString::fromLocal8Bit("在线升级"),this,SLOT(tray_onlineUpgrade()));//注意消息阻塞
-    m_menuTray->addAction(QIcon("://images/tray/tray_logout.png"),QString::fromLocal8Bit("退出登录"),this,SLOT(tray_systemLogout()));
+    m_menuTray->addAction(QIcon("://images/tray/tray_logout.png"),QString::fromLocal8Bit("登录账号"),this,SLOT(tray_systemLogout()));
     m_menuTray->addSeparator();
     m_menuTray->addAction(QIcon("://images/tray/tray_exit.png"),QString::fromLocal8Bit("退出软件"),this,SLOT(tray_systemExitSoftware()));
     m_tray->setContextMenu(m_menuTray);
@@ -828,7 +846,17 @@ void MainWidget::tray_onlineUpgrade()
 
 void MainWidget::tray_systemLogout()
 {
-    QMessageBox::information(this,QString::fromLocal8Bit("登出提示"),QString::fromLocal8Bit("您已成功退出登录！"));
+    QAction *action = qobject_cast<QAction *>(sender());
+    qDebug() << action->text();
+    if(action->text() == QString::fromLocal8Bit("退出登录"))
+    {
+        userSignOut();
+    }
+    else if(action->text() == QString::fromLocal8Bit("登录账号"))
+    {
+        m_titleBar->showLoginForm();
+        userSignIn();
+    }
 }
 
 void MainWidget::tray_systemExitSoftware()
@@ -845,6 +873,19 @@ void MainWidget::tray_setCurrentPlayOrderStatus(QAction *sendAction)
 void MainWidget::tray_setCurrentPlayOrderStatus(int index)
 {
     m_actionGroup->actions().at(index-1)->setChecked(true);//互斥组内相互互斥，前提是设置checkable
+}
+
+bool MainWidget::tray_setUserLoginStatusText(const QString &previous, const QString &current)
+{
+    QList<QAction*> action_tray = m_menuTray->actions();
+    foreach (QAction* action, action_tray)
+    {
+        if(action->text() == previous)
+        {
+            action->setText(current);
+            return true;
+        }
+    }
 }
 
 
@@ -875,6 +916,20 @@ void MainWidget::tray_getCurrentPlayOrder(QAction *sendAction)
 void MainWidget::setGlobalToolTip()
 {
 
+}
+
+void MainWidget::userSignIn()
+{
+    tray_setUserLoginStatusText(QString::fromLocal8Bit("登录账号"),QString::fromLocal8Bit("退出登录"));
+}
+
+void MainWidget::userSignOut()
+{
+    m_titleBar->slot_clearColletRecords();//标题栏清除收藏,搜索历史
+    m_webRecords->slot_clearUserRecords();//清除6个分栏，1个总栏
+    m_webHistory->slot_clearUserRecords();//清除用户历史记录
+    tray_setUserLoginStatusText(QString::fromLocal8Bit("退出登录"),QString::fromLocal8Bit("登录账号"));
+    dataBase::getInstance()->login_setLoginStatus(0);//设置用户状态 -- 下线
 }
 
 void MainWidget::slot_setWebProgreeBarValue(int value)

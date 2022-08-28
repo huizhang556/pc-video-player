@@ -51,7 +51,7 @@ void WebHistory::chandleSignalsAndSLots()
     connect(ui->pushButton_clearPage,&QPushButton::clicked,[=](){
         ui->listWidget_showHis->clear();
         //数据库清除
-        dataBase::browser_deleteAllHisRecordToList();
+        dataBase::getInstance()->browser_deleteAllHisRecordToList();
     });
     //搜索按钮
     connect(ui->pushButton_searchHis,&QPushButton::clicked,[=](){
@@ -73,12 +73,13 @@ void WebHistory::slot_addToListHistoryWidget(QUrl url)
 }
 
 //初始化历史记录
-void WebHistory::slot_initHistoryRecordListWgt(const QString &text)
+void WebHistory::slot_initHistoryRecordListWgt(const QString &text, const QString &ctime)
 {
     if(text.isEmpty()) return;
     bool finded = judgeHistoryUrlExist(text);//存在则删除重建（or不存在）也删除重建
     qDebug() <<QString::fromLocal8Bit("历史记录存在状态")<<finded;
     RecordItem *itemWidget = new RecordItem(4,QIcon("://images/function/history_list_item_hover.png"),text);
+    itemWidget->slot_setRecordCreatetime(ctime);
     QListWidgetItem *item = new QListWidgetItem(text);
     item->setSizeHint(itemWidget->size()-QSize(170,0));
     ui->listWidget_showHis->insertItem(0,item);//头插法
@@ -92,7 +93,7 @@ void WebHistory::slot_initHistoryRecordListWgt(const QString &text)
     //删除item
     connect(itemWidget,&RecordItem::sig_item_delete,[=](){
         //00---数据库先操作
-        dataBase::browser_deleteHisRecordToList(item->text());
+        dataBase::getInstance()->browser_deleteHisRecordToList(item->text());
         //删除前应该先断开信号与槽函数连接，防止最后一个item删除出现bug
         itemWidget->deleteLater();
         ui->listWidget_showHis->takeItem(ui->listWidget_showHis->row(item));
@@ -127,7 +128,7 @@ void WebHistory::slot_addToListHistoryWidget(const QString &text)
     ui->listWidget_showHis->setItemWidget(item,itemWidget);
 
     //数据库插入一条历史记录
-    dataBase::browser_addHisRecordToList(item->text());
+    dataBase::getInstance()->browser_addHisRecordToList(item->text());
 
     //点击历史记录
     connect(itemWidget,&RecordItem::sig_item_record,[=](QString url){
@@ -137,12 +138,18 @@ void WebHistory::slot_addToListHistoryWidget(const QString &text)
     //删除item
     connect(itemWidget,&RecordItem::sig_item_delete,[=](){
         //00---数据库先操作
-        dataBase::browser_deleteHisRecordToList(item->text());
+        dataBase::getInstance()->browser_deleteHisRecordToList(item->text());
         //删除前应该先断开信号与槽函数连接，防止最后一个item删除出现bug
         itemWidget->deleteLater();
         ui->listWidget_showHis->takeItem(ui->listWidget_showHis->row(item));
         delete item;
     });
+}
+
+//用户退出清除该用户的历史记录
+void WebHistory::slot_clearUserRecords()
+{
+    ui->listWidget_showHis->clear();
 }
 
 void WebHistory::slot_clearMarks()

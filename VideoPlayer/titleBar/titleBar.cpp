@@ -29,12 +29,22 @@ TitleBar::~TitleBar()
     delete ui;
     delete m_loginForm;
     delete m_searchForm;
+    delete m_headHover;
 }
 
 /*初始化工作*/
 void TitleBar::initWorker()
 {
+    //网络请求
+    manager = new QNetworkAccessManager(this);
+
+    //遮罩
+    QRegion maskRegion(ui->label_userHead->rect(),QRegion::Ellipse);//创建圆形遮罩
+    ui->label_userHead->setMask(maskRegion);//设置圆形遮罩
+    ui->label_defaultHead->setMask(maskRegion);
+    ui->label_userHead->installEventFilter(this);
     ui->stackedWidget_title->setCurrentIndex(0);
+    ui->label_usermark->hide();
 
     //tooltip
     ui->pushButton_resume->setToolTip(QString::fromLocal8Bit("恢复"));
@@ -44,7 +54,6 @@ void TitleBar::initWorker()
     ui->pushButton_more->setToolTip(QString::fromLocal8Bit("浏览控制"));
     ui->pushButton_webdownload->setToolTip(QString::fromLocal8Bit("下载"));
 
-    ui->stackedWidget_login->setCurrentIndex(0);//左上角登录stackwidget
     ui->pushButton_userlogin->setFlat(true);
     ui->pushButton_userregis->setFlat(true);
 
@@ -121,6 +130,9 @@ void TitleBar::initWorker()
     m_loginForm = new Login();
     m_loginForm->setObjectName(QString::fromLocal8Bit("m_loginForm"));
 
+    m_headHover = new HeadHover();
+    m_headHover->setObjectName(QString::fromLocal8Bit("m_headHover"));
+
     m_mySkin = new MySkin();
     m_mySkin->setObjectName(QString::fromLocal8Bit("m_mySkin"));
 
@@ -153,19 +165,53 @@ void TitleBar::initWorker()
     m_engineSetBtn->setFixedHeight(26);
     slot_addWebEngine();
 
-    slot_switchToLoginPage(1,QString::fromLocal8Bit("测试测名称8020"));
+    slot_switchToLoginPage(0,QString::fromLocal8Bit(""));
 }
 
 
 /*处理信号与槽函数*/
 void TitleBar::chandleSignalAndSLots()
 {
-    //登录位置转换
-    connect(ui->pushButton_logo,&QPushButton::clicked,[=](){ ui->stackedWidget_login->setCurrentIndex(1);});
-    connect(ui->pushButton_logo2,&QPushButton::clicked,[=](){ ui->stackedWidget_login->setCurrentIndex(0);});
-    //登录
+    //个人信息选择改变
+    connect(m_headHover,&HeadHover::sig_itemChanged,[=](QString text){
+        if(QString::fromLocal8Bit("个人主页") == text)
+        {
+            emit sig_filesUploadDownLoad(5,4);//主界面反应
+        }
+        else if(QString::fromLocal8Bit("会员中心") == text)
+        {
+            emit sig_filesUploadDownLoad(5,4);//主界面反应
+        }
+        else if(QString::fromLocal8Bit("还原歌单") == text)
+        {
+
+        }
+        else if(QString::fromLocal8Bit("修改密码") == text)
+        {
+            LoginPersonInfo::getInstance()->showLoginWindow(3);
+        }
+        else if(QString::fromLocal8Bit("退出登录") == text)
+        {
+            slot_receivedSign_out();
+        }
+        qDebug() << "current select item ="<< text;
+    });
+
+    //登录弹出界面
     connect(ui->pushButton_userlogin,&QPushButton::clicked,[=](){
         LoginPersonInfo::getInstance()->showLoginWindow(0);
+    });
+    //登录回显登录信息
+    connect(LoginPersonInfo::getInstance(),&LoginPersonInfo::sig_sendLoginOK,[=](QString nick, QString head, int grade){
+        slot_receivedLoginInfo(nick,head,grade);
+    });
+
+    //登陆之前清除痕迹
+    connect(LoginPersonInfo::getInstance(),&LoginPersonInfo::sig_sendClearTempRecords,[=](){
+        m_listWdgt_history->clear();//清除搜索历史记录
+        m_listWdgt_colloect->clear();//清除收藏历史记录
+        slot_setCurrentWebSiteCollectStatus(ui->lineEdit_webSearch->text());
+        emit sig_sendClearTempRecords();
     });
 
     //注册
@@ -184,8 +230,9 @@ void TitleBar::chandleSignalAndSLots()
     connect(this,&TitleBar::sig_winClose,m_searchForm,&SearchForm::closeSearchForm);
     //关闭搜索历史记录、引擎记录
     connect(this,&TitleBar::sig_winClose,[=](){
-        if(!m_listWdgt_history->isHidden()) m_listWdgt_history->close();
-        if(!m_listWdgt_engine->isHidden()) m_listWdgt_engine->close();
+        if(!m_listWdgt_history->isHidden())     m_listWdgt_history->close();
+        if(!m_listWdgt_engine->isHidden())      m_listWdgt_engine->close();
+        if(!m_headHover->isHidden())            m_headHover->close();
         //这里需要做判断，是否有下载文件
         if(!WebDownLoadList::getInstance()->isHidden()) WebDownLoadList::getInstance()->close();
     });
@@ -824,6 +871,13 @@ void TitleBar::setShowToolTip()
     ui->BtnScreen->setToolTip(QString::fromLocal8Bit("截屏"));
 }
 
+void TitleBar::setUserHeadPicture(const QString &path)
+{
+    manager->get(QNetworkRequest(QUrl(path)));
+    //获取网络图片(注意：使用的是manager的finished信号)
+    connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(slot_replyFinished(QNetworkReply*)));
+}
+
 /*重写鼠标双击事件*/
 void TitleBar::mouseDoubleClickEvent(QMouseEvent *event)
 {
@@ -845,6 +899,7 @@ bool TitleBar::eventFilter(QObject *watched, QEvent *event)
     mouseIsEnterLeaveLineEdit(watched,mouseEvent);//搜索框鼠标进入离开,处理样式
     mouseIsPressReleaseLineEdit(watched,mouseEvent);//搜索框鼠标按下释放，处理历史记录
     setSelectAllTextStatus(watched,mouseEvent);//lineedit选中文本
+    slot_showUserInfoWgt(watched,mouseEvent);//显示登录用户信息
     if(watched == m_listWdgt_history)
     {
         if(event->type() == QEvent::Leave)
@@ -1091,10 +1146,49 @@ void TitleBar::slot_switchToLoginPage(int mark, QString nick)
     }
     else if(mark  == 1)//已登录
     {
-        ui->stackedWidget_login->setCurrentIndex(1);
-        ui->pushButton_usernick->setText(nick);
+        ui->stackedWidget_login->setCurrentIndex(1);//用户信息界面
+        QFont font;
+        font.setPixelSize(10);
+        QFontMetrics   fontMetric = QFontMetrics(font);
+        QString text = fontMetric.elidedText(nick,Qt::ElideRight,80,0);//19个字宽以后，省略为...(10x19，字号x字数)
+        ui->pushButton_usernick->setText(text);
+        ui->pushButton_usernick->setToolTip(nick);
+        m_loginForm->slot_setPersonVipPage(1);
+        emit sig_userSign_in(nick);//上线 发出带用户名
     }
 
+}
+
+//设置当前用户等级
+void TitleBar::slot_setCurrentUserGrade(int grade)
+{
+    QPixmap pix;
+    switch (grade) {
+    case 0://游客
+    {
+        pix.load("://images/icon/comment_vip.png");
+    }
+        break;
+    case 1://普通
+    {
+        pix.load("://images/icon/comment_vip.png");
+    }
+        break;
+    case 2://会员
+    {
+        pix.load("://images/icon/comment_vip.png");
+    }
+        break;
+    case 3://超级会员
+    {
+        pix.load("://images/icon/comment_vip.png");
+    }
+        break;
+    default:
+        break;
+    }
+    ui->label_usermark->setPixmap(pix);
+    ui->label_usermark->setScaledContents(true);
 }
 
 void TitleBar::slot_setButtonHelpEmitItem()
@@ -1182,6 +1276,26 @@ void TitleBar::slot_resetWebProgressBarValue()
     opacityAnimation->start();
 }
 
+//设置头像
+void TitleBar::slot_replyFinished(QNetworkReply *reply)
+{
+    ui->label_userHead->clear();
+    if (reply->error() == QNetworkReply::NoError)
+    {
+        //获取字节流构造 QPixmap 对象
+        m_headPixmap.loadFromData(reply->readAll());
+        ui->label_userHead->setPixmap(m_headPixmap);
+        ui->label_userHead->setScaledContents(true);
+    }
+    else//请求失败，加载默认图片
+    {
+        qDebug() <<  QString::fromLocal8Bit("请求错误：")<<reply->errorString();
+        QPixmap pixmap(":/images/icon/kugou.ico");
+        ui->label_userHead->setPixmap(pixmap);
+        ui->label_userHead->setScaledContents(true);
+    }
+}
+
 //接收tabbar添加一个空白网页的请求
 void TitleBar::slot_receiveBlankWebTab()
 {
@@ -1193,10 +1307,10 @@ void TitleBar::slot_receiveBlankWebTab()
 
 void TitleBar::slot_clearAllPopupUi()
 {
-    if(!m_loginForm->isHidden()) m_loginForm->hide();
-    if(!m_searchForm->isHidden()) m_searchForm->hide();
+    if(!m_loginForm->isHidden())        m_loginForm->hide();
+    if(!m_searchForm->isHidden())       m_searchForm->hide();
     if(!m_listWdgt_history->isHidden()) m_listWdgt_history->hide();
-    if(!m_listWdgt_engine->isHidden()) m_listWdgt_engine->hide();
+    if(!m_listWdgt_engine->isHidden())  m_listWdgt_engine->hide();
 }
 
 void TitleBar::slot_initCollectRecordListWgt(const QString &text)
@@ -1215,6 +1329,31 @@ void TitleBar::slot_initCollectRecordListWgt(const QString &text)
                                  QString::fromLocal8Bit("是"));
     }
     slot_setCurrentWebSiteCollectStatus(text);//收藏以后，样式在做一次处理
+}
+
+void TitleBar::slot_clearColletRecords()
+{
+    ui->stackedWidget_login->setCurrentIndex(0);//返回登录注册界面
+    m_listWdgt_history->clear();
+    m_listWdgt_colloect->clear();
+    slot_setCurrentWebSiteCollectStatus(ui->lineEdit_webSearch->text());//切换用户以后，样式在做一次处理
+}
+
+void TitleBar::slot_receivedLoginInfo(const QString &name, const QString &head, int grade)
+{
+    //标题栏
+    setUserHeadPicture(head);//设置用户头像
+    slot_switchToLoginPage(1,name);//设置用户名称
+    slot_setCurrentUserGrade(grade);//设置等级图标
+    //浮动界面
+    m_headHover->slot_setCurrentUserInfo(head,name,grade,QString::fromLocal8Bit("欢迎回来^_^"));
+}
+
+//退出登录
+void TitleBar::slot_receivedSign_out()
+{
+    emit sig_userSign_out(ui->pushButton_usernick->text());//下线带用户名
+    m_loginForm->slot_setPersonVipPage(0);
 }
 
 /*槽函数 --- 获取系统时间并且显示*/
@@ -1300,6 +1439,21 @@ void TitleBar::receiveMainFormClose()
 {
     m_loginForm->close();
     m_loginForm->receiveMainWinCloseAppSignal();
+}
+
+void TitleBar::slot_showUserInfoWgt(QObject *watched, QEvent *event)
+{
+    if(watched == ui->label_userHead && event->type() == QEvent::MouseButtonPress)
+    {
+        if(m_headHover)
+        {
+            int x = ui->label_userHead->parentWidget()->mapToGlobal(ui->label_userHead->pos()).x();
+            int y = ui->label_userHead->parentWidget()->mapToGlobal(ui->label_userHead->pos()).y();
+            m_headHover->setGeometry(x+5,y+5,m_headHover->width(),m_headHover->height());
+            m_headHover->raise();
+            m_headHover->show();
+        }
+    }
 }
 
 //鼠标按下选中文字

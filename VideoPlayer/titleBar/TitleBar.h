@@ -2,6 +2,7 @@
 #define TITLEBAR_H
 #include "login/Login.h"
 #include "skin/MySkin.h"
+#include "titlebar/HeadHover.h"
 #include "mainwidget/SearchForm.h"
 #include "login/LoginPersonInfo.h"
 #include "browser/WebDownLoadList.h"
@@ -13,6 +14,9 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QMouseEvent>
+#include <QPixmap>
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
 
 namespace Ui {
 class TitleBar;
@@ -36,14 +40,15 @@ protected:
 
 //公有槽函数以公共接口的形式暴露在外面，外部任何客户可以直接访问
 public slots:
-    void isNecessaryShowSearch(int index);
-    //处理鼠标进入离开输入框
-    void    mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event);
+    void    isNecessaryShowSearch(int index);
     void    receiveMainFormClose();
+    void    slot_showUserInfoWgt(QObject *watched, QEvent *event);//显示用户信息
+    void    mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event);
     void    setSelectAllTextStatus(QObject *watched, QEvent *event);//lineEdit按下
     void    mouseIsPressReleaseLineEdit(QObject *watched, QEvent *event);//搜索框点击事件
     void    serarchLineEditFacous(QObject *watched, QEvent *event);
-    void    slot_switchToLoginPage(int mark,QString nick);
+    void    slot_switchToLoginPage(int mark,QString nick);//登录设置名称
+    void    slot_setCurrentUserGrade(int grade);//设置当前用户等级
     void    slot_setButtonHelpEmitItem();
     void    slot_receivedListItemText(QString text);
     void    slot_setWebLineEditCurentUrl(QUrl url);//设置当前url
@@ -52,13 +57,17 @@ public slots:
     void    slot_receiveBlankWebTab();//接收tabbar添加一个空白网页的请求
     void    slot_clearAllPopupUi();
     void    slot_initCollectRecordListWgt(const QString &text);//初始化
+    void    slot_clearColletRecords();
+    void    showLoginForm();
+    //接收登录界面信号
+    void    slot_receivedLoginInfo(const QString& name,const QString& head,int grade);
+    void    slot_receivedSign_out();//退出登录
 
 //私有槽函数，外部不能直接访问
 private slots:
     void    chandleMainWinStatus(bool status);
     void    getSystemTimeShow();
     void    setLineEditAddress(const QUrl url);
-    void    showLoginForm();//显示登录窗口
     void    showMySkin();//皮肤设置
     void    createHelpMenu();//帮助菜单
     QString judgeUrlType(QString url);
@@ -79,6 +88,7 @@ private slots:
     void    slot_setCanGoForward(bool status);
     void    slot_setCanGoBack(bool status);
     void    slot_resetWebProgressBarValue();
+    void    slot_replyFinished(QNetworkReply *reply);//设置头像
 
     //浏览器设置---右键菜单
     void    slot_browser_setMenu_createTab();               //新建窗口
@@ -102,6 +112,7 @@ private slots:
 
 private:
     void    setShowToolTip();
+    void    setUserHeadPicture(const QString & path);
 
 signals:
     //窗口大小调节按钮
@@ -153,8 +164,11 @@ signals:
     void    sig_sendBrowserHelp();//帮助
 
     //登录部分
-    void    sig_userLogin();
-    void    sig_userRegister();
+    void    sig_sendClearTempRecords();
+    void    sig_userSign_in(QString);//登录
+    void    sig_userSign_out(QString);//下线
+    void    sig_userRegister();//注册
+
 
 private:
     //网址搜索栏目
@@ -168,6 +182,7 @@ private:
     QMenu           *pmenu_help1            =   nullptr;
     QMenu           *pmenu_help2            =   nullptr;
     SearchForm      *m_searchForm           =   nullptr;
+    HeadHover       *m_headHover            =   nullptr;
     Login           *m_loginForm            =   nullptr;
     MySkin          *m_mySkin               =   nullptr;
     QListWidget     *m_listWdgt_colloect    =   nullptr;//收藏列表
@@ -175,6 +190,10 @@ private:
     QListWidget     *m_listWdgt_engine      =   nullptr;//搜索引擎
     QPushButton     *m_engineSetBtn         =   nullptr;//引擎设置按钮
     QString         m_headUrl;
+    QPixmap         m_headPixmap;
+
+    QNetworkAccessManager   *manager;
+    QNetworkReply           *reply;
     Ui::TitleBar    *ui;
 };
 

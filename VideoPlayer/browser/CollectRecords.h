@@ -29,9 +29,10 @@ public:
     QPushButton*        getCurrentRecordItemButton(QListWidgetItem* item);//传入QListWidgetItem，返回按钮
     QString             getCurrentRecordItemText(QListWidget *listWidget, QString &text);//传入按钮文本，返回QListWidgetItem文本
     QListWidgetItem*    getCurrentRecordParentItem(QListWidget *listWidget, QString &text);//传入按钮文本，返回QListWidgetItem
-    void                slot_initToRecordsListWidget(const QString &url, QIcon icon,const QString &title);//初始化历史记录
+    void                slot_initToRecordsListWidget(const QString &url, QIcon icon,const QString &title, const QString & createtime);//初始化历史记录
 
 public slots:
+    void                slot_clearUserRecords();//用户退出清除历史记录
     void                slot_addToRecordsListWidget(QUrl url);
     void                slot_showWebMessageWindow(QString url, QString name);
     void                slot_updateCurrentRecord_recordItem(QListWidgetItem* item,const QString &url, const QString& rename);

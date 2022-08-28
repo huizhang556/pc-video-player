@@ -53,6 +53,11 @@ void RecordItem::slot_setRecordButtonText(QString text)
     ui->pushButton_record->setText(text);
 }
 
+void RecordItem::slot_setRecordCreatetime(const QString &time)
+{
+    ui->label_time->setText(time);
+}
+
 void RecordItem::judgeType()
 {
     if(m_type == 0)//都不显示
