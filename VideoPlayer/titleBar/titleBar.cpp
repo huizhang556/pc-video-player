@@ -1458,7 +1458,7 @@ void TitleBar::slot_showUserInfoWgt(QObject *watched, QEvent *event)
         {
             int x = ui->label_userHead->parentWidget()->mapToGlobal(ui->label_userHead->pos()).x();
             int y = ui->label_userHead->parentWidget()->mapToGlobal(ui->label_userHead->pos()).y();
-            m_headHover->setGeometry(x+5,y+5,m_headHover->width(),m_headHover->height());
+            m_headHover->setGeometry(x,y,m_headHover->width(),m_headHover->height());
             m_headHover->raise();
             m_headHover->show();
         }
@@ -1472,7 +1472,7 @@ void TitleBar::setSelectAllTextStatus(QObject *watched, QEvent *event)
     {
         if(event->type() == QEvent::FocusIn)
         {
-            //FocusIn屏蔽全选功能
+            //FocusIn屏蔽了全选功能
             QTimer::singleShot(0,this,[=](){ui->lineEdit_webSearch->selectAll();});
         }
     }

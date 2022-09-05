@@ -1,8 +1,8 @@
 SOURCES += \
-    $$PWD/MySplashScreen.cpp
+    $$PWD/CSplashScreen.cpp
 
 
 HEADERS += \
-    $$PWD/MySplashScreen.h
+    $$PWD/CSplashScreen.h
 
 FORMS +=

@@ -29,7 +29,7 @@
 #include "videomodels/FloatPlayCtl.h"
 #include "customer/CustomFileDialog.h"
 #include "videomodels/RecVideoItem.h"
-#include "splashscreen/MySplashScreen.h"
+#include "splashscreen/CSplashScreen.h"
 
 #include <QTranslator>
 #include <QThread>
@@ -54,22 +54,20 @@ int main(int argc, char *argv[])
     //数据初始化（放在界面初始化完成以后）
     dataBase::creatMysqlConnection();//连接数据库,有数据的必须先连接数据库
     //开机启动屏幕
-//    QPixmap pixmap(Global::appDirPath  + "/pictures/splashscreen/splash.gif");
-//    MySplashScreen splash(pixmap,3000);
-//    QLabel label(splash.w);
-//    QMovie mv(Global::appDirPath  + "/pictures/splashscreen/splash.gif");
-//    label.setMovie(&mv);
-//    mv.start();
-//    splash.show();
-//    splash.setCursor(Qt::BlankCursor);
-//    for (int i=0; i<100; i++) {
-//            a.processEvents();
-//            QThread::usleep(3000);
-//        }
-
+    QPixmap pixmap(Global::appDirPath + "/pictures/splashscreen/splash.gif");
+    CSplashScreen splashscream(pixmap);
+//    CSplashScreen splashscream(Global::appDirPath + "/pictures/splashscreen/splash.gif");
+    a.processEvents();
+    splashscream.show();
+    splashscream.setCursor(Qt::BlankCursor);
+    for(int i = 0; i< 10; ++i)
+    {
+        splashscream.slot_updateProgressbarValue(i*11);
+        QThread::sleep(1);
+    }
     MainWidget w1;
     w1.show();
-//    splash.finish(&w1);
+    splashscream.finish(&w1);
 
 //    MultipPlayer w;
 //    w.show();
