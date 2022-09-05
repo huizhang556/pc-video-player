@@ -20,7 +20,7 @@ bool Worker::isDirExist(QString fullpath)
     }
     else
     {
-        bool ok = dir.mkpath(fullpath);//创建多级目录
+        bool ok = dir.mkpath(fullpath);//创建多级目录,区别于mkdir()只创建一级目录
         return ok;
     }
 }

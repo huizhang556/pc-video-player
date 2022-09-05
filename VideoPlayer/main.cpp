@@ -29,27 +29,54 @@
 #include "videomodels/FloatPlayCtl.h"
 #include "customer/CustomFileDialog.h"
 #include "videomodels/RecVideoItem.h"
+#include "splashscreen/MySplashScreen.h"
 
 #include <QTranslator>
+#include <QThread>
 #include <QTimer>
+#include <QPixmap>
+#include <QLabel>
+#include <QMovie>
 
 int main(int argc, char *argv[])
 {
+
 //    QApplication::setAttribute(Qt::AA_UseOpenGLES);
     QApplication a(argc, argv);
+    //加载翻译文件
     QTranslator translator1;
     translator1.load(":/font/qt_zh_CN.qm");//翻译为中文
     a.installTranslator(&translator1);
-    loadGlobalQss::loadAllUIQss();//加载全局样式
+    //加载全局样式
+    loadGlobalQss::loadAllUIQss();
+//    QFont f("黑体",10);
+//    a.setFont(f);
     //数据初始化（放在界面初始化完成以后）
     dataBase::creatMysqlConnection();//连接数据库,有数据的必须先连接数据库
+    //开机启动屏幕
+//    QPixmap pixmap(Global::appDirPath  + "/pictures/splashscreen/splash.gif");
+//    MySplashScreen splash(pixmap,3000);
+//    QLabel label(splash.w);
+//    QMovie mv(Global::appDirPath  + "/pictures/splashscreen/splash.gif");
+//    label.setMovie(&mv);
+//    mv.start();
+//    splash.show();
+//    splash.setCursor(Qt::BlankCursor);
+//    for (int i=0; i<100; i++) {
+//            a.processEvents();
+//            QThread::usleep(3000);
+//        }
+
     MainWidget w1;
     w1.show();
+//    splash.finish(&w1);
 
 //    MultipPlayer w;
 //    w.show();
+
+    //数据初始化
     QTimer::singleShot(1500,0,[=](){
-        dataBase::getInstance()->initGlobalDate();//数据初始化
+        dataBase::getInstance()->initGlobalDate();
     });
 
 

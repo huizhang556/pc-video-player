@@ -61,6 +61,7 @@ void FilesTrans::initWorkUI()
     ui->listWidget_trans->setCurrentRow(0);
     ui->listWidget_trans->setFixedWidth(102);
     ui->listWidget_trans->setViewMode(QListView::IconMode);
+    ui->listWidget_trans->setMovement(QListView::Static);//不可拖动
     //setLayoutDirection
     //在列表模式下，控制图标在文本左（LeftToRight）边还是在右（RightToLeft）
     //在图标模式下，不起作用

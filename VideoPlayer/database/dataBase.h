@@ -63,7 +63,7 @@ public:
     int                     getCurrentUserGrade();
 
 public slots:
-    //通用计算
+    //通用
 
     //表通用查询
     int                     getTableRecordsCounts(const QString& tablename);//查询某张表记录总数

@@ -2,6 +2,7 @@
 #define MYSKIN_H
 #include "MySkinItem.h"
 #include "global/Global.h"
+
 #include <QPoint>
 #include <QDialog>
 #include <QListWidget>

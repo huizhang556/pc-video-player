@@ -4,8 +4,11 @@
 #include <QWidget>
 #include <QPoint>
 #include <QAction>
+#include <QListView>
+#include <QCompleter>
 #include <QPushButton>
 #include <QListWidget>
+#include <QStringListModel>
 
 namespace Ui {
 class LoginPersonInfo;
@@ -58,6 +61,10 @@ private slots:
 
     void        slot_clearWarningText();
 
+    void        slot_addLoginHisUsers(const QString &name);//添加登录历史
+    void        slot_clearTempInputText();//清除临时输入的文字
+    void        slot_setLoginStatusButtonGeometry();//设置位置
+    void        slot_setLoginStatusButtonStyle(bool status);//设置样式
 
 private:
     //构造函数私有化  实现单例
@@ -74,6 +81,9 @@ private:
     QAction             *clearAction5;
     bool                passwdStatus;
     bool                passwdStatus2;
+    QPushButton         *m_loginStatusBtn;
+    QCompleter          *m_completer;
+    QStringList         m_comlist;//登录历史记录
     static  LoginPersonInfo* m_pInstance;
 
 signals:

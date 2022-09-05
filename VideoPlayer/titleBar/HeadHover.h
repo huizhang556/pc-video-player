@@ -30,6 +30,7 @@ protected:
     void        leaveEvent(QEvent *event) override;
 private:
     Ui::HeadHover *ui;
+    QByteArray              m_headBytes;
     QPixmap                 m_headPixmap;
     QNetworkAccessManager   *m_manager;
 
@@ -38,6 +39,7 @@ private:
     void        slots_setUserName(const QString &nick);
     void        slots_setUserIcon(int grade);
     void        slot_setUserInfo(const QString &info);
+    void        slot_receivedNetworkPicture(QNetworkReply* reply);
 
 signals:
     void        sig_itemChanged(QString);

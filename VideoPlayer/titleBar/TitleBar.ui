@@ -78,7 +78,7 @@ border:none;
 }</string>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="page_4">
             <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -304,7 +304,7 @@ background-color:transparent;
 color:#ffffff;
 font-size:12px;
 margin-right:0px;
-padding-left:3px;
+padding-left:8px;
 padding-right:3px;
 text-align:left;
 }

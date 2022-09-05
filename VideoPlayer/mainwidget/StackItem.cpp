@@ -7,7 +7,7 @@ StackItem::StackItem(QWidget *parent) :
     ui(new Ui::StackItem)
 {
     ui->setupUi(this);
-    this->setFixedSize(300,26);
+    this->setFixedSize(300,30);
     ui->pushButton_name->installEventFilter(this);
     ui->pushButton_intro->installEventFilter(this);
     //设置鼠标穿透，会使监听器失效

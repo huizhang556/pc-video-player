@@ -41,9 +41,9 @@
    <item>
     <widget class="QStackedWidget" name="stackwidget_login">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
-     <widget class="QWidget" name="Page1" native="true">
+     <widget class="QWidget" name="Page1">
       <layout class="QVBoxLayout" name="verticalLayout_6" stretch="2,3">
        <property name="spacing">
         <number>0</number>

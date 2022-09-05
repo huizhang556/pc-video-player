@@ -33,7 +33,7 @@ void HeadHover::initWorkUI()
     ui->listWidget_menu->addItem(item3);
     ui->listWidget_menu->addItem(item4);
     ui->listWidget_menu->addItem(item5);
-
+    ui->listWidget_menu->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     slots_setUserIcon(1);
 
     //遮罩
@@ -47,6 +47,8 @@ void HeadHover::handleSignalsAndSlots()
         emit sig_itemChanged(item->text());
         this->hide();
     });
+
+    connect(m_manager,&QNetworkAccessManager::finished,this,&HeadHover::slot_receivedNetworkPicture,Qt::UniqueConnection);
 }
 
 //设置个人信息
@@ -60,24 +62,7 @@ void HeadHover::slot_setCurrentUserInfo(const QString &head="", const QString &n
 
 void HeadHover::slots_setUserHead(const QString &head)
 {
-
     m_manager->get(QNetworkRequest(QUrl(head)));
-    connect(m_manager,&QNetworkAccessManager::finished,[=](QNetworkReply *reply){
-        if (reply->error() == QNetworkReply::NoError)
-        {
-            //获取字节流构造 QPixmap 对象
-            m_headPixmap.loadFromData(reply->readAll());
-            ui->label_head->setPixmap(m_headPixmap);
-            ui->label_head->setScaledContents(true);
-        }
-        else//请求失败，加载默认图片
-        {
-            qDebug() <<  QString::fromLocal8Bit("请求错误：")<<reply->errorString();
-            QPixmap pixmap("://images/user/default_woman00.png");//默认图标
-            ui->label_head->setPixmap(pixmap);
-            ui->label_head->setScaledContents(true);
-        }
-    });
 }
 
 void HeadHover::slots_setUserName(const QString& nick)
@@ -85,7 +70,7 @@ void HeadHover::slots_setUserName(const QString& nick)
     QFont font;
     font.setPixelSize(13);
     QFontMetrics   fontMetric = QFontMetrics(font);
-    QString text = fontMetric.elidedText(nick,Qt::ElideRight,100,0);//19个字宽以后，省略为...(10x19，字号x字数)
+    QString text = fontMetric.elidedText(nick,Qt::ElideRight,130,0);
     ui->pushButton_userName->setText(text);
     ui->pushButton_userName->setToolTip(nick);
     ui->pushButton_userName->setText(nick);
@@ -117,6 +102,28 @@ void HeadHover::slots_setUserIcon(int grade)
 void HeadHover::slot_setUserInfo(const QString &info)
 {
     ui->pushButton_otherInfo->setText(info);
+}
+
+void HeadHover::slot_receivedNetworkPicture(QNetworkReply *reply)
+{
+    if (reply->error() == QNetworkReply::NoError)
+    {
+        //获取字节流构造 QPixmap 对象
+        m_headBytes = reply->readAll();
+        m_headPixmap.loadFromData(m_headBytes);
+        ui->label_head->setPixmap(m_headPixmap);
+        ui->label_head->setScaledContents(true);
+        qDebug() <<QString::fromLocal8Bit("网络请求图片设置成功！");
+        qDebug() <<QString::fromLocal8Bit("本次网络请求图片的大小：")<<m_headBytes.size()<<endl
+                <<QString::fromLocal8Bit("pixmap真正大小：")<< m_headPixmap.size();
+    }
+    else//请求失败，加载默认图片
+    {
+        qDebug() <<  QString::fromLocal8Bit("请求错误：")<<reply->errorString();
+        QPixmap pixmap("://images/user/default_woman00.png");//默认图标
+        ui->label_head->setPixmap(pixmap);
+        ui->label_head->setScaledContents(true);
+    }
 }
 
 void HeadHover::leaveEvent(QEvent *event)

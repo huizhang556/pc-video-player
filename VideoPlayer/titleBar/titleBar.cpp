@@ -5,6 +5,7 @@
 #include <QDateTime>
 #include <QRegExp>
 #include <QPalette>
+#include <QProcess>
 #include <QMessageBox>
 #include <QRegExpValidator>
 #include <QDesktopServices>
@@ -165,7 +166,7 @@ void TitleBar::initWorker()
     m_engineSetBtn->setFixedHeight(26);
     slot_addWebEngine();
 
-    slot_switchToLoginPage(0,QString::fromLocal8Bit(""));
+    slot_switchToLoginPage(0,QString::fromLocal8Bit(""));//0 注册 1登录
 }
 
 
@@ -255,7 +256,14 @@ void TitleBar::chandleSignalAndSLots()
     //历史记录
     connect(ui->BtnHistory,&QPushButton::clicked,[=](){emit sig_historyDownload(5,0);});//历史记录
     //截屏
-    connect(ui->BtnScreen,&QPushButton::clicked,[=](){emit sig_screenPicture();});//截屏
+    connect(ui->BtnScreen,&QPushButton::clicked,[=](){
+       qDebug()<< "emit sig_screenPicture();";
+//        QProcess process;
+//        process.setWorkingDirectory(Global::appDirPath + "/capture" );
+//        process.start( Global::appDirPath + "/capture/CaptureTool.exe");
+//        process.start("E:\\QtProjects\\000QtDemo_51ctodemo\\04_20SubVideoPlayer\\VideoPlayer\\capture\\CaptureTool.exe");
+
+    });//截屏
 
 
     //腾讯主页
@@ -379,6 +387,9 @@ void TitleBar::chandleSignalAndSLots()
     connect(m_engineSetBtn,&QPushButton::clicked,this,[=](){
         emit sig_settingHelpItem(1);//转到系统设置
     });
+
+    //获取网络头像
+    connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(slot_replyFinished(QNetworkReply*)),Qt::UniqueConnection);
 }
 
 /*创建菜单*/
@@ -875,7 +886,6 @@ void TitleBar::setUserHeadPicture(const QString &path)
 {
     manager->get(QNetworkRequest(QUrl(path)));
     //获取网络图片(注意：使用的是manager的finished信号)
-    connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(slot_replyFinished(QNetworkReply*)));
 }
 
 /*重写鼠标双击事件*/
@@ -1279,7 +1289,6 @@ void TitleBar::slot_resetWebProgressBarValue()
 //设置头像
 void TitleBar::slot_replyFinished(QNetworkReply *reply)
 {
-    ui->label_userHead->clear();
     if (reply->error() == QNetworkReply::NoError)
     {
         //获取字节流构造 QPixmap 对象

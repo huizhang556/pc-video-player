@@ -68,13 +68,13 @@
          <widget class="QPushButton" name="pushButton_name">
           <property name="minimumSize">
            <size>
-            <width>130</width>
+            <width>165</width>
             <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>130</width>
+            <width>165</width>
             <height>26</height>
            </size>
           </property>
@@ -89,7 +89,7 @@ color:#9b9ca0;
 }</string>
           </property>
           <property name="text">
-           <string>雪中悍刀行</string>
+           <string/>
           </property>
          </widget>
         </item>

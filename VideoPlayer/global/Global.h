@@ -19,17 +19,17 @@ public:
     ~Global();
     static void registerLAVplayer();//注册播放器
     static void unRegisterLAVplayer();//卸载注册播放器
-    bool    isNetWorkOnline();//判断是否在线
-    void    checkNetWorkOnline();//判断是都连接互联网
+    bool        isNetWorkOnline();//判断是否在线
+    void        checkNetWorkOnline();//判断是都连接互联网
 
     //声明共有静态变量
     static QString appDirPath;
 
 public slots:
-    void    onLookupHost(QHostInfo host);
+    void        onLookupHost(QHostInfo host);
 
 signals:
-    void    sig_sendLookUpHostResult(bool);
+    void        sig_sendLookUpHostResult(bool);
 };
 
 #endif // GLOBAL_H

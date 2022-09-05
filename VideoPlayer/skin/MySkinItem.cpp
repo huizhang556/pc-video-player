@@ -34,7 +34,7 @@ MySkinItem::MySkinItem(int x, int y, int w, int h,int type, QWidget *parent) :
 //    m_checkedBtn->setGeometry(130,80,20,20);//x-w,y-h-间距,w,h
     setCheckedButtonGeometry(m_checkedBtn,x,y,w,h,type);
     setCheckButtonStatus();
-    m_checkedBtn->hide();
+    m_checkedBtn->hide();//默认隐藏
 
     connect(m_closeBtn,&QPushButton::clicked,[=](){
         emit sig_closewindow();
@@ -83,7 +83,7 @@ void MySkinItem::setUnCheckedStatus()
 
 void MySkinItem::setCheckButtonStatus()
 {
-    if(m_status)
+    if(m_status)//勾选状态
     {
         m_checkedBtn->setStyleSheet("QPushButton"
                                     "{"
@@ -91,7 +91,7 @@ void MySkinItem::setCheckButtonStatus()
                                     "border-image: url(://images/skin/myskin_checkbtn_hover.png);"
                                     "}");
     }
-    else
+    else//未勾选状态（默认状态）
     {
         m_checkedBtn->setStyleSheet("QPushButton"
                                     "{"
@@ -129,7 +129,7 @@ bool MySkinItem::eventFilter(QObject *watched, QEvent *event)
         m_closeBtn->show();
         m_checkedBtn->show();
     }
-    else if(event->type() == QEvent::Leave)
+    else if(event->type() == QEvent::Leave && m_status)
     {
         m_closeBtn->hide();
         m_checkedBtn->hide();

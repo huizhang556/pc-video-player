@@ -4,8 +4,6 @@
 
 #include <QDebug>
 #include <QTimer>
-#include <QListView>
-#include <QCompleter>
 #include <QMouseEvent>
 #include <QMessageBox>
 #include <QRegExpValidator>
@@ -49,6 +47,13 @@ LoginPersonInfo* LoginPersonInfo::getInstance()
 
 void LoginPersonInfo::initWorkUI()
 {
+    m_loginStatusBtn = new QPushButton();
+    m_loginStatusBtn->setFixedSize(14,14);
+    m_loginStatusBtn->setObjectName(QString::fromLocal8Bit("m_loginStatusBtn"));
+    m_loginStatusBtn->setParent(ui->login_Labtouxiang);
+    m_loginStatusBtn->setGeometry(49,49,14,14);
+
+
     userAction = new QAction(QIcon(":/images/icon/loginuser.png"),"");
     keybordAction = new QAction(QIcon(":/images/icon/loginpasswd.png"),"");
     ui->login_lineEditUser->addAction(userAction, QLineEdit::LeadingPosition);
@@ -70,13 +75,13 @@ void LoginPersonInfo::initWorkUI()
 
     ui->login_BtnRegis->setToolTip(QString::fromLocal8Bit("注册用户"));
     ui->login_BtnQR->setToolTip(QString::fromLocal8Bit("二维码登录"));
-    QStringList comlist;
-    comlist<<"1238975230"<<"1238975235"<<"1238975236"<<"12348695"<<"12357984"<<"12368866"<<"25789412"<<"25468963"<<"25963654"<<"25896254";
-    QCompleter *completer = new QCompleter(comlist,this);
-    completer->setCaseSensitivity(Qt::CaseInsensitive);
-    completer->popup()->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    completer->popup()->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    completer->popup()->setStyleSheet(
+
+//    m_comlist<<"1238975230"<<"1238975235"<<"1238975236"<<"12348695"<<"12357984"<<"12368866"<<"25789412"<<"25468963"<<"25963654"<<"25896254";
+    m_completer = new QCompleter(m_comlist,this);
+    m_completer->setCaseSensitivity(Qt::CaseInsensitive);
+    m_completer->popup()->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_completer->popup()->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_completer->popup()->setStyleSheet(
                         "QListView"
                         "{"
                         "min-height:80px;"
@@ -92,8 +97,8 @@ void LoginPersonInfo::initWorkUI()
                         "color:green;"
                         "background-color:yellow;"
                         "}");
-    completer->setMaxVisibleItems(4);//最大显示4
-    ui->login_lineEditUser->setCompleter(completer);
+    m_completer->setMaxVisibleItems(4);//最大显示4
+    ui->login_lineEditUser->setCompleter(m_completer);
     /*登录-登录账户*/
     ui->login_lineEditUser->setPlaceholderText(QString::fromLocal8Bit("账户"));
 //    QRegExp regExp("[A-Za-z0-9]{4,16}");//英文字母、数字
@@ -240,8 +245,7 @@ void LoginPersonInfo::chandleSignalsAndSLots()
     /*登录---关闭按钮*/
     connect(ui->login_Btnclose,&QPushButton::clicked,[=]()
     {
-        ui->login_lineEditUser->clear();
-        ui->login_lineEditPasswd->clear();
+        slot_clearTempInputText();
         close();
     });
 
@@ -264,6 +268,8 @@ void LoginPersonInfo::chandleSignalsAndSLots()
          }
     });
 
+    //快捷登录
+    connect(ui->login_lineEditPasswd,&QLineEdit::returnPressed,[=](){ ui->login_BtnLogin->click();});
 
     /*登录---登录按钮*/
     connect(ui->login_BtnLogin,&QPushButton::clicked,[=]()
@@ -273,10 +279,12 @@ void LoginPersonInfo::chandleSignalsAndSLots()
         if(account.isEmpty())
         {
             slot_showWarning_login(QString::fromLocal8Bit("账户不能为空！"));
+            return;
         }
         else if(passwd.isEmpty())
         {
             slot_showWarning_login(QString::fromLocal8Bit("密码不能为空！"));
+            return;
         }
         bool valiable = dataBase::getInstance()->login_checked_usernameAndPasswd(account,passwd);//核对账号是否存在
         if(valiable)//信息核对成功！
@@ -290,10 +298,13 @@ void LoginPersonInfo::chandleSignalsAndSLots()
             QString head     =  dataBase::getInstance()->getCurrentUserHead();
             int     grade    =  dataBase::getInstance()->getCurrentUserGrade();
             emit sig_sendLoginOK(nickname,head,grade);
+            slot_addLoginHisUsers(account);
+            slot_clearTempInputText();
         }
         else//信息核对失败！
         {
             slot_showWarning_login(QString::fromLocal8Bit("登录信息有误！"));
+            return;
         }
     });
 
@@ -428,7 +439,10 @@ void LoginPersonInfo::on_gis_BtnRegister_clicked()
        if(isOK)//插入成功
        {
            slot_showWarning_gis(QString::fromLocal8Bit("注册成功！"));
-           QTimer::singleShot(0,0,[=](){showLoginWindow(0);});//转到登录界面
+           QTimer::singleShot(0,0,[=](){
+               slot_clearTempInputText();
+               showLoginWindow(0);
+           });//转到登录界面
        }
        else//插入失败
        {
@@ -495,5 +509,56 @@ void LoginPersonInfo::slot_showWaringText(const QString &text)
 void LoginPersonInfo::slot_clearWarningText()
 {
     ui->label_message->clear();
+}
+
+//添加登录历史
+void LoginPersonInfo::slot_addLoginHisUsers(const QString &name)
+{
+    m_comlist.append(name);
+    QStringListModel *model = qobject_cast<QStringListModel *>(m_completer->model());
+    model->setStringList(m_comlist);
+    model->submit();//提交生效
+    qDebug() <<"user login history had added!";
+}
+
+void LoginPersonInfo::slot_clearTempInputText()
+{
+    ui->login_lineEditUser->clear();
+    ui->login_lineEditPasswd->clear();
+    ui->gis_lineEditUser->clear();
+    ui->gis_lineEditPasswd->clear();
+    ui->gis_lineEditEmail->clear();
+    ui->reset_lineEditUser->clear();
+    ui->reset_lineEditPasswd->clear();
+    ui->reset_lineEditEmail->clear();
+}
+
+void LoginPersonInfo::slot_setLoginStatusButtonGeometry()
+{
+//    int x = ui->login_Labtouxiang->parentWidget()->mapToGlobal(ui->login_Labtouxiang->pos()).x();
+//    int y = ui->login_Labtouxiang->parentWidget()->mapToGlobal(ui->login_Labtouxiang->pos()).y();
+//    qDebug() << QString::fromLocal8Bit("获得的POS:")<< x<<y;
+//    qDebug() << QString::fromLocal8Bit("实际的POS:")<< ui->login_Labtouxiang->pos();
+//    m_loginStatusBtn->setParent(ui->login_Labtouxiang);
+//    m_loginStatusBtn->setGeometry(52,52,14,14);
+//    m_loginStatusBtn->raise();
+//    m_loginStatusBtn->show();
+}
+
+void LoginPersonInfo::slot_setLoginStatusButtonStyle(bool status)
+{
+    if(status)
+    {
+        m_loginStatusBtn->setStyleSheet("QPushButton{"
+                                        "background-color: #c0ff02;"
+                                        "}");
+    }
+    else
+    {
+        m_loginStatusBtn->setStyleSheet("QPushButton{"
+                                        "background-color: #bdbfc1;"
+                                        "}");
+    }
+
 }
 
