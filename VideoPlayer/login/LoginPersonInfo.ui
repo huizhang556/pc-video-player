@@ -828,7 +828,7 @@ color: white;
 font-size:14px;
 font-family:&quot;楷体&quot;;
 border-radius:3px;
-background-color: rgb(2, 184, 250);
+background-color: #82d615;
 color:white;
 }
 

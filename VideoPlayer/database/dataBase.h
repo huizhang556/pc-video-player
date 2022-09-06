@@ -1,6 +1,9 @@
 ﻿#ifndef DATABASE_H
 #define DATABASE_H
 
+#include <QFile>
+#include <QDomDocument>
+
 #include <QVariant>
 #include <QSqlQuery>
 #include <QSqlError>
@@ -8,6 +11,7 @@
 #include <QSqlDatabase>
 #include <QDesktopWidget>
 #include <QDebug>
+
 
 //用户信息结构体
 struct UserInfo
@@ -43,8 +47,6 @@ struct Message
 };
 Q_DECLARE_METATYPE(Message)
 
-
-
 class dataBase : public QObject
 {
      Q_OBJECT
@@ -53,7 +55,9 @@ public:
     static  dataBase*       getInstance();
     static  QSqlDatabase    getSqlDataBase();
     static  bool            creatSqliteConnection();//创建sqlite连接
+    static  bool            removeSqliteConnection();//移除sqlite连接
     static  bool            creatMysqlConnection();//创建mysql连接
+    static  bool            removeMysqlConnection();//移除mysql连接
     bool                    initGlobalDate();//初始化全局数据
     void                    handleSignalsAndSlots();//处理信号与槽函数
     //获取用户信息
@@ -61,6 +65,13 @@ public:
     QString                 getCurrentUserName();
     QString                 getCurrentUserHead();
     int                     getCurrentUserGrade();
+
+    //读取cfg.xml信息
+    static void             readXML(const QString& path);
+    static void             writeXML(const QString& path);
+    static void             deleteXML(const QString& path,const QString& node,const QString& newvalue);
+    static void             addXML(const QString& path,const QString& node,const QString& newvalue);
+    static void             updateXML(const QString& path, const QString& nodename, const QString& newvalue);
 
 public slots:
     //通用
@@ -99,9 +110,6 @@ public slots:
     //推荐视频
     bool                    video_recDramaInfo();//查询推荐列表
 
-public:
-
-
 protected:
 
 
@@ -114,6 +122,19 @@ private:
     QString                 m_curUserName;//当前用户名称
     int                     m_curUserGrade;//当前用户等级 游客0 普通1 会员2 超级会员3
     bool                    m_online;//是否在线
+    //数据库连接
+    static      QString     m_hostName;//主机ip
+    static      QString     m_hostPort;//主机端口
+    static      QString     m_userName;//用户名称
+    static      QString     m_userPawd;//用户密码
+    static      QString     m_dataName;//数据库名
+
+private:
+    static      QString     getHostName();
+    static      QString     getHostPort();
+    static      QString     getUserName();
+    static      QString     getUserPawd();
+    static      QString     getDataName();
 
 signals:
     void        sig_loginStatusChanged(bool);//0下线 1登录

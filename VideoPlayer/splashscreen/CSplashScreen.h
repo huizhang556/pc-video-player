@@ -36,6 +36,7 @@ private:
     QMovie          *m_move;
     QTimer          *timer;
     QProgressBar    *m_progressbar;
+//    QString         edition;
 
 };
 #endif // CSPLASHSCREEN_H

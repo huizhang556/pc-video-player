@@ -37,26 +37,44 @@
 #include <QPixmap>
 #include <QLabel>
 #include <QMovie>
+#include <QDebug>
+
 
 int main(int argc, char *argv[])
 {
 
 //    QApplication::setAttribute(Qt::AA_UseOpenGLES);
     QApplication a(argc, argv);
-    //加载翻译文件
+    //00--->加载翻译文件
     QTranslator translator1;
     translator1.load(":/font/qt_zh_CN.qm");//翻译为中文
     a.installTranslator(&translator1);
-    //加载全局样式
+
+    //01--->加载全局样式
     loadGlobalQss::loadAllUIQss();
 //    QFont f("黑体",10);
 //    a.setFont(f);
-    //数据初始化（放在界面初始化完成以后）
+
+    //02--->数据初始化（放在界面初始化完成以后）
+    dataBase::readXML(Global::appDirPath + "/config/config.xml");
     dataBase::creatMysqlConnection();//连接数据库,有数据的必须先连接数据库
-    //开机启动屏幕
-    QPixmap pixmap(Global::appDirPath + "/pictures/splashscreen/splash.gif");
+
+    //03--->注册解码器
+    if(!Global::getRegisStatus())
+    {
+        qDebug() << QString::fromLocal8Bit("播放器还未注册！");
+        Global::registerLAVplayer();
+        Global::setIni();
+    }
+    else
+    {
+        qDebug() << QString::fromLocal8Bit("播放器已经注册！");
+    }
+
+    //04--->开机启动屏幕
+    QPixmap pixmap(Global::appDirPath + "/pictures/splashscreen/splash1.gif");
     CSplashScreen splashscream(pixmap);
-//    CSplashScreen splashscream(Global::appDirPath + "/pictures/splashscreen/splash.gif");
+//    CSplashScreen splashscream(Global::appDirPath + "/pictures/splashscreen/splash1.gif");
     a.processEvents();
     splashscream.show();
     splashscream.setCursor(Qt::BlankCursor);
@@ -65,6 +83,8 @@ int main(int argc, char *argv[])
         splashscream.slot_updateProgressbarValue(i*11);
         QThread::sleep(1);
     }
+
+    //05--->显示主界面
     MainWidget w1;
     w1.show();
     splashscream.finish(&w1);
@@ -72,7 +92,7 @@ int main(int argc, char *argv[])
 //    MultipPlayer w;
 //    w.show();
 
-    //数据初始化
+    //06--->数据恢复初始化
     QTimer::singleShot(1500,0,[=](){
         dataBase::getInstance()->initGlobalDate();
     });

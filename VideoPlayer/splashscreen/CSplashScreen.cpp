@@ -2,6 +2,12 @@
 #include <QThread>
 #include <QDebug>
 
+//#ifdef QT_DEBUG
+//   QString edition = QString::fromLocal8Bit("调试版");
+//#else
+//   QString edition = QString::fromLocal8Bit("正式版");
+//#endif
+
 CSplashScreen::CSplashScreen(const QPixmap & pixmap) : QSplashScreen(pixmap)
 {
     m_progressbar = new QProgressBar(this);
@@ -77,20 +83,24 @@ void CSplashScreen::slot_update()
 void CSplashScreen::drawContents(QPainter *painter)
 {
     painter->setFont(QFont("Mircrosoft YaHei", 36));
-    painter->setPen(QColor(213, 218, 220));
-    painter->drawText(QPointF(20, 100), QString::fromLocal8Bit("音视频播放器"));
+    painter->setPen(QColor(134, 95, 197));
+    painter->drawText(QPointF(20, 80), QString::fromLocal8Bit("音视频播放器"));
 
     painter->setFont(QFont("Mircrosoft YaHei", 12));
-    painter->setPen(QColor(213, 218, 220));
+    painter->setPen(QColor(65, 205, 82));
     painter->drawText(QPointF(30, 140), QString::fromLocal8Bit("Version: 1.0.0"));
 
     painter->setFont(QFont("Mircrosoft YaHei", 12));
-    painter->setPen(QColor(213, 218, 220));
-    painter->drawText(QPointF(30, 180), QString::fromLocal8Bit("Author:ZhangHui"));
+    painter->setPen(QColor(65, 205, 82));
+    painter->drawText(QPointF(30, 180), QString::fromLocal8Bit("Author: ZhangHui"));
 
     painter->setFont(QFont("Mircrosoft YaHei", 12));
-    painter->setPen(QColor(213, 218, 220));
-    painter->drawText(QPointF(30, 220), QString::fromLocal8Bit("Emails:2493920797@qq.com"));
+    painter->setPen(QColor(65, 205, 82));
+    painter->drawText(QPointF(30, 220), QString::fromLocal8Bit("Emails: 2493920797@qq.com"));
+
+    painter->setFont(QFont("Mircrosoft YaHei", 12));
+    painter->setPen(QColor(65, 205, 82));
+    painter->drawText(QPointF(30, 260), QString::fromLocal8Bit("Based on: Qt 5.12.0 (MSVC 2015, 32 bit) + MySQL 5.7.36 for Linux (x86_64)"));
 
     painter->setFont(QFont("Helvetica", 16));
     painter->setPen(QColor(Qt::white));

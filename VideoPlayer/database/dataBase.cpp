@@ -1,8 +1,16 @@
 ﻿#include "dataBase.h"
+#include "global/Global.h"
 #include "videomodels/RecomVideoTab.h" //引入结构体
 #include <QMetaType>
 #include <QDateTime>
+#include <QDebug>
 
+//静态成员类外初始化
+QString   dataBase::m_hostName = "";
+QString   dataBase::m_hostPort = "";
+QString   dataBase::m_userName = "";
+QString   dataBase::m_userPawd = "";
+QString   dataBase::m_dataName = "";
 dataBase* dataBase::m_pInstance = nullptr;
 
 dataBase::dataBase():
@@ -17,6 +25,32 @@ dataBase::dataBase():
     qRegisterMetaType<QVariant>("QVariant"); //构造函数注册自定义结构体
     handleSignalsAndSlots();
 }
+
+QString dataBase::getHostName()
+{
+    return m_hostName;
+}
+
+QString dataBase::getHostPort()
+{
+    return  m_hostPort;
+}
+
+QString dataBase::getUserName()
+{
+    return m_userName;
+}
+
+QString dataBase::getUserPawd()
+{
+    return m_userPawd;
+}
+
+QString dataBase::getDataName()
+{
+    return m_dataName;
+}
+
 
 dataBase::~dataBase()
 {
@@ -54,11 +88,11 @@ bool dataBase::creatMysqlConnection()
 {
     qDebug() << QString::fromLocal8Bit("Qt现在支持的驱动：")<<QSqlDatabase::drivers();
     QSqlDatabase db_mysql = QSqlDatabase::addDatabase("QMYSQL","connect_mysql");//连接数据库类型
-    db_mysql.setHostName("82.156.175.81");
-    db_mysql.setUserName("zhang");
-    db_mysql.setPassword("zhang_databases123");
-    db_mysql.setPort(3306);
-    db_mysql.setDatabaseName("client_test");//给数据库起名字
+    db_mysql.setHostName(m_hostName);
+    db_mysql.setUserName(m_userName);
+    db_mysql.setPassword(m_userPawd);
+    db_mysql.setPort(m_hostPort.toInt());
+    db_mysql.setDatabaseName(m_dataName);//给数据库起名字
     if(!db_mysql.open())
     {
        qDebug()<<"mysql database is not open!"<<db_mysql.lastError();
@@ -153,6 +187,17 @@ bool dataBase::creatMysqlConnection()
     }
 }
 
+bool dataBase::removeMysqlConnection()
+{
+    if(getSqlDataBase().isOpen())
+    {
+        getSqlDataBase().close();
+        getSqlDataBase().removeDatabase("connect_mysql");
+        qDebug() << QString::fromLocal8Bit("mysql数据库已关闭，连接已移除！");
+    }
+    return true;
+}
+
 /*连接数据库*/
 bool dataBase::creatSqliteConnection()
 {
@@ -184,6 +229,16 @@ bool dataBase::creatSqliteConnection()
     }
 }
 
+bool dataBase::removeSqliteConnection()
+{
+    if(getSqlDataBase().isOpen())
+    {
+        getSqlDataBase().close();
+        getSqlDataBase().removeDatabase("connect_sqlite");
+    }
+    return true;
+}
+
 
 
 //初始化全局数据
@@ -213,6 +268,211 @@ QString dataBase::getCurrentUserHead()
 int dataBase::getCurrentUserGrade()
 {
     return m_curUserGrade;
+}
+
+void dataBase::readXML(const QString &path)
+{
+    QFile file(path);
+    if(!file.open(QFile::ReadOnly))//只读打开
+        return;
+    QDomDocument doc;
+    if(!doc.setContent(&file))//file转为QDomDocument文档
+    {
+        file.close();
+        return;
+    }
+    file.close();//转换为文档后，就可以关闭文件
+    QDomElement root = doc.documentElement();//返回根节点
+    qDebug() << root.nodeName();//---> appconfig
+    QDomNode node = root.firstChild();//获得第一个子节点
+    while(!node.isNull())
+    {
+        if(node.isElement())//如果节点是元素
+        {
+            //节点转换为元素，节点和元素是两种数据结构
+            QDomElement e = node.toElement();
+            qDebug() << e.tagName();//-->database
+            if(e.tagName() == "database")
+            {
+                QDomNodeList list = e.childNodes();//元素下子节点
+                for(int i=0; i<list.count(); i++) //遍历子元素，count和size都可以用,可用于标签数计数
+                {
+                    QDomNode n = list.at(i);
+                    if(node.isElement())
+                    {
+                        qDebug()<<n.nodeName()<<":"<<n.toElement().text();
+                        if(n.nodeName() == QString("hostName")) m_hostName = n.toElement().text();
+                        if(n.nodeName() == QString("hostPort")) m_hostPort = n.toElement().text();
+                        if(n.nodeName() == QString("userName")) m_userName = n.toElement().text();
+                        if(n.nodeName() == QString("userPawd")) m_userPawd = n.toElement().text();
+                        if(n.nodeName() == QString("dataName")) m_dataName = n.toElement().text();
+                    }
+
+                }
+            }
+
+        }
+        node=node.nextSibling();//下一个兄弟节点,nextSiblingElement()是下一个兄弟元素
+    }
+}
+
+void dataBase::writeXML(const QString &path)
+{
+    //打开或创建文件
+       QFile file("./config/cfg.xml"); //相对路径、绝对路径、资源路径都可以
+       if(!file.open(QFile::WriteOnly|QFile::Truncate)) //可以用QIODevice，Truncate表示清空原来的内容
+           return;
+
+       QDomDocument doc;
+       //写入xml头部
+       QDomProcessingInstruction instruction; //添加处理命令
+       instruction=doc.createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");
+       doc.appendChild(instruction);
+       //添加根节点
+       QDomElement root=doc.createElement("appconfig");
+       doc.appendChild(root);
+       //添加第一个子节点及其子元素
+       QDomElement book =doc.createElement("book");
+       book.setAttribute("id",1); //方式一：创建属性  其中键值对的值可以是各种类型
+       QDomAttr time=doc.createAttribute("time"); //方式二：创建属性 值必须是字符串
+       time.setValue("2013/6/13");
+       book.setAttributeNode(time);
+       QDomElement title=doc.createElement("title"); //创建子元素
+       QDomText text; //设置括号标签中间的值
+       text=doc.createTextNode("C++ primer");
+       book.appendChild(title);
+       title.appendChild(text);
+       QDomElement author=doc.createElement("author"); //创建子元素
+       text=doc.createTextNode("Stanley Lippman");
+       author.appendChild(text);
+       book.appendChild(author);
+       root.appendChild(book);
+
+       //添加第二个子节点及其子元素，部分变量只需重新赋值
+       book=doc.createElement("book");
+       book.setAttribute("id",2);
+       time=doc.createAttribute("time");
+       time.setValue("2007/5/25");
+       book.setAttributeNode(time);
+       title=doc.createElement("title");
+       text=doc.createTextNode("Thinking in Java");
+       book.appendChild(title);
+       title.appendChild(text);
+       author=doc.createElement("author");
+       text=doc.createTextNode("Bruce Eckel");
+       author.appendChild(text);
+       book.appendChild(author);
+       root.appendChild(book);
+
+       //输出到文件
+       QTextStream out_stream(&file);
+       doc.save(out_stream,4); //缩进4格
+       file.close();
+}
+
+void dataBase::deleteXML(const QString &path, const QString &node, const QString &newvalue)
+{
+    //打开文件
+        QFile file("test.xml"); //相对路径、绝对路径、资源路径都可以
+        if(!file.open(QFile::ReadOnly))
+            return;
+
+        //删除一个一级子节点及其元素，外层节点删除内层节点于此相同
+        QDomDocument doc;
+        if(!doc.setContent(&file))
+        {
+            file.close();
+            return;
+        }
+        file.close();  //一定要记得关掉啊，不然无法完成操作
+
+        QDomElement root=doc.documentElement();
+        QDomNodeList list=doc.elementsByTagName("book"); //由标签名定位
+        for(int i=0;i<list.count();i++)
+        {
+            QDomElement e=list.at(i).toElement();
+            if(e.attribute("time")=="2007/5/25")  //以属性名定位，类似于hash的方式，warning：这里仅仅删除一个节点，其实可以加个break
+                root.removeChild(list.at(i));
+        }
+
+        if(!file.open(QFile::WriteOnly|QFile::Truncate))
+            return;
+        //输出到文件
+        QTextStream out_stream(&file);
+        doc.save(out_stream,4); //缩进4格
+        file.close();
+}
+
+void dataBase::addXML(const QString &path, const QString &node, const QString &newvalue)
+{
+    //打开文件
+        QFile file("test.xml"); //相对路径、绝对路径、资源路径都可以
+        if(!file.open(QFile::ReadOnly))
+            return;
+
+        //增加一个一级子节点以及元素
+        QDomDocument doc;
+        if(!doc.setContent(&file))
+        {
+            file.close();
+            return;
+        }
+        file.close();
+
+        QDomElement root=doc.documentElement();
+        QDomElement book=doc.createElement("book");
+        book.setAttribute("id",3);
+        book.setAttribute("time","1813/1/27");
+        QDomElement title=doc.createElement("title");
+        QDomText text;
+        text=doc.createTextNode("Pride and Prejudice");
+        title.appendChild(text);
+        book.appendChild(title);
+        QDomElement author=doc.createElement("author");
+        text=doc.createTextNode("Jane Austen");
+        author.appendChild(text);
+        book.appendChild(author);
+        root.appendChild(book);
+
+        if(!file.open(QFile::WriteOnly|QFile::Truncate)) //先读进来，再重写，如果不用truncate就是在后面追加内容，就无效了
+            return;
+        //输出到文件
+        QTextStream out_stream(&file);
+        doc.save(out_stream,4); //缩进4格
+        file.close();
+}
+
+void dataBase::updateXML(const QString &path, const QString &nodename, const QString &newvalue)
+{
+    //打开文件
+        QFile file("test.xml"); //相对路径、绝对路径、资源路径都可以
+        if(!file.open(QFile::ReadOnly))
+            return;
+
+        //更新一个标签项,如果知道xml的结构，直接定位到那个标签上定点更新
+        //或者用遍历的方法去匹配tagname或者attribut，value来更新
+        QDomDocument doc;
+        if(!doc.setContent(&file))
+        {
+            file.close();
+            return;
+        }
+        file.close();
+
+        QDomElement root=doc.documentElement();
+        QDomNodeList list=root.elementsByTagName("book");
+        QDomNode node=list.at(list.size()-1).firstChild(); //定位到第三个一级子节点的子元素
+        QDomNode oldnode=node.firstChild(); //标签之间的内容作为节点的子节点出现,当前是Pride and Projudice
+        node.firstChild().setNodeValue("Emma");
+        QDomNode newnode=node.firstChild();
+        node.replaceChild(newnode,oldnode);
+
+        if(!file.open(QFile::WriteOnly|QFile::Truncate))
+            return;
+        //输出到文件
+        QTextStream out_stream(&file);
+        doc.save(out_stream,4); //缩进4格
+        file.close();
 }
 
 //查询某表记录总数

@@ -1272,6 +1272,7 @@ void MainWidget::closeEvent(QCloseEvent *event)
 //         query.exec("drop table if exists logininfo;");//sqlite
          query.exec("truncate table localmusic;");//mysql
          qDebug()<<"localmusic,logininfo tables is drop!";
+         dataBase::removeMysqlConnection();//关闭数据库，移除连接
          event->accept();
      }
 }

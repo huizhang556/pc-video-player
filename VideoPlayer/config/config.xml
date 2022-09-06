@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<appconfig>
+<database>
+<hostName>82.156.175.81</hostName>
+<hostPort>3306</hostPort>
+<userName>zhang</userName>
+<userPawd>zhang_databases123</userPawd>
+<dataName>client</dataName>
+</database>
+<browser>
+<defaultUrl>http://www.hao123.com</defaultUrl>
+<defaultUser>visitor</defaultUser>
+<defaultUserID>0000000000</defaultUserID>
+<downloadPath>download</downloadPath>
+</browser>
+<skin>
+<defaultSkin>blackTheme</defaultSkin>
+</skin>
+</appconfig>

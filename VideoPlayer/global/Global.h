@@ -17,11 +17,16 @@ class Global : public QObject
 public:
     explicit Global(QObject *parent = nullptr);
     ~Global();
-    static void registerLAVplayer();//注册播放器
-    static void unRegisterLAVplayer();//卸载注册播放器
-    bool        isNetWorkOnline();//判断是否在线
-    void        checkNetWorkOnline();//判断是都连接互联网
+    static void         registerLAVplayer();//注册播放器
+    static void         unRegisterLAVplayer();//卸载注册播放器
+    bool                isNetWorkOnline();//判断是否在线
+    void                checkNetWorkOnline();//判断是都连接互联网
+    static QString      readIni();//读取配置文件
+    static void         setIni();
+    static void         setIni_ungis();
+    static bool         getRegisStatus();
 
+public:
     //声明共有静态变量
     static QString appDirPath;
 

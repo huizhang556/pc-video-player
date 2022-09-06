@@ -86,7 +86,7 @@ border-radius:6px;
           <property name="styleSheet">
            <string notr="true">#widget_title
 {
-background-color:#212121;
+background-color:#41cd52;
 }
 </string>
           </property>
@@ -132,7 +132,7 @@ background-color:#212121;
                 <string notr="true">QLabel
 {
 border:1px solid transparent;
-color:#ff8f00;
+color: #2da7fa;
 }</string>
                </property>
                <property name="text">

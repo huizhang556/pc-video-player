@@ -154,13 +154,13 @@ background-color: transparent;
 background-color: transparent;
 text-align:left;
 padding-left:8px;
-color: #926f6f;
+color: #0e1b2c;
 font: 75 10pt &quot;Microsoft YaHei UI&quot;;
 }
 
 QPushButton:hover
 {
-color: #ff4b38;
+color: #bc1701;
 text-decoration: underline;
 }</string>
                </property>
@@ -183,7 +183,7 @@ text-decoration: underline;
 background-color: transparent;
 text-align:left;
 padding-left:28px;
-color: #a7a6a5;
+color: #005d21;
 }</string>
                </property>
                <property name="text">

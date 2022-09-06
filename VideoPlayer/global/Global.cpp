@@ -1,5 +1,6 @@
 ﻿#include "Global.h"
 
+#include <QSettings>
 #include <QDebug>
 
 //类外初始化全局变量
@@ -113,6 +114,7 @@ void Global::unRegisterLAVplayer()
     {
         qDebug() << QString::fromLocal8Bit("卸载video失败！");
     }
+    setIni_ungis();//注册状态恢复为 0
 }
 
 //判断是否有网络连接（不一定能上网）
@@ -126,6 +128,45 @@ bool Global::isNetWorkOnline()
 void Global::checkNetWorkOnline()
 {
     QHostInfo::lookupHost("www.baidu.com",this,SLOT(onLookupHost(QHostInfo)));
+}
+
+//读取注册状态
+QString Global::readIni()
+{
+    QSettings *set = new QSettings(appDirPath + "/config/config.ini",QSettings::IniFormat);
+    QString statusValue = set->value("/regis_status/status").toString();
+    delete set;
+    set = nullptr;
+    return statusValue;
+}
+
+//写入注册状态
+void Global::setIni()
+{
+    QSettings *set = new QSettings(appDirPath + "/config/config.ini",QSettings::IniFormat);
+    set->setValue("/regis_status/status","1");
+    delete set;
+    set = nullptr;
+}
+
+void Global::setIni_ungis()
+{
+    QSettings *set = new QSettings(appDirPath + "/config/config.ini",QSettings::IniFormat);
+    set->setValue("/regis_status/status","0");
+    delete set;
+    set = nullptr;
+}
+
+bool Global::getRegisStatus()
+{
+    if(readIni() == "1")//1 已经注册
+    {
+        return true;
+    }
+    else if(readIni() == "0")//0 未注册
+    {
+        return false;
+    }
 }
 
 void Global::onLookupHost(QHostInfo host)
