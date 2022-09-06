@@ -139,6 +139,7 @@ private:
 signals:
     void        sig_loginStatusChanged(bool);//0下线 1登录
     void        sig_sendVideoDramaInfo(QVariant);
+    void        sig_sendVideoDramaUrl(int,QString);
     void        sig_sendRecordInfo(QString,QString,QString);//urlnick url createtiem
     void        sig_sendHisRecordInfo(QString,QString);//url createtime
     void        sig_sendMessage(int,QString);//信息类型 消息体

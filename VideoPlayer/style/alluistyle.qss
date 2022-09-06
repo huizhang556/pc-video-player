@@ -136,6 +136,8 @@ border-bottom-right-radius:10px;
 {
 /*此处只做圆角修改，其他部分样式代码设置*/
 background-color: transparent;
+border-top-left-radius:8px;
+border-bottom-left-radius:8px;
 }
 
 /*推荐栏左右调节按钮*/

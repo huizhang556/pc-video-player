@@ -183,7 +183,7 @@ void TitleBar::chandleSignalAndSLots()
         {
             emit sig_filesUploadDownLoad(5,4);//主界面反应
         }
-        else if(QString::fromLocal8Bit("还原歌单") == text)
+        else if(QString::fromLocal8Bit("注销账号") == text)
         {
 
         }

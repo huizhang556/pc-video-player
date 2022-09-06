@@ -3,6 +3,8 @@
 #define MARWIDTH 2 //窗口边距
 #include "network/MyHttp.h"
 
+#define LEFTWIDTH   260
+
 #include "database/dataBase.h"
 #include "videomodels/VideoBlank.h"
 #include "videomodels/muteDialog.h"
@@ -65,7 +67,7 @@ public:
 
     void    chandleSignalAndSLots();
 
-    void    addToPlaylist(const QStringList& fileNames);
+    void    addToPlaylist(QMediaPlaylist* mylist,const QStringList& fileNames);
 
     void    addFileToList(const QStringList &strList);//浮动歌曲列表
 
@@ -90,6 +92,8 @@ public:
     QString getCurrentMediaPlayFileName();
 
     QRect   getDesktopScreenGeometry();
+
+    int     getMapKeyFromValue(const QString& value);//map-->根据value找id
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
@@ -170,11 +174,16 @@ public slots:
     void    slot_clearAllPopupUi();//清理所有弹出的界面
 
 private slots:
+    QMediaPlaylist *    slot_getCurrentPlayList();//获取当前正在播放的列表
+
+    void    slot_switchPlayerList(QMediaPlaylist *list);//切换播放列表
+
     void    on_time();
 
     void    slot_setMediaPlayPosition(int value);//设置播放点
 
     void    checkChandleMediaPlayerStatus(QMediaPlayer::State newState);//监测处理媒体播放状态
+
 
     void    checkChandleMediaStatus();//监测处理媒体状态
 
@@ -291,6 +300,8 @@ signals:
 
     void    sig_playerIsMutedStatus(bool);
 
+    void    sig_playlistCurrentIndex(int);//临时列表当前索引
+
 
 private:
     Ui::MultipPlayer *ui;
@@ -324,8 +335,8 @@ private:
     DramaListForm               *m_dramaList        = nullptr;//系列推荐
     RecomVideoTab               *m_recomTab         = nullptr;
     MyVideoWidget               *videoWidget        = nullptr;//视频播放界面
-    QMediaPlaylist              *playlist           = nullptr;
-
+    QMediaPlaylist              *playlist           = nullptr;//播放列表1 正式
+    QMediaPlaylist              *playlist_t         = nullptr;//播放列表2 临时
 
     int                         m_voice;                        //静音之前的值
     bool                        m_winMax;                       //默认非最大化
@@ -345,12 +356,15 @@ private:
     QPoint                      m_videoPos;
 
     QStringList                 m_fileNames;                    //文件名称列表
+    QStringList                 m_tempList;                    //临时播放列表
+    QStringList                 list_temp;
+
     QMap<int,QString>           m_mapList;                      //存储歌名路径
     QMap<int,QString>           m_mapList2;                     //存储歌名带后缀
+    QMap<int,QString>           m_t_MapList;                     //临时存储歌名带后缀
     QMap<int,QString>           m_mapList_collect;
     QMap<int,QString>           m_mapList_history;
     QMediaPlayer::State         m_playerState;
-    QStringList                 list_temp;
     QString                     m_curMediaName;
 /*以下为界面拉伸所用*/
     bool                        _isleftpressed      = false;    //判断是否是左键点击

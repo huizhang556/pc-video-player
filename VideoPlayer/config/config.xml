@@ -5,7 +5,7 @@
 <hostPort>3306</hostPort>
 <userName>zhang</userName>
 <userPawd>zhang_databases123</userPawd>
-<dataName>client</dataName>
+<dataName>client_test</dataName>
 </database>
 <browser>
 <defaultUrl>http://www.hao123.com</defaultUrl>

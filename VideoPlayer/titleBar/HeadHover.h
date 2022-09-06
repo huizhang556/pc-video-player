@@ -37,7 +37,7 @@ private:
 private:
     void        slots_setUserHead(const QString &head);
     void        slots_setUserName(const QString &nick);
-    void        slots_setUserIcon(int grade);
+    void        slots_setUserIcon(int grade,const QString &nick);
     void        slot_setUserInfo(const QString &info);
     void        slot_receivedNetworkPicture(QNetworkReply* reply);
 

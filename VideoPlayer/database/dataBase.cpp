@@ -897,12 +897,12 @@ bool dataBase::video_recDramaInfo()
     {
         while (query.next())
         {
-            int id              =   query.value(0).toInt();
-            QString alias       =   query.value(1).toString();
-            QString url         =   query.value(2).toString();
-            QString duration    =   query.value(3).toString();
-            QString cover       =   query.value(4).toString();
-            QString uplove      =   query.value(5).toString();
+            int id              =   query.value(0).toInt();     //id
+            QString alias       =   query.value(1).toString();  //标题说明
+            QString url         =   query.value(2).toString();  //播放地址url
+            QString duration    =   query.value(3).toString();  //时长
+            QString cover       =   query.value(4).toString();  //封面url
+            QString uplove      =   query.value(5).toString();  //点赞
             MusicData musicData;//结构体定义的头文件一定要添加进来
             musicData.id        =   id;
             musicData.alias     =   alias;
@@ -914,7 +914,8 @@ bool dataBase::video_recDramaInfo()
             musicdata.setValue(musicData);
 //            qDebug() << "finded drama video info = "
 //                     << id << alias <<url <<duration << cover << uplove;
-            emit sig_sendVideoDramaInfo(musicdata);
+            emit sig_sendVideoDramaInfo(musicdata);//推荐视频用
+            emit sig_sendVideoDramaUrl(id,url);//主界面播放用
         }
     }
     else

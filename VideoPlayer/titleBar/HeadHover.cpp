@@ -25,8 +25,8 @@ void HeadHover::initWorkUI()
 
     QListWidgetItem *item1 = new QListWidgetItem(QIcon("://images/user/user_zhuye.png"),QString::fromLocal8Bit("个人主页"));
     QListWidgetItem *item2 = new QListWidgetItem(QIcon("://images/user/user_vipcenter.png"),QString::fromLocal8Bit("会员中心"));
-    QListWidgetItem *item3 = new QListWidgetItem(QIcon("://images/user/user_songlist.png"),QString::fromLocal8Bit("还原歌单"));
-    QListWidgetItem *item4 = new QListWidgetItem(QIcon("://images/user/user_changepwd.png"),QString::fromLocal8Bit("修改密码"));
+    QListWidgetItem *item3 = new QListWidgetItem(QIcon("://images/user/user_changepwd.png"),QString::fromLocal8Bit("修改密码"));
+    QListWidgetItem *item4 = new QListWidgetItem(QIcon("://images/user/user_songlist.png"),QString::fromLocal8Bit("注销账号"));
     QListWidgetItem *item5 = new QListWidgetItem(QIcon("://images/user/user_exit.png"),QString::fromLocal8Bit("退出登录"));
     ui->listWidget_menu->addItem(item1);
     ui->listWidget_menu->addItem(item2);
@@ -34,7 +34,9 @@ void HeadHover::initWorkUI()
     ui->listWidget_menu->addItem(item4);
     ui->listWidget_menu->addItem(item5);
     ui->listWidget_menu->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-    slots_setUserIcon(1);
+    ui->listWidget_menu->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_menu->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    slots_setUserIcon(1,"visitor");
 
     //遮罩
     QRegion maskRegion(ui->label_head->rect(),QRegion::Ellipse);//创建圆形遮罩
@@ -56,7 +58,7 @@ void HeadHover::slot_setCurrentUserInfo(const QString &head="", const QString &n
 {
     slots_setUserHead(head);
     slots_setUserName(nick);
-    slots_setUserIcon(grade);
+    slots_setUserIcon(grade,nick);
     slot_setUserInfo(info);
 }
 
@@ -72,29 +74,39 @@ void HeadHover::slots_setUserName(const QString& nick)
     QFontMetrics   fontMetric = QFontMetrics(font);
     QString text = fontMetric.elidedText(nick,Qt::ElideRight,130,0);
     ui->pushButton_userName->setText(text);
-    ui->pushButton_userName->setToolTip(nick);
-    ui->pushButton_userName->setText(nick);
 }
 
-void HeadHover::slots_setUserIcon(int grade)
+void HeadHover::slots_setUserIcon(int grade,const QString &nick)
 {
 //    ui->pushButton_userName->setLayoutDirection(Qt::RightToLeft);//图标放在右侧
     switch (grade)
     {
     case 0:
+    {
         ui->pushButton_userName->setIcon(QIcon("://images/user/user_visitor.png"));
+        ui->pushButton_userName->setToolTip(nick + QString::fromLocal8Bit("(普通游客)"));
+    }
         break;
     case 1:
+    {
         ui->pushButton_userName->setIcon(QIcon("://images/user/user_vip.png"));
+        ui->pushButton_userName->setToolTip(nick + QString::fromLocal8Bit("(注册用户)"));
+    }
         break;
     case 2:
+    {
         ui->pushButton_userName->setIcon(QIcon("://images/user/user_suvip.png"));
+        ui->pushButton_userName->setToolTip(nick + QString::fromLocal8Bit("(普通会员)"));
+    }
         break;
     case 3:
+    {
         ui->pushButton_userName->setIcon(QIcon("://images/user/user_ssvip.png"));
+        ui->pushButton_userName->setToolTip(nick + QString::fromLocal8Bit("(超级会员)"));
+    }
         break;
     default:
-        ui->pushButton_userName->setIcon(QIcon("://images/user/user_vipcenter.png"));
+        ui->pushButton_userName->setIcon(QIcon("://images/user/user_zhuye.png"));
         break;
     }
 }

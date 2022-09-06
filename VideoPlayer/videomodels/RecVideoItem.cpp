@@ -11,7 +11,7 @@ RecVideoItem::RecVideoItem(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setFixedHeight(85);
-    this->setFixedWidth(250);
+    this->setFixedWidth(260);
     handleSignalsAndSlots();
     manager = new QNetworkAccessManager(this);
     ui->label_videoPic->installEventFilter(this);

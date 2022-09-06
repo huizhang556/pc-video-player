@@ -59,17 +59,17 @@ int main(int argc, char *argv[])
     dataBase::readXML(Global::appDirPath + "/config/config.xml");
     dataBase::creatMysqlConnection();//连接数据库,有数据的必须先连接数据库
 
-    //03--->注册解码器
-    if(!Global::getRegisStatus())
-    {
-        qDebug() << QString::fromLocal8Bit("播放器还未注册！");
-        Global::registerLAVplayer();
-        Global::setIni();
-    }
-    else
-    {
-        qDebug() << QString::fromLocal8Bit("播放器已经注册！");
-    }
+    //03--->注册解码器(记得打开管理员权限)
+//    if(!Global::getRegisStatus())
+//    {
+//        qDebug() << QString::fromLocal8Bit("播放器还未注册！");
+//        Global::registerLAVplayer();
+//        Global::setIni();
+//    }
+//    else
+//    {
+//        qDebug() << QString::fromLocal8Bit("播放器已经注册！");
+//    }
 
     //04--->开机启动屏幕
     QPixmap pixmap(Global::appDirPath + "/pictures/splashscreen/splash1.gif");

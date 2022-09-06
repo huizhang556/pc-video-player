@@ -78,13 +78,13 @@
           <widget class="QFrame" name="frame_return">
            <property name="minimumSize">
             <size>
-             <width>110</width>
+             <width>120</width>
              <height>40</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>110</width>
+             <width>120</width>
              <height>40</height>
             </size>
            </property>
@@ -117,13 +117,13 @@
              <widget class="QPushButton" name="pushButton_return">
               <property name="minimumSize">
                <size>
-                <width>100</width>
+                <width>120</width>
                 <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>100</width>
+                <width>120</width>
                 <height>30</height>
                </size>
               </property>
@@ -204,18 +204,17 @@ color: #06e1f4;
                <property name="font">
                 <font>
                  <family>楷体</family>
-                 <pointsize>14</pointsize>
-                 <weight>87</weight>
+                 <pointsize>13</pointsize>
+                 <weight>50</weight>
                  <italic>false</italic>
-                 <bold>true</bold>
+                 <bold>false</bold>
                 </font>
                </property>
                <property name="styleSheet">
                 <string notr="true">QLabel
 {
-color:#00aaff;
-font: 14pt &quot;楷体&quot;;
-font-weight:700;
+color:#29aae2;
+font: 13pt &quot;楷体&quot;;
 padding-left:40px;
 }
 </string>

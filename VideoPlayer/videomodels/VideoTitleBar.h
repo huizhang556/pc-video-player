@@ -20,14 +20,14 @@ public:
 public slots:
     void setTitleStackWidgetPage(int index);
     void chandleVMainWinStatus(bool status);
+    void clearTitleText();
+    void setTitleText(const QString & text);
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
 
 private slots:
-    void setTitleText(const QString & text);
-    void clearTitleText();
 
 private:
     Ui::VideoTitleBar *ui;

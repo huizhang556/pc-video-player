@@ -25,29 +25,29 @@ RecomVideoTab::~RecomVideoTab()
 
 void RecomVideoTab::initWorkUI()
 {
-                  m_tempVideoList
-                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp001.flv")
-                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp002.flv")
-                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp003.flv")
-                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp004.flv")
-                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp005.flv")
-                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp006.flv")
-                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp007.flv")
-                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp008.flv")
-                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp009.flv")
-                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp010.flv");
+//                  m_tempVideoList
+//                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp001.flv")
+//                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp002.flv")
+//                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp003.flv")
+//                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp004.flv")
+//                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp005.flv")
+//                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp006.flv")
+//                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp007.flv")
+//                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp008.flv")
+//                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp009.flv")
+//                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp010.flv");
 
-                  m_tempInfoList
-                  <<QString::fromLocal8Bit("测试视频-剧集列表-赵本山改革春风吹满地，中国人民真争气")
-                  <<QString::fromLocal8Bit("测试视频-剧集列表-中国好声音-谁还能记得，匆匆往事")
-                  <<QString::fromLocal8Bit("测试视频-剧集列表-中国好声音-beyond-海阔天空")
-                  <<QString::fromLocal8Bit("测试视频-剧集列表-中国好声音-面筋哥-波澜不惊")
-                  <<QString::fromLocal8Bit("测试视频-剧集列表-小米-雷军-are you ok?")
-                  <<QString::fromLocal8Bit("测试视频-剧集列表-侯翠翠-团队后面的重要性")
-                  <<QString::fromLocal8Bit("测试视频-剧集列表-侯翠翠-谁拿上班当回事儿")
-                  <<QString::fromLocal8Bit("测试视频-剧集列表-面筋哥-让风儿自由的行走")
-                  <<QString::fromLocal8Bit("测试视频-剧集列表-面筋哥-努力自有回报一切都将会到来")
-                  <<QString::fromLocal8Bit("测试视频-剧集列表-侯翠翠-考什么研还不如躺平");
+//                  m_tempInfoList
+//                  <<QString::fromLocal8Bit("测试视频-剧集列表-赵本山改革春风吹满地，中国人民真争气")
+//                  <<QString::fromLocal8Bit("测试视频-剧集列表-中国好声音-谁还能记得，匆匆往事")
+//                  <<QString::fromLocal8Bit("测试视频-剧集列表-中国好声音-beyond-海阔天空")
+//                  <<QString::fromLocal8Bit("测试视频-剧集列表-中国好声音-面筋哥-波澜不惊")
+//                  <<QString::fromLocal8Bit("测试视频-剧集列表-小米-雷军-are you ok?")
+//                  <<QString::fromLocal8Bit("测试视频-剧集列表-侯翠翠-团队后面的重要性")
+//                  <<QString::fromLocal8Bit("测试视频-剧集列表-侯翠翠-谁拿上班当回事儿")
+//                  <<QString::fromLocal8Bit("测试视频-剧集列表-面筋哥-让风儿自由的行走")
+//                  <<QString::fromLocal8Bit("测试视频-剧集列表-面筋哥-努力自有回报一切都将会到来")
+//                  <<QString::fromLocal8Bit("测试视频-剧集列表-侯翠翠-考什么研还不如躺平");
 
 
 
@@ -98,6 +98,11 @@ void RecomVideoTab::handleSignalsAndSLots()
     });
 }
 
+QStringList RecomVideoTab::slot_getDramaList()
+{
+    return m_tempVideoList;
+}
+
 void RecomVideoTab::slot_setCurrentVideoPicture(const QString &path)
 {
     QPixmap pix(path);
@@ -118,6 +123,8 @@ bool RecomVideoTab::slot_addRecVideoItem(QVariant musicVariant)
     item->setSizeHint(videoItem->size());//留出来1px的边框
     ui->listWidget_recommend->addItem(item);
     ui->listWidget_recommend->setItemWidget(item,videoItem);
+    m_tempVideoList.append(data.url);
+    m_tempInfoList.append(data.alias);
 
     //信号与槽函数
     connect(videoItem,&RecVideoItem::sig_sendVideoUrl,[=](){
@@ -135,6 +142,8 @@ bool RecomVideoTab::slot_addRecVideoItem(QString url, QString path, QString time
     item->setSizeHint(videoItem->size());//留出来1px的边框
     ui->listWidget_recommend->addItem(item);
     ui->listWidget_recommend->setItemWidget(item,videoItem);
+    m_tempVideoList.append(url);
+    m_tempInfoList.append(info);
 
     //信号与槽函数
     connect(videoItem,&RecVideoItem::sig_sendVideoUrl,[=](){
@@ -143,6 +152,11 @@ bool RecomVideoTab::slot_addRecVideoItem(QString url, QString path, QString time
         qDebug() <<QString::fromLocal8Bit("已发送临时播放连接url:")<<item->text();
     });
     return true;
+}
+
+void RecomVideoTab::slot_setListWidgetCurrentIndex(int index)
+{
+    ui->listWidget_recommend->setCurrentRow(index);
 }
 
 void RecomVideoTab::slots_switchTurn()

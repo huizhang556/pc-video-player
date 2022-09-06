@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1227</width>
-    <height>363</height>
+    <width>1002</width>
+    <height>362</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -53,8 +53,8 @@
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="minimumSize">
         <size>
-         <width>0</width>
-         <height>0</height>
+         <width>600</width>
+         <height>300</height>
         </size>
        </property>
        <property name="styleSheet">
@@ -80,7 +80,7 @@ margin:0px;
       <widget class="QStackedWidget" name="stackedWidget_player">
        <property name="minimumSize">
         <size>
-         <width>0</width>
+         <width>1000</width>
          <height>60</height>
         </size>
        </property>
