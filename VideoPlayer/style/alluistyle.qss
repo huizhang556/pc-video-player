@@ -130,7 +130,24 @@ color: white;
 /*******************03排行榜******************/
 
 /*******************04歌单分类****************/
+QFrame#frame_style QPushButton
+{
+background-color: transparent;
+color: #fbfbfc;
+font: 75 10pt "Microsoft YaHei UI";
+}
 
+QFrame#frame_style QPushButton:hover
+{
+color: #fca60b;
+}
+
+QFrame#frame_style QPushButton:checked
+{
+background-color: #46a0ef;
+border-radius: 12px;
+color: white;
+}
 /*******************05主播电台****************/
 
 /*******************06音乐现场****************/

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1317</width>
+    <width>1322</width>
     <height>459</height>
    </rect>
   </property>
@@ -43,7 +43,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QFrame" name="frame">
+           <widget class="QFrame" name="frame_selectStyle">
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -54,22 +54,48 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_3">
                <item>
-                <widget class="QComboBox" name="comboBox">
+                <widget class="QToolButton" name="toolButton">
                  <property name="minimumSize">
                   <size>
                    <width>70</width>
                    <height>26</height>
                   </size>
                  </property>
-                 <item>
-                  <property name="text">
-                   <string>80后</string>
-                  </property>
-                 </item>
+                 <property name="styleSheet">
+                  <string notr="true">QToolButton
+{
+background-color: #294c5b;
+border: 1px solid #87f61f;
+color: white;
+border-radius:4px;
+padding-left:5px;
+}
+
+QToolButton:hover
+{
+color: white;
+}
+
+QToolButton:checked
+{
+background-color: #b01430;
+color: white;
+border: 1px solid #87f61f;
+}
+
+/*添加菜单后去掉右下角小箭头*/
+QToolButton::menu-indicator
+{
+image:none;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string>80后</string>
+                 </property>
                 </widget>
                </item>
                <item>
-                <spacer name="horizontalSpacer">
+                <spacer name="horizontalSpacer_3">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
@@ -81,13 +107,158 @@
                  </property>
                 </spacer>
                </item>
+               <item>
+                <widget class="QFrame" name="frame_3">
+                 <property name="minimumSize">
+                  <size>
+                   <width>120</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>110</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_5">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_5">
+                    <property name="spacing">
+                     <number>5</number>
+                    </property>
+                    <item>
+                     <widget class="QPushButton" name="pushButton_new">
+                      <property name="minimumSize">
+                       <size>
+                        <width>50</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>50</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton
+{
+background-color: #242e3c;
+border-radius: 10px;
+color: white;
+
+}
+
+QPushButton:hover
+{
+color: white;
+}
+
+QPushButton:checked
+{
+background-color: #505863;
+border-radius: 10px;
+color: white;
+}</string>
+                      </property>
+                      <property name="text">
+                       <string>最新</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="Line" name="line">
+                      <property name="minimumSize">
+                       <size>
+                        <width>1</width>
+                        <height>18</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>1</width>
+                        <height>18</height>
+                       </size>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="pushButton_hot">
+                      <property name="minimumSize">
+                       <size>
+                        <width>50</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>50</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton
+{
+background-color: #242e3c;
+border-radius: 10px;
+color: white;
+
+}
+
+QPushButton:hover
+{
+color: white;
+}
+
+QPushButton:checked
+{
+background-color: #505863;
+border-radius: 10px;
+color: white;
+}</string>
+                      </property>
+                      <property name="text">
+                       <string>最热</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
               </layout>
              </item>
             </layout>
            </widget>
           </item>
           <item>
-           <widget class="QFrame" name="frame_2">
+           <widget class="QFrame" name="frame_style">
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -105,13 +276,19 @@
                    <height>26</height>
                   </size>
                  </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel
+{
+color: white;
+}</string>
+                 </property>
                  <property name="text">
                   <string>热门标签：</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton">
+                <widget class="QPushButton" name="pushButton_mark1">
                  <property name="minimumSize">
                   <size>
                    <width>50</width>
@@ -124,7 +301,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_2">
+                <widget class="QPushButton" name="pushButton_mark2">
                  <property name="minimumSize">
                   <size>
                    <width>50</width>
@@ -137,7 +314,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_3">
+                <widget class="QPushButton" name="pushButton_mark3">
                  <property name="minimumSize">
                   <size>
                    <width>50</width>
@@ -150,7 +327,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_4">
+                <widget class="QPushButton" name="pushButton_mark4">
                  <property name="minimumSize">
                   <size>
                    <width>50</width>
@@ -163,7 +340,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_6">
+                <widget class="QPushButton" name="pushButton_mark5">
                  <property name="minimumSize">
                   <size>
                    <width>50</width>
@@ -176,7 +353,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_7">
+                <widget class="QPushButton" name="pushButton_mark6">
                  <property name="minimumSize">
                   <size>
                    <width>50</width>
@@ -212,7 +389,21 @@
       </widget>
      </item>
      <item>
-      <widget class="QListWidget" name="listWidget"/>
+      <widget class="QListWidget" name="listWidget_markItem">
+       <property name="styleSheet">
+        <string notr="true">QListWidget
+{
+border:none;
+background-color: #2a2a31;
+}
+
+QListWidget::item
+{
+color: transparent;
+}
+</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

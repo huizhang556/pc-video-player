@@ -15,7 +15,9 @@ SOURCES += \
     $$PWD/recommend/Slideshow.cpp \
     $$PWD/recommend/StackItem.cpp \
     $$PWD/recommend/StackItemForm.cpp \
-    $$PWD/songersort/SongItem.cpp
+    $$PWD/songersort/SongItem.cpp \
+    $$PWD/songlistsort/TagsItem.cpp \
+    $$PWD/songlistsort/TagsMenu.cpp
 
 HEADERS += \
     $$PWD/songersort/SongerSort.h \
@@ -34,7 +36,9 @@ HEADERS += \
     $$PWD/recommend/Slideshow.h \
     $$PWD/recommend/StackItem.h \
     $$PWD/recommend/StackItemForm.h \
-    $$PWD/songersort/SongItem.h
+    $$PWD/songersort/SongItem.h \
+    $$PWD/songlistsort/TagsItem.h \
+    $$PWD/songlistsort/TagsMenu.h
 
 FORMS += \
     $$PWD/songersort/SongerSort.ui \
@@ -52,5 +56,7 @@ FORMS += \
     $$PWD/recommend/Slideshow.ui \
     $$PWD/recommend/StackItem.ui \
     $$PWD/recommend/StackItemForm.ui \
-    $$PWD/songersort/SongItem.ui
+    $$PWD/songersort/SongItem.ui \
+    $$PWD/songlistsort/TagsItem.ui \
+    $$PWD/songlistsort/TagsMenu.ui
 

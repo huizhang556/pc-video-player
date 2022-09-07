@@ -411,5 +411,7 @@
         <file>images/user/user_vip.png</file>
         <file>images/user/user_ssvip.png</file>
         <file>images/user/user_visitor.png</file>
+        <file>images/home/toolbutton_next.png</file>
+        <file>images/home/toolbutton_up.png</file>
     </qresource>
 </RCC>
