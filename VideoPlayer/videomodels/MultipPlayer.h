@@ -67,7 +67,9 @@ public:
 
     void    chandleSignalAndSLots();
 
-    void    addToPlaylist(QMediaPlaylist* mylist,const QStringList& fileNames);
+    void    addToPlaylist(QMediaPlaylist* mylist,const QStringList& fileNames);//重载1
+
+    void    addToPlaylist(QMediaPlaylist* mylist,const QString& fileName);//重载2
 
     void    addFileToList(const QStringList &strList);//浮动歌曲列表
 

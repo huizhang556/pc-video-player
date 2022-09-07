@@ -310,6 +310,7 @@ void MultipPlayer::chandleSignalAndSLots()
     connect(dataBase::getInstance(),&dataBase::sig_sendVideoDramaUrl,[=](int id,QString url){
         m_tempList.append(url);//临时列表添加
         m_t_MapList.insert(id,url);
+        addToPlaylist(playlist_t,url);
     });
     //查看评论
     connect(ui->pushButton_comments,&QPushButton::clicked,[=](){ showMediaCommentTab();});
@@ -402,10 +403,12 @@ void MultipPlayer::chandleSignalAndSLots()
         if(m_player->playlist() == playlist)
         {
             m_videoTitleBar->setTitleText(nameUrl);
+            qDebug() << QString::fromLocal8Bit("正式列表，设置了标题栏名称~");
         }
-        else
+        else if(m_player->playlist() == playlist_t)
         {
             m_videoTitleBar->clearTitleText();
+            qDebug() << QString::fromLocal8Bit("临时列表，清空了标题栏名称~");
         }
     });
     //进度条上方显示当前播放媒体歌名
@@ -453,6 +456,8 @@ void MultipPlayer::chandleSignalAndSLots()
             slot_setMainCurrentIndex(1);
             setCollectBtnShowStatus();//处理所有的item改变时的操作
             slot_updateRateTypeUiLayout();//速率恢复正常
+            m_videoTitleBar->clearTitleText();
+            ui->label_media_name->clear();
         }
 
     });
@@ -471,7 +476,9 @@ void MultipPlayer::chandleSignalAndSLots()
             slot_setMainCurrentIndex(1);
             setCollectBtnShowStatus();//处理所有的item改变时的操作
             slot_updateRateTypeUiLayout();//速率恢复正常
-            emit sig_playlistCurrentIndex(index);
+            emit sig_playlistCurrentIndex(index);//item样式
+            m_videoTitleBar->clearTitleText();
+            ui->label_media_name->clear();
         }
 
     });
@@ -555,7 +562,7 @@ void MultipPlayer::chandleSignalAndSLots()
         if(m_player->playlist() != playlist_t)
         {
             slot_switchPlayerList(playlist_t);//切换为临时列表
-            addToPlaylist(playlist_t,m_tempList);
+//            addToPlaylist(playlist_t,m_tempList);
         }
         slot_addPlayTempMedia(url);
     });
@@ -675,6 +682,31 @@ void MultipPlayer::addToPlaylist(QMediaPlaylist *mylist, const QStringList &file
             {
                 mylist->addMedia(url);
             }
+        }
+    }
+}
+
+void MultipPlayer::addToPlaylist(QMediaPlaylist *mylist, const QString &fileName)
+{
+    QFileInfo fileInfo(fileName);
+    if (fileInfo.exists())
+    {
+        QUrl url = QUrl::fromLocalFile(fileInfo.absoluteFilePath());
+        if (fileInfo.suffix().toLower() == QLatin1String("m3u"))
+        {
+            mylist->load(url);
+        }
+        else
+        {
+            mylist->addMedia(url);
+        }
+    }
+    else
+    {
+        QUrl url(fileName);
+        if (url.isValid())
+        {
+            mylist->addMedia(url);
         }
     }
 }
@@ -998,6 +1030,7 @@ void MultipPlayer::on_pushButton_5_clicked()
                 m_playerState = QMediaPlayer::PlayingState;
                 m_newStart = true;
             });
+            slot_switchPlayerList(playlist);//转换为当前列表
             m_player->play();//调试暂停2022-05-14
             slot_setMainCurrentIndex(1);
         }
@@ -1049,6 +1082,7 @@ void MultipPlayer::on_pushButton_6_clicked()
             m_listWisget3->clear();
             addFileToList(m_fileNames);
             fileType(m_fileNames,0);//判断文件类型并作出界面反应
+            slot_switchPlayerList(playlist);//转换为当前列表
             m_player->play();//调试暂停 2022-05-14
             slot_setMainCurrentIndex(1);
             m_playerState = QMediaPlayer::PlayingState;
@@ -1110,7 +1144,7 @@ void MultipPlayer::slot_updateRateTypeUiLayout()
 /*播放and暂停*/
 void MultipPlayer::on_pushButton_pauseStart_clicked()
 {
-    if(m_listWisget2->count() == 0) return;
+    if(slot_getCurrentPlayList()->mediaCount() == 0) return;
     ui->pushButton_pauseStart->setFocusPolicy(Qt::NoFocus);//点击按钮后去掉虚线框
     if(m_playerState == QMediaPlayer::PlayingState)
     {
@@ -1273,22 +1307,6 @@ void MultipPlayer::checkChandleMediaStatus()
     }
 }
 
-/*上一首播放按钮*/
-void MultipPlayer::on_pushButton_previous_clicked()
-{
-    m_player->pause();
-    m_playerState = QMediaPlayer::PausedState;
-//    int row = playlist->mediaCount();
-    int current = slot_getCurrentPlayList()->currentIndex();
-    if(--current < 0)//先做--运算，在比较
-        {
-        current = 0;//第一首不能再往前
-    }
-    slot_getCurrentPlayList()->setCurrentIndex(current);
-    fileType(current);
-    m_player->play();
-    m_playerState = QMediaPlayer::PlayingState;
-}
 
 //接收托盘发过来的音量信号
 void MultipPlayer::slot_receiveSystemTraySendSoundValue(int value)
@@ -1361,6 +1379,23 @@ QMediaPlaylist *MultipPlayer::slot_getCurrentPlayList()
     return m_player->playlist();
 }
 
+/*上一首播放按钮*/
+void MultipPlayer::on_pushButton_previous_clicked()
+{
+    m_player->pause();
+    m_playerState = QMediaPlayer::PausedState;
+//    int row = playlist->mediaCount();
+    int current = slot_getCurrentPlayList()->currentIndex();
+    if(--current < 0)//先做--运算，在比较
+        {
+        current = 0;//第一首不能再往前
+    }
+    slot_getCurrentPlayList()->setCurrentIndex(current);
+//    fileType(current);
+    m_player->play();
+    m_playerState = QMediaPlayer::PlayingState;
+}
+
 /*下一首播放按钮*/
 void MultipPlayer::on_pushButton_next_clicked()
 {
@@ -1373,7 +1408,7 @@ void MultipPlayer::on_pushButton_next_clicked()
         current = row;//最后一首不能再往后
     }
     slot_getCurrentPlayList()->setCurrentIndex(current);
-    fileType(current);
+//    fileType(current);
     m_player->play();
     m_playerState = QMediaPlayer::PlayingState;
 }
@@ -2524,10 +2559,12 @@ void MultipPlayer::slot_setCurrentMediaName(QString name)
         QString filename = name.left(pos);//从pos位置向左侧截取
         ui->label_media_name->setText(filename);
         FloatPlayCtl::getInstance()->slot_setMediaPlayName(filename);
+        qDebug() << QString::fromLocal8Bit("正式列表，设置了控制栏和浮动控制名称~");
     }
-    else
+    else if(m_player->playlist() == playlist_t)
     {
         ui->label_media_name->clear();
+        qDebug() << QString::fromLocal8Bit("临时列表，清空了控制栏和浮动控制名称~");
     }
 }
 
