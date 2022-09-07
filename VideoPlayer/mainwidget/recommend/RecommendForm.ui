@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>950</width>
+    <width>972</width>
     <height>404</height>
    </rect>
   </property>
@@ -438,10 +438,8 @@ font-weight:700;
 </string>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>-1</number>
          </property>
-         <widget class="QWidget" name="page"/>
-         <widget class="QWidget" name="page_2"/>
         </widget>
        </item>
       </layout>

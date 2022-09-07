@@ -100,6 +100,43 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #0f2028, 
 color: #008bb5;
 }
 
+/*******************01精选********************/
+QWidget#widget_songer  QPushButton
+{
+background-color: transparent;
+color: #fbfbfc;
+font: 75 10pt "Microsoft YaHei UI";
+}
+
+QWidget#widget_songer  QPushButton:hover
+{
+color: #fca60b;
+}
+
+QWidget#widget_songer  QPushButton:checked
+{
+background-color: #46a0ef;
+border-radius: 15px;
+color: white;
+}
+
+#pushButton_fasthot
+{
+
+}
+
+/*******************02歌手********************/
+
+/*******************03排行榜******************/
+
+/*******************04歌单分类****************/
+
+/*******************05主播电台****************/
+
+/*******************06音乐现场****************/
+
+/*******************07会员专区****************/
+
 /*侧边栏底部--展开按钮*/
 #m_expandBtn
 {
@@ -987,7 +1024,7 @@ font-weight: bold;
 /*右侧整个播放列表父亲m_widget1*/
 #m_widget1
 {
-background-color: #072957；
+background-color: #072957;
 border:1px solid transapent;
 border-left-color: #3f4042;
 }

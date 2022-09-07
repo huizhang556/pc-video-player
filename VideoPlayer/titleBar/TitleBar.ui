@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1007</width>
+    <width>1216</width>
     <height>52</height>
    </rect>
   </property>
@@ -74,7 +74,7 @@
             <string notr="true">#stackedWidget_login
 {
 background-color: transparent;
-border:none;
+border: 0px solid #909090;
 }</string>
            </property>
            <property name="currentIndex">
@@ -232,6 +232,28 @@ color: #ff5500;
                  </property>
                 </spacer>
                </item>
+               <item>
+                <widget class="Line" name="line_2">
+                 <property name="minimumSize">
+                  <size>
+                   <width>1</width>
+                   <height>36</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>1</width>
+                   <height>36</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: #44444f;</string>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </item>
             </layout>
@@ -346,6 +368,28 @@ border-image: url(:/images/icon/zuanshi_hover.png);
                    </property>
                    <property name="text">
                     <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="Line" name="line_3">
+                   <property name="minimumSize">
+                    <size>
+                     <width>1</width>
+                     <height>36</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>1</width>
+                     <height>36</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: #44444f;</string>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
                    </property>
                   </widget>
                  </item>

@@ -3,7 +3,7 @@
 #include "login/Login.h"
 #include "skin/MySkin.h"
 #include "titlebar/HeadHover.h"
-#include "mainwidget/SearchForm.h"
+#include "mainwidget/recommend/SearchForm.h"
 #include "login/LoginPersonInfo.h"
 #include "browser/WebDownLoadList.h"
 

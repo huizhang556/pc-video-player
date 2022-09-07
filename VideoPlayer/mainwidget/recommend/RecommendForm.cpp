@@ -57,6 +57,7 @@ void RecommendForm::initWorkUI()
 
     addToStackWidgetPage();
     setSelectButtonText();
+    ui->widget_select->setHidden(true);//隐藏
 }
 
 void RecommendForm::chandleSignalsAndSlots()

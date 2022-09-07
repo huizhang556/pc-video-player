@@ -1,29 +1,56 @@
 SOURCES += \
-    $$PWD/Slideshow.cpp \
-    $$PWD/SearchForm.cpp \
-    $$PWD/RecommendForm.cpp \
-    $$PWD/GalleryItemForm.cpp \
-    $$PWD/CentralHomeForm.cpp \
-    $$PWD/PicWallItem.cpp \
-    $$PWD/StackItemForm.cpp \
-    $$PWD/StackItem.cpp
+    $$PWD/songersort/SongerSort.cpp \
+    $$PWD/rankinglist/RankingList.cpp \
+    $$PWD/songlistsort/SonglistSort.cpp \
+    $$PWD/radiohost/RadioHost.cpp \
+    $$PWD/musicscene/MusicScene.cpp \
+    $$PWD/vipmember/VipMember.cpp \
+    $$PWD/HomeWidget.cpp \
+    $$PWD/SelectButtons.cpp \
+    $$PWD/recommend/CentralHomeForm.cpp \
+    $$PWD/recommend/GalleryItemForm.cpp \
+    $$PWD/recommend/PicWallItem.cpp \
+    $$PWD/recommend/RecommendForm.cpp \
+    $$PWD/recommend/SearchForm.cpp \
+    $$PWD/recommend/Slideshow.cpp \
+    $$PWD/recommend/StackItem.cpp \
+    $$PWD/recommend/StackItemForm.cpp \
+    $$PWD/songersort/SongItem.cpp
 
 HEADERS += \
-    $$PWD/Slideshow.h \
-    $$PWD/SearchForm.h \
-    $$PWD/RecommendForm.h \
-    $$PWD/GalleryItemForm.h \
-    $$PWD/CentralHomeForm.h \
-    $$PWD/PicWallItem.h \
-    $$PWD/StackItemForm.h \
-    $$PWD/StackItem.h
+    $$PWD/songersort/SongerSort.h \
+    $$PWD/rankinglist/RankingList.h \
+    $$PWD/songlistsort/SonglistSort.h \
+    $$PWD/radiohost/RadioHost.h \
+    $$PWD/musicscene/MusicScene.h \
+    $$PWD/vipmember/VipMember.h \
+    $$PWD/HomeWidget.h \
+    $$PWD/SelectButtons.h \
+    $$PWD/recommend/CentralHomeForm.h \
+    $$PWD/recommend/GalleryItemForm.h \
+    $$PWD/recommend/PicWallItem.h \
+    $$PWD/recommend/RecommendForm.h \
+    $$PWD/recommend/SearchForm.h \
+    $$PWD/recommend/Slideshow.h \
+    $$PWD/recommend/StackItem.h \
+    $$PWD/recommend/StackItemForm.h \
+    $$PWD/songersort/SongItem.h
 
 FORMS += \
-    $$PWD/Slideshow.ui \
-    $$PWD/SearchForm.ui \
-    $$PWD/RecommendForm.ui \
-    $$PWD/GalleryItemForm.ui \
-    $$PWD/PicWallItem.ui \
-    $$PWD/StackItemForm.ui \
-    $$PWD/StackItem.ui
+    $$PWD/songersort/SongerSort.ui \
+    $$PWD/rankinglist/RankingList.ui \
+    $$PWD/songlistsort/SonglistSort.ui \
+    $$PWD/radiohost/RadioHost.ui \
+    $$PWD/musicscene/MusicScene.ui \
+    $$PWD/vipmember/VipMember.ui \
+    $$PWD/HomeWidget.ui \
+    $$PWD/SelectButtons.ui \
+    $$PWD/recommend/GalleryItemForm.ui \
+    $$PWD/recommend/PicWallItem.ui \
+    $$PWD/recommend/RecommendForm.ui \
+    $$PWD/recommend/SearchForm.ui \
+    $$PWD/recommend/Slideshow.ui \
+    $$PWD/recommend/StackItem.ui \
+    $$PWD/recommend/StackItemForm.ui \
+    $$PWD/songersort/SongItem.ui
 

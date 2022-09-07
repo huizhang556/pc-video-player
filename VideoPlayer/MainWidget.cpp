@@ -46,6 +46,10 @@ void MainWidget::initOtherWidgetUi()
     m_leftButton->setObjectName(QString::fromLocal8Bit("m_leftButton"));
     m_leftButton->setFixedSize(20,60);
 
+    //首页推荐
+    m_homeWidget = new HomeWidget();
+    m_homeWidget->setObjectName(QString::fromLocal8Bit("m_homeWidget"));
+
     m_mainPlayer = new MultipPlayer();
     m_mainPlayer->setObjectName(QString::fromLatin1("m_mainPlayer"));
 
@@ -119,6 +123,7 @@ void MainWidget::initOtherWidgetUi()
     m_webStackWgt->addWidget(m_webHistory);//2 浏览器浏览历史
     m_webStackWgt->setCurrentWidget(m_webWidget);
 
+
     m_fileTrans = new FilesTrans();
     m_fileTrans->setObjectName(QString::fromLocal8Bit("m_fileTrans"));
 
@@ -131,9 +136,6 @@ void MainWidget::initOtherWidgetUi()
 
     m_systemSetting = new SystemSetting();
     m_systemSetting->setObjectName(QString::fromLocal8Bit("m_systemSetting"));
-
-    m_homeWdgt = new CentralHomeForm();
-    m_homeWdgt->setObjectName(QString::fromLocal8Bit("m_homeWdgt"));
 
     //托盘
     QIcon icno(":/images/icon/tray.png");
@@ -148,8 +150,9 @@ void MainWidget::initOtherWidgetUi()
     m_stackWidget_left->insertWidget(0,m_leftSideBar);
 //    m_stackWidget_left->insertWidget(1,new CentralHomeForm());
 
-    m_vblayout = new QVBoxLayout(this);
-    m_hblayout = new QHBoxLayout(this);
+    m_vblayout          = new QVBoxLayout(this);
+    m_hblayout          = new QHBoxLayout(this);
+
     //侧边栏+QStackedWidget--->水平布局
     m_hblayout->addWidget(m_stackWidget_left,0,Qt::AlignLeft);
 //    m_hblayout->addWidget(m_stackWidget_center,1,Qt::AlignCenter);//此处不能添加布局，否则导致界面错乱
@@ -169,7 +172,7 @@ void MainWidget::initOtherWidgetUi()
 //设置StackedWidget布局每个page界面
 void MainWidget::setStackedWidgetPage()
 {
-    m_stackWidget_center->insertWidget(0,m_homeWdgt);//m_mainShowForm
+    m_stackWidget_center->insertWidget(0,m_homeWidget);//m_mainShowForm
     m_stackWidget_center->insertWidget(1,m_webStackWgt);//m_webStackWgt
     m_stackWidget_center->insertWidget(2,m_tabWidget);//m_tabWidget
     m_stackWidget_center->insertWidget(3,m_musicShow);//musicshow
@@ -182,6 +185,16 @@ void MainWidget::setStackedWidgetPage()
 void MainWidget::setLeftSliderCurrentIndex(int index)
 {
     m_stackWidget_left->setCurrentIndex(index);
+}
+
+void MainWidget::slot_setCurrentCenterStackWidget(int index)
+{
+    m_stackWidget_center->setCurrentIndex(index);
+}
+
+void MainWidget::slot_setCurrentCenterStackWidget(QString name)
+{
+//    m_stackWidget_center->setCurrentWidget();
 }
 
 //重载函数1：添加一个browser---参数为QUrl
@@ -395,6 +408,16 @@ void MainWidget::slot_removeTabWidgetTab(int index)
 //处理信号与槽函数
 void MainWidget::chandleSignalAndSlots()
 {
+    //侧边栏有关信号与槽函数处理
+    connect(m_leftSideBar,&LeftSideBar::sig_sidebarItemChange,[=](int index)
+    {
+        slot_setCurrentCenterStackWidget(index);
+        m_titleBar->isNecessaryShowSearch(index);//标题栏显示
+    });
+    //左侧边栏控制显示/隐藏的按钮
+    connect(m_leftButton,&QPushButton::clicked,[=](){
+        slot_on_leftButton_clicked();
+    });
 
     /*********************************标题栏----用户下线*************************************/
     connect(m_titleBar,&TitleBar::sig_userSign_out,[=](){
@@ -555,16 +578,7 @@ void MainWidget::chandleSignalAndSlots()
 
     //关闭主窗口，先通知标题栏，再转发登录窗口关闭
     connect(this,&MainWidget::sig_startCloseAppliction,m_titleBar,&TitleBar::receiveMainFormClose);
-    //侧边栏有关信号与槽函数处理
-    connect(m_leftSideBar,&LeftSideBar::sig_sidebarItemChange,[=](int index)
-    {
-        m_stackWidget_center->setCurrentIndex(index);
-        m_titleBar->isNecessaryShowSearch(index);
-    });
-    //左侧边栏控制显示/隐藏的按钮
-    connect(m_leftButton,&QPushButton::clicked,[=](){
-        slot_on_leftButton_clicked();
-    });
+
     connect(this,SIGNAL(sig_winStatus(bool)),m_titleBar,SLOT(chandleMainWinStatus(bool)));//标题栏处理不同状态下样式
     //空白页---打开文件
     connect(m_videoBlank,&VideoBlank::sig_openLocalFile,[=]()

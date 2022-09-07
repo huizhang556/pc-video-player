@@ -1,7 +1,7 @@
 ﻿#ifndef STACKITEMFORM_H
 #define STACKITEMFORM_H
 #include "global/Global.h"
-#include "mainwidget/StackItem.h"
+#include "mainwidget/recommend/StackItem.h"
 #include <QWidget>
 #include <QMap>
 #include <QLabel>

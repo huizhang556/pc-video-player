@@ -1,7 +1,7 @@
 ﻿#ifndef CENTRALHOMEFORM_H
 #define CENTRALHOMEFORM_H
-#include "mainwidget/RecommendForm.h"
-#include "mainwidget/GalleryItemForm.h"
+#include "mainwidget/recommend/RecommendForm.h"
+#include "mainwidget/recommend/GalleryItemForm.h"
 
 #include <QWidget>
 #include <QListWidget>

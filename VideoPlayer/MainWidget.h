@@ -22,8 +22,9 @@
 #include "musicmodels/MusicPlayShow.h"
 #include "videomodels/PlayOrderForm.h"
 #include "videomodels/VideoTitleBar.h"
-#include "mainwidget/CentralHomeForm.h"
 #include "videomodels/PersonFileForm.h"
+#include "mainwidget/HomeWidget.h"
+
 
 #include <QMenu>
 #include <QPoint>
@@ -92,10 +93,16 @@ private:
     void        setGlobalToolTip();
 
     void        userSignIn();
+
     void        userSignOut();
+
 
 private slots:
     void        slot_setWebProgreeBarValue(int value);//网页进度
+
+    void        slot_setCurrentCenterStackWidget(int index);//设置中心区域
+
+    void        slot_setCurrentCenterStackWidget(QString name);//设置中心区域
 
     void        slot_resetWebProgressBarValue();
 
@@ -184,11 +191,12 @@ private:
     QStackedWidget      *m_stackWidget_center      = nullptr;//中心显示区域
     QStackedWidget      *m_stackWidget_left        = nullptr;//左侧边栏区域
     QPushButton         *m_leftButton              = nullptr;//控制显示还是隐藏的按钮
-    QVBoxLayout         *m_vblayout                = nullptr;
-    QHBoxLayout         *m_hblayout                = nullptr;
+    QVBoxLayout         *m_vblayout                = nullptr;//标题栏+center
+    QVBoxLayout         *m_vblayout_center         = nullptr;//选择按钮+center
+    QHBoxLayout         *m_hblayout                = nullptr;//侧边栏+center
     ExitDialog          *m_pExitDlg                = nullptr;
     TitleBar            *m_titleBar                = nullptr;
-    CentralHomeForm     *m_homeWdgt                = nullptr;
+    HomeWidget          *m_homeWidget              = nullptr;//首页推荐
     PersonFileForm      *m_personForm              = nullptr;
     MultipPlayer        *m_mainPlayer              = nullptr;
     LeftSideBar         *m_leftSideBar             = nullptr;

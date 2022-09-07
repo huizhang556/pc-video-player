@@ -9,19 +9,19 @@
 #include "style/loadGlobalQss.h"
 #include "customer/SystemTray.h"
 #include "customer/CusLineEdit.h"
-#include "mainwidget/Slideshow.h"
+#include "mainwidget/recommend/Slideshow.h"
 #include "customer/CusLineEdit.h"
 #include "lunbotu/PictureWidget.h"
 #include "videomodels/CommentTab.h"
 #include "customer/CusFileDialog.h"
 #include "browser/WebDownLoadList.h"
 #include "messagebox/CusMessageBox.h"
-#include "mainwidget/RecommendForm.h"
+#include "mainwidget/recommend/RecommendForm.h"
 #include "videomodels/MultipPlayer.h"
 #include "videomodels/PersonFileForm.h"
 #include "musicmodels/SongItemForm.h"
-#include "mainwidget/StackItemForm.h"
-#include "mainwidget/GalleryItemForm.h"
+#include "mainwidget/recommend/StackItemForm.h"
+#include "mainwidget/recommend/GalleryItemForm.h"
 #include "videomodels/VideoProgressBar.h"
 #include "videomodels/RotatePic.h"
 #include "browser/DownLoadItem.h"
@@ -30,6 +30,8 @@
 #include "customer/CustomFileDialog.h"
 #include "videomodels/RecVideoItem.h"
 #include "splashscreen/CSplashScreen.h"
+
+#include "mainwidget/songersort/SongerSort.h"
 
 #include <QTranslator>
 #include <QThread>
@@ -56,8 +58,8 @@ int main(int argc, char *argv[])
 //    a.setFont(f);
 
     //02--->数据初始化（放在界面初始化完成以后）
-    dataBase::readXML(Global::appDirPath + "/config/config.xml");
-    dataBase::creatMysqlConnection();//连接数据库,有数据的必须先连接数据库
+//    dataBase::readXML(Global::appDirPath + "/config/config.xml");
+//    dataBase::creatMysqlConnection();//连接数据库,有数据的必须先连接数据库
 
     //03--->注册解码器(记得打开管理员权限)
 //    if(!Global::getRegisStatus())
@@ -72,31 +74,34 @@ int main(int argc, char *argv[])
 //    }
 
     //04--->开机启动屏幕
-    QPixmap pixmap(Global::appDirPath + "/pictures/splashscreen/splash1.gif");
-    CSplashScreen splashscream(pixmap);
+//    QPixmap pixmap(Global::appDirPath + "/pictures/splashscreen/splash1.gif");
+//    CSplashScreen splashscream(pixmap);
 //    CSplashScreen splashscream(Global::appDirPath + "/pictures/splashscreen/splash1.gif");
-    a.processEvents();
-    splashscream.show();
-    splashscream.setCursor(Qt::BlankCursor);
-    for(int i = 0; i< 10; ++i)
-    {
-        splashscream.slot_updateProgressbarValue(i*11);
-        QThread::sleep(1);
-    }
+//    a.processEvents();
+//    splashscream.show();
+//    splashscream.setCursor(Qt::BlankCursor);
+//    for(int i = 0; i< 10; ++i)
+//    {
+//        splashscream.slot_updateProgressbarValue(i*11);
+//        QThread::sleep(1);
+//    }
 
     //05--->显示主界面
     MainWidget w1;
     w1.show();
-    splashscream.finish(&w1);
+//    splashscream.finish(&w1);
 
 //    MultipPlayer w;
 //    w.show();
 
     //06--->数据恢复初始化
-    QTimer::singleShot(1500,0,[=](){
-        dataBase::getInstance()->initGlobalDate();
-    });
+//    QTimer::singleShot(1500,0,[=](){
+//        dataBase::getInstance()->initGlobalDate();
+//    });
 
+
+//    SongerSort s;
+//    s.show();
 
     //播放器注册
 //    Global::registerLAVplayer();

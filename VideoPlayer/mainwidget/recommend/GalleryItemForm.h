@@ -1,7 +1,7 @@
 ﻿#ifndef GALLERYITEMFORM_H
 #define GALLERYITEMFORM_H
 #include "global/Global.h"
-#include "mainwidget/PicWallItem.h"
+#include "mainwidget/recommend/PicWallItem.h"
 
 #include <QWidget>
 #include <QPushButton>
