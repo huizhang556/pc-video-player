@@ -167,14 +167,14 @@
                 <widget class="Line" name="line">
                  <property name="minimumSize">
                   <size>
-                   <width>2</width>
-                   <height>20</height>
+                   <width>1</width>
+                   <height>15</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>2</width>
-                   <height>20</height>
+                   <width>1</width>
+                   <height>15</height>
                   </size>
                  </property>
                  <property name="orientation">

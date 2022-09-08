@@ -932,6 +932,7 @@ void MultipPlayer::addFileToList(const QStringList &strList)
 //        w->setLayout(layout);
 
         QSqlQuery query(dataBase::getSqlDataBase());
+        //加上用户id
         query.exec(QString("insert into localmusic values(%1,'%2','%3','%4')").arg(0).arg(name).arg(path).arg((QString::fromLocal8Bit("高音品质"))));
         qDebug()<<"localmusic one data insert successful!";
 

@@ -193,13 +193,13 @@ color: white;
                       <property name="minimumSize">
                        <size>
                         <width>1</width>
-                        <height>18</height>
+                        <height>15</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
                         <width>1</width>
-                        <height>18</height>
+                        <height>15</height>
                        </size>
                       </property>
                       <property name="orientation">
@@ -272,14 +272,15 @@ color: white;
                 <widget class="QLabel" name="label">
                  <property name="minimumSize">
                   <size>
-                   <width>50</width>
+                   <width>70</width>
                    <height>26</height>
                   </size>
                  </property>
                  <property name="styleSheet">
                   <string notr="true">QLabel
 {
-color: white;
+color: white;;
+font-size: 15px;
 }</string>
                  </property>
                  <property name="text">

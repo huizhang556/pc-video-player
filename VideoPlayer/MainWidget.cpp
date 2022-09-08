@@ -653,7 +653,11 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_mainPlayer,SIGNAL(sig_currentMediaSoundValueChange(int)),FloatPlayCtl::getInstance(),SLOT(slot_setProgressbar_voice(int)));
 
     //MusicPlaylist显示数据(参数：QString--->QString)
-    connect(m_mainPlayer,&MultipPlayer::sig_sendToMusicList,m_musicList,&MusicPlaylist::addFileInfoToListView);
+//    connect(m_mainPlayer,&MultipPlayer::sig_sendToMusicList,m_musicList,&MusicPlaylist::addFileInfoToListView);
+    connect(m_mainPlayer,&MultipPlayer::sig_sendToMusicList,[=](){
+        if(dataBase::getInstance()->getSqlDataBase().isOpen())
+           m_musicList->addFileInfoToListView();
+    });
     //播放列表界面传来播放歌曲的信息
     connect(m_musicList,&MusicPlaylist::sig_selectRowIndex,[=](QModelIndex index)
     {

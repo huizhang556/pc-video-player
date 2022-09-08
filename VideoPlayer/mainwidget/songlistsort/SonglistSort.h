@@ -1,8 +1,14 @@
 ﻿#ifndef SONGLISTSORT_H
 #define SONGLISTSORT_H
 
+#include "mainwidget/songlistsort/TagsMenu.h"
+#include "mainwidget/songlistsort/TagsItem.h"
+
 #include <QWidget>
 #include <QButtonGroup>
+#include <QWidgetAction>
+#include <QAbstractButton>
+#include <QMenu>
 
 namespace Ui {
 class SonglistSort;
@@ -23,10 +29,19 @@ public slots:
     void        slot_setCheckedButton(QAbstractButton* button);
     void        slot_showTagsMenu();
 
+protected:
+    bool        eventFilter(QObject *watched, QEvent *event) override;
+
 private:
     Ui::SonglistSort *ui;
     QButtonGroup        *m_buttonGroup1;
     QButtonGroup        *m_buttonGroup2;
+    QMenu               *m_menu;
+    TagsMenu            *m_tags;
+    QWidgetAction       *m_action;
+
+private:
+     void       updateMenuGeometry();
 
 signals:
     void sig_sendSelectTags(QString);

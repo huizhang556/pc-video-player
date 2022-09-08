@@ -118,7 +118,7 @@ void SongerSort::initWorkUI()
     ui->listWidget_songers->setMovement(QListView::Static);//图标不可拖动
     ui->listWidget_songers->setResizeMode(QListWidget::Adjust);
     ui->listWidget_songers->setWrapping(true);//自动换行 所有itm在一行显示
-    ui->listWidget_songers->setVerticalScrollMode(QAbstractItemView::ScrollPerItem);
+    ui->listWidget_songers->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
 }
 

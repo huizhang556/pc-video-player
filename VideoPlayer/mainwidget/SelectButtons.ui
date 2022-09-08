@@ -100,8 +100,7 @@
 background-color: transparent;
 color: #00aaff;
 border:2px solid transparent;
-font-size:16px;
-font-family:&quot;楷体&quot;;
+font-size:14px;
 font-weight:700;
 }
 
@@ -109,14 +108,14 @@ QPushButton:hover
 {
 color:white;
 border-bottom-color:#ff0000;
-font-size:18px;
+font-size:16px;
 font-weight:700;
 }
 
 QPushButton:checked
 {
 border-bottom-color:#ff0000;
-font-size:18px;
+font-size:16px;
 font-weight:700;
 }</string>
           </property>
@@ -145,8 +144,7 @@ font-weight:700;
 background-color: transparent;
 color: #00aaff;
 border:2px solid transparent;
-font-size:16px;
-font-family:&quot;楷体&quot;;
+font-size:14px;
 font-weight:700;
 }
 
@@ -154,14 +152,14 @@ QPushButton:hover
 {
 color:white;
 border-bottom-color:#ff0000;
-font-size:18px;
+font-size:16px;
 font-weight:700;
 }
 
 QPushButton:checked
 {
 border-bottom-color:#ff0000;
-font-size:18px;
+font-size:16px;
 font-weight:700;
 }</string>
           </property>
@@ -190,8 +188,7 @@ font-weight:700;
 background-color: transparent;
 color: #00aaff;
 border:2px solid transparent;
-font-size:16px;
-font-family:&quot;楷体&quot;;
+font-size:14px;
 font-weight:700;
 }
 
@@ -199,14 +196,14 @@ QPushButton:hover
 {
 color:white;
 border-bottom-color:#ff0000;
-font-size:18px;
+font-size:16px;
 font-weight:700;
 }
 
 QPushButton:checked
 {
 border-bottom-color:#ff0000;
-font-size:18px;
+font-size:16px;
 font-weight:700;
 }</string>
           </property>
@@ -235,8 +232,7 @@ font-weight:700;
 background-color: transparent;
 color: #00aaff;
 border:2px solid transparent;
-font-size:16px;
-font-family:&quot;楷体&quot;;
+font-size:14px;
 font-weight:700;
 }
 
@@ -244,14 +240,14 @@ QPushButton:hover
 {
 color:white;
 border-bottom-color:#ff0000;
-font-size:18px;
+font-size:16px;
 font-weight:700;
 }
 
 QPushButton:checked
 {
 border-bottom-color:#ff0000;
-font-size:18px;
+font-size:16px;
 font-weight:700;
 }</string>
           </property>
@@ -280,8 +276,7 @@ font-weight:700;
 background-color: transparent;
 color: #00aaff;
 border:2px solid transparent;
-font-size:16px;
-font-family:&quot;楷体&quot;;
+font-size:14px;
 font-weight:700;
 }
 
@@ -289,14 +284,14 @@ QPushButton:hover
 {
 color:white;
 border-bottom-color:#ff0000;
-font-size:18px;
+font-size:16px;
 font-weight:700;
 }
 
 QPushButton:checked
 {
 border-bottom-color:#ff0000;
-font-size:18px;
+font-size:16px;
 font-weight:700;
 }</string>
           </property>
@@ -325,8 +320,7 @@ font-weight:700;
 background-color: transparent;
 color: #00aaff;
 border:2px solid transparent;
-font-size:16px;
-font-family:&quot;楷体&quot;;
+font-size:14px;
 font-weight:700;
 }
 
@@ -334,14 +328,14 @@ QPushButton:hover
 {
 color:white;
 border-bottom-color:#ff0000;
-font-size:18px;
+font-size:16px;
 font-weight:700;
 }
 
 QPushButton:checked
 {
 border-bottom-color:#ff0000;
-font-size:18px;
+font-size:16px;
 font-weight:700;
 }</string>
           </property>
@@ -370,8 +364,7 @@ font-weight:700;
 background-color: transparent;
 color: #00aaff;
 border:2px solid transparent;
-font-size:16px;
-font-family:&quot;楷体&quot;;
+font-size:14px;
 font-weight:700;
 }
 
@@ -379,14 +372,14 @@ QPushButton:hover
 {
 color:white;
 border-bottom-color:#ff0000;
-font-size:18px;
+font-size:16px;
 font-weight:700;
 }
 
 QPushButton:checked
 {
 border-bottom-color:#ff0000;
-font-size:18px;
+font-size:16px;
 font-weight:700;
 }</string>
           </property>

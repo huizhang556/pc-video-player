@@ -148,6 +148,23 @@ background-color: #46a0ef;
 border-radius: 12px;
 color: white;
 }
+
+#songerlist_menu
+{
+background-color: #294c5b;
+border: none;
+}
+
+#songerlist_menu::item
+{
+border: 0px solid transparent;
+}
+
+#songerlist_menu::item:selected
+{
+color: #d65348;
+}
+
 /*******************05主播电台****************/
 
 /*******************06音乐现场****************/
