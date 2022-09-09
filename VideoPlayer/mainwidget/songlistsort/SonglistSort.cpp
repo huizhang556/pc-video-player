@@ -12,22 +12,26 @@ SonglistSort::SonglistSort(QWidget *parent) :
     initWorkUI();
     handleSignalsAndSlots();
     this->installEventFilter(this);
+    m_tags->installEventFilter(this);
 }
 
 SonglistSort::~SonglistSort()
 {
     delete ui;
+    delete m_tags;
 }
 
 void SonglistSort::initWorkUI()
 {
-    m_menu = new QMenu(this);
-    m_menu->setObjectName(QString::fromLocal8Bit("songerlist_menu"));
-    ui->toolButton->setMenu(m_menu);
-    m_tags = new TagsMenu(m_menu);
-    m_action = new QWidgetAction(m_menu);
-    m_action->setDefaultWidget(m_tags);
-    m_menu->addAction(m_action);
+//    m_menu = new QMenu(this);
+//    m_menu->setWindowFlags(m_menu->windowFlags() | Qt::FramelessWindowHint);
+//    m_menu->setAttribute(Qt::WA_TranslucentBackground,true);//去标题栏，背景透明，才能设置圆角
+//    m_menu->setObjectName(QString::fromLocal8Bit("songerlist_menu"));
+//    ui->toolButton->setMenu(m_menu);
+    m_tags = new TagsMenu();
+//    m_action = new QWidgetAction(m_menu);
+//    m_action->setDefaultWidget(m_tags);
+//    m_menu->addAction(m_action);
 
     ui->toolButton->setCheckable(true);
     ui->toolButton->setLayoutDirection(Qt::RightToLeft);
@@ -68,8 +72,6 @@ void SonglistSort::initWorkUI()
     ui->listWidget_markItem->setResizeMode(QListWidget::Adjust);
     ui->listWidget_markItem->setWrapping(true);//自动换行 所有itm在一行显示
     ui->listWidget_markItem->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-
-
 }
 
 void SonglistSort::handleSignalsAndSlots()
@@ -87,6 +89,15 @@ void SonglistSort::handleSignalsAndSlots()
             ui->toolButton->setIcon(QIcon("://images/home/toolbutton_next"));
         }
     });
+
+    connect(m_tags,&TagsMenu::sig_sendCurrentItemText,[=](QString text){
+        ui->toolButton->setText(text);
+    });
+
+}
+
+void SonglistSort::clearAllFocusWidgets()
+{
 
 }
 
@@ -126,18 +137,19 @@ void SonglistSort::slot_setCheckedButton(QAbstractButton *button)
 void SonglistSort::slot_showTagsMenu()
 {
     updateMenuGeometry();
-    m_menu->exec();
+    m_tags->show();
 }
 
 bool SonglistSort::eventFilter(QObject *watched, QEvent *event)
 {
-    if(watched == this)
+    if(watched == m_tags)
     {
-        if(event->type() == QEvent::MouseButtonPress)
+        if(event->type() == QEvent::Hide)
         {
-//            if(ui->toolButton->hasFocus())
+//            if(!ui->toolButton->geometry().contains(this->mapFromGlobal(QCursor::pos())))
 //            {
-//                ui->toolButton->clearFocus();
+//                emit sig_sendToolButtonFocusOut();
+//                qDebug() <<QString::fromLocal8Bit("TOOLBUTTON失去焦点");
 //            }
             if(ui->toolButton->isChecked())
             {
@@ -150,9 +162,15 @@ bool SonglistSort::eventFilter(QObject *watched, QEvent *event)
     return  QWidget::eventFilter(watched,event);
 }
 
+void SonglistSort::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event)
+//    clearAllFocusWidgets();
+}
+
 void SonglistSort::updateMenuGeometry()
 {
         int x = ui->toolButton->mapToGlobal(ui->toolButton->pos()).x();
         int y = ui->toolButton->mapToGlobal(ui->toolButton->pos()).y();
-        m_menu->setGeometry(x-10,y+50,m_tags->width(),m_tags->height());
+        m_tags->setGeometry(x - 10,y + 20,m_tags->width(),m_tags->height());
 }

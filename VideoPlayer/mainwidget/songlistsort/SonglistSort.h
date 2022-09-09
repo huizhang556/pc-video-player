@@ -23,6 +23,7 @@ public:
     ~SonglistSort();
     void        initWorkUI();
     void        handleSignalsAndSlots();
+    void        clearAllFocusWidgets();
 public slots:
     void        slot_addSongItem(const QString& url,const QString&path, const QString& tags, const QString& mark);
     void        slot_emitHotAndNewTags(QAbstractButton* button);
@@ -31,7 +32,7 @@ public slots:
 
 protected:
     bool        eventFilter(QObject *watched, QEvent *event) override;
-
+    void        resizeEvent(QResizeEvent *event) override;
 private:
     Ui::SonglistSort *ui;
     QButtonGroup        *m_buttonGroup1;
@@ -44,8 +45,9 @@ private:
      void       updateMenuGeometry();
 
 signals:
-    void sig_sendSelectTags(QString);
-    void sig_sendTags(QString);
+    void    sig_sendSelectTags(QString);
+    void    sig_sendTags(QString);
+    void    sig_sendToolButtonFocusOut();
 
 };
 

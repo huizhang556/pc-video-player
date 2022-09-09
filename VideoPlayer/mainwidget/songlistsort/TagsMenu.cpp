@@ -2,6 +2,7 @@
 #include "ui_TagsMenu.h"
 #include "mainwidget/songlistsort/TagsMenuItem.h"
 
+#include <QGraphicsDropShadowEffect>
 #include <QListWidgetItem>
 #include <QScrollBar>
 #include <QPolygon>
@@ -9,14 +10,15 @@
 
 TagsMenu::TagsMenu(QWidget *parent) :
     QWidget(parent),
-    m_startX(10),
-    m_startY(0),
-    m_triangleWidth(30),
-    m_triangleHeight(30),
+    m_startX(15),
+    m_startY(20),
+    m_triangleWidth(20),
+    m_triangleHeight(20),
     ui(new Ui::TagsMenu)
 {
     ui->setupUi(this);
-    setFixedSize(746,360);
+    setFixedWidth(718);
+//    setFixedSize(718,360);
     initWorkUI();
     handleSignalsAndSlots();
 }
@@ -28,10 +30,18 @@ TagsMenu::~TagsMenu()
 
 void TagsMenu::initWorkUI()
 {
-    this->setWindowFlag(Qt::FramelessWindowHint);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
     this->setAttribute(Qt::WA_TranslucentBackground,true);
     ui->listWidget_menu->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->listWidget_menu->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_menu->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_menu->verticalScrollBar()->setObjectName(QString("songlist_vertical_scrollBar"));//样式用
+
+//    auto shadowEffect = new QGraphicsDropShadowEffect(this);
+//    shadowEffect->setOffset(0,0);
+//    shadowEffect->setColor(Qt::white);
+//    shadowEffect->setBlurRadius(0);// 阴影厚度
+//    this->setGraphicsEffect(shadowEffect);
 
     m_vector.append(m_area);
     m_vector.append(m_subject);
@@ -40,6 +50,7 @@ void TagsMenu::initWorkUI()
     m_vector.append(m_years);
     m_vector.append(m_language);
     m_vector.append(m_style);
+    m_vector.append(m_voice);
 
     m_vectorPic.append(QString("://images/icon/hot0.png"));
     m_vectorPic.append(QString("://images/icon/hot1.png"));
@@ -48,6 +59,7 @@ void TagsMenu::initWorkUI()
     m_vectorPic.append(QString("://images/icon/hot4.png"));
     m_vectorPic.append(QString("://images/icon/hot5.png"));
     m_vectorPic.append(QString("://images/icon/hot6.png"));
+    m_vectorPic.append(QString("://images/icon/hot7.png"));
 
     for(int i = 0; i < m_theme.size(); i++)
     {
@@ -82,16 +94,16 @@ void TagsMenu::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing,true);
     painter.setPen(Qt::NoPen);
-    painter.setBrush(QColor(255,255,255));
+    painter.setBrush(QColor(255,255,255));//50 77 91
     //小三角区域
     QPolygon trianglePolygon;
-    trianglePolygon << QPoint(m_startX , m_startY );
-    trianglePolygon << QPoint(m_startX + m_triangleWidth / 2, m_startY - m_triangleHeight );
+    trianglePolygon << QPoint(m_startX , m_startY);// 30 30
+    trianglePolygon << QPoint(m_startX + m_triangleWidth / 2, 0);//45 0
     trianglePolygon << QPoint(m_startX + m_triangleWidth, m_startY);
     QPainterPath drawPath;
-//    drawPath.addRoundedRect(0,0,width(),height(),0,0);
-//    drawPath.addPolygon(trianglePolygon);
-//    painter.drawPath(drawPath);
-    painter.drawPolygon(trianglePolygon);
+    //调整三角形高度：1.界面留出空白高度 2.三角形起点高度 3.三角形高度一致
+    drawPath.addRoundedRect(0,m_startY,width(),height()- m_triangleHeight,5,5);//嵌入按钮中时，按钮也要设置圆角
+    drawPath.addPolygon(trianglePolygon);
+    painter.drawPath(drawPath);
 }
 

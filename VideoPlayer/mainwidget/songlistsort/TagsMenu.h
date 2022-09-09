@@ -45,7 +45,8 @@ private:
         QString::fromLocal8Bit("场景"),
         QString::fromLocal8Bit("年代"),
         QString::fromLocal8Bit("语言"),
-        QString::fromLocal8Bit("流派")
+        QString::fromLocal8Bit("流派"),
+        QString::fromLocal8Bit("有声")
     };
 
     QStringList     m_area = {
@@ -138,6 +139,13 @@ private:
         QString::fromLocal8Bit("嘻哈"),
         QString::fromLocal8Bit("乡村"),
         QString::fromLocal8Bit("爵士")
+    };
+
+    QStringList     m_voice = {
+        QString::fromLocal8Bit("相声"),
+        QString::fromLocal8Bit("评书"),
+        QString::fromLocal8Bit("戏曲"),
+        QString::fromLocal8Bit("二人转")
     };
 
     QVector<QStringList>     m_vector;

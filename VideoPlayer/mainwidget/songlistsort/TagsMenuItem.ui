@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>735</width>
-    <height>48</height>
+    <height>55</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>735</width>
-    <height>40</height>
+    <height>55</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -49,7 +49,7 @@
      <property name="minimumSize">
       <size>
        <width>735</width>
-       <height>0</height>
+       <height>50</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -157,11 +157,17 @@ text-align: center;
         </item>
         <item>
          <widget class="QFrame" name="frame_2">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="styleSheet">
            <string notr="true">#frame_2
 {
 border: 0px solid #b2b3b5;
-border-bottom-width: 1px;
+/*border-bottom-width: 1px;*/
 }</string>
           </property>
           <property name="frameShape">
@@ -170,7 +176,7 @@ border-bottom-width: 1px;
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout">
+          <layout class="QVBoxLayout" name="verticalLayout_6">
            <property name="spacing">
             <number>0</number>
            </property>
@@ -187,9 +193,17 @@ border-bottom-width: 1px;
             <number>0</number>
            </property>
            <item>
-            <widget class="QListWidget" name="listWidget_tags">
-             <property name="styleSheet">
-              <string notr="true">QListWidget#listWidget_tags
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <item>
+              <widget class="QListWidget" name="listWidget_tags">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>55</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QListWidget#listWidget_tags
 {
 color: #009900;
 font: 75 10pt &quot;Microsoft YaHei UI&quot;;
@@ -199,22 +213,16 @@ background-color: transparent;
 
 QListWidget#listWidget_tags::item
 {
-width:80px;
-height: 30px;
-margin: 5px 12px 5px 12px;
-}
-
-QListWidget#listWidget_tags::item:hover
-{
-border-radius: 15px;
-background-color: #f0bde8;
+width:90px;
+height: 48px;
+margin: 5px 10px 8px 10px;
 }
 
 QListWidget#listWidget_tags::item:selected
 {
 background-color: #f0bde8;
 border-radius: 15px;
-color:#b122d7;
+color: #00aaff;
 }
 
 QListWidget#listWidget_tags::item:!selected
@@ -222,9 +230,83 @@ QListWidget#listWidget_tags::item:!selected
 background-color: transparent;
 }
 
+/**hover的样式必须放在selected之后才生效**/
+QListWidget#listWidget_tags::item:hover
+{
+color:#00aaff;
+border-radius: 15px;
+background-color: rgba(240, 189, 232,0.2);
+}
+
 </string>
-             </property>
-            </widget>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <item>
+                <spacer name="horizontalSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>10</width>
+                   <height>1</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="Line" name="line_style">
+                 <property name="minimumSize">
+                  <size>
+                   <width>580</width>
+                   <height>1</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>580</width>
+                   <height>1</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">#line_style
+{
+background-color: #858b93;
+}</string>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Expanding</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>10</width>
+                   <height>1</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>

@@ -32,6 +32,7 @@
 #include "splashscreen/CSplashScreen.h"
 
 #include "mainwidget/songersort/SongerSort.h"
+#include "mainwidget/songlistsort/TagsMenu.h"
 
 #include <QTranslator>
 #include <QThread>
@@ -102,6 +103,9 @@ int main(int argc, char *argv[])
 
 //    SongerSort s;
 //    s.show();
+
+//    TagsMenu t;
+//    t.show();
 
     //播放器注册
 //    Global::registerLAVplayer();

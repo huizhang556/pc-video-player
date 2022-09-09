@@ -32,11 +32,13 @@ TagsMenuItem::~TagsMenuItem()
 
 void TagsMenuItem::initWorkUI()
 {
-    ui->listWidget_tags->setViewMode(QListView::IconMode);
+//    ui->listWidget_tags->setViewMode(QListView::IconMode);
     ui->listWidget_tags->setMovement(QListView::Static);//图标不可拖动
     ui->listWidget_tags->setResizeMode(QListWidget::Adjust);
     ui->listWidget_tags->setLayoutDirection(Qt::LeftToRight);
-    ui->listWidget_tags->setWrapping(true);//自动换行 所有itm在一行显示
+    ui->listWidget_tags->setLayoutMode(QListView::SinglePass);
+    ui->listWidget_tags->setFlow(QListView::LeftToRight);
+    ui->listWidget_tags->setWrapping(true);//自动换行
 //    ui->listWidget_tags->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 //    ui->listWidget_tags->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_tags->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
@@ -64,9 +66,9 @@ void TagsMenuItem::slot_addTagMenuItem(const QStringList &list)
 {
     foreach (QString item, list)
     {
-//        QListWidgetItem *pitem = new QListWidgetItem(item);
-//        pitem->setSizeHint(QSize(90,30));
-        ui->listWidget_tags->addItem(item);//采用样式表中的宽高
+        QListWidgetItem *pitem = new QListWidgetItem(QIcon("://images/icon/hot0.png"),item);
+        pitem->setSizeHint(QSize(100,48));
+        ui->listWidget_tags->addItem(pitem);//采用样式表中的宽高
         //说明：
         //代码不指定宽高，默认使用的是界面放置的宽高。如果后面设置了更大的值，界面会被撑大。
         //但是，设置的值比原来默认的值小，则保持默认值大小，不会被缩小。
@@ -82,8 +84,8 @@ void TagsMenuItem::setMenuListWidgetHeight(int counts)
     else
         num0 = num0+1;
 //    qDebug() << QString::fromLocal8Bit("所占行数：") << num0;
-    this->setMinimumHeight(num0*48);
-    m_size = QSize(width(),num0*48);
+    this->setMinimumHeight(num0*56 - 5);
+    m_size = QSize(width(),num0*56 - 5);
 }
 
 QSize TagsMenuItem::getMenuListWidgetHeight()

@@ -151,18 +151,22 @@ color: white;
 
 #songerlist_menu
 {
-background-color: #294c5b;
-border: none;
+/**去标题栏，背景透明，才能设置圆角**/
+/*去掉标题栏圆角生效*/
+border-radius: 5px;
+/**去标题栏，背景透明，还要设置样式才真的变透明**/
+background-color:  transparent;
+border: 0px solid transparent;
 }
 
 #songerlist_menu::item
 {
+/**去标题栏，背景透明，才能设置圆角**/
+/*去掉标题栏圆角生效*/
+border-radius: 5px;
+/**去标题栏，背景透明，还要设置样式才真的变透明**/
+background-color:  transparent;
 border: 0px solid transparent;
-}
-
-#songerlist_menu::item:selected
-{
-color: #d65348;
 }
 
 /*******************05主播电台****************/

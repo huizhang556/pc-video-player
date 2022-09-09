@@ -13,6 +13,12 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget
+{
+background-color: transparent;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
     <number>0</number>
@@ -32,7 +38,7 @@
    <item>
     <widget class="QFrame" name="frame">
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">background-color: transparent;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -57,24 +63,40 @@
        <number>0</number>
       </property>
       <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <widget class="QListWidget" name="listWidget_menu">
         <property name="styleSheet">
          <string notr="true">#listWidget_menu
 {
 border: none;
-background-color: #324d5b;
+/*background-color: #324d5b;*/
 }
 
 #listWidget_menu::item
 {
-background-color: #324d5b;
+background-color: #ffffff;
 border: 0px solid #a0a0a0;
 }
 
 #songlist_vertical_scrollBar:vertical
 {
 background-color:#7fbd42;/*背景颜色*/
-width:8px;/*整体宽度*/
+width:16px;/*整体宽度*/
 }
 
 /*四个列表的滚动条---单独的统一放在通用样式之前设置*/
@@ -93,13 +115,13 @@ background-color: #a254ff;
 /*滚动条滚过部分样式*/
 #songlist_vertical_scrollBar::sub-page:vertical
 {
-background-color:#007acc;
+background-color: #324d5b;
 }
 
 /*滚动条未滚过部分样式*/
 #songlist_vertical_scrollBar::add-page:vertical
 {
-background-color:#007acc;
+background-color: #324d5b;
 }
 </string>
         </property>
