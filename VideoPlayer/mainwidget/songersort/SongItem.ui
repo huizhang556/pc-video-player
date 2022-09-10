@@ -40,7 +40,7 @@
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">border-image: url(:/images/bgpic/dieji2.png);</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string/>
@@ -83,6 +83,7 @@
 {
 color: white;
 background-color: transparent;
+font: 75 11pt &quot;Microsoft YaHei UI&quot;;
 }
 
 QPushButton:hover
@@ -102,11 +103,13 @@ color: #46a0ef;
 {
 color: #8d9aa8;
 background-color: transparent;
+font: 75 10pt &quot;Microsoft YaHei UI&quot;;
 }
 
 QPushButton:hover
 {
 color: #46a0ef;
+font: 75 11pt &quot;Microsoft YaHei UI&quot;;
 }</string>
             </property>
             <property name="text">

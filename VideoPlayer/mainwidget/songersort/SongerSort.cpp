@@ -1,8 +1,9 @@
 ﻿#include "SongerSort.h"
 #include "ui_SongerSort.h"
 #include "mainwidget/songersort/SongItem.h"
+#include "global/Global.h"
 
-
+#include <QScrollBar>
 #include <QAbstractButton>
 #include <QListWidgetItem>
 #include <QDebug>
@@ -15,9 +16,10 @@ SongerSort::SongerSort(QWidget *parent) :
     initWorkUI();
     handleSignalsAndSlots();
 
-    for(int i = 0; i < 50; i++)
+    for(int i = 0; i < 100; i++)
     {
-        slot_addSongItem("","",QString::fromLocal8Bit("凤凰传奇"),"1000+");
+        QString path1 = QString(Global::appDirPath +"/pictures/musics/nearly/music%1.png").arg(i);
+        slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("凤凰传奇"),"1000+");// url picture info count
     }
 }
 
@@ -114,6 +116,7 @@ void SongerSort::initWorkUI()
     ui->pushButton_fasthot->setCheckable(true);
     ui->pushButton_fasthot->setChecked(true);
 
+    ui->listWidget_songers->installEventFilter(this);
     ui->listWidget_songers->setViewMode(QListView::IconMode);
     ui->listWidget_songers->setMovement(QListView::Static);//图标不可拖动
     ui->listWidget_songers->setResizeMode(QListWidget::Adjust);
@@ -159,6 +162,22 @@ void SongerSort::slot_addSongItem(const QString &url, const QString &path, const
     });
 }
 
+void SongerSort::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event)
+    qDebug() << QString::fromLocal8Bit("主界面resize")<<this->size();
+}
+
+bool SongerSort::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == ui->listWidget_songers)
+    {
+        if(event->type() == QEvent::Resize)
+            resizeListWidgetItemWidget();
+    }
+    return QWidget::eventFilter(watched,event);
+}
+
 void SongerSort::slot_emitNationality(QAbstractButton *button)
 {
     emit sig_sendNationality(button->text());
@@ -175,10 +194,64 @@ void SongerSort::slot_emitStyle(QAbstractButton *button)
 {
     emit sig_sendStyle(button->text());
     qDebug() <<QString::fromLocal8Bit("当前选择的风格：%1").arg(button->text());
+    ui->listWidget_songers->clear();
+    if(button->text() == QString::fromLocal8Bit("流行"))
+    {
+        for(int i = 0; i < 100; i++)
+        {
+            QString path1 = QString(Global::appDirPath +"/pictures/musics/nearly/music%1.png").arg(i);
+            slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
+        }
+    }
+    else if(button->text() == QString::fromLocal8Bit("电子"))
+    {
+        for(int i = 0; i < 100; i++)
+        {
+            QString path1 = QString(Global::appDirPath +"/pictures/musics/recradio/music%1.png").arg(i);
+            slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
+        }
+    }
+    else if(button->text() == QString::fromLocal8Bit("摇滚"))
+    {
+        for(int i = 0; i < 100; i++)
+        {
+            QString path1 = QString(Global::appDirPath +"/pictures/musics/recommend/music%1.png").arg(i);
+            slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
+        }
+    }
+    else
+    {
+        for(int i = 0; i < 100; i++)
+        {
+            QString path1 = QString(Global::appDirPath +"/pictures/musics/new/music%1.png").arg(i);
+            slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
+        }
+    }
+    resize(this->width()+1,this->height()+1);//刷新界面
 }
 
 void SongerSort::slot_emitA_to_Z(QAbstractButton *button)
 {
     emit sig_sendA_to_Z(button->text());
     qDebug() <<QString::fromLocal8Bit("当前选择的字母：%1").arg(button->text());
+}
+
+//动态更新item大
+void SongerSort::resizeListWidgetItemWidget()
+{
+    int width = ui->listWidget_songers->width();
+//    滚动条宽度默认17
+    int colWidth  = (int)((width - ui->listWidget_songers->verticalScrollBar()->width() - 1)/7);
+    for(int i = 0; i < ui->listWidget_songers->count(); i++)
+    {
+        if( colWidth - 1 < MINSIZE.width())//minsize(152,204)
+        {
+            ui->listWidget_songers->item(i)->setSizeHint(MINSIZE);
+        }
+        else
+        {
+            ui->listWidget_songers->item(i)->setSizeHint(QSize(colWidth - 1,colWidth*SCALE));
+//            qDebug() << QString::fromLocal8Bit("动态更新后的item大小：宽度%1，高度%2").arg(colWidth-1).arg(colWidth*SCALE);
+        }
+    }
 }

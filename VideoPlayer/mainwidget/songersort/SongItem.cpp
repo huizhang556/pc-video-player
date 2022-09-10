@@ -1,19 +1,18 @@
 ﻿#include "SongItem.h"
 #include "ui_SongItem.h"
 
-
 #include <QRegion>
+#include <QDebug>
 
 SongItem::SongItem(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SongItem)
 {
     ui->setupUi(this);
-    setFixedSize(162,214);
-    QRegion maskRegion(ui->label_songhead->rect(),QRegion::Ellipse);//创建圆形遮罩
-    ui->label_songhead->setMask(maskRegion);//设置圆形遮罩
+    setMinimumSize(152,204);
     setInstallEventFilter();
     handleSignalsAndSlots();
+    setHeadPictureMskRegion();
 }
 
 SongItem::SongItem(const QString &picture, const QString &name, const QString &counts, int alignFlag, QWidget *parent) :
@@ -24,15 +23,14 @@ SongItem::SongItem(const QString &picture, const QString &name, const QString &c
     ui(new Ui::SongItem)
 {
     ui->setupUi(this);
-    setFixedSize(162,214);
+    setMinimumSize(152,204);
     slot_setHeadPicture(picture);
     slot_setSongerName(name);
     slot_setSongerCounts(counts);
     slot_setAlignText(alignFlag);
     setInstallEventFilter();
     handleSignalsAndSlots();
-    QRegion maskRegion(ui->label_songhead->rect(),QRegion::Ellipse);//创建圆形遮罩
-    ui->label_songhead->setMask(maskRegion);//设置圆形遮罩
+   setHeadPictureMskRegion();
 }
 
 SongItem::~SongItem()
@@ -57,6 +55,7 @@ void SongItem::slot_setHeadPicture(const QString &path)
 {
     if(path.isEmpty()) return;
     QPixmap pix(path);
+    //这里要代码添加图片，否则样式表中的图片不能被拉升
     ui->label_songhead->setPixmap(pix);
     ui->label_songhead->setScaledContents(true);
 }
@@ -143,4 +142,19 @@ void SongItem::paintEvent(QPaintEvent *event)
 
 //#endif
 
+}
+
+void SongItem::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event)
+    setHeadPictureMskRegion();
+}
+
+void SongItem::setHeadPictureMskRegion()
+{
+    int radius = qMin(ui->label_songhead->width(),ui->label_songhead->height());
+    ui->label_songhead->move((ui->label_songhead->width()-radius + 8)/2,(ui->label_songhead->height()-radius + 28)/2);
+    ui->label_songhead->resize(QSize(radius,radius));
+    QRegion maskRegion(ui->label_songhead->rect(),QRegion::Ellipse);//创建圆形遮罩
+    ui->label_songhead->setMask(maskRegion);//设置圆形遮罩
 }

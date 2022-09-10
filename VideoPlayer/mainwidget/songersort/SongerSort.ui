@@ -1003,20 +1003,51 @@
       </widget>
      </item>
      <item>
-      <widget class="QListWidget" name="listWidget_songers">
-       <property name="styleSheet">
-        <string notr="true">QListWidget
+      <widget class="QStackedWidget" name="stackedWidget_songersort">
+       <widget class="QWidget" name="page">
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QListWidget" name="listWidget_songers">
+           <property name="styleSheet">
+            <string notr="true">QListWidget
 {
 border:none;
 background-color: #2a2a31;
 }
 QListWidget::item
 {
-
+/*background-color: #ff5500;*/
 color: transparent;
+/*border: 1px solid yellow;*/
+}
+
+QListWidget::item:hover
+{
+color: transparent;
+background-color: transparent;
+/*border: 1px solid yellow;*/
 }
 </string>
-       </property>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </item>
     </layout>

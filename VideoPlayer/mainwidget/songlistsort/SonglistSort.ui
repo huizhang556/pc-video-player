@@ -63,7 +63,7 @@
                 <widget class="QToolButton" name="toolButton">
                  <property name="minimumSize">
                   <size>
-                   <width>70</width>
+                   <width>100</width>
                    <height>26</height>
                   </size>
                  </property>
@@ -278,7 +278,7 @@ color: white;
                 <widget class="QLabel" name="label">
                  <property name="minimumSize">
                   <size>
-                   <width>70</width>
+                   <width>100</width>
                    <height>26</height>
                   </size>
                  </property>
@@ -406,7 +406,16 @@ background-color: #2a2a31;
 
 QListWidget::item
 {
+/*border: 1px solid #ff00ff;*/
 color: transparent;
+background-color: transparent;
+}
+
+QListWidget::item:hover
+{
+/*border: 1px solid #ff00ff;*/
+color: transparent;
+background-color: transparent;
 }
 </string>
        </property>

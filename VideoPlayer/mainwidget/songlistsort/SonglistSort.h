@@ -1,6 +1,9 @@
 ﻿#ifndef SONGLISTSORT_H
 #define SONGLISTSORT_H
 
+#define MINSIZE QSize(186,218) //默认最小宽高，不能动态调整比这个值小
+#define SCALE   MINSIZE.height()/MINSIZE.width() // 高/宽 比例
+
 #include "mainwidget/songlistsort/TagsMenu.h"
 #include "mainwidget/songlistsort/TagsItem.h"
 
@@ -42,7 +45,9 @@ private:
     QWidgetAction       *m_action;
 
 private:
+    void        resizeListWidgetItemWidget();//动态更新item大小
      void       updateMenuGeometry();
+     int       calculateItemWidth(int width);
 
 signals:
     void    sig_sendSelectTags(QString);

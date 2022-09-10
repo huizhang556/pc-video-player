@@ -30,7 +30,10 @@
     <number>5</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_3">
+    <layout class="QVBoxLayout" name="verticalLayout_3" stretch="3,1">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QLabel" name="label_head">
        <property name="minimumSize">
@@ -78,12 +81,19 @@
           </property>
           <item>
            <widget class="QPushButton" name="pushButton_tags">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
 text-align:left;
 color: white;
 background-color: transparent;
+font: 75 11pt &quot;Microsoft YaHei UI&quot;;
 }
 
 QPushButton:hover
@@ -98,17 +108,25 @@ color: #46a0ef;
           </item>
           <item>
            <widget class="QPushButton" name="pushButton_mark">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
 text-align:left;
 color: white;
 background-color: transparent;
+font: 75 10pt &quot;Microsoft YaHei UI&quot;;
 }
 
 QPushButton:hover
 {
 color: #46a0ef;
+font: 75 11pt &quot;Microsoft YaHei UI&quot;;
 }</string>
             </property>
             <property name="text">

@@ -6,7 +6,7 @@ TagsItem::TagsItem(QWidget *parent) :
     ui(new Ui::TagsItem)
 {
     ui->setupUi(this);
-    setFixedSize(186,218);
+    setMinimumSize(186,218);
     handleSignalsAndSlots();
     setInstallEventFilter();
 }
@@ -16,7 +16,7 @@ TagsItem::TagsItem(const QString &picture, const QString &name, const QString &c
     ui(new Ui::TagsItem)
 {
     ui->setupUi(this);
-    setFixedSize(186,218);
+    setMinimumSize(186,218);
     slot_setHeadPicture(picture);
     slot_setSongerTages(name);
     slot_setSongerMark(counts);
@@ -70,4 +70,19 @@ bool TagsItem::eventFilter(QObject *watched, QEvent *event)
         }
     }
     return QWidget::eventFilter(watched,event);
+}
+
+void TagsItem::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event)
+//    setHeadPictureMskRegion();
+}
+
+void TagsItem::setHeadPictureMskRegion()
+{
+    int radius = qMin(ui->label_head->width(),ui->label_head->height());
+//    ui->label_head->move((ui->label_head->width()-radius + 8)/2,(ui->label_head->height()-radius + 28)/2);
+    ui->label_head->resize(QSize(radius,radius));
+//    QRegion maskRegion(ui->label_head->rect(),QRegion::Ellipse);//创建圆形遮罩
+//    ui->label_head->setMask(maskRegion);//设置圆形遮罩
 }

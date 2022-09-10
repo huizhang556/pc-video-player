@@ -205,7 +205,7 @@ border: 0px solid #b2b3b5;
                <property name="styleSheet">
                 <string notr="true">QListWidget#listWidget_tags
 {
-color: #009900;
+color: #303846;
 font: 75 10pt &quot;Microsoft YaHei UI&quot;;
 border:none;
 background-color: transparent;

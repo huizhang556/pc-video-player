@@ -31,12 +31,15 @@ public slots:
 protected:
     bool        eventFilter(QObject *watched, QEvent *event) override;
     void        paintEvent(QPaintEvent *event) override;
-
+    void        resizeEvent(QResizeEvent *event) override;
 private:
     Ui::SongItem *ui;
     QString     m_path;
     QString     m_name;
     QString     m_counts;
+
+private:
+    void        setHeadPictureMskRegion();
 
 signals:
     void        sig_sendSonger(QString);
