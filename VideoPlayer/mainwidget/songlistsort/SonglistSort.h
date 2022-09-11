@@ -10,6 +10,7 @@
 #include <QWidget>
 #include <QButtonGroup>
 #include <QWidgetAction>
+#include <QListWidgetItem>
 #include <QAbstractButton>
 #include <QMenu>
 
@@ -29,6 +30,7 @@ public:
     void        clearAllFocusWidgets();
 public slots:
     void        slot_addSongItem(const QString& url,const QString&path, const QString& tags, const QString& mark);
+    void        slot_resetSongListItemInfo(QListWidgetItem *item,const QString& url,const QString&path, const QString& tags, const QString& mark);
     void        slot_emitHotAndNewTags(QAbstractButton* button);
     void        slot_setCheckedButton(QAbstractButton* button);
     void        slot_showTagsMenu();

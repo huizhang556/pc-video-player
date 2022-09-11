@@ -338,12 +338,20 @@ border:none;
 QListWidget::item
 {
 margin:10px 10px 10px 10px;
-color:#00aaff;
+color:transparent;
+background-color: transparent;
+}
+
+QListWidget::item:selected
+{
+color:transparent;
+background-color: transparent;
 }
 
 QListWidget::item:hover
 {
-color:#ff0000;
+color:transparent;
+background-color: transparent;
 }</string>
        </property>
       </widget>

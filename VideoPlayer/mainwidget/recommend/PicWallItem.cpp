@@ -8,7 +8,7 @@ PicWallItem::PicWallItem(QWidget *parent) :
     ui(new Ui::PicWallItem)
 {
     ui->setupUi(this);
-    this->setMinimumSize(200,436);
+//    this->setMinimumSize(150,350);
 }
 
 PicWallItem::~PicWallItem()

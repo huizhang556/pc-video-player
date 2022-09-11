@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>152</width>
-    <height>204</height>
+    <height>216</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <property name="spacing">
-      <number>2</number>
+      <number>5</number>
      </property>
      <item>
       <widget class="QLabel" name="label_songhead">
@@ -81,6 +81,7 @@
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
+text-align: center;
 color: white;
 background-color: transparent;
 font: 75 11pt &quot;Microsoft YaHei UI&quot;;
@@ -101,6 +102,7 @@ color: #46a0ef;
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
+text-align: center;
 color: #8d9aa8;
 background-color: transparent;
 font: 75 10pt &quot;Microsoft YaHei UI&quot;;

@@ -59,7 +59,7 @@ void TagsMenuItem::slot_setTagMenuItemHead(const QString &iconpath, const QStrin
     ui->pushButton->setIcon(QIcon(iconpath));
     ui->pushButton->setIconSize(QSize(32,32));
     ui->pushButton->setText(title);
-    qDebug() <<QString::fromLocal8Bit("当前主题：%1,当前图标：%2").arg(title).arg(iconpath);
+//    qDebug() <<QString::fromLocal8Bit("当前主题：%1,当前图标：%2").arg(title).arg(iconpath);
 }
 
 void TagsMenuItem::slot_addTagMenuItem(const QStringList &list)

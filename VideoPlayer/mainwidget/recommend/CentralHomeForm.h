@@ -8,6 +8,7 @@
 #include <QBoxLayout>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QListWidgetItem>
 
 namespace Ui {
 class CentralHomeForm;
@@ -27,13 +28,17 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
 
 private slots:
-    void makeBottomButton(int value);//判断滚动条位置，适时出现
-    void updateBottomButtonGeometry();
+    void    makeBottomButton(int value);//判断滚动条位置，适时出现
+    void    updateBottomButtonGeometry();
+    void    resizeHomeListWidgetSize(QListWidgetItem* item, QSize size);
+
 private:
     RecommendForm   *m_recommend        = nullptr;
     QListWidget     *m_homeListWidget   = nullptr;
     QVBoxLayout     *m_vBlayout         = nullptr;
     QPushButton     *m_bottomBtn        = nullptr;//底部返回按钮
+
+private:
 
 };
 

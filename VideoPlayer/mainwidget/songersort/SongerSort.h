@@ -7,6 +7,7 @@
 #include <QWidget>
 #include <QSize>
 #include <QButtonGroup>
+#include <QListWidgetItem>
 
 namespace Ui {
 class SongerSort;
@@ -24,6 +25,8 @@ public:
 
 public slots:
     void        slot_addSongItem(const QString& url,const QString&path, const QString& name, const QString& count);
+    void        slot_reserItem(const QString &path);
+    void        slot_resetSongItemInfo(QListWidgetItem* item, const QString& url, const QString&path, const QString& name, const QString& count);
 
 protected:
     void        resizeEvent(QResizeEvent *event) override;

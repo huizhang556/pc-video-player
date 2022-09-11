@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>186</width>
+    <width>223</width>
     <height>218</height>
    </rect>
   </property>
@@ -43,7 +43,10 @@
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">border-image: url(:/images/bgpic/dieji3.png);</string>
+        <string notr="true">#label_head
+{
+border-radius: 75px;
+}</string>
        </property>
        <property name="text">
         <string/>

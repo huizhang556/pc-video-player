@@ -413,5 +413,7 @@
         <file>images/user/user_visitor.png</file>
         <file>images/home/toolbutton_next.png</file>
         <file>images/home/toolbutton_up.png</file>
+        <file>images/home/songlist_hot.png</file>
+        <file>images/home/songlist_new.png</file>
     </qresource>
 </RCC>

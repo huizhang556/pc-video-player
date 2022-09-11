@@ -169,6 +169,23 @@ background-color:  transparent;
 border: 0px solid transparent;
 }
 
+#m_tagBtn
+{
+border-image:url(://images/home/songlist_new.png);
+}
+
+#m_tagsCountBtn
+{
+background-color:  transparent;
+color: #0070d9;
+padding-left: 3px;
+}
+
+#m_tagsPlayBtn
+{
+border-image:url(://images/tray/recvideo_play.png);
+}
+
 /*******************05主播电台****************/
 
 /*******************06音乐现场****************/
@@ -668,11 +685,17 @@ background-color:transparent;
 background-color:transparent;
 }
 /**浏览器承载QTabWidget整体设置---end**/
+/**右上侧承载**/
+#m_addWidget
+{
+background-color: yellow;
+}
 
 /*添加网页按钮*/
-#m_addWebButton
+#m_webAddBtn
 {
-margin-left:15px;
+margin-left: 0px;
+color: #2b2b2b;
 background-color:white;
 }
 

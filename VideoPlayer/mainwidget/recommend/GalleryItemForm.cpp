@@ -12,10 +12,14 @@ GalleryItemForm::GalleryItemForm(QWidget *parent) :
     ui(new Ui::GalleryItemForm)
 {
     ui->setupUi(this);
-    ui->listWidget_itempic->setMinimumHeight(440);
+    this->setMinimumHeight(432);
+    ui->listWidget_itempic->setViewMode(QListView::IconMode);
+    ui->listWidget_itempic->setMovement(QListView::Static);//图标不可拖动
+    ui->listWidget_itempic->setResizeMode(QListWidget::Adjust);
+    ui->listWidget_itempic->setWrapping(true);//自动换行 所有itm在一行显示
+    ui->listWidget_itempic->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_itempic->installEventFilter(this);
 //    ui->widget_rec_title->setFixedHeight(60);
-    this->setMinimumHeight(500);
     initWorkUI();
     chandleSignalsAndSlots();
 }
@@ -88,33 +92,63 @@ void GalleryItemForm::adjustListWidgetItemsSize()
 
 void GalleryItemForm::setItemPictures(int size,QString path)
 {
-    for(int i = 0; i < size; i=i+2)
+   for(int i = 0; i < size; i++)
+   {
+       QString path1 = QString(Global::appDirPath + path + "/music%1.png").arg(i);
+       QString path2 = QString(Global::appDirPath + path + "/music%1.png").arg(i+1);
+       QString info1 = QString(u8"美好的歌曲%1").arg(i);
+       QString info2 = QString(u8"美好的歌曲%1").arg(i+1);
+       slot_addGalleryItem("www.hao123.com",path1,path2,info1,info2);
+   }
+}
+
+void GalleryItemForm::slot_addGalleryItem(const QString &url, const QString &pic1, const QString &pic2, const QString &text1, const QString &text2)
+{
+    PicWallItem *pitem = new PicWallItem();
+    pitem->setPicItemWall(pic1);
+    pitem->setPicItemWall2(pic2);
+    pitem->setPicItemWallText(text1);
+    pitem->setPicItemWallText2(text2);
+    QListWidgetItem *item = new QListWidgetItem(url);
+//    item->setData(Qt::UserRole,url);
+    item->setSizeHint(QSize(pitem->size().width()+10,pitem->size().height()));
+    //        QPixmap pix(path);
+    //        pix.scaled(200,170,Qt::KeepAspectRatio);
+    //        item->icon().addPixmap(pix);
+    //        item->setText(QString::fromLocal8Bit("美好的歌曲%1").arg(i+1));
+    //        item->setSizeHint(QSize(270,350));
+    //        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+    //        item->setTextAlignment(Qt::AlignCenter);
+    ui->listWidget_itempic->addItem(item);
+    ui->listWidget_itempic->setItemWidget(item,pitem);
+}
+
+void GalleryItemForm::resizeGalleryItemSize()
+{
+    int width = ui->listWidget_itempic->width();
+//    滚动条宽度默认17
+    int colWidth  = (int)((width - ui->listWidget_itempic->verticalScrollBar()->width() - 1)/7);
+    for(int i = 0; i < ui->listWidget_itempic->count(); i++)
     {
-        PicWallItem *pitem = new PicWallItem();
-        QString path1 = QString(Global::appDirPath + path + "/music%1.png").arg(i);
-        QString path2 = QString(Global::appDirPath + path + "/music%1.png").arg(i+1);
-        pitem->setPicItemWall(path1);
-        pitem->setPicItemWall2(path2);
-        pitem->setPicItemWallText(QString::fromLocal8Bit("美好的歌曲%1").arg(i+1));
-        pitem->setPicItemWallText2(QString::fromLocal8Bit("美好的歌曲%1").arg(i+2));
-        QListWidgetItem *item = new QListWidgetItem();
-        item->setSizeHint(QSize(pitem->size().width()+10,pitem->size().height()));
-//        QPixmap pix(path);
-//        pix.scaled(200,170,Qt::KeepAspectRatio);
-//        item->icon().addPixmap(pix);
-//        item->setText(QString::fromLocal8Bit("美好的歌曲%1").arg(i+1));
-//        item->setSizeHint(QSize(270,350));
-//        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-//        item->setTextAlignment(Qt::AlignCenter);
-        ui->listWidget_itempic->addItem(item);
-        ui->listWidget_itempic->setItemWidget(item,pitem);
+//        if( colWidth - 1 < MINSIZE.width())
+//        {
+//            emit sig_itemResizeChanged(QSize(MINSIZE.width()*7,MINSIZE.height()+ui->listWidget_itempic->horizontalScrollBar()->height()+20));
+//            ui->listWidget_itempic->item(i)->setSizeHint(QSize(150,350));
+//        }
+//        else
+//        {
+            emit sig_itemResizeChanged(QSize((colWidth-1)*7,(colWidth-1)*SCALE + ui->listWidget_itempic->horizontalScrollBar()->height()+20));
+            ui->listWidget_itempic->item(i)->setSizeHint(QSize(colWidth - 1,(colWidth-1)*SCALE));
+//            qDebug() << QString::fromLocal8Bit("动态更新后的item大小：宽度%1，高度%2").arg(colWidth-1).arg(colWidth*SCALE);
+//        }
     }
+
 }
 
 
 void GalleryItemForm::setHeaderTitle(QString title)
 {
-    ui->pushButton_title->setText(title);
+    ui->pushButton_title->setText(title);//主题
 }
 
 
@@ -131,6 +165,10 @@ bool GalleryItemForm::eventFilter(QObject *watched, QEvent *event)
         if( event->type() == QEvent::Wheel)
         {
             ui->listWidget_itempic->horizontalScrollBar()->setEnabled(false);
+        }
+        else if(event->type() == QEvent::Resize)
+        {
+            resizeGalleryItemSize();
         }
     }
     return  QWidget::eventFilter(watched,event);

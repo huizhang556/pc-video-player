@@ -1,7 +1,8 @@
 ﻿#ifndef TAGSITEM_H
 #define TAGSITEM_H
-
+#include "mainwidget/songlistsort/HoverMask.h"
 #include <QWidget>
+#include <QPushButton>
 
 namespace Ui {
 class TagsItem;
@@ -15,6 +16,7 @@ public:
     explicit TagsItem(QWidget *parent = nullptr);
     explicit TagsItem(const QString& picture,const QString& name,const QString& counts,QWidget *parent = nullptr);
     ~TagsItem();
+    void        initWorkUI();
     void        handleSignalsAndSlots();
     void        setInstallEventFilter();
 
@@ -28,12 +30,17 @@ protected:
     void        resizeEvent(QResizeEvent *event) override;
 private:
     void        setHeadPictureMskRegion();
+    void        setHeadMask(bool mask);
 
 private:
     Ui::TagsItem *ui;
-    QString     m_path;
-    QString     m_name;
-    QString     m_counts;
+    QString         m_path;
+    QString         m_name;
+    QString         m_counts;
+    QPushButton     *m_playBtn;
+    QPushButton     *m_countBtn;
+    QPushButton     *m_tagBtn;
+
 
 signals:
     void        sig_sendMarkItem();

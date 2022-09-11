@@ -36,6 +36,8 @@ void SonglistSort::initWorkUI()
 //    m_action->setDefaultWidget(m_tags);
 //    m_menu->addAction(m_action);
 
+    ui->lineEdit_turnTo->setAlignment(Qt::AlignCenter);
+
     ui->toolButton->setCheckable(true);
     ui->toolButton->setLayoutDirection(Qt::RightToLeft);
     ui->toolButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -67,8 +69,8 @@ void SonglistSort::initWorkUI()
 
     for(int i = 0; i < 100; i++)
     {
-        QString path1 = QString(Global::appDirPath +"/pictures/musics/fashion/music%1.png").arg(i);
-        slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
+        QString path1 = QString(Global::appDirPath +"/pictures/musics/style/music%1.png").arg(i);
+        slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事 | 远方的人儿"),QString::fromLocal8Bit("故事中的人%1").arg(i));
     }
 
     ui->listWidget_markItem->setViewMode(QListView::IconMode);
@@ -120,6 +122,15 @@ void SonglistSort::slot_addSongItem(const QString &url, const QString &path, con
     });
 }
 
+void SonglistSort::slot_resetSongListItemInfo(QListWidgetItem *item, const QString &url, const QString &path, const QString &tags, const QString &mark)
+{
+    TagsItem *itemWidget = (TagsItem*)(ui->listWidget_markItem->itemWidget(item));
+    item->setText(url);
+    itemWidget->slot_setHeadPicture(path);
+    itemWidget->slot_setSongerTages(tags);
+    itemWidget->slot_setSongerMark(mark);
+}
+
 void SonglistSort::slot_emitHotAndNewTags(QAbstractButton *button)
 {
     if(button->text() == QString::fromLocal8Bit("最新"))
@@ -136,40 +147,71 @@ void SonglistSort::slot_setCheckedButton(QAbstractButton *button)
 {
     ui->toolButton->setText(button->text());
     emit sig_sendSelectTags(button->text());
-    ui->listWidget_markItem->clear();
+
     if(button->text() == QString::fromLocal8Bit("80后"))
     {
         for(int i = 0; i < 100; i++)
         {
+            QListWidgetItem* item = ui->listWidget_markItem->item(i);
             QString path1 = QString(Global::appDirPath +"/pictures/musics/nearly/music%1.png").arg(i);
-            slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
+            slot_resetSongListItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事0 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
         }
     }
     else if(button->text() == QString::fromLocal8Bit("运动"))
     {
         for(int i = 0; i < 100; i++)
         {
+            QListWidgetItem* item = ui->listWidget_markItem->item(i);
             QString path1 = QString(Global::appDirPath +"/pictures/musics/recradio/music%1.png").arg(i);
-            slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
+            slot_resetSongListItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事1 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
         }
     }
     else if(button->text() == QString::fromLocal8Bit("怀旧"))
     {
         for(int i = 0; i < 100; i++)
         {
+            QListWidgetItem* item = ui->listWidget_markItem->item(i);
             QString path1 = QString(Global::appDirPath +"/pictures/musics/recommend/music%1.png").arg(i);
-            slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
+            slot_resetSongListItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事2 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
+        }
+    }
+    else if(button->text() == QString::fromLocal8Bit("伤感"))
+    {
+        for(int i = 0; i < 100; i++)
+        {
+            QListWidgetItem* item = ui->listWidget_markItem->item(i);
+            QString path1 = QString(Global::appDirPath +"/pictures/musics/nearly/music%1.png").arg(i);
+            slot_resetSongListItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事3 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
+        }
+    }
+    else if(button->text() == QString::fromLocal8Bit("古风"))
+    {
+        for(int i = 0; i < 100; i++)
+        {
+            QListWidgetItem* item = ui->listWidget_markItem->item(i);
+            QString path1 = QString(Global::appDirPath +"/pictures/musics/recradio/music%1.png").arg(i);
+            slot_resetSongListItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事4 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
+        }
+    }
+    else if(button->text() == QString::fromLocal8Bit("网络"))
+    {
+        for(int i = 0; i < 100; i++)
+        {
+            QListWidgetItem* item = ui->listWidget_markItem->item(i);
+            QString path1 = QString(Global::appDirPath +"/pictures/musics/recommend/music%1.png").arg(i);
+            slot_resetSongListItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事5 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
         }
     }
     else
     {
         for(int i = 0; i < 100; i++)
         {
+            QListWidgetItem* item = ui->listWidget_markItem->item(i);
             QString path1 = QString(Global::appDirPath +"/pictures/musics/new/music%1.png").arg(i);
-            slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
+            slot_resetSongListItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事6 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
         }
     }
-    resize(this->width()+1,this->height()+1);
+//    resize(this->width()+1,this->height()+1);//更新界面
 }
 
 void SonglistSort::slot_showTagsMenu()
@@ -236,7 +278,7 @@ void SonglistSort::updateMenuGeometry()
 
 int SonglistSort::calculateItemWidth(int width)
 {
-    qDebug() << QString::fromLocal8Bit("传进来列表可用的宽度==") << width;
+//    qDebug() << QString::fromLocal8Bit("传进来列表可用的宽度==") << width;
     //最小显示6个item,最大刚好显示10个item
     //6~7 1116~1302 7~8 1302~1488 8~9 1488~1674 9~10 1674~1860
     if(width < MINSIZE.width()*6)// 1116及其以下 显示6个

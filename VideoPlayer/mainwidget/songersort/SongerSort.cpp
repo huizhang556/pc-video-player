@@ -18,8 +18,8 @@ SongerSort::SongerSort(QWidget *parent) :
 
     for(int i = 0; i < 100; i++)
     {
-        QString path1 = QString(Global::appDirPath +"/pictures/musics/nearly/music%1.png").arg(i);
-        slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("凤凰传奇"),"1000+");// url picture info count
+        QString path1 = QString(Global::appDirPath +"/pictures/musics/songers/music%1.png").arg(i);
+        slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("凤凰传奇"),QString::fromLocal8Bit("累计歌曲1000+首"));// url picture info count
     }
 }
 
@@ -30,6 +30,8 @@ SongerSort::~SongerSort()
 
 void SongerSort::initWorkUI()
 {
+    ui->lineEdit_turnTo->setAlignment(Qt::AlignCenter);
+
     m_buttonGroup1 = new QButtonGroup(this);
     m_buttonGroup2 = new QButtonGroup(this);
     m_buttonGroup3 = new QButtonGroup(this);
@@ -162,6 +164,25 @@ void SongerSort::slot_addSongItem(const QString &url, const QString &path, const
     });
 }
 
+void SongerSort::slot_reserItem(const QString& path)
+{
+    for(int i = 0; i < ui->listWidget_songers->count(); i++)
+    {
+        QListWidgetItem *item = ui->listWidget_songers->item(i);
+        QString path1 = QString(Global::appDirPath + path + "/music%1.png").arg(i);
+        slot_resetSongItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("家乡的故事 | 聆听美好家乡故事"),QString::fromLocal8Bit("家乡小跟班%1").arg(i));
+    }
+}
+
+void SongerSort::slot_resetSongItemInfo(QListWidgetItem *item, const QString &url, const QString &path, const QString &name, const QString &count)
+{
+    SongItem *itemWidget = (SongItem*)(ui->listWidget_songers->itemWidget(item));
+    item->setText(url);
+    itemWidget->slot_setHeadPicture(path);
+    itemWidget->slot_setSongerName(name);
+    itemWidget->slot_setSongerCounts(count);
+}
+
 void SongerSort::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event)
@@ -194,40 +215,124 @@ void SongerSort::slot_emitStyle(QAbstractButton *button)
 {
     emit sig_sendStyle(button->text());
     qDebug() <<QString::fromLocal8Bit("当前选择的风格：%1").arg(button->text());
-    ui->listWidget_songers->clear();
     if(button->text() == QString::fromLocal8Bit("流行"))
     {
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < ui->listWidget_songers->count(); i++)
         {
-            QString path1 = QString(Global::appDirPath +"/pictures/musics/nearly/music%1.png").arg(i);
-            slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
+            QListWidgetItem *item = ui->listWidget_songers->item(i);
+            QString path1 = QString(Global::appDirPath +"/pictures/musics/fashion/music%1.png").arg(i);
+            slot_resetSongItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("王力宏"),QString::fromLocal8Bit("累计歌曲%1").arg(i));
         }
     }
     else if(button->text() == QString::fromLocal8Bit("电子"))
     {
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < ui->listWidget_songers->count(); i++)
         {
+            QListWidgetItem *item = ui->listWidget_songers->item(i);
             QString path1 = QString(Global::appDirPath +"/pictures/musics/recradio/music%1.png").arg(i);
-            slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
+            slot_resetSongItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("花儿乐队"),QString::fromLocal8Bit("累计歌曲%1").arg(i));
         }
     }
     else if(button->text() == QString::fromLocal8Bit("摇滚"))
     {
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < ui->listWidget_songers->count(); i++)
         {
+            QListWidgetItem *item = ui->listWidget_songers->item(i);
             QString path1 = QString(Global::appDirPath +"/pictures/musics/recommend/music%1.png").arg(i);
-            slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
+            slot_resetSongItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("玖月奇迹"),QString::fromLocal8Bit("累计歌曲%1").arg(i));
+        }
+    }
+    else if(button->text() == QString::fromLocal8Bit("嘻哈"))
+    {
+        for(int i = 0; i < ui->listWidget_songers->count(); i++)
+        {
+            QListWidgetItem *item = ui->listWidget_songers->item(i);
+            QString path1 = QString(Global::appDirPath +"/pictures/musics/recradio/music%1.png").arg(i);
+            slot_resetSongItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("北方的狼"),QString::fromLocal8Bit("累计歌曲%1").arg(i));
+        }
+    }
+    else if(button->text() == QString::fromLocal8Bit("R&B"))
+    {
+        for(int i = 0; i < ui->listWidget_songers->count(); i++)
+        {
+            QListWidgetItem *item = ui->listWidget_songers->item(i);
+            QString path1 = QString(Global::appDirPath +"/pictures/musics/recommend/music%1.png").arg(i);
+            slot_resetSongItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("我是歌手"),QString::fromLocal8Bit("累计歌曲%1").arg(i));
+        }
+    }
+    else if(button->text() == QString::fromLocal8Bit("民谣"))
+    {
+        for(int i = 0; i < ui->listWidget_songers->count(); i++)
+        {
+            QListWidgetItem *item = ui->listWidget_songers->item(i);
+            QString path1 = QString(Global::appDirPath +"/pictures/musics/recradio/music%1.png").arg(i);
+            slot_resetSongItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("中国好声音"),QString::fromLocal8Bit("累计歌曲%1").arg(i));
+        }
+    }
+    else if(button->text() == QString::fromLocal8Bit("爵士"))
+    {
+        for(int i = 0; i < ui->listWidget_songers->count(); i++)
+        {
+            QListWidgetItem *item = ui->listWidget_songers->item(i);
+            QString path1 = QString(Global::appDirPath +"/pictures/musics/recommend/music%1.png").arg(i);
+            slot_resetSongItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("中国新歌秀"),QString::fromLocal8Bit("累计歌曲%1").arg(i));
+        }
+    }
+    else if(button->text() == QString::fromLocal8Bit("古典"))
+    {
+        for(int i = 0; i < ui->listWidget_songers->count(); i++)
+        {
+            QListWidgetItem *item = ui->listWidget_songers->item(i);
+            QString path1 = QString(Global::appDirPath +"/pictures/musics/recradio/music%1.png").arg(i);
+            slot_resetSongItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("周深"),QString::fromLocal8Bit("累计歌曲%1").arg(i));
+        }
+    }
+    else if(button->text() == QString::fromLocal8Bit("拉丁"))
+    {
+        for(int i = 0; i < ui->listWidget_songers->count(); i++)
+        {
+            QListWidgetItem *item = ui->listWidget_songers->item(i);
+            QString path1 = QString(Global::appDirPath +"/pictures/musics/recommend/music%1.png").arg(i);
+            slot_resetSongItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("王菲"),QString::fromLocal8Bit("累计歌曲%1").arg(i));
+        }
+    }
+    else if(button->text() == QString::fromLocal8Bit("轻音乐"))
+    {
+        for(int i = 0; i < ui->listWidget_songers->count(); i++)
+        {
+            QListWidgetItem *item = ui->listWidget_songers->item(i);
+            QString path1 = QString(Global::appDirPath +"/pictures/musics/recradio/music%1.png").arg(i);
+            slot_resetSongItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("韩红"),QString::fromLocal8Bit("累计歌曲%1").arg(i));
+        }
+    }
+    else if(button->text() == QString::fromLocal8Bit("乡村"))
+    {
+        for(int i = 0; i < ui->listWidget_songers->count(); i++)
+        {
+            QListWidgetItem *item = ui->listWidget_songers->item(i);
+            QString path1 = QString(Global::appDirPath +"/pictures/musics/recommend/music%1.png").arg(i);
+            slot_resetSongItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("至上励合"),QString::fromLocal8Bit("累计歌曲%1").arg(i));
+        }
+    }
+    else if(button->text() == QString::fromLocal8Bit("蓝调"))
+    {
+        for(int i = 0; i < ui->listWidget_songers->count(); i++)
+        {
+            QListWidgetItem *item = ui->listWidget_songers->item(i);
+            QString path1 = QString(Global::appDirPath +"/pictures/musics/recradio/music%1.png").arg(i);
+            slot_resetSongItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("李荣浩"),QString::fromLocal8Bit("累计歌曲%1").arg(i));
         }
     }
     else
     {
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < ui->listWidget_songers->count(); i++)
         {
+            QListWidgetItem *item = ui->listWidget_songers->item(i);
             QString path1 = QString(Global::appDirPath +"/pictures/musics/new/music%1.png").arg(i);
-            slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事 | 写首诗歌唱给远方的人"),QString::fromLocal8Bit("鞠婧祎的小跟班%1").arg(i));
+            slot_resetSongItemInfo(item,"www.hao123.com",path1,QString::fromLocal8Bit("周华健"),QString::fromLocal8Bit("累计歌曲%1").arg(i));
         }
     }
-    resize(this->width()+1,this->height()+1);//刷新界面
+//    resize(this->width()+1,this->height()+1);//刷新界面
 }
 
 void SongerSort::slot_emitA_to_Z(QAbstractButton *button)

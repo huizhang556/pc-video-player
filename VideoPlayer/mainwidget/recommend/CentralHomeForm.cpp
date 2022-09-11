@@ -70,6 +70,10 @@ void CentralHomeForm::addWidgetToListWidget()
     item1->setSizeHint(pitem1->size());
     m_homeListWidget->addItem(item1);
     m_homeListWidget->setItemWidget(item1,pitem1);
+    //信号与槽函数
+    connect(pitem1,&GalleryItemForm::sig_itemResizeChanged,[=](QSize size){
+        resizeHomeListWidgetSize(item1,size);
+    });
 
     QListWidgetItem *item2 = new QListWidgetItem();
     GalleryItemForm *pitem2 = new GalleryItemForm();//分类介绍画廊2
@@ -78,6 +82,10 @@ void CentralHomeForm::addWidgetToListWidget()
     item2->setSizeHint(pitem2->size());
     m_homeListWidget->addItem(item2);
     m_homeListWidget->setItemWidget(item2,pitem2);
+    //信号与槽函数
+    connect(pitem2,&GalleryItemForm::sig_itemResizeChanged,[=](QSize size){
+        resizeHomeListWidgetSize(item2,size);
+    });
 
     QListWidgetItem *item3 = new QListWidgetItem();
     GalleryItemForm *pitem3 = new GalleryItemForm();//分类介绍画廊3
@@ -86,6 +94,10 @@ void CentralHomeForm::addWidgetToListWidget()
     item3->setSizeHint(pitem3->size());
     m_homeListWidget->addItem(item3);
     m_homeListWidget->setItemWidget(item3,pitem3);
+    //信号与槽函数
+    connect(pitem3,&GalleryItemForm::sig_itemResizeChanged,[=](QSize size){
+        resizeHomeListWidgetSize(item3,size);
+    });
 
     QListWidgetItem *item4 = new QListWidgetItem();
     GalleryItemForm *pitem4 = new GalleryItemForm();//分类介绍画廊4
@@ -94,6 +106,10 @@ void CentralHomeForm::addWidgetToListWidget()
     item4->setSizeHint(pitem4->size());
     m_homeListWidget->addItem(item4);
     m_homeListWidget->setItemWidget(item4,pitem4);
+    //信号与槽函数
+    connect(pitem4,&GalleryItemForm::sig_itemResizeChanged,[=](QSize size){
+        resizeHomeListWidgetSize(item4,size);
+    });
 
     QListWidgetItem *item5 = new QListWidgetItem();
     GalleryItemForm *pitem5 = new GalleryItemForm();//分类介绍画廊5
@@ -102,6 +118,10 @@ void CentralHomeForm::addWidgetToListWidget()
     item5->setSizeHint(pitem5->size());
     m_homeListWidget->addItem(item5);
     m_homeListWidget->setItemWidget(item5,pitem5);
+    //信号与槽函数
+    connect(pitem5,&GalleryItemForm::sig_itemResizeChanged,[=](QSize size){
+        resizeHomeListWidgetSize(item5,size);
+    });
 
     QListWidgetItem *item6 = new QListWidgetItem();
     GalleryItemForm *pitem6 = new GalleryItemForm();//分类介绍画廊6
@@ -110,6 +130,10 @@ void CentralHomeForm::addWidgetToListWidget()
     item6->setSizeHint(pitem6->size());
     m_homeListWidget->addItem(item6);
     m_homeListWidget->setItemWidget(item6,pitem6);
+    //信号与槽函数
+    connect(pitem6,&GalleryItemForm::sig_itemResizeChanged,[=](QSize size){
+        resizeHomeListWidgetSize(item6,size);
+    });
 
     QListWidgetItem *item7 = new QListWidgetItem();
     GalleryItemForm *pitem7 = new GalleryItemForm();//分类介绍画廊7
@@ -118,6 +142,10 @@ void CentralHomeForm::addWidgetToListWidget()
     item7->setSizeHint(pitem7->size());
     m_homeListWidget->addItem(item7);
     m_homeListWidget->setItemWidget(item7,pitem7);
+    //信号与槽函数
+    connect(pitem7,&GalleryItemForm::sig_itemResizeChanged,[=](QSize size){
+        resizeHomeListWidgetSize(item7,size);
+    });
 
     QListWidgetItem *item8 = new QListWidgetItem();
     GalleryItemForm *pitem8 = new GalleryItemForm();//分类介绍画廊8
@@ -126,6 +154,10 @@ void CentralHomeForm::addWidgetToListWidget()
     item8->setSizeHint(pitem8->size());
     m_homeListWidget->addItem(item8);
     m_homeListWidget->setItemWidget(item8,pitem8);
+    //信号与槽函数
+    connect(pitem8,&GalleryItemForm::sig_itemResizeChanged,[=](QSize size){
+        resizeHomeListWidgetSize(item8,size);
+    });
 
     QListWidgetItem *item9 = new QListWidgetItem();
     GalleryItemForm *pitem9 = new GalleryItemForm();//分类介绍画廊9
@@ -134,6 +166,10 @@ void CentralHomeForm::addWidgetToListWidget()
     item9->setSizeHint(pitem9->size());
     m_homeListWidget->addItem(item9);
     m_homeListWidget->setItemWidget(item9,pitem9);
+    //信号与槽函数
+    connect(pitem9,&GalleryItemForm::sig_itemResizeChanged,[=](QSize size){
+        resizeHomeListWidgetSize(item9,size);
+    });
 
     QListWidgetItem *item10 = new QListWidgetItem();
     GalleryItemForm *pitem10 = new GalleryItemForm();//分类介绍画廊10
@@ -142,6 +178,10 @@ void CentralHomeForm::addWidgetToListWidget()
     item10->setSizeHint(pitem10->size());
     m_homeListWidget->addItem(item10);
     m_homeListWidget->setItemWidget(item10,pitem10);
+    //信号与槽函数
+    connect(pitem10,&GalleryItemForm::sig_itemResizeChanged,[=](QSize size){
+        resizeHomeListWidgetSize(item10,size);
+    });
 
     QListWidgetItem *item_back = new QListWidgetItem();
     QWidget *subWidget = new QWidget();
@@ -192,4 +232,9 @@ void CentralHomeForm::updateBottomButtonGeometry()
     m_bottomBtn->setGeometry(m_homeListWidget->width()-m_bottomBtn->width()-10,
                              m_homeListWidget->height() - m_bottomBtn->height()-10,
                              m_bottomBtn->width(),m_bottomBtn->height());
+}
+
+void CentralHomeForm::resizeHomeListWidgetSize(QListWidgetItem *item, QSize size)
+{
+    item->setSizeHint(QSize(size.width(),size.height()+m_homeListWidget->horizontalScrollBar()->height()));
 }

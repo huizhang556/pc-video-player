@@ -69,6 +69,34 @@ void MainWidget::initOtherWidgetUi()
     m_webBrowser = new CusWebBrowser();
     m_webBrowser->setObjectName(QString::fromLatin1("m_webBrowser"));
 
+    m_webAddBtn = new QPushButton("+");//添加tab按钮
+    m_webAddBtn->setFixedSize(30,26);
+    m_webAddBtn->setFlat(true);
+    m_webAddBtn->setObjectName(QString::fromLocal8Bit("m_webAddBtn"));
+
+    m_addHblayout = new QHBoxLayout();
+    m_addHblayout->addWidget(m_webAddBtn);
+    //    enum Policy {
+    //        Fixed = 0,
+    //        Minimum = GrowFlag,
+    //        Maximum = ShrinkFlag,
+    //        Preferred = GrowFlag | ShrinkFlag,
+    //        MinimumExpanding = GrowFlag | ExpandFlag,
+    //        Expanding = GrowFlag | ShrinkFlag | ExpandFlag,
+    //        Ignored = ShrinkFlag | GrowFlag | IgnoreFlag
+    //    };
+    sparcer_item = new QSpacerItem(20,20,QSizePolicy::MinimumExpanding);
+    m_addHblayout->addSpacerItem(sparcer_item);
+//    m_addHblayout->addStretch(50);
+    m_addHblayout->setSpacing(0);
+    m_addHblayout->setMargin(0);
+    m_addHblayout->setContentsMargins(0,0,0,0);
+
+    m_addWidget = new QWidget();
+    m_addWidget->setObjectName(QString::fromLocal8Bit("m_addWidget"));
+    m_addWidget->setLayout(m_addHblayout);
+//    m_addWidget->layout()->invalidate();
+
     m_cusTabbar = new CusTabBar();
     m_cusTabbar->setObjectName(QString::fromLocal8Bit("m_cusTabbar"));
     m_cusTabbar->hide();
@@ -88,11 +116,13 @@ void MainWidget::initOtherWidgetUi()
 
     m_webTabWidget = new QTabWidget();
     m_webTabWidget->setObjectName(QString::fromLocal8Bit("m_webTabWidget"));
+//    m_webTabWidget->setCornerWidget(m_addWidget,Qt::TopRightCorner);//每次添加或者删除一个tab都要计算宽度
     m_webTabWidget->tabBar()->setObjectName(QString::fromLocal8Bit("m_webTabBar"));
-    m_webTabWidget->tabBar()->setLayoutDirection(Qt::LayoutDirectionAuto);
+    m_webTabWidget->tabBar()->setLayoutDirection(Qt::LeftToRight);
     m_webTabWidget->insertTab(0,m_webBrowser,QIcon("://images/icon/engine.png"),m_webBrowser->title());
     m_webTabWidget->setTabsClosable(true);//打开关闭按钮
     m_webTabWidget->setMovable(true);//标签可拖动
+    m_webTabWidget->installEventFilter(this);
     m_webTabWidget->tabBar()->setStyle(new CustomTabStyle);//调整体字、图标
 
 //    m_webTabWidget->tabBar()->setTabButton(0,QTabBar::RightSide,m_addWebButton);
@@ -950,6 +980,15 @@ void MainWidget::userSignOut()
     dataBase::getInstance()->login_setLoginStatus(0);//设置用户状态 -- 下线
 }
 
+void MainWidget::updateWebAddButtonGeometry()
+{
+    qDebug() << QString(u8"tabBar的宽度：")<<m_webTabWidget->tabBar()->width();
+    int width   = m_webTabWidget->width() - m_webTabWidget->tabBar()->width() - 1;
+    QRect rect  = QRect(0,0,m_webTabWidget->rect().width() - m_webTabWidget->tabBar()->width() - 30,26);
+    sparcer_item->setGeometry(rect);
+    qDebug() << QString::fromLocal8Bit("webTab剩余宽度：")<<width;
+}
+
 void MainWidget::slot_setWebProgreeBarValue(int value)
 {
     opacity->setOpacity(1);//恢复透明度值
@@ -1171,6 +1210,14 @@ bool MainWidget::eventFilter(QObject *watched, QEvent *event)
             m_leftButton->hide();
         }
     }
+    if(watched == m_webTabWidget)
+    {
+        if(event->type() ==  QEvent::Resize)
+        {
+//            updateWebAddButtonGeometry();
+            qDebug() << QString(u8"m_webTabWidget尺寸变了");
+        }
+    }
     return QWidget::eventFilter(watched,event);
 }
 
@@ -1299,6 +1346,7 @@ void MainWidget::closeEvent(QCloseEvent *event)
 void MainWidget::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
+//    updateWebAddButtonGeometry();
 }
 
 void MainWidget::keyPressEvent(QKeyEvent *event)

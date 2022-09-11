@@ -31,10 +31,11 @@
 #include <QLayout>
 #include <QThread>
 #include <QWidget>
-#include <QKeyEvent>
 #include <QStatusBar>
 #include <QShowEvent>
 #include <QTabWidget>
+#include <QKeyEvent>
+#include <QSpacerItem>
 #include <QPushButton>
 #include <QMouseEvent>
 #include <QCloseEvent>
@@ -95,6 +96,8 @@ private:
     void        userSignIn();
 
     void        userSignOut();
+
+    void        updateWebAddButtonGeometry();//更新添加按钮位置
 
 
 private slots:
@@ -207,8 +210,12 @@ private:
     VideoBlank          *m_videoBlank              = nullptr;
     QTabWidget          *m_webTabWidget            = nullptr;
     QVBoxLayout         *m_webVblayout             = nullptr;
-    CusTabBar           *m_cusTabbar               = nullptr;//自定义tabbar标题栏
+    CusTabBar           *m_cusTabbar               = nullptr;//自定义tabbar标题栏(收藏栏)
     CusWebBrowser       *m_webBrowser              = nullptr;//自定义浏览器
+    QPushButton         *m_webAddBtn               = nullptr;//添加按钮
+    QSpacerItem         *sparcer_item              = nullptr;
+    QWidget             *m_addWidget               = nullptr;//添加tab网页栏
+    QHBoxLayout         *m_addHblayout             = nullptr;
     QStatusBar          *m_statusBar               = nullptr;//浏览器状态栏
     QProgressBar        *m_progressBar             = nullptr;//浏览器网页加载进度
     CollectRecords      *m_webRecords              = nullptr;//浏览器收藏标签界面
