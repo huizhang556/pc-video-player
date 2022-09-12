@@ -1,6 +1,7 @@
 ﻿#include "CusLabelItem.h"
 #include "ui_CusLabelItem.h"
 
+#include <QBitmap>
 #include <QDebug>
 
 CusLabelItem::CusLabelItem(QWidget *parent) :
@@ -13,8 +14,9 @@ CusLabelItem::CusLabelItem(QWidget *parent) :
     handleSignalsAndSlots();
 }
 
-CusLabelItem::CusLabelItem(const QString &hotPath, const QString &playcounts, bool hotOn, bool playOff1, bool playOff2, QWidget *parent):
+CusLabelItem::CusLabelItem(const QString& picPath, const QString &hotPath, const QString &playcounts, bool hotOn, bool playOff1, bool playOff2, QWidget *parent):
     QLabel(parent),
+    m_picPath(picPath),
     m_hot(hotPath),
     m_counts(playcounts),
     m_hotOn(hotOn),
@@ -29,7 +31,7 @@ CusLabelItem::CusLabelItem(const QString &hotPath, const QString &playcounts, bo
     setItem_hotOn(m_hotOn);
     setItemMainPlayerOn(m_mainPlay);
     setItemPlayerOn(m_play);
-
+    setItemPicture(m_picPath);
     setItem_hot(m_hot);
     setItem_playCounts(m_counts);
 }
@@ -41,7 +43,7 @@ CusLabelItem::~CusLabelItem()
 
 void CusLabelItem::initWorkUI()
 {
-//    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
+//    setWindowFlags(Qt::FramelessWindowHint);
     ui->pushButton_hot->hide();
     ui->pushButton_mainPlay->hide();
     ui->pushButton_play->hide();
@@ -61,13 +63,14 @@ void CusLabelItem::setEventFilter()
     ui->pushButton_play->installEventFilter(this);
 }
 
-void CusLabelItem::constructItem(const QString &hotPath, const QString &playcounts, bool hotOn, bool playOff1, bool playOff2)
+void CusLabelItem::constructItem(const QString &picPath, const QString &hotPath, const QString &playcounts, bool hotOn, bool playOff1, bool playOff2)
 {
     this->setItem_hotOn(hotOn);
     this->setItemMainPlayerOn(playOff1);
     this->setItemPlayerOn(playOff2);
     this->setItem_hot(hotPath);
     this->setItem_playCounts(playcounts);
+    this->setItemPicture(picPath);
 }
 
 void CusLabelItem::setItem_hotOn(bool on)
@@ -95,12 +98,12 @@ bool CusLabelItem::eventFilter(QObject *watched, QEvent *event)
         if(event->type() == QEvent::Enter && m_mainPlay)//进入且用了mainPlay
         {
             ui->pushButton_mainPlay->show();
-            qDebug() << "Mainplayer enter";
+//            qDebug() << "Mainplayer enter";
         }
         else if(event->type() == QEvent::Leave && m_mainPlay)
         {
             ui->pushButton_mainPlay->hide();
-            qDebug() << "Mainplayer hide";
+//            qDebug() << "Mainplayer hide";
         }
     }
 
@@ -131,15 +134,18 @@ bool CusLabelItem::eventFilter(QObject *watched, QEvent *event)
 void CusLabelItem::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
-//        QPainter painter(this);
-//        painter.setRenderHint(QPainter::Antialiasing,true);
-//        painter.setPen(Qt::NoPen);
-//        painter.setBrush(QColor(56, 67, 99,10));//rgba
-//        QPainterPath drawPath;
+        QPainter painter(this);
+        painter.setRenderHint(QPainter::Antialiasing,true);
+        painter.setPen(Qt::NoPen);
+        painter.setBrush(QColor(56, 67, 99,10));//rgba
 
-//        drawPath.addRoundedRect(this->rect(),10,10);
-//        painter.drawPath(drawPath);
-//        painter.drawPixmap(0,0,width(),height(),QPixmap(m_hot));
+        QPainterPath drawPath;
+        drawPath.addRoundedRect(this->rect(),15,15);
+        drawPath.addRect(this->rect());
+        painter.drawPixmap(0,0,width(),height(),QPixmap(m_picPath));//不绘制图片（其上面叠加的部分会被覆盖）
+        painter.fillPath(drawPath,Qt::black);//先绘图片再填充外部边缘（准确来说叫颜色压住覆盖 ）
+//        painter.drawPath(drawPath);//绘制路径组成的区域
+//        painter.eraseRect(QRect(5,5,width()-10,height()-10));//擦除矩形区域
 }
 
 void CusLabelItem::setItem_hot(const QString &hot)
@@ -163,4 +169,11 @@ void CusLabelItem::setItem_mainPlayer(bool on)
 void CusLabelItem::setItem_player(bool on)
 {
     ui->pushButton_play->setHidden(on);
+}
+
+void CusLabelItem::setItemPicture(const QString &picPath)
+{
+    m_picPath = picPath;
+//    this->setPixmap(QPixmap(picPath));
+//    this->setScaledContents(true);
 }

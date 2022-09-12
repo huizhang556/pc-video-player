@@ -34,11 +34,11 @@ void GalleryItemForm::chandleSignalsAndSlots()
     connect(ui->listWidget_itempic,&QListWidget::itemEntered,[=](QListWidgetItem *item){
 //        item->setSizeHint(item->sizeHint()+QSize(15,15));
         update();
-        qDebug() << "enter item";
+//        qDebug() << "enter item";
     });
 
     connect(ui->listWidget_itempic,&QListWidget::itemChanged,[=](QListWidgetItem *item){
-        qDebug() <<"item leave";
+//        qDebug() <<"item leave";
 
     });
 }
@@ -90,7 +90,7 @@ void GalleryItemForm::adjustListWidgetItemsSize()
     }
 }
 
-void GalleryItemForm::setItemPictures(int size,QString path)
+void GalleryItemForm::createItems(int size,QString path)
 {
    for(int i = 0; i < size; i++)
    {
@@ -106,14 +106,14 @@ void GalleryItemForm::slot_addGalleryItem(const QString &url, const QString &pic
 {
     PicWallItem *pitem = new PicWallItem();
     //设置图片
-    pitem->setPicItemWall(pic1);
-    pitem->setPicItemWall2(pic2);
+//    pitem->setPicItemWall(pic1);
+//    pitem->setPicItemWall2(pic2);
     //设置文字
     pitem->setPicItemWallText(text1);
     pitem->setPicItemWallText2(text2);
     //设置开关
-    pitem->getItemPic_1Label()->constructItem("://images/user/itemmark_new.png",QString(u8"6.6"),true,true,false);
-    pitem->getItemPic_2Label()->constructItem("://images/user/itemmark_vyp.png",QString(u8"6.6"),true,true,false);
+    pitem->getItemPic_1Label()->constructItem(pic1,"://images/user/itemmark_new.png",QString(u8"6.6"),true,true,false);
+    pitem->getItemPic_2Label()->constructItem(pic2,"://images/user/itemmark_vyp.png",QString(u8"6.6"),true,true,false);
 
     QListWidgetItem *item = new QListWidgetItem(url);
 //    item->setData(Qt::UserRole,url);

@@ -26,7 +26,7 @@ public:
     void chandleSignalsAndSlots();
     void setHeaderTitle(QString title);
     void adjustListWidgetItemsSize();
-    void setItemPictures(int size,QString path);
+    void createItems(int size,QString path);
 
 public slots:
     void    slot_addGalleryItem(const QString& url,const QString& pic1,const QString& pic2,const QString& text1,const QString& text2);

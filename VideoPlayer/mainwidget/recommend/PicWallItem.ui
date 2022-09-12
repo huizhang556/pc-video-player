@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>170</width>
+    <width>150</width>
     <height>380</height>
    </rect>
   </property>
@@ -53,15 +53,6 @@
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="CusLabelItem" name="label_wallitem1">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>150</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
          <property name="text">
           <string/>
          </property>
@@ -100,15 +91,6 @@ font-size:14px;
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="CusLabelItem" name="label_wallitem2">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>150</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
          <property name="text">
           <string/>
          </property>

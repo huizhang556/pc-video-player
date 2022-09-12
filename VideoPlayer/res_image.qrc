@@ -420,5 +420,7 @@
         <file>images/user/itemmark_new2.png</file>
         <file>images/user/itemmark_recommend.png</file>
         <file>images/user/itemmark_vyp.png</file>
+        <file>images/home/transparent.png</file>
+        <file>images/bgpic/recommend_title.png</file>
     </qresource>
 </RCC>

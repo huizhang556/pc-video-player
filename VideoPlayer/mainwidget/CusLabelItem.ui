@@ -6,18 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>164</width>
-    <height>160</height>
+    <width>146</width>
+    <height>142</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#CusLabelItem
-{
-border-radius:10px;
-}</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <property name="spacing">
@@ -50,12 +47,13 @@ border-radius:10px;
          <property name="minimumSize">
           <size>
            <width>40</width>
-           <height>20</height>
+           <height>25</height>
           </size>
          </property>
          <property name="styleSheet">
           <string notr="true">#pushButton_hot
 {
+margin-top: 5px;
 background-color: transparent;
 /*border-image: url(:/images/home/songlist_hot.png);*/
 border: none;

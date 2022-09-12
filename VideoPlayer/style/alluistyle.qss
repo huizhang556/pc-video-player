@@ -804,13 +804,13 @@ background-color:#f0f0f0;
 #m_bottomBtn
 {
 border-radius:25px;
-background: rbga(240, 240, 240,0.6) url(://images/icon/main_bottom_hover.png) no-repeat no-repeat center center;
+background: rbga(240, 240, 240,0.3) url(://images/icon/main_bottom_hover.png) no-repeat no-repeat center center;
 }
 
 #m_bottomBtn:hover
 {
 border-radius:25px;
-background: rbga(240, 240, 240,0.6) url(://images/icon/main_bottombtn.png) no-repeat no-repeat center center;
+background: rbga(240, 240, 240,0.8) url(://images/icon/main_bottombtn.png) no-repeat no-repeat center center;
 }
 
 /*去白边*/

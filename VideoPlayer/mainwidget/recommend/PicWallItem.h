@@ -28,7 +28,7 @@ public:
     void    setPicItemWall2(QString path);
     void    setPicItemWallText2(QString text);
 
-    CusLabelItem*    getItemPic_1Label();
+    CusLabelItem *getItemPic_1Label();
     CusLabelItem*    getItemPic_2Label();
 
 protected:

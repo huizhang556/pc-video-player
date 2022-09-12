@@ -26,21 +26,20 @@ QPushButton* PicWallItem::getWallItemTextButton()
 void PicWallItem::setPicItemWall(QString path)
 {
     QPixmap pix(path);
-    ui->label_wallitem1->setPixmap(pix);
-    ui->label_wallitem1->setScaledContents(true);//自适应
+//    ui->label_wallitem1->setPixmap(pix);
+//    ui->label_wallitem1->setScaledContents(true);//自适应
 }
 
 void PicWallItem::setPicItemWallText(QString text)
 {
     ui->pushButton_wall_title1->setText(text);
-
 }
 
 void PicWallItem::setPicItemWall2(QString path)
 {
     QPixmap pix(path);
-    ui->label_wallitem2->setPixmap(pix);
-    ui->label_wallitem2->setScaledContents(true);//自适应
+//    ui->label_wallitem2->setPixmap(pix);
+//    ui->label_wallitem2->setScaledContents(true);//自适应
 }
 
 void PicWallItem::setPicItemWallText2(QString text)
