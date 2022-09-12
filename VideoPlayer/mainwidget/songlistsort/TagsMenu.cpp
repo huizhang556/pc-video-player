@@ -17,7 +17,7 @@ TagsMenu::TagsMenu(QWidget *parent) :
     ui(new Ui::TagsMenu)
 {
     ui->setupUi(this);
-    setFixedWidth(718);
+    setFixedWidth(720);//120 * 6
 //    setFixedSize(718,360);
     initWorkUI();
     handleSignalsAndSlots();
@@ -94,7 +94,7 @@ void TagsMenu::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing,true);
     painter.setPen(Qt::NoPen);
-    painter.setBrush(QColor(255, 255, 255));//50 77 91
+    painter.setBrush(QColor(56, 67, 99));//50 77 91
     //小三角区域
     QPolygon trianglePolygon;
     trianglePolygon << QPoint(m_startX , m_startY);// 30 30

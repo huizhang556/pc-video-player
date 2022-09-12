@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>170</width>
-    <height>390</height>
+    <height>380</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -24,6 +24,9 @@
   </property>
   <property name="windowTitle">
    <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
@@ -49,12 +52,15 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QLabel" name="label_wallitem1">
+        <widget class="CusLabelItem" name="label_wallitem1">
          <property name="minimumSize">
           <size>
            <width>150</width>
            <height>150</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
          </property>
          <property name="text">
           <string/>
@@ -93,12 +99,15 @@ font-size:14px;
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QLabel" name="label_wallitem2">
+        <widget class="CusLabelItem" name="label_wallitem2">
          <property name="minimumSize">
           <size>
            <width>150</width>
            <height>150</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
          </property>
          <property name="text">
           <string/>
@@ -138,6 +147,13 @@ font-size:14px;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CusLabelItem</class>
+   <extends>QLabel</extends>
+   <header location="global">mainwidget/CusLabelItem.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

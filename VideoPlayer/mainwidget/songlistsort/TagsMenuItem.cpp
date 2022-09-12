@@ -2,7 +2,7 @@
 #include "ui_TagsMenuItem.h"
 
 #include <QListWidgetItem>
-
+#include <QScrollBar>
 #include <QDebug>
 
 TagsMenuItem::TagsMenuItem(QWidget *parent) :
@@ -67,7 +67,8 @@ void TagsMenuItem::slot_addTagMenuItem(const QStringList &list)
     foreach (QString item, list)
     {
         QListWidgetItem *pitem = new QListWidgetItem(QIcon("://images/icon/hot0.png"),item);
-        pitem->setSizeHint(QSize(100,48));
+        pitem->setSizeHint(QSize(100,46));//包含margin
+        pitem->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
         ui->listWidget_tags->addItem(pitem);//采用样式表中的宽高
         //说明：
         //代码不指定宽高，默认使用的是界面放置的宽高。如果后面设置了更大的值，界面会被撑大。
@@ -84,8 +85,8 @@ void TagsMenuItem::setMenuListWidgetHeight(int counts)
     else
         num0 = num0+1;
 //    qDebug() << QString::fromLocal8Bit("所占行数：") << num0;
-    this->setMinimumHeight(num0*56 - 5);
-    m_size = QSize(width(),num0*56 - 5);
+    this->setMinimumHeight(num0*48 + ui->listWidget_tags->horizontalScrollBar()->height() - 15);
+    m_size = QSize(width(),num0*48 + ui->listWidget_tags->horizontalScrollBar()->height() - 15);
 }
 
 QSize TagsMenuItem::getMenuListWidgetHeight()

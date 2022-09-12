@@ -230,7 +230,7 @@ color: #ff0000;
 }</string>
                  </property>
                  <property name="text">
-                  <string>1/3</string>
+                  <string/>
                  </property>
                 </widget>
                </item>
@@ -339,7 +339,8 @@ QListWidget::item
 {
 margin:10px 10px 10px 10px;
 color:transparent;
-background-color: transparent;
+/*border: 1px solid red;*/
+/*background-color: yellow;*/
 }
 
 QListWidget::item:selected

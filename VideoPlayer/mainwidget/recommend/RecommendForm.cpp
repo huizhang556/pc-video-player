@@ -10,7 +10,7 @@ RecommendForm::RecommendForm(QWidget *parent) :
     ui(new Ui::RecommendForm)
 {
     ui->setupUi(this);
-    this->setMinimumHeight(400);
+    this->setMinimumHeight(360);
     initWorkUI();
     chandleSignalsAndSlots();
     ui->stackedWidget_recommend->installEventFilter(this);//安装监听器

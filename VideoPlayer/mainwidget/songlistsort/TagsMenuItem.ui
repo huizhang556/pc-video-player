@@ -205,7 +205,7 @@ border: 0px solid #b2b3b5;
                <property name="styleSheet">
                 <string notr="true">QListWidget#listWidget_tags
 {
-color: #303846;
+color: #ffffff;
 font: 75 10pt &quot;Microsoft YaHei UI&quot;;
 border:none;
 background-color: transparent;
@@ -215,13 +215,13 @@ QListWidget#listWidget_tags::item
 {
 width:90px;
 height: 48px;
-margin: 5px 10px 8px 10px;
+margin: 5px 10px 5px 10px;
 }
 
 QListWidget#listWidget_tags::item:selected
 {
-background-color: #f0bde8;
-border-radius: 15px;
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #c11432, stop:1  #730f33);
+border-radius: 16px;
 color: #00aaff;
 }
 
@@ -234,8 +234,8 @@ background-color: transparent;
 QListWidget#listWidget_tags::item:hover
 {
 color:#00aaff;
-border-radius: 15px;
-background-color: rgba(240, 189, 232,0.2);
+border-radius: 16px;
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #5104e4, stop:1  #8e2ce1);
 }
 
 </string>

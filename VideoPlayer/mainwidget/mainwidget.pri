@@ -19,7 +19,8 @@ SOURCES += \
     $$PWD/songlistsort/TagsItem.cpp \
     $$PWD/songlistsort/TagsMenu.cpp \
     $$PWD/songlistsort/TagsMenuItem.cpp \
-    $$PWD/songlistsort/HoverMask.cpp
+    $$PWD/CusLabelItem.cpp \
+    $$PWD/HoverMask.cpp
 
 HEADERS += \
     $$PWD/songersort/SongerSort.h \
@@ -42,7 +43,8 @@ HEADERS += \
     $$PWD/songlistsort/TagsItem.h \
     $$PWD/songlistsort/TagsMenu.h \
     $$PWD/songlistsort/TagsMenuItem.h \
-    $$PWD/songlistsort/HoverMask.h
+    $$PWD/CusLabelItem.h \
+    $$PWD/HoverMask.h
 
 FORMS += \
     $$PWD/songersort/SongerSort.ui \
@@ -63,5 +65,6 @@ FORMS += \
     $$PWD/songersort/SongItem.ui \
     $$PWD/songlistsort/TagsItem.ui \
     $$PWD/songlistsort/TagsMenu.ui \
-    $$PWD/songlistsort/TagsMenuItem.ui
+    $$PWD/songlistsort/TagsMenuItem.ui \
+    $$PWD/CusLabelItem.ui
 

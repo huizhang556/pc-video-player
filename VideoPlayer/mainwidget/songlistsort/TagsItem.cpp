@@ -137,18 +137,18 @@ void TagsItem::setHeadMask(bool mask)
 //        path.addRoundedRect(ui->label_head->rect(), 1.0f, 1.0f, Qt::AbsoluteSize);
 //        QRegion maskRegion = QRegion(path.toFillPolygon().toPolygon());
 //        ui->label_head->setMask(maskRegion);//设置遮罩
-        int x = ui->label_head->mapToGlobal(ui->label_head->pos()).x();
-        int y = ui->label_head->mapToGlobal(ui->label_head->pos()).y();
-        HoverMask::getInstance()->setGeometry(x-5,y-5,ui->label_head->width(),ui->label_head->height());
-        HoverMask::getInstance()->setAttribute(Qt::WA_TransparentForMouseEvents,true);
-        HoverMask::getInstance()->show();
+//        int x = ui->label_head->mapToGlobal(ui->label_head->pos()).x();
+//        int y = ui->label_head->mapToGlobal(ui->label_head->pos()).y();
+//        HoverMask::getInstance()->setGeometry(x-5,y-5,ui->label_head->width(),ui->label_head->height());
+//        HoverMask::getInstance()->setAttribute(Qt::WA_TransparentForMouseEvents,true);
+//        HoverMask::getInstance()->show();
 //        qDebug() <<QString::fromLocal8Bit("遮罩显示");
     }
     else
     {
 //        ui->label_head->clearMask();
-        if(!HoverMask::getInstance()->isHidden())
-        HoverMask::getInstance()->hide();
+//        if(!HoverMask::getInstance()->isHidden())
+//        HoverMask::getInstance()->hide();
 //        qDebug() <<QString::fromLocal8Bit("遮罩隐藏");
     }
 }

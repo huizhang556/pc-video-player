@@ -415,5 +415,10 @@
         <file>images/home/toolbutton_up.png</file>
         <file>images/home/songlist_hot.png</file>
         <file>images/home/songlist_new.png</file>
+        <file>images/user/itemmark_hot.png</file>
+        <file>images/user/itemmark_new.png</file>
+        <file>images/user/itemmark_new2.png</file>
+        <file>images/user/itemmark_recommend.png</file>
+        <file>images/user/itemmark_vyp.png</file>
     </qresource>
 </RCC>

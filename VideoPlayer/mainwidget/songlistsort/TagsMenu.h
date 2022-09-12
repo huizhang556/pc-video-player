@@ -39,113 +39,115 @@ private:
     int     m_triangleHeight;//小三角高度
 
     QStringList     m_theme = {
-        QString::fromLocal8Bit("专区"),
-        QString::fromLocal8Bit("主题"),
-        QString::fromLocal8Bit("心情"),
-        QString::fromLocal8Bit("场景"),
-        QString::fromLocal8Bit("年代"),
-        QString::fromLocal8Bit("语言"),
-        QString::fromLocal8Bit("流派"),
-        QString::fromLocal8Bit("有声")
+        QString(u8"专区"),
+        QString(u8"主题"),
+        QString(u8"心情"),
+        QString(u8"场景"),
+        QString(u8"年代"),
+        QString(u8"语言"),
+        QString(u8"流派"),
+        QString(u8"有声")
     };
 
     QStringList     m_area = {
-        QString::fromLocal8Bit("抖音专区"),
-        QString::fromLocal8Bit("网红专区"),
-        QString::fromLocal8Bit("DJ专区"),
-        QString::fromLocal8Bit("国风专区"),
-        QString::fromLocal8Bit("小说专区"),
-        QString::fromLocal8Bit("佛乐专区"),
-        QString::fromLocal8Bit("影视专区"),
-        QString::fromLocal8Bit("铃声专区"),
-        QString::fromLocal8Bit("动漫专区"),
-        QString::fromLocal8Bit("老歌专区"),
-        QString::fromLocal8Bit("首发专区"),
-        QString::fromLocal8Bit("K歌专区"),
-        QString::fromLocal8Bit("DJ专区"),
-        QString::fromLocal8Bit("古典专区"),
-        QString::fromLocal8Bit("Vlog专区"),
-        QString::fromLocal8Bit("综艺专区"),
-        QString::fromLocal8Bit("轻音乐专区"),
-        QString::fromLocal8Bit("铃声专区")
+        QString(u8"抖音专区"),
+        QString(u8"网红专区"),
+        QString(u8"DJ专区"),
+        QString(u8"国风专区"),
+        QString(u8"小说专区"),
+        QString(u8"佛乐专区"),
+        QString(u8"影视专区"),
+        QString(u8"铃声专区"),
+        QString(u8"动漫专区"),
+        QString(u8"老歌专区"),
+        QString(u8"首发专区"),
+        QString(u8"K歌专区"),
+        QString(u8"DJ专区"),
+        QString(u8"古典专区"),
+        QString(u8"Vlog专区"),
+        QString(u8"综艺专区"),
+        QString(u8"轻音乐专区"),
+        QString(u8"创新专区"),
+        QString(u8"铃声专区")
     };
     QStringList     m_subject = {
-        QString::fromLocal8Bit("抖音"),
-        QString::fromLocal8Bit("情歌"),
-        QString::fromLocal8Bit("DJ"),
-        QString::fromLocal8Bit("经典"),
-        QString::fromLocal8Bit("BGM"),
-        QString::fromLocal8Bit("古风"),
-        QString::fromLocal8Bit("喊麦"),
-        QString::fromLocal8Bit("游戏"),
-        QString::fromLocal8Bit("轻音乐"),
-        QString::fromLocal8Bit("佛教"),
-        QString::fromLocal8Bit("合唱"),
-        QString::fromLocal8Bit("网络"),
-        QString::fromLocal8Bit("儿童"),
-        QString::fromLocal8Bit("影视"),
-        QString::fromLocal8Bit("说唱"),
-        QString::fromLocal8Bit("翻唱"),
-        QString::fromLocal8Bit("3D")
+        QString(u8"抖音"),
+        QString(u8"情歌"),
+        QString(u8"DJ"),
+        QString(u8"经典"),
+        QString(u8"BGM"),
+        QString(u8"古风"),
+        QString(u8"喊麦"),
+        QString(u8"游戏"),
+        QString(u8"轻音乐"),
+        QString(u8"佛教"),
+        QString(u8"合唱"),
+        QString(u8"网络"),
+        QString(u8"儿童"),
+        QString(u8"影视"),
+        QString(u8"说唱"),
+        QString(u8"翻唱"),
+        QString(u8"3D")
     };
     QStringList     m_feeling = {
-        QString::fromLocal8Bit("伤感"),
-        QString::fromLocal8Bit("放松"),
-        QString::fromLocal8Bit("励志"),
-        QString::fromLocal8Bit("开心"),
-        QString::fromLocal8Bit("甜蜜"),
-        QString::fromLocal8Bit("兴奋"),
-        QString::fromLocal8Bit("安静"),
-        QString::fromLocal8Bit("治愈"),
-        QString::fromLocal8Bit("思念")
+        QString(u8"伤感"),
+        QString(u8"放松"),
+        QString(u8"励志"),
+        QString(u8"开心"),
+        QString(u8"甜蜜"),
+        QString(u8"兴奋"),
+        QString(u8"安静"),
+        QString(u8"治愈"),
+        QString(u8"思念")
     };
 
     QStringList     m_scene = {
-        QString::fromLocal8Bit("开车"),
-        QString::fromLocal8Bit("运动"),
-        QString::fromLocal8Bit("学习"),
-        QString::fromLocal8Bit("清晨"),
-        QString::fromLocal8Bit("旅行"),
-        QString::fromLocal8Bit("工作"),
-        QString::fromLocal8Bit("广场舞"),
-        QString::fromLocal8Bit("校园"),
-        QString::fromLocal8Bit("夜店")
+        QString(u8"开车"),
+        QString(u8"运动"),
+        QString(u8"学习"),
+        QString(u8"清晨"),
+        QString(u8"旅行"),
+        QString(u8"工作"),
+        QString(u8"广场舞"),
+        QString(u8"校园"),
+        QString(u8"夜店")
     };
 
     QStringList     m_years = {
-        QString::fromLocal8Bit("60后"),
-        QString::fromLocal8Bit("70后"),
-        QString::fromLocal8Bit("80后"),
-        QString::fromLocal8Bit("90后"),
-        QString::fromLocal8Bit("00后"),
-        QString::fromLocal8Bit("10后")
+        QString(u8"60后"),
+        QString(u8"70后"),
+        QString(u8"80后"),
+        QString(u8"90后"),
+        QString(u8"00后"),
+        QString(u8"10后")
     };
 
     QStringList     m_language = {
-        QString::fromLocal8Bit("华语"),
-        QString::fromLocal8Bit("欧美"),
-        QString::fromLocal8Bit("日语"),
-        QString::fromLocal8Bit("韩语"),
-        QString::fromLocal8Bit("粤语"),
-        QString::fromLocal8Bit("小语种")
+        QString(u8"华语"),
+        QString(u8"欧美"),
+        QString(u8"日语"),
+        QString(u8"韩语"),
+        QString(u8"粤语"),
+        QString(u8"俄语"),
+        QString(u8"小语种")
     };
 
     QStringList     m_style = {
-        QString::fromLocal8Bit("流行"),
-        QString::fromLocal8Bit("电子"),
-        QString::fromLocal8Bit("摇滚"),
-        QString::fromLocal8Bit("民歌"),
-        QString::fromLocal8Bit("古典"),
-        QString::fromLocal8Bit("嘻哈"),
-        QString::fromLocal8Bit("乡村"),
-        QString::fromLocal8Bit("爵士")
+        QString(u8"流行"),
+        QString(u8"电子"),
+        QString(u8"摇滚"),
+        QString(u8"民歌"),
+        QString(u8"古典"),
+        QString(u8"嘻哈"),
+        QString(u8"乡村"),
+        QString(u8"爵士")
     };
 
     QStringList     m_voice = {
-        QString::fromLocal8Bit("相声"),
-        QString::fromLocal8Bit("评书"),
-        QString::fromLocal8Bit("戏曲"),
-        QString::fromLocal8Bit("二人转")
+        QString(u8"相声"),
+        QString(u8"评书"),
+        QString(u8"戏曲"),
+        QString(u8"二人转")
     };
 
     QVector<QStringList>     m_vector;

@@ -84,12 +84,12 @@ background-color: transparent;
          <string notr="true">#listWidget_menu
 {
 border: none;
-/*background-color: #324d5b;*/
+/*background-color: #2a2a31;*/
 }
 
 #listWidget_menu::item
 {
-background-color: rgb(255, 255, 255);
+background-color: rgb(56, 67, 99);
 border: 0px solid #a0a0a0;
 }
 

@@ -24,6 +24,11 @@ void CentralHomeForm::initWorkUI()
     m_homeListWidget = new QListWidget(this);
     m_homeListWidget->setObjectName(QString::fromLocal8Bit("m_homeListWidget"));
     //默认按每次一个item滚动,另一个默认按每次一个像素滚动
+    m_homeListWidget->setViewMode(QListView::ListMode);
+    m_homeListWidget->setMovement(QListView::Static);
+    m_homeListWidget->setResizeMode(QListView::Adjust);
+//    m_homeListWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_homeListWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_homeListWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);//按照像素滚动
 
     //底部按钮
@@ -59,7 +64,7 @@ void CentralHomeForm::addWidgetToListWidget()
 {
 
     QListWidgetItem *item0 = new QListWidgetItem();
-    item0->setSizeHint(m_recommend->size());//推荐部分
+    item0->setSizeHint(QSize(800,360));//推荐部分
     m_homeListWidget->addItem(item0);
     m_homeListWidget->setItemWidget(item0,m_recommend);
 

@@ -3,12 +3,12 @@
 
 
 //类外初始化
-HoverMask* HoverMask::m_pInstance  = nullptr;
+//HoverMask* HoverMask::m_pInstance  = nullptr;
 
 HoverMask::HoverMask(QWidget *parent) :
-    QWidget(parent)
+    QFrame(parent)
 {
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | windowFlags());
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
     this->setPalette(Qt::black);
     this->setWindowOpacity(0.4);//设置窗口透明度
 //    QGraphicsOpacityEffect *goe = new QGraphicsOpacityEffect();
@@ -18,22 +18,22 @@ HoverMask::HoverMask(QWidget *parent) :
     this->setAttribute(Qt::WA_TransparentForMouseEvents,true);//鼠标穿透
 }
 
-HoverMask *HoverMask::getInstance()
-{
-    if(m_pInstance == nullptr)
-    {
-        m_pInstance = new HoverMask();
-    }
-    return m_pInstance;
-}
+//HoverMask *HoverMask::getInstance()
+//{
+//    if(m_pInstance == nullptr)
+//    {
+//        m_pInstance = new HoverMask();
+//    }
+//    return m_pInstance;
+//}
 
 HoverMask::~HoverMask()
 {
-    if(m_pInstance != nullptr)
-    {
-        delete m_pInstance;
-        m_pInstance = nullptr;
-    }
+//    if(m_pInstance != nullptr)
+//    {
+//        delete m_pInstance;
+//        m_pInstance = nullptr;
+//    }
 }
 
 void HoverMask::leaveEvent(QEvent *event)

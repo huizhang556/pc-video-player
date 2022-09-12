@@ -1,6 +1,8 @@
 ﻿#ifndef TAGSITEM_H
 #define TAGSITEM_H
-#include "mainwidget/songlistsort/HoverMask.h"
+
+#include "mainwidget/HoverMask.h"
+
 #include <QWidget>
 #include <QPushButton>
 
