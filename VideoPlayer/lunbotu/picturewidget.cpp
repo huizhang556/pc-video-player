@@ -15,12 +15,15 @@
 #include <QTransform>
 #include <QButtonGroup>
 #include <QMap>
+
 static int dir = 0;//记录方向
 static QList<qreal> spaceList;
 static QList<qreal> unitList;
 static QList<qreal> transScaleList;//缩放比例表
+
  QSize pictrueBigSize = RAW_VIEW_SIZE/SCALE_VIEW_PIXMAP;
  QSize pictrueSmallSize = RAW_VIEW_SIZE/SCALE_VIEW_PIXMAP/SCALE_BIG_SMALL;
+
 static QList<pictureItem *> itemList;
 static QList<int> finishList;
 static QMap<int, pictureItem *> mapLink;  //按钮id 与 图片资源的映射
@@ -74,7 +77,7 @@ void PictureWidget::setButtonGroup()
     m_BtnGroup->setExclusive(true);
     m_BtnGroup->button(1)->setChecked(true);
     for (int i = 0; i<10; i++) {
-        static_cast<pictureButton*>(m_BtnGroup->button(i))->setId(i);
+        static_cast<pictureButton*>(m_BtnGroup->button(i))->setId(i);//为每个按钮设置id
     }
 }
 
@@ -82,7 +85,8 @@ void PictureWidget::setInitList()
 {
     m_PointList << P1 << P2<< P3 << P4 << P5 << P6 << P7 << P8 << P9 << P10;
     m_ZValueList << 1 << 2 << 1  << 0  << 0  << 0  << 0  << 0  << 0  << 0;
-    m_PixmapScaleList << 0.8<< 1 << 0.8 << 0.8 << 0.8 << 0.8 << 0.8 << 0.8 << 0.8 <<0.8;
+//    m_PixmapScaleList << 0.85 << 1 << 0.85 << 0.85 << 0.85 << 0.85 << 0.85 << 0.85 << 0.85 <<0.85;
+    m_PixmapScaleList << 0.9 << 1 << 0.9 << 0.9 << 0.9 << 0.9 << 0.9 << 0.9 << 0.9 <<0.9;
 }
 
 void PictureWidget::setPictureScreen()
@@ -100,6 +104,7 @@ void PictureWidget::setPictureScreen()
         //release时候使用
         m_PixmapList.append(QPixmap(QString(Global::appDirPath + "/pictures/lunbotu/lbt%1.png").arg(i)));
     }
+
     for (int i = 0; i<10;i++) {
         itemList.append(new pictureItem(m_PixmapList[i].scaled(pictrueBigSize,
                                Qt::KeepAspectRatio,Qt::SmoothTransformation)));
@@ -160,9 +165,9 @@ int PictureWidget::getIndexByRules(int oldIndex, int rule)
 {
     switch (rule) {
     case 1:
-        return  (oldIndex+1)/10;
+        return  (oldIndex+1) / 10;
     case -1:
-         return oldIndex==0?9:oldIndex-1;
+         return oldIndex == 0 ? 9 : oldIndex - 1;
     default:
         return 0;
     }
@@ -249,7 +254,16 @@ void PictureWidget::clickedItemRoll(int type)
 
 void PictureWidget::resizeEvent(QResizeEvent *event)
 {
-//    RAW_VIEW_SIZE.width() = this->width()/2;
+    Q_UNUSED(event)
+    m_PointList.clear();
+    m_ZValueList.clear();
+    m_PixmapScaleList.clear();
+
+    m_PointList << 0.30 << 0.00 << 0.50 << 0.2 << 0.2 << 0.2 << 0.2 << 0.2 << 0.2 << 0.2;
+    m_ZValueList << 1 << 2 << 1  << 0  << 0  << 0  << 0  << 0  << 0  << 0;//显示等级 1次级显示 2顶级显示 0末级显示
+    m_PixmapScaleList << 0.90 << 1.0 << 0.90 << 0.90 << 0.90 << 0.90 << 0.90 << 0.90 << 0.90 << 0.90;
+//     m_scene->setSceneRect(0,0,ui->graphicsView->width()/2,ui->graphicsView->height());
+    update();
 }
 
 //左边运动

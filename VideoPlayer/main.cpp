@@ -59,47 +59,47 @@ int main(int argc, char *argv[])
 //    a.setFont(f);
 
     //02--->数据初始化（放在界面初始化完成以后）
-//    dataBase::readXML(Global::appDirPath + "/config/config.xml");
-//    dataBase::creatMysqlConnection();//连接数据库,有数据的必须先连接数据库
+    dataBase::readXML(Global::appDirPath + "/config/config.xml");
+    dataBase::creatMysqlConnection();//连接数据库,有数据的必须先连接数据库
 
     //03--->注册解码器(记得打开管理员权限)
-//    if(!Global::getRegisStatus())
-//    {
-//        qDebug() << QString::fromLocal8Bit("播放器还未注册！");
-//        Global::registerLAVplayer();
-//        Global::setIni();
-//    }
-//    else
-//    {
-//        qDebug() << QString::fromLocal8Bit("播放器已经注册！");
-//    }
+    if(!Global::getRegisStatus())
+    {
+        qDebug() << QString::fromLocal8Bit("播放器还未注册！");
+        Global::registerLAVplayer();
+        Global::setIni();
+    }
+    else
+    {
+        qDebug() << QString::fromLocal8Bit("播放器已经注册！");
+    }
 
     //04--->开机启动屏幕
-//    QPixmap pixmap(Global::appDirPath + "/pictures/splashscreen/splash.png");
-//    QPixmap pixmap(Global::appDirPath + "/pictures/splashscreen/splash1.gif");
-//    CSplashScreen splashscream(pixmap);
-////    CSplashScreen splashscream(Global::appDirPath + "/pictures/splashscreen/splash1.gif");
-//    a.processEvents();
-//    splashscream.show();
-//    splashscream.setCursor(Qt::BlankCursor);
-//    for(int i = 0; i< 10; ++i)
-//    {
-//        splashscream.slot_updateProgressbarValue(i*11);
-//        QThread::sleep(1);
-//    }
+    QPixmap pixmap(Global::appDirPath + "/pictures/splashscreen/splash.png");//静图
+//    QPixmap pixmap(Global::appDirPath + "/pictures/splashscreen/splash1.gif");//动态
+    CSplashScreen splashscream(pixmap);
+//    CSplashScreen splashscream(Global::appDirPath + "/pictures/splashscreen/splash1.gif");
+    a.processEvents();
+    splashscream.show();
+    splashscream.setCursor(Qt::BlankCursor);
+    for(int i = 0; i< 10; ++i)
+    {
+        splashscream.slot_updateProgressbarValue(i*11);
+        QThread::sleep(1);
+    }
 
     //05--->显示主界面
     MainWidget w1;
     w1.show();
-//    splashscream.finish(&w1);
+    splashscream.finish(&w1);
 
 //    MultipPlayer w;
 //    w.show();
 
     //06--->数据恢复初始化
-//    QTimer::singleShot(1500,0,[=](){
-//        dataBase::getInstance()->initGlobalDate();
-//    });
+    QTimer::singleShot(1500,0,[=](){
+        dataBase::getInstance()->initGlobalDate();
+    });
 
 
 //    SongerSort s;

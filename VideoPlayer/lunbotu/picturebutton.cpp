@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <QPainterPath>
+
 pictureButton::pictureButton(QWidget *parent)
     : QAbstractButton(parent)
 {
