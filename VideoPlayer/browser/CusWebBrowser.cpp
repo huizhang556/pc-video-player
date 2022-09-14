@@ -8,7 +8,7 @@ CusWebBrowser::CusWebBrowser(QWidget *parent) :
     this->showMaximized();
     installEventFilter(this);
 //    this->load(QUrl("http://www.baidu.com"));
-    this->load(QUrl("http://82.156.175.81/study/index.html"));
+//    this->load(QUrl("http://82.156.175.81/study/index.html"));// 不设置一个默认url,默认什么都不显示
     //加载外部文件方法1
 //    QString htmlPath = Global::appDirPath + QString::fromLocal8Bit("/html/study/index.html");
 //    QFile file(htmlPath);//直接加载本地html文件，外部对象由本地文件的相对路径查找，因此不需要设置
@@ -65,10 +65,15 @@ CusWebBrowser::~CusWebBrowser()
 //    this->page()->profile()->cookieStore()->deleteAllCookies();//清除cookies
 }
 
-QUrl CusWebBrowser::getCurrentWebPageUrl()
+QString CusWebBrowser::getCurrentWebPageUrl()
 {
     return this->page()->url().toString();
     qDebug() << this->page()->url().toString();
+}
+
+QString CusWebBrowser::getCurrentWebPageIconUrl()
+{
+    return this->page()->iconUrl().toString();
 }
 
 QWebEngineView *CusWebBrowser::createWindow(QWebEnginePage::WebWindowType type)
@@ -141,6 +146,11 @@ bool CusWebBrowser::event(QEvent *et)
 void CusWebBrowser::contextMenuEvent(QContextMenuEvent *)
 {
     slot_createCustomRightMenu();
+}
+
+void CusWebBrowser::setCurrentDefaultUrl(const QString &url)
+{
+    this->load(QUrl(url));
 }
 
 void CusWebBrowser::slots_createNewWindows(const QUrl url)

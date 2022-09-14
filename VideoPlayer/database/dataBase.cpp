@@ -11,6 +11,14 @@ QString   dataBase::m_hostPort = "";
 QString   dataBase::m_userName = "";
 QString   dataBase::m_userPawd = "";
 QString   dataBase::m_dataName = "";
+
+QString  dataBase::m_webDef_Url = "";
+QString  dataBase::m_webDef_title = "";
+QString  dataBase::m_webDef_user = "";
+QString  dataBase::m_webDef_userId = "";
+QString  dataBase::m_webDef_savePath = "";
+
+QString  dataBase::m_skin_theme = "";
 dataBase* dataBase::m_pInstance = nullptr;
 
 dataBase::dataBase():
@@ -300,7 +308,7 @@ void dataBase::readXML(const QString &path)
                     QDomNode n = db_list.at(i);
                     if(node.isElement())
                     {
-//                        qDebug()<<n.nodeName()<<":"<<n.toElement().text();
+                        qDebug()<<n.nodeName()<<":"<<n.toElement().text();
                         if(n.nodeName() == QString("hostName")) m_hostName = n.toElement().text();
                         if(n.nodeName() == QString("hostPort")) m_hostPort = n.toElement().text();
                         if(n.nodeName() == QString("userName")) m_userName = n.toElement().text();
@@ -319,12 +327,12 @@ void dataBase::readXML(const QString &path)
                     QDomNode node = bro_list.at(i);
                     if(node.isElement())
                     {
-//                        qDebug() << node.nodeName()<<":"<<node.toElement().text();
-                        if(node.nodeName() == QString("defaultUser"))       qDebug() << node.toElement().text();
-                        if(node.nodeName() == QString("defaultUserID"))     qDebug() << node.toElement().text();
-                        if(node.nodeName() == QString("defaultUrl"))        qDebug() << node.toElement().text();
-                        if(node.nodeName() == QString("defaultTitle"))      qDebug() << node.toElement().text();
-                        if(node.nodeName() == QString("downloadPath"))      qDebug() << node.toElement().text();
+                        qDebug()<<node.nodeName()<<":"<<node.toElement().text();
+                        if(node.nodeName() == QString("defaultUser"))       m_webDef_user = node.toElement().text();
+                        if(node.nodeName() == QString("defaultUserID"))     m_webDef_userId = node.toElement().text();
+                        if(node.nodeName() == QString("defaultUrl"))        m_webDef_Url = node.toElement().text();
+                        if(node.nodeName() == QString("defaultTitle"))      m_webDef_title = node.toElement().text();
+                        if(node.nodeName() == QString("downloadPath"))      m_webDef_savePath = node.toElement().text();
                     }
                 }
             }
@@ -337,8 +345,8 @@ void dataBase::readXML(const QString &path)
                     QDomNode node = skin_list.at(i);
                     if(node.isElement())
                     {
-//                        qDebug() <<node.nodeName()<<":"<<node.toElement().text();
-                        if(node.nodeName() == QString("defaultSkin"))      qDebug() <<node.toElement().text();
+                        qDebug()<<node.nodeName()<<":"<<node.toElement().text();
+                        if(node.nodeName() == QString("defaultSkin"))      m_skin_theme = node.toElement().text();
                     }
                 }
             }
@@ -508,6 +516,36 @@ void dataBase::updateXML(const QString &path, const QString &nodename, const QSt
         QTextStream out_stream(&file);
         doc.save(out_stream,4); //缩进4格
         file.close();
+}
+
+QString dataBase::getWebDef_user()
+{
+    return m_webDef_user;
+}
+
+QString dataBase::getWebDef_userId()
+{
+    return m_webDef_userId;
+}
+
+QString dataBase::getWebDef_url()
+{
+    return m_webDef_Url;
+}
+
+QString dataBase::getWebDef_title()
+{
+    return m_webDef_title;
+}
+
+QString dataBase::getWebDef_savePath()
+{
+    return m_webDef_savePath;
+}
+
+QString dataBase::getSkin_theme()
+{
+    return m_skin_theme;
 }
 
 //查询某表记录总数

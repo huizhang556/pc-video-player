@@ -27,13 +27,16 @@ class CusWebBrowser : public QWebEngineView
 public:
     explicit CusWebBrowser(QWidget *parent = nullptr);
     ~CusWebBrowser();
-    QUrl        getCurrentWebPageUrl();
+    void        setCurrentDefaultUrl(const QString& url);//设置默认url
+    QString     getCurrentWebPageUrl();
+    QString     getCurrentWebPageIconUrl();
 
 protected:
     QWebEngineView *createWindow(QWebEnginePage::WebWindowType type) override;
     bool        eventFilter(QObject *watched, QEvent *event) override;
     bool        event(QEvent *et) override;
     void        contextMenuEvent(QContextMenuEvent*) override;//重写右键菜单内容
+
 public slots:
     void        slots_createNewWindows(const QUrl url);
     void        slots_loadNewUrl(QString path);

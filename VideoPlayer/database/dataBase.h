@@ -73,6 +73,14 @@ public:
     static void             addXML(const QString& path,const QString& node,const QString& newvalue);
     static void             updateXML(const QString& path, const QString& nodename, const QString& newvalue);
 
+    static QString          getWebDef_user();
+    static QString          getWebDef_userId();
+    static QString          getWebDef_url();
+    static QString          getWebDef_title();
+    static QString          getWebDef_savePath();
+
+    static QString          getSkin_theme();
+
 public slots:
     //通用
 
@@ -128,6 +136,14 @@ private:
     static      QString     m_userName;//用户名称
     static      QString     m_userPawd;//用户密码
     static      QString     m_dataName;//数据库名
+    //浏览器
+    static      QString     m_webDef_Url;//默认加载url
+    static      QString     m_webDef_title;//默认标题
+    static      QString     m_webDef_user;//默认用户
+    static      QString     m_webDef_userId;//默认用户ID
+    static      QString     m_webDef_savePath;//默认保存路径
+    //皮肤
+    static      QString     m_skin_theme;//默认皮肤主题
 
 private:
     static      QString     getHostName();

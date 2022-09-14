@@ -29,6 +29,7 @@ void MainWidget::initOtherWidgetUi()
 {
     m_titleBar = new TitleBar(this);
     m_titleBar->setFixedHeight(50);
+    m_titleBar->setWebDefUrl(dataBase::getWebDef_url());//设置默认显示标题
     m_titleBar->setObjectName(QString::fromLatin1("m_titleBar"));
 
     m_leftSideBar = new LeftSideBar(this);
@@ -67,6 +68,7 @@ void MainWidget::initOtherWidgetUi()
     m_videoBlank->setObjectName(QString::fromLatin1("m_videoBlank"));
 
     m_webBrowser = new CusWebBrowser();
+    m_webBrowser->setCurrentDefaultUrl(dataBase::getWebDef_url());
     m_webBrowser->setObjectName(QString::fromLatin1("m_webBrowser"));
 
     m_webAddBtn = new QPushButton("+");//添加tab按钮

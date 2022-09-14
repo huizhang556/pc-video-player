@@ -93,7 +93,7 @@ void TitleBar::initWorker()
     //网址栏
     ui->lineEdit_webSearch->setFixedHeight(28);
     ui->lineEdit_webSearch->installEventFilter(this);
-    ui->lineEdit_webSearch->setText(QString::fromLocal8Bit("http://82.156.175.81/study/index.html"));//默认显示的网址
+
     ui->lineEdit_webSearch->setPlaceholderText(QString::fromLocal8Bit("请输入有效网址或要搜索的内容-_-"));
     ui->lineEdit_webSearch->setCursorPosition(0);
     //正则校验  url校验
@@ -390,6 +390,11 @@ void TitleBar::chandleSignalAndSLots()
 
     //获取网络头像
     connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(slot_replyFinished(QNetworkReply*)),Qt::UniqueConnection);
+}
+
+void TitleBar::setWebDefUrl(const QString& title)
+{
+        ui->lineEdit_webSearch->setText(title);//默认显示的网址
 }
 
 /*创建菜单*/

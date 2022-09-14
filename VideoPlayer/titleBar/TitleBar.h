@@ -31,6 +31,7 @@ public:
     ~TitleBar();
     void    initWorker();
     void    chandleSignalAndSLots();
+    void    setWebDefUrl(const QString& title);
 
 protected:
     void    mouseDoubleClickEvent(QMouseEvent *event) override;
