@@ -53,27 +53,27 @@ AdjustBright::AdjustBright(QWidget *parent) :
     {
         emit valueChange_liangdu(value);
         ui->label_liangdu->setText(QString::number(value)+"%");
-        qDebug()<<"send:valueChange_liangdu ="<<value;
+//        qDebug()<<"send:valueChange_liangdu ="<<value;
     });//亮度
 
     connect(ui->horizontalSlider_duibidu,&QSlider::valueChanged,[=](int value)
     {
         emit valueChange_duibidu(value);
         ui->label_duibidu->setText(QString::number(value)+"%");
-        qDebug()<<"send:valueChange_duibidu ="<<value;
+//        qDebug()<<"send:valueChange_duibidu ="<<value;
     });//对比度
 
     connect(ui->horizontalSlider_baohedu,&QSlider::valueChanged,[=](int value)
     {
         emit valueChange_baohedu(value);
         ui->label_baohedu->setText(QString::number(value)+"%");
-        qDebug()<<"send:valueChange_baohedu ="<<value;
+//        qDebug()<<"send:valueChange_baohedu ="<<value;
     });//饱和度
     connect(ui->horizontalSlider_sediao,&QSlider::valueChanged,[=](int value)
     {
         emit valueChange_sediao(value);
         ui->label_sediao->setText(QString::number(value)+"%");
-        qDebug()<<"send:valueChange_sediao ="<<value;
+//        qDebug()<<"send:valueChange_sediao ="<<value;
     });//色调
 
     //播放速率

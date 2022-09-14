@@ -1452,7 +1452,7 @@ void TitleBar::receiveMainFormClose()
 
 void TitleBar::slot_showUserInfoWgt(QObject *watched, QEvent *event)
 {
-    if(watched == ui->label_userHead && event->type() == QEvent::MouseButtonPress)
+    if(watched == ui->label_userHead && event->type() == QEvent::Enter)
     {
         if(m_headHover)
         {

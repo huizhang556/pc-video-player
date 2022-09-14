@@ -148,7 +148,7 @@ void SystemSetting::mouseMoveEvent(QMouseEvent *event)
 //保存设置
 void SystemSetting::savesSettingConfigFile()
 {
-    qDebug() << "the file Settings are saved(0)!";
+    qDebug() << "the file Settings are saved!";
 }
 
 //加载配置

@@ -294,13 +294,13 @@ void dataBase::readXML(const QString &path)
             qDebug() << e.tagName();//-->database
             if(e.tagName() == "database")
             {
-                QDomNodeList list = e.childNodes();//元素下子节点
-                for(int i=0; i<list.count(); i++) //遍历子元素，count和size都可以用,可用于标签数计数
+                QDomNodeList db_list = e.childNodes();//元素下子节点
+                for(int i = 0; i < db_list.count(); i++) //遍历子元素，count和size都可以用,可用于标签数计数
                 {
-                    QDomNode n = list.at(i);
+                    QDomNode n = db_list.at(i);
                     if(node.isElement())
                     {
-                        qDebug()<<n.nodeName()<<":"<<n.toElement().text();
+//                        qDebug()<<n.nodeName()<<":"<<n.toElement().text();
                         if(n.nodeName() == QString("hostName")) m_hostName = n.toElement().text();
                         if(n.nodeName() == QString("hostPort")) m_hostPort = n.toElement().text();
                         if(n.nodeName() == QString("userName")) m_userName = n.toElement().text();
@@ -310,9 +310,44 @@ void dataBase::readXML(const QString &path)
 
                 }
             }
-
+            else if(e.tagName() == "browser")
+            {
+                qDebug() << "finded browser node";
+                QDomNodeList bro_list = e.childNodes();
+                for(int i = 0; i < bro_list.count(); i++)
+                {
+                    QDomNode node = bro_list.at(i);
+                    if(node.isElement())
+                    {
+//                        qDebug() << node.nodeName()<<":"<<node.toElement().text();
+                        if(node.nodeName() == QString("defaultUser"))       qDebug() << node.toElement().text();
+                        if(node.nodeName() == QString("defaultUserID"))     qDebug() << node.toElement().text();
+                        if(node.nodeName() == QString("defaultUrl"))        qDebug() << node.toElement().text();
+                        if(node.nodeName() == QString("defaultTitle"))      qDebug() << node.toElement().text();
+                        if(node.nodeName() == QString("downloadPath"))      qDebug() << node.toElement().text();
+                    }
+                }
+            }
+            else if(e.tagName() == "skin")
+            {
+                qDebug() << "finded skin node";
+                QDomNodeList skin_list = e.childNodes();
+                for(int i = 0; i < skin_list.count(); i++)
+                {
+                    QDomNode node = skin_list.at(i);
+                    if(node.isElement())
+                    {
+//                        qDebug() <<node.nodeName()<<":"<<node.toElement().text();
+                        if(node.nodeName() == QString("defaultSkin"))      qDebug() <<node.toElement().text();
+                    }
+                }
+            }
+            else
+            {
+                break;
+            }
         }
-        node=node.nextSibling();//下一个兄弟节点,nextSiblingElement()是下一个兄弟元素
+        node = node.nextSibling();//下一个兄弟节点,nextSiblingElement()是下一个兄弟元素
     }
 }
 

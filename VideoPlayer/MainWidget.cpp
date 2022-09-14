@@ -1215,7 +1215,7 @@ bool MainWidget::eventFilter(QObject *watched, QEvent *event)
         if(event->type() ==  QEvent::Resize)
         {
 //            updateWebAddButtonGeometry();
-            qDebug() << QString(u8"m_webTabWidget尺寸变了");
+//            qDebug() << QString(u8"m_webTabWidget尺寸变了");
         }
     }
     return QWidget::eventFilter(watched,event);
