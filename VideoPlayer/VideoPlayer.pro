@@ -12,7 +12,7 @@ TARGET = VideoPlayer
 TEMPLATE = app
 RC_ICONS = favicon.ico
 # 以管理员运行
-#QMAKE_LFLAGS += /MANIFESTUAC:\"level=\'requireAdministrator\' uiAccess=\'false\'\"
+QMAKE_LFLAGS += /MANIFESTUAC:\"level=\'requireAdministrator\' uiAccess=\'false\'\"
 
 DEFINES += QT_DEPRECATED_WARNINGS
 #禁用qdebug打印输出

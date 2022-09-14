@@ -19,6 +19,8 @@ QString  dataBase::m_webDef_userId = "";
 QString  dataBase::m_webDef_savePath = "";
 
 QString  dataBase::m_skin_theme = "";
+bool     dataBase::m_skin_switch = true;
+QString  dataBase::m_skin_splash = "";
 dataBase* dataBase::m_pInstance = nullptr;
 
 dataBase::dataBase():
@@ -258,22 +260,22 @@ bool dataBase::initGlobalDate()
     return true;
 }
 
-QString dataBase::getCurrentUserID()
+QString dataBase::getCurrentUserID() const
 {
     return m_curUserID;
 }
 
-QString dataBase::getCurrentUserName()
+QString dataBase::getCurrentUserName() const
 {
     return m_curUserName;
 }
 
-QString dataBase::getCurrentUserHead()
+QString dataBase::getCurrentUserHead() const
 {
     return m_curUserHead;
 }
 
-int dataBase::getCurrentUserGrade()
+int dataBase::getCurrentUserGrade() const
 {
     return m_curUserGrade;
 }
@@ -347,6 +349,14 @@ void dataBase::readXML(const QString &path)
                     {
                         qDebug()<<node.nodeName()<<":"<<node.toElement().text();
                         if(node.nodeName() == QString("defaultSkin"))      m_skin_theme = node.toElement().text();
+                        if(node.nodeName() == QString("splashOn"))
+                        {
+                            if(node.toElement().text() == "true")
+                                m_skin_switch = true;
+                            else
+                                m_skin_switch = false;
+                        }
+                        if(node.nodeName() == QString("defaultSplash"))    m_skin_splash = node.toElement().text();
                     }
                 }
             }
@@ -357,6 +367,7 @@ void dataBase::readXML(const QString &path)
         }
         node = node.nextSibling();//下一个兄弟节点,nextSiblingElement()是下一个兄弟元素
     }
+    file.close();//读完记得关闭文件
 }
 
 void dataBase::writeXML(const QString &path)
@@ -546,6 +557,16 @@ QString dataBase::getWebDef_savePath()
 QString dataBase::getSkin_theme()
 {
     return m_skin_theme;
+}
+
+bool dataBase::getSkin_switch()
+{
+    return m_skin_switch;
+}
+
+QString dataBase::getSkin_splash()
+{
+    return m_skin_splash;
 }
 
 //查询某表记录总数

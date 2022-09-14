@@ -61,10 +61,10 @@ public:
     bool                    initGlobalDate();//初始化全局数据
     void                    handleSignalsAndSlots();//处理信号与槽函数
     //获取用户信息
-    QString                 getCurrentUserID();
-    QString                 getCurrentUserName();
-    QString                 getCurrentUserHead();
-    int                     getCurrentUserGrade();
+    QString                 getCurrentUserID() const;
+    QString                 getCurrentUserName() const;
+    QString                 getCurrentUserHead() const;
+    int                     getCurrentUserGrade() const;
 
     //读取cfg.xml信息
     static void             readXML(const QString& path);
@@ -73,6 +73,7 @@ public:
     static void             addXML(const QString& path,const QString& node,const QString& newvalue);
     static void             updateXML(const QString& path, const QString& nodename, const QString& newvalue);
 
+    //静态成员函数不能加const 修饰
     static QString          getWebDef_user();
     static QString          getWebDef_userId();
     static QString          getWebDef_url();
@@ -80,6 +81,8 @@ public:
     static QString          getWebDef_savePath();
 
     static QString          getSkin_theme();
+    static bool             getSkin_switch();
+    static QString          getSkin_splash();
 
 public slots:
     //通用
@@ -144,6 +147,8 @@ private:
     static      QString     m_webDef_savePath;//默认保存路径
     //皮肤
     static      QString     m_skin_theme;//默认皮肤主题
+    static      bool        m_skin_switch;//开关
+    static      QString     m_skin_splash;//加载缓冲界面
 
 private:
     static      QString     getHostName();

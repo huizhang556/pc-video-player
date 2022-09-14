@@ -10,11 +10,13 @@
 <browser>
 <defaultUser>visitor</defaultUser>
 <defaultUserID>0000000000</defaultUserID>
-<defaultUrl>http://www.hao123.com</defaultUrl>
+<defaultUrl>https://www.bilibili.com</defaultUrl>
 <defaultTitle>上网从这里开始</defaultTitle>
 <downloadPath>download</downloadPath>
 </browser>
 <skin>
 <defaultSkin>blackTheme</defaultSkin>
+<splashOn>false</splashOn>
+<defaultSplash>/pictures/splashscreen/splash1.gif</defaultSplash>
 </skin>
 </appconfig>
