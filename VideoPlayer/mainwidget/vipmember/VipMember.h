@@ -16,9 +16,17 @@ public:
     ~VipMember();
     void        initWorkUI();
     void        handleSignalsAndSlots();
+    void        setInstallEventFilter();
+
+protected:
+    bool    eventFilter(QObject *watched, QEvent *event) override;
 
 private:
     Ui::VipMember *ui;
+
+private slots:
+    void     resizeListWidgetItemWidget(const QSize& size);//动态更新item大小
+
 };
 
 #endif // VIPMEMBER_H

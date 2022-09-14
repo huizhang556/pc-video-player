@@ -20,7 +20,10 @@ SOURCES += \
     $$PWD/songlistsort/TagsMenu.cpp \
     $$PWD/songlistsort/TagsMenuItem.cpp \
     $$PWD/CusLabelItem.cpp \
-    $$PWD/HoverMask.cpp
+    $$PWD/HoverMask.cpp \
+    $$PWD/vipmember/HotDownload.cpp \
+    $$PWD/vipmember/HotDownloadItem.cpp \
+    $$PWD/vipmember/HotSort.cpp
 
 HEADERS += \
     $$PWD/songersort/SongerSort.h \
@@ -44,7 +47,10 @@ HEADERS += \
     $$PWD/songlistsort/TagsMenu.h \
     $$PWD/songlistsort/TagsMenuItem.h \
     $$PWD/CusLabelItem.h \
-    $$PWD/HoverMask.h
+    $$PWD/HoverMask.h \
+    $$PWD/vipmember/HotDownload.h \
+    $$PWD/vipmember/HotDownloadItem.h \
+    $$PWD/vipmember/HotSort.h
 
 FORMS += \
     $$PWD/songersort/SongerSort.ui \
@@ -66,5 +72,8 @@ FORMS += \
     $$PWD/songlistsort/TagsItem.ui \
     $$PWD/songlistsort/TagsMenu.ui \
     $$PWD/songlistsort/TagsMenuItem.ui \
-    $$PWD/CusLabelItem.ui
+    $$PWD/CusLabelItem.ui \
+    $$PWD/vipmember/HotDownload.ui \
+    $$PWD/vipmember/HotDownloadItem.ui \
+    $$PWD/vipmember/HotSort.ui
 

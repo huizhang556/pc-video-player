@@ -422,5 +422,9 @@
         <file>images/user/itemmark_vyp.png</file>
         <file>images/home/transparent.png</file>
         <file>images/bgpic/recommend_title.png</file>
+        <file>images/bgpic/vip_shared.png</file>
+        <file>images/user/vip_start0.png</file>
+        <file>images/user/vip_start1.png</file>
+        <file>images/user/vip_start3.png</file>
     </qresource>
 </RCC>

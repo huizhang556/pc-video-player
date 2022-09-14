@@ -49,7 +49,7 @@ private:
 private:
     void        resizeListWidgetItemWidget();//动态更新item大小
      void       updateMenuGeometry();
-     int       calculateItemWidth(int width);
+     int        calculateItemWidth(int width);
 
 signals:
     void    sig_sendSelectTags(QString);

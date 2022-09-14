@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HotSort</class>
+ <widget class="QWidget" name="HotSort">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>494</width>
+    <height>520</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: transparent;</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QFrame" name="frame_title">
+       <property name="styleSheet">
+        <string notr="true">#frame_title
+{
+/*background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #f39d5d, stop:1  #f6594c);*/
+background-color: #21374b;
+}</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="pushButton_marks">
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+color: white;
+font: 25 12pt &quot;Microsoft YaHei&quot;;
+border: none;
+background-color: transparent;
+}</string>
+            </property>
+            <property name="text">
+             <string>精选歌单</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QFrame" name="frame_tags">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>60</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout">
+               <property name="spacing">
+                <number>10</number>
+               </property>
+               <item>
+                <widget class="QPushButton" name="pushButton_tags1">
+                 <property name="minimumSize">
+                  <size>
+                   <width>36</width>
+                   <height>26</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>36</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton
+{
+background-color: transparent;
+color: #b6babf;
+}
+
+QPushButton:hover
+{
+color: #5c64ae;
+}
+
+QPushButton:checked
+{
+color: white;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string>华语</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_tags2">
+                 <property name="minimumSize">
+                  <size>
+                   <width>36</width>
+                   <height>26</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>36</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton
+{
+background-color: transparent;
+color: #b6babf;
+}
+
+QPushButton:hover
+{
+color: #5c64ae;
+}
+
+QPushButton:checked
+{
+color: white;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string>日韩</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_tags3">
+                 <property name="minimumSize">
+                  <size>
+                   <width>36</width>
+                   <height>26</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>36</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton
+{
+background-color: transparent;
+color: #b6babf;
+}
+
+QPushButton:hover
+{
+color: #5c64ae;
+}
+
+QPushButton:checked
+{
+color: white;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string>欧美</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="Line" name="line">
+                 <property name="minimumSize">
+                  <size>
+                   <width>1</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>1</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">#line
+{
+background-color: rgb(85, 0, 255);
+}</string>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_tags4">
+                 <property name="minimumSize">
+                  <size>
+                   <width>36</width>
+                   <height>26</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>36</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton
+{
+background-color: transparent;
+color: #b6babf;
+}
+
+QPushButton:hover
+{
+color: #5c64ae;
+}
+
+QPushButton:checked
+{
+color: white;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string>更多</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QListWidget" name="listWidget_vipItems">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>436</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#listWidget_vipItems
+{
+border: none;
+background-color:#0c1828;
+}
+
+#listWidget_vipItems::item
+{
+background-color:#0c1828;
+}
+
+#listWidget_vipItems::item:hover
+{
+background-color:#4493b7;
+}
+
+#listWidget_vipItems::item:selected
+{
+background-color: #112c44;
+}
+
+#listWidget_vipItems::item:!selected
+{
+
+}
+
+
+
+</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
