@@ -69,7 +69,7 @@ border-radius:4px;
          <string notr="true"/>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>4</number>
         </property>
         <widget class="QWidget" name="page">
          <property name="styleSheet">
@@ -2333,7 +2333,7 @@ color:white;
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>110</width>
             <height>25</height>
            </size>
           </property>
@@ -2455,13 +2455,13 @@ color:white;
            <rect>
             <x>221</x>
             <y>90</y>
-            <width>68</width>
+            <width>70</width>
             <height>25</height>
            </rect>
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>70</width>
             <height>25</height>
            </size>
           </property>
@@ -2477,13 +2477,13 @@ color:white;
            <rect>
             <x>340</x>
             <y>90</y>
-            <width>68</width>
+            <width>70</width>
             <height>25</height>
            </rect>
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>70</width>
             <height>25</height>
            </size>
           </property>
@@ -2499,13 +2499,13 @@ color:white;
            <rect>
             <x>340</x>
             <y>140</y>
-            <width>68</width>
+            <width>70</width>
             <height>25</height>
            </rect>
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>70</width>
             <height>25</height>
            </size>
           </property>
@@ -2555,13 +2555,13 @@ color:white;
            <rect>
             <x>221</x>
             <y>140</y>
-            <width>68</width>
+            <width>70</width>
             <height>25</height>
            </rect>
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>70</width>
             <height>25</height>
            </size>
           </property>
@@ -2645,13 +2645,13 @@ color:white;
            <rect>
             <x>60</x>
             <y>230</y>
-            <width>108</width>
+            <width>110</width>
             <height>25</height>
            </rect>
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>110</width>
             <height>25</height>
            </size>
           </property>
@@ -2694,13 +2694,13 @@ font-size:14px;
            <rect>
             <x>340</x>
             <y>230</y>
-            <width>68</width>
+            <width>70</width>
             <height>25</height>
            </rect>
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>70</width>
             <height>25</height>
            </size>
           </property>
@@ -2894,7 +2894,7 @@ color: rgb(0, 0, 0);
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>110</width>
             <height>25</height>
            </size>
           </property>

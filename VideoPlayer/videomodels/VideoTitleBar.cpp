@@ -80,6 +80,7 @@ void VideoTitleBar::clearTitleText()
 void VideoTitleBar::mouseDoubleClickEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);
+    if(event->button() == Qt::LeftButton)
     emit sig_doubleClick();
 }
 

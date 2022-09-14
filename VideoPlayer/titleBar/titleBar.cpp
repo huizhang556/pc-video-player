@@ -187,7 +187,7 @@ void TitleBar::chandleSignalAndSLots()
         {
 
         }
-        else if(QString::fromLocal8Bit("修改密码") == text)
+        else if(QString::fromLocal8Bit("重置密码") == text)
         {
             LoginPersonInfo::getInstance()->showLoginWindow(3);
         }
@@ -897,6 +897,7 @@ void TitleBar::setUserHeadPicture(const QString &path)
 void TitleBar::mouseDoubleClickEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);
+    if(event->button() == Qt::LeftButton)
     emit sig_doubleClick();//主窗口调整界面大小
 }
 
