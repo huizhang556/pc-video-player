@@ -31,8 +31,10 @@
 #include "videomodels/RecVideoItem.h"
 #include "splashscreen/CSplashScreen.h"
 
+#include "mainwidget/TrianButton.h"
 #include "mainwidget/songersort/SongerSort.h"
 #include "mainwidget/songlistsort/TagsMenu.h"
+#include "mainwidget/rankinglist/RankingList.h"
 
 #include <QTranslator>
 #include <QThread>
@@ -94,6 +96,12 @@ int main(int argc, char *argv[])
     //05--->显示主界面
     MainWidget w1;
     w1.show();
+
+//    TrianButton w1;
+//    w1.show();
+
+//    RankingList w1;
+//    w1.show();
     splashscream.finish(&w1);
 
 

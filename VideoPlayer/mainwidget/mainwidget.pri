@@ -23,7 +23,12 @@ SOURCES += \
     $$PWD/HoverMask.cpp \
     $$PWD/vipmember/HotDownload.cpp \
     $$PWD/vipmember/HotDownloadItem.cpp \
-    $$PWD/vipmember/HotSort.cpp
+    $$PWD/vipmember/HotSort.cpp \
+    $$PWD/TrianButton.cpp \
+    $$PWD/vipmember/HotVideoItem.cpp \
+    $$PWD/vipmember/HotVideo.cpp \
+    $$PWD/rankinglist/RankItem.cpp \
+    $$PWD/rankinglist/RankListItem.cpp
 
 HEADERS += \
     $$PWD/songersort/SongerSort.h \
@@ -50,7 +55,12 @@ HEADERS += \
     $$PWD/HoverMask.h \
     $$PWD/vipmember/HotDownload.h \
     $$PWD/vipmember/HotDownloadItem.h \
-    $$PWD/vipmember/HotSort.h
+    $$PWD/vipmember/HotSort.h \
+    $$PWD/TrianButton.h \
+    $$PWD/vipmember/HotVideoItem.h \
+    $$PWD/vipmember/HotVideo.h \
+    $$PWD/rankinglist/RankItem.h \
+    $$PWD/rankinglist/RankListItem.h
 
 FORMS += \
     $$PWD/songersort/SongerSort.ui \
@@ -75,5 +85,10 @@ FORMS += \
     $$PWD/CusLabelItem.ui \
     $$PWD/vipmember/HotDownload.ui \
     $$PWD/vipmember/HotDownloadItem.ui \
-    $$PWD/vipmember/HotSort.ui
+    $$PWD/vipmember/HotSort.ui \
+    $$PWD/TrianButton.ui \
+    $$PWD/vipmember/HotVideoItem.ui \
+    $$PWD/vipmember/HotVideo.ui \
+    $$PWD/rankinglist/RankItem.ui \
+    $$PWD/rankinglist/RankListItem.ui
 

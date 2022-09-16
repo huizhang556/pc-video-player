@@ -87,6 +87,7 @@ background-color: transparent;
         <property name="styleSheet">
          <string notr="true">#pushButton_vipNumber
 {
+color: white;
 background-color: transparent;
 }</string>
         </property>

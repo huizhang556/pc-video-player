@@ -3,6 +3,7 @@
 
 #include "mainwidget/HoverMask.h"
 
+#include <QSize>
 #include <QWidget>
 #include <QPushButton>
 
@@ -46,6 +47,7 @@ private:
 
 signals:
     void        sig_sendMarkItem();
+    void        sig_itemSizeChanged(QSize);
 };
 
 #endif // TAGSITEM_H

@@ -15,6 +15,7 @@ HotSort::HotSort(QWidget *parent) :
     initWorkUI();
     handleSignalsAndSlots();
     setInstallEventFilter();
+    this->setMinimumHeight(230*2 + 60);
 }
 
 HotSort::~HotSort()
@@ -24,6 +25,9 @@ HotSort::~HotSort()
 
 void HotSort::initWorkUI()
 {
+    ui->pushButton_marks->setIcon(QIcon("://images/user/itemmark_new2.png"));
+    ui->pushButton_marks->setIconSize(QSize(36,36));
+
     ui->listWidget_vipItems->setViewMode(QListView::IconMode);
     ui->listWidget_vipItems->setMovement(QListView::Static);//图标不可拖动
     ui->listWidget_vipItems->setResizeMode(QListWidget::Adjust);

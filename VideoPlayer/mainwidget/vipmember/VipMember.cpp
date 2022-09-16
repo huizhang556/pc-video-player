@@ -2,9 +2,11 @@
 #include "ui_VipMember.h"
 
 #include "mainwidget/vipmember/HotSort.h"
+#include "mainwidget/vipmember/HotVideo.h"
 #include "mainwidget/vipmember/HotDownload.h"
 
 #include <QListWidgetItem>
+#include <QScrollBar>
 #include <QDebug>
 
 VipMember::VipMember(QWidget *parent) :
@@ -25,34 +27,48 @@ VipMember::~VipMember()
 void VipMember::initWorkUI()
 {
     ui->listWidget_vipshared->setViewMode(QListView::ListMode);
-//    ui->listWidget_vipshared->setMovement(QListView::Static);//图标不可拖动
+    ui->listWidget_vipshared->setMovement(QListView::Static);//图标不可拖动
     ui->listWidget_vipshared->setResizeMode(QListWidget::Adjust);
 //    ui->listWidget_vipshared->setWrapping(true);//自动换行 所有itm在一行显示
-//    ui->listWidget_vipshared->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_vipshared->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_vipshared->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_vipshared->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < 2; i++)
     {
-        HotDownload *hItem = new HotDownload();
+        //会员专享下载
+        HotDownload *itemWidget = new HotDownload();
         QListWidgetItem *item = new QListWidgetItem();
-        item->setSizeHint(hItem->size());
+        item->setSizeHint(itemWidget->size());
         ui->listWidget_vipshared->addItem(item);
-        ui->listWidget_vipshared->setItemWidget(item,hItem);
+        ui->listWidget_vipshared->setItemWidget(item,itemWidget);
         //槽函数
-        connect(hItem,&HotDownload::sig_itemSizeChanged,this,&VipMember::resizeListWidgetItemWidget);
+        connect(itemWidget,&HotDownload::sig_itemSizeChanged,this,&VipMember::resizeListWidgetItemWidget);
     }
 
-    for(int i = 0; i < 6; i++)
+    for(int i = 0; i < 8; i++)
     {
-        HotSort *hItem = new HotSort();
+        //精选分类
+        HotSort *itemWidget = new HotSort();
         QListWidgetItem *item = new QListWidgetItem();
-        item->setSizeHint(hItem->size());
+        item->setSizeHint(itemWidget->size());
         ui->listWidget_vipshared->addItem(item);
-        ui->listWidget_vipshared->setItemWidget(item,hItem);
+        ui->listWidget_vipshared->setItemWidget(item,itemWidget);
         //槽函数
 
     }
+
+//    for(int i = 0; i < 2; i++)
+//    {
+//        HotVideo *itemWidget = new HotVideo();
+//        QListWidgetItem *item = new QListWidgetItem();
+//        item->setSizeHint(itemWidget->size());
+//        ui->listWidget_vipshared->addItem(item);
+//        ui->listWidget_vipshared->setItemWidget(item,itemWidget);
+//        //槽函数
+//    }
+//    ui->listWidget_vipshared->setMinimumHeight((230*2+60)*ui->listWidget_vipshared->count()+ui->listWidget_vipshared->horizontalScrollBar()->height());
+    ui->listWidget_vipshared->setMinimumHeight((82*3 + 60)*2 + (230*2+60)*8);
 }
 
 void VipMember::handleSignalsAndSlots()

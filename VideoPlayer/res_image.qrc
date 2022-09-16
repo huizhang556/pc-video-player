@@ -426,5 +426,23 @@
         <file>images/user/vip_start0.png</file>
         <file>images/user/vip_start1.png</file>
         <file>images/user/vip_start3.png</file>
+        <file>images/home/rank_add.png</file>
+        <file>images/home/rank_alllist.png</file>
+        <file>images/home/rank_download.png</file>
+        <file>images/home/rank_drop.png</file>
+        <file>images/home/rank_new.png</file>
+        <file>images/home/rank_newtop.png</file>
+        <file>images/home/rank_play.png</file>
+        <file>images/home/rank_rise.png</file>
+        <file>images/home/rank_video.png</file>
+        <file>images/home/rank_vip.png</file>
+        <file>images/home/rank_add2.png</file>
+        <file>images/home/rank_down.png</file>
+        <file>images/home/rank_down_hover.png</file>
+        <file>images/home/rank_tipvip.png</file>
+        <file>images/home/rank_vip2.png</file>
+        <file>images/home/rank_hotsong.png</file>
+        <file>images/home/rank_newsong.png</file>
+        <file>images/home/rank_raisesong.png</file>
     </qresource>
 </RCC>

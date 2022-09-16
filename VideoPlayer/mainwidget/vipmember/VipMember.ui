@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1049</width>
-    <height>310</height>
+    <height>522</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,6 +34,12 @@
    </property>
    <item>
     <widget class="QScrollArea" name="scrollArea">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true">#scrollArea
 {
@@ -49,8 +55,14 @@ border:none;
         <x>0</x>
         <y>0</y>
         <width>1049</width>
-        <height>310</height>
+        <height>522</height>
        </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
       </property>
       <property name="styleSheet">
        <string notr="true"/>

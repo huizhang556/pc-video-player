@@ -15,6 +15,7 @@ HotDownload::HotDownload(QWidget *parent) :
     initWorkUI();
     handleSignalsAndSlots();
     setInstallEventFilter();
+    this->setMinimumHeight(82*3 + 60);
 }
 
 HotDownload::~HotDownload()
@@ -38,12 +39,14 @@ void HotDownload::initWorkUI()
 
     for(int i = 0; i < 9; i++)
     {
-        HotDownloadItem *hotItem = new HotDownloadItem();
+        HotDownloadItem *itemWidget = new HotDownloadItem();
         QListWidgetItem *item = new QListWidgetItem();
-        item->setSizeHint(QSize(hotItem->size()));
+        item->setSizeHint(QSize(itemWidget->size()));
         ui->listWidget_vipHot->addItem(item);
-        ui->listWidget_vipHot->setItemWidget(item,hotItem);
+        ui->listWidget_vipHot->setItemWidget(item,itemWidget);
     }
+
+    ui->listWidget_vipHot->setMinimumHeight(82*3+ui->listWidget_vipHot->horizontalScrollBar()->height());
 }
 
 void HotDownload::handleSignalsAndSlots()

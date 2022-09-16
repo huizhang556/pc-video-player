@@ -26,7 +26,7 @@ public slots:
     void        slot_addSongItem(const QString& titleIcon,const QString& titleText,const QStringList& list);
 
 protected:
-    void        paintEvent(QPaintEvent* event);
+    void        paintEvent(QPaintEvent* event) override;
 
 signals:
     void        sig_sendCurrentItemText(QString);
