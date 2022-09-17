@@ -24,6 +24,7 @@
 #include "videomodels/VideoTitleBar.h"
 #include "videomodels/PersonFileForm.h"
 #include "mainwidget/HomeWidget.h"
+#include "mainwidget/videosmv/MainVideoMv.h"
 
 
 #include <QMenu>
@@ -188,6 +189,7 @@ signals:
     void        sig_canGoBack(bool status);
     void        sig_canGoForward(bool status);
     void        sig_createNewWebTab();//创建新的tab
+    void        sig_globalResize();
 
 private:
     QGraphicsOpacityEffect *opacity                = nullptr;
@@ -200,6 +202,7 @@ private:
     ExitDialog          *m_pExitDlg                = nullptr;
     TitleBar            *m_titleBar                = nullptr;
     HomeWidget          *m_homeWidget              = nullptr;//首页推荐
+    VideoMv             *m_mainVideoMv             = nullptr;//视频
     PersonFileForm      *m_personForm              = nullptr;
     MultipPlayer        *m_mainPlayer              = nullptr;
     LeftSideBar         *m_leftSideBar             = nullptr;

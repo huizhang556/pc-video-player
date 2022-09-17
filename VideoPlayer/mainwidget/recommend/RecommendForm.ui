@@ -434,7 +434,8 @@ font-weight:700;
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color:#2a2a31;
+          <string notr="true">background-color: #0d1a2b;
+
 </string>
          </property>
          <property name="currentIndex">

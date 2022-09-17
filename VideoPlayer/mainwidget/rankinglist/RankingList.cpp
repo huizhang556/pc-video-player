@@ -82,6 +82,12 @@ void RankingList::setInstallEventFilter()
     ui->listWidget_feature->installEventFilter(this);
 }
 
+void RankingList::slot_globalResize()
+{
+    this->resize(1,1);
+    qDebug() << QString(u8"排行榜主界面已更新~！");
+}
+
 void RankingList::slot_addRankListItem()
 {
     for(int i = 0; i < 10; i++)

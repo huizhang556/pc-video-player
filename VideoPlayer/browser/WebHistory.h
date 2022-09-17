@@ -22,6 +22,7 @@ public:
     void    chandleSignalsAndSLots();
 
 public slots:
+    void    slot_globalResize();
     void    slot_addToListHistoryWidget(QUrl url);
     void    slot_initHistoryRecordListWgt(const QString &text,const QString &ctime);//初始化
     void    slot_addToListHistoryWidget(const QString &text);//添加一条历史记录

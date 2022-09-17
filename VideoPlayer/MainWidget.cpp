@@ -51,6 +51,9 @@ void MainWidget::initOtherWidgetUi()
     m_homeWidget = new HomeWidget();
     m_homeWidget->setObjectName(QString::fromLocal8Bit("m_homeWidget"));
 
+    m_mainVideoMv = new VideoMv();
+    m_mainVideoMv->setObjectName(QString::fromLocal8Bit("m_mainVideoMv"));
+
     m_mainPlayer = new MultipPlayer();
     m_mainPlayer->setObjectName(QString::fromLatin1("m_mainPlayer"));
 
@@ -206,11 +209,12 @@ void MainWidget::setStackedWidgetPage()
 {
     m_stackWidget_center->insertWidget(0,m_homeWidget);//m_mainShowForm
     m_stackWidget_center->insertWidget(1,m_webStackWgt);//m_webStackWgt
-    m_stackWidget_center->insertWidget(2,m_tabWidget);//m_tabWidget
+    m_stackWidget_center->insertWidget(2,m_mainVideoMv);
     m_stackWidget_center->insertWidget(3,m_musicShow);//musicshow
     m_stackWidget_center->insertWidget(4,m_musicList);//musiclist
     m_stackWidget_center->insertWidget(5,m_personForm);//personform 个人管理
     m_stackWidget_center->insertWidget(6,m_fileTrans);//文件传输
+    m_stackWidget_center->insertWidget(7,m_tabWidget);//m_tabWidget
     m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
 }
 
@@ -440,6 +444,15 @@ void MainWidget::slot_removeTabWidgetTab(int index)
 //处理信号与槽函数
 void MainWidget::chandleSignalAndSlots()
 {
+    //全局更新
+    connect(this,&MainWidget::sig_globalResize,[=](){
+        m_homeWidget->slot_globalResize();//推荐总界面更新
+        m_mainVideoMv->slot_globalResize();//视频推荐界面更新
+//        m_webRecords->slot_globalResize();//收藏记录界面更新
+//        m_webHistory->slot_globalResize();//历史记录界面更新
+    });
+
+
     //侧边栏有关信号与槽函数处理
     connect(m_leftSideBar,&LeftSideBar::sig_sidebarItemChange,[=](int index)
     {
@@ -449,6 +462,7 @@ void MainWidget::chandleSignalAndSlots()
     //左侧边栏控制显示/隐藏的按钮
     connect(m_leftButton,&QPushButton::clicked,[=](){
         slot_on_leftButton_clicked();
+        emit sig_globalResize();
     });
 
     /*********************************标题栏----用户下线*************************************/

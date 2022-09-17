@@ -7,13 +7,28 @@
     <x>0</x>
     <y>0</y>
     <width>804</width>
-    <height>572</height>
+    <height>418</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_9">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QScrollArea" name="scrollArea">
      <property name="widgetResizable">
@@ -24,7 +39,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>767</width>
+        <width>785</width>
         <height>1080</height>
        </rect>
       </property>
@@ -52,8 +67,17 @@
        </property>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_7">
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <item>
           <widget class="QWidget" name="widget_style" native="true">
+           <property name="styleSheet">
+            <string notr="true">#widget_style
+{
+background-color: #0d1a2b;
+}</string>
+           </property>
            <layout class="QHBoxLayout" name="horizontalLayout_8">
             <property name="spacing">
              <number>0</number>
@@ -78,6 +102,12 @@
          </item>
          <item>
           <widget class="QWidget" name="widget_jinxuan" native="true">
+           <property name="styleSheet">
+            <string notr="true">#widget_jinxuan
+{
+background-color: #0d1a2b;
+}</string>
+           </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <property name="spacing">
              <number>0</number>
@@ -180,7 +210,13 @@
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="widget_radio_2" native="true">
+          <widget class="QWidget" name="widget_recmmend" native="true">
+           <property name="styleSheet">
+            <string notr="true">#widget_recmmend
+{
+background-color: #0d1a2b;
+}</string>
+           </property>
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <property name="spacing">
              <number>0</number>
@@ -316,6 +352,12 @@
          </item>
          <item>
           <widget class="QWidget" name="widget_radio" native="true">
+           <property name="styleSheet">
+            <string notr="true">#widget_radio
+{
+alternate-background-color: #0d1a2b;
+}</string>
+           </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <property name="spacing">
              <number>0</number>
@@ -347,6 +389,9 @@
                   <width>16777215</width>
                   <height>50</height>
                  </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>

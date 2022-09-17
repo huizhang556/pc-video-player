@@ -29,6 +29,9 @@ public:
     void        handleSignalsAndSlots();
     void        addToStackWidget();
 
+public slots:
+    void        slot_globalResize();
+
 private slots:
     void        slot_setCurrentCenterStackWidget(int index);//设置中心区域
 
@@ -44,6 +47,9 @@ private:
     VipMember           *m_vipMember               = nullptr;//会员专区
     QStackedWidget      *m_stackWgt_center         = nullptr;//承载区域
     QVBoxLayout         *m_vbHlayout               = nullptr;
+
+signals:
+    void    sig_globalResize();
 };
 
 #endif // HOMEWIDGET_H

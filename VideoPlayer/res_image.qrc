@@ -444,5 +444,27 @@
         <file>images/home/rank_hotsong.png</file>
         <file>images/home/rank_newsong.png</file>
         <file>images/home/rank_raisesong.png</file>
+        <file>images/videosmv/mvsort/music0.png</file>
+        <file>images/videosmv/mvsort/music1.png</file>
+        <file>images/videosmv/mvsort/music2.png</file>
+        <file>images/videosmv/mvsort/music3.png</file>
+        <file>images/videosmv/mvsort/music4.png</file>
+        <file>images/videosmv/mvsort/music5.png</file>
+        <file>images/videosmv/mvsort/music6.png</file>
+        <file>images/videosmv/mvsort/music7.png</file>
+        <file>images/videosmv/mvsort/music8.png</file>
+        <file>images/videosmv/mvsort/music9.png</file>
+        <file>images/videosmv/reclist/music0.png</file>
+        <file>images/videosmv/reclist/music1.png</file>
+        <file>images/videosmv/reclist/music2.png</file>
+        <file>images/videosmv/reclist/music3.png</file>
+        <file>images/videosmv/reclist/music4.png</file>
+        <file>images/videosmv/reclist/music5.png</file>
+        <file>images/videosmv/reclist/music6.png</file>
+        <file>images/videosmv/reclist/music7.png</file>
+        <file>images/videosmv/reclist/music8.png</file>
+        <file>images/videosmv/reclist/music9.png</file>
+        <file>images/videosmv/rectitle/music0.png</file>
+        <file>images/videosmv/rectitle/music1.png</file>
     </qresource>
 </RCC>

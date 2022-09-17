@@ -183,6 +183,12 @@ void SongerSort::slot_resetSongItemInfo(QListWidgetItem *item, const QString &ur
     itemWidget->slot_setSongerCounts(count);
 }
 
+void SongerSort::slot_globalResize()
+{
+    this->resize(1,1);
+    qDebug() << QString(u8"歌曲分类主界已更新！");
+}
+
 void SongerSort::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event)

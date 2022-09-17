@@ -246,6 +246,12 @@ void CollectRecords::slot_initToRecordsListWidget(const QString &url, QIcon icon
     /****************************信号与槽函数****************************************/
 }
 
+void CollectRecords::slot_globalResize()
+{
+    this->resize(0,0);
+    qDebug() << QString(u8"收藏记录界面已更新！");
+}
+
 //用户退出清除历史记录
 void CollectRecords::slot_clearUserRecords()
 {

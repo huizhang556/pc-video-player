@@ -243,3 +243,9 @@ void CentralHomeForm::resizeHomeListWidgetSize(QListWidgetItem *item, QSize size
 {
     item->setSizeHint(QSize(size.width(),size.height()+m_homeListWidget->horizontalScrollBar()->height()));
 }
+
+void CentralHomeForm::slot_globalResize()
+{
+    this->resize(1,1);
+    qDebug() <<QString(u8"推荐主界面更新");
+}

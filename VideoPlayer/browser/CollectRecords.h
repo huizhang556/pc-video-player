@@ -32,6 +32,7 @@ public:
     void                slot_initToRecordsListWidget(const QString &url, QIcon icon,const QString &title, const QString & createtime);//初始化历史记录
 
 public slots:
+    void                slot_globalResize();
     void                slot_clearUserRecords();//用户退出清除历史记录
     void                slot_addToRecordsListWidget(QUrl url);
     void                slot_showWebMessageWindow(QString url, QString name);

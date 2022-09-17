@@ -66,6 +66,12 @@ void WebHistory::chandleSignalsAndSLots()
     connect(ui->pushButton_delete,&QPushButton::clicked,[=](){});
 }
 
+void WebHistory::slot_globalResize()
+{
+    this->resize(0,0);
+    qDebug() << QString(u8"历史记录界面已更新！");
+}
+
 void WebHistory::slot_addToListHistoryWidget(QUrl url)
 {
     qDebug() << QString::fromLocal8Bit("历史记录接收到地址：")<<url.toDisplayString();

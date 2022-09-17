@@ -24,6 +24,10 @@ public:
     void initWorkUI();
     void chandleSignalsAndSLots();
     void addWidgetToListWidget();
+
+public slots:
+    void    slot_globalResize();
+
 protected:
     void resizeEvent(QResizeEvent *event) override;
 

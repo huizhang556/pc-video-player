@@ -1,6 +1,8 @@
 ﻿#include "HomeWidget.h"
 #include "ui_HomeWidget.h"
 
+#include <QDebug>
+
 HomeWidget::HomeWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::HomeWidget)
@@ -66,6 +68,12 @@ void HomeWidget::handleSignalsAndSlots()
 {
     //中心区域切换
     connect(m_selectButton,SIGNAL(sig_buttonItemChanged(int)),this,SLOT(slot_setCurrentCenterStackWidget(int)));
+    //界面更新
+    connect(this,&HomeWidget::sig_globalResize,[=](){
+        m_homeWdgt->slot_globalResize();
+//        m_songerSort->slot_globalResize();
+        m_rankList->slot_globalResize();
+    });
 }
 
 void HomeWidget::addToStackWidget()
@@ -77,6 +85,13 @@ void HomeWidget::addToStackWidget()
     m_stackWgt_center->insertWidget(4,m_radioHost);
     m_stackWgt_center->insertWidget(5,m_musicScene);
     m_stackWgt_center->insertWidget(6,m_vipMember);
+}
+
+void HomeWidget::slot_globalResize()
+{
+    this->resize(1,1);
+    emit sig_globalResize();//向子界面发送更新信号
+    qDebug() << QString(u8"推荐总界面已更新！");
 }
 
 void HomeWidget::slot_setCurrentCenterStackWidget(int index)

@@ -28,7 +28,13 @@ SOURCES += \
     $$PWD/vipmember/HotVideoItem.cpp \
     $$PWD/vipmember/HotVideo.cpp \
     $$PWD/rankinglist/RankItem.cpp \
-    $$PWD/rankinglist/RankListItem.cpp
+    $$PWD/rankinglist/RankListItem.cpp \
+    $$PWD/videosmv/MainVideoMv.cpp \
+    $$PWD/videosmv/MultipType.cpp \
+    $$PWD/videosmv/MVRecmmend.cpp \
+    $$PWD/videosmv/MVSortType.cpp \
+    $$PWD/videosmv/RecmmendVideoItem.cpp \
+    $$PWD/videosmv/VideoItem.cpp
 
 HEADERS += \
     $$PWD/songersort/SongerSort.h \
@@ -60,7 +66,13 @@ HEADERS += \
     $$PWD/vipmember/HotVideoItem.h \
     $$PWD/vipmember/HotVideo.h \
     $$PWD/rankinglist/RankItem.h \
-    $$PWD/rankinglist/RankListItem.h
+    $$PWD/rankinglist/RankListItem.h \
+    $$PWD/videosmv/MainVideoMv.h \
+    $$PWD/videosmv/MultipType.h \
+    $$PWD/videosmv/MVRecmmend.h \
+    $$PWD/videosmv/MVSortType.h \
+    $$PWD/videosmv/RecmmendVideoItem.h \
+    $$PWD/videosmv/VideoItem.h
 
 FORMS += \
     $$PWD/songersort/SongerSort.ui \
@@ -90,5 +102,11 @@ FORMS += \
     $$PWD/vipmember/HotVideoItem.ui \
     $$PWD/vipmember/HotVideo.ui \
     $$PWD/rankinglist/RankItem.ui \
-    $$PWD/rankinglist/RankListItem.ui
+    $$PWD/rankinglist/RankListItem.ui \
+    $$PWD/videosmv/MainVideoMv.ui \
+    $$PWD/videosmv/MultipType.ui \
+    $$PWD/videosmv/MVRecmmend.ui \
+    $$PWD/videosmv/MVSortType.ui \
+    $$PWD/videosmv/RecmmendVideoItem.ui \
+    $$PWD/videosmv/VideoItem.ui
 

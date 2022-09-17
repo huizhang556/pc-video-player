@@ -21,6 +21,7 @@ public:
     void        setInstallEventFilter();
 
 public slots:
+    void    slot_globalResize();
     void    slot_addRankListItem();
     void    slot_addSongItem_recommend();
     void    slot_setCheckedButton(QAbstractButton *button);
