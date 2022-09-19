@@ -30,7 +30,7 @@ public slots:
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
-
+    void    resizeEvent(QResizeEvent *event) override;
 private:
     void        resizeListWidgetItemWidget();//动态更新item大小
     int        calculateItemWidth(int width);

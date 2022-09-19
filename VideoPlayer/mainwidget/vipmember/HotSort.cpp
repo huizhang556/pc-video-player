@@ -36,7 +36,7 @@ void HotSort::initWorkUI()
     ui->listWidget_vipItems->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_vipItems->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
-    for(int i = 0; i < 20; i++)
+    for(int i = 0; i < 18; i++)
     {
         QString path1 = QString(Global::appDirPath +"/pictures/musics/style/music%1.png").arg(i);
         slot_addSongItem("www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事 | 远方的人儿"),QString::fromLocal8Bit("故事中的人%1").arg(i));
@@ -88,6 +88,7 @@ void HotSort::resizeListWidgetItemWidget()
     //6~7 1116~1302 7~8 1302~1488 8~9 1488~1674 9~10 1674~1860
     for(int i = 0; i < ui->listWidget_vipItems->count(); i++)
     {
+        //vip 会员分类下载
         int avgWidth = calculateItemWidth(width - ui->listWidget_vipItems->verticalScrollBar()->width() + 100);
         ui->listWidget_vipItems->item(i)->setSizeHint(QSize(avgWidth,avgWidth*SCALE));
 //        qDebug() << QString::fromLocal8Bit("动态更新后的item大小：宽度%1，高度%2").arg(avgWidth).arg(avgWidth*SCALE);

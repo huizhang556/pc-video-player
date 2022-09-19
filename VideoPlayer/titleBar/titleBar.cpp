@@ -155,6 +155,7 @@ void TitleBar::initWorker()
 
     //引擎列表
     m_listWdgt_engine = new QListWidget();
+    m_listWdgt_engine->setWindowFlags(Qt::Tool);
     m_listWdgt_engine->setObjectName(QString::fromLocal8Bit("m_listWdgt_engine"));
     m_listWdgt_engine->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_listWdgt_engine->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

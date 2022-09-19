@@ -29,8 +29,8 @@ void RankListItem::initWorkUI()
     ui->listWidget_rankItem->setMovement(QListView::Static);//图标不可拖动
     ui->listWidget_rankItem->setResizeMode(QListWidget::Adjust);
 //    ui->listWidget_rankItem->setWrapping(true);//自动换行 所有itm在一行显示
-//    ui->listWidget_rankItem->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-//    ui->listWidget_rankItem->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_rankItem->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_rankItem->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_rankItem->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     slot_addRankListItem();
 }
@@ -54,7 +54,7 @@ void RankListItem::setInstallEvevtFilter()
 
 void RankListItem::slot_addRankListItem()
 {
-    for(int i = 0; i < 20; i++)
+    for(int i = 0; i < 18; i++)
     {
         QString path1 = QString(Global::appDirPath +"/pictures/musics/style/music%1.png").arg(i);
         slot_addSongItem_recommend("www.hao123.com",path1,QString::fromLocal8Bit("遥远的故事 | 远方的人儿"),QString::fromLocal8Bit("故事中的人%1").arg(i));
@@ -85,6 +85,12 @@ bool RankListItem::eventFilter(QObject *watched, QEvent *event)
     return QWidget::eventFilter(watched,event);
 }
 
+void RankListItem::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event)
+    resizeListWidgetItemWidget();
+}
+
 void RankListItem::resizeListWidgetItemWidget()
 {
     int width = ui->listWidget_rankItem->width();
@@ -93,7 +99,7 @@ void RankListItem::resizeListWidgetItemWidget()
     //6~7 1116~1302 7~8 1302~1488 8~9 1488~1674 9~10 1674~1860
     for(int i = 0; i < ui->listWidget_rankItem->count(); i++)
     {
-        int avgWidth = calculateItemWidth(width - ui->listWidget_rankItem->verticalScrollBar()->width() - 1);
+        int avgWidth = calculateItemWidth(width - ui->listWidget_rankItem->verticalScrollBar()->width() + 99);
         ui->listWidget_rankItem->item(i)->setSizeHint(QSize(avgWidth,avgWidth*SCALE));
 //        qDebug() << QString::fromLocal8Bit("动态更新后的item大小：宽度%1，高度%2").arg(avgWidth).arg(avgWidth*SCALE);
     }

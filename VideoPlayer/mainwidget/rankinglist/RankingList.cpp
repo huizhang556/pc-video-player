@@ -63,13 +63,14 @@ void RankingList::initWorkUI()
     ui->listWidget_feature->setResizeMode(QListWidget::Adjust);
 //    ui->listWidget_feature->setWrapping(true);//自动换行 所有itm在一行显示
 //    ui->listWidget_feature->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-//    ui->listWidget_feature->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_feature->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_feature->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     ui->listWidget_left->setMinimumHeight(40*10);
     ui->listWidget_right->setMinimumHeight(40*10);
-    ui->scrollArea->setWidgetResizable(true);
+//    ui->scrollArea->setWidgetResizable(true);
     slot_addRankListItem();
+    ui->listWidget_feature->setMinimumHeight((230*2+60)*ui->listWidget_feature->count()+ui->listWidget_feature->horizontalScrollBar()->height());
 }
 
 void RankingList::handleSignalsAndSlots()
@@ -113,7 +114,6 @@ void RankingList::slot_addRankListItem()
        slot_addSongItem_recommend();
     }
 
-    ui->listWidget_feature->setMinimumHeight((230*2+60)*ui->listWidget_feature->count()+ui->listWidget_feature->horizontalScrollBar()->height());
 }
 
 void RankingList::slot_addSongItem_recommend()
@@ -144,7 +144,7 @@ bool RankingList::eventFilter(QObject *watched, QEvent *event)
     {
         if(event->type() == QEvent::Resize)
         {
-            resizeListWidgetItemWidget();
+//            resizeListWidgetItemWidget();
         }
 
     }

@@ -91,6 +91,7 @@ void HotDownload::resizeListWidgetItemWidget()
     //滚动条默认宽度17
     for(int i = 0; i<ui->listWidget_vipHot->count();i++)
     {
+        //3 listwidget会员下载
         if(fitWidth < MINSIZE.width())
         {
             ui->listWidget_vipHot->item(i)->setSizeHint(QSize(fitWidth1+50,82));

@@ -446,7 +446,7 @@ void MainWidget::chandleSignalAndSlots()
 {
     //全局更新
     connect(this,&MainWidget::sig_globalResize,[=](){
-        m_homeWidget->slot_globalResize();//推荐总界面更新
+//        m_homeWidget->slot_globalResize();//推荐总界面更新
         m_mainVideoMv->slot_globalResize();//视频推荐界面更新
 //        m_webRecords->slot_globalResize();//收藏记录界面更新
 //        m_webHistory->slot_globalResize();//历史记录界面更新
