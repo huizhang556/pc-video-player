@@ -14,7 +14,8 @@ SOURCES += \
     $$PWD/PlayOrderForm.cpp \
     $$PWD/RotatePic.cpp \
     $$PWD/FloatPlayCtl.cpp \
-    $$PWD/RecVideoItem.cpp
+    $$PWD/RecVideoItem.cpp \
+    $$PWD/VideoClarity.cpp
 
 
 HEADERS += \
@@ -33,7 +34,8 @@ HEADERS += \
     $$PWD/PlayOrderForm.h \
     $$PWD/RotatePic.h \
     $$PWD/FloatPlayCtl.h \
-    $$PWD/RecVideoItem.h
+    $$PWD/RecVideoItem.h \
+    $$PWD/VideoClarity.h
 
 
 FORMS += \
@@ -50,5 +52,9 @@ FORMS += \
     $$PWD/DramaListForm.ui \
     $$PWD/PlayOrderForm.ui \
     $$PWD/FloatPlayCtl.ui \
-    $$PWD/RecVideoItem.ui
+    $$PWD/RecVideoItem.ui \
+    $$PWD/VideoClarity.ui
+
+#添加库文件
+#LIBS += -L ../lib/lib -luser32
 

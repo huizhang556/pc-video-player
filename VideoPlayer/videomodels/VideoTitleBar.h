@@ -1,6 +1,7 @@
 ﻿#ifndef VIDEOTITLEBAR_H
 #define VIDEOTITLEBAR_H
 
+#include <QLibrary>
 #include <QWidget>
 #include <QMouseEvent>
 
@@ -15,17 +16,18 @@ class VideoTitleBar : public QWidget
 public:
     explicit VideoTitleBar(QWidget *parent = nullptr);
     ~VideoTitleBar();
-    void initUi();
-    void chandleSignalsAndSlots();
+    void        initUi();
+    void        chandleSignalsAndSlots();
 public slots:
-    void setTitleStackWidgetPage(int index);
-    void chandleVMainWinStatus(bool status);
-    void clearTitleText();
-    void setTitleText(const QString & text);
+    void        setTitleStackWidgetPage(int index);
+    void        chandleVMainWinStatus(bool status);
+    void        clearTitleText();
+    void        setTitleText(const QString & text);
 
 protected:
-    void mouseDoubleClickEvent(QMouseEvent *event) override;
-    bool eventFilter(QObject *watched, QEvent *event) override;
+    void        mouseDoubleClickEvent(QMouseEvent *event) override;
+    bool        eventFilter(QObject *watched, QEvent *event) override;
+    void        mousePressEvent(QMouseEvent *event) override;
 
 private slots:
 

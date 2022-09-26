@@ -8,7 +8,7 @@
 
 enum ButtonType
 {
-    RoundRect,//圆角矩形
+    RadiusRect,//圆角矩形
     LeftType,
     MidType,
     rightType

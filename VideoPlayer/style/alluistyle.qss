@@ -1222,7 +1222,7 @@ QScrollBar::handle:vertical
 {
 min-height:20px;/*滑块宽度*/
 border-radius:4px;/*滑块角度弯曲*/
-background-color:#038387;
+background-color: #222222;
 }
 
 /*水平滚动条内滑块样式*/
@@ -1230,20 +1230,20 @@ QScrollBar::handle:horizontal
 {
 min-width:20px;/*滑块高度*/
 border-radius:4px;/*滑块角度弯曲*/
-background-color:#038387;
+background-color: #222222;
 }
 
 /*垂直滚动条内滑块样式--hover*/
 QScrollBar::handle:vertical:hover
 {
-background-color:#6b9fa7;
+background-color: #038387;
 border-radius:4px;
 }
 
 /*水平滚动条内滑块样式--hover*/
 QScrollBar::handle:horizontal:hover
 {
-background-color:#6b9fa7;
+background-color: #038387;
 border-radius:4px;
 }
 

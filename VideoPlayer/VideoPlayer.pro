@@ -11,7 +11,8 @@ CONFIG += C++11 ##使用C++11某些新语法
 TARGET = VideoPlayer
 TEMPLATE = app
 RC_ICONS = favicon.ico
-# 以管理员运行
+# 以管理员运行(msvc方式)
+#mingw需要通过加入文件的形式
 #QMAKE_LFLAGS += /MANIFESTUAC:\"level=\'requireAdministrator\' uiAccess=\'false\'\"
 
 DEFINES += QT_DEPRECATED_WARNINGS

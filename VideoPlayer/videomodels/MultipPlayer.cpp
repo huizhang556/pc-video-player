@@ -1,6 +1,13 @@
 ﻿#include "MultipPlayer.h"
 #include "ui_MultipPlayer.h"
 
+#ifdef Q_OS_WIN
+#include <qt_windows.h>
+#include <Windows.h>
+#include <windowsx.h>
+#pragma comment (lib,"user32.lib")
+#endif
+
 #include <QFile>
 #include <QMenu>
 #include <QDebug>
@@ -31,8 +38,8 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
     this->setMinimumSize(1320,800);//1320,800
     this->setMouseTracking(true);//开启鼠标跟踪，适应捕捉屏幕
     this->setWindowFlags(Qt::FramelessWindowHint| //去掉标题栏
-                         Qt::WindowSystemMenuHint|
                          Qt::WindowMinMaxButtonsHint);
+    this->setAttribute(Qt::WA_Hover);//窗口拖拽用
 
     this->setWindowTitle(QString::fromLocal8Bit("Qt简易视频播放器"));
     initMainWindow();//初始化界面
@@ -78,6 +85,7 @@ MultipPlayer::~MultipPlayer()
     delete m_cusDialog;
     delete videoWidget;
     delete m_videoBlank;
+    delete m_videoClarity;
     delete m_adjustBright;
     delete m_videoTitleBar;
     delete m_hboxlayout_rlist;
@@ -267,8 +275,9 @@ void MultipPlayer::initMainWindow()
     ui->verticalLayout_main->setStretch(2,1);
     ui->verticalLayout_main->setContentsMargins(0,0,0,0);
     ui->verticalLayout_main->setSpacing(0);
-    ui->verticalLayout_main->setMargin(MARWIDTH);//注意边线的颜色
-    this->setLayout(ui->verticalLayout_main);
+    ui->verticalLayout_main->setMargin(0);//注意边线的颜色
+
+    this->layout()->setContentsMargins(MARWIDTH,MARWIDTH,MARWIDTH,MARWIDTH);//鼠标捕获拉伸宽度
     loadDefaultLogo();//加载默认图标
 
     VideoProgressBar::getInstance()->hide();
@@ -284,6 +293,9 @@ void MultipPlayer::initMainWindow()
     m_muteDlg = new muteDialog();//不加this
     m_muteDlg->setObjectName(QString::fromLocal8Bit("m_muteDlg"));
     m_muteDlg->setHidden(true);
+
+    m_videoClarity = new VideoClarity();
+    m_videoClarity->setObjectName(QString::fromUtf8("m_videoClarity"));
 
     m_foldBtn = new QPushButton(ui->stackedWidget);//父亲必须指定，要不然显示不出来
     m_foldBtn->setObjectName(QString::fromLocal8Bit("m_foldBtn"));
@@ -301,6 +313,28 @@ void MultipPlayer::initMainWindow()
 /*处理信号与槽函数*/
 void MultipPlayer::chandleSignalAndSLots()
 {
+    //清晰度选择
+    connect(ui->pushButton_clarity,&QPushButton::clicked,[=](){
+        if(m_videoClarity->isHidden())
+        {
+            int x = ui->pushButton_clarity->parentWidget()->mapToGlobal(ui->pushButton_clarity->pos()).x();
+            int y = ui->pushButton_clarity->parentWidget()->mapToGlobal(ui->pushButton_clarity->pos()).y();
+            m_videoClarity->setGeometry(x-30,y-185,m_videoClarity->width(),m_videoClarity->height());
+            m_videoClarity->raise();
+            m_videoClarity->show();
+        }
+        else
+        {
+            m_videoClarity->hide();
+        }
+
+    });
+
+    //按钮设置清晰度
+    connect(m_videoClarity,&VideoClarity::sig_clarityChanged,[=](QString clarity){
+        ui->pushButton_clarity->setText(clarity);
+    });
+
     //列表折叠指示按钮
     connect(m_foldBtn,&QPushButton::clicked,[=](){slot_judgeFoldBtnOfRightDockList();});
 
@@ -420,6 +454,7 @@ void MultipPlayer::chandleSignalAndSLots()
 
     //标题栏---窗口最小化按钮
     connect(m_videoTitleBar,&VideoTitleBar::sig_winVMinimum,this,&MultipPlayer::showMinimized);
+    connect(m_videoTitleBar,&VideoTitleBar::sig_winVMinimum,[=](){slot_clearAllPopupUi();});
     //标题栏改变窗口大小--->主界面控制大小（并发送信号）--->标题栏修改样式
     connect(this,SIGNAL(sig_winVStatus(bool)),m_videoTitleBar,SLOT(chandleVMainWinStatus(bool)));
     //标题栏--->双击标题栏改变窗口大小
@@ -427,9 +462,9 @@ void MultipPlayer::chandleSignalAndSLots()
     //标题栏--窗口还原
     connect(m_videoTitleBar,&VideoTitleBar::sig_winVRestore,[=](){chandleRestoreWindow();});
     //标题栏---窗口还原按钮--->关闭视频配置调节界面
-    connect(m_videoTitleBar,&VideoTitleBar::sig_winVRestore,[=](){m_adjustBright->close();});
+//    connect(m_videoTitleBar,&VideoTitleBar::sig_winVRestore,[=](){m_adjustBright->close();});
     //标题栏--->窗口关闭按钮--->视频调节界面关闭
-    connect(m_videoTitleBar,&VideoTitleBar::sig_winVClose,[=](){m_adjustBright->close();});
+//    connect(m_videoTitleBar,&VideoTitleBar::sig_winVClose,[=](){m_adjustBright->close();});
     //标题栏--->窗口关闭按钮--->主界面关闭视屏界面
     connect(m_videoTitleBar,&VideoTitleBar::sig_winVClose,[=](){slot_closeCurrentWindow();});
     //退出全屏（按钮发出信号）
@@ -622,7 +657,6 @@ void MultipPlayer::loadDefaultLogo()
     ui->Btn_adjust->setToolTip(QString::fromLocal8Bit("设置"));
     ui->pushButton_sound->setToolTip(QString::fromLocal8Bit("音量"));
     ui->pushButton_collect->setToolTip(QString::fromLocal8Bit("收藏"));
-    ui->pushButton_download->setToolTip(QString::fromLocal8Bit("下载"));
     ui->pushButton_curlist->setToolTip(QString::fromLocal8Bit("全屏"));
 
     m_lineEdit->setPlaceholderText(QString::fromLocal8Bit("输入要搜索的内容^_^"));
@@ -1372,6 +1406,7 @@ void MultipPlayer::slot_clearAllPopupUi()
     if(!VideoProgressBar::getInstance()->isHidden()) VideoProgressBar::getInstance()->hide();
     if(!PlayOrderForm::getInstance()->isHidden()) PlayOrderForm::getInstance()->hide();
     if(!m_adjustBright->isHidden()) m_adjustBright->hide();
+    if(!m_videoClarity->isHidden()) m_videoClarity->hide();
     if(!m_muteDlg->isHidden()) m_muteDlg->hide();
 }
 
@@ -1424,13 +1459,13 @@ void MultipPlayer::on_pushButton_next_clicked()
 void MultipPlayer::mousePressEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);
-    if (event->button() == Qt::LeftButton)
-    {
-        this->_isleftpressed = true;
-        QPoint temp = event->globalPos();
-        _plast = temp;
-        _curpos = countFlag(event->pos(), countRow(event->pos()));
-    }
+//    if (event->button() == Qt::LeftButton)
+//    {
+//        this->_isleftpressed = true;
+//        QPoint temp = event->globalPos();
+//        _plast = temp;
+//        _curpos = countFlag(event->pos(), countRow(event->pos()));
+//    }
 }
 
 //鼠标释放事件
@@ -1442,9 +1477,9 @@ void MultipPlayer::mousePressEvent(QMouseEvent *event)
 void MultipPlayer::mouseReleaseEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);
-    if (_isleftpressed)
-        _isleftpressed = false;
-    setCursor(Qt::ArrowCursor);
+//    if (_isleftpressed)
+//        _isleftpressed = false;
+//    setCursor(Qt::ArrowCursor);
 }
 
 void MultipPlayer::changeEvent(QEvent *event)
@@ -1479,8 +1514,9 @@ void MultipPlayer::resizeEvent(QResizeEvent *event)
 //    m_widget1->setMinimumHeight(ui->stackedWidget->height());
 //    m_widget1->raise();
 //    m_widget1->show();
-    Q_UNUSED(event);
+    Q_UNUSED(event)
 //    updatePlayAdustForm();
+    slot_clearAllPopupUi();
     slot_updateFoldButtonGeometry();
     slot_setFoldButtonStyle();
 }
@@ -1498,42 +1534,39 @@ void MultipPlayer::keyPressEvent(QKeyEvent *event)
 //鼠标移动事件
 void MultipPlayer::mouseMoveEvent(QMouseEvent *event)
 {
+    Q_UNUSED(event)
     //拖动之前判断是否处于最大化
-    if(this->isMaximized())
-    {
-        return;
-    }
-    Q_UNUSED(event);
+    if(this->isMaximized()) return;
     if(this->isFullScreen()) return;	//窗口铺满全屏，直接返回，不做任何操作
-    int poss = countFlag(event->pos(), countRow(event->pos()));
-    setCursorType(poss);
-    if (_isleftpressed)//是否左击
-    {
-        QPoint ptemp = event->globalPos();
-        ptemp = ptemp - _plast;
-        if (_curpos == 22)//移动窗口
-        {
-            ptemp = ptemp + pos();
-            move(ptemp);
-        }
-        else
-        {
-            QRect wid = geometry();
-            switch (_curpos)//改变窗口的大小
-            {
-            case 11:wid.setTopLeft(wid.topLeft() + ptemp); break;//左上角
-            case 13:wid.setTopRight(wid.topRight() + ptemp); break;//右上角
-            case 31:wid.setBottomLeft(wid.bottomLeft() + ptemp); break;//左下角
-            case 33:wid.setBottomRight(wid.bottomRight() + ptemp); break;//右下角
-            case 12:wid.setTop(wid.top() + ptemp.y()); break;//中上角
-            case 21:wid.setLeft(wid.left() + ptemp.x()); break;//中左角
-            case 23:wid.setRight(wid.right() + ptemp.x()); break;//中右角
-            case 32:wid.setBottom(wid.bottom() + ptemp.y()); break;//中下角
-            }
-            setGeometry(wid);
-        }
-        _plast = event->globalPos();//更新位置
-    }
+//    int poss = countFlag(event->pos(), countRow(event->pos()));
+//    setCursorType(poss);
+//    if (_isleftpressed)//是否左击
+//    {
+//        QPoint ptemp = event->globalPos();
+//        ptemp = ptemp - _plast;
+//        if (_curpos == 22)//移动窗口
+//        {
+//            ptemp = ptemp + pos();
+//            move(ptemp);
+//        }
+//        else
+//        {
+//            QRect wid = geometry();
+//            switch (_curpos)//改变窗口的大小
+//            {
+//            case 11:wid.setTopLeft(wid.topLeft() + ptemp); break;//左上角
+//            case 13:wid.setTopRight(wid.topRight() + ptemp); break;//右上角
+//            case 31:wid.setBottomLeft(wid.bottomLeft() + ptemp); break;//左下角
+//            case 33:wid.setBottomRight(wid.bottomRight() + ptemp); break;//右下角
+//            case 12:wid.setTop(wid.top() + ptemp.y()); break;//中上角
+//            case 21:wid.setLeft(wid.left() + ptemp.x()); break;//中左角
+//            case 23:wid.setRight(wid.right() + ptemp.x()); break;//中右角
+//            case 32:wid.setBottom(wid.bottom() + ptemp.y()); break;//中下角
+//            }
+//            setGeometry(wid);
+//        }
+//        _plast = event->globalPos();//更新位置
+//    }
 }
 
 //获取光标在窗口所在区域的 列  返回行列坐标
@@ -1642,7 +1675,7 @@ void MultipPlayer::volumeAdjustShowUi(QObject *watched, QEvent *event)
             int y = ui->pushButton_sound->parentWidget()->mapToGlobal(ui->pushButton_sound->pos()).y();
             int h = m_muteDlg->height();
             //                    qDebug() << "QPont_g(" << x << "," << y << ")";
-            m_muteDlg->setGeometry(x-11,y-h-4,m_muteDlg->width(),m_muteDlg->height());
+            m_muteDlg->setGeometry(x-11,y-h+4,m_muteDlg->width(),m_muteDlg->height());// 使音量界面覆盖在音量按钮之上
             m_muteDlg->raise();
             m_muteDlg->show();
         }
@@ -1685,6 +1718,7 @@ void MultipPlayer::stackWidgetSliderButtonEventFilter(QObject *watched, QEvent *
     }
 }
 
+/*全屏时---控制界面*/
 void MultipPlayer::floatPlayCtrlEnterLeave(QObject *watched, QMouseEvent *mousevent)
 {
     if(watched == videoWidget)
@@ -2479,6 +2513,7 @@ void MultipPlayer::slot_closeCurrentWindow()
     {
         VideoProgressBar::getInstance()->close();
     }
+    slot_clearAllPopupUi();//清空未关闭在界面上的
     emit sig_mainPlayerClose();//主界面处理内存删除
 }
 
@@ -2490,7 +2525,7 @@ void MultipPlayer::slot_showNormalWindows()
     m_winMax = false;
     m_videoTitleBar->chandleVMainWinStatus(true);
     //标题栏、播放控制栏等显示出来
-    ui->verticalLayout_main->setMargin(MARWIDTH);//2px边界
+    this->layout()->setContentsMargins(MARWIDTH,MARWIDTH,MARWIDTH,MARWIDTH);
     if(m_videoTitleBar->isHidden()) m_videoTitleBar->show();
     if(ui->stackedWidget_player->isHidden()) ui->stackedWidget_player->show();
     if(!FloatPlayCtl::getInstance()->isHidden()) FloatPlayCtl::getInstance()->hide();
@@ -2615,8 +2650,9 @@ void MultipPlayer::slot_judgeFoldBtnOfRightDockList()
 /*左侧列表控制显隐*/
 void MultipPlayer::slot_setMainWindowShowFullgreen()
 {
-    if(!(ui->stackedWidget->currentWidget() == videoWidget || ui->stackedWidget->currentWidget() == m_musicUi)) return;
-    ui->verticalLayout_main->setMargin(0);//去掉2px边界
+//    if(!(ui->stackedWidget->currentWidget() == videoWidget || ui->stackedWidget->currentWidget() == m_musicUi)) return;
+    if(!(ui->stackedWidget->currentWidget() == videoWidget)) return;
+    this->layout()->setContentsMargins(0,0,0,0);
     m_videoTitleBar->hide();//头部标题栏隐藏
     ui->stackedWidget_player->hide();//底部控制栏隐藏
     m_widget1->hide();//侧边栏隐藏
@@ -2690,6 +2726,62 @@ bool MultipPlayer::eventFilter(QObject *watched, QEvent *event)
     floatPlayCtrlEnterLeave(watched,mousevent);//浮动播放
 //    videoDouleExit(watched,mousevent);
     return QWidget::eventFilter(watched,event);
+}
+
+bool MultipPlayer::nativeEvent(const QByteArray &eventType, void *message, long *result)
+{
+    Q_UNUSED(eventType)
+//    qDebug() <<"enter nativeEvent";
+    MSG* param = static_cast<MSG*>(message);
+
+    switch (param->message)
+    {
+    case WM_NCHITTEST:
+    {
+        int nX = GET_X_LPARAM(param->lParam) - this->geometry().x();
+        int nY = GET_Y_LPARAM(param->lParam) - this->geometry().y();
+
+        // 如果鼠标位于子控件上，则不进行处理
+        if(nX > MARWIDTH && nX <this->width() - MARWIDTH &&
+                nY > MARWIDTH && nY < this->height() - MARWIDTH)
+        {
+            if (childAt(nX, nY) != nullptr)
+                return QWidget::nativeEvent(eventType, message, result);
+        }
+
+        // 鼠标区域位于窗体边框，进行缩放
+        if ((nX > 0) && (nX < MARWIDTH))//左边
+            *result = HTLEFT;
+
+        if ((nX > this->width() - MARWIDTH) && (nX < this->width()))
+            *result = HTRIGHT;
+
+        if ((nY > 0) && (nY < MARWIDTH))//上边
+            *result = HTTOP;
+
+        if ((nY > this->height() - MARWIDTH) && (nY < this->height()))
+            *result = HTBOTTOM;
+
+        if ((nX > 0) && (nX < MARWIDTH) && (nY > 0)
+                && (nY < MARWIDTH))
+            *result = HTTOPLEFT;
+
+        if ((nX > this->width() - MARWIDTH) && (nX < this->width())
+                && (nY > 0) && (nY < MARWIDTH))
+            *result = HTTOPRIGHT;
+
+        if ((nX > 0) && (nX < MARWIDTH)
+                && (nY > this->height() - MARWIDTH) && (nY < this->height()))
+            *result = HTBOTTOMLEFT;
+
+        if ((nX > this->width() - MARWIDTH) && (nX < this->width())
+                && (nY > this->height() - MARWIDTH) && (nY < this->height()))
+            *result = HTBOTTOMRIGHT;
+
+        return true;
+        }
+    }
+    return QWidget::nativeEvent(eventType, message, result);
 }
 
 

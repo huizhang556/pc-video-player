@@ -97,16 +97,13 @@ int main(int argc, char *argv[])
     MainWidget w1;
     w1.show();
 
-//    TrianButton w1;
-//    w1.show();
+//        MultipPlayer w1;
+//        w1.show();
 
 //    RankingList w1;
 //    w1.show();
     splashscream.finish(&w1);
 
-
-//    MultipPlayer w;
-//    w.show();
 
     //06--->数据恢复初始化
     QTimer::singleShot(1500,0,[=](){

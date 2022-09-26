@@ -80,7 +80,12 @@ void muteDialog::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
     QPainter painter(this);
-    painter.drawPixmap(0,0,this->width(),this->height(),QPixmap(":/images/bgpic/voice_bgpic.png"));
+    painter.setRenderHint(QPainter::Antialiasing,true);
+    painter.setPen(Qt::NoPen);
+//    QPainterPath path;
+//    path.addRoundedRect(0,0,width(),height(),5,5);
+//    painter.drawPath(path);
+    painter.drawPixmap(0,0,this->width(),this->height()-5,QPixmap(":/images/bgpic/voice_bgpic.png"));//留出5px 三角距离底部的距离
 //    QPainterPath path;
 //    //设置圆角半径
 //    const qreal radius = 10;

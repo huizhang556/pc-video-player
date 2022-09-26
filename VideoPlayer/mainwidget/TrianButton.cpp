@@ -50,7 +50,7 @@ void TrianButton::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing,true);
     painter.setPen(Qt::NoPen);
-    //小三角区域
+    //小三角区域+矩形区域
     QPolygon trianglePolygon;
     trianglePolygon << QPoint(0,height()- m_triangleHeight);
     trianglePolygon << QPoint(m_offset,0);
@@ -66,7 +66,7 @@ void TrianButton::paintEvent(QPaintEvent *event)
 
     switch (m_type)
     {
-    case ButtonType::RoundRect://默认矩形
+    case ButtonType::RadiusRect://默认矩形
         {
             QLinearGradient lineGradient(0,0,400,400);
             lineGradient.setColorAt(0.0,Qt::white);

@@ -466,5 +466,8 @@
         <file>images/videosmv/reclist/music9.png</file>
         <file>images/videosmv/rectitle/music0.png</file>
         <file>images/videosmv/rectitle/music1.png</file>
+        <file>images/icon/vtitle_fixed.png</file>
+        <file>images/icon/vtitle_suggest.png</file>
+        <file>images/icon/vtitle_download.png</file>
     </qresource>
 </RCC>

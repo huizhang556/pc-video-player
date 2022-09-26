@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>700</width>
-    <height>204</height>
+    <width>230</width>
+    <height>216</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -96,14 +96,14 @@
       <widget class="QWidget" name="widget" native="true">
        <property name="minimumSize">
         <size>
-         <width>65</width>
-         <height>80</height>
+         <width>125</width>
+         <height>40</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>65</width>
-         <height>80</height>
+         <width>125</width>
+         <height>40</height>
         </size>
        </property>
        <property name="styleSheet">
@@ -112,7 +112,7 @@
 background-color:#2a2a31;
 }</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <property name="spacing">
          <number>0</number>
         </property>
@@ -129,56 +129,32 @@ background-color:#2a2a31;
          <number>0</number>
         </property>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout">
+         <layout class="QHBoxLayout" name="horizontalLayout">
           <property name="spacing">
-           <number>4</number>
+           <number>0</number>
           </property>
-          <item>
-           <widget class="QPushButton" name="Btn_blank">
-            <property name="minimumSize">
-             <size>
-              <width>60</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>60</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton
-{
-border-image: url(:/images/icon/openfile.png);
-background-color:#2a2a31;
-margin-left:5px;
-}</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
           <item>
            <widget class="QPushButton" name="pushButton_openfile">
             <property name="minimumSize">
              <size>
-              <width>65</width>
-              <height>25</height>
+              <width>120</width>
+              <height>36</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>65</width>
-              <height>25</height>
+              <width>120</width>
+              <height>36</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">#pushButton_openfile
 {
-background-color:transparent;
+background-color:#41cd52;
 color:#bbbebf;
+border-radius: 18px;
+padding-left:2px;
+font: 75 11pt &quot;Microsoft YaHei UI&quot;;
 }
 #pushButton_openfile:hover
 {

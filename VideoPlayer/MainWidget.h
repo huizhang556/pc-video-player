@@ -61,7 +61,9 @@ public:
     ~MainWidget();
 
 protected:
-    bool        eventFilter(QObject *watched, QEvent *event) override;
+    bool        nativeEvent(const QByteArray& eventType, void* message, long* result) override;
+
+    bool        eventFilter(QObject *watched, QEvent *event) override;  
 
     void        mousePressEvent(QMouseEvent *event) override;
 

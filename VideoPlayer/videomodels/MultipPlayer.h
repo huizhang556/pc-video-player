@@ -1,15 +1,16 @@
 ﻿#ifndef MULTIPPLAYER_H
 #define MULTIPPLAYER_H
-#define MARWIDTH 2 //窗口边距
-#include "network/MyHttp.h"
 
+#define MARWIDTH 2 //窗口边距,进过测试最小需要2px
 #define LEFTWIDTH   260
 
+#include "network/MyHttp.h"
 #include "database/dataBase.h"
 #include "videomodels/VideoBlank.h"
 #include "videomodels/muteDialog.h"
 #include "videomodels/CommentTab.h"
 #include "videomodels/FloatPlayCtl.h"
+#include "videomodels/VideoClarity.h"
 #include "videomodels/AdjustBright.h"
 #include "customer/CustomFileDialog.h"
 #include "musicmodels/MusicPlayShow.h"
@@ -98,6 +99,8 @@ public:
     int     getMapKeyFromValue(const QString& value);//map-->根据value找id
 
 protected:
+    bool    nativeEvent(const QByteArray& eventType, void* message, long* result) override;
+
     bool    eventFilter(QObject *watched, QEvent *event) override;
 
     void    mousePressEvent(QMouseEvent *event) override;
@@ -331,7 +334,8 @@ private:
     QPushButton                 *m_searchBtn        = nullptr;
     QPushButton                 *m_foldBtn          = nullptr;
     QMediaPlayer                *m_player           = nullptr;
-    AdjustBright                *m_adjustBright     = nullptr;
+    AdjustBright                *m_adjustBright     = nullptr;//参数调整界面
+    VideoClarity                *m_videoClarity     = nullptr;//清晰度调整界面
     MusicPlayShow               *m_musicUi          = nullptr;
     VideoTitleBar               *m_videoTitleBar    = nullptr;
     DramaListForm               *m_dramaList        = nullptr;//系列推荐

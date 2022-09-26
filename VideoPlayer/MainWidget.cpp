@@ -2,6 +2,13 @@
 #include "database/dataBase.h"
 #include "customer/CustomTabStyle.h"
 
+#ifdef Q_OS_WIN
+#include <qt_windows.h>
+#include <Windows.h>
+#include <windowsx.h>
+#pragma comment (lib,"user32.lib")
+#endif
+
 #include <QDebug>
 #include <QSqlQuery>
 #include <QMessageBox>
@@ -16,7 +23,7 @@ MainWidget::MainWidget(QWidget *parent) :
 {
     setMinimumSize(1320,800);
     setMouseTracking(true);
-    setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);
     setWindowTitle(QString::fromLocal8Bit("Qt简易视频播放器主界面"));
     initOtherWidgetUi();//初始化界面
     setLeftSliderCurrentIndex(0);//主界面左侧列表内容
@@ -125,8 +132,11 @@ void MainWidget::initOtherWidgetUi()
     m_webTabWidget->tabBar()->setObjectName(QString::fromLocal8Bit("m_webTabBar"));
     m_webTabWidget->tabBar()->setLayoutDirection(Qt::LeftToRight);
     m_webTabWidget->insertTab(0,m_webBrowser,QIcon("://images/icon/engine.png"),m_webBrowser->title());
+//    m_webTabWidget->setTabToolTip(0,m_webBrowser->title());
     m_webTabWidget->setTabsClosable(true);//打开关闭按钮
     m_webTabWidget->setMovable(true);//标签可拖动
+    m_webTabWidget->setElideMode(Qt::ElideRight);//文字过长省略号代替
+//    m_webTabWidget->setDocumentMode(true);
     m_webTabWidget->installEventFilter(this);
     m_webTabWidget->tabBar()->setStyle(new CustomTabStyle);//调整体字、图标
 
@@ -185,8 +195,8 @@ void MainWidget::initOtherWidgetUi()
     m_stackWidget_left->insertWidget(0,m_leftSideBar);
 //    m_stackWidget_left->insertWidget(1,new CentralHomeForm());
 
-    m_vblayout          = new QVBoxLayout(this);
-    m_hblayout          = new QHBoxLayout(this);
+    m_vblayout  = new QVBoxLayout(this);
+    m_hblayout  = new QHBoxLayout(this);
 
     //侧边栏+QStackedWidget--->水平布局
     m_hblayout->addWidget(m_stackWidget_left,0,Qt::AlignLeft);
@@ -198,10 +208,10 @@ void MainWidget::initOtherWidgetUi()
     //标题栏+水平布局--->垂直布局
     m_vblayout->addWidget(m_titleBar,0,Qt::AlignTop);
     m_vblayout->addLayout(m_hblayout,1);
-    m_vblayout->setContentsMargins(2,2,2,2);
+    m_vblayout->setContentsMargins(MARGIN,MARGIN,MARGIN,MARGIN);
     m_vblayout->setSpacing(0);
     m_hblayout->setMargin(0);
-    this->setLayout(m_vblayout);
+//    this->setLayout(m_vblayout);//可以不设置，默认以最后一个布局作为整体布局添加
 }
 
 //设置StackedWidget布局每个page界面
@@ -1076,6 +1086,8 @@ void MainWidget::slot_setCurrentWebBarTitle(int index, const QString &title)
     else
     {
         m_webTabWidget->setTabText(index,title);
+        m_webTabWidget->setTabToolTip(index,title);
+        qDebug() << QString(u8"标题以改变！")<<title;
     }
 }
 
@@ -1210,6 +1222,60 @@ MainWidget::~MainWidget()
     }
 }
 
+bool MainWidget::nativeEvent(const QByteArray &eventType, void *message, long *result)
+{
+    Q_UNUSED(eventType)
+    MSG* param = static_cast<MSG*>(message);
+       switch (param->message)
+       {
+       case WM_NCHITTEST:
+       {
+           int nX = GET_X_LPARAM(param->lParam) - this->geometry().x();
+           int nY = GET_Y_LPARAM(param->lParam) - this->geometry().y();
+
+           // 如果鼠标位于子控件上，则不进行处理
+           if(nX > MARWIDTH && nX <this->width() - MARWIDTH &&
+                   nY > MARWIDTH && nY < this->height() - MARWIDTH)
+           {
+               if (childAt(nX, nY) != nullptr)
+                   return QWidget::nativeEvent(eventType, message, result);
+           }
+
+           // 鼠标区域位于窗体边框，进行缩放
+           if ((nX > 0) && (nX < MARWIDTH))//左边
+               *result = HTLEFT;
+
+           if ((nX > this->width() - MARWIDTH) && (nX < this->width()))
+               *result = HTRIGHT;
+
+           if ((nY > 0) && (nY < MARWIDTH))//上边
+               *result = HTTOP;
+
+           if ((nY > this->height() - MARWIDTH) && (nY < this->height()))
+               *result = HTBOTTOM;
+
+           if ((nX > 0) && (nX < MARWIDTH) && (nY > 0)
+                   && (nY < MARWIDTH))
+               *result = HTTOPLEFT;
+
+           if ((nX > this->width() - MARWIDTH) && (nX < this->width())
+                   && (nY > 0) && (nY < MARWIDTH))
+               *result = HTTOPRIGHT;
+
+           if ((nX > 0) && (nX < MARWIDTH)
+                   && (nY > this->height() - MARWIDTH) && (nY < this->height()))
+               *result = HTBOTTOMLEFT;
+
+           if ((nX > this->width() - MARWIDTH) && (nX < this->width())
+                   && (nY > this->height() - MARWIDTH) && (nY < this->height()))
+               *result = HTBOTTOMRIGHT;
+
+           return true;
+           }
+       }
+       return QWidget::nativeEvent(eventType,message,result);
+}
+
 /*事件过滤器*/
 bool MainWidget::eventFilter(QObject *watched, QEvent *event)
 {
@@ -1240,13 +1306,23 @@ bool MainWidget::eventFilter(QObject *watched, QEvent *event)
 void MainWidget::mousePressEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);
-    if (event->button() == Qt::LeftButton)
+    //    if (event->button() == Qt::LeftButton)
+    //    {
+    //        this->_isleftpressed = true;
+    //        QPoint temp = event->globalPos();
+    //        _plast = temp;
+    //        _curpos = countFlag(event->pos(), countRow(event->pos()));
+    //    }
+
+    if(ReleaseCapture())
     {
-        this->_isleftpressed = true;
-        QPoint temp = event->globalPos();
-        _plast = temp;
-        _curpos = countFlag(event->pos(), countRow(event->pos()));
+        QWidget* pWindow = this->window();
+        if(pWindow->isTopLevel())
+        {
+            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
+        }
     }
+    event->ignore();
 }
 
 void MainWidget::mouseMoveEvent(QMouseEvent *event)

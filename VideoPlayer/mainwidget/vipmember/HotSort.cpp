@@ -89,7 +89,7 @@ void HotSort::resizeListWidgetItemWidget()
     for(int i = 0; i < ui->listWidget_vipItems->count(); i++)
     {
         //vip 会员分类下载
-        int avgWidth = calculateItemWidth(width - ui->listWidget_vipItems->verticalScrollBar()->width() + 100);
+        int avgWidth = calculateItemWidth(width - ui->listWidget_vipItems->verticalScrollBar()->width() + 99);
         ui->listWidget_vipItems->item(i)->setSizeHint(QSize(avgWidth,avgWidth*SCALE));
 //        qDebug() << QString::fromLocal8Bit("动态更新后的item大小：宽度%1，高度%2").arg(avgWidth).arg(avgWidth*SCALE);
     }

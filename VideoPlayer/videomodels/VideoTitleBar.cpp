@@ -1,5 +1,11 @@
 ﻿#include "VideoTitleBar.h"
 #include "ui_VideoTitleBar.h"
+
+#ifdef Q_OS_WIN
+#include <qt_windows.h>
+#pragma comment (lib,"user32.lib")
+#endif
+
 #include <QDebug>
 
 VideoTitleBar::VideoTitleBar(QWidget *parent) :
@@ -98,6 +104,19 @@ bool VideoTitleBar::eventFilter(QObject *watched, QEvent *event)
         }
     }
     return QWidget::eventFilter(watched,event);
+}
+
+void VideoTitleBar::mousePressEvent(QMouseEvent *event)
+{
+        if(ReleaseCapture())
+        {
+            QWidget* pWindow = this->window();
+            if(pWindow->isTopLevel())
+            {
+                SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
+            }
+        }
+    event->ignore();
 }
 
 /*处理样式*/

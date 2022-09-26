@@ -598,6 +598,70 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_7">
               <item>
+               <widget class="QPushButton" name="pushButton_clarity">
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>50</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">#pushButton_clarity
+{
+background-color: #393939;
+border-radius: 10px;
+color: white;
+}
+
+#pushButton_clarity:hover
+{
+background-color: #ff4f4a;
+border-radius: 10px;
+color: white;
+}</string>
+                </property>
+                <property name="text">
+                 <string>清晰度</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Btn_adjust">
+                <property name="minimumSize">
+                 <size>
+                  <width>22</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>22</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">#Btn_adjust
+{
+border-image: url(:/images/icon/set.png);
+}
+
+#Btn_adjust:hover
+{
+border-image: url(:/images/icon/set_hover.png);
+}</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QPushButton" name="pushButton_playOrder">
                 <property name="minimumSize">
                  <size>
@@ -650,36 +714,6 @@ border-image: url(:/images/icon/comment_message.png);
 QPushButton:hover
 {
 border-image: url(:/images/icon/comment_message.png);
-}</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="Btn_adjust">
-                <property name="minimumSize">
-                 <size>
-                  <width>22</width>
-                  <height>22</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>22</width>
-                  <height>22</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">#Btn_adjust
-{
-border-image: url(:/images/icon/set.png);
-}
-
-#Btn_adjust:hover
-{
-border-image: url(:/images/icon/set_hover.png);
 }</string>
                 </property>
                 <property name="text">
@@ -743,36 +777,6 @@ QPushButton:unchecked
 border-image: url(:/images/icon/play_collect_unchecked.png);
 }
 */</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_download">
-                <property name="minimumSize">
-                 <size>
-                  <width>22</width>
-                  <height>22</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>22</width>
-                  <height>22</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">#pushButton_download
-{
-border-image: url(:/images/icon/media_download.png);
-}
-
-#pushButton_download:hover
-{
-border-image: url(:/images/icon/media_download_hover.png);
-}</string>
                 </property>
                 <property name="text">
                  <string/>
