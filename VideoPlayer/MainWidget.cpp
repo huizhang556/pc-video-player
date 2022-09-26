@@ -61,6 +61,9 @@ void MainWidget::initOtherWidgetUi()
     m_mainVideoMv = new VideoMv();
     m_mainVideoMv->setObjectName(QString::fromLocal8Bit("m_mainVideoMv"));
 
+    m_videoMember = new MainMembForm();
+    m_videoMember->setObjectName(QString::fromLocal8Bit("m_videoMember"));
+
     m_mainPlayer = new MultipPlayer();
     m_mainPlayer->setObjectName(QString::fromLatin1("m_mainPlayer"));
 
@@ -220,11 +223,12 @@ void MainWidget::setStackedWidgetPage()
     m_stackWidget_center->insertWidget(0,m_homeWidget);//m_mainShowForm
     m_stackWidget_center->insertWidget(1,m_webStackWgt);//m_webStackWgt
     m_stackWidget_center->insertWidget(2,m_mainVideoMv);
-    m_stackWidget_center->insertWidget(3,m_musicShow);//musicshow
-    m_stackWidget_center->insertWidget(4,m_musicList);//musiclist
-    m_stackWidget_center->insertWidget(5,m_personForm);//personform 个人管理
-    m_stackWidget_center->insertWidget(6,m_fileTrans);//文件传输
-    m_stackWidget_center->insertWidget(7,m_tabWidget);//m_tabWidget
+    m_stackWidget_center->insertWidget(3,m_videoMember);
+    m_stackWidget_center->insertWidget(4,m_musicShow);//musicshow
+    m_stackWidget_center->insertWidget(5,m_musicList);//musiclist
+    m_stackWidget_center->insertWidget(6,m_personForm);//personform 个人管理
+    m_stackWidget_center->insertWidget(7,m_fileTrans);//文件传输
+    m_stackWidget_center->insertWidget(8,m_tabWidget);//m_tabWidget
     m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
 }
 

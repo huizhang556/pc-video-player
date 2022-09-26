@@ -37,6 +37,66 @@ background-color: #2a2a31;
 /*********QWebEngineView，所有的样式在html页面中设置********/
 
 
+/**视频会员主界面---覆盖阴影**/
+#m_bottomFrame
+{
+background-color: transparent;
+}
+
+/*阴影item*/
+#m_bottomFrame QPushButton
+{
+color: #86928e;
+background-color: rgba(38, 40, 41,0.4);
+}
+
+#m_bottomFrame QPushButton:hover
+{
+color: #f6d18e;
+background-color: rgba(38, 40, 41,0.4);
+}
+
+/*选择阴影item*/
+#frame_switch
+{
+background-color: #0e1b2c;
+}
+
+#frame_switch QPushButton
+{
+background-color: #43434a;
+border-radius：14px;
+color: white;
+}
+
+#frame_switch QPushButton:hover
+{
+color: black;
+background-color: #ffdea3;
+}
+
+/*向右按钮*/
+#m_buttonAdd
+{
+background-color: rgba(38, 40, 41,0.3); border-radius:20px;
+}
+
+#m_buttonAdd:hover
+{
+color: #ee5024;
+}
+
+/**向左按钮*/
+#m_buttonSub
+{
+background-color: rgba(38, 40, 41,0.3); border-radius:20px;
+}
+
+#m_buttonSub:hover
+{
+color: #ee5024;
+}
+
 /*主界面标题栏---内衬*/
 #stackedWidget_title
 {
@@ -1222,7 +1282,7 @@ QScrollBar::handle:vertical
 {
 min-height:20px;/*滑块宽度*/
 border-radius:4px;/*滑块角度弯曲*/
-background-color: #222222;
+background-color: #10a8fe;
 }
 
 /*水平滚动条内滑块样式*/
@@ -1230,7 +1290,7 @@ QScrollBar::handle:horizontal
 {
 min-width:20px;/*滑块高度*/
 border-radius:4px;/*滑块角度弯曲*/
-background-color: #222222;
+background-color: #10a8fe;
 }
 
 /*垂直滚动条内滑块样式--hover*/

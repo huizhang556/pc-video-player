@@ -34,7 +34,14 @@ SOURCES += \
     $$PWD/videosmv/MVRecmmend.cpp \
     $$PWD/videosmv/MVSortType.cpp \
     $$PWD/videosmv/RecmmendVideoItem.cpp \
-    $$PWD/videosmv/VideoItem.cpp
+    $$PWD/videosmv/VideoItem.cpp \
+    $$PWD/videomember/CusStackWidget.cpp \
+    $$PWD/videomember/MainMembForm.cpp \
+    $$PWD/videomember/MemberVideoItem.cpp \
+    $$PWD/videomember/MemberVipOpen.cpp \
+    $$PWD/videomember/SwitchVideoType.cpp \
+    $$PWD/videomember/VideoSortType.cpp \
+    $$PWD/videomember/CusPusgButton.cpp
 
 HEADERS += \
     $$PWD/songersort/SongerSort.h \
@@ -72,7 +79,14 @@ HEADERS += \
     $$PWD/videosmv/MVRecmmend.h \
     $$PWD/videosmv/MVSortType.h \
     $$PWD/videosmv/RecmmendVideoItem.h \
-    $$PWD/videosmv/VideoItem.h
+    $$PWD/videosmv/VideoItem.h \
+    $$PWD/videomember/CusStackWidget.h \
+    $$PWD/videomember/MainMembForm.h \
+    $$PWD/videomember/MemberVideoItem.h \
+    $$PWD/videomember/MemberVipOpen.h \
+    $$PWD/videomember/SwitchVideoType.h \
+    $$PWD/videomember/VideoSortType.h \
+    $$PWD/videomember/CusPusgButton.h
 
 FORMS += \
     $$PWD/songersort/SongerSort.ui \
@@ -108,5 +122,10 @@ FORMS += \
     $$PWD/videosmv/MVRecmmend.ui \
     $$PWD/videosmv/MVSortType.ui \
     $$PWD/videosmv/RecmmendVideoItem.ui \
-    $$PWD/videosmv/VideoItem.ui
+    $$PWD/videosmv/VideoItem.ui \
+    $$PWD/videomember/MainMembForm.ui \
+    $$PWD/videomember/MemberVideoItem.ui \
+    $$PWD/videomember/MemberVipOpen.ui \
+    $$PWD/videomember/SwitchVideoType.ui \
+    $$PWD/videomember/VideoSortType.ui
 

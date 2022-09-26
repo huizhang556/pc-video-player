@@ -24,6 +24,7 @@
 #include "videomodels/VideoTitleBar.h"
 #include "videomodels/PersonFileForm.h"
 #include "mainwidget/HomeWidget.h"
+#include "mainwidget/videomember/MainMembForm.h"
 #include "mainwidget/videosmv/MainVideoMv.h"
 
 
@@ -205,6 +206,7 @@ private:
     TitleBar            *m_titleBar                = nullptr;
     HomeWidget          *m_homeWidget              = nullptr;//首页推荐
     VideoMv             *m_mainVideoMv             = nullptr;//视频
+    MainMembForm        *m_videoMember             = nullptr;//会员视频
     PersonFileForm      *m_personForm              = nullptr;
     MultipPlayer        *m_mainPlayer              = nullptr;
     LeftSideBar         *m_leftSideBar             = nullptr;
