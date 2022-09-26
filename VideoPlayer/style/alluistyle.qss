@@ -38,47 +38,29 @@ background-color: #2a2a31;
 
 
 /**视频会员主界面---覆盖阴影**/
-#m_bottomFrame
+QFrame#m_bottomFrame
 {
 background-color: transparent;
 }
 
 /*阴影item*/
-#m_bottomFrame QPushButton
+QFrame#m_bottomFrame QPushButton
 {
 color: #86928e;
 background-color: rgba(38, 40, 41,0.4);
 }
 
-#m_bottomFrame QPushButton:hover
+QFrame#m_bottomFrame QPushButton:hover
 {
 color: #f6d18e;
 background-color: rgba(38, 40, 41,0.4);
 }
 
-/*选择阴影item*/
-#frame_switch
-{
-background-color: #0e1b2c;
-}
-
-#frame_switch QPushButton
-{
-background-color: #43434a;
-border-radius：14px;
-color: white;
-}
-
-#frame_switch QPushButton:hover
-{
-color: black;
-background-color: #ffdea3;
-}
-
 /*向右按钮*/
 #m_buttonAdd
 {
-background-color: rgba(38, 40, 41,0.3); border-radius:20px;
+background-color: rgba(31, 31, 31,0.4); 
+border-radius:20px;
 }
 
 #m_buttonAdd:hover
@@ -89,7 +71,8 @@ color: #ee5024;
 /**向左按钮*/
 #m_buttonSub
 {
-background-color: rgba(38, 40, 41,0.3); border-radius:20px;
+background-color: rgba(31, 31, 31,0.4); 
+border-radius:20px;
 }
 
 #m_buttonSub:hover

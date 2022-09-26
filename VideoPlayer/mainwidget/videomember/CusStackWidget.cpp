@@ -33,7 +33,7 @@ void CusStackWidget::initWorkUI()
     m_bottomFrame->setObjectName(QString(u8"m_bottomFrame"));
 
     m_hbLayout = new QHBoxLayout(this);
-
+    m_hbLayout->addSpacerItem(new QSpacerItem(10,20,QSizePolicy::Fixed,QSizePolicy::Fixed));
     m_buttonActions.append(new QPushButton(u8"动漫"));
     m_buttonActions.append(new QPushButton(u8"综艺"));
     m_buttonActions.append(new QPushButton(u8"少儿"));
@@ -42,20 +42,21 @@ void CusStackWidget::initWorkUI()
     m_buttonActions.append(new QPushButton(u8"音乐"));
     m_buttonActions.append(new QPushButton(u8"游戏"));
     m_buttonActions.append(new QPushButton(u8"直播"));
+    m_buttonActions.append(new QPushButton(u8"戏曲"));
+    m_buttonActions.append(new QPushButton(u8"评书"));
 
     for(int i = 0; i < m_buttonActions.count(); i++)
     {
         qDebug() << "button id = "<<m_buttonActions.at(i);
         m_buttonActions.at(i)->setMinimumWidth(MINWIDTH);
         m_buttonActions.at(i)->setFixedHeight(MINHEIGHT);
-        m_buttonActions.at(i)->setFlat(true);
         m_buttonGroup->addButton(m_buttonActions.at(i),i);//不写i,默认是负值增加 -1 -2 -3 ...
         m_hbLayout->addWidget(m_buttonActions.at(i));
     }
-
+    m_hbLayout->addSpacerItem(new QSpacerItem(10,20,QSizePolicy::Fixed,QSizePolicy::Fixed));
     m_bottomFrame->setLayout(m_hbLayout);
 
-    for(int i = 0; i < 9; i++)
+    for(int i = 0; i < 10; i++)
     {
         QString path = Global::appDirPath + QString("/pictures/stackwall/stack%1.png").arg(i);
         m_pictureList.insert(i,path);
@@ -73,7 +74,10 @@ void CusStackWidget::handleSignalsAndSlots()
     connect(m_buttonSub,&QPushButton::clicked,[=](){
         qDebug() << m_counts <<m_currentIndex;
         if(--m_currentIndex < 0)
-        m_currentIndex = 0;
+        {
+            m_currentIndex = 0;
+        }
+        qDebug() << QString(u8"当前索引：")<<m_currentIndex;
         this->setCurrentIndex(m_currentIndex);
         updateButtonGeometry();
     });
@@ -81,8 +85,11 @@ void CusStackWidget::handleSignalsAndSlots()
     //右移（向右增加）
     connect(m_buttonAdd,&QPushButton::clicked,[=](){
         qDebug() << m_counts <<m_currentIndex;
-        if(++m_currentIndex > 10)
-            m_currentIndex = 10;
+        if(++m_currentIndex > 9)
+        {
+            m_currentIndex = 9;
+        }
+        qDebug() << QString(u8"当前索引：")<<m_currentIndex;
         this->setCurrentIndex(m_currentIndex);
         updateButtonGeometry();
     });

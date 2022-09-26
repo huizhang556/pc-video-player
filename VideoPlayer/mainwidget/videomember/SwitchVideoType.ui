@@ -26,7 +26,24 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
+   <string notr="true">/*选择阴影item*/
+QFrame#frame_switch
+{
+background-color: #0e1b2c;
+}
+
+QFrame#frame_switch QPushButton
+{
+border-radius:14px;
+color: white;
+background-color: #43434a;
+}
+
+QFrame#frame_switch QPushButton:hover
+{
+color: black;
+background-color: #ffdea3;
+}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -97,6 +114,9 @@
           <property name="text">
            <string>电视剧</string>
           </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item>
@@ -118,6 +138,9 @@
           </property>
           <property name="text">
            <string>电影</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -141,6 +164,9 @@
           <property name="text">
            <string>动漫</string>
           </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item>
@@ -162,6 +188,9 @@
           </property>
           <property name="text">
            <string>综艺</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -185,6 +214,9 @@
           <property name="text">
            <string>少儿</string>
           </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item>
@@ -206,6 +238,9 @@
           </property>
           <property name="text">
            <string>纪录片</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -229,6 +264,9 @@
           <property name="text">
            <string>音乐</string>
           </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item>
@@ -251,6 +289,9 @@
           <property name="text">
            <string>游戏</string>
           </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item>
@@ -269,6 +310,9 @@
           </property>
           <property name="text">
            <string>VIP特权</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -307,6 +351,9 @@
           </property>
           <property name="text">
            <string>VIP等级</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>

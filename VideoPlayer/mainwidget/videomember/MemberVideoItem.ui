@@ -36,437 +36,22 @@
     <number>2</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_10" stretch="8,2">
+    <layout class="QVBoxLayout" name="verticalLayout_10" stretch="0,2">
      <property name="spacing">
       <number>0</number>
      </property>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_7">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QFrame" name="frame">
-           <property name="styleSheet">
-            <string notr="true">QFrame
-{
-background-color: transparent;
-}</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="leftMargin">
-             <number>2</number>
-            </property>
-            <property name="topMargin">
-             <number>2</number>
-            </property>
-            <property name="rightMargin">
-             <number>2</number>
-            </property>
-            <property name="bottomMargin">
-             <number>2</number>
-            </property>
-            <item>
-             <widget class="QPushButton" name="pushButton_vip">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>26</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>60</width>
-                <height>26</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton
-{
-background-color: transparent;
-}
-
-QPushButton:hover
-{
-
-}</string>
-              </property>
-              <property name="text">
-               <string>VIP</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QFrame" name="frame_5">
-           <property name="styleSheet">
-            <string notr="true">QFrame
-{
-background-color: transparent;
-}</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="leftMargin">
-             <number>2</number>
-            </property>
-            <property name="topMargin">
-             <number>2</number>
-            </property>
-            <property name="rightMargin">
-             <number>2</number>
-            </property>
-            <property name="bottomMargin">
-             <number>2</number>
-            </property>
-            <item>
-             <widget class="QPushButton" name="pushButton_indeplayer">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>26</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>60</width>
-                <height>26</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton
-{
-background-color: transparent;
-}
-
-QPushButton:hover
-{
-
-}</string>
-              </property>
-              <property name="text">
-               <string>独播</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_6">
-           <item>
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QFrame" name="frame_2">
-             <property name="minimumSize">
-              <size>
-               <width>60</width>
-               <height>60</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>60</width>
-               <height>60</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QFrame
-{
-background-color: transparent;
-}</string>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_5">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>2</number>
-              </property>
-              <property name="topMargin">
-               <number>2</number>
-              </property>
-              <property name="rightMargin">
-               <number>2</number>
-              </property>
-              <property name="bottomMargin">
-               <number>2</number>
-              </property>
-              <item>
-               <widget class="QPushButton" name="pushButton_mainPlayer">
-                <property name="minimumSize">
-                 <size>
-                  <width>50</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>50</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton
-{
-background-color: transparent;
-}
-
-QPushButton:hover
-{
-
-}</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <widget class="QFrame" name="frame_3">
-           <property name="styleSheet">
-            <string notr="true">QFrame
-{
-background-color: transparent;
-}</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="leftMargin">
-             <number>2</number>
-            </property>
-            <property name="topMargin">
-             <number>2</number>
-            </property>
-            <property name="rightMargin">
-             <number>2</number>
-            </property>
-            <property name="bottomMargin">
-             <number>2</number>
-            </property>
-            <item>
-             <widget class="QPushButton" name="pushButton_online">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>80</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton
-{
-background-color: transparent;
-}
-
-QPushButton:hover
-{
-
-}</string>
-              </property>
-              <property name="text">
-               <string>后天10点上线</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QFrame" name="frame_4">
-           <property name="styleSheet">
-            <string notr="true">QFrame
-{
-background-color: transparent;
-}</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_4">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="leftMargin">
-             <number>2</number>
-            </property>
-            <property name="topMargin">
-             <number>2</number>
-            </property>
-            <property name="rightMargin">
-             <number>2</number>
-            </property>
-            <property name="bottomMargin">
-             <number>2</number>
-            </property>
-            <item>
-             <widget class="QPushButton" name="pushButton_score">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>60</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton
-{
-background-color: transparent;
-}
-
-QPushButton:hover
-{
-
-}</string>
-              </property>
-              <property name="text">
-               <string>8.8分</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
+      <widget class="QLabel" name="label_videoPic">
+       <property name="minimumSize">
+        <size>
+         <width>216</width>
+         <height>234</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QFrame" name="frame_6">
@@ -501,7 +86,7 @@ QPushButton:hover
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <property name="spacing">
-           <number>0</number>
+           <number>2</number>
           </property>
           <item>
            <widget class="QPushButton" name="pushButton_intro">
@@ -514,6 +99,8 @@ QPushButton:hover
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
+border-radius: 5px;
+border: 1px solid #bcbebf;
 background-color: transparent;
 }
 
@@ -538,6 +125,8 @@ QPushButton:hover
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
+border-radius: 5px;
+border: 1px solid #bcbebf;
 background-color: transparent;
 }
 

@@ -5,11 +5,6 @@
 #include "VideoSortType.h"
 #include "SwitchVideoType.h"
 
-#ifdef QT_DEBUG
-
-#else
-
-#endif
 
 #include <QDebug>
 

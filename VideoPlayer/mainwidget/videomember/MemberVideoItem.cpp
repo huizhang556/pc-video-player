@@ -1,12 +1,6 @@
 ﻿#include "MemberVideoItem.h"
 #include "ui_MemberVideoItem.h"
-
-#ifdef QT_DEBUG
-        QString MemberVideoItem::m_appDir = QString("E:/TEST/VipMemberVideo");
-#else
-        QString MemberVideoItem::m_appDir = QDir::currentPath();//release时使用
-#endif
-
+#include "global/Global.h"
 #include <QDebug>
 
 MemberVideoItem::MemberVideoItem(QWidget *parent) :
@@ -19,6 +13,22 @@ MemberVideoItem::MemberVideoItem(QWidget *parent) :
     setInstallEventFilter();
 }
 
+MemberVideoItem::MemberVideoItem(const QString &picpath, const QString &name, const QString &author, QWidget *parent) :
+    QLabel(parent),
+    ui(new Ui::MemberVideoItem)
+{
+    ui->setupUi(this);
+    initWorkUI();
+    handleSignalsAndSlots();
+    setInstallEventFilter();
+
+    ui->label_videoPic->setPixmap(QPixmap(picpath));
+    this->setScaledContents(true);
+
+    ui->pushButton_intro->setText(name);
+    ui->pushButton_name->setText(author);
+}
+
 MemberVideoItem::~MemberVideoItem()
 {
     delete ui;
@@ -26,9 +36,9 @@ MemberVideoItem::~MemberVideoItem()
 
 void MemberVideoItem::initWorkUI()
 {
-    QString path = m_appDir + QString("/pictures/mylike/list_intro6.png");
-    this->setPixmap(QPixmap(path));
-    this->setScaledContents(true);
+//    QString path = Global::appDirPath + QString("/pictures/mylike/list_intro6.png");
+//    ui->label_videoPic->setPixmap(QPixmap(path));
+//    this->setScaledContents(true);
 }
 
 void MemberVideoItem::handleSignalsAndSlots()

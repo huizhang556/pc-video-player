@@ -14,6 +14,7 @@ class MemberVideoItem : public QLabel
 
 public:
     explicit MemberVideoItem(QWidget *parent = nullptr);
+    explicit MemberVideoItem(const QString& picpath,const QString& name,const QString& author, QWidget *parent = nullptr);
     ~MemberVideoItem();
     void    initWorkUI();
     void    handleSignalsAndSlots();
