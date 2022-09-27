@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1169</width>
+    <width>1252</width>
     <height>60</height>
    </rect>
   </property>
@@ -95,6 +95,22 @@ background-color: #ffdea3;
          <number>15</number>
         </property>
         <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>10</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
          <widget class="QPushButton" name="pushButton_type1">
           <property name="minimumSize">
            <size>
@@ -104,7 +120,7 @@ background-color: #ffdea3;
           </property>
           <property name="maximumSize">
            <size>
-            <width>180</width>
+            <width>120</width>
             <height>16777215</height>
            </size>
           </property>
@@ -129,7 +145,7 @@ background-color: #ffdea3;
           </property>
           <property name="maximumSize">
            <size>
-            <width>180</width>
+            <width>120</width>
             <height>16777215</height>
            </size>
           </property>
@@ -154,7 +170,7 @@ background-color: #ffdea3;
           </property>
           <property name="maximumSize">
            <size>
-            <width>180</width>
+            <width>120</width>
             <height>16777215</height>
            </size>
           </property>
@@ -179,7 +195,7 @@ background-color: #ffdea3;
           </property>
           <property name="maximumSize">
            <size>
-            <width>180</width>
+            <width>120</width>
             <height>16777215</height>
            </size>
           </property>
@@ -204,7 +220,7 @@ background-color: #ffdea3;
           </property>
           <property name="maximumSize">
            <size>
-            <width>180</width>
+            <width>120</width>
             <height>16777215</height>
            </size>
           </property>
@@ -229,7 +245,7 @@ background-color: #ffdea3;
           </property>
           <property name="maximumSize">
            <size>
-            <width>180</width>
+            <width>120</width>
             <height>16777215</height>
            </size>
           </property>
@@ -254,7 +270,7 @@ background-color: #ffdea3;
           </property>
           <property name="maximumSize">
            <size>
-            <width>180</width>
+            <width>120</width>
             <height>16777215</height>
            </size>
           </property>
@@ -279,7 +295,7 @@ background-color: #ffdea3;
           </property>
           <property name="maximumSize">
            <size>
-            <width>180</width>
+            <width>120</width>
             <height>16777215</height>
            </size>
           </property>
@@ -320,13 +336,13 @@ background-color: #ffdea3;
          <widget class="Line" name="line">
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>1</width>
             <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
+            <width>1</width>
             <height>26</height>
            </size>
           </property>
@@ -361,6 +377,9 @@ background-color: #ffdea3;
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>

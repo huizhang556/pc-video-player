@@ -20,7 +20,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES     += QT_NO_DEBUG_OUTPUT
 #调试窗口必须要release才能生效，而后再使用debug
 #CONFIG += console pro
-#关闭编译警告提示 眼不见为净
+#关闭编译警告提示
 CONFIG      += warn_off
 
 # You can also make your code fail to compile if you use deprecated APIs.

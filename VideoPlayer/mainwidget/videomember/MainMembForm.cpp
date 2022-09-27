@@ -5,10 +5,9 @@
 #include "VideoSortType.h"
 #include "SwitchVideoType.h"
 
-
 #include <QDebug>
 
-MainMembForm::MainMembForm(QWidget *parent) :
+MainMembForm::MainMembForm(QWidget *parent):
     QWidget(parent),
     ui(new Ui::MainMembForm)
 {
@@ -26,8 +25,8 @@ MainMembForm::~MainMembForm()
 void MainMembForm::initWorkUI()
 {
     ui->scrollArea->setFrameShape(QFrame::NoFrame);//继承自QFrame的，都可以用此方法去掉边界线
-    CusStackWidget *itemWidget = new CusStackWidget();
-    SwitchVideoType *switchItem = new SwitchVideoType();
+    CusStackWidget *itemWidget    = new CusStackWidget();
+    SwitchVideoType *switchItem   = new SwitchVideoType();
     VideoSortType *videoSortItem1 = new VideoSortType();
     VideoSortType *videoSortItem2 = new VideoSortType();
     VideoSortType *videoSortItem3 = new VideoSortType();

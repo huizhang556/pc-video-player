@@ -1,11 +1,14 @@
 ﻿#ifndef CUSSTACKWIDGET_H
 #define CUSSTACKWIDGET_H
+
 #define BUTTONSIZE  QSize(40,130)
 #define MINWIDTH   85
 #define MINHEIGHT   40
 #define BUTTONMARGIN 10
 
 #include "CusStackWidget.h"
+#include "CusPushButton.h"
+
 #include <QSize>
 #include <QLabel>
 #include <QList>
@@ -55,7 +58,6 @@ private:
     QStringList             m_pictureList;
     int                     m_counts = 0;
     int                     m_currentIndex = 0;
-    QList<QPushButton*>     m_buttonActions;
     static  QString         m_appDir;
 };
 

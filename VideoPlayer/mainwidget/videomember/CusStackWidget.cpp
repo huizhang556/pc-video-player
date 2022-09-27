@@ -6,6 +6,7 @@
 CusStackWidget::CusStackWidget(QWidget *parent) :
     QStackedWidget(parent)
 {
+    setMinimumWidth(1160);//布局撑不开
     setFixedHeight(360);
     initWorkUI();
     handleSignalsAndSlots();
@@ -34,24 +35,45 @@ void CusStackWidget::initWorkUI()
 
     m_hbLayout = new QHBoxLayout(this);
     m_hbLayout->addSpacerItem(new QSpacerItem(10,20,QSizePolicy::Fixed,QSizePolicy::Fixed));
-    m_buttonActions.append(new QPushButton(u8"动漫"));
-    m_buttonActions.append(new QPushButton(u8"综艺"));
-    m_buttonActions.append(new QPushButton(u8"少儿"));
-    m_buttonActions.append(new QPushButton(u8"影视"));
-    m_buttonActions.append(new QPushButton(u8"相声"));
-    m_buttonActions.append(new QPushButton(u8"音乐"));
-    m_buttonActions.append(new QPushButton(u8"游戏"));
-    m_buttonActions.append(new QPushButton(u8"直播"));
-    m_buttonActions.append(new QPushButton(u8"戏曲"));
-    m_buttonActions.append(new QPushButton(u8"评书"));
 
-    for(int i = 0; i < m_buttonActions.count(); i++)
+    CusPushButton   *button0 = new CusPushButton(QString(u8"动漫"),0);
+    CusPushButton   *button1 = new CusPushButton(QString(u8"综艺"),1);
+    CusPushButton   *button2 = new CusPushButton(QString(u8"少儿"),2);
+    CusPushButton   *button3 = new CusPushButton(QString(u8"影视"),3);
+    CusPushButton   *button4 = new CusPushButton(QString(u8"相声"),4);
+    CusPushButton   *button5 = new CusPushButton(QString(u8"音乐"),5);
+    CusPushButton   *button6 = new CusPushButton(QString(u8"游戏"),6);
+    CusPushButton   *button7 = new CusPushButton(QString(u8"直播"),7);
+    CusPushButton   *button8 = new CusPushButton(QString(u8"戏曲"),8);
+    CusPushButton   *button9 = new CusPushButton(QString(u8"评书"),9);
+
+    connect(button0,SIGNAL(sig_buttonHover(int)),this,SLOT(slot_setCurrentIndex(int)));
+    connect(button1,SIGNAL(sig_buttonHover(int)),this,SLOT(slot_setCurrentIndex(int)));
+    connect(button2,SIGNAL(sig_buttonHover(int)),this,SLOT(slot_setCurrentIndex(int)));
+    connect(button3,SIGNAL(sig_buttonHover(int)),this,SLOT(slot_setCurrentIndex(int)));
+    connect(button4,SIGNAL(sig_buttonHover(int)),this,SLOT(slot_setCurrentIndex(int)));
+    connect(button5,SIGNAL(sig_buttonHover(int)),this,SLOT(slot_setCurrentIndex(int)));
+    connect(button6,SIGNAL(sig_buttonHover(int)),this,SLOT(slot_setCurrentIndex(int)));
+    connect(button7,SIGNAL(sig_buttonHover(int)),this,SLOT(slot_setCurrentIndex(int)));
+    connect(button8,SIGNAL(sig_buttonHover(int)),this,SLOT(slot_setCurrentIndex(int)));
+    connect(button9,SIGNAL(sig_buttonHover(int)),this,SLOT(slot_setCurrentIndex(int)));
+
+    m_buttonGroup->addButton(button0,0);//不写i,默认是负值增加 -1 -2 -3 ...
+    m_buttonGroup->addButton(button1,1);
+    m_buttonGroup->addButton(button2,2);
+    m_buttonGroup->addButton(button3,3);
+    m_buttonGroup->addButton(button4,4);
+    m_buttonGroup->addButton(button5,5);
+    m_buttonGroup->addButton(button6,6);
+    m_buttonGroup->addButton(button7,7);
+    m_buttonGroup->addButton(button8,8);
+    m_buttonGroup->addButton(button9,9);
+    m_buttonGroup->setExclusive(true);
+
+    for(int i = 0; i < 10; i++)
     {
-        qDebug() << "button id = "<<m_buttonActions.at(i);
-        m_buttonActions.at(i)->setMinimumWidth(MINWIDTH);
-        m_buttonActions.at(i)->setFixedHeight(MINHEIGHT);
-        m_buttonGroup->addButton(m_buttonActions.at(i),i);//不写i,默认是负值增加 -1 -2 -3 ...
-        m_hbLayout->addWidget(m_buttonActions.at(i));
+        m_buttonGroup->button(i)->setMinimumSize(85,40);
+       m_hbLayout->addWidget(m_buttonGroup->button(i));
     }
     m_hbLayout->addSpacerItem(new QSpacerItem(10,20,QSizePolicy::Fixed,QSizePolicy::Fixed));
     m_bottomFrame->setLayout(m_hbLayout);
@@ -69,7 +91,7 @@ void CusStackWidget::initWorkUI()
 void CusStackWidget::handleSignalsAndSlots()
 {
     connect(m_buttonGroup,SIGNAL(buttonClicked(QAbstractButton*)),this,SLOT(slot_setCheckButton(QAbstractButton*)));
-    connect(m_buttonGroup,SIGNAL(buttonToggled(int,bool)),this,SLOT(slot_setCurrentIndex(int)));
+
     //左移(向左减少)
     connect(m_buttonSub,&QPushButton::clicked,[=](){
         qDebug() << m_counts <<m_currentIndex;
@@ -147,6 +169,7 @@ void CusStackWidget::slot_setCheckButton(QAbstractButton *button)
 
 void CusStackWidget::slot_setCurrentIndex(int index)
 {
+    qDebug() << "button id ="<< index;
     m_currentIndex = index;
     this->setCurrentIndex(m_currentIndex);
     updateButtonGeometry();

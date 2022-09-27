@@ -1,27 +1,35 @@
-﻿#include "CusPusgButton.h"
+﻿#include "CusPushButton.h"
 #include <QDebug>
-CusPusgButton::CusPusgButton(QWidget *parent) :
+CusPushButton::CusPushButton(QWidget *parent) :
     QPushButton(parent)
 {
     installEventFilter(this);
 }
 
-CusPusgButton::~CusPusgButton()
+CusPushButton::CusPushButton(const QString &text, const int id, QWidget *parent):
+    QPushButton(parent)
+{
+    installEventFilter(this);
+    this->setText(text);
+    this->setButtonId(id);
+}
+
+CusPushButton::~CusPushButton()
 {
 
 }
 
-void CusPusgButton::setButtonId(int id)
+void CusPushButton::setButtonId(int id)
 {
     m_id = id;
 }
 
-int CusPusgButton::slot_getButtonId()
+int CusPushButton::slot_getButtonId()
 {
     return m_id;
 }
 
-bool CusPusgButton::eventFilter(QObject *watched, QEvent *event)
+bool CusPushButton::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == this)
         if(event->type() == QEvent::Enter)

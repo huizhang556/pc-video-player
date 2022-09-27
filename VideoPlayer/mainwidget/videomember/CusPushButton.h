@@ -1,21 +1,22 @@
-﻿#ifndef CUSPUSGBUTTON_H
-#define CUSPUSGBUTTON_H
+﻿#ifndef CusPushButton_H
+#define CusPushButton_H
 
 #include <QEvent>
 #include <QWidget>
 #include <QPushButton>
 
 namespace Ui {
-class CusPusgButton;
+class CusPushButton;
 }
 
-class CusPusgButton : public QPushButton
+class CusPushButton : public QPushButton
 {
     Q_OBJECT
 
 public:
-    explicit CusPusgButton(QWidget *parent = nullptr);
-    ~CusPusgButton();
+    explicit CusPushButton(QWidget *parent = nullptr);
+    explicit CusPushButton(const QString& text, const int id, QWidget *parent = nullptr);
+    ~CusPushButton();
     void    setButtonId(int id);
 
 public slots:
@@ -33,4 +34,4 @@ signals:
 
 };
 
-#endif // CUSPUSGBUTTON_H
+#endif // CusPushButton_H

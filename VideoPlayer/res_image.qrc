@@ -469,5 +469,8 @@
         <file>images/icon/vtitle_fixed.png</file>
         <file>images/icon/vtitle_suggest.png</file>
         <file>images/icon/vtitle_download.png</file>
+        <file>images/home/fram_vtitle.png</file>
+        <file>images/home/vtitle_switch.png</file>
+        <file>images/home/vtitle_switch_hover.png</file>
     </qresource>
 </RCC>

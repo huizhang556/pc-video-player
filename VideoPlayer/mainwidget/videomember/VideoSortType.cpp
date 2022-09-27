@@ -10,7 +10,7 @@ VideoSortType::VideoSortType(QWidget *parent) :
 {
     ui->setupUi(this);
     initWorkUI();
-    setFixedHeight(400);
+    setFixedHeight(410);
     handleSignalsAndSlots();
     setInstallEventFilter();
 }
@@ -28,10 +28,10 @@ void VideoSortType::initWorkUI()
     ui->listWidget_items->setResizeMode(QListView::Adjust);
     ui->listWidget_items->setVerticalScrollMode(QListView::ScrollPerPixel);
 
-    for(int i = 0; i < 8; i++)
+    for(int i = 0; i < 10; i++)
     {
         QString path = Global::appDirPath + QString("/pictures/mylike/list_intro%1.png").arg(i);
-        MemberVideoItem *itemWidget = new MemberVideoItem(path,QString(u8"沸腾人生"),QString(u8"再现中国重卡制造史"));
+        MemberVideoItem *itemWidget = new MemberVideoItem(path,QString(u8"沸腾人生%1").arg(i),QString(u8"再现中国重卡制造史"));
         QListWidgetItem *item1 = new QListWidgetItem();
         item1->setSizeHint(itemWidget->size());
         ui->listWidget_items->addItem(item1);

@@ -46,14 +46,16 @@ background-color: transparent;
 /*阴影item*/
 QFrame#m_bottomFrame QPushButton
 {
-color: #86928e;
-background-color: rgba(38, 40, 41,0.4);
+color:#00aaff;
+font-weight: 700;
+font: 75 11pt "Microsoft JhengHei UI";
+background-color: rgba(38, 40, 41,0.5);
 }
 
 QFrame#m_bottomFrame QPushButton:hover
 {
 color: #f6d18e;
-background-color: rgba(38, 40, 41,0.4);
+background-color: rgba(38, 40, 41,0.5);
 }
 
 /*向右按钮*/
