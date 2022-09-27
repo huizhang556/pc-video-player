@@ -472,5 +472,7 @@
         <file>images/home/fram_vtitle.png</file>
         <file>images/home/vtitle_switch.png</file>
         <file>images/home/vtitle_switch_hover.png</file>
+        <file>images/home/vtitle_byself.png</file>
+        <file>images/home/vtitle_singplay.png</file>
     </qresource>
 </RCC>

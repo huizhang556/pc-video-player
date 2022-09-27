@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>186</width>
-    <height>180</height>
+    <height>229</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,19 +15,22 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_8">
    <property name="leftMargin">
-    <number>5</number>
+    <number>2</number>
    </property>
    <property name="topMargin">
-    <number>5</number>
+    <number>2</number>
    </property>
    <property name="rightMargin">
-    <number>5</number>
+    <number>2</number>
    </property>
    <property name="bottomMargin">
-    <number>5</number>
+    <number>2</number>
    </property>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_7">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
@@ -52,28 +55,28 @@ background-color: transparent;
            <number>0</number>
           </property>
           <property name="leftMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <property name="topMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <item>
            <widget class="QPushButton" name="pushButton_vip">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>30</width>
               <height>26</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>30</width>
               <height>26</height>
              </size>
             </property>
@@ -81,6 +84,7 @@ background-color: transparent;
              <string notr="true">QPushButton
 {
 background-color: transparent;
+border-image: url(:/images/user/vip_start1.png);
 }
 
 QPushButton:hover
@@ -89,7 +93,7 @@ QPushButton:hover
 }</string>
             </property>
             <property name="text">
-             <string>VIP</string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -128,35 +132,36 @@ background-color: transparent;
            <number>0</number>
           </property>
           <property name="leftMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <property name="topMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <item>
-           <widget class="QPushButton" name="pushButton_indeplayer">
+           <widget class="QPushButton" name="pushButton_makeself">
             <property name="minimumSize">
              <size>
-              <width>0</width>
-              <height>26</height>
+              <width>30</width>
+              <height>18</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
-              <height>26</height>
+              <width>30</width>
+              <height>18</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
 background-color: transparent;
+border-image: url(:/images/home/vtitle_byself.png);
 }
 
 QPushButton:hover
@@ -165,7 +170,7 @@ QPushButton:hover
 }</string>
             </property>
             <property name="text">
-             <string>独播</string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -261,14 +266,10 @@ background-color: transparent;
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">QPushButton
+               <string notr="true">#pushButton_mainPlayer
 {
 background-color: transparent;
-}
-
-QPushButton:hover
-{
-
+border-image: url(:/images/tray/recvideo_play.png);
 }</string>
               </property>
               <property name="text">
@@ -330,35 +331,37 @@ background-color: transparent;
            <number>0</number>
           </property>
           <property name="leftMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <property name="topMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <item>
            <widget class="QPushButton" name="pushButton_online">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>100</width>
               <height>30</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>80</width>
+              <width>100</width>
               <height>30</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
-background-color: transparent;
+color: white;
+font-weight: 800;
+background-color: rgba(26, 22, 13,0.8);
 }
 
 QPushButton:hover
@@ -406,16 +409,16 @@ background-color: transparent;
            <number>0</number>
           </property>
           <property name="leftMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <property name="topMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <item>
            <widget class="QPushButton" name="pushButton_score">
@@ -434,7 +437,9 @@ background-color: transparent;
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
-background-color: transparent;
+color: #d84e2f;
+font-weight: 800;
+background-color: rgba(26, 22, 13,0.8);
 }
 
 QPushButton:hover

@@ -1033,7 +1033,7 @@ void TitleBar::isNecessaryShowSearch(int index)
     }
     else
     {
-        ui->stackedWidget->setCurrentIndex(2);
+        ui->stackedWidget->setCurrentIndex(0);
     }
 }
 

@@ -61,24 +61,30 @@ background-color: rgba(38, 40, 41,0.5);
 /*向右按钮*/
 #m_buttonAdd
 {
-background-color: rgba(31, 31, 31,0.4); 
+font-size: 12px;
+background-color: rgba(242, 212, 145,0.4); 
 border-radius:20px;
 }
 
 #m_buttonAdd:hover
 {
+font-weight: 800;
 color: #ee5024;
+font-size: 14px;
 }
 
 /**向左按钮*/
 #m_buttonSub
 {
-background-color: rgba(31, 31, 31,0.4); 
+font-size: 12px;
+background-color: rgba(242, 212, 145,0.4); 
 border-radius:20px;
 }
 
 #m_buttonSub:hover
 {
+font-size: 14px;
+font-weight: 800;
 color: #ee5024;
 }
 
@@ -1267,7 +1273,7 @@ QScrollBar::handle:vertical
 {
 min-height:20px;/*滑块宽度*/
 border-radius:4px;/*滑块角度弯曲*/
-background-color: #10a8fe;
+background-color: rgba(16, 168, 254,0.5);
 }
 
 /*水平滚动条内滑块样式*/
@@ -1275,20 +1281,20 @@ QScrollBar::handle:horizontal
 {
 min-width:20px;/*滑块高度*/
 border-radius:4px;/*滑块角度弯曲*/
-background-color: #10a8fe;
+background-color: rgba(16, 168, 254,0.5);
 }
 
 /*垂直滚动条内滑块样式--hover*/
 QScrollBar::handle:vertical:hover
 {
-background-color: #038387;
+background-color: rgba(16, 168, 254,1.0);
 border-radius:4px;
 }
 
 /*水平滚动条内滑块样式--hover*/
 QScrollBar::handle:horizontal:hover
 {
-background-color: #038387;
+background-color: rgba(16, 168, 254,1.0);
 border-radius:4px;
 }
 

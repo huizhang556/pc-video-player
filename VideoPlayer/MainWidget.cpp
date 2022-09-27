@@ -476,7 +476,7 @@ void MainWidget::chandleSignalAndSlots()
     //左侧边栏控制显示/隐藏的按钮
     connect(m_leftButton,&QPushButton::clicked,[=](){
         slot_on_leftButton_clicked();
-        emit sig_globalResize();
+//        emit sig_globalResize();
     });
 
     /*********************************标题栏----用户下线*************************************/
