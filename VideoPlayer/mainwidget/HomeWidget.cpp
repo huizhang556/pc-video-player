@@ -89,7 +89,7 @@ void HomeWidget::addToStackWidget()
 
 void HomeWidget::slot_globalResize()
 {
-    this->resize(1,1);
+    this->repaint();
     emit sig_globalResize();//向子界面发送更新信号
     qDebug() << QString(u8"推荐总界面已更新！");
 }

@@ -31,18 +31,16 @@ MySkinItem::MySkinItem(int x, int y, int w, int h,int type, QWidget *parent) :
     m_checkedBtn = new QPushButton(QIcon(""),"",this);
     m_checkedBtn->setObjectName(QString::fromLocal8Bit("m_skinCheckedBtn"));
     m_checkedBtn->setFlat(true);
+    m_checkedBtn->setCheckable(true);//可选
+//    m_checkedBtn->setChecked(false);
+    setCheckButtonStatus();
 //    m_checkedBtn->setGeometry(130,80,20,20);//x-w,y-h-间距,w,h
     setCheckedButtonGeometry(m_checkedBtn,x,y,w,h,type);
-    setCheckButtonStatus();
     m_checkedBtn->hide();//默认隐藏
 
     connect(m_closeBtn,&QPushButton::clicked,[=](){
         emit sig_closewindow();
         qDebug() << "emit sig_closewindow();";
-    });
-    connect(m_checkedBtn,&QPushButton::clicked,[=](){
-        emit sig_checkedStatus(m_status);
-        qDebug() << "emit sig_checkedStatus(m_status);";
     });
 
     connect(m_checkedBtn,&QPushButton::clicked,[=](){
@@ -90,6 +88,7 @@ void MySkinItem::setCheckButtonStatus()
                                     "background:transparent;"
                                     "border-image: url(://images/skin/myskin_checkbtn_hover.png);"
                                     "}");
+        emit sig_checkedStatus(m_status);
     }
     else//未勾选状态（默认状态）
     {
@@ -98,7 +97,17 @@ void MySkinItem::setCheckButtonStatus()
                                     "background:transparent;"
                                     "border-image: url(://images/skin/myskin_checkbtn.png);"
                                     "}");
+        emit sig_checkedStatus(m_status);
     }
+//    if(m_status)
+//    {
+//        m_checkedBtn->setChecked(false);
+//    }
+//    else
+//    {
+//        m_checkedBtn->setChecked(true);
+//    }
+
     m_status = !m_status;//状态置为反面
 }
 

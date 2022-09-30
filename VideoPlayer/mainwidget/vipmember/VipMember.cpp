@@ -30,7 +30,7 @@ void VipMember::initWorkUI()
     ui->listWidget_vipshared->setMovement(QListView::Static);//图标不可拖动
     ui->listWidget_vipshared->setResizeMode(QListWidget::Adjust);
 //    ui->listWidget_vipshared->setWrapping(true);//自动换行 所有itm在一行显示
-    ui->listWidget_vipshared->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    ui->listWidget_vipshared->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_vipshared->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_vipshared->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
@@ -46,7 +46,7 @@ void VipMember::initWorkUI()
         connect(itemWidget,&HotDownload::sig_itemSizeChanged,this,&VipMember::resizeListWidgetItemWidget);
     }
 
-    for(int i = 0; i < 8; i++)
+    for(int i = 0; i < 2; i++)
     {
         //精选分类
         HotSort *itemWidget = new HotSort();
@@ -58,17 +58,18 @@ void VipMember::initWorkUI()
 
     }
 
-//    for(int i = 0; i < 2; i++)
-//    {
-//        HotVideo *itemWidget = new HotVideo();
-//        QListWidgetItem *item = new QListWidgetItem();
-//        item->setSizeHint(itemWidget->size());
-//        ui->listWidget_vipshared->addItem(item);
-//        ui->listWidget_vipshared->setItemWidget(item,itemWidget);
-//        //槽函数
-//    }
+    for(int i = 0; i < 2; i++)
+    {
+        //热门视频
+        HotVideo *itemWidget = new HotVideo();
+        QListWidgetItem *item = new QListWidgetItem();
+        item->setSizeHint(itemWidget->size());
+        ui->listWidget_vipshared->addItem(item);
+        ui->listWidget_vipshared->setItemWidget(item,itemWidget);
+        //槽函数
+    }
 //    ui->listWidget_vipshared->setMinimumHeight((230*2+60)*ui->listWidget_vipshared->count()+ui->listWidget_vipshared->horizontalScrollBar()->height());
-    ui->listWidget_vipshared->setMinimumHeight((82*3 + 60)*2 + (230*2+60)*8);
+//    ui->listWidget_vipshared->setMinimumHeight((82*3 + 60)*2 + (230*2+60)*8);
 }
 
 void VipMember::handleSignalsAndSlots()

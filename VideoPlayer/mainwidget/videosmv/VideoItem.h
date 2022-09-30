@@ -13,6 +13,7 @@ class VideoItem : public QWidget
 
 public:
     explicit VideoItem(QWidget *parent = nullptr);
+    explicit VideoItem(const QString& picPath, const QString& introduce, const QString& author, QWidget *parent = nullptr);
     ~VideoItem();
     void    initWorkUI();
     void    handleSignalsAndSlots();

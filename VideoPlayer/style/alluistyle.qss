@@ -20,6 +20,8 @@ QTabWidget::pane
 border-right: 0;
 }
 
+/*弹幕---登录按钮*/
+
 /**登录状态按钮**/
 #m_loginStatusBtn
 {
@@ -34,27 +36,54 @@ background-color: #2a2a31;
 /*2px边界线颜色在这里设置*/
 }
 
-/*********QWebEngineView，所有的样式在html页面中设置********/
+/*********皮肤设置********/
+/*未选中*/
+#m_skinCheckedBtn
+{
+border-image: url(://images/skin/myskin_checkbtn.png);
+}
+
+/*选中*/
+#m_skinCheckedBtn:checked
+{
+border-image: url(://images/skin/myskin_checkbtn_hover.png);
+}
+
+#m_skinCheckedBtn:unchecked
+{
+border-image: url(://images/skin/myskin_checkbtn.png);
+}
 
 
 /**视频会员主界面---覆盖阴影**/
 QFrame#m_bottomFrame
 {
-background-color: transparent;
+background-color:  transparent;
 }
 
 /*阴影item*/
 QFrame#m_bottomFrame QPushButton
 {
 color:#00aaff;
-font-weight: 700;
+border: none;
+font-weight: 800;
 font: 75 11pt "Microsoft JhengHei UI";
+background-color: rgba(38, 40, 41,0.5);
+}
+
+QFrame#m_bottomFrame QPushButton:checked
+{
+color: #f6d18e;
+border: none;
+font-weight: 800;
 background-color: rgba(38, 40, 41,0.5);
 }
 
 QFrame#m_bottomFrame QPushButton:hover
 {
 color: #f6d18e;
+border: none;
+font-weight: 800;
 background-color: rgba(38, 40, 41,0.5);
 }
 

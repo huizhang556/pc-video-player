@@ -60,7 +60,7 @@ void VideoMv::setInstallEventFilter()
 
 void VideoMv::slot_globalResize()
 {
-    this->resize(1,1);
+    this->repaint();
     qDebug() << QString(u8"视频界面已更新！");
 }
 

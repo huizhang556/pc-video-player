@@ -44,7 +44,10 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color:#263446;</string>
+      <string notr="true">#widget_select
+{
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0, stop:0 #5512db, stop:0.2  #5728c4, stop:0.5  #9409ea, stop:0.8  #5728c4, stop:1  #5512db);
+}</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
@@ -106,7 +109,7 @@ font-weight:700;
 
 QPushButton:hover
 {
-color:white;
+color:#dfd8ff;
 border-bottom-color:#ff0000;
 font-size:16px;
 font-weight:700;
@@ -150,7 +153,7 @@ font-weight:700;
 
 QPushButton:hover
 {
-color:white;
+color:#dfd8ff;
 border-bottom-color:#ff0000;
 font-size:16px;
 font-weight:700;
@@ -194,7 +197,7 @@ font-weight:700;
 
 QPushButton:hover
 {
-color:white;
+color:#dfd8ff;
 border-bottom-color:#ff0000;
 font-size:16px;
 font-weight:700;
@@ -238,7 +241,7 @@ font-weight:700;
 
 QPushButton:hover
 {
-color:white;
+color:#dfd8ff;
 border-bottom-color:#ff0000;
 font-size:16px;
 font-weight:700;
@@ -282,7 +285,7 @@ font-weight:700;
 
 QPushButton:hover
 {
-color:white;
+color:#dfd8ff;
 border-bottom-color:#ff0000;
 font-size:16px;
 font-weight:700;
@@ -326,7 +329,7 @@ font-weight:700;
 
 QPushButton:hover
 {
-color:white;
+color:#dfd8ff;
 border-bottom-color:#ff0000;
 font-size:16px;
 font-weight:700;
@@ -370,7 +373,7 @@ font-weight:700;
 
 QPushButton:hover
 {
-color:white;
+color:#dfd8ff;
 border-bottom-color:#ff0000;
 font-size:16px;
 font-weight:700;

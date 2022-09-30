@@ -1,6 +1,13 @@
 ﻿#include "TitleBar.h"
 #include "ui_TitleBar.h"
 
+#ifdef Q_OS_WIN
+#include <qt_windows.h>
+#include <Windows.h>
+#include <windowsx.h>
+#pragma comment (lib,"user32.lib")
+#endif
+
 #include <QDebug>
 #include <QDateTime>
 #include <QRegExp>
@@ -201,7 +208,8 @@ void TitleBar::chandleSignalAndSLots()
 
     //登录弹出界面
     connect(ui->pushButton_userlogin,&QPushButton::clicked,[=](){
-        LoginPersonInfo::getInstance()->showLoginWindow(0);
+//        LoginPersonInfo::getInstance()->showLoginWindow(0);
+        NewLoginForm::getInstance()->exec();
     });
     //登录回显登录信息
     connect(LoginPersonInfo::getInstance(),&LoginPersonInfo::sig_sendLoginOK,[=](QString nick, QString head, int grade){
@@ -218,7 +226,7 @@ void TitleBar::chandleSignalAndSLots()
 
     //注册
     connect(ui->pushButton_userregis,&QPushButton::clicked,[=](){
-        LoginPersonInfo::getInstance()->showLoginWindow(1);
+        slot_showPersonLogin();
     });
 
     /*关于窗口大小调整*/
@@ -997,6 +1005,20 @@ void TitleBar::keyPressEvent(QKeyEvent *event)
     qDebug() << event->key();//78（key）需要鼠标焦点在标题栏
 }
 
+void TitleBar::mousePressEvent(QMouseEvent *event)
+{
+    Q_UNUSED(event)
+    if(ReleaseCapture())
+    {
+        QWidget* pWindow = this->window();
+        if(pWindow->isTopLevel())
+        {
+            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
+        }
+    }
+    event->ignore();
+}
+
 /*根据窗口状态设置样式*/
 void TitleBar::chandleMainWinStatus(bool status)
 {
@@ -1353,6 +1375,12 @@ void TitleBar::slot_clearColletRecords()
     m_listWdgt_history->clear();
     m_listWdgt_colloect->clear();
     slot_setCurrentWebSiteCollectStatus(ui->lineEdit_webSearch->text());//切换用户以后，样式在做一次处理
+}
+
+void TitleBar::slot_showPersonLogin()
+{
+//    LoginPersonInfo::getInstance()->showLoginWindow(0);
+    NewLoginForm::getInstance()->exec();
 }
 
 void TitleBar::slot_receivedLoginInfo(const QString &name, const QString &head, int grade)

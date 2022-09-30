@@ -474,5 +474,26 @@
         <file>images/home/vtitle_switch_hover.png</file>
         <file>images/home/vtitle_byself.png</file>
         <file>images/home/vtitle_singplay.png</file>
+        <file>images/home/title_quanwangshoubo.png</file>
+        <file>images/home/vtitle_dubo2.png</file>
+        <file>images/home/vtitle_gaoqingjingdian.png</file>
+        <file>images/home/vtitle_hot.png</file>
+        <file>images/home/vtitle_shoubo.png</file>
+        <file>images/home/vtitle_vvip.png</file>
+        <file>images/home/vtitle_yugao.png</file>
+        <file>images/home/vtitle_yuyue.png</file>
+        <file>images/home/vtitle_zhibo.png</file>
+        <file>images/icon/bullet_hover.png</file>
+        <file>images/icon/bullet_login_hover.png</file>
+        <file>images/icon/bullet_login_normal.png</file>
+        <file>images/icon/bullet_normal.png</file>
+        <file>images/icon/video_openvip.png</file>
+        <file>images/user/mewlogin_sina.png</file>
+        <file>images/user/newlogin_more.png</file>
+        <file>images/user/newlogin_payfor.png</file>
+        <file>images/user/newlogin_qq.png</file>
+        <file>images/user/newlogin_taobao.png</file>
+        <file>images/user/newlogin_wechat.png</file>
+        <file>images/user/newlogin_QRcode.png</file>
     </qresource>
 </RCC>

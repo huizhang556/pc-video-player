@@ -35,6 +35,9 @@ private slots:
     void switchButtonToStackWidget(QAbstractButton *button);
 
 private:
+    QPushButton*    getListWidgetItemButton(QListWidget* listWidget, QListWidgetItem* item, QString objname);//在item中查找指定按钮
+    void            setItemChangedStyle(QListWidget* listWidget, QListWidgetItem *current,QListWidgetItem *previous);
+private:
     Ui::MySkin *ui;
     QButtonGroup        *btngroup   = nullptr;
     QPoint              m_mvPos;

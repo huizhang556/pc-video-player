@@ -1,5 +1,6 @@
 ﻿#include "RecommendForm.h"
 #include "ui_RecommendForm.h"
+#include "global/Global.h"
 #include <QListWidgetItem>
 #include <QDebug>
 
@@ -83,19 +84,40 @@ void RecommendForm::addToStackWidgetPage()
     m_stackItem = new StackItemForm();
     m_stackItem->setObjectName(QString::fromLocal8Bit("m_stackItem"));
 
-    QPushButton *btn2 = new QPushButton("012222222222222222",ui->stackedWidget_recommend);
-    QPushButton *btn3 = new QPushButton("013333333333333333",ui->stackedWidget_recommend);
-    QPushButton *btn4 = new QPushButton("014444444444444444",ui->stackedWidget_recommend);
-    QPushButton *btn5 = new QPushButton("015555555555555555",ui->stackedWidget_recommend);
-    QPushButton *btn6 = new QPushButton("016666666666666666",ui->stackedWidget_recommend);
+//    QPushButton *btn2 = new QPushButton(QIcon(Global::appDirPath + QString("/pictures/stackwall/stack1.png")),"",ui->stackedWidget_recommend);
+//    QPushButton *btn3 = new QPushButton(QIcon(Global::appDirPath + QString("/pictures/stackwall/stack2.png")),"",ui->stackedWidget_recommend);
+//    QPushButton *btn4 = new QPushButton(QIcon(Global::appDirPath + QString("/pictures/stackwall/stack3.png")),"",ui->stackedWidget_recommend);
+//    QPushButton *btn5 = new QPushButton(QIcon(Global::appDirPath + QString("/pictures/stackwall/stack4.png")),"",ui->stackedWidget_recommend);
+//    QPushButton *btn6 = new QPushButton(QIcon(Global::appDirPath + QString("/pictures/stackwall/stack5.png")),"",ui->stackedWidget_recommend);
+
+    CusLabel2  *labPic1 = new CusLabel2();
+    labPic1->setPixmap(QPixmap(Global::appDirPath + QString("/pictures/stackwall/stack1.png")));
+    labPic1->setScaledContents(true);
+
+    CusLabel2  *labPic2 = new CusLabel2();
+    labPic2->setPixmap(QPixmap(Global::appDirPath + QString("/pictures/stackwall/stack2.png")));
+    labPic2->setScaledContents(true);
+
+    CusLabel2  *labPic3 = new CusLabel2();
+    labPic3->setPixmap(QPixmap(Global::appDirPath + QString("/pictures/stackwall/stack3.png")));
+    labPic3->setScaledContents(true);
+
+    CusLabel2  *labPic4 = new CusLabel2();
+    labPic4->setPixmap(QPixmap(Global::appDirPath + QString("/pictures/stackwall/stack4.png")));
+    labPic4->setScaledContents(true);
+
+    CusLabel2  *labPic5 = new CusLabel2();
+    labPic5->setPixmap(QPixmap(Global::appDirPath + QString("/pictures/stackwall/stack5.png")));
+    labPic5->setScaledContents(true);
+
 
     ui->stackedWidget_recommend->insertWidget(0,m_picWidget);
     ui->stackedWidget_recommend->insertWidget(1,m_stackItem);
-    ui->stackedWidget_recommend->insertWidget(2,btn2);
-    ui->stackedWidget_recommend->insertWidget(3,btn3);
-    ui->stackedWidget_recommend->insertWidget(4,btn4);
-    ui->stackedWidget_recommend->insertWidget(5,btn5);
-    ui->stackedWidget_recommend->insertWidget(6,btn6);
+    ui->stackedWidget_recommend->insertWidget(2,labPic1);
+    ui->stackedWidget_recommend->insertWidget(3,labPic2);
+    ui->stackedWidget_recommend->insertWidget(4,labPic3);
+    ui->stackedWidget_recommend->insertWidget(5,labPic4);
+    ui->stackedWidget_recommend->insertWidget(6,labPic5);
     ui->stackedWidget_recommend->setCurrentIndex(0);//默认显示0页
 }
 

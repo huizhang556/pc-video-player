@@ -6,6 +6,7 @@ HotVideoItem::HotVideoItem(QWidget *parent) :
     ui(new Ui::HotVideoItem)
 {
     ui->setupUi(this);
+    setFixedSize(365,300);
 }
 
 HotVideoItem::~HotVideoItem()

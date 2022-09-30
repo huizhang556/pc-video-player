@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>942</width>
-    <height>380</height>
+    <height>353</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,6 +36,25 @@
      </property>
      <item>
       <widget class="QFrame" name="frame_title">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#frame_title
+{
+/*background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #f39d5d, stop:1  #f6594c);*/
+background-color: #21374b;
+}</string>
+       </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
        </property>
@@ -43,15 +62,39 @@
         <enum>QFrame::Raised</enum>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>2</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="rightMargin">
+         <number>2</number>
+        </property>
+        <property name="bottomMargin">
+         <number>2</number>
+        </property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="pushButton_title">
             <property name="minimumSize">
              <size>
               <width>100</width>
               <height>36</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+color: white;
+font: 25 12pt &quot;Microsoft YaHei&quot;;
+border: none;
+background-color: transparent;
+}</string>
             </property>
             <property name="text">
              <string>会员精选MV</string>
@@ -72,7 +115,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="pushButton_more">
             <property name="minimumSize">
              <size>
               <width>30</width>
@@ -84,6 +127,23 @@
               <width>30</width>
               <height>20</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+background-color: transparent;
+color: #b6babf;
+}
+
+QPushButton:hover
+{
+color: #5c64ae;
+}
+
+QPushButton:checked
+{
+color: white;
+}</string>
             </property>
             <property name="text">
              <string>更多</string>
@@ -100,7 +160,7 @@
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>20</width>
+              <width>10</width>
               <height>20</height>
              </size>
             </property>
@@ -112,7 +172,45 @@
       </widget>
      </item>
      <item>
-      <widget class="QListWidget" name="listWidget_videoItem"/>
+      <widget class="QListWidget" name="listWidget_videoItem">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>230</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QListWidget
+{
+border: none;
+background-color:#0c1828;
+}
+
+QListWidget::item
+{
+background-color:#0c1828;
+}
+
+QListWidget::item:hover
+{
+/*background-color:#4493b7;*/
+}
+
+QListWidget::item:selected
+{
+background-color: #112c44;
+}
+
+QListWidget::item:!selected
+{
+
+}
+
+
+
+</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

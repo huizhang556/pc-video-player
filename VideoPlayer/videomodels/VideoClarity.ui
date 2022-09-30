@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>106</width>
-    <height>185</height>
+    <height>194</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -57,11 +57,11 @@
 {
    /* background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #E0E0E0, stop: 1 #FFFFFF);*/
-   /* border: 1px solid gray;*/
+    border: 1px solid gray;
     border-radius: 5px;
     margin-top: 1ex; /* leave space at the top for the title */
 	color: #cdcdcd;
-	background-color: #2a2a31;
+	background-color: #181b1f;
 	/*font: 10pt &quot;Microsoft YaHei UI&quot;;*/
 }
 

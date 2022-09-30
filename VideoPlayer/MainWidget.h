@@ -103,6 +103,7 @@ private:
 
     void        updateWebAddButtonGeometry();//更新添加按钮位置
 
+    void        updateWinTitleBarButtons();
 
 private slots:
     void        slot_setWebProgreeBarValue(int value);//网页进度

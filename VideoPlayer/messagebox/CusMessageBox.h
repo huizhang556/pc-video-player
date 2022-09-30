@@ -4,6 +4,15 @@
 #include <QWidget>
 #include <QMessageBox>
 
+enum MessType
+{
+    NoIcon = 0,
+    Information = 1,
+    Warning = 2,
+    Critical = 3,
+    Question = 4
+};
+
 namespace Ui {
 class CusMessageBox;
 }

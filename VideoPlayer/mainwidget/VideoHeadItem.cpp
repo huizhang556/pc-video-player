@@ -19,11 +19,7 @@ VideoHeadItem::~VideoHeadItem()
 
 void VideoHeadItem::initWorkUI()
 {
-//    ui->pushButton_makeself->hide();
     ui->pushButton_mainPlayer->hide();
-//    ui->pushButton_online->hide();
-//    ui->pushButton_score->hide();
-//    ui->pushButton_vip->hide();
 }
 
 void VideoHeadItem::handleSignalsAndSlots()

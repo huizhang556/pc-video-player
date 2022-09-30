@@ -1,8 +1,10 @@
 ﻿#ifndef RECOMMENDFORM_H
 #define RECOMMENDFORM_H
 #include "lunbotu/PictureWidget.h"
+#include "mainwidget/CusLabel2.h"
 #include "mainwidget/recommend/StackItemForm.h"
 #include "mainwidget/recommend/GalleryItemForm.h"
+#include <QLabel>
 #include <QWidget>
 #include <QPushButton>
 #include <QButtonGroup>

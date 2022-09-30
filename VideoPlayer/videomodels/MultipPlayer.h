@@ -90,8 +90,6 @@ public:
 
     void    set_fileTolistWidget(QString item);//将服务器获取到的文件列表显
 
-    void    showMediaCommentTab();
-
     QString getCurrentMediaPlayFileName();
 
     QRect   getDesktopScreenGeometry();
@@ -307,9 +305,12 @@ signals:
 
     void    sig_playlistCurrentIndex(int);//临时列表当前索引
 
+    void    sig_userLogin();
+
 
 private:
     Ui::MultipPlayer *ui;
+    QAction                     *m_actionBullet     = nullptr;//弹幕登录开关
     QTimer                      *m_pTimer           = nullptr; //进度滚动条更新
     QTimer                      *m_pTimer2          = nullptr; //延迟ui界面
     QTimer                      *m_showFloat        = nullptr;//定时显示浮动界面

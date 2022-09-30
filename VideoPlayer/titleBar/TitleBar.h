@@ -5,6 +5,7 @@
 #include "titlebar/HeadHover.h"
 #include "mainwidget/recommend/SearchForm.h"
 #include "login/LoginPersonInfo.h"
+#include "login/NewLoginForm.h"
 #include "browser/WebDownLoadList.h"
 
 #include <QMenu>
@@ -34,10 +35,11 @@ public:
     void    setWebDefUrl(const QString& title);
 
 protected:
-    void    mouseDoubleClickEvent(QMouseEvent *event) override;
-    bool    eventFilter(QObject *watched, QEvent *event) override;
     void    showEvent(QShowEvent *event) override;
     void    keyPressEvent(QKeyEvent *event) override;
+    void    mousePressEvent(QMouseEvent *event) override;
+    void    mouseDoubleClickEvent(QMouseEvent *event) override;
+    bool    eventFilter(QObject *watched, QEvent *event) override;
 
 //公有槽函数以公共接口的形式暴露在外面，外部任何客户可以直接访问
 public slots:
@@ -59,6 +61,7 @@ public slots:
     void    slot_clearAllPopupUi();
     void    slot_initCollectRecordListWgt(const QString &text);//初始化
     void    slot_clearColletRecords();
+    void    slot_showPersonLogin();
     void    showLoginForm();
     //接收登录界面信号
     void    slot_receivedLoginInfo(const QString& name,const QString& head,int grade);

@@ -73,6 +73,7 @@ void CusStackWidget::initWorkUI()
     for(int i = 0; i < 10; i++)
     {
         m_buttonGroup->button(i)->setMinimumSize(85,40);
+        m_buttonGroup->button(i)->setCheckable(true);
        m_hbLayout->addWidget(m_buttonGroup->button(i));
     }
     m_hbLayout->addSpacerItem(new QSpacerItem(10,20,QSizePolicy::Fixed,QSizePolicy::Fixed));
@@ -94,24 +95,25 @@ void CusStackWidget::handleSignalsAndSlots()
 
     //左移(向左减少)
     connect(m_buttonSub,&QPushButton::clicked,[=](){
-        qDebug() << m_counts <<m_currentIndex;
+        qDebug() << QString(u8"当前索引：")<<m_currentIndex;
         if(--m_currentIndex < 0)
         {
             m_currentIndex = 0;
         }
         qDebug() << QString(u8"当前索引：")<<m_currentIndex;
         this->setCurrentIndex(m_currentIndex);
+        m_buttonGroup->button(m_currentIndex)->setChecked(true);
         updateButtonGeometry();
     });
 
     //右移（向右增加）
     connect(m_buttonAdd,&QPushButton::clicked,[=](){
-        qDebug() << m_counts <<m_currentIndex;
+        qDebug() << QString(u8"当前索引：")<<m_currentIndex;
         if(++m_currentIndex > 9)
         {
             m_currentIndex = 9;
         }
-        qDebug() << QString(u8"当前索引：")<<m_currentIndex;
+        m_buttonGroup->button(m_currentIndex)->setChecked(true);
         this->setCurrentIndex(m_currentIndex);
         updateButtonGeometry();
     });
@@ -158,6 +160,7 @@ void CusStackWidget::slot_addToStackPictures(const QStringList &introduce, const
     }
 }
 
+//点击设置
 void CusStackWidget::slot_setCheckButton(QAbstractButton *button)
 {
     button->setChecked(true);
@@ -167,10 +170,12 @@ void CusStackWidget::slot_setCheckButton(QAbstractButton *button)
     qDebug() << button->text()<<m_buttonGroup->id(button);
 }
 
+//hover设置
 void CusStackWidget::slot_setCurrentIndex(int index)
 {
     qDebug() << "button id ="<< index;
     m_currentIndex = index;
+    m_buttonGroup->button(m_currentIndex)->setChecked(true);
     this->setCurrentIndex(m_currentIndex);
     updateButtonGeometry();
 }

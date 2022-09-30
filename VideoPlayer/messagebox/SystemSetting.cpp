@@ -135,6 +135,7 @@ void SystemSetting::setTitleWarningText(QString text, int msec)
 
 void SystemSetting::mousePressEvent(QMouseEvent *event)
 {
+    Q_UNUSED(event)
 //    QPoint orign_point = this->pos();
 //    QPoint new_point = event->globalPos();
 //    m_mvPos = new_point - orign_point;
@@ -142,6 +143,7 @@ void SystemSetting::mousePressEvent(QMouseEvent *event)
 
 void SystemSetting::mouseMoveEvent(QMouseEvent *event)
 {
+    Q_UNUSED(event)
 //        this->move(event->globalPos() - m_mvPos);
 }
 

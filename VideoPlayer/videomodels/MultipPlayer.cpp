@@ -226,13 +226,16 @@ void MultipPlayer::initMainWindow()
     m_toolBox->addItem(m_listWisget4,icon_internet,QString::fromLocal8Bit("播放记录"));
     m_toolBox->layout()->setSpacing(3);//item之间的间距
 
+    //剧集列表
     m_dramaList = new DramaListForm;//系列推荐
     m_dramaList->setObjectName(QString::fromLocal8Bit("m_dramaList"));
 
+    //推荐
     m_recomTab = new RecomVideoTab;
     m_recomTab->setObjectName(QString::fromLocal8Bit("m_recomTab"));
     m_recomTab->setFixedWidth(LEFTWIDTH);
 
+    //评论
     m_commentTab = new CommentTab;
     m_commentTab->setObjectName(QString::fromLocal8Bit("m_commentTab"));
     m_commentTab->setFixedWidth(LEFTWIDTH);
@@ -241,10 +244,8 @@ void MultipPlayer::initMainWindow()
     m_tabWidget1 = new QTabWidget;//不用手动释放，有包含关系
     m_tabWidget1->setObjectName(QString::fromLocal8Bit("m_tabWidget1"));
     m_tabWidget1->setFixedWidth(LEFTWIDTH);//固定宽度
-//    set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_recomTab,QString::fromLocal8Bit("推荐视频"));
-//    set_showTwoTabBar(m_tabWidget1,0,m_dramaList,QString::fromLocal8Bit("剧集介绍"),1,m_commentTab,QString::fromLocal8Bit("讨论"));
-    set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_dramaList,QString::fromLocal8Bit("剧集介绍"));
-    m_tabWidget1->setCurrentIndex(0);
+    set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_recomTab,QString::fromLocal8Bit("推荐视频"));
+    m_tabWidget1->setCurrentWidget(m_toolBox);
 
 
     m_vHlayout_jianjie = new QVBoxLayout;
@@ -303,6 +304,10 @@ void MultipPlayer::initMainWindow()
 //    m_foldBtn->setAttribute(Qt::WA_TranslucentBackground,true);//没效果，得定制
     m_foldBtn->setHidden(true);//初始化隐藏按钮
 
+    m_actionBullet  = new QAction(QIcon("://images/icon/bullet_login_hover.png"),"");
+    m_actionBullet->setObjectName(QString::fromUtf8("m_actionBullet"));
+    ui->lineEdit_bullet->addAction(m_actionBullet,QLineEdit::LeadingPosition);// 登录左侧显示
+
     //快捷键
     ui->pushButton_previous->setShortcut(QKeySequence(tr("left")));//<-键
     ui->pushButton_pauseStart->setShortcut(QKeySequence(tr("space")));//空格键
@@ -347,7 +352,61 @@ void MultipPlayer::chandleSignalAndSLots()
         addToPlaylist(playlist_t,url);
     });
     //查看评论
-    connect(ui->pushButton_comments,&QPushButton::clicked,[=](){ showMediaCommentTab();});
+    connect(ui->pushButton_comments,&QPushButton::clicked,[=](){
+
+    });
+
+    //选集
+    connect(ui->pushButton_anthology,&QPushButton::clicked,[=](){
+        removeTabwidgetTabBar(m_tabWidget1);
+        set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_dramaList,QString::fromLocal8Bit("剧集介绍"));
+        m_tabWidget1->setCurrentWidget(m_dramaList);
+
+    });
+
+    //评论
+    connect(ui->pushButton_talks,&QPushButton::clicked,[=](){
+        removeTabwidgetTabBar(m_tabWidget1);
+        set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_commentTab,QString::fromLocal8Bit("评论"));
+        m_tabWidget1->setCurrentWidget(m_commentTab);
+    });
+
+    //弹幕部分（默认开关打开）
+    connect(ui->pushButton_bulletOn,&QPushButton::clicked,[=](){
+        if(!ui->pushButton_bulletOn->isChecked())
+        {
+            ui->lineEdit_bullet->clear();
+            ui->pushButton_bulletOn->setChecked(false);
+            ui->lineEdit_bullet->setEnabled(false);
+            qDebug() << QString(u8"设置为未选中");
+        }
+        else
+        {
+            ui->pushButton_bulletOn->setChecked(true);
+            ui->lineEdit_bullet->setEnabled(true);
+            qDebug() << QString(u8"设置为选中");
+        }
+    });
+
+    //弹幕---登录
+    connect(m_actionBullet,&QAction::triggered,[=](){
+        emit sig_userLogin();
+        qDebug() << QString(u8"弹幕登录");
+    });
+
+
+    //开通vip
+    connect(ui->pushButton_openVip,&QPushButton::clicked,[=](){
+        qDebug() << QString(u8"开通vip");
+    });
+    //弹幕发送
+    connect(ui->pushButton_sendbullet,&QPushButton::clicked,[=](){
+        if(ui->pushButton_bulletOn->isChecked() && ui->lineEdit_bullet->isEnabled())
+        {
+            qDebug() << QString(u8"弹幕内容：")<<ui->lineEdit_bullet->text();
+        }
+    });
+
     //应该在有影片播放的时候，执行定时器，否则就是无效；1s更新一次进度
     connect(m_pTimer,&QTimer::timeout,this,&MultipPlayer::on_time);
     connect(m_pTimer,&QTimer::timeout,this,&MultipPlayer::updateProgressBarGeometry);//每0.3秒更新不管有没有缓冲
@@ -654,6 +713,16 @@ void MultipPlayer::chandleSignalAndSLots()
 /*加载默认图标*/
 void MultipPlayer::loadDefaultLogo()
 {
+    //open vip
+    ui->pushButton_openVip->setIcon(QIcon("://images/icon/video_openvip.png"));
+    ui->pushButton_bulletOn->setCheckable(true);
+    ui->pushButton_bulletOn->setChecked(true);//默认不开启弹幕
+    ui->pushButton_sendbullet->setText(QString(u8"发送"));
+
+
+    ui->lineEdit_bullet->setPlaceholderText(QString(u8"快来发弹幕吧"));
+    ui->lineEdit_bullet->setEnabled(true);//默认不能使用
+
     ui->Btn_adjust->setToolTip(QString::fromLocal8Bit("设置"));
     ui->pushButton_sound->setToolTip(QString::fromLocal8Bit("音量"));
     ui->pushButton_collect->setToolTip(QString::fromLocal8Bit("收藏"));
@@ -865,14 +934,6 @@ void MultipPlayer::set_fileTolistWidget(QString item)
     m_listWisget2->addItem(pitem);
 }
 
-void MultipPlayer::showMediaCommentTab()
-{
-            removeTabwidgetTabBar(m_tabWidget1);
-            set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_recomTab,QString::fromLocal8Bit("推荐视频"));
-//            set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_dramaList,QString::fromLocal8Bit("剧集介绍"));
-//            set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_dramaList,QString::fromLocal8Bit("剧集介绍"));
-            m_tabWidget1->setCurrentWidget(m_recomTab);
-}
 
 QString MultipPlayer::getCurrentMediaPlayFileName()
 {
@@ -1381,22 +1442,22 @@ void MultipPlayer::slot_showPlayerErrot(QMediaPlayer::Error error)
     switch(error)
     {
     case QMediaPlayer::NoError:
-        ui->label_error->setText(QString::fromLocal8Bit("没有错误！"));
+        ui->label_media_name->setText(QString::fromLocal8Bit("没有错误！"));
         break;
     case QMediaPlayer::ResourceError:
-        ui->label_error->setText(QString::fromLocal8Bit("媒体资源无法被解析!"));
+        ui->label_media_name->setText(QString::fromLocal8Bit("媒体资源无法被解析!"));
         break;
     case QMediaPlayer::FormatError:
-        ui->label_error->setText(QString::fromLocal8Bit("不支持该媒体格式!"));
+        ui->label_media_name->setText(QString::fromLocal8Bit("不支持该媒体格式!"));
         break;
     case QMediaPlayer::NetworkError:
-        ui->label_error->setText(QString::fromLocal8Bit("发生了一个网络错误!"));
+        ui->label_media_name->setText(QString::fromLocal8Bit("发生了一个网络错误!"));
         break;
     case QMediaPlayer::AccessDeniedError:
-        ui->label_error->setText(QString::fromLocal8Bit("没有播放权限!"));
+        ui->label_media_name->setText(QString::fromLocal8Bit("没有播放权限!"));
         break;
     case QMediaPlayer::ServiceMissingError:
-        ui->label_error->setText(QString::fromLocal8Bit("没有发现有效的播放服务!"));
+        ui->label_media_name->setText(QString::fromLocal8Bit("没有发现有效的播放服务!"));
         break;
     }
 }

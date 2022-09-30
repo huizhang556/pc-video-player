@@ -41,7 +41,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="CusLabelItem" name="label_mvPic">
+      <widget class="CusLabel2" name="label_mvPic">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -157,9 +157,9 @@ background-color: transparent;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CusLabelItem</class>
+   <class>CusLabel2</class>
    <extends>QLabel</extends>
-   <header>mainwidget/CusLabelItem.h</header>
+   <header>mainwidget/CusLabel2.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

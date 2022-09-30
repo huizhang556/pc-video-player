@@ -84,6 +84,10 @@ void MySkin::initWorkUI()
         item->setSizeHint(QSize(250,160));
         ui->listWidget_desktop->addItem(item);
         ui->listWidget_desktop->setItemWidget(item,skitem);
+        //信号与槽函数
+        connect(skitem,&MySkinItem::sig_checkedStatus,[=](bool checkStatus){
+            ui->listWidget_desktop->setCurrentItem(item);
+        });
     }
 
     //主题皮肤
@@ -124,6 +128,28 @@ void MySkin::chandleSignalAndSlot()
 {
     //遇到有重载（同名信号，参数不同）的信号，需要明确指出具体的参数
     connect(btngroup,SIGNAL(buttonClicked(QAbstractButton*)),this,SLOT(switchButtonToStackWidget(QAbstractButton*)));
+
+    //当前项改变（设置样式）
+    //桌面
+    connect(ui->listWidget_desktop,&QListWidget::currentItemChanged,[=](QListWidgetItem *current,QListWidgetItem *previous)
+    {
+        setItemChangedStyle(ui->listWidget_desktop, current, previous);
+    });
+    //主题
+    connect(ui->listWidget_zhuti,&QListWidget::currentItemChanged,[=](QListWidgetItem *current,QListWidgetItem *previous)
+    {
+         setItemChangedStyle(ui->listWidget_zhuti, current, previous);
+    });
+    //预置
+    connect(ui->listWidget_yuzhi,&QListWidget::currentItemChanged,[=](QListWidgetItem *current,QListWidgetItem *previous)
+    {
+         setItemChangedStyle(ui->listWidget_yuzhi, current, previous);
+    });
+    //自定义
+    connect(ui->listWidget_custom,&QListWidget::currentItemChanged,[=](QListWidgetItem *current,QListWidgetItem *previous)
+    {
+         setItemChangedStyle(ui->listWidget_custom, current, previous);
+    });
 }
 
 
@@ -164,4 +190,35 @@ void MySkin::switchButtonToStackWidget(QAbstractButton *button)
 {
     int num = btngroup->id(button);
     ui->stackedWidget_skin->setCurrentIndex(num);
+}
+
+QPushButton *MySkin::getListWidgetItemButton(QListWidget* listWidget, QListWidgetItem *item, QString objname)
+{
+    qDebug() << "item changed start finded!";
+    QWidget* itemWidget = listWidget->itemWidget(item);
+    if(nullptr != itemWidget)
+    {
+        QPushButton *itemBtn = itemWidget->findChild<QPushButton*>(objname);//查找指定名称的按钮
+        if(nullptr != itemBtn)
+        {
+            qDebug() << "item changed finded!";
+            return itemBtn;
+        }
+    }
+}
+
+void MySkin::setItemChangedStyle(QListWidget *listWidget, QListWidgetItem *current, QListWidgetItem *previous)
+{
+    qDebug() <<"item changed enter";
+    if(previous != nullptr)
+    {
+        qDebug() << QString::fromLocal8Bit("先前的item：")<<previous->text();
+        getListWidgetItemButton(listWidget,previous,"m_skinCheckedBtn")->setChecked(false);
+    }
+    if(current != nullptr)
+    {
+        qDebug() << QString::fromLocal8Bit("现在的item:")<<current->text();
+        getListWidgetItemButton(listWidget,current,"m_skinCheckedBtn")->setChecked(true);
+    }
+
 }

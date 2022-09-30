@@ -263,35 +263,26 @@ color: #b6b9be;
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">#listWidget_vipHot
+        <string notr="true">QListWidget
 {
 border: none;
-background-color:#0c1828;
+background-color: #0c1828;
 }
 
-#listWidget_vipHot::item
+QListWidget::item
 {
-background-color:#0c1828;
+background-color: #0c1828;
 }
 
-#listWidget_vipHot::item:hover
+QListWidget::item:hover
 {
-background-color:#5589fa;
+background-color: rgba(70, 160, 239,0.3);
 }
 
-#listWidget_vipHot::item:selected
+QListWidget::item:selected
 {
-background-color: #112c44;
-}
-
-#listWidget_vipHot::item:!selected
-{
-
-}
-
-
-
-</string>
+background-color: transparent;
+}</string>
        </property>
       </widget>
      </item>

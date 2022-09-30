@@ -31,6 +31,8 @@
 #include "videomodels/RecVideoItem.h"
 #include "splashscreen/CSplashScreen.h"
 
+#include "login/NewLoginForm.h"
+
 #include "mainwidget/TrianButton.h"
 #include "mainwidget/songersort/SongerSort.h"
 #include "mainwidget/songlistsort/TagsMenu.h"

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>494</width>
+    <width>786</width>
     <height>368</height>
    </rect>
   </property>
@@ -363,7 +363,7 @@ background-color:#0c1828;
 
 #listWidget_vipItems::item:hover
 {
-background-color:#4493b7;
+/*background-color:#4493b7;*/
 }
 
 #listWidget_vipItems::item:selected

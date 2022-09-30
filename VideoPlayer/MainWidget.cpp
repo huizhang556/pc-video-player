@@ -21,7 +21,7 @@ MainWidget::MainWidget(QWidget *parent) :
     m_winMax(false),
     m_firstOpen(true)
 {
-    setMinimumSize(1320,800);
+    setMinimumSize(1320,800);//1320,800 1500,950
     setMouseTracking(true);
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);
     setWindowTitle(QString::fromLocal8Bit("Qt简易视频播放器主界面"));
@@ -53,7 +53,7 @@ void MainWidget::initOtherWidgetUi()
     m_leftButton = new QPushButton(m_stackWidget_center);
     m_leftButton->setObjectName(QString::fromLocal8Bit("m_leftButton"));
     m_leftButton->setFixedSize(20,60);
-
+    m_leftButton->hide();
     //首页推荐
     m_homeWidget = new HomeWidget();
     m_homeWidget->setObjectName(QString::fromLocal8Bit("m_homeWidget"));
@@ -194,7 +194,7 @@ void MainWidget::initOtherWidgetUi()
 
     m_stackWidget_left = new QStackedWidget(this);
     m_stackWidget_left->setObjectName(QString::fromLocal8Bit("m_stackWidget_left"));
-    m_stackWidget_left->setFixedWidth(140);//固定宽度170
+    m_stackWidget_left->setFixedWidth(140);//固定宽度140
     m_stackWidget_left->insertWidget(0,m_leftSideBar);
 //    m_stackWidget_left->insertWidget(1,new CentralHomeForm());
 
@@ -458,10 +458,10 @@ void MainWidget::slot_removeTabWidgetTab(int index)
 //处理信号与槽函数
 void MainWidget::chandleSignalAndSlots()
 {
-    //全局更新
+    //全局更新update,repaint,resize(this->size()),adjustSize
     connect(this,&MainWidget::sig_globalResize,[=](){
 //        m_homeWidget->slot_globalResize();//推荐总界面更新
-        m_mainVideoMv->slot_globalResize();//视频推荐界面更新
+//        m_mainVideoMv->slot_globalResize();//视频推荐界面更新
 //        m_webRecords->slot_globalResize();//收藏记录界面更新
 //        m_webHistory->slot_globalResize();//历史记录界面更新
     });
@@ -488,6 +488,9 @@ void MainWidget::chandleSignalAndSlots()
     connect(m_titleBar,&TitleBar::sig_userSign_in,[=](){
         userSignIn();
     });
+
+    //弹幕处登录
+    connect(m_mainPlayer,&MultipPlayer::sig_userLogin,m_titleBar,&TitleBar::slot_showPersonLogin);
 
     //清除临时记录
     connect(m_titleBar,&TitleBar::sig_sendClearTempRecords,[=](){
@@ -1019,6 +1022,18 @@ void MainWidget::updateWebAddButtonGeometry()
     qDebug() << QString::fromLocal8Bit("webTab剩余宽度：")<<width;
 }
 
+void MainWidget::updateWinTitleBarButtons()
+{
+    if(isMaximized())//如果最大化
+    {
+        emit sig_winStatus(false);
+    }
+    else//没有最大化
+    {
+        emit sig_winStatus(true);
+    }
+}
+
 void MainWidget::slot_setWebProgreeBarValue(int value)
 {
     opacity->setOpacity(1);//恢复透明度值
@@ -1126,9 +1141,10 @@ void MainWidget::slot_setRemoveTabLineEditText(int index)
 //左侧边栏点击判断
 void MainWidget::slot_on_leftButton_clicked()
 {
+    //隐藏设为宽度为1
     if(m_isHide)
     {
-        m_stackWidget_left->show();
+        m_stackWidget_left->show();//左侧边栏 固定宽度 140px
         updateLeftButtonGeometry();
         setLeftButtonStyleSheetStatus();
         m_leftButton->hide();
@@ -1141,6 +1157,8 @@ void MainWidget::slot_on_leftButton_clicked()
         m_leftButton->hide();
     }
     m_isHide = !m_isHide;//状态置反
+//    this->move(this->geometry().x()-1,this->geometry().y()-1);
+
 }
 
 //更新左侧边栏按钮样式
@@ -1274,6 +1292,7 @@ bool MainWidget::nativeEvent(const QByteArray &eventType, void *message, long *r
                    && (nY > this->height() - MARWIDTH) && (nY < this->height()))
                *result = HTBOTTOMRIGHT;
 
+//           updateWinTitleBarButtons();//判断是否最大化
            return true;
            }
        }
@@ -1287,13 +1306,13 @@ bool MainWidget::eventFilter(QObject *watched, QEvent *event)
     {
         if(event->type() == QEvent::Enter)
         {
-            updateLeftButtonGeometry();
-            setLeftButtonStyleSheetStatus();
-            m_leftButton->show();
+//            updateLeftButtonGeometry();
+//            setLeftButtonStyleSheetStatus();
+//            m_leftButton->show();
         }
         else if(event->type() == QEvent::Leave)
         {
-            m_leftButton->hide();
+//            m_leftButton->hide();
         }
     }
     if(watched == m_webTabWidget)
@@ -1318,15 +1337,15 @@ void MainWidget::mousePressEvent(QMouseEvent *event)
     //        _curpos = countFlag(event->pos(), countRow(event->pos()));
     //    }
 
-    if(ReleaseCapture())
-    {
-        QWidget* pWindow = this->window();
-        if(pWindow->isTopLevel())
-        {
-            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
-        }
-    }
-    event->ignore();
+//    if(ReleaseCapture())
+//    {
+//        QWidget* pWindow = this->window();
+//        if(pWindow->isTopLevel())
+//        {
+//            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
+//        }
+//    }
+//    event->ignore();
 }
 
 void MainWidget::mouseMoveEvent(QMouseEvent *event)

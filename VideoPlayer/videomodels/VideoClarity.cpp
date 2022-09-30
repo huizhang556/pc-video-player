@@ -76,7 +76,7 @@ void VideoClarity::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing,true);
     painter.setPen(Qt::NoPen);
-    painter.setBrush(QColor(42, 42, 49));
+    painter.setBrush(QColor(24, 27, 31));
     QPolygon trianglePolygon;
     trianglePolygon << QPoint(width()/2-m_triangleWidth/2 , height()- m_triangleHeight);
     trianglePolygon << QPoint(width()/2,height());
