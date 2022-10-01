@@ -15,7 +15,9 @@ SOURCES += \
     $$PWD/RotatePic.cpp \
     $$PWD/FloatPlayCtl.cpp \
     $$PWD/RecVideoItem.cpp \
-    $$PWD/VideoClarity.cpp
+    $$PWD/VideoClarity.cpp \
+    $$PWD/Danmu.cpp \
+    $$PWD/DanmuSetting.cpp
 
 
 HEADERS += \
@@ -35,7 +37,9 @@ HEADERS += \
     $$PWD/RotatePic.h \
     $$PWD/FloatPlayCtl.h \
     $$PWD/RecVideoItem.h \
-    $$PWD/VideoClarity.h
+    $$PWD/VideoClarity.h \
+    $$PWD/Danmu.h \
+    $$PWD/DanmuSetting.h
 
 
 FORMS += \
@@ -53,7 +57,8 @@ FORMS += \
     $$PWD/PlayOrderForm.ui \
     $$PWD/FloatPlayCtl.ui \
     $$PWD/RecVideoItem.ui \
-    $$PWD/VideoClarity.ui
+    $$PWD/VideoClarity.ui \
+    $$PWD/DanmuSetting.ui
 
 #添加库文件
 #LIBS += -L ../lib/lib -luser32

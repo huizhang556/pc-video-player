@@ -26,7 +26,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: #25252a;</string>
+   <string notr="true">background-color: #2a2a32;</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
@@ -196,20 +196,22 @@ border-image: url(:/images/icon/his_delete_hover.png);
 padding-left:30px;
 border:none;
 font: 12pt &quot;楷体&quot;;
-color: rgb(148, 148, 148);
+color: #68686d;
+background-color: #2a2a32;
 }
 
 QListWidget::item
 {
 min-height:22px;
+background-color: #2a2a32;
 
 }
 
 QListWidget::item:hover
 {
-background-color: rgb(79, 79, 79);
+background-color: #1e1e24;
 font: 12pt &quot;楷体&quot;;
-color: rgb(11, 11, 11);
+color: #56d6df;
 }</string>
          </property>
          <item>
@@ -247,20 +249,21 @@ color: rgb(11, 11, 11);
 padding-left:30px;
 border:none;
 font: 12pt &quot;楷体&quot;;
-color: rgb(148, 148, 148);
+color: #68686d;
+background-color: #2a2a32;
 }
 
 QListWidget::item
 {
 min-height:22px;
-
+background-color: #2a2a32;
 }
 
 QListWidget::item:hover
 {
-background-color: rgb(79, 79, 79);
+background-color: #1e1e24;
 font: 12pt &quot;楷体&quot;;
-color: rgb(11, 11, 11);
+color: #56d6df;
 }</string>
          </property>
          <item>
@@ -444,20 +447,22 @@ font: 11pt &quot;楷体&quot;;
 padding-left:30px;
 border:none;
 font: 12pt &quot;楷体&quot;;
-color: rgb(148, 148, 148);
+color: #68686d;
+background-color: #2a2a32;
 }
 
 QListWidget::item
 {
 min-height:22px;
+background-color: #2a2a32;
 
 }
 
 QListWidget::item:hover
 {
-background-color: rgb(79, 79, 79);
+background-color: #1e1e24;
 font: 12pt &quot;楷体&quot;;
-color: rgb(11, 11, 11);
+color: #56d6df;
 }</string>
          </property>
          <item>
@@ -495,20 +500,21 @@ color: rgb(11, 11, 11);
 padding-left:30px;
 border:none;
 font: 12pt &quot;楷体&quot;;
-color: rgb(148, 148, 148);
+color: #68686d;
+background-color: #2a2a32;
 }
 
 QListWidget::item
 {
 min-height:22px;
-
+background-color: #2a2a32;
 }
 
 QListWidget::item:hover
 {
-background-color: rgb(79, 79, 79);
+background-color: #1e1e24;
 font: 12pt &quot;楷体&quot;;
-color: rgb(11, 11, 11);
+color: #56d6df;
 }</string>
          </property>
          <item>

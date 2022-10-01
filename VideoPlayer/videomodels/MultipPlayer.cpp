@@ -46,6 +46,7 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
     chandleSignalAndSLots();//处理信号与槽函数
     //设置监听
     installEventFilter(this);
+    ui->pushButton_bulletSet->installEventFilter(this);//弹幕设置
     ui->pushButton_sound->installEventFilter(this);//音量调节按钮设置监听
     ui->stackedWidget->installEventFilter(this);//侧边按钮显隐用
     videoWidget->installEventFilter(this);//视频界面
@@ -295,8 +296,13 @@ void MultipPlayer::initMainWindow()
     m_muteDlg->setObjectName(QString::fromLocal8Bit("m_muteDlg"));
     m_muteDlg->setHidden(true);
 
+    //清晰度
     m_videoClarity = new VideoClarity();
     m_videoClarity->setObjectName(QString::fromUtf8("m_videoClarity"));
+
+    //弹幕设置
+    m_danmuSetting = new DanmuSetting();
+    m_danmuSetting->setObjectName(QString::fromUtf8("m_danmuSetting"));
 
     m_foldBtn = new QPushButton(ui->stackedWidget);//父亲必须指定，要不然显示不出来
     m_foldBtn->setObjectName(QString::fromLocal8Bit("m_foldBtn"));
@@ -351,9 +357,11 @@ void MultipPlayer::chandleSignalAndSLots()
         m_t_MapList.insert(id,url);
         addToPlaylist(playlist_t,url);
     });
-    //查看评论
+    //推荐视频
     connect(ui->pushButton_comments,&QPushButton::clicked,[=](){
-
+        removeTabwidgetTabBar(m_tabWidget1);
+        set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_recomTab,QString::fromLocal8Bit("推荐视频"));
+        m_tabWidget1->setCurrentWidget(m_recomTab);
     });
 
     //选集
@@ -401,9 +409,25 @@ void MultipPlayer::chandleSignalAndSLots()
     });
     //弹幕发送
     connect(ui->pushButton_sendbullet,&QPushButton::clicked,[=](){
-        if(ui->pushButton_bulletOn->isChecked() && ui->lineEdit_bullet->isEnabled())
+        if(ui->pushButton_bulletOn->isChecked() && ui->lineEdit_bullet->isEnabled() && !ui->lineEdit_bullet->text().isEmpty())
         {
-            qDebug() << QString(u8"弹幕内容：")<<ui->lineEdit_bullet->text();
+            QRect screenPoint = ui->stackedWidget->parentWidget()->geometry();
+            Danmu *danmu = new Danmu(nullptr,ui->lineEdit_bullet->text(),"Green",1,screenPoint);//动画完成以后自动调用析构函数
+
+
+            ui->lineEdit_bullet->clear();
+            ui->lineEdit_bullet->setFocus();
+        }
+    });
+
+    //回车发送弹幕
+    connect(ui->lineEdit_bullet,&QLineEdit::returnPressed,[=](){
+        if(ui->pushButton_bulletOn->isChecked() && ui->lineEdit_bullet->isEnabled() && !ui->lineEdit_bullet->text().isEmpty())
+        {
+            QRect screenPoint = ui->stackedWidget->parentWidget()->geometry();
+            Danmu *danmu = new Danmu(nullptr,ui->lineEdit_bullet->text(),"Green",1,screenPoint);//动画完成以后自动调用析构函数
+            ui->lineEdit_bullet->clear();
+            ui->lineEdit_bullet->setFocus();
         }
     });
 
@@ -726,6 +750,7 @@ void MultipPlayer::loadDefaultLogo()
     ui->Btn_adjust->setToolTip(QString::fromLocal8Bit("设置"));
     ui->pushButton_sound->setToolTip(QString::fromLocal8Bit("音量"));
     ui->pushButton_collect->setToolTip(QString::fromLocal8Bit("收藏"));
+    ui->pushButton_collect->setIconSize(QSize(18,18));
     ui->pushButton_curlist->setToolTip(QString::fromLocal8Bit("全屏"));
 
     m_lineEdit->setPlaceholderText(QString::fromLocal8Bit("输入要搜索的内容^_^"));
@@ -1464,10 +1489,13 @@ void MultipPlayer::slot_showPlayerErrot(QMediaPlayer::Error error)
 
 void MultipPlayer::slot_clearAllPopupUi()
 {
+    //三处调用
+    //1.resize closewin,MouseButtonPress空白处点击
     if(!VideoProgressBar::getInstance()->isHidden()) VideoProgressBar::getInstance()->hide();
     if(!PlayOrderForm::getInstance()->isHidden()) PlayOrderForm::getInstance()->hide();
     if(!m_adjustBright->isHidden()) m_adjustBright->hide();
     if(!m_videoClarity->isHidden()) m_videoClarity->hide();
+    if(!m_danmuSetting->isHidden()) m_danmuSetting->hide();
     if(!m_muteDlg->isHidden()) m_muteDlg->hide();
 }
 
@@ -1800,6 +1828,25 @@ void MultipPlayer::floatPlayCtrlEnterLeave(QObject *watched, QMouseEvent *mousev
         else if(mousevent->type() == QEvent::Enter)
         {
             m_showFloat->stop();//定时器断开
+        }
+    }
+}
+
+void MultipPlayer::slot_showDanmuSettingForm(QObject *watched, QMouseEvent *mousevent)
+{
+    if(watched == ui->pushButton_bulletSet)
+    {
+        if(mousevent->type() == QEvent::Enter)
+        {
+            int x = ui->pushButton_bulletSet->parentWidget()->mapToGlobal(ui->pushButton_bulletSet->pos()).x();
+            int y = ui->pushButton_bulletSet->parentWidget()->mapToGlobal(ui->pushButton_bulletSet->pos()).y();
+            m_danmuSetting->setGeometry(x-m_danmuSetting->width()/2,y-m_danmuSetting->height()+30,m_danmuSetting->width(),m_danmuSetting->height());
+            m_danmuSetting->raise();
+            m_danmuSetting->show();
+        }
+        else if(mousevent->type() == QEvent::Leave)
+        {
+//            m_danmuSetting->hide();
         }
     }
 }
@@ -2785,6 +2832,7 @@ bool MultipPlayer::eventFilter(QObject *watched, QEvent *event)
     playlistMouseEnterLeave(watched,mousevent);//节目列表搜索框
     stackWidgetSliderButtonEventFilter(watched,mousevent);//箭头显示影藏动作
     floatPlayCtrlEnterLeave(watched,mousevent);//浮动播放
+    slot_showDanmuSettingForm(watched,mousevent);//弹幕设置
 //    videoDouleExit(watched,mousevent);
     return QWidget::eventFilter(watched,event);
 }

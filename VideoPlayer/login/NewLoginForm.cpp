@@ -42,7 +42,7 @@ void NewLoginForm::initWorkUI()
     m_actionShowPwd->setChecked(false);
     ui->lineEdit_telNumber->setPlaceholderText(QString(u8"请输入手机号码"));
     ui->lineEdit_checkCode->setPlaceholderText(QString(u8"请输入验证码"));
-    ui->lineEdit_account->setPlaceholderText(QString(u8"手机/邮箱/优酷土豆账号"));
+    ui->lineEdit_account->setPlaceholderText(QString(u8"手机/邮箱/账户名"));
     ui->lineEdit_userpwd->setPlaceholderText(QString(u8"登陆密码"));
     ui->lineEdit_userpwd->setEchoMode(QLineEdit::Password);
     ui->lineEdit_userpwd->addAction(m_actionShowPwd,QLineEdit::TrailingPosition);
@@ -58,6 +58,9 @@ void NewLoginForm::initWorkUI()
     ui->lineEdit_firstpwd->setEchoMode(QLineEdit::Password);
     ui->lineEdit_secondpwd->setEchoMode(QLineEdit::Password);
     ui->stackedWidget_right->setCurrentIndex(0);
+    //解决QLineEdit回车键退出
+    ui->pushButton_close->setFocusPolicy(Qt::NoFocus);//默认具有焦点
+    ui->pushButton_register->setFocusPolicy(Qt::NoFocus);//默认具有焦点
 }
 
 void NewLoginForm::chandleSignalsAndSLots()
@@ -77,6 +80,10 @@ void NewLoginForm::chandleSignalsAndSLots()
     connect(ui->pushButton_forgotPwd,&QPushButton::clicked,[=](){
         ui->stackedWidget_right->setCurrentIndex(2);
         qDebug() << QString(u8"忘记密码");
+    });
+    //扫码登录
+    connect(ui->pushButton_scanCode,&QPushButton::clicked,[=](){
+        ui->stackedWidget_right->setCurrentIndex(0);
     });
     //登录遇到问题
     connect(ui->pushButton_questions,&QPushButton::clicked,[=](){
@@ -98,6 +105,7 @@ void NewLoginForm::chandleSignalsAndSLots()
             m_actionShowPwd->setChecked(false);
         }
     });
+
 }
 
 NewLoginForm *NewLoginForm::getInstance()
@@ -107,6 +115,54 @@ NewLoginForm *NewLoginForm::getInstance()
         m_pInstance = new NewLoginForm();
     }
     return m_pInstance;
+}
+
+void NewLoginForm::receiveLoginAppClose()
+{
+    this->close();
+}
+
+void NewLoginForm::slot_switchWinType(ShowType type)
+{
+    switch (type) {
+    case ShowType::LoginWin_0://扫码登录
+    {
+        ui->tabWidget_login->setCurrentIndex(0);
+        ui->stackedWidget_right->setCurrentIndex(0);
+    }
+        break;
+    case ShowType::LoginWin_1://短信登录
+    {
+        ui->tabWidget_login->setCurrentIndex(0);
+        ui->stackedWidget_right->setCurrentIndex(0);
+        ui->lineEdit_telNumber->setFocus();
+    }
+        break;
+    case ShowType::LoginWin_2://账号登录
+    {
+        ui->tabWidget_login->setCurrentIndex(1);
+        ui->stackedWidget_right->setCurrentIndex(0);
+        ui->lineEdit_account->setFocus();
+    }
+        break;
+    case ShowType::RegisWin://注册窗口
+    {
+        ui->tabWidget_login->setCurrentIndex(1);
+        ui->stackedWidget_right->setCurrentIndex(1);
+        ui->lineEdit_regis_telNumber->setFocus();
+    }
+        break;
+    case ShowType::ReSetWin://重置窗口
+    {
+        ui->tabWidget_login->setCurrentIndex(1);
+        ui->stackedWidget_right->setCurrentIndex(2);
+        ui->lineEdit_fpwd_account->setFocus();
+    }
+        break;
+    default:
+        break;
+    }
+    this->exec();
 }
 
 void NewLoginForm::paintEvent(QPaintEvent *event)

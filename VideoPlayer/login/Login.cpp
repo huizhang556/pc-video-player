@@ -36,23 +36,24 @@ void Login::handleSignalsAndSlots()
 {
     connect(ui->BtnLogin,&QPushButton::clicked,[=]()
     {
-        if(LoginPersonInfo::getInstance())
+        if(NewLoginForm::getInstance())
         {
-            if(!LoginPersonInfo::getInstance()->isHidden())//正常显示
+            if(!NewLoginForm::getInstance()->isHidden())//正常显示
             {
-                LoginPersonInfo::getInstance()->hide();
+                NewLoginForm::getInstance()->hide();
             }
             else//隐藏
             {
-                LoginPersonInfo::getInstance()->raise();
-                LoginPersonInfo::getInstance()->setWindowModality(Qt::ApplicationModal);
-                LoginPersonInfo::getInstance()->show();
+                NewLoginForm::getInstance()->raise();
+//                NewLoginForm::getInstance()->setWindowModality(Qt::ApplicationModal);
+                NewLoginForm::getInstance()->slot_switchWinType(ShowType::LoginWin_1);
             }
         }
 
     });
 
-    connect(this,&Login::sig_LoginWinClose,LoginPersonInfo::getInstance(),&LoginPersonInfo::receiveLoginAppClose);
+    //收到关闭程序信号
+    connect(this,&Login::sig_LoginWinClose,NewLoginForm::getInstance(),&NewLoginForm::receiveLoginAppClose);
 }
 
 

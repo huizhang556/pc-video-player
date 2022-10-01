@@ -68,7 +68,7 @@ void CommentTab::chandleSignalsAndSLots()
         QString comdata     = ui->textEdit_comment->toPlainText();
         qDebug()            << comdata;
         int count           = 1;
-        if(!comdata.isEmpty())
+        if(comdata.remove(QRegExp("\\s")).length() != 0)//去除空格
         slot_insertNewCommentForm(pix,nick,datetime,comdata,count);
         qDebug() << "comment new publish";
     });

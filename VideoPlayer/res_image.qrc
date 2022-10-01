@@ -495,5 +495,7 @@
         <file>images/user/newlogin_taobao.png</file>
         <file>images/user/newlogin_wechat.png</file>
         <file>images/user/newlogin_QRcode.png</file>
+        <file>images/user/bullet_set_hover.png</file>
+        <file>images/user/bullet_set_normal.png</file>
     </qresource>
 </RCC>

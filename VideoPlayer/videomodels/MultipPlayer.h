@@ -6,6 +6,7 @@
 
 #include "network/MyHttp.h"
 #include "database/dataBase.h"
+#include "videomodels/Danmu.h"
 #include "videomodels/VideoBlank.h"
 #include "videomodels/muteDialog.h"
 #include "videomodels/CommentTab.h"
@@ -19,6 +20,7 @@
 #include "videomodels/RecomVideoTab.h"
 #include "videomodels/DramaListForm.h"
 #include "videomodels/PlayOrderForm.h"
+#include "videomodels/DanmuSetting.h"
 #include "videomodels/VideoProgressBar.h"
 
 #include <QMap>
@@ -218,6 +220,8 @@ private slots:
 
     void    floatPlayCtrlEnterLeave(QObject *watched, QMouseEvent *mousevent);
 
+    void   slot_showDanmuSettingForm(QObject *watched, QMouseEvent *mousevent);
+
     void    playlistMouseEnterLeave(QObject *watched, QEvent *event);
 
 
@@ -339,6 +343,7 @@ private:
     VideoClarity                *m_videoClarity     = nullptr;//清晰度调整界面
     MusicPlayShow               *m_musicUi          = nullptr;
     VideoTitleBar               *m_videoTitleBar    = nullptr;
+    DanmuSetting                *m_danmuSetting     = nullptr;//弹幕设置
     DramaListForm               *m_dramaList        = nullptr;//系列推荐
     RecomVideoTab               *m_recomTab         = nullptr;
     MyVideoWidget               *videoWidget        = nullptr;//视频播放界面

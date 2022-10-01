@@ -197,7 +197,8 @@ void TitleBar::chandleSignalAndSLots()
         }
         else if(QString::fromLocal8Bit("重置密码") == text)
         {
-            LoginPersonInfo::getInstance()->showLoginWindow(3);
+//            LoginPersonInfo::getInstance()->showLoginWindow(3);
+            NewLoginForm::getInstance()->slot_switchWinType(ShowType::ReSetWin);
         }
         else if(QString::fromLocal8Bit("退出登录") == text)
         {
@@ -206,10 +207,10 @@ void TitleBar::chandleSignalAndSLots()
         qDebug() << "current select item ="<< text;
     });
 
-    //登录弹出界面
+    //左上角---用户登录
     connect(ui->pushButton_userlogin,&QPushButton::clicked,[=](){
 //        LoginPersonInfo::getInstance()->showLoginWindow(0);
-        NewLoginForm::getInstance()->exec();
+        NewLoginForm::getInstance()->slot_switchWinType(ShowType::LoginWin_2);
     });
     //登录回显登录信息
     connect(LoginPersonInfo::getInstance(),&LoginPersonInfo::sig_sendLoginOK,[=](QString nick, QString head, int grade){
@@ -224,9 +225,10 @@ void TitleBar::chandleSignalAndSLots()
         emit sig_sendClearTempRecords();
     });
 
-    //注册
+    //左上角---用户注册
     connect(ui->pushButton_userregis,&QPushButton::clicked,[=](){
-        slot_showPersonLogin();
+//        slot_showPersonLogin();
+        NewLoginForm::getInstance()->slot_switchWinType(ShowType::RegisWin);
     });
 
     /*关于窗口大小调整*/
@@ -1380,7 +1382,7 @@ void TitleBar::slot_clearColletRecords()
 void TitleBar::slot_showPersonLogin()
 {
 //    LoginPersonInfo::getInstance()->showLoginWindow(0);
-    NewLoginForm::getInstance()->exec();
+    NewLoginForm::getInstance()->slot_switchWinType(ShowType::LoginWin_1);
 }
 
 void TitleBar::slot_receivedLoginInfo(const QString &name, const QString &head, int grade)

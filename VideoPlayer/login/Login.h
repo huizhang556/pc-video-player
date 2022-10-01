@@ -2,6 +2,7 @@
 #define LOGIN_H
 
 #include <QDialog>
+#include "NewLoginForm.h"
 #include "LoginPersonInfo.h"
 #include <QPaintEvent>
 

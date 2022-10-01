@@ -21,7 +21,7 @@ MainWidget::MainWidget(QWidget *parent) :
     m_winMax(false),
     m_firstOpen(true)
 {
-    setMinimumSize(1320,800);//1320,800 1500,950
+    setMinimumSize(1500,950);//1320,800 1500,950
     setMouseTracking(true);
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);
     setWindowTitle(QString::fromLocal8Bit("Qt简易视频播放器主界面"));
