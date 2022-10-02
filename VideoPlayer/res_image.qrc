@@ -497,5 +497,6 @@
         <file>images/user/newlogin_QRcode.png</file>
         <file>images/user/bullet_set_hover.png</file>
         <file>images/user/bullet_set_normal.png</file>
+        <file>images/user/vtitle_mask.png</file>
     </qresource>
 </RCC>

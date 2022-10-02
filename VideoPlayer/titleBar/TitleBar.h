@@ -7,6 +7,7 @@
 #include "login/LoginPersonInfo.h"
 #include "login/NewLoginForm.h"
 #include "browser/WebDownLoadList.h"
+#include "customer/CusLineEdit.h"
 
 #include <QMenu>
 #include <QPoint>
@@ -175,6 +176,8 @@ signals:
 
 
 private:
+    //视频内容搜索
+    QAction         *m_actHotRank           =   nullptr;//热搜榜
     //网址搜索栏目
     QAction         *m_actSafeMode          =   nullptr;//浏览模式
     QAction         *m_actCollect           =   nullptr;//收藏网址

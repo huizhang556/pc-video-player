@@ -288,6 +288,11 @@ private slots:
 
     void    slot_selectAllListItem(QListWidget *obj);//全选
 
+private:
+    //弹幕位置
+    QRect    calUpdateDanmuGeometry();//计算更新弹幕显示位置
+    void     setDanmuInfo(Danmu* danmu, const QString &color, const QFont &danmuFont, double transDepth);//设置弹幕颜色，字体宽度，透明度
+
 signals:
     void    sig_sendSwitchToMusicPage(QString name);
 
@@ -311,6 +316,7 @@ signals:
 
     void    sig_userLogin();
 
+    void    sig_videoDanmuStatus(bool);
 
 private:
     Ui::MultipPlayer *ui;

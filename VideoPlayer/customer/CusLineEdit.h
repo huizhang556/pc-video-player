@@ -1,8 +1,9 @@
 ﻿#ifndef CUSLINEEDIT_H
 #define CUSLINEEDIT_H
-
+#include "customer/CPushButton.h"
 #include <QLineEdit>
-#include <QPushButton>
+#include <QEvent>
+#include <QDebug>
 
 namespace Ui {
 class CusLineEdit;
@@ -13,20 +14,20 @@ class CusLineEdit : public QLineEdit
     Q_OBJECT
 
 public:
-    explicit CusLineEdit(const QString &btnText, QWidget *parent = nullptr);
-    explicit CusLineEdit(const QIcon &icon, QWidget *parent = nullptr);
+    CusLineEdit(QWidget *parent = nullptr);
     ~CusLineEdit();
+    void initWorkUI();
+    void handleSignalsAndSLots();
+
+protected:
+    void    leaveEvent(QEvent* event) override;
+    void    enterEvent(QEvent* event) override;
 
 private:    
-    void setTextButton();// 设置文本按钮或图标按钮的大小和外观
-    void setIconButton();
-    void addButton();//将按钮添加到edit
-    void setButtonSize(QPushButton *button, int width,int height);
-    QPushButton     *m_button       =       nullptr;
-    const   int     buttonMargin    =       3;// 按钮和输入内容的边距
+    CPushButton* m_pBtn = nullptr;
 
 signals:
-    void buttonClicked(bool);
+    void sig_Search(const QString&);
 };
 
 #endif // CUSLINEEDIT_H

@@ -144,7 +144,7 @@ QTabBar::tab:only-one
           <property name="currentIndex">
            <number>2</number>
           </property>
-          <widget class="QWidget" name="tab">
+          <widget class="QWidget" name="tab_style">
            <attribute name="title">
             <string>弹幕样式</string>
            </attribute>
@@ -170,20 +170,20 @@ QTabBar::tab:only-one
                <number>0</number>
               </property>
               <property name="topMargin">
-               <number>0</number>
+               <number>15</number>
               </property>
               <item>
-               <widget class="QGroupBox" name="groupBox_3">
+               <widget class="QGroupBox" name="groupBox_vipFont">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>70</height>
+                  <height>90</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>70</height>
+                  <height>90</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -204,8 +204,8 @@ QGroupBox::title
     subcontrol-origin: margin;
     subcontrol-position: top center; /* position at the top center */
     padding: 0 3px;
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #FFOECE, stop: 1 #FFFFFF);
+   /* background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #FFOECE, stop: 1 #FFFFFF);*/
 }
 
 QGroupBox::indicator 
@@ -247,7 +247,7 @@ QGroupBox::indicator:unchecked
                     <number>16</number>
                    </property>
                    <item>
-                    <widget class="QPushButton" name="pushButton_10">
+                    <widget class="QPushButton" name="pushButton_vip1">
                      <property name="minimumSize">
                       <size>
                        <width>70</width>
@@ -267,6 +267,12 @@ color: #0c868d;
 border-radius: 16px;
 border: 1px solid #0c868d;
 background-color: #2a2a31;
+}
+
+QPushButton:checked
+{
+color: white;
+background-color: #0c868d;
 }</string>
                      </property>
                      <property name="text">
@@ -275,7 +281,7 @@ background-color: #2a2a31;
                     </widget>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="pushButton_11">
+                    <widget class="QPushButton" name="pushButton_vip2">
                      <property name="minimumSize">
                       <size>
                        <width>70</width>
@@ -295,6 +301,12 @@ color: #fad88e;
 border-radius: 16px;
 border: 1px solid #fad88e;
 background-color: #2a2a31;
+}
+
+QPushButton:checked
+{
+color: white;
+background-color: #fad88e;
 }</string>
                      </property>
                      <property name="text">
@@ -303,7 +315,7 @@ background-color: #2a2a31;
                     </widget>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="pushButton_12">
+                    <widget class="QPushButton" name="pushButton_vip3">
                      <property name="minimumSize">
                       <size>
                        <width>70</width>
@@ -323,6 +335,12 @@ color: #ff078f;
 border-radius: 16px;
 border: 1px solid #ff078f;
 background-color: #2a2a31;
+}
+
+QPushButton:checked
+{
+color: white;
+background-color: #ff078f;
 }</string>
                      </property>
                      <property name="text">
@@ -336,7 +354,7 @@ background-color: #2a2a31;
                </widget>
               </item>
               <item>
-               <widget class="QGroupBox" name="groupBox_4">
+               <widget class="QGroupBox" name="nvipFont">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -415,7 +433,7 @@ QGroupBox::indicator:unchecked
                       <number>16</number>
                      </property>
                      <item>
-                      <widget class="QPushButton" name="pushButton_13">
+                      <widget class="QPushButton" name="pushButton_nvip1">
                        <property name="minimumSize">
                         <size>
                          <width>70</width>
@@ -435,6 +453,12 @@ color: #0c868d;
 border-radius: 16px;
 border: 1px solid #0c868d;
 background-color: #2a2a31;
+}
+
+QPushButton:checked
+{
+color: white;
+background-color: #0c868d;
 }</string>
                        </property>
                        <property name="text">
@@ -443,7 +467,7 @@ background-color: #2a2a31;
                       </widget>
                      </item>
                      <item>
-                      <widget class="QPushButton" name="pushButton_14">
+                      <widget class="QPushButton" name="pushButton_nvip2">
                        <property name="minimumSize">
                         <size>
                          <width>70</width>
@@ -463,6 +487,12 @@ color: #07b482;
 border-radius: 16px;
 border: 1px solid #07b482;
 background-color: #2a2a31;
+}
+
+QPushButton:checked
+{
+color: white;
+background-color: #07b482;
 }</string>
                        </property>
                        <property name="text">
@@ -471,7 +501,7 @@ background-color: #2a2a31;
                       </widget>
                      </item>
                      <item>
-                      <widget class="QPushButton" name="pushButton_15">
+                      <widget class="QPushButton" name="pushButton_nvip3">
                        <property name="minimumSize">
                         <size>
                          <width>70</width>
@@ -491,6 +521,12 @@ color: #208bd5;
 border-radius: 16px;
 border: 1px solid #208bd5;
 background-color: #2a2a31;
+}
+
+QPushButton:checked
+{
+color: white;
+background-color: #208bd5;
 }</string>
                        </property>
                        <property name="text">
@@ -506,7 +542,7 @@ background-color: #2a2a31;
                       <number>16</number>
                      </property>
                      <item>
-                      <widget class="QPushButton" name="pushButton_16">
+                      <widget class="QPushButton" name="pushButton_nvip4">
                        <property name="minimumSize">
                         <size>
                          <width>70</width>
@@ -526,6 +562,12 @@ color: #d27334;
 border-radius: 16px;
 border: 1px solid #d27334;
 background-color: #2a2a31;
+}
+
+QPushButton:checked
+{
+color: white;
+background-color: #d27334;
 }</string>
                        </property>
                        <property name="text">
@@ -534,7 +576,7 @@ background-color: #2a2a31;
                       </widget>
                      </item>
                      <item>
-                      <widget class="QPushButton" name="pushButton_17">
+                      <widget class="QPushButton" name="pushButton_nvip5">
                        <property name="minimumSize">
                         <size>
                          <width>70</width>
@@ -554,6 +596,12 @@ color: #ca234f;
 border-radius: 16px;
 border: 1px solid #ca234f;
 background-color: #2a2a31;
+}
+
+QPushButton:checked
+{
+color: white;
+background-color: #ca234f;
 }</string>
                        </property>
                        <property name="text">
@@ -562,7 +610,7 @@ background-color: #2a2a31;
                       </widget>
                      </item>
                      <item>
-                      <widget class="QPushButton" name="pushButton_18">
+                      <widget class="QPushButton" name="pushButton_nvip6">
                        <property name="minimumSize">
                         <size>
                          <width>70</width>
@@ -582,6 +630,12 @@ color: #9d75ca;
 border-radius: 16px;
 border: 1px solid #9d75ca;
 background-color: #2a2a31;
+}
+
+QPushButton:checked
+{
+color: white;
+background-color: #9d75ca;
 }</string>
                        </property>
                        <property name="text">
@@ -600,7 +654,7 @@ background-color: #2a2a31;
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="tab_2">
+          <widget class="QWidget" name="tab_watch">
            <attribute name="title">
             <string>观看设置</string>
            </attribute>
@@ -626,7 +680,7 @@ background-color: #2a2a31;
                <number>10</number>
               </property>
               <item>
-               <widget class="QGroupBox" name="groupBox_5">
+               <widget class="QGroupBox" name="groupBox_trans">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -657,8 +711,8 @@ QGroupBox::title
     subcontrol-origin: margin;
     subcontrol-position: top center; /* position at the top center */
     padding: 0 3px;
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #FFOECE, stop: 1 #FFFFFF);
+    /*background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #FFOECE, stop: 1 #FFFFFF);*/
 }
 
 QGroupBox::indicator 
@@ -697,7 +751,7 @@ QGroupBox::indicator:unchecked
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_9">
                    <item>
-                    <widget class="QSlider" name="horizontalSlider">
+                    <widget class="QSlider" name="horizontalSlider_trans">
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
@@ -756,7 +810,7 @@ border-radius:5px;
 QSlider::add-page:horizontal,QSlider::add-line:horizontal
 {
 border-radius:2px;
-background-color:yellow;
+background-color:#61f6ff;
 }
 
 /*已划过的区域，左边界线*/
@@ -773,11 +827,24 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLabel" name="label_2">
+                    <widget class="QLabel" name="label_trans">
+                     <property name="minimumSize">
+                      <size>
+                       <width>30</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>30</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
                      <property name="styleSheet">
                       <string notr="true">QLabel
 {
 color: #ff4a38;
+margin-left:2px;
 }</string>
                      </property>
                      <property name="text">
@@ -791,7 +858,7 @@ color: #ff4a38;
                </widget>
               </item>
               <item>
-               <widget class="QGroupBox" name="groupBox_6">
+               <widget class="QGroupBox" name="groupBox_fintSize">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -822,8 +889,8 @@ QGroupBox::title
     subcontrol-origin: margin;
     subcontrol-position: top center; /* position at the top center */
     padding: 0 3px;
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #FFOECE, stop: 1 #FFFFFF);
+    /*background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #FFOECE, stop: 1 #FFFFFF);*/
 }
 
 QGroupBox::indicator 
@@ -841,7 +908,7 @@ QGroupBox::indicator:unchecked
 </string>
                 </property>
                 <property name="title">
-                 <string>弹幕显示区域</string>
+                 <string>弹幕字体粗度</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_11">
                  <property name="spacing">
@@ -862,7 +929,7 @@ QGroupBox::indicator:unchecked
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_12">
                    <item>
-                    <widget class="QSlider" name="horizontalSlider_2">
+                    <widget class="QSlider" name="horizontalSlider_fontWeight">
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
@@ -921,7 +988,7 @@ border-radius:5px;
 QSlider::add-page:horizontal,QSlider::add-line:horizontal
 {
 border-radius:2px;
-background-color:yellow;
+background-color:#61f6ff;
 }
 
 /*已划过的区域，左边界线*/
@@ -938,11 +1005,24 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLabel" name="label_4">
+                    <widget class="QLabel" name="label_fontWeight">
+                     <property name="minimumSize">
+                      <size>
+                       <width>30</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>30</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
                      <property name="styleSheet">
                       <string notr="true">QLabel
 {
 color: #ff4a38;
+margin-left:2px;
 }</string>
                      </property>
                      <property name="text">
@@ -956,7 +1036,7 @@ color: #ff4a38;
                </widget>
               </item>
               <item>
-               <widget class="QGroupBox" name="groupBox_7">
+               <widget class="QGroupBox" name="groupBox_fontWeight">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -987,8 +1067,8 @@ QGroupBox::title
     subcontrol-origin: margin;
     subcontrol-position: top center; /* position at the top center */
     padding: 0 3px;
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #FFOECE, stop: 1 #FFFFFF);
+    /*background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #FFOECE, stop: 1 #FFFFFF);*/
 }
 
 QGroupBox::indicator 
@@ -1027,7 +1107,7 @@ QGroupBox::indicator:unchecked
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_14">
                    <item>
-                    <widget class="QSlider" name="horizontalSlider_3">
+                    <widget class="QSlider" name="horizontalSlider_fontSize">
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
@@ -1086,7 +1166,7 @@ border-radius:5px;
 QSlider::add-page:horizontal,QSlider::add-line:horizontal
 {
 border-radius:2px;
-background-color:yellow;
+background-color:#61f6ff;
 }
 
 /*已划过的区域，左边界线*/
@@ -1103,11 +1183,24 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLabel" name="label_6">
+                    <widget class="QLabel" name="label_fontSize">
+                     <property name="minimumSize">
+                      <size>
+                       <width>30</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>30</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
                      <property name="styleSheet">
                       <string notr="true">QLabel
 {
 color: #ff4a38;
+margin-left:2px;
 }</string>
                      </property>
                      <property name="text">
@@ -1121,7 +1214,7 @@ color: #ff4a38;
                </widget>
               </item>
               <item>
-               <widget class="QGroupBox" name="groupBox_8">
+               <widget class="QGroupBox" name="groupBox_speed">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -1152,8 +1245,8 @@ QGroupBox::title
     subcontrol-origin: margin;
     subcontrol-position: top center; /* position at the top center */
     padding: 0 3px;
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #FFOECE, stop: 1 #FFFFFF);
+   /*background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #FFOECE, stop: 1 #FFFFFF);*/
 }
 
 QGroupBox::indicator 
@@ -1192,7 +1285,7 @@ QGroupBox::indicator:unchecked
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_16">
                    <item>
-                    <widget class="QSlider" name="horizontalSlider_4">
+                    <widget class="QSlider" name="horizontalSlider_speed">
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
@@ -1251,7 +1344,7 @@ border-radius:5px;
 QSlider::add-page:horizontal,QSlider::add-line:horizontal
 {
 border-radius:2px;
-background-color:yellow;
+background-color:#61f6ff;
 }
 
 /*已划过的区域，左边界线*/
@@ -1268,11 +1361,24 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLabel" name="label_8">
+                    <widget class="QLabel" name="label_speed">
+                     <property name="minimumSize">
+                      <size>
+                       <width>30</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>30</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
                      <property name="styleSheet">
                       <string notr="true">QLabel
 {
 color: #ff4a38;
+margin-left:2px;
 }</string>
                      </property>
                      <property name="text">
@@ -1307,7 +1413,7 @@ color: #ff4a38;
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="pushButton_19">
+                 <widget class="QPushButton" name="pushButton_default">
                   <property name="minimumSize">
                    <size>
                     <width>120</width>
@@ -1353,7 +1459,7 @@ border: 1px solid #208bd5;
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="tab_3">
+          <widget class="QWidget" name="tab_mask">
            <attribute name="title">
             <string>屏蔽设置</string>
            </attribute>
@@ -1407,7 +1513,7 @@ padding-left: 5px;
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="lineEdit">
+                 <widget class="QLineEdit" name="lineEdit_mask">
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
@@ -1426,6 +1532,7 @@ padding-left: 5px;
 color: #4a4a4a;
 border-radius: 18px;
 margin: 0px 0px;
+padding-left:15px;
 border: 1px solid #2a2a2c;
 background-color: #1c1c1c;
 }
@@ -1436,14 +1543,14 @@ color: white;
 }</string>
                   </property>
                   <property name="text">
-                   <string>输入屏蔽词，按回车键添加</string>
+                   <string/>
                   </property>
                  </widget>
                 </item>
                </layout>
               </item>
               <item>
-               <widget class="QListWidget" name="listWidget">
+               <widget class="QListWidget" name="listWidget_maskList">
                 <property name="styleSheet">
                  <string notr="true">QListWidget
 {
@@ -1462,31 +1569,6 @@ QListWidget::item:hover
 color: white;
 }</string>
                 </property>
-                <item>
-                 <property name="text">
-                  <string>国家</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>名族</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>国外</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>VPN</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>翻墙</string>
-                 </property>
-                </item>
                </widget>
               </item>
              </layout>

@@ -493,7 +493,7 @@ border:none;
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="lineEditSearch">
+                 <widget class="CusLineEdit" name="lineEditSearch">
                   <property name="minimumSize">
                    <size>
                     <width>150</width>
@@ -514,13 +514,13 @@ color:#cccccc;
 font: 10pt &quot;楷体&quot;;
 background-color: #3c3842;
 selection-background-color: #D1DBCB;
-border-right:transparent;
+/*border-right:transparent;*/
 /*border:1px solid #ff5c38;*/
 border-top-left-radius:18;
-border-top-right-radius:0;
-border-bottom-right-radius:0;
+border-top-right-radius:18;
+border-bottom-right-radius:18;
 border-bottom-left-radius:18;
-padding-right:-2px;
+/*padding-right:-2px;*/
 padding-left:15px;
 }
 /*
@@ -1794,6 +1794,13 @@ border: 1px solid #3C80B1;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CusLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customer/CusLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

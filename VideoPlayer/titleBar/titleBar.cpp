@@ -128,8 +128,11 @@ void TitleBar::initWorker()
     ui->lineEdit_simpSearch->addAction(m_actEngine, QLineEdit::LeadingPosition);//左侧
     ui->lineEdit_simpSearch->addAction(m_actSSearch, QLineEdit::TrailingPosition);//右侧
 
+//    m_actHotRank = new QAction(QIcon("://images/home/rank_alllist.png"),"");
+//    ui->lineEditSearch->addAction(m_actHotRank,QLineEdit::TrailingPosition);//显示在右侧
     ui->lineEditSearch->installEventFilter(this);//输入检索字
     ui->BtnSearch->installEventFilter(this);
+    ui->BtnSearch->setHidden(true);//被隐藏掉
     ui->lineEdit_webSearch->installEventFilter(this);//输入网址
 
     m_searchForm = new SearchForm();//不指定父控件，也不加布局，需要手动删除
@@ -342,6 +345,7 @@ void TitleBar::chandleSignalAndSLots()
               slot_setCurrentWebSiteCollectStatus(text);//设置样式
     });
 
+    //搜索框---回车
     connect(ui->lineEditSearch,&QLineEdit::returnPressed,[=](){
         QString his = ui->lineEditSearch->text().trimmed();
         m_searchForm->addHistoryItem(his);
@@ -917,7 +921,7 @@ bool TitleBar::eventFilter(QObject *watched, QEvent *event)
 {
     if(event->type() == QEvent::MouseButtonPress && watched == this)
     {
-       //鼠标单击空白处，获得焦点
+       //搜索框---鼠标单击空白处，获得焦点
         ui->lineEditSearch->clearFocus();
         this->setFocus();
         slot_clearAllPopupUi();
@@ -976,6 +980,7 @@ void TitleBar::showEvent(QShowEvent *event)
 {
     Q_UNUSED(event);
     this->setFocusPolicy(Qt::NoFocus);
+    //搜索框---设置焦点
     ui->lineEditSearch->setFocus();
     ui->lineEditSearch->setFocusPolicy(Qt::StrongFocus);
     ui->lineEdit_webSearch->setFocus();
@@ -1064,6 +1069,7 @@ void TitleBar::isNecessaryShowSearch(int index)
 /*槽函数 --public 处理鼠标进入离开的样式*/
 void TitleBar::mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event)
 {
+    //搜索框---监视
     if(watched == ui->lineEditSearch)
     {
         if(event->type() == QEvent::Leave)
@@ -1071,12 +1077,13 @@ void TitleBar::mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event)
             ui->lineEditSearch->setStyleSheet("QLineEdit{"
                                               "color:#cccccc;"
                                               "font: 10pt Microsoft YaHei;"
-                                              "margin-right:-3px;"
                                               "padding-left:15px;"
                                               "background-color: #3c3842;"
                                               "border:1px solid transparent;"
                                               "border-top-left-radius:18;"
                                               "border-bottom-left-radius:18;"
+                                              "border-top-right-radius:18;"
+                                              "border-bottom-right-radius:18;"
                                               "}");
             ui->BtnSearch->setStyleSheet("QPushButton{"
                                          "background-color:#44444f;"
@@ -1091,12 +1098,12 @@ void TitleBar::mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event)
                                               "color:#aeada7;"
                                               "font: 10pt Microsoft YaHei;"
                                               "padding-left:15px;"
-                                              "margin-right:-3px;"
-                                              "border-right:-2px;"
                                               "background-color: #3a2f36;"
-                                              "border:1px solid #ff5c38;"
+                                              "border:1px solid #00beff;"
                                               "border-top-left-radius:18;"
                                               "border-bottom-left-radius:18;"
+                                              "border-top-right-radius:18;"
+                                              "border-bottom-right-radius:18;"
                                               "}");
             ui->BtnSearch->setStyleSheet("QPushButton{"
                                          "background-color:#ff5246;"
@@ -1115,12 +1122,13 @@ void TitleBar::mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event)
             ui->lineEditSearch->setStyleSheet("QLineEdit{"
                                               "color:#cccccc;"
                                               "font: 10pt Microsoft YaHei;"
-                                              "margin-right:-3px;"
                                               "padding-left:15px;"
                                               "background-color: #3c3842;"
                                               "border:1px solid transparent;"
                                               "border-top-left-radius:18;"
                                               "border-bottom-left-radius:18;"
+                                              "border-top-right-radius:18;"
+                                              "border-bottom-right-radius:18;"
                                               "}");
             ui->BtnSearch->setStyleSheet("QPushButton{"
                                          "background-color:#44444f;"
@@ -1133,13 +1141,13 @@ void TitleBar::mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event)
         {
             ui->lineEditSearch->setStyleSheet("QLineEdit{"
                                               "font: 10pt Microsoft YaHei;"
-                                              "margin-right:-3px;"
                                               "padding-left:15px;"
-                                              "border-right:-2px;"
                                               "background-color: #3a2f36;"
-                                              "border:1px solid #ff5c38;"
+                                              "border:1px solid #00beff;"
                                               "border-top-left-radius:18;"
                                               "border-bottom-left-radius:18;"
+                                              "border-top-right-radius:18;"
+                                              "border-bottom-right-radius:18;"
                                               "}");
             ui->BtnSearch->setStyleSheet("QPushButton{"
                                          "background-color:#ff5246;"
@@ -1155,6 +1163,7 @@ void TitleBar::mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event)
 /*搜索框按下释放*/
 void TitleBar::mouseIsPressReleaseLineEdit(QObject *watched, QEvent *event)
 {
+    //搜索框---监视
     if(watched == ui->lineEditSearch)
     {
         if(event->type() == QEvent::MouseButtonPress)
@@ -1162,7 +1171,7 @@ void TitleBar::mouseIsPressReleaseLineEdit(QObject *watched, QEvent *event)
             int x = this->mapToGlobal(ui->lineEditSearch->pos()+ui->stackedWidget->pos()+this->pos()).x();
             int y = this->mapToGlobal(ui->lineEditSearch->pos()+ui->stackedWidget->pos()+this->pos()).y();
             int height = ui->lineEditSearch->height();
-            m_searchForm->setGeometry(x+10,y+height-2,ui->lineEditSearch->width()+ui->BtnSearch->width()-26,m_searchForm->height());
+            m_searchForm->setGeometry(x+10,y+height-2,ui->lineEditSearch->width()-26,m_searchForm->height());
             m_searchForm->raise();//必须提升界面所处层次
             m_searchForm->show();
         }

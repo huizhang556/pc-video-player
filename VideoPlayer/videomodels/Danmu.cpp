@@ -1,60 +1,84 @@
 ﻿#include "Danmu.h"
 
-Danmu::Danmu(QWidget * parent,QString text,QString color,int type,QRect rect,QFont danmuFont,double Transparency,int runTime):QLabel(parent)
+Danmu::Danmu(QWidget * parent,QString text,ColorType color,int type,QRect rect,QFont danmuFont,double Transparency,int runTime):QLabel(parent)
 {
     DText = text;
     //this->setText(text);        //设置内容
-    this->setColor(color);      //设置内容
+//    this->setColor(color);      //设置内容
     this->setType(type);        //设置类型
     this->setQFont(danmuFont);      //弹幕字体
     this->setTransparency(Transparency);        //弹幕透明度
     this->setRunTime(runTime);
     this->setScreenRect(rect);
     QFontMetrics metrics(this->getQFont());
-    QPalette palll=QPalette();
-    QString DColor = this->getColor();
+    QPalette palll = QPalette();
+//    QString DColor = this->getColor();
     anim2 = NULL;
     //颜色字符串转化为特定的颜色
-    if(DColor == "White"){
-        palll.setColor(QPalette::WindowText,QColor(255,255,246,255));
-        this->setQColor(QColor(255,255,246,255));
-    }else if(DColor =="Red"){
-        palll.setColor(QPalette::WindowText,QColor(231,0,18,255));
-        this->setQColor(QColor(231,0,18,255));
-    }else if(DColor =="Yellow"){
-        palll.setColor(QPalette::WindowText,QColor(254,241,2,255));
-        this->setQColor(QColor(254,241,2,255));
-    }else if(DColor == "Green"){
-        palll.setColor(QPalette::WindowText,QColor(0,152,67,255));
-        this->setQColor(QColor(0,152,67,255));
-    }else if(DColor == "Blue"){
-        palll.setColor(QPalette::WindowText,QColor(0,160,234,255));
-        this->setQColor(QColor(0,160,234,255));
-    }else if(DColor == "Pink"){
-        palll.setColor(QPalette::WindowText,QColor(226,2,127,255));
-        this->setQColor(QColor(226,2,127,255));
-    }else if(DColor == "Grass"){
-        palll.setColor(QPalette::WindowText,QColor(144,195,32,255));
-        this->setQColor(QColor(144,195,32,255));
-    }else if(DColor == "DBlue"){
-        palll.setColor(QPalette::WindowText,QColor(0,46,114,255));
-        this->setQColor(QColor(0,46,114,255));
-    }else if(DColor == "DYellow"){
-        palll.setColor(QPalette::WindowText,QColor(240,171,42,255));
-        this->setQColor(QColor(240,171,42,255));
-    }else if(DColor =="DPurple"){
-        palll.setColor(QPalette::WindowText,QColor(104,58,123,255));
-        this->setQColor(QColor(104,58,123,255));
-    }else if(DColor == "LBlue"){
-        palll.setColor(QPalette::WindowText,QColor(129,193,205,255));
-        this->setQColor(QColor(129,193,205,255));
-    }else if(DColor =="Brown"){
-        palll.setColor(QPalette::WindowText,QColor(149,119,57,255));
-        this->setQColor(QColor(149,119,57,255));
-    }else{
+    switch (color)
+    {
+    case ColorType::VIPBlue:
+    {
+        palll.setColor(QPalette::WindowText,QColor(12, 134, 141,255));
+        this->setQColor(QColor(12, 134, 141,255));
+    }
+        break;
+    case ColorType::VIPGolden:
+    {
+        palll.setColor(QPalette::WindowText,QColor(250, 216, 142,255));
+        this->setQColor(QColor(250, 216, 142,255));
+    }
+        break;
+    case ColorType::VIPPink:
+    {
+        palll.setColor(QPalette::WindowText,QColor(255, 7, 143,255));
+        this->setQColor(QColor(255, 7, 143,255));
+    }
+        break;
+    case ColorType::NVIPDefault:
+    {
+        palll.setColor(QPalette::WindowText,QColor(12, 134, 141,255));
+        this->setQColor(QColor(12, 134, 141,255));
+    }
+        break;
+    case ColorType::NVIPGreen:
+    {
+        palll.setColor(QPalette::WindowText,QColor(7, 180, 130,255));
+        this->setQColor(QColor(7, 180, 130,255));
+    }
+        break;
+    case ColorType::NVIPBlue:
+    {
+        palll.setColor(QPalette::WindowText,QColor(32, 139, 213,255));
+        this->setQColor(QColor(32, 139, 213,255));
+    }
+        break;
+    case ColorType::NVIPOrange:
+    {
+        palll.setColor(QPalette::WindowText,QColor(210, 115, 52,255));
+        this->setQColor(QColor(210, 115, 52,255));
+    }
+        break;
+    case ColorType::NVIPRed:
+    {
+        palll.setColor(QPalette::WindowText,QColor(202, 35, 79,255));
+        this->setQColor(QColor(202, 35, 79,255));
+    }
+        break;
+    case ColorType::NVIPViolet:
+    {
+        palll.setColor(QPalette::WindowText,QColor(157, 117, 202,255));
+        this->setQColor(QColor(157, 117, 202,255));
+    }
+        break;
+    default:
+    {
         palll.setColor(QPalette::WindowText,QColor(255,255,246,255));
         this->setQColor(QColor(255,255,246,255));
     }
+        break;
+    }
+
     this->setPalette(palll);        //设置调色盘
     //弹幕的屏幕坐标全部都是绝对坐标（相对于桌面坐标而言），传进来的rect变量就是绝对坐标
     this->setFixedHeight(metrics.height()+5);
@@ -62,7 +86,16 @@ Danmu::Danmu(QWidget * parent,QString text,QString color,int type,QRect rect,QFo
     int yy = qrand()%(rect.height());
     qDebug() << QString(u8"随机的起始高度+60：") << yy;
     int y = yy<(rect.height()-metrics.height()-5)?(yy):(rect.height()-metrics.height()-5);//随机值小于窗口高度-字体像素高度则真
-    qDebug() << QString(u8"计算后确定的起始高度：") << y;
+    if(y < rect.y())
+    {
+        y = rect.y()+80 + metrics.height()+5;//显示在标题栏以下
+    }
+    else if(y > rect.y() + rect.height())
+    {
+        y = rect.y() + rect.height() - metrics.height()-5 - 90;//最底部减去文字高度,减去控制栏高度
+    }
+
+    qDebug() << QString(u8"显示的屏幕高度：") << rect.height() << QString(u8"计算后确定的起始高度：") << y;
 //    int xx = rect.width()+qrand()%500;
     int xx = rect.width()+rect.x()-metrics.width(DText);
     qDebug() << QString(u8"计算后确定的起始横坐标：") << xx;
@@ -230,4 +263,24 @@ int Danmu::getRunTime()
 QPropertyAnimation * Danmu::getanimation()
 {
     return anim2;
+}
+
+void Danmu::release()
+{
+//    this->hide();
+    this->close();
+}
+
+void Danmu::remove(bool open)
+{
+    if(open)
+    {
+//        anim2->resume();
+        this->show();
+    }
+    else
+    {
+//        anim2->pause();
+        this->hide();
+    }
 }

@@ -15,7 +15,6 @@ public:
     explicit CusFileDialog(QWidget *parent = nullptr);
     ~CusFileDialog();
     void initWorkUI();
-
     void chandleSignalsAndSLots();
 
 private:

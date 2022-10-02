@@ -21,7 +21,8 @@ MainWidget::MainWidget(QWidget *parent) :
     m_winMax(false),
     m_firstOpen(true)
 {
-    setMinimumSize(1500,950);//1320,800 1500,950
+    setMinimumSize(985,670);//1320,800 1500,950
+    this->resize(QSize(1500,920));
     setMouseTracking(true);
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);
     setWindowTitle(QString::fromLocal8Bit("Qt简易视频播放器主界面"));
@@ -220,10 +221,10 @@ void MainWidget::initOtherWidgetUi()
 //设置StackedWidget布局每个page界面
 void MainWidget::setStackedWidgetPage()
 {
-    m_stackWidget_center->insertWidget(0,m_homeWidget);//m_mainShowForm
+    m_stackWidget_center->insertWidget(0,m_videoMember);//m_mainShowForm
     m_stackWidget_center->insertWidget(1,m_webStackWgt);//m_webStackWgt
     m_stackWidget_center->insertWidget(2,m_mainVideoMv);
-    m_stackWidget_center->insertWidget(3,m_videoMember);
+    m_stackWidget_center->insertWidget(3,m_homeWidget);//m_videoMember
     m_stackWidget_center->insertWidget(4,m_musicShow);//musicshow
     m_stackWidget_center->insertWidget(5,m_musicList);//musiclist
     m_stackWidget_center->insertWidget(6,m_personForm);//personform 个人管理

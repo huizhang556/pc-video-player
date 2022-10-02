@@ -6,7 +6,8 @@ SOURCES += \
     $$PWD/SystemTray.cpp \
     $$PWD/CusFileDialog.cpp \
     $$PWD/CustomTabStyle.cpp \
-    $$PWD/CustomFileDialog.cpp
+    $$PWD/CustomFileDialog.cpp \
+    $$PWD/CPushButton.cpp
 
 HEADERS += \
     $$PWD/CusTabWidget.h \
@@ -16,7 +17,8 @@ HEADERS += \
     $$PWD/SystemTray.h \
     $$PWD/CusFileDialog.h \
     $$PWD/CustomTabStyle.h \
-    $$PWD/CustomFileDialog.h
+    $$PWD/CustomFileDialog.h \
+    $$PWD/CPushButton.h
 
 FORMS += \
     $$PWD/CusTabWidget.ui \

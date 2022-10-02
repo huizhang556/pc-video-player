@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
         }
     }
 
-//    //05--->显示主界面
+    //05--->显示主界面
     MainWidget w1;
     w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
     w1.show();
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
 
 //    RankingList w1;
 //    w1.show();
-    splashscream.finish(&w1);
+//    splashscream.finish(&w1);
 
 
 
@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
 //    Slideshow s;
 //    s.show();
 
-//    CusLineEdit c(QIcon(":/images/icon/checked.png"));
+//    CusLineEdit c;
 //    c.show();
 
 //    TitleBar t;

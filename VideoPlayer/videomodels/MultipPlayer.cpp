@@ -35,7 +35,8 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
     m_playerState(QMediaPlayer::StoppedState)
 {
     ui->setupUi(this);
-    this->setMinimumSize(1320,800);//1320,800
+    this->setMinimumSize(985,670);//1320,800
+    this->resize(QSize(1240,775));
     this->setMouseTracking(true);//开启鼠标跟踪，适应捕捉屏幕
     this->setWindowFlags(Qt::FramelessWindowHint| //去掉标题栏
                          Qt::WindowMinMaxButtonsHint);
@@ -386,12 +387,14 @@ void MultipPlayer::chandleSignalAndSLots()
             ui->lineEdit_bullet->clear();
             ui->pushButton_bulletOn->setChecked(false);
             ui->lineEdit_bullet->setEnabled(false);
+            emit sig_videoDanmuStatus(false);//关闭弹幕
             qDebug() << QString(u8"设置为未选中");
         }
         else
         {
             ui->pushButton_bulletOn->setChecked(true);
             ui->lineEdit_bullet->setEnabled(true);
+            emit sig_videoDanmuStatus(true);//开启弹幕
             qDebug() << QString(u8"设置为选中");
         }
     });
@@ -407,16 +410,22 @@ void MultipPlayer::chandleSignalAndSLots()
     connect(ui->pushButton_openVip,&QPushButton::clicked,[=](){
         qDebug() << QString(u8"开通vip");
     });
-    //弹幕发送
+    //手动弹幕发送
     connect(ui->pushButton_sendbullet,&QPushButton::clicked,[=](){
         if(ui->pushButton_bulletOn->isChecked() && ui->lineEdit_bullet->isEnabled() && !ui->lineEdit_bullet->text().isEmpty())
         {
-            QRect screenPoint = ui->stackedWidget->parentWidget()->geometry();
-            Danmu *danmu = new Danmu(nullptr,ui->lineEdit_bullet->text(),"Green",1,screenPoint);//动画完成以后自动调用析构函数
-
-
+            if(m_danmuSetting->findMask(ui->lineEdit_bullet->text())) return;//禁用词语禁止发送
+            Danmu *danmu = new Danmu(nullptr,ui->lineEdit_bullet->text(),m_danmuSetting->getColor(),1,
+                                     calUpdateDanmuGeometry(),
+                                     QFont("Microsoft YaHei",m_danmuSetting->getFontSize(),m_danmuSetting->getFontWeight()),
+                                     m_danmuSetting->getTransNumber());//动画完成以后自动调用析构函数
             ui->lineEdit_bullet->clear();
             ui->lineEdit_bullet->setFocus();
+            connect(m_videoTitleBar,&VideoTitleBar::sig_winVClose,danmu,&Danmu::release);
+            connect(m_videoTitleBar,&VideoTitleBar::sig_winVMinimum,danmu,&Danmu::release);
+            connect(m_videoTitleBar,&VideoTitleBar::sig_winVRestore,danmu,&Danmu::release);
+            connect(m_videoTitleBar,&VideoTitleBar::sig_doubleClick,danmu,&Danmu::release);
+            connect(this,SIGNAL(sig_videoDanmuStatus(bool)),danmu,SLOT(remove(bool)));
         }
     });
 
@@ -424,10 +433,18 @@ void MultipPlayer::chandleSignalAndSLots()
     connect(ui->lineEdit_bullet,&QLineEdit::returnPressed,[=](){
         if(ui->pushButton_bulletOn->isChecked() && ui->lineEdit_bullet->isEnabled() && !ui->lineEdit_bullet->text().isEmpty())
         {
-            QRect screenPoint = ui->stackedWidget->parentWidget()->geometry();
-            Danmu *danmu = new Danmu(nullptr,ui->lineEdit_bullet->text(),"Green",1,screenPoint);//动画完成以后自动调用析构函数
+            if(m_danmuSetting->findMask(ui->lineEdit_bullet->text())) return;//禁用词语禁止发送
+            Danmu *danmu = new Danmu(nullptr,ui->lineEdit_bullet->text(),m_danmuSetting->getColor(),1,
+                                     calUpdateDanmuGeometry(),
+                                     QFont("Microsoft YaHei",m_danmuSetting->getFontSize(),m_danmuSetting->getFontWeight()),
+                                     m_danmuSetting->getTransNumber());//动画完成以后自动调用析构函数
             ui->lineEdit_bullet->clear();
             ui->lineEdit_bullet->setFocus();
+            connect(m_videoTitleBar,&VideoTitleBar::sig_winVClose,danmu,&Danmu::release);
+            connect(m_videoTitleBar,&VideoTitleBar::sig_winVMinimum,danmu,&Danmu::release);
+            connect(m_videoTitleBar,&VideoTitleBar::sig_winVRestore,danmu,&Danmu::release);
+            connect(m_videoTitleBar,&VideoTitleBar::sig_doubleClick,danmu,&Danmu::release);
+            connect(this,SIGNAL(sig_videoDanmuStatus(bool)),danmu,SLOT(remove(bool)));
         }
     });
 
@@ -2582,6 +2599,44 @@ void MultipPlayer::slot_selectAllListItem(QListWidget *obj)
     {
         return;
     }
+}
+
+//计算不同情况下弹幕的绝对位置
+QRect MultipPlayer::calUpdateDanmuGeometry()
+{
+    QRect screenPoint;
+    ui->stackedWidget->updateGeometry();
+    QRect tempRect  = ui->stackedWidget->parentWidget()->geometry();
+    if(!this->isMaximized())
+    {
+        if(m_widget1->isHidden())
+        {
+            screenPoint = QRect(tempRect.x(),tempRect.y()+60,tempRect.width(),tempRect.height()- 70);
+        }
+        else
+        {
+            screenPoint = QRect(tempRect.x(),tempRect.y()+60,tempRect.width()- m_widget1->width(),tempRect.height() - 70);
+        }
+    }
+    else
+    {
+        if(m_widget1->isHidden())
+        {
+            screenPoint = QRect(tempRect.x(),tempRect.y()+60,tempRect.width(),tempRect.height()-70);
+        }
+        else
+        {
+            screenPoint = QRect(tempRect.x(),tempRect.y()+60,tempRect.width() - m_widget1->width(),tempRect.height()-70);
+        }
+    }
+    return screenPoint;
+}
+
+void MultipPlayer::setDanmuInfo(Danmu *danmu, const QString &color, const QFont &danmuFont, double transDepth)
+{
+    danmu->setColor(color);
+    danmu->setFont(danmuFont);
+    danmu->setTransparency(transDepth);
 }
 
 

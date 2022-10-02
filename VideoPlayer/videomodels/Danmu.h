@@ -12,13 +12,27 @@
 #include <QTime>
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
+
+enum ColorType
+{
+    VIPBlue,
+    VIPGolden,  //金色
+    VIPPink,
+    NVIPDefault,
+    NVIPGreen,
+    NVIPBlue,   //蓝色
+    NVIPOrange, //橙色
+    NVIPRed,    //红色
+    NVIPViolet  //紫色
+};
+
 class Danmu : public QLabel{
 
     Q_OBJECT
 
   public:
 
-      Danmu(QWidget * parent,QString text,QString color,int type,QRect rect,QFont danmuFont = QFont("SimHei",20,100),double Transparency = 1.00,int runTime=15000);       //构造函数，常用
+      Danmu(QWidget * parent, QString text, ColorType color, int type, QRect rect, QFont danmuFont = QFont("SimHei",20,100), double Transparency = 1.00, int runTime=15000);       //构造函数，常用
 
       ~Danmu();     //析构函数
 
@@ -60,6 +74,12 @@ class Danmu : public QLabel{
       void setRunTime(int runTime);
 
       QPropertyAnimation * getanimation();
+
+public slots:
+
+      void  release();
+
+      void  remove(bool open);
 
   protected:
       void  paintEvent(QPaintEvent *);       //重点，弹幕的绘制函数

@@ -1,21 +1,12 @@
 ﻿#include "CusLineEdit.h"
 #include <QBoxLayout>
 
-CusLineEdit::CusLineEdit(const QString &btnText, QWidget *parent) :
+CusLineEdit::CusLineEdit(QWidget *parent):
     QLineEdit(parent)
 {
-    this->setFixedHeight(50);
-    m_button = new QPushButton(btnText);
-    setTextButton();
-    addButton();
-}
-
-CusLineEdit::CusLineEdit(const QIcon &icon, QWidget *parent)
-{
-    m_button = new QPushButton;
-    m_button->setIcon(icon);
-    setIconButton();
-    addButton();
+    this->setAttribute(Qt::WA_StyledBackground);
+    initWorkUI();
+    handleSignalsAndSLots();
 }
 
 CusLineEdit::~CusLineEdit()
@@ -23,53 +14,58 @@ CusLineEdit::~CusLineEdit()
 
 }
 
-void CusLineEdit::setTextButton()
+void CusLineEdit::initWorkUI()
 {
-    if (!m_button) {
-            return;
-        }
-        // 获得当前字体下文本内容的像素宽度
-        auto width = QWidget::fontMetrics().width(m_button->text());
-        setButtonSize(m_button, width,this->height()-buttonMargin*2);
+    //原样式表中QLineEdit生效
+    QString qss_lineEdit = R"(
+            QLineEdit{
+                background-color:#33373E;     /* 背景颜色 */
+                border: 1px solid #33373E;      /* 边框宽度为1px，颜色为#A0A0A0 */
+                border-radius: 18px;         /* 边框圆角 */
+                padding-left: 10px;           /* 文本距离左边界有5px */
+                color: #FFFFFF;     /* 文本颜色 */
+                selection-background-color: #A0A0A0;     /* 选中文本的背景颜色 */
+                selection-color: #F2F2F2;    /* 选中文本的颜色 */
+                font-family: \"Microsoft YaHei\";    /* 文本字体族 */
+                font-size:18px;    /* 文本字体大小 */
+            }
+        )";
+//    this->setStyleSheet(qss_lineEdit);
+    this->setPlaceholderText(u8"请输入搜索内容");
+    this->setFixedHeight(36);
+    this->setMinimumWidth(180);
+
+    m_pBtn = new CPushButton(this);
+    QHBoxLayout* pHlay = new QHBoxLayout(this);
+    pHlay->addStretch();
+    pHlay->addWidget(m_pBtn);
+    pHlay->setContentsMargins(0,0,2,0);
+    this->setTextMargins(10, 0, 32,0);//void setTextMargins(int left, int top, int right, int bottom);
 }
 
-void CusLineEdit::setIconButton()
+void CusLineEdit::handleSignalsAndSLots()
 {
-    if (!m_button) {
-            return;
-        }
+    connect(m_pBtn, &CPushButton::clicked,[=]()
+    {
 
-        // 获取图标的width简单得多
-        auto width = m_button->iconSize().width();
-        setButtonSize(m_button, width,this->height()-buttonMargin*2);
-        // 设置背景和边框在非点击时不可见
-        m_button->setFlat(true);
+    });
 }
 
-void CusLineEdit::addButton()
-{
-    // 按钮已经是edit的一部分了，不应该再能被单独聚焦，否则可能导致误触
-    m_button->setFocusPolicy(Qt::NoFocus);
-    // 设置鼠标，否则点击按钮时仍然会显示输入内容时的鼠标图标
-    m_button->setCursor(Qt::ArrowCursor);
 
-    auto btnLayout = new QHBoxLayout;
-    btnLayout->addStretch();
-    btnLayout->addWidget(m_button);
-    // 设置组件右对齐，按钮会显示在edit的右侧
-    btnLayout->setAlignment(Qt::AlignRight);
-    btnLayout->setContentsMargins(0, 0, 0, 0);
-    setLayout(btnLayout);
-    // 设置输入区域的范围，从edit的最左到按钮的最左(包含了按钮设置的buttonMargin)
-    setTextMargins(0, 0, m_button->width(), 0);
+
+void CusLineEdit::leaveEvent(QEvent *event)
+{
+    Q_UNUSED(event)
+    m_pBtn->setFixedWidth(32);
+    m_pBtn->leaveStyle();
+    this->setTextMargins(10, 0, 32,0);
 }
 
-void CusLineEdit::setButtonSize(QPushButton *button, int width, int height)
+void CusLineEdit::enterEvent(QEvent *event)
 {
-    auto policy = button->sizePolicy();
-    policy.setHorizontalPolicy(QSizePolicy::Fixed);
-    button->setSizePolicy(policy);
-    // 固定宽度，加上边距
-    button->setMinimumWidth((width+buttonMargin*2));
-    button->setMinimumHeight((height+buttonMargin*2));
+    Q_UNUSED(event)
+    m_pBtn->setFixedWidth(95);
+    m_pBtn->enterStyle();
+    this->setTextMargins(10, 0, 95,0);
 }
+
