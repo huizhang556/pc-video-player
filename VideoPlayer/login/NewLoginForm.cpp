@@ -1,18 +1,19 @@
 ﻿#include "NewLoginForm.h"
 #include "ui_NewLoginForm.h"
 
-#ifdef Q_OS_WIN
-#include <qt_windows.h>
-#include <Windows.h>
-#include <windowsx.h>
-#pragma comment (lib,"user32.lib")
-#endif
+//#ifdef Q_OS_WIN
+//#include <qt_windows.h>
+//#include <Windows.h>
+//#include <windowsx.h>
+//#pragma comment (lib,"user32.lib")
+//#endif
 
+#include <QAbstractItemView>
 #include <QDebug>
 //类外初始化
 NewLoginForm* NewLoginForm::m_pInstance = nullptr;
 
-NewLoginForm::NewLoginForm(QWidget *parent) :
+NewLoginForm::NewLoginForm(QWidget *parent):
     QDialog(parent),
     ui(new Ui::NewLoginForm)
 {
@@ -61,6 +62,18 @@ void NewLoginForm::initWorkUI()
     //解决QLineEdit回车键退出
     ui->pushButton_close->setFocusPolicy(Qt::NoFocus);//默认具有焦点
     ui->pushButton_register->setFocusPolicy(Qt::NoFocus);//默认具有焦点
+
+    //combobox弹框问题
+    ui->comboBox_area->installEventFilter(this);
+    ui->comboBox_area->setFocusPolicy(Qt::NoFocus);
+    ui->comboBox_regis_area->installEventFilter(this);
+    ui->comboBox_regis_area->setFocusPolicy(Qt::NoFocus);
+
+    //勾选协议（默认勾选）
+    ui->radioButton_check->setCheckable(true);
+    ui->radioButton_check->setChecked(true);
+    ui->radioButton_regis_check->setCheckable(true);
+    ui->radioButton_regis_check->setChecked(true);
 }
 
 void NewLoginForm::chandleSignalsAndSLots()
@@ -183,13 +196,31 @@ void NewLoginForm::paintEvent(QPaintEvent *event)
 void NewLoginForm::mousePressEvent(QMouseEvent *event)
 {
     Q_UNUSED(event)
-    QPoint orign_point = this->pos();
-    QPoint new_point = event->globalPos();
-    m_mvPos = new_point - orign_point;
+//    QPoint orign_point = this->pos();
+//    QPoint new_point = event->globalPos();
+//    m_mvPos = new_point - orign_point;
 }
 
 void NewLoginForm::mouseMoveEvent(QMouseEvent *event)
 {
     Q_UNUSED(event)
-    this->move(event->globalPos() - m_mvPos);
+//    this->move(event->globalPos() - m_mvPos);
+//    if(ReleaseCapture())
+//    {
+//        QWidget* pWindow = this->window();
+//        if(pWindow->isTopLevel())
+//        {
+//            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
+//        }
+//    }
+//    event->ignore();
+}
+
+bool NewLoginForm::eventFilter(QObject *obj, QEvent *ev)
+{
+    if(obj == ui->comboBox_area)
+    {
+
+    }
+    return QWidget::eventFilter(obj,ev);
 }

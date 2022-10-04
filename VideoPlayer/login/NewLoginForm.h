@@ -38,11 +38,13 @@ protected:
     void        paintEvent(QPaintEvent* event) override;
     void        mousePressEvent(QMouseEvent *event) override;
     void        mouseMoveEvent(QMouseEvent *event) override;
+    bool        eventFilter(QObject *obj, QEvent *ev) override;
+
 
 private:
     explicit NewLoginForm(QWidget *parent = nullptr);
     Ui::NewLoginForm *ui;
-    QPoint  m_mvPos;
+//    QPoint  m_mvPos;
     QAction *m_actionShowPwd;//查看密码
     static  NewLoginForm* m_pInstance;
 };

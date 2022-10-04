@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
 
 //    RankingList w1;
 //    w1.show();
-//    splashscream.finish(&w1);
+    splashscream.finish(&w1);
 
 
 

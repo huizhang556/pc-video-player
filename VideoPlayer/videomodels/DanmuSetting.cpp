@@ -178,8 +178,15 @@ bool DanmuSetting::findMask(const QString &text)
 {
     for(int i = 0; i <ui->listWidget_maskList->count(); i++)
     {
-        if(ui->listWidget_maskList->item(i)->text() == text)
+        //判断 是否有敏感字符串在内（两方面都判断）
+        if(ui->listWidget_maskList->item(i)->text().contains(text,Qt::CaseInsensitive))//大小写不敏感
+        {
             return true;
+        }
+        else if(text.contains(ui->listWidget_maskList->item(i)->text(),Qt::CaseInsensitive))
+        {
+            return true;
+        }
     }
     return false;
 }
