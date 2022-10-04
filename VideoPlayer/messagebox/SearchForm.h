@@ -18,6 +18,10 @@ public:
 
     void initWorkUi();
     void chandleSignalsAndSlot();
+
+public slots:
+    void    slot_addHotRecommendItems(const QStringList & str_list);
+
 protected:
     void leaveEvent(QEvent *event) override;
 private:

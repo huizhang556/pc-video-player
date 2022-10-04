@@ -47,7 +47,7 @@ void CusLineEdit::handleSignalsAndSLots()
 {
     connect(m_pBtn, &CPushButton::clicked,[=]()
     {
-
+        emit sig_Search(this->text());
     });
 }
 

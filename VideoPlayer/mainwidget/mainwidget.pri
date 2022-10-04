@@ -11,7 +11,6 @@ SOURCES += \
     $$PWD/recommend/GalleryItemForm.cpp \
     $$PWD/recommend/PicWallItem.cpp \
     $$PWD/recommend/RecommendForm.cpp \
-    $$PWD/recommend/SearchForm.cpp \
     $$PWD/recommend/Slideshow.cpp \
     $$PWD/recommend/StackItem.cpp \
     $$PWD/recommend/StackItemForm.cpp \
@@ -58,7 +57,6 @@ HEADERS += \
     $$PWD/recommend/GalleryItemForm.h \
     $$PWD/recommend/PicWallItem.h \
     $$PWD/recommend/RecommendForm.h \
-    $$PWD/recommend/SearchForm.h \
     $$PWD/recommend/Slideshow.h \
     $$PWD/recommend/StackItem.h \
     $$PWD/recommend/StackItemForm.h \
@@ -104,7 +102,6 @@ FORMS += \
     $$PWD/recommend/GalleryItemForm.ui \
     $$PWD/recommend/PicWallItem.ui \
     $$PWD/recommend/RecommendForm.ui \
-    $$PWD/recommend/SearchForm.ui \
     $$PWD/recommend/Slideshow.ui \
     $$PWD/recommend/StackItem.ui \
     $$PWD/recommend/StackItemForm.ui \

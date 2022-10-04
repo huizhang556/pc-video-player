@@ -220,8 +220,21 @@ void TitleBar::chandleSignalAndSLots()
         slot_receivedLoginInfo(nick,head,grade);
     });
 
+    //new 登录回显登录信息
+    connect(NewLoginForm::getInstance(),&NewLoginForm::sig_sendLoginOK,[=](QString nick, QString head, int grade){
+        slot_receivedLoginInfo(nick,head,grade);
+    });
+
     //登陆之前清除痕迹
     connect(LoginPersonInfo::getInstance(),&LoginPersonInfo::sig_sendClearTempRecords,[=](){
+        m_listWdgt_history->clear();//清除搜索历史记录
+        m_listWdgt_colloect->clear();//清除收藏历史记录
+        slot_setCurrentWebSiteCollectStatus(ui->lineEdit_webSearch->text());
+        emit sig_sendClearTempRecords();
+    });
+
+    //new 登陆之前清除痕迹
+    connect(NewLoginForm::getInstance(),&NewLoginForm::sig_sendClearTempRecords,[=](){
         m_listWdgt_history->clear();//清除搜索历史记录
         m_listWdgt_colloect->clear();//清除收藏历史记录
         slot_setCurrentWebSiteCollectStatus(ui->lineEdit_webSearch->text());
@@ -346,12 +359,18 @@ void TitleBar::chandleSignalAndSLots()
     });
 
     //搜索框---回车
-    connect(ui->lineEditSearch,&QLineEdit::returnPressed,[=](){
+    connect(ui->lineEditSearch,&CusLineEdit::returnPressed,[=](){
         QString his = ui->lineEditSearch->text().trimmed();
         m_searchForm->addHistoryItem(his);
         qDebug() << "emit sig_sendNewSearch(his);";
         //处理其他事件
         //鼠标进入样式改变
+    });
+
+    //搜索框---搜索按钮
+    connect(ui->lineEditSearch,&CusLineEdit::sig_Search,[=](QString text){
+        m_searchForm->addHistoryItem(text.trimmed());
+        qDebug() << QString(u8"手动点击按钮搜索");
     });
 
     //网址收藏----单击收藏，双击显示列表
@@ -1182,10 +1201,10 @@ void TitleBar::mouseIsPressReleaseLineEdit(QObject *watched, QEvent *event)
     }
 }
 
-void TitleBar::serarchLineEditFacous(QObject *watched, QEvent *event)
-{
+//void TitleBar::serarchLineEditFacous(QObject *watched, QEvent *event)
+//{
 
-}
+//}
 
 /*左上角登陆*/
 void TitleBar::slot_switchToLoginPage(int mark, QString nick)
@@ -1200,7 +1219,7 @@ void TitleBar::slot_switchToLoginPage(int mark, QString nick)
         QFont font;
         font.setPixelSize(10);
         QFontMetrics   fontMetric = QFontMetrics(font);
-        QString text = fontMetric.elidedText(nick,Qt::ElideRight,80,0);//19个字宽以后，省略为...(10x19，字号x字数)
+        QString text = fontMetric.elidedText(nick,Qt::ElideRight,80,0);//19个字宽以后，省略为...(10x19，字号x字数,设置像素，字点大小就为-1，设置字点大小，像素就为-1)
         ui->pushButton_usernick->setText(text);
         ui->pushButton_usernick->setToolTip(nick);
         m_loginForm->slot_setPersonVipPage(1);

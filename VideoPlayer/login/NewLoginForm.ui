@@ -20,7 +20,10 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: #2c2d36;</string>
+   <string notr="true">QWidget
+{
+background-color: #2c2d36;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_36">
    <property name="spacing">
@@ -282,7 +285,7 @@ QTabBar::tab:only-one
 }</string>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="tab">
                 <attribute name="title">
@@ -384,13 +387,13 @@ border-bottom-width: 1px;
                          <widget class="QComboBox" name="comboBox_area">
                           <property name="minimumSize">
                            <size>
-                            <width>50</width>
+                            <width>60</width>
                             <height>30</height>
                            </size>
                           </property>
                           <property name="maximumSize">
                            <size>
-                            <width>50</width>
+                            <width>60</width>
                             <height>30</height>
                            </size>
                           </property>
@@ -1768,13 +1771,13 @@ border-bottom-width: 1px;
                        <widget class="QComboBox" name="comboBox_regis_area">
                         <property name="minimumSize">
                          <size>
-                          <width>50</width>
+                          <width>60</width>
                           <height>30</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>50</width>
+                          <width>60</width>
                           <height>30</height>
                          </size>
                         </property>
@@ -1978,6 +1981,111 @@ color: #2494e4;
                        </widget>
                       </item>
                      </layout>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_regis_emails">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QFrame
+{
+border: 0px solid rgba(58, 58, 65,0.7);
+border-bottom-width: 1px;
+}</string>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_19">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_emails">
+                      <property name="minimumSize">
+                       <size>
+                        <width>60</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>60</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QLabel
+{
+color: #717275;
+border: none;
+font: 75 11pt &quot;Microsoft YaHei UI&quot;;
+}</string>
+                      </property>
+                      <property name="text">
+                       <string>邮箱:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="lineEdit_regis_email">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QLineEdit
+{
+border:  none;
+color: white;
+font: 75 10pt &quot;Microsoft YaHei UI&quot;;
+padding-left: 5px;
+}
+
+QLineEdit:hover
+{
+
+}
+
+</string>
+                      </property>
+                     </widget>
                     </item>
                    </layout>
                   </widget>

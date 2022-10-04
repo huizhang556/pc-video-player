@@ -238,6 +238,46 @@ void DanmuSetting::setFontSize(int size)
 
 void DanmuSetting::setFontWeight(int size)
 {
+//    if(size < 100)
+//    {
+//        size = 100;
+//    }
+//    else if(size < 200)
+//    {
+//        size = 200;
+//    }
+//    else if(size < 300)
+//    {
+//        size = 300;
+//    }
+//    else if(size < 400)
+//    {
+//        size = 400;
+//    }
+//    else if(size < 500)
+//    {
+//        size = 500;
+//    }
+//    else if(size < 600)
+//    {
+//        size = 600;
+//    }
+//    else if(size < 700)
+//    {
+//        size = 700;
+//    }
+//    else if(size < 800)
+//    {
+//        size = 800;
+//    }
+//    else if(size < 900)
+//    {
+//        size = 900;
+//    }
+//    else if(size < 1001)
+//    {
+//        size = 1000;
+//    }
     m_fontWeight = size;
 }
 

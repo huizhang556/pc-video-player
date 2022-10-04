@@ -498,5 +498,8 @@
         <file>images/user/bullet_set_hover.png</file>
         <file>images/user/bullet_set_normal.png</file>
         <file>images/user/vtitle_mask.png</file>
+        <file>images/icon/message_error.png</file>
+        <file>images/icon/message_question.png</file>
+        <file>images/icon/message_warning.png</file>
     </qresource>
 </RCC>

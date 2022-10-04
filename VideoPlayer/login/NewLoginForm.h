@@ -6,6 +6,17 @@
 #include <QPainter>
 #include <QPaintEvent>
 #include <QDialog>
+#include <QColor>
+#include <QToolTip>
+#include <QDebug>
+
+
+enum TipType
+{
+    Normal = 0,
+    Error = 1,
+    Correct = 2
+};
 
 enum ShowType
 {
@@ -29,6 +40,8 @@ public:
     void        initWorkUI();
     void        chandleSignalsAndSLots();
     static      NewLoginForm* getInstance();
+    void        setType(TipType type);
+    static void showCText(TipType type, const QPoint &pos, const QString& text, QWidget *w, const QRect &rect, int msecShowTime);
 
 public slots:
     void        receiveLoginAppClose();
@@ -40,6 +53,14 @@ protected:
     void        mouseMoveEvent(QMouseEvent *event) override;
     bool        eventFilter(QObject *obj, QEvent *ev) override;
 
+private slots:
+    void        setUser_login();
+    void        setUser_register();
+    void        setUser_reSet();
+    void        setUser_findPwd();
+
+    void        slot_clearTempInputText();
+
 
 private:
     explicit NewLoginForm(QWidget *parent = nullptr);
@@ -47,6 +68,10 @@ private:
 //    QPoint  m_mvPos;
     QAction *m_actionShowPwd;//查看密码
     static  NewLoginForm* m_pInstance;
+
+signals:
+    void    sig_sendClearTempRecords();
+    void    sig_sendLoginOK(QString,QString,int);
 };
 
 #endif // NEWLOGINFORM_H

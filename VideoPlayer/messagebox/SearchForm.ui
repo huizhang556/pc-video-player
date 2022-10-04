@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>676</width>
-    <height>350</height>
+    <width>669</width>
+    <height>360</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>300</width>
-    <height>312</height>
+    <height>360</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>16777215</width>
-    <height>350</height>
+    <height>360</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -202,9 +202,15 @@ background-color: #2a2a32;
 
 QListWidget::item
 {
-min-height:22px;
+min-height:26px;
 background-color: #2a2a32;
+}
 
+QListWidget::item:selected
+{
+background-color: #2a2a32;
+font: 12pt &quot;楷体&quot;;
+color: #68686d;
 }
 
 QListWidget::item:hover
@@ -214,31 +220,6 @@ font: 12pt &quot;楷体&quot;;
 color: #56d6df;
 }</string>
          </property>
-         <item>
-          <property name="text">
-           <string>乌克兰局势</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>走向共和</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>成都旅行</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>中国机长</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>新疆自治区</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item>
@@ -255,8 +236,15 @@ background-color: #2a2a32;
 
 QListWidget::item
 {
-min-height:22px;
+min-height:26px;
 background-color: #2a2a32;
+}
+
+QListWidget::item:selected
+{
+background-color: #2a2a32;
+font: 12pt &quot;楷体&quot;;
+color: #68686d;
 }
 
 QListWidget::item:hover
@@ -266,31 +254,6 @@ font: 12pt &quot;楷体&quot;;
 color: #56d6df;
 }</string>
          </property>
-         <item>
-          <property name="text">
-           <string>搜索历史记录1</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>搜索历史记录2</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>搜索历史记录3</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>搜索历史记录4</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>搜索历史记录5</string>
-          </property>
-         </item>
         </widget>
        </item>
       </layout>
@@ -453,9 +416,15 @@ background-color: #2a2a32;
 
 QListWidget::item
 {
-min-height:22px;
+min-height:26px;
 background-color: #2a2a32;
+}
 
+QListWidget::item:selected
+{
+background-color: #2a2a32;
+font: 12pt &quot;楷体&quot;;
+color: #68686d;
 }
 
 QListWidget::item:hover
@@ -465,31 +434,6 @@ font: 12pt &quot;楷体&quot;;
 color: #56d6df;
 }</string>
          </property>
-         <item>
-          <property name="text">
-           <string>1 余生，请多指教</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>3 斗罗大陆</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>5 陈情令</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>7 追爱家族</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>9 才不要和老板谈恋爱</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item>
@@ -506,8 +450,15 @@ background-color: #2a2a32;
 
 QListWidget::item
 {
-min-height:22px;
+min-height:26px;
 background-color: #2a2a32;
+}
+
+QListWidget::item:selected
+{
+background-color: #2a2a32;
+font: 12pt &quot;楷体&quot;;
+color: #68686d;
 }
 
 QListWidget::item:hover
@@ -517,31 +468,6 @@ font: 12pt &quot;楷体&quot;;
 color: #56d6df;
 }</string>
          </property>
-         <item>
-          <property name="text">
-           <string>2 王牌对王牌 第7季</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>4 猎罪图鉴</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>6 中国机长</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>8 骨语2</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>10 雪中悍刀行</string>
-          </property>
-         </item>
         </widget>
        </item>
       </layout>

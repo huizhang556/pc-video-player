@@ -3,7 +3,7 @@
 #include "login/Login.h"
 #include "skin/MySkin.h"
 #include "titlebar/HeadHover.h"
-#include "mainwidget/recommend/SearchForm.h"
+#include "messagebox/SearchForm.h"
 #include "login/LoginPersonInfo.h"
 #include "login/NewLoginForm.h"
 #include "browser/WebDownLoadList.h"
@@ -50,7 +50,7 @@ public slots:
     void    mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event);
     void    setSelectAllTextStatus(QObject *watched, QEvent *event);//lineEdit按下
     void    mouseIsPressReleaseLineEdit(QObject *watched, QEvent *event);//搜索框点击事件
-    void    serarchLineEditFacous(QObject *watched, QEvent *event);
+//    void    serarchLineEditFacous(QObject *watched, QEvent *event);
     void    slot_switchToLoginPage(int mark,QString nick);//登录设置名称
     void    slot_setCurrentUserGrade(int grade);//设置当前用户等级
     void    slot_setButtonHelpEmitItem();

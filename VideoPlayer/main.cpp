@@ -15,7 +15,7 @@
 #include "videomodels/CommentTab.h"
 #include "customer/CusFileDialog.h"
 #include "browser/WebDownLoadList.h"
-#include "messagebox/CusMessageBox.h"
+#include "messagebox/CMessageBox.h"
 #include "mainwidget/recommend/RecommendForm.h"
 #include "videomodels/MultipPlayer.h"
 #include "videomodels/PersonFileForm.h"
@@ -100,11 +100,13 @@ int main(int argc, char *argv[])
     w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
     w1.show();
 
-//        MultipPlayer w1;
-//        w1.show();
+//    NewLoginForm::getInstance()->show();
 
-//    RankingList w1;
-//    w1.show();
+////        MultipPlayer w1;
+////        w1.show();
+
+////    RankingList w1;
+////    w1.show();
     splashscream.finish(&w1);
 
 
@@ -147,8 +149,8 @@ int main(int argc, char *argv[])
 //    NewWork m;
 //    m.show();
 
-//    CusMessageBox e;
-//    e.show();
+//    CMessageBox e(MessageType::CQuestion,"question","are you sure exit?");
+//    e.exec();
 
 //    CusFileDialog s;
 //    s.show();

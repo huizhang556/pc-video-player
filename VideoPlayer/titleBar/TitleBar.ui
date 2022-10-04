@@ -511,7 +511,7 @@ border:none;
 QLineEdit
 {
 color:#cccccc;
-font: 10pt &quot;楷体&quot;;
+font: 10pt &quot;微软雅黑&quot;;
 background-color: #3c3842;
 selection-background-color: #D1DBCB;
 /*border-right:transparent;*/
@@ -523,14 +523,7 @@ border-bottom-left-radius:18;
 /*padding-right:-2px;*/
 padding-left:15px;
 }
-/*
-QLineEdit:hover
-{
-background-color: #3a2f36;
-border-right:-2px;
-border:1px solid #ff5c38;
-}
-*/
+
 </string>
                   </property>
                   <property name="text">
