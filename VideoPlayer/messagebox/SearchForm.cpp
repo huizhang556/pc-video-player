@@ -1,6 +1,7 @@
 ﻿#include "SearchForm.h"
 #include "ui_SearchForm.h"
 #include "messagebox/CMessageBox.h"
+#include "titlebar/CusListItem.h"
 #include <QListWidgetItem>
 #include <QDebug>
 
@@ -22,6 +23,7 @@ SearchForm::~SearchForm()
 
 void SearchForm::initWorkUi()
 {
+    this->setFocusPolicy(Qt::NoFocus);
     ui->listWidget_his1->setFocusPolicy(Qt::NoFocus);
     ui->listWidget_his2->setFocusPolicy(Qt::NoFocus);
     ui->listWidget_hot1->setFocusPolicy(Qt::NoFocus);
@@ -95,18 +97,45 @@ void SearchForm::addHistoryItem(QString his)
         clearHistoryList();
     }
     qDebug() << his;
-    QListWidgetItem *item =  new QListWidgetItem(his);
+    QListWidgetItem *item =  new QListWidgetItem();
     if(ui->listWidget_his1->count() <= 4)
     {
-//      item->setSizeHint(QSize());
+        CusListItem *itemWidget1 = new CusListItem("://images/home/songlist_hot.png",his);
         ui->listWidget_his1->addItem(item);
-    }
-    else
-    {
-        if((ui->listWidget_his2->count() <= 4))
-        ui->listWidget_his2->addItem(item);
-    }
+        ui->listWidget_his1->setItemWidget(item,itemWidget1);
+        connect(itemWidget1,&CusListItem::sig_sendItemClose,[=]()
+        {
+            qDebug() << QString(u8"his1接收到删除信号");
+            itemWidget1->deleteLater();
+//            ui->listWidget_his1->takeItem(ui->listWidget_his1->row(item));
+            ui->listWidget_his1->removeItemWidget(item);
+            delete item;
+        });
 
+        connect(itemWidget1,&CusListItem::sig_sendItemText,[=](QString text)
+        {
+            qDebug() << QString(u8"历史记录")<<text;
+        });
+    }
+    else if((ui->listWidget_his2->count() <= 4))
+    {
+        CusListItem *itemWidget2 = new CusListItem("://images/home/songlist_new.png",his);
+        ui->listWidget_his2->addItem(item);
+        ui->listWidget_his2->setItemWidget(item,itemWidget2);
+        connect(itemWidget2,&CusListItem::sig_sendItemClose,[=]()
+        {
+            qDebug() << QString(u8"his2接收到删除信号");
+            itemWidget2->deleteLater();
+//            ui->listWidget_his2->takeItem(ui->listWidget_his1->row(item));
+            ui->listWidget_his2->removeItemWidget(item);
+            delete item;
+        });
+
+        connect(itemWidget2,&CusListItem::sig_sendItemText,[=](QString text)
+        {
+            qDebug() << QString(u8"历史记录")<<text;
+        });
+    }
 }
 
 void SearchForm::closeSearchForm()

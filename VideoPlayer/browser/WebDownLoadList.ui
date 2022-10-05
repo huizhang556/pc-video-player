@@ -86,7 +86,7 @@ border-radius:6px;
           <property name="styleSheet">
            <string notr="true">#widget_title
 {
-background-color:#41cd52;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #2f4359, stop:1  #03223a);
 }
 </string>
           </property>
@@ -118,13 +118,13 @@ background-color:#41cd52;
               <widget class="QLabel" name="label_title">
                <property name="minimumSize">
                 <size>
-                 <width>70</width>
+                 <width>75</width>
                  <height>25</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>70</width>
+                 <width>75</width>
                  <height>25</height>
                 </size>
                </property>
@@ -155,7 +155,7 @@ color: #2da7fa;
                 <string notr="true">QLabel
 {
 border:1px solid transparent;
-color:#ff8f00;
+color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #fc00ff, stop:1  #00dbde);;
 }</string>
                </property>
                <property name="text">
