@@ -1,5 +1,6 @@
 ﻿#include "Login.h"
 #include "ui_Login.h"
+#include "mainwidget/vipmember/BuyVip.h"
 #include <QPainter>
 
 Login::Login(QWidget *parent) :
@@ -54,6 +55,11 @@ void Login::handleSignalsAndSlots()
 
     //收到关闭程序信号
     connect(this,&Login::sig_LoginWinClose,NewLoginForm::getInstance(),&NewLoginForm::receiveLoginAppClose);
+
+    //开通vip
+    connect(ui->pushButton_openvip,&QPushButton::clicked,[=](){
+        BuyVip::getInstance()->exec();
+    });
 }
 
 

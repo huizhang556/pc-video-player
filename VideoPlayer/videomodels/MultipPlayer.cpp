@@ -35,7 +35,7 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
     m_playerState(QMediaPlayer::StoppedState)
 {
     ui->setupUi(this);
-    this->setMinimumSize(985,670);//1320,800
+    this->setMinimumSize(1028,670);//1320,800
     this->resize(QSize(1240,775));
     this->setMouseTracking(true);//开启鼠标跟踪，适应捕捉屏幕
     this->setWindowFlags(Qt::FramelessWindowHint| //去掉标题栏
