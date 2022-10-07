@@ -44,7 +44,8 @@ SOURCES += \
     $$PWD/CusLabel2.cpp \
     $$PWD/VideoHeadItem.cpp \
     $$PWD/vipmember/BuyVip.cpp \
-    $$PWD/vipmember/BuyVipItem.cpp
+    $$PWD/vipmember/BuyVipItem.cpp \
+    $$PWD/CusListWidget.cpp
 
 HEADERS += \
     $$PWD/songersort/SongerSort.h \
@@ -92,7 +93,8 @@ HEADERS += \
     $$PWD/CusLabel2.h \
     $$PWD/VideoHeadItem.h \
     $$PWD/vipmember/BuyVip.h \
-    $$PWD/vipmember/BuyVipItem.h
+    $$PWD/vipmember/BuyVipItem.h \
+    $$PWD/CusListWidget.h
 
 FORMS += \
     $$PWD/songersort/SongerSort.ui \
@@ -136,5 +138,6 @@ FORMS += \
     $$PWD/CusLabel2.ui \
     $$PWD/VideoHeadItem.ui \
     $$PWD/vipmember/BuyVip.ui \
-    $$PWD/vipmember/BuyVipItem.ui
+    $$PWD/vipmember/BuyVipItem.ui \
+    $$PWD/CusListWidget.ui
 

@@ -33,7 +33,7 @@
     <number>3</number>
    </property>
    <property name="bottomMargin">
-    <number>3</number>
+    <number>6</number>
    </property>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -41,16 +41,16 @@
       <number>0</number>
      </property>
      <property name="leftMargin">
-      <number>6</number>
+      <number>0</number>
      </property>
      <property name="topMargin">
-      <number>6</number>
+      <number>0</number>
      </property>
      <property name="rightMargin">
-      <number>6</number>
+      <number>0</number>
      </property>
      <property name="bottomMargin">
-      <number>6</number>
+      <number>0</number>
      </property>
      <item>
       <widget class="QFrame" name="frame">
@@ -87,13 +87,13 @@
           <property name="minimumSize">
            <size>
             <width>150</width>
-            <height>30</height>
+            <height>26</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>150</width>
-            <height>16777215</height>
+            <height>26</height>
            </size>
           </property>
           <property name="styleSheet">
@@ -106,7 +106,7 @@ font: 800 12pt &quot;Microsoft YaHei UI&quot;;
 }</string>
           </property>
           <property name="text">
-           <string>连续包年</string>
+           <string>连续包年(限时优惠)</string>
           </property>
          </widget>
         </item>
@@ -115,7 +115,13 @@ font: 800 12pt &quot;Microsoft YaHei UI&quot;;
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>26</height>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>20</height>
            </size>
           </property>
           <property name="styleSheet">

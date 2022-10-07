@@ -11,14 +11,21 @@
 
 BuyVip* BuyVip::m_pInstance = nullptr;
 
-BuyVip::BuyVip(QWidget *parent) :
+BuyVip::BuyVip(QWidget *parent):
     QDialog(parent),
     ui(new Ui::BuyVip)
 {
     ui->setupUi(this);
-    this->setFixedSize(580,615);
+    this->setFixedSize(580,600);
+    this->setAttribute(Qt::WA_Hover);
     this->setAttribute(Qt::WA_TranslucentBackground,true);
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowStaysOnTopHint);
+    initWorkUI();
+    handleSignalsAndSlots();
+}
+
+void BuyVip::initWorkUI()
+{
 
     ui->listWidget_musicvip->setViewMode(QListView::IconMode);
     ui->listWidget_videovip->setViewMode(QListView::IconMode);
@@ -49,6 +56,8 @@ BuyVip::BuyVip(QWidget *parent) :
     ui->listWidget_rightmusic->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_rightmusic->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
+    ui->tabWidget_vipType->setCurrentIndex(0);
+
     for(int i = 0; i < 4; i++)
     {
         BuyVipItem *buyItem = new BuyVipItem();
@@ -56,6 +65,10 @@ BuyVip::BuyVip(QWidget *parent) :
         item->setSizeHint(buyItem->size());
         ui->listWidget_musicvip->addItem(item);
         ui->listWidget_musicvip->setItemWidget(item,buyItem);
+        connect(buyItem,&BuyVipItem::sig_sendMouseClicked,[=](){
+//            qDebug() << QString(u8"设置item");
+            ui->listWidget_musicvip->setCurrentItem(item);
+        });
     }
 
     for(int i = 0; i < 4; i++)
@@ -65,6 +78,10 @@ BuyVip::BuyVip(QWidget *parent) :
         item->setSizeHint(buyItem->size());
         ui->listWidget_rightmusic->addItem(item);
         ui->listWidget_rightmusic->setItemWidget(item,buyItem);
+        connect(buyItem,&BuyVipItem::sig_sendMouseClicked,[=](){
+//            qDebug() << QString(u8"设置item");
+            ui->listWidget_rightmusic->setCurrentItem(item);
+        });
     }
 
 
@@ -75,13 +92,19 @@ BuyVip::BuyVip(QWidget *parent) :
         item->setSizeHint(buyItem->size());
         ui->listWidget_videovip->addItem(item);
         ui->listWidget_videovip->setItemWidget(item,buyItem);
+        connect(buyItem,&BuyVipItem::sig_sendMouseClicked,[=](){
+//            qDebug() << QString(u8"设置item");
+            ui->listWidget_videovip->setCurrentItem(item);
+        });
     }
 
+}
 
+void BuyVip::handleSignalsAndSlots()
+{
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){
         this->close();
     });
-
 }
 
 BuyVip::~BuyVip()
@@ -101,6 +124,7 @@ BuyVip *BuyVip::getInstance()
     }
     return m_pInstance;
 }
+
 
 void BuyVip::mousePressEvent(QMouseEvent *event)
 {

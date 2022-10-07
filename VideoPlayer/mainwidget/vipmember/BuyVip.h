@@ -14,6 +14,9 @@ class BuyVip : public QDialog
 public:
     ~BuyVip();
     static BuyVip*    getInstance();
+    void    initWorkUI();
+    void    handleSignalsAndSlots();
+
 protected:
    void  mousePressEvent(QMouseEvent *event) override;
 

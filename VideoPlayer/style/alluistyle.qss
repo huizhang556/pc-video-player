@@ -36,6 +36,15 @@ background-color: #2a2a31;
 /*2px边界线颜色在这里设置*/
 }
 
+/*特价优惠*/
+#m_itemMarkButton
+{
+border: none;
+color: #ffd386;
+border-radius: 8px;
+background-color: rgb(21, 196, 52);
+}
+
 /*********皮肤设置********/
 /*未选中*/
 #m_skinCheckedBtn
