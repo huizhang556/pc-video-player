@@ -22,6 +22,7 @@
 #include "videomodels/PlayOrderForm.h"
 #include "videomodels/DanmuSetting.h"
 #include "videomodels/VideoProgressBar.h"
+#include "mainwidget/vipmember/BuyVip.h"
 
 #include <QMap>
 #include <QMenu>

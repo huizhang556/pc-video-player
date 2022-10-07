@@ -14,11 +14,11 @@ RC_ICONS = favicon.ico
 
 # 以管理员运行(msvc方式)
 #mingw需要通过加入文件的形式
-#QMAKE_LFLAGS += /MANIFESTUAC:\"level=\'requireAdministrator\' uiAccess=\'false\'\"
+QMAKE_LFLAGS += /MANIFESTUAC:\"level=\'requireAdministrator\' uiAccess=\'false\'\"
 
 DEFINES += QT_DEPRECATED_WARNINGS
 #禁用qdebug打印输出
-#DEFINES     += QT_NO_DEBUG_OUTPUT
+DEFINES     += QT_NO_DEBUG_OUTPUT
 #调试窗口必须要release才能生效，而后再使用debug
 #CONFIG += console pro
 #关闭编译警告提示

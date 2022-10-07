@@ -16,6 +16,7 @@ class BuyVipItem : public QWidget
 
 public:
     explicit BuyVipItem(QWidget *parent = nullptr);
+    explicit BuyVipItem(const QString& type,const QString& oldprice,const QString& newprice,const QString& averageprice, QWidget *parent = nullptr);
     ~BuyVipItem();
     void    initWorkUI();
     void    handleSignalsAndSlots();

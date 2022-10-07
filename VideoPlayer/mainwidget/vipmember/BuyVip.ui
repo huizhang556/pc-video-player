@@ -463,7 +463,8 @@ QTabBar::tab:only-one
                  <property name="styleSheet">
                   <string notr="true">QLabel
 {
-color: white;
+color: rgb(255, 211, 134);
+font: 800 10pt &quot;Microsoft YaHei UI&quot;;
 }</string>
                  </property>
                  <property name="text">
@@ -494,8 +495,9 @@ background-color: transparent;
 
 QListWidget::item
 {
+color: transparent;
 margin:5px;
-border-radius: 10px;
+border-radius: 6px;
 background-color: rgb(247, 249, 252);
 }
 
@@ -557,7 +559,8 @@ background-color: rgb(255, 233, 192);
                  <property name="styleSheet">
                   <string notr="true">QLabel
 {
-color: white;
+color: rgb(255, 211, 134);
+font: 800 10pt &quot;Microsoft YaHei UI&quot;;
 }</string>
                  </property>
                  <property name="text">
@@ -588,8 +591,9 @@ background-color: transparent;
 
 QListWidget::item
 {
+color: transparent;
 margin:5px;
-border-radius: 10px;
+border-radius: 6px;
 background-color: rgb(247, 249, 252);
 }
 
@@ -792,28 +796,29 @@ border-image: url(:/images/user/newlogin_QRcode.png);
                         <number>0</number>
                        </property>
                        <item>
-                        <widget class="QLabel" name="label">
+                        <widget class="QLabel" name="label_payprice">
                          <property name="minimumSize">
                           <size>
                            <width>0</width>
-                           <height>26</height>
+                           <height>36</height>
                           </size>
                          </property>
                          <property name="maximumSize">
                           <size>
                            <width>16777215</width>
-                           <height>30</height>
+                           <height>36</height>
                           </size>
                          </property>
                          <property name="styleSheet">
                           <string notr="true">QLabel
 {
 color: #ff0000;
+padding-bottom: 18px;
 font: 75 12pt &quot;Microsoft YaHei UI&quot;;
 }</string>
                          </property>
                          <property name="text">
-                          <string>实付： 25元/月</string>
+                          <string>实付： 298元/月</string>
                          </property>
                         </widget>
                        </item>
@@ -1110,8 +1115,9 @@ background-color: transparent;
 
 QListWidget::item
 {
+color: transparent;
 margin:5px;
-border-radius: 10px;
+border-radius: 6px;
 background-color: rgb(247, 249, 252);
 }
 

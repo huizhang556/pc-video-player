@@ -10,7 +10,24 @@ BuyVipItem::BuyVipItem(QWidget *parent) :
     initWorkUI();
     handleSignalsAndSlots();
     this->installEventFilter(this);
-    setItemMark("://images/home/songlist_hot.png");
+    setItemMark(QString(u8"特价优惠"));
+    ui->pushButton_pricetype->installEventFilter(this);
+}
+
+BuyVipItem::BuyVipItem(const QString &type, const QString &oldprice, const QString &newprice, const QString &averageprice, QWidget *parent):
+    QWidget(parent),
+    ui(new Ui::BuyVipItem)
+{
+    ui->setupUi(this);
+    setFixedSize(170,100);
+    initWorkUI();
+    handleSignalsAndSlots();
+    this->installEventFilter(this);
+    setItemMark(QString(u8"特价优惠"));
+    ui->pushButton_pricetype->setText(type);
+    ui->label_origionprice->setText(oldprice);
+    ui->label_nowprice->setText(newprice);
+    ui->label_averageprice->setText(averageprice);
     ui->pushButton_pricetype->installEventFilter(this);
 }
 
@@ -43,7 +60,7 @@ void BuyVipItem::setItemMark(const QString &path)
     {
         m_itemMarkButton->setParent(this);
 //        m_itemMarkButton->setIcon(QIcon(path));
-        m_itemMarkButton->setText(QString(u8"特价优惠"));
+        m_itemMarkButton->setText(path);
         m_itemMarkButton->move(65,35);
     }
 

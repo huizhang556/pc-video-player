@@ -409,6 +409,7 @@ void MultipPlayer::chandleSignalAndSLots()
     //开通vip
     connect(ui->pushButton_openVip,&QPushButton::clicked,[=](){
         qDebug() << QString(u8"开通vip");
+        BuyVip::getInstance()->exec();
     });
     //手动弹幕发送
     connect(ui->pushButton_sendbullet,&QPushButton::clicked,[=](){

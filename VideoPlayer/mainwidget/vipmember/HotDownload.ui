@@ -99,7 +99,7 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #f39d5d, 
              <string notr="true">QPushButton
 {
 color: white;
-font: 25 12pt &quot;Microsoft YaHei&quot;;
+font: 800 12pt &quot;Microsoft YaHei&quot;;
 border: none;
 background-color: transparent;
 }</string>

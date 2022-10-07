@@ -26,6 +26,10 @@ BuyVip::BuyVip(QWidget *parent):
 
 void BuyVip::initWorkUI()
 {
+    m_strList.append(m_yearVip);
+    m_strList.append(m_quarterVip);
+    m_strList.append(m_monthVip);
+    m_strList.append(m_freeTimeVip);
 
     ui->listWidget_musicvip->setViewMode(QListView::IconMode);
     ui->listWidget_videovip->setViewMode(QListView::IconMode);
@@ -60,44 +64,50 @@ void BuyVip::initWorkUI()
 
     for(int i = 0; i < 4; i++)
     {
-        BuyVipItem *buyItem = new BuyVipItem();
-        QListWidgetItem *item = new QListWidgetItem();
+        BuyVipItem *buyItem = new BuyVipItem(m_strList.at(i).at(0),m_strList.at(i).at(1),m_strList.at(i).at(2),m_strList.at(i).at(3));
+        QListWidgetItem *item = new QListWidgetItem(m_strList.at(i).at(2));
         item->setSizeHint(buyItem->size());
         ui->listWidget_musicvip->addItem(item);
         ui->listWidget_musicvip->setItemWidget(item,buyItem);
         connect(buyItem,&BuyVipItem::sig_sendMouseClicked,[=](){
 //            qDebug() << QString(u8"设置item");
             ui->listWidget_musicvip->setCurrentItem(item);
+            ui->label_payprice->setText(QString(u8"实付： ")+m_strList.at(i).at(2));
         });
     }
+    ui->listWidget_musicvip->setCurrentRow(0);
 
     for(int i = 0; i < 4; i++)
     {
-        BuyVipItem *buyItem = new BuyVipItem();
-        QListWidgetItem *item = new QListWidgetItem();
+        BuyVipItem *buyItem = new BuyVipItem(m_strList.at(i).at(0),m_strList.at(i).at(1),m_strList.at(i).at(2),m_strList.at(i).at(3));
+        QListWidgetItem *item = new QListWidgetItem(m_strList.at(i).at(2));
         item->setSizeHint(buyItem->size());
         ui->listWidget_rightmusic->addItem(item);
         ui->listWidget_rightmusic->setItemWidget(item,buyItem);
         connect(buyItem,&BuyVipItem::sig_sendMouseClicked,[=](){
 //            qDebug() << QString(u8"设置item");
             ui->listWidget_rightmusic->setCurrentItem(item);
+            ui->label_payprice->setText(QString(u8"实付： ")+m_strList.at(i).at(2));
         });
     }
+    ui->listWidget_rightmusic->setCurrentRow(0);
 
 
     for(int i = 0; i < 4; i++)
     {
-        BuyVipItem *buyItem = new BuyVipItem();
-        QListWidgetItem *item = new QListWidgetItem();
+        BuyVipItem *buyItem = new BuyVipItem(m_strList.at(i).at(0),m_strList.at(i).at(1),m_strList.at(i).at(2),m_strList.at(i).at(3));
+        QListWidgetItem *item = new QListWidgetItem(m_strList.at(i).at(2));
         item->setSizeHint(buyItem->size());
         ui->listWidget_videovip->addItem(item);
         ui->listWidget_videovip->setItemWidget(item,buyItem);
         connect(buyItem,&BuyVipItem::sig_sendMouseClicked,[=](){
 //            qDebug() << QString(u8"设置item");
             ui->listWidget_videovip->setCurrentItem(item);
+            ui->label_payprice->setText(QString(u8"实付： ")+m_strList.at(i).at(2));
         });
     }
-
+    ui->listWidget_videovip->setCurrentRow(0);
+    ui->label_payprice->setText(QString(u8"实付： ")+m_strList.at(0).at(2));
 }
 
 void BuyVip::handleSignalsAndSlots()
