@@ -21,9 +21,11 @@ MusicPlaylist::MusicPlaylist(QWidget *parent) :
 //    ui->lineEdit_searchSong->addAction(m_songAction, QLineEdit::TrailingPosition);// 右侧显示
 //    connect(m_songAction,&QAction::triggered,[=](){ui->lineEdit_searchSong->clear();});
 
-
+    ui->tabWidget->setCurrentIndex(0);
 
     ui->listWidget_songer->installEventFilter(this);
+    ui->listWidget_songer->setViewMode(QListView::ListMode);
+    ui->listWidget_songer->setVerticalScrollMode(QAbstractItemView::ScrollPerItem);//像素滚动
     ui->listWidget_songer->setContextMenuPolicy(Qt::CustomContextMenu);//自定义菜单
 
     ui->lineEdit_searchSong->setEnabled(false);//空时不能搜索

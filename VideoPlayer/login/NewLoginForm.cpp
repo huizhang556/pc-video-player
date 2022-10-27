@@ -19,7 +19,7 @@ NewLoginForm::NewLoginForm(QWidget *parent):
 {
     ui->setupUi(this);
     setFixedSize(700,455);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool |Qt::WindowMinMaxButtonsHint | Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowMinMaxButtonsHint | Qt::WindowStaysOnTopHint);
     setAttribute(Qt::WA_TranslucentBackground,true);
     initWorkUI();
     chandleSignalsAndSLots();

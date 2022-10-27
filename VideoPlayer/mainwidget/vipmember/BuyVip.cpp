@@ -16,7 +16,7 @@ BuyVip::BuyVip(QWidget *parent):
     ui(new Ui::BuyVip)
 {
     ui->setupUi(this);
-    this->setFixedSize(580,600);
+    this->setFixedSize(666,570);
     this->setAttribute(Qt::WA_Hover);
     this->setAttribute(Qt::WA_TranslucentBackground,true);
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowStaysOnTopHint);

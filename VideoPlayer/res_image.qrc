@@ -501,5 +501,12 @@
         <file>images/icon/message_error.png</file>
         <file>images/icon/message_question.png</file>
         <file>images/icon/message_warning.png</file>
+        <file>images/bgpic/show_rect.png</file>
+        <file>images/bgpic/hotsearch.png</file>
+        <file>images/fileitem/hot_down.png</file>
+        <file>images/fileitem/hot_up.png</file>
+        <file>images/bgpic/cusvideoitem1.png</file>
+        <file>images/bgpic/cusvideoitem2.png</file>
+        <file>images/bgpic/cusvideoitem3.png</file>
     </qresource>
 </RCC>

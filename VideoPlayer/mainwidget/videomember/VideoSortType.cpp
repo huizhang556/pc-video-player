@@ -23,6 +23,9 @@ VideoSortType::~VideoSortType()
 
 void VideoSortType::initWorkUI()
 {
+    ui->pushButton_flush->setIcon(QIcon(":/images/home/vtitle_switch.png"));
+    ui->pushButton_flush->setText(QString(u8"换一换"));
+
     ui->listWidget_items->setViewMode(QListView::IconMode);
     ui->listWidget_items->setMovement(QListView::Static);
     ui->listWidget_items->setWrapping(false);

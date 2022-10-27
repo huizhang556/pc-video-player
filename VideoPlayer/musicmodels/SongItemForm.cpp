@@ -16,13 +16,16 @@ SongItemForm::SongItemForm(QString num, QString son_name, bool col, QString song
     ui->setupUi(this);
     ui->label_order->setText(addPrefixNum(num));
     ui->pushButton_son_name->setText(son_name);
+    ui->pushButton_son_name->setToolTip(son_name);
     slot_setSongCollectStatus(col);
     ui->pushButton_songer->setText(songer);
     ui->pushButton_zhuanji->setText(zhuanji);
 
-//    ui->pushButton_son_collect->setAttribute(Qt::WA_TransparentForMouseEvents,true);//设置鼠标穿透
-//    ui->pushButton_son_download->setAttribute(Qt::WA_TransparentForMouseEvents,true);//设置鼠标穿透
-//    ui->pushButton_son_delete->setAttribute(Qt::WA_TransparentForMouseEvents,true);//设置鼠标穿透
+    ui->pushButton_son_collect->setToolTip(QString(u8"收藏"));
+    ui->pushButton_son_download->setToolTip(QString(u8"下载"));
+    ui->pushButton_son_delete->setToolTip(QString(u8"删除"));
+    ui->pushButton_son_more->setToolTip(QString(u8"更多"));
+    ui->pushButton_son_mv->setToolTip(QString(u8"MV"));
 
     ui->pushButton_son_collect->setFixedSize(21,21);
     ui->pushButton_son_collect->setCheckable(true);

@@ -29,7 +29,7 @@ MainWidget::MainWidget(QWidget *parent) :
     initOtherWidgetUi();//初始化界面
     setLeftSliderCurrentIndex(0);//主界面左侧列表内容
     setStackedWidgetPage();//设置StackedWidget布局每个page界面
-    chandleSignalAndSlots();//处理所有的信号与槽函数
+    handleSignalAndSLots();//处理所有的信号与槽函数
 }
 
 //初始化界面
@@ -183,13 +183,49 @@ void MainWidget::initOtherWidgetUi()
     m_pExitDlg = new ExitDialog(this);
     m_pExitDlg->setObjectName(QString::fromLatin1("m_pExitDlg"));
 
+    m_hotSearch = new HotSearchForm();
+    m_hotSearch->setObjectName(QString::fromLocal8Bit("m_hotSearch"));
+
     m_systemSetting = new SystemSetting();
     m_systemSetting->setObjectName(QString::fromLocal8Bit("m_systemSetting"));
+
+    //歌手排行
+    m_songerSort = new SongerSort();
+    m_songerSort->setObjectName(QString::fromLocal8Bit("m_songerSort"));
+
+    //排行榜
+    m_rankList = new RankingList();
+    m_rankList->setObjectName(QString::fromLocal8Bit("m_rankList"));
+
+    //歌单分类
+    m_songlistSort = new SonglistSort();
+    m_songlistSort->setObjectName(QString::fromLocal8Bit("m_songlistSort"));
+
+    //主播电台
+    m_radioHost = new RadioHost();
+    m_radioHost->setObjectName(QString::fromLocal8Bit("m_radioHost"));
+
+    //音乐现场
+    m_musicScene = new MusicScene();
+    m_musicScene->setObjectName(QString::fromLocal8Bit("m_musicScene"));
+
+    //会员专区
+    m_vipMember = new VipMember();
+    m_vipMember->setObjectName(QString::fromLocal8Bit("m_vipMember"));
+
+    //视频盒子
+    m_cusVideoBox = new CusVideosBox();
+    m_cusVideoBox->setObjectName(QString::fromLocal8Bit("m_cusVideoBox"));
+
+    //视频筛选结果
+    videoFindResult = new VideoTypeSelect();
+    videoFindResult->setObjectName(QString::fromLocal8Bit("videoFindResult"));
 
     //托盘
     QIcon icno(":/images/icon/tray.png");
     m_tray = new QSystemTrayIcon(icno,this);
-    m_tray->setToolTip(QString::fromLocal8Bit("subplayer"));
+//    m_tray->installEventFilter(this);
+    m_tray->setToolTip(QString(u8"音视频播放器"));
     m_tray->show();
     createTrayMenu();
 
@@ -224,12 +260,21 @@ void MainWidget::setStackedWidgetPage()
     m_stackWidget_center->insertWidget(0,m_videoMember);//m_mainShowForm
     m_stackWidget_center->insertWidget(1,m_webStackWgt);//m_webStackWgt
     m_stackWidget_center->insertWidget(2,m_mainVideoMv);
-    m_stackWidget_center->insertWidget(3,m_homeWidget);//m_videoMember
-    m_stackWidget_center->insertWidget(4,m_musicShow);//musicshow
-    m_stackWidget_center->insertWidget(5,m_musicList);//musiclist
-    m_stackWidget_center->insertWidget(6,m_personForm);//personform 个人管理
-    m_stackWidget_center->insertWidget(7,m_fileTrans);//文件传输
-    m_stackWidget_center->insertWidget(8,m_tabWidget);//m_tabWidget
+    m_stackWidget_center->insertWidget(3,m_hotSearch);
+    m_stackWidget_center->insertWidget(4,m_homeWidget);//m_videoMember
+    m_stackWidget_center->insertWidget(5,m_songerSort);
+    m_stackWidget_center->insertWidget(6,m_rankList);
+    m_stackWidget_center->insertWidget(7,m_songlistSort);
+    m_stackWidget_center->insertWidget(8,m_radioHost);
+    m_stackWidget_center->insertWidget(9,m_musicScene);
+    m_stackWidget_center->insertWidget(11,m_vipMember);
+    m_stackWidget_center->insertWidget(12,m_musicShow);//musicshow
+    m_stackWidget_center->insertWidget(13,m_musicList);//musiclist
+    m_stackWidget_center->insertWidget(14,m_personForm);//personform 个人管理
+    m_stackWidget_center->insertWidget(15,m_fileTrans);//文件传输
+    m_stackWidget_center->insertWidget(16,m_tabWidget);//m_tabWidget
+    m_stackWidget_center->insertWidget(17,m_cusVideoBox);
+    m_stackWidget_center->insertWidget(18,videoFindResult);//视频筛选结果
     m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
 }
 
@@ -424,7 +469,15 @@ void MainWidget::slot_judgeCurrentBrowserIsActive_advance()
     CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
         actWdgt->slots_advance();
         m_webStackWgt->setCurrentWidget(m_webWidget);
-//        delete actWdgt;
+        //        delete actWdgt;
+}
+
+//全屏显示
+void MainWidget::slot_webbrowserShowFullscreen()
+{
+    CusWebBrowser *actWdgt = qobject_cast<CusWebBrowser*>(m_webTabWidget->currentWidget());
+        actWdgt->showFullScreen();
+        qDebug() << "show fullscreen";
 }
 
 void MainWidget::slot_judgeCurrentBrowserIsActive_load(QString newUrl)
@@ -457,7 +510,7 @@ void MainWidget::slot_removeTabWidgetTab(int index)
 }
 
 //处理信号与槽函数
-void MainWidget::chandleSignalAndSlots()
+void MainWidget::handleSignalAndSLots()
 {
     //全局更新update,repaint,resize(this->size()),adjustSize
     connect(this,&MainWidget::sig_globalResize,[=](){
@@ -591,6 +644,10 @@ void MainWidget::chandleSignalAndSlots()
 
 
     /************************************浏览器---右键部分处理************************************/
+    //网页全屏
+    connect(m_titleBar,&TitleBar::sig_sendBrowserFullScreen,[=](){
+//        slot_webbrowserShowFullscreen();
+    });
     //显示收藏栏
     connect(m_titleBar,&TitleBar::sig_sendBrowserShowCollectRecords,[=](){m_cusTabbar->show(); qDebug() <<"show collectmarks";});
     //显示历史记录
@@ -771,7 +828,7 @@ void MainWidget::createTrayMenu()
     m_actionGroup->addAction(rankAction);
 
     QWidgetAction *wgtAction = new QWidgetAction(m_menuTray);//还可以子类化QWidgetAction，paintEvent()重绘
-    wgtAction->setDefaultWidget(m_systemTray);
+    wgtAction->setDefaultWidget(m_systemTray);//添加自定义的widget_menu
 //    m_menuTray->setStyleSheet("QMenu{"
 //                              "background-color:white;"
 //                              "color:#cdcdcd;"
@@ -1324,6 +1381,22 @@ bool MainWidget::eventFilter(QObject *watched, QEvent *event)
 //            qDebug() << QString(u8"m_webTabWidget尺寸变了");
         }
     }
+//    if(watched == m_tray)
+//    {
+//        if(event->type() == QEvent::Enter)
+//        {
+//            qDebug() << QString(u8"m_tray enter!");
+//            m_tray->contextMenu()->show();
+//        }
+//        else if(event->type() == QEvent::Leave)
+//        {
+//            qDebug() << QString(u8"m_tray leave!");
+//            m_tray->showMessage(QString(u8"提示"),QString(u8"有版本更新!"),
+//                                QSystemTrayIcon::Information,10000);
+
+//        }
+//    }
+
     return QWidget::eventFilter(watched,event);
 }
 

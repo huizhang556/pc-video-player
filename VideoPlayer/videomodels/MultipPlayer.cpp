@@ -44,7 +44,7 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
 
     this->setWindowTitle(QString::fromLocal8Bit("Qt简易视频播放器"));
     initMainWindow();//初始化界面
-    chandleSignalAndSLots();//处理信号与槽函数
+    handleSignalAndSLots();//处理信号与槽函数
     //设置监听
     installEventFilter(this);
     ui->pushButton_bulletSet->installEventFilter(this);//弹幕设置
@@ -323,7 +323,7 @@ void MultipPlayer::initMainWindow()
 }
 
 /*处理信号与槽函数*/
-void MultipPlayer::chandleSignalAndSLots()
+void MultipPlayer::handleSignalAndSLots()
 {
     //清晰度选择
     connect(ui->pushButton_clarity,&QPushButton::clicked,[=](){
@@ -1142,16 +1142,16 @@ void MultipPlayer::on_pushButton_5_clicked()
 {
     if(!m_newStart)
     {
-//        m_fileNames =  CusFileDialog::getOpenFileNames(0,//不指定父窗口，设置自己的样式
-//                                                     QString::fromLocal8Bit("选择文件"),
-//                                                     QString::fromLocal8Bit("/"),
-//                                                     QString::fromLocal8Bit("Videos(*avi *mp4 *flv *mp3 *wmv)"),
-//                                                     0,
-//                                                     QFileDialog::DontUseNativeDialog);
-        m_cusDialog->exec();
-        m_fileNames = m_cusDialog->selectedFiles();
+        m_fileNames =  QFileDialog::getOpenFileNames(0,//不指定父窗口，设置自己的样式
+                                                     QString::fromLocal8Bit("选择文件"),
+                                                     QString::fromLocal8Bit("/"),
+                                                     QString::fromLocal8Bit("Videos(*avi *mp4 *flv *mp3 *wmv)"),
+                                                     0
+                                                     );//QFileDialog::DontUseNativeDialog
+//        m_cusDialog->exec();
+//        m_fileNames = m_cusDialog->selectedFiles();
         //测试功能
-        m_fileNames = list_temp;
+//        m_fileNames = list_temp;
 //        ui->pushButton_5->setFocusPolicy(Qt::NoFocus);//点击按钮后去掉虚线框
         //多文件打开
         if(!m_fileNames.isEmpty())
@@ -1192,15 +1192,15 @@ void MultipPlayer::on_pushButton_6_clicked()
         m_player->pause();
 //        ui->pushButton_pauseStart->setIcon(QIcon(":/images/icon/playhover.png"));//播放
 //        ui->pushButton_pauseStart->setToolTip(QString::fromLocal8Bit("播放"));
-//        m_fileNames =  QFileDialog::getOpenFileNames(0,//不指定父窗口，设置自己的样式,
-//                                                     QString::fromLocal8Bit("选择文件"),
-//                                                     QString::fromLocal8Bit("/"),
-//                                                     QString::fromLocal8Bit("Videos(*avi *mp4 *flv *mp3 *wmv)"),
-//                                                     0,
-//                                                     QFileDialog::DontUseNativeDialog);
-        m_cusDialog->exec();
-        m_fileNames = m_cusDialog->selectedFiles();
-        qDebug() << QString::fromLocal8Bit("打开的文件（夹）是：") <<m_fileNames;
+        m_fileNames =  QFileDialog::getOpenFileNames(0,//不指定父窗口，设置自己的样式
+                                                     QString::fromLocal8Bit("选择文件"),
+                                                     QString::fromLocal8Bit("/"),
+                                                     QString::fromLocal8Bit("Videos(*avi *mp4 *flv *mp3 *wmv)"),
+                                                     0
+                                                     );//QFileDialog::DontUseNativeDialog
+//        m_cusDialog->exec();
+//        m_fileNames = m_cusDialog->selectedFiles();
+//        qDebug() << QString::fromLocal8Bit("打开的文件（夹）是：") <<m_fileNames;
         if(!m_fileNames.isEmpty() && !QFileInfo(m_fileNames[0]).isDir())
         {
             QSqlQuery query(dataBase::getSqlDataBase());

@@ -477,7 +477,7 @@ background-color: transparent;
         </size>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="page_5">
         <layout class="QHBoxLayout" name="horizontalLayout_10">

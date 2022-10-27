@@ -32,7 +32,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_3" stretch="3,1">
      <property name="spacing">
-      <number>0</number>
+      <number>6</number>
      </property>
      <item>
       <widget class="QLabel" name="label_head">
@@ -45,7 +45,7 @@
        <property name="styleSheet">
         <string notr="true">#label_head
 {
-border-radius: 75px;
+border-radius: 10px;
 }</string>
        </property>
        <property name="text">

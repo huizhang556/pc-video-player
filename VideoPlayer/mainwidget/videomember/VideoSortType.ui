@@ -126,29 +126,32 @@ color:#43b8fc;
            <widget class="QPushButton" name="pushButton_flush">
             <property name="minimumSize">
              <size>
-              <width>26</width>
+              <width>80</width>
               <height>26</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>26</width>
+              <width>100</width>
               <height>26</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
-border-image: url(:/images/home/vtitle_switch.png);
+border: none;
+color: #d81e1f;
+font: 800 14px &quot;微软雅黑&quot;;
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/home/vtitle_switch_hover.png);
-}</string>
+color: #d81e1f;
+}
+</string>
             </property>
             <property name="text">
-             <string/>
+             <string>换一换</string>
             </property>
            </widget>
           </item>
@@ -191,6 +194,7 @@ background-color: #0e1b2c;
 QListWidget::item
 {
 background-color: #0e1b2c;
+border-radius: 6px;
 }
 
 QListWidget::item:selected

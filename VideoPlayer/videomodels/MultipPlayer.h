@@ -69,7 +69,7 @@ public:
 
     void    initMainWindow();
 
-    void    chandleSignalAndSLots();
+    void    handleSignalAndSLots();
 
     void    addToPlaylist(QMediaPlaylist* mylist,const QStringList& fileNames);//重载1
 

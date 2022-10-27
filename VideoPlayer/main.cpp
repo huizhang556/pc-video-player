@@ -37,6 +37,8 @@
 #include "mainwidget/songersort/SongerSort.h"
 #include "mainwidget/songlistsort/TagsMenu.h"
 #include "mainwidget/rankinglist/RankingList.h"
+#include "mainwidget/CusVerStackWgt.h"
+#include "mainwidget/videotypeselect/VideoTypeSelect.h"
 
 #include <QTranslator>
 #include <QThread>
@@ -100,13 +102,8 @@ int main(int argc, char *argv[])
     w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
     w1.show();
 
-//    NewLoginForm::getInstance()->show();
-
-////        MultipPlayer w1;
-////        w1.show();
-
-////    RankingList w1;
-////    w1.show();
+//    MultipPlayer w1;
+//    w1.show();
     splashscream.finish(&w1);
 
 

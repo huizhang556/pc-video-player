@@ -94,7 +94,7 @@ color: #f6d18e;
 border: none;
 font-weight: 800;
 background-color: rgba(38, 40, 41,0.5);
-}
+} 
 
 /*向右按钮*/
 #m_buttonAdd
@@ -126,6 +126,53 @@ font-weight: 800;
 color: #ee5024;
 }
 
+/*自定义视频盒子*/
+/*左移按钮*/
+#m_videoButton_L
+{
+font-weight: 800;
+border: none;
+border-radius: 15px;
+border-top-left-radius: 0px;
+border-bottom-left-radius: 0px;
+background-color: rgba(44, 45, 54,0.5);
+}
+
+#m_videoButton_L:hover
+{
+color: white;
+background-color: rgba(44, 45, 54,0.8);
+}
+
+/*右移按钮*/
+#m_videoButton_R
+{
+font-weight: 800;
+border: none;
+border-radius: 15px;
+border-top-right-radius: 0px;
+border-bottom-right-radius: 0px;
+background-color: rgba(44, 45, 54,0.5);
+}
+
+#m_videoButton_R:hover
+{
+color: white;
+background-color: rgba(44, 45, 54,0.8);
+}
+
+/**视频分类结果**/
+#m_listWgt_sortResult
+{
+background-color: rgba(44, 45, 54,0.8);
+}
+
+#m_listWgt_sortResult::item
+{
+margin: 5px 3px 3px 5px;
+background-color: rgba(44, 45, 54,0.8);
+}
+
 /*主界面标题栏---内衬*/
 #stackedWidget_title
 {
@@ -146,13 +193,38 @@ MultipPlayer
 background-color: #2a2a31;
 }
 
+/*自定义stackedwidget_listwidget*/
+#m_rightListWidget
+{
+border: none;
+font: 800 12pt "Microsoft YaHei UI";
+background-color: transparent;
+}
+
+#m_rightListWidget::item
+{
+color:  rgba(216, 30, 6,1.0);
+background-color: rgba(64, 66, 68,0.3);
+}
+
+#m_rightListWidget::item:selected
+{
+color:  rgba(57, 176, 251,1.0);
+background-color: rgba(64, 66, 68,0.5);
+}
+
+#m_rightListWidget::item:hover
+{
+color:  rgba(145, 145, 226,1.0);
+}
+
 /*---左侧节目侧边栏列表---*/
 #listWidget_playlist
 {
 font-family:"微软雅黑";
 border:none;
-icon-size:50px;
-font-size:14px;
+icon-size:46px;
+font-size:15px;
 text-align:center;
 background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #28405d, stop:1  #223a55);
 }
@@ -165,6 +237,9 @@ width:170px;
 height:50px;
 min-height:50px;/*有效设置item高度*/
 padding-left: 8px;
+padding-right: 4px;
+border-radius: 6px;
+margin: 2px 6px;
 background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #28405d, stop:1  #223a55);
 }
 
@@ -1110,6 +1185,7 @@ border:none;
 background-color: transparent;
 outline:none;
 color:black;
+font: 75 12pt "Microsoft YaHei UI";
 }
 
 #m_tabWidget1 QTabBar::tab
@@ -1128,13 +1204,15 @@ background-color:#3f3f48;
 #m_tabWidget1 QTabBar::tab:!selected
 {
 margin-top: 0px;
+color:  #8a8a8a;
 }
 
 #m_tabWidget1 QTabBar::tab:selected
 {
-color:#ff5c38;
+/*color:#ff5c38;*/
 font-size:14px;
 font-weight:bold;
+color: rgb(255, 211, 134);
 border-bottom:2px solid #ff5c38;
 }
 
@@ -1149,9 +1227,9 @@ background-color:#3d3d3d;
 /*抽屉控件,有效*/
 QToolBox::tab
 {
-border-bottom:2px groove blue; 
-border-radius:2px;
-background-color:#3d3d3d;
+border-bottom: 2px groove blue; 
+border-radius: 2px;
+background-color: #3d3d3d;
 color: yellow;
 text-align: center; 
 }

@@ -203,6 +203,7 @@ background-color: #2a2a32;
 QListWidget::item
 {
 min-height:26px;
+border-radius: 5px;
 background-color: #2a2a32;
 }
 
@@ -237,6 +238,7 @@ background-color: #2a2a32;
 QListWidget::item
 {
 min-height:26px;
+border-radius: 5px;
 background-color: #2a2a32;
 }
 
@@ -417,6 +419,7 @@ background-color: #2a2a32;
 QListWidget::item
 {
 min-height:26px;
+border-radius: 5px;
 background-color: #2a2a32;
 }
 
@@ -451,6 +454,7 @@ background-color: #2a2a32;
 QListWidget::item
 {
 min-height:26px;
+border-radius: 5px;
 background-color: #2a2a32;
 }
 

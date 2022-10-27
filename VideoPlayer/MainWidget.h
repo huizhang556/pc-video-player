@@ -26,6 +26,15 @@
 #include "mainwidget/HomeWidget.h"
 #include "mainwidget/videomember/MainMembForm.h"
 #include "mainwidget/videosmv/MainVideoMv.h"
+#include "mainwidget/songersort/SongerSort.h"
+#include "mainwidget/rankinglist/RankingList.h"
+#include "mainwidget/songlistsort/SonglistSort.h"
+#include "mainwidget/radiohost/RadioHost.h"
+#include "mainwidget/musicscene/MusicScene.h"
+#include "mainwidget/vipmember/VipMember.h"
+#include "mainwidget/cusvideosbox/CusVideosBox.h"
+#include "mainwidget/hotsearch/HotSearchForm.h"
+#include "mainwidget/videotypeselect/VideoTypeSelect.h"
 
 
 #include <QMenu>
@@ -85,7 +94,7 @@ protected:
 private:
     void        initOtherWidgetUi();
 
-    void        chandleSignalAndSlots();
+    void        handleSignalAndSLots();
 
     void        updateAddWebButtonPosition();//更新新增网页按钮的位置
 
@@ -135,6 +144,8 @@ private slots:
     void        slot_judgeCurrentBrowserIsActive_freshen();//刷新
 
     void        slot_judgeCurrentBrowserIsActive_advance();//下一页
+
+    void        slot_webbrowserShowFullscreen();//全屏显示
 
     void        slot_judgeCurrentBrowserIsActive_load(QString newUrl);//加载输入框地址
 
@@ -208,6 +219,15 @@ private:
     HomeWidget          *m_homeWidget              = nullptr;//首页推荐
     VideoMv             *m_mainVideoMv             = nullptr;//视频
     MainMembForm        *m_videoMember             = nullptr;//会员视频
+    HotSearchForm       *m_hotSearch               = nullptr;//热搜
+    SongerSort          *m_songerSort              = nullptr;//歌手排行
+    RankingList         *m_rankList                = nullptr;//排行榜
+    SonglistSort        *m_songlistSort            = nullptr;//歌单分类
+    RadioHost           *m_radioHost               = nullptr;//主播电台
+    MusicScene          *m_musicScene              = nullptr;//音乐现场
+    VipMember           *m_vipMember               = nullptr;//会员专区
+    CusVideosBox        *m_cusVideoBox             = nullptr;//视频盒子
+    VideoTypeSelect     *videoFindResult           = nullptr;//视频筛选结果
     PersonFileForm      *m_personForm              = nullptr;
     MultipPlayer        *m_mainPlayer              = nullptr;
     LeftSideBar         *m_leftSideBar             = nullptr;

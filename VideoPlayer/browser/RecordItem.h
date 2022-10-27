@@ -18,7 +18,7 @@ public:
     explicit RecordItem(QWidget *parent = nullptr);
     explicit RecordItem(int type,QIcon icon,QString text, QWidget *parent = nullptr);
     ~RecordItem();
-    void        chandleSignalAndSLots();
+    void        handleSignalAndSLots();
 
 public slots:
     void        slot_setRecordButtonText(QString text);

@@ -210,7 +210,7 @@ background-color: #0d1a2a;
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_2" stretch="8,2">
             <property name="spacing">
-             <number>0</number>
+             <number>6</number>
             </property>
             <item>
              <widget class="CusLabelItem" name="label_picMv">
@@ -224,6 +224,7 @@ background-color: #0d1a2a;
                <string notr="true">#label_picMv
 {
 border-image: url(:/images/videosmv/rectitle/music0.png);
+border-radius: 10px;
 }</string>
               </property>
               <property name="text">
@@ -315,7 +316,7 @@ background-color: #0d1a2a;
 
 QListWidget::item
 {
-background-color: #55ff00;
+background-color: #0d1a2a;
 /*border: 1px solid #ff0000;*/
 }
 
@@ -344,7 +345,7 @@ QListWidget::item:selected
   <customwidget>
    <class>CusLabelItem</class>
    <extends>QLabel</extends>
-   <header>mainwidget/CusLabelItem.h</header>
+   <header location="global">mainwidget/CusLabelItem.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -32,7 +32,7 @@ public:
     explicit TitleBar(QWidget *parent = nullptr);
     ~TitleBar();
     void    initWorker();
-    void    chandleSignalAndSLots();
+    void    handleSignalAndSLots();
     void    setWebDefUrl(const QString& title);
 
 protected:

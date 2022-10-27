@@ -41,9 +41,16 @@
       <widget class="VideoHeadItem" name="label_videoPic">
        <property name="minimumSize">
         <size>
-         <width>180</width>
-         <height>180</height>
+         <width>210</width>
+         <height>255</height>
         </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#label_videoPic
+{
+border-radius: 10px;
+background-color: transparent;
+}</string>
        </property>
        <property name="text">
         <string/>

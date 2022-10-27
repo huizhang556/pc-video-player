@@ -8,7 +8,7 @@ RecordItem::RecordItem(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setFixedHeight(26);
-    chandleSignalAndSLots();
+    handleSignalAndSLots();
 }
 
 RecordItem::RecordItem(int type, QIcon icon, QString text, QWidget *parent) :
@@ -21,7 +21,7 @@ RecordItem::RecordItem(int type, QIcon icon, QString text, QWidget *parent) :
 {
     ui->setupUi(this);
     this->setFixedHeight(26);
-    chandleSignalAndSLots();
+    handleSignalAndSLots();
     ui->pushButton_record->setIcon(icon);
     ui->pushButton_record->setText(text);
     ui->label_time->setText(m_dateTime);
@@ -35,7 +35,7 @@ RecordItem::~RecordItem()
     delete ui;
 }
 
-void RecordItem::chandleSignalAndSLots()
+void RecordItem::handleSignalAndSLots()
 {
     //
     connect(ui->pushButton_record,&QPushButton::clicked,[=](){

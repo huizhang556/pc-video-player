@@ -28,7 +28,7 @@ TitleBar::TitleBar(QWidget *parent) :
     installEventFilter(this);
     this->setFixedHeight(40);
     initWorker();//初始化
-    chandleSignalAndSLots();
+    handleSignalAndSLots();
 }
 
 /*析构*/
@@ -182,7 +182,7 @@ void TitleBar::initWorker()
 
 
 /*处理信号与槽函数*/
-void TitleBar::chandleSignalAndSLots()
+void TitleBar::handleSignalAndSLots()
 {
     //个人信息选择改变
     connect(m_headHover,&HeadHover::sig_itemChanged,[=](QString text){

@@ -41,7 +41,7 @@ void DownLoadItem::initWorkUI()
     ui->progressBar->setValue(0);
     ui->pushButton_dl_pause->setToolTip(QString::fromLocal8Bit("暂停任务"));
     setItemDownloadStatus(m_start);
-    ui->pushButton_dl_cancel->setToolTip(QString::fromLocal8Bit("取消任务"));
+    ui->pushButton_dl_cancel->setToolTip(QString::fromLocal8Bit("刷新任务"));
     ui->pushButton_dl_delete->setToolTip(QString::fromLocal8Bit("删除任务"));
     ui->pushButton_dl_openfile->setToolTip(QString::fromLocal8Bit("打开目录"));
     ui->pushButton_dl_redown->setToolTip(QString::fromLocal8Bit("重新下载"));
@@ -52,7 +52,7 @@ void DownLoadItem::chandleSignalsAndSlots()
 {
     //01---暂停/开始
     connect(ui->pushButton_dl_pause,&QPushButton::clicked,[=](){setItemDownloadStatus(m_start); emit sig_downloadStatus(getItemOrder(),m_start);});
-    //02---取消下载
+    //02---刷新任务
     connect(ui->pushButton_dl_cancel,&QPushButton::clicked,[=](){emit sig_download_cancel(getItemOrder());});
     //03---删除任务
     connect(ui->pushButton_dl_delete,&QPushButton::clicked,[=](){emit sig_download_delete(getItemOrder());});

@@ -237,6 +237,11 @@ color: #ffffff;
         <string notr="true">#stackedWidget_sort
 {
 border: none;
+}
+
+#stackedWidget_sort::item
+{
+border-radius: 6px;
 }</string>
        </property>
       </widget>

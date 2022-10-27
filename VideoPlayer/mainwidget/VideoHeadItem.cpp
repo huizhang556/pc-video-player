@@ -19,6 +19,7 @@ VideoHeadItem::~VideoHeadItem()
 
 void VideoHeadItem::initWorkUI()
 {
+//    this->setAttribute(Qt::WA_TranslucentBackground,true);
     ui->pushButton_mainPlayer->hide();
 }
 

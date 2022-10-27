@@ -38,13 +38,13 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <property name="spacing">
-      <number>0</number>
+      <number>6</number>
      </property>
      <item>
       <widget class="CusLabel2" name="label_video">
        <property name="minimumSize">
         <size>
-         <width>365</width>
+         <width>356</width>
          <height>230</height>
         </size>
        </property>
@@ -52,6 +52,7 @@
         <string notr="true">QLabel
 {
 border-image: url(:/images/videosmv/reclist/music2.png);
+border-radius: 10px;
 }</string>
        </property>
        <property name="text">

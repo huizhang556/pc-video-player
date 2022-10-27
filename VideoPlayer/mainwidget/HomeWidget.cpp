@@ -79,12 +79,12 @@ void HomeWidget::handleSignalsAndSlots()
 void HomeWidget::addToStackWidget()
 {
     m_stackWgt_center->insertWidget(0,m_homeWdgt);
-    m_stackWgt_center->insertWidget(1,m_songerSort);
-    m_stackWgt_center->insertWidget(2,m_rankList);
-    m_stackWgt_center->insertWidget(3,m_songlistSort);
-    m_stackWgt_center->insertWidget(4,m_radioHost);
-    m_stackWgt_center->insertWidget(5,m_musicScene);
-    m_stackWgt_center->insertWidget(6,m_vipMember);
+//    m_stackWgt_center->insertWidget(1,m_songerSort);
+//    m_stackWgt_center->insertWidget(2,m_rankList);
+//    m_stackWgt_center->insertWidget(3,m_songlistSort);
+//    m_stackWgt_center->insertWidget(4,m_radioHost);
+//    m_stackWgt_center->insertWidget(5,m_musicScene);
+//    m_stackWgt_center->insertWidget(6,m_vipMember);
 }
 
 void HomeWidget::slot_globalResize()
@@ -96,5 +96,5 @@ void HomeWidget::slot_globalResize()
 
 void HomeWidget::slot_setCurrentCenterStackWidget(int index)
 {
-    m_stackWgt_center->setCurrentIndex(index);
+//    m_stackWgt_center->setCurrentIndex(index);
 }

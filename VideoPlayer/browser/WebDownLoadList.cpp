@@ -246,9 +246,13 @@ bool WebDownLoadList::slot_addDownLoadRecordToList(const QUrl &url, const QStrin
     //01-继续/暂停
     connect(m_downLoadItem,SIGNAL(sig_downloadStatus(int,bool)),m_worker,SLOT(slot_receiveData_pause(int,bool)));
     //02-取消
-    connect(m_downLoadItem,SIGNAL(sig_download_cancel(int)),m_worker,SLOT(slot_receiveData_cancel(int)));
+//    connect(m_downLoadItem,SIGNAL(sig_download_cancel(int)),m_worker,SLOT(slot_receiveData_cancel(int)));
+    connect(m_downLoadItem,&DownLoadItem::sig_download_cancel,[=](){
+        m_workThread->start(QThread::HighPriority);
+    });
     //03-删除(删除item和文件)
     connect(m_downLoadItem,&DownLoadItem::sig_download_delete,[=](){
+//        m_workThread->quit();
         slot_freeItem(ui->listWidget_list,m_downLoadItem,m_workItem);//删除item
     });
     //05-重新下载

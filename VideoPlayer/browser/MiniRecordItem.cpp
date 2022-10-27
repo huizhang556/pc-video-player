@@ -16,7 +16,7 @@ MiniRecordItem::MiniRecordItem(QString text, QIcon icon, QWidget *parent):
 {
     ui->setupUi(this);
     this->setFixedHeight(26);
-    chandleSignalAndSLots();
+    handleSignalAndSLots();
     ui->pushButton_record->setText(text);
     ui->pushButton_record->setIcon(icon);
     ui->pushButton_change->setToolTip(QString::fromLocal8Bit("修改"));
@@ -28,7 +28,7 @@ MiniRecordItem::~MiniRecordItem()
     delete ui;
 }
 
-void MiniRecordItem::chandleSignalAndSLots()
+void MiniRecordItem::handleSignalAndSLots()
 {
     connect(ui->pushButton_record,&QPushButton::clicked,[=](){
         emit sig_item_record(ui->pushButton_record->text());

@@ -5,7 +5,7 @@ LeftSideBar::LeftSideBar(QWidget *parent) :
     QWidget(parent)
 {
     initWidgetUi();
-    chandleSignalAndSlots();
+    handleSignalAndSLots();
 }
 
 LeftSideBar::~LeftSideBar()
@@ -17,20 +17,20 @@ void LeftSideBar::setSlideBarListText(QStringList strList)
 {
     //节目列表
     QStringList t_strList;
-    t_strList  <<QString(u8"精彩推荐")
+    t_strList  <<QString(u8"精选推荐")
                <<QString(u8"新浏览器")
                <<QString(u8"最新视频")
                <<QString(u8"VIP会员")
+               <<QString(u8"精彩推荐")
+               <<QString(u8"全球歌手")
+               <<QString(u8"新排行榜")
+               <<QString(u8"歌单分类")
+               <<QString(u8"主播电台")
+               <<QString(u8"音乐现场")
+               <<QString(u8"会员专区")
                <<QString(u8"播放列表")
                <<QString(u8"个人信息")
                <<QString(u8"文件传输")
-               <<QString(u8"教育课堂")
-               <<QString(u8"游戏直播")
-               <<QString(u8"建党百年")
-               <<QString(u8"王者荣耀")
-               <<QString(u8"健康养生")
-               <<QString(u8"资讯速递")
-               <<QString(u8"生活解密")
                <<QString(u8"世界地理")
                <<QString(u8"人文艺术")
                <<QString(u8"今日影院")
@@ -85,7 +85,7 @@ void LeftSideBar::initWidgetUi()
 }
 
 /*处理信号与槽函数*/
-void LeftSideBar::chandleSignalAndSlots()
+void LeftSideBar::handleSignalAndSLots()
 {
     connect(m_listWidget,&QListWidget::itemClicked,[=](QListWidgetItem *item)
     {

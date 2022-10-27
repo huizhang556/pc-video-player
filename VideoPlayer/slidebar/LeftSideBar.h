@@ -24,7 +24,7 @@ public:
 private:
     //私有函数
     void initWidgetUi();
-    void chandleSignalAndSlots();
+    void handleSignalAndSLots();
 private:
     QVBoxLayout         *m_vbayout      = nullptr;
     QPushButton         *m_expandBtn    = nullptr;     //底部展开按钮

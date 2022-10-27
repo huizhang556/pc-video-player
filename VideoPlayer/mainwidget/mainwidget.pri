@@ -45,7 +45,17 @@ SOURCES += \
     $$PWD/VideoHeadItem.cpp \
     $$PWD/vipmember/BuyVip.cpp \
     $$PWD/vipmember/BuyVipItem.cpp \
-    $$PWD/CusListWidget.cpp
+    $$PWD/CusListWidget.cpp \
+    $$PWD/CusVerStackWgt.cpp \
+    $$PWD/subunititems/SubUnitItem.cpp \
+    $$PWD/subunititems/SubModules.cpp \
+    $$PWD/subunititems/Container00.cpp \
+    $$PWD/subunititems/Container01.cpp \
+    $$PWD/hotsearch/HotSearchForm.cpp \
+    $$PWD/hotsearch/HotSearchItem.cpp \
+    $$PWD/cusvideosbox/CusVideosBox.cpp \
+    $$PWD/subunititems/SelectVideoType.cpp \
+    $$PWD/videotypeselect/VideoTypeSelect.cpp
 
 HEADERS += \
     $$PWD/songersort/SongerSort.h \
@@ -94,7 +104,17 @@ HEADERS += \
     $$PWD/VideoHeadItem.h \
     $$PWD/vipmember/BuyVip.h \
     $$PWD/vipmember/BuyVipItem.h \
-    $$PWD/CusListWidget.h
+    $$PWD/CusListWidget.h \
+    $$PWD/CusVerStackWgt.h \
+    $$PWD/subunititems/SubUnitItem.h \
+    $$PWD/subunititems/SubModules.h \
+    $$PWD/subunititems/Container00.h \
+    $$PWD/subunititems/Container01.h \
+    $$PWD/hotsearch/HotSearchForm.h \
+    $$PWD/hotsearch/HotSearchItem.h \
+    $$PWD/cusvideosbox/CusVideosBox.h \
+    $$PWD/subunititems/SelectVideoType.h \
+    $$PWD/videotypeselect/VideoTypeSelect.h
 
 FORMS += \
     $$PWD/songersort/SongerSort.ui \
@@ -139,5 +159,15 @@ FORMS += \
     $$PWD/VideoHeadItem.ui \
     $$PWD/vipmember/BuyVip.ui \
     $$PWD/vipmember/BuyVipItem.ui \
-    $$PWD/CusListWidget.ui
+    $$PWD/CusListWidget.ui \
+    $$PWD/subunititems/SubUnitItem.ui \
+    $$PWD/subunititems/SubModules.ui \
+    $$PWD/subunititems/Container00.ui \
+    $$PWD/subunititems/Container01.ui \
+    $$PWD/hotsearch/HotSearchForm.ui \
+    $$PWD/hotsearch/HotSearchItem.ui \
+    $$PWD/cusvideosbox/CusVideosBox.ui \
+    $$PWD/subunititems/SelectVideoType.ui
+
+DISTFILES +=
 

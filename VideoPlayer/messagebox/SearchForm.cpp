@@ -29,6 +29,37 @@ void SearchForm::initWorkUi()
     ui->listWidget_hot1->setFocusPolicy(Qt::NoFocus);
     ui->listWidget_hot2->setFocusPolicy(Qt::NoFocus);
 
+    ui->listWidget_his1->setViewMode(QListView::ListMode);
+    ui->listWidget_his2->setViewMode(QListView::ListMode);
+    ui->listWidget_hot1->setViewMode(QListView::ListMode);
+    ui->listWidget_hot2->setViewMode(QListView::ListMode);
+
+    ui->listWidget_his1->setMovement(QListView::Static);//图标不可拖动
+    ui->listWidget_his2->setMovement(QListView::Static);//图标不可拖动
+    ui->listWidget_hot1->setMovement(QListView::Static);//图标不可拖动
+    ui->listWidget_hot2->setMovement(QListView::Static);//图标不可拖动
+
+    ui->listWidget_his1->setResizeMode(QListWidget::Adjust);
+    ui->listWidget_his2->setResizeMode(QListWidget::Adjust);
+    ui->listWidget_hot1->setResizeMode(QListWidget::Adjust);
+    ui->listWidget_hot2->setResizeMode(QListWidget::Adjust);
+
+    ui->listWidget_his1->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_his1->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_his1->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+
+    ui->listWidget_his2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_his2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_his2->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+
+    ui->listWidget_hot1->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_hot1->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_hot1->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+
+    ui->listWidget_hot2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_hot2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_hot2->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+
     ui->btn_his_delete->setFlat(true);
     ui->btn_hot_more->setFlat(true);
     clearHistoryList();

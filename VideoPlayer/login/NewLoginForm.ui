@@ -177,6 +177,7 @@ background-color: transparent;
 QPushButton:hover
 {
 color: #2494e4;
+
 }</string>
              </property>
              <property name="text">
@@ -401,7 +402,7 @@ border-bottom-width: 1px;
                            <string notr="true">#comboBox_area
 {
 color: #515153;
-border: 0px solid white;
+border: 0px solid #515153;
 border-right-width: 1px;
 font: 75 11pt &quot;Microsoft YaHei UI&quot;;
 background-color: transparent;
@@ -1385,7 +1386,7 @@ background-color: rgba(58, 58, 65,0.7);
         <item>
          <widget class="QStackedWidget" name="stackedWidget_right">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page_login">
            <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -1489,28 +1490,40 @@ background-color: rgba(58, 58, 65,0.7);
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QLabel" name="label_QRcode">
-                        <property name="minimumSize">
-                         <size>
-                          <width>220</width>
-                          <height>200</height>
-                         </size>
+                       <widget class="QFrame" name="frame_QR">
+                        <property name="frameShape">
+                         <enum>QFrame::StyledPanel</enum>
                         </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>220</width>
-                          <height>200</height>
-                         </size>
+                        <property name="frameShadow">
+                         <enum>QFrame::Raised</enum>
                         </property>
-                        <property name="styleSheet">
-                         <string notr="true">#label_QRcode
+                        <layout class="QHBoxLayout" name="horizontalLayout_20">
+                         <item>
+                          <widget class="QLabel" name="label_QRcode">
+                           <property name="minimumSize">
+                            <size>
+                             <width>150</width>
+                             <height>150</height>
+                            </size>
+                           </property>
+                           <property name="maximumSize">
+                            <size>
+                             <width>130</width>
+                             <height>130</height>
+                            </size>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">#label_QRcode
 {
 border-image: url(://images/user/newlogin_QRcode.png);
 }</string>
-                        </property>
-                        <property name="text">
-                         <string/>
-                        </property>
+                           </property>
+                           <property name="text">
+                            <string/>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
                        </widget>
                       </item>
                       <item>
@@ -1785,7 +1798,7 @@ border-bottom-width: 1px;
                          <string notr="true">#comboBox_regis_area
 {
 color: #515153;
-border: 0px solid white;
+border: 0px solid #515153;
 border-right-width: 1px;
 font: 75 11pt &quot;Microsoft YaHei UI&quot;;
 background-color: transparent;
@@ -2047,7 +2060,7 @@ border-bottom-width: 1px;
 {
 color: #717275;
 border: none;
-font: 75 11pt &quot;Microsoft YaHei UI&quot;;
+font: 75 10pt &quot;Microsoft YaHei UI&quot;;
 }</string>
                       </property>
                       <property name="text">
@@ -2441,7 +2454,7 @@ border-bottom-width: 1px;
 {
 color: #717275;
 border: none;
-font: 75 11pt &quot;Microsoft YaHei UI&quot;;
+font: 75 10pt &quot;Microsoft YaHei UI&quot;;
 }</string>
                           </property>
                           <property name="text">
@@ -2550,7 +2563,7 @@ border-bottom-width: 1px;
 {
 color: #717275;
 border: none;
-font: 75 11pt &quot;Microsoft YaHei UI&quot;;
+font: 75 10pt &quot;Microsoft YaHei UI&quot;;
 }</string>
                           </property>
                           <property name="text">
@@ -2692,7 +2705,7 @@ border-bottom-width: 1px;
 {
 color: #717275;
 border: none;
-font: 75 11pt &quot;Microsoft YaHei UI&quot;;
+font: 75 10pt &quot;Microsoft YaHei UI&quot;;
 }</string>
                           </property>
                           <property name="text">
@@ -2797,7 +2810,7 @@ border-bottom-width: 1px;
 {
 color: #717275;
 border: none;
-font: 75 11pt &quot;Microsoft YaHei UI&quot;;
+font: 75 10pt &quot;Microsoft YaHei UI&quot;;
 }</string>
                           </property>
                           <property name="text">

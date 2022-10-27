@@ -1,6 +1,6 @@
 ﻿#include "MainMembForm.h"
 #include "ui_MainMembForm.h"
-
+#include "mainwidget/CusVerStackWgt.h"
 #include "CusStackWidget.h"
 #include "VideoSortType.h"
 #include "SwitchVideoType.h"
@@ -26,7 +26,9 @@ void MainMembForm::initWorkUI()
 {
     ui->scrollArea->setFrameShape(QFrame::NoFrame);//继承自QFrame的，都可以用此方法去掉边界线
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    CusStackWidget *itemWidget    = new CusStackWidget();
+
+    CusVerStackWgt *itemWidget    = new CusVerStackWgt();
+//    CusStackWidget *itemWidget    = new CusStackWidget();
     SwitchVideoType *switchItem   = new SwitchVideoType();
     VideoSortType *videoSortItem1 = new VideoSortType();
     VideoSortType *videoSortItem2 = new VideoSortType();

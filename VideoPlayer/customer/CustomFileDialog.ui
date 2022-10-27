@@ -63,7 +63,7 @@ QComboBox::drop-down{
 background-color:rgb(255,255,255,0);
 }
 QComboBox::drop-down:disabled,QComboBox:disabled{
-background-color:#f8f8f8
+background-color:#f8f8f8;
 }
 QLineEdit,QComboBox{
 color: #666666;border: 1px solid #DDDDDD;border-radius:2px;
