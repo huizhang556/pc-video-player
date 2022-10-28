@@ -82,11 +82,15 @@ void SearchForm::initWorkUi()
 
 void SearchForm::chandleSignalsAndSlot()
 {
+    //清除历史记录
     connect(ui->btn_his_delete,&QPushButton::clicked,[=](){
        CMessageBox message(MessageType::CQuestion,QString(u8"清除提示"),QString(u8"您确定要清除吗？"),QString(u8"确定"),QString(u8"取消"));
        if(message.exec() == QDialog::Accepted)//1
         clearHistoryList();
     });
+
+    //更多热搜
+    connect(ui->btn_hot_more,&QPushButton::clicked,[=](){emit sig_SendToMoreHots();});
 
 }
 

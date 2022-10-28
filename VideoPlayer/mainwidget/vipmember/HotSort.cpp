@@ -35,6 +35,8 @@ void HotSort::initWorkUI()
     ui->listWidget_vipItems->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_vipItems->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_vipItems->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->listWidget_vipItems->horizontalScrollBar()->setDisabled(true);
+    ui->listWidget_vipItems->verticalScrollBar()->setDisabled(true);
 
     for(int i = 0; i < 18; i++)
     {

@@ -78,6 +78,7 @@ void SonglistSort::initWorkUI()
     ui->listWidget_markItem->setResizeMode(QListWidget::Adjust);
     ui->listWidget_markItem->setWrapping(true);//自动换行 所有itm在一行显示
     ui->listWidget_markItem->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->listWidget_markItem->horizontalScrollBar()->setDisabled(true);
 }
 
 void SonglistSort::handleSignalsAndSlots()

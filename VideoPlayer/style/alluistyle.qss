@@ -651,6 +651,7 @@ border:1px solid #6768ee;
 border-top-left-radius:8px;
 border-bottom-right-radius:8px;
 margin:3px 3px 3px 0px;
+border-image:url(://images/icon/web_hide.png);
 }
 
 #m_webHideBtn:hover
@@ -767,6 +768,8 @@ color:#2b2b2b;
 {
 background-color:#4969c7;
 border:none;
+color: #333333;
+font: 400 12px "微软雅黑";
 }
 
 #m_webTabWidget::pane
@@ -777,21 +780,23 @@ background-color:green;
 
 #m_webTabWidget::tab-bar
 {
-left:0px;
 background-color:#009999;
 height:24px;
 border: none;
+color: #333333;
+font: 400 12px "微软雅黑";
 }
 
 /*浏览器页面承载QTabWidget自定义Tab样式*/
 #m_webTabBar::tab
 {
-background-color: #4666b9;
 max-width: 180px;
 height:24px;
-color: black;
+color: #07ccff；
+margin-right: 1px;
 border: 0px solid #c1c1c1;
 border-left-width:1px;
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #7ebef6, stop:1  #b7b0fd);
 }
 
 #m_webTabBar::tab:first
@@ -807,13 +812,14 @@ margin-right: 0px;
 
 #m_webTabBar::tab:hover
 {
-background-color: #b8c91e;
 color:white;
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #a2ccf7, stop:1  #1296f6);
 }
 
 #m_webTabBar::tab:selected
 {
-background-color:  #3399cc;
+color: #07ccff；
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #7ebef6, stop:1  #b7b0fd);
 }
 
 #m_webTabBar::tab:!selected
@@ -827,13 +833,13 @@ background-color: #118860;
 image: url(://images/icon/tab_closebtn.png);
 }
 
-/**关闭按钮---hover**/
+/**关闭按钮--->hover**/
 #m_webTabBar::close-button:hover
 {
 image: url(://images/icon/tab_closebtn_hover.png);
 }
 
-/*浏览器承载界面工具栏*/
+/*浏览器承载界面--->工具栏*/
 #m_webTabBar QToolButton
 {
 background-color:transparent;

@@ -2,6 +2,8 @@
 #define MUSICSCENE_H
 
 #include <QWidget>
+#include <QScrollBar>
+#include <QDebug>
 
 namespace Ui {
 class MusicScene;

@@ -17,7 +17,8 @@ MusicScene::~MusicScene()
 
 void MusicScene::initWorkUI()
 {
-
+    ui->listWidget->horizontalScrollBar()->setDisabled(true);
+    ui->listWidget_2->horizontalScrollBar()->setDisabled(true);
 }
 
 void MusicScene::handleSignalsAndSlots()

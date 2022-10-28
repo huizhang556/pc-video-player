@@ -185,7 +185,7 @@ background-color: transparent;
                 <string notr="true">QPushButton
 {
 background-color: transparent;
-border-image: url(:/images/home/vtitle_byself.png);
+border-image: url(:/images/home/mark_dubo.png);
 }
 
 QPushButton:hover

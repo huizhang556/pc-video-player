@@ -33,7 +33,7 @@ void CusStackWidget::initWorkUI()
     m_bottomFrame->setFixedHeight(MINHEIGHT+20);
     m_bottomFrame->setObjectName(QString(u8"m_bottomFrame"));
 
-    m_hbLayout = new QHBoxLayout(this);
+    m_hbLayout = new QHBoxLayout();
     m_hbLayout->addSpacerItem(new QSpacerItem(10,20,QSizePolicy::Fixed,QSizePolicy::Fixed));
 
     CusPushButton   *button0 = new CusPushButton(QString(u8"动漫"),0);

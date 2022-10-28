@@ -2,6 +2,7 @@
 #include "ui_HotVideo.h"
 
 #include "mainwidget/vipmember/HotVideoItem.h"
+#include <QScrollBar>
 #include <QListWidgetItem>
 #include <QDebug>
 
@@ -19,6 +20,8 @@ HotVideo::HotVideo(QWidget *parent) :
     ui->listWidget_videoItem->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_videoItem->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_videoItem->setFrameShape(QFrame::NoFrame);//无边界线
+    ui->listWidget_videoItem->horizontalScrollBar()->setDisabled(true);
+    ui->listWidget_videoItem->verticalScrollBar()->setDisabled(true);
 
     ui->pushButton_title->setIcon(QIcon("://images/user/itemmark_new2.png"));
     ui->pushButton_title->setIconSize(QSize(36,36));

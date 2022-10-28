@@ -13,13 +13,14 @@ GalleryItemForm::GalleryItemForm(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setMinimumHeight(432);
+    ui->listWidget_itempic->installEventFilter(this);
     ui->listWidget_itempic->setViewMode(QListView::IconMode);
     ui->listWidget_itempic->setMovement(QListView::Static);//图标不可拖动
     ui->listWidget_itempic->setResizeMode(QListWidget::Adjust);
     ui->listWidget_itempic->setWrapping(true);//自动换行 所有itm在一行显示
     ui->listWidget_itempic->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-    ui->listWidget_itempic->installEventFilter(this);
-//    ui->widget_rec_title->setFixedHeight(60);
+    ui->listWidget_itempic->horizontalScrollBar()->setDisabled(true);
+
     initWorkUI();
     chandleSignalsAndSlots();
 }
@@ -95,9 +96,9 @@ void GalleryItemForm::createItems(int size,QString path)
    for(int i = 0; i < size; i++)
    {
        QString path1 = QString(Global::appDirPath + path + "/music%1.png").arg(i);
-       QString path2 = QString(Global::appDirPath + path + "/music%1.png").arg(i+1);
-       QString info1 = QString(u8"美好的歌曲%1").arg(i);
-       QString info2 = QString(u8"美好的歌曲%1").arg(i+1);
+       QString path2 = QString(Global::appDirPath + path + "/music%1.png").arg(i+18);
+       QString info1 = QString(u8" 网络情歌|没有谁会永远陪着谁%1").arg(i);
+       QString info2 = QString(u8"共享音乐好时光%1").arg(i+18);
        slot_addGalleryItem("www.hao123.com",path1,path2,info1,info2);
    }
 }
@@ -184,12 +185,12 @@ bool GalleryItemForm::eventFilter(QObject *watched, QEvent *event)
 void GalleryItemForm::on_pushButton_itemnext_clicked()
 {
     int step = ui->listWidget_itempic->horizontalScrollBar()->value();
-    ui->listWidget_itempic->horizontalScrollBar()->setValue(step + ui->listWidget_itempic->item(0)->sizeHint().width());
+    ui->listWidget_itempic->horizontalScrollBar()->setValue(step + ui->listWidget_itempic->item(0)->sizeHint().width()*7);
 }
 
 //上一个item
 void GalleryItemForm::on_pushButton_itemprevious_clicked()
 {
     int step = ui->listWidget_itempic->horizontalScrollBar()->value();
-    ui->listWidget_itempic->horizontalScrollBar()->setValue(step - ui->listWidget_itempic->item(0)->sizeHint().width());
+    ui->listWidget_itempic->horizontalScrollBar()->setValue(step - ui->listWidget_itempic->item(0)->sizeHint().width()*7);
 }

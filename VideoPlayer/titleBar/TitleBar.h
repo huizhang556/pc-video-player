@@ -174,6 +174,9 @@ signals:
     void    sig_userSign_out(QString);//下线
     void    sig_userRegister();//注册
 
+    //下拉搜索界面
+    void    sig_SendToMoreHots();//更多热搜
+
 
 private:
     //视频内容搜索

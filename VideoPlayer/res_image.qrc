@@ -508,5 +508,7 @@
         <file>images/bgpic/cusvideoitem1.png</file>
         <file>images/bgpic/cusvideoitem2.png</file>
         <file>images/bgpic/cusvideoitem3.png</file>
+        <file>images/icon/web_hide.png</file>
+        <file>images/home/mark_dubo.png</file>
     </qresource>
 </RCC>

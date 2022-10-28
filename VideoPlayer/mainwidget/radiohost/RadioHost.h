@@ -2,6 +2,8 @@
 #define RADIOHOST_H
 
 #include <QWidget>
+#include <QScrollBar>
+#include <QDebug>
 
 namespace Ui {
 class RadioHost;

@@ -33,6 +33,9 @@ public slots:
     void addHistoryItem(QString his);
 
     void closeSearchForm();
+
+signals:
+    void    sig_SendToMoreHots();//更多热搜
 };
 
 #endif // SEARCHFORM_H

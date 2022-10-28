@@ -41,8 +41,14 @@
       <widget class="VideoHeadItem" name="label_videoPic">
        <property name="minimumSize">
         <size>
-         <width>210</width>
-         <height>255</height>
+         <width>213</width>
+         <height>257</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>213</width>
+         <height>257</height>
         </size>
        </property>
        <property name="styleSheet">
@@ -115,15 +121,15 @@ background-color: transparent;
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
-color: white;
+color: #878787;
 border-radius: 5px;
-/*border: 1px solid #bcbebf;*/
+font: 800 15px &quot;微软雅黑&quot;;
 background-color: transparent;
 }
 
 QPushButton:hover
 {
-color: #878787;
+color: white;
 }</string>
             </property>
             <property name="text">
@@ -148,15 +154,15 @@ color: #878787;
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
-color: white;
+color: #878787;
 border-radius: 5px;
-/*border: 1px solid #bcbebf;*/
+font: 800 14px &quot;微软雅黑&quot;;
 background-color: transparent;
 }
 
 QPushButton:hover
 {
-color: #878787;
+color: white;
 }</string>
             </property>
             <property name="text">

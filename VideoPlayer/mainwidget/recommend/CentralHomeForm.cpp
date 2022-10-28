@@ -30,6 +30,7 @@ void CentralHomeForm::initWorkUI()
 //    m_homeListWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_homeListWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_homeListWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);//按照像素滚动
+    m_homeListWidget->horizontalScrollBar()->setDisabled(true);
 
     //底部按钮
     m_bottomBtn = new QPushButton(m_homeListWidget);//指定父窗口，可以使用相对坐标
@@ -71,7 +72,7 @@ void CentralHomeForm::addWidgetToListWidget()
     QListWidgetItem *item1 = new QListWidgetItem();
     GalleryItemForm *pitem1 = new GalleryItemForm();//分类介绍画廊1
     pitem1->setHeaderTitle(QString::fromLocal8Bit("个性推荐"));
-    pitem1->createItems(18,QString("/pictures/musics/recommend"));
+    pitem1->createItems(18,QString("/pictures/musics/recommend3"));
     item1->setSizeHint(pitem1->size());
     m_homeListWidget->addItem(item1);
     m_homeListWidget->setItemWidget(item1,pitem1);

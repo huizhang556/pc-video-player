@@ -22,7 +22,8 @@ public:
     void    handleSignalsAndSlots();
 
 public slots:
-    void    slot_addItemToListWidget(const QString& url, const QString& picpath,const QString& info1,const QString& info2);
+    void    slot_addItemToListWidget_top(const QString& url, const QString& picpath,const QString& info1,const QString& info2);
+    void    slot_addItemToListWidget_bottom(const QString& url, const QString& picpath,const QString& info1,const QString& info2);
 
 private:
     Ui::Container01 *ui;

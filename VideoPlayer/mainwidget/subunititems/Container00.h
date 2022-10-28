@@ -5,6 +5,7 @@
 #include <QEvent>
 #include <QPushButton>
 #include <QScrollBar>
+#include <QScroller>
 #include <QListWidgetItem>
 #include <QDebug>
 

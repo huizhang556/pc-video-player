@@ -41,6 +41,7 @@ void Container00::initWorkUI()
     m_videoButton_R->setObjectName(QString::fromLocal8Bit("m_videoButton_R"));
     m_videoButton_R->setFixedSize(22,30);
 
+
     ui->listWidget_container00->installEventFilter(this);
     ui->listWidget_container00->setViewMode(QListView::IconMode);
     ui->listWidget_container00->setMovement(QListView::Static);//图标不可拖动
@@ -49,6 +50,7 @@ void Container00::initWorkUI()
     ui->listWidget_container00->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_container00->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_container00->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->listWidget_container00->horizontalScrollBar()->setDisabled(true);//禁用横向滚动条
 
     for(int i = 0; i < 10; i++)
     {

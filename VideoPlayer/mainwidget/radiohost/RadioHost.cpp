@@ -17,7 +17,10 @@ RadioHost::~RadioHost()
 
 void RadioHost::initWorkUI()
 {
-
+    ui->listWidget_2->horizontalScrollBar()->setDisabled(true);
+    ui->listWidget_3->horizontalScrollBar()->setDisabled(true);
+    ui->listWidget_4->horizontalScrollBar()->setDisabled(true);
+    ui->listWidget_5->horizontalScrollBar()->setDisabled(true);
 }
 
 void RadioHost::handleSignalsAndSlots()

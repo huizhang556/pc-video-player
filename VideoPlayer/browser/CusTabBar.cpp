@@ -32,8 +32,8 @@ void CusTabBar::initWorkUI()
     m_expandBtn->setToolTip(QString::fromLocal8Bit("展开收藏夹"));
     m_expandBtn->setObjectName(QString::fromLocal8Bit("m_webExpandBtn"));
 
-    m_hideBtn = new QPushButton(QString::fromLocal8Bit("隐藏"),this);
-    m_hideBtn->setFixedSize(36,24);
+    m_hideBtn = new QPushButton(QString::fromLocal8Bit(""),this);
+    m_hideBtn->setFixedSize(20,24);
     m_hideBtn->setFlat(true);
     m_hideBtn->setToolTip(QString::fromLocal8Bit("隐藏收藏栏"));
 //    m_hideBtn->setIcon(QIcon("://images/icon/tabbar_hide.png"));
@@ -41,7 +41,7 @@ void CusTabBar::initWorkUI()
     m_hideBtn->setObjectName(QString::fromLocal8Bit("m_webHideBtn"));
 
 //    this->setTabButton(0,QTabBar::RightSide,m_closeBtn);//这个是在tab内部设置的按钮
-    m_hblayout = new QHBoxLayout(this);
+    m_hblayout = new QHBoxLayout();
     m_hblayout->setSpacing(5);
     m_hblayout->setContentsMargins(0,0,0,0);
     m_hblayout->setMargin(0);
@@ -53,7 +53,7 @@ void CusTabBar::initWorkUI()
     m_frame = new QFrame(this);
     m_frame->setObjectName(QString::fromLocal8Bit("m_tabframe"));
     m_frame->setLayout(m_hblayout);
-    m_hblayout2 = new QHBoxLayout(m_frame);
+    m_hblayout2 = new QHBoxLayout();
     m_hblayout2->setSpacing(0);
     m_hblayout2->setMargin(0);
     m_hblayout2->setContentsMargins(0,0,0,0);

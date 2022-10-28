@@ -65,6 +65,8 @@ void RankingList::initWorkUI()
 //    ui->listWidget_feature->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_feature->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_feature->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->listWidget_feature->horizontalScrollBar()->setDisabled(true);
+    ui->listWidget_feature->verticalScrollBar()->setDisabled(true);
 
     ui->listWidget_left->setMinimumHeight(40*10);
     ui->listWidget_right->setMinimumHeight(40*10);

@@ -78,7 +78,7 @@ void SelectVideoType::slot_addSelectTypeItemsToFrame(VSItemType itemType, const 
     {
         m_buttonGroup1 = new QButtonGroup(this);
         m_buttonGroup1->setExclusive(true);
-        QHBoxLayout *m_hbLayout = new QHBoxLayout(this);
+        QHBoxLayout *m_hbLayout = new QHBoxLayout();
         m_hbLayout->setSpacing(0);
         m_hbLayout->setContentsMargins(0,0,0,0);
         m_hbLayout->setMargin(0);
@@ -99,7 +99,7 @@ void SelectVideoType::slot_addSelectTypeItemsToFrame(VSItemType itemType, const 
     {
         m_buttonGroup2 = new QButtonGroup(this);
         m_buttonGroup2->setExclusive(true);
-        QHBoxLayout *m_hbLayout = new QHBoxLayout(this);
+        QHBoxLayout *m_hbLayout = new QHBoxLayout();
         m_hbLayout->addSpacerItem(new QSpacerItem(10,20,QSizePolicy::Fixed,QSizePolicy::Fixed));
         for(int i = 0; i < list.count(); i++)
         {
@@ -117,7 +117,7 @@ void SelectVideoType::slot_addSelectTypeItemsToFrame(VSItemType itemType, const 
     {
         m_buttonGroup3 = new QButtonGroup(this);
         m_buttonGroup3->setExclusive(true);
-        QHBoxLayout *m_hbLayout = new QHBoxLayout(this);
+        QHBoxLayout *m_hbLayout = new QHBoxLayout();
         m_hbLayout->addSpacerItem(new QSpacerItem(10,20,QSizePolicy::Fixed,QSizePolicy::Fixed));
         for(int i = 0; i < list.count(); i++)
         {
@@ -135,7 +135,7 @@ void SelectVideoType::slot_addSelectTypeItemsToFrame(VSItemType itemType, const 
     {
         m_buttonGroup4 = new QButtonGroup(this);
         m_buttonGroup4->setExclusive(true);
-        QHBoxLayout *m_hbLayout = new QHBoxLayout(this);
+        QHBoxLayout *m_hbLayout = new QHBoxLayout();
         m_hbLayout->addSpacerItem(new QSpacerItem(10,20,QSizePolicy::Fixed,QSizePolicy::Fixed));
         for(int i = 0; i < list.count(); i++)
         {
@@ -153,7 +153,7 @@ void SelectVideoType::slot_addSelectTypeItemsToFrame(VSItemType itemType, const 
     {
         m_buttonGroup5 = new QButtonGroup(this);
         m_buttonGroup5->setExclusive(true);
-        QHBoxLayout *m_hbLayout = new QHBoxLayout(this);
+        QHBoxLayout *m_hbLayout = new QHBoxLayout();
         m_hbLayout->addSpacerItem(new QSpacerItem(10,20,QSizePolicy::Fixed,QSizePolicy::Fixed));
         for(int i = 0; i < list.count(); i++)
         {
@@ -171,7 +171,7 @@ void SelectVideoType::slot_addSelectTypeItemsToFrame(VSItemType itemType, const 
     {
         m_buttonGroup6 = new QButtonGroup(this);
         m_buttonGroup6->setExclusive(true);
-        QHBoxLayout *m_hbLayout = new QHBoxLayout(this);
+        QHBoxLayout *m_hbLayout = new QHBoxLayout();
         m_hbLayout->addSpacerItem(new QSpacerItem(10,20,QSizePolicy::Fixed,QSizePolicy::Fixed));
         for(int i = 0; i < list.count(); i++)
         {
@@ -189,7 +189,7 @@ void SelectVideoType::slot_addSelectTypeItemsToFrame(VSItemType itemType, const 
     {
         m_buttonGroup7 = new QButtonGroup(this);
         m_buttonGroup7->setExclusive(true);
-        QHBoxLayout *m_hbLayout = new QHBoxLayout(this);
+        QHBoxLayout *m_hbLayout = new QHBoxLayout();
         m_hbLayout->addSpacerItem(new QSpacerItem(10,20,QSizePolicy::Fixed,QSizePolicy::Fixed));
         for(int i = 0; i < list.count(); i++)
         {

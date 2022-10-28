@@ -424,6 +424,10 @@ void TitleBar::handleSignalAndSLots()
 
     //获取网络头像
     connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(slot_replyFinished(QNetworkReply*)),Qt::UniqueConnection);
+
+    //转到热搜界面
+    connect(m_searchForm,&SearchForm::sig_SendToMoreHots,[=](){emit sig_SendToMoreHots();});
+
 }
 
 void TitleBar::setWebDefUrl(const QString& title)

@@ -198,13 +198,13 @@ void MultipPlayer::initMainWindow()
     m_searchBtn->setObjectName(QString::fromLocal8Bit("m_searchBtn"));
     m_searchBtn->setFixedSize(33,30);
 
-    m_hLayout = new QHBoxLayout(this);
+    m_hLayout = new QHBoxLayout();
     m_hLayout->insertWidget(0,m_lineEdit);
     m_hLayout->insertWidget(1,m_searchBtn);
     m_hLayout->setSpacing(0);
     m_hLayout->setStretch(0,4);
 
-    m_vHlayout = new QVBoxLayout(this);
+    m_vHlayout = new QVBoxLayout();
     m_vHlayout->insertLayout(0,m_hLayout);
     m_vHlayout->insertWidget(1,m_listWisget2);
     m_vHlayout->setStretch(0,1);
@@ -632,8 +632,12 @@ void MultipPlayer::handleSignalAndSLots()
     m_adjustBright = new AdjustBright();//必须先new出来，再使用，否则无用
     m_adjustBright->setObjectName(QString::fromLocal8Bit("m_adjustBright"));
     m_adjustBright->setHidden(true);//界面运行起来弹出界面bug
+
     connect(playlist,SIGNAL(currentIndexChanged(int)),m_adjustBright,SLOT(updatePlayRate()));//倍速恢复正常选项状态
+    connect(playlist_t,SIGNAL(currentIndexChanged(int)),m_adjustBright,SLOT(updatePlayRate()));//倍速恢复正常选项状态
     connect(playlist,SIGNAL(currentIndexChanged(int)),this,SLOT(update_adjustBright()));//亮度，饱和度，色调，对比度恢复原值
+    connect(playlist_t,SIGNAL(currentIndexChanged(int)),this,SLOT(update_adjustBright()));//亮度，饱和度，色调，对比度恢复原值
+
     //调节倍速
     connect(m_adjustBright,SIGNAL(valueChange_playRate(qreal)),m_player,SLOT(setPlaybackRate(qreal)));
     //调节播放模式(暂时不用)
@@ -1222,7 +1226,7 @@ void MultipPlayer::on_pushButton_6_clicked()
             addFileToList(m_fileNames);
             fileType(m_fileNames,0);//判断文件类型并作出界面反应
             slot_switchPlayerList(playlist);//转换为当前列表
-            m_player->play();//调试暂停 2022-05-14
+            m_player->play();
             slot_setMainCurrentIndex(1);
             m_playerState = QMediaPlayer::PlayingState;
         }

@@ -1,6 +1,7 @@
 ﻿#include "PicWallItem.h"
 #include "ui_PicWallItem.h"
 #include <QDebug>
+#include <QFontMetrics>
 #include <QPixmap>
 #include <QRegion>
 
@@ -32,7 +33,9 @@ void PicWallItem::setPicItemWall(QString path)
 
 void PicWallItem::setPicItemWallText(QString text)
 {
-    ui->pushButton_wall_title1->setText(text);
+    QFontMetrics elidfont(ui->pushButton_wall_title1->font());
+    ui->pushButton_wall_title1->setText(elidfont.elidedText(text, Qt::ElideRight, ui->pushButton_wall_title1->width()+60));
+    ui->pushButton_wall_title1->setToolTip(text);
 }
 
 void PicWallItem::setPicItemWall2(QString path)
@@ -44,7 +47,9 @@ void PicWallItem::setPicItemWall2(QString path)
 
 void PicWallItem::setPicItemWallText2(QString text)
 {
-    ui->pushButton_wall_title2->setText(text);
+    QFontMetrics elidfont(ui->pushButton_wall_title2->font());
+    ui->pushButton_wall_title2->setText (elidfont.elidedText(text, Qt::ElideRight, ui->pushButton_wall_title2->width()+60));
+    ui->pushButton_wall_title2->setToolTip(text);
 }
 
 CusLabelItem *PicWallItem::getItemPic_1Label()

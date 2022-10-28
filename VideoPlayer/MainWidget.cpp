@@ -24,7 +24,7 @@ MainWidget::MainWidget(QWidget *parent) :
     setMinimumSize(985,670);//1320,800 1500,950
     this->resize(QSize(1500,920));
     setMouseTracking(true);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);//保留最大最小功能
     setWindowTitle(QString::fromLocal8Bit("Qt简易视频播放器主界面"));
     initOtherWidgetUi();//初始化界面
     setLeftSliderCurrentIndex(0);//主界面左侧列表内容
@@ -229,14 +229,14 @@ void MainWidget::initOtherWidgetUi()
     m_tray->show();
     createTrayMenu();
 
-    m_stackWidget_left = new QStackedWidget(this);
+    m_stackWidget_left = new QStackedWidget();
     m_stackWidget_left->setObjectName(QString::fromLocal8Bit("m_stackWidget_left"));
     m_stackWidget_left->setFixedWidth(140);//固定宽度140
     m_stackWidget_left->insertWidget(0,m_leftSideBar);
 //    m_stackWidget_left->insertWidget(1,new CentralHomeForm());
 
-    m_vblayout  = new QVBoxLayout(this);
-    m_hblayout  = new QHBoxLayout(this);
+    m_vblayout  = new QVBoxLayout();//左后的上下布局
+    m_hblayout  = new QHBoxLayout();//最后的左右布局
 
     //侧边栏+QStackedWidget--->水平布局
     m_hblayout->addWidget(m_stackWidget_left,0,Qt::AlignLeft);
@@ -251,7 +251,10 @@ void MainWidget::initOtherWidgetUi()
     m_vblayout->setContentsMargins(MARGIN,MARGIN,MARGIN,MARGIN);
     m_vblayout->setSpacing(0);
     m_hblayout->setMargin(0);
-//    this->setLayout(m_vblayout);//可以不设置，默认以最后一个布局作为整体布局添加
+    //说明：
+    //setlayout接口使用时，所有的布局没有指定父亲为this
+    //如果有布局父亲为this,可以不设置setlayout
+    this->setLayout(m_vblayout);
 }
 
 //设置StackedWidget布局每个page界面
@@ -532,6 +535,9 @@ void MainWidget::handleSignalAndSLots()
         slot_on_leftButton_clicked();
 //        emit sig_globalResize();
     });
+
+    /**********************************标题栏---热词搜索**************************************/
+    connect(m_titleBar,&TitleBar::sig_SendToMoreHots,[=](){m_stackWidget_center->setCurrentWidget(m_hotSearch);});
 
     /*********************************标题栏----用户下线*************************************/
     connect(m_titleBar,&TitleBar::sig_userSign_out,[=](){
