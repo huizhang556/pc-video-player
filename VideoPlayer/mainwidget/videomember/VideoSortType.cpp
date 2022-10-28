@@ -11,7 +11,7 @@ VideoSortType::VideoSortType(QWidget *parent) :
 {
     ui->setupUi(this);
     initWorkUI();
-    setFixedHeight(410);
+    setFixedHeight(430);
     handleSignalsAndSlots();
     setInstallEventFilter();
 }
@@ -35,7 +35,7 @@ void VideoSortType::initWorkUI()
     ui->listWidget_items->setVerticalScrollMode(QListView::ScrollPerPixel);
     ui->listWidget_items->horizontalScrollBar()->setDisabled(true);
 
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < 17; i++)
     {
 //        QString path1 = Global::appDirPath + QString("/pictures/mylike/videos_list2/list_intro%1.png").arg(i);
         QString path2 = Global::appDirPath + QString("/pictures/mylike/videos_list2/list_intro%1.jpg").arg(i);
@@ -49,10 +49,19 @@ void VideoSortType::initWorkUI()
 
 void VideoSortType::handleSignalsAndSlots()
 {
-    //换一换
+    //换一换 document length = maximum() - minimum() + pageStep().
     connect(ui->pushButton_flush,&QPushButton::clicked,[=](){
         int step = ui->listWidget_items->horizontalScrollBar()->value();
-        ui->listWidget_items->horizontalScrollBar()->setValue(ui->listWidget_items->item(0)->sizeHint().width()*7 + step);
+//        qDebug() << QString(u8"当前step:") << step << QString(u8"滚动条总长度：")<<ui->listWidget_items->horizontalScrollBar()->maximum();
+        if(step == ui->listWidget_items->horizontalScrollBar()->maximum())
+        {
+            ui->listWidget_items->horizontalScrollBar()->setValue(ui->listWidget_items->horizontalScrollBar()->minimum());
+//            ui->listWidget_items->scrollToBottom();
+        }
+        else
+        {
+            ui->listWidget_items->horizontalScrollBar()->setValue(ui->listWidget_items->item(0)->sizeHint().width()*7 + step);
+        }
     });
 }
 

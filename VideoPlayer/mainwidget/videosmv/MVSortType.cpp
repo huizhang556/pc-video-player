@@ -1,6 +1,6 @@
 ﻿#include "MVSortType.h"
 #include "ui_MVSortType.h"
-
+#include "global/Global.h"
 #include "mainwidget/videosmv/VideoItem.h"
 #include <QListWidgetItem>
 #include <QScrollBar>
@@ -41,9 +41,12 @@ void MVSortType::initWorkUI()
     m_buttonGroup->addButton(ui->pushButton_mark2,1);
     m_buttonGroup->addButton(ui->pushButton_mark3,2);
 
-    for(int i = 0; i < 100; i++)
+    for(int i = 0; i < 23; i++)
     {
-        VideoItem *itemWidget = new VideoItem();
+        QString picpath = Global::appDirPath + QString("/pictures/mvsort/music%1.png").arg(i);
+        QString introduce = QString(u8"《痒》--%1").arg(i+1);
+        QString author = QString(u8"黄龄--%1").arg(i+1);
+        VideoItem *itemWidget = new VideoItem(picpath,introduce,author);
         QListWidgetItem *item = new QListWidgetItem();
         item->setSizeHint(itemWidget->size());
 

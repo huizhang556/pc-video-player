@@ -13,13 +13,18 @@ VideoItem::VideoItem(QWidget *parent) :
 
 VideoItem::VideoItem(const QString &picPath, const QString &introduce, const QString &author, QWidget *parent):
     QWidget(parent),
+    m_picPath(picPath),
+    m_intro(introduce),
+    m_author(author),
     ui(new Ui::VideoItem)
 {
     ui->setupUi(this);
     initWorkUI();
     handleSignalsAndSlots();
     setInstallEventFilter();
-
+    setItemPicture();
+    setItemIntroduce();
+    setItemAuthor();
 }
 
 VideoItem::~VideoItem()
@@ -29,7 +34,7 @@ VideoItem::~VideoItem()
 
 void VideoItem::initWorkUI()
 {
-//    ui->label_mvPic->constructItem(":/images/videosmv/mvsort/music1.png","://images/user/itemmark_new.png",QString(u8"6.6"),true,true,false);
+
 }
 
 void VideoItem::handleSignalsAndSlots()
@@ -40,4 +45,21 @@ void VideoItem::handleSignalsAndSlots()
 void VideoItem::setInstallEventFilter()
 {
 
+}
+
+void VideoItem::setItemPicture()
+{
+//    ui->label_mvPic->setPixmap(QPixmap(m_picPath));
+//    ui->label_mvPic->setScaledContents(true);
+    ui->label_mvPic->setItemPicture(m_picPath);
+}
+
+void VideoItem::setItemIntroduce()
+{
+    ui->pushButton_name->setText(m_intro);
+}
+
+void VideoItem::setItemAuthor()
+{
+    ui->pushButton_author->setText(m_author);
 }

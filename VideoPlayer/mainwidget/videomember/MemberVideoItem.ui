@@ -7,17 +7,26 @@
     <x>0</x>
     <y>0</y>
     <width>225</width>
-    <height>330</height>
+    <height>360</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>225</width>
-    <height>330</height>
+    <height>360</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>360</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <property name="spacing">
@@ -41,21 +50,20 @@
       <widget class="VideoHeadItem" name="label_videoPic">
        <property name="minimumSize">
         <size>
-         <width>213</width>
-         <height>257</height>
+         <width>210</width>
+         <height>280</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>213</width>
-         <height>257</height>
+         <width>16777215</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">#label_videoPic
+        <string notr="true">QLabel
 {
 border-radius: 10px;
-background-color: transparent;
 }</string>
        </property>
        <property name="text">
@@ -133,7 +141,7 @@ color: white;
 }</string>
             </property>
             <property name="text">
-             <string>最强大脑第9季</string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -166,7 +174,7 @@ color: white;
 }</string>
             </property>
             <property name="text">
-             <string>选手首站就遭淘汰？</string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -183,7 +191,7 @@ color: white;
   <customwidget>
    <class>VideoHeadItem</class>
    <extends>QLabel</extends>
-   <header location="global">mainwidget/VideoHeadItem.h</header>
+   <header>mainwidget/VideoHeadItem.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

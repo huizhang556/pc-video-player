@@ -1,7 +1,7 @@
 ﻿#include "MVRecmmend.h"
 #include "ui_MVRecmmend.h"
 
-
+#include "global/Global.h"
 #include "mainwidget/videosmv/MultipType.h"
 #include "mainwidget/videosmv/RecmmendVideoItem.h"
 
@@ -35,7 +35,11 @@ void MVRecmmend::initWorkUI()
 
     for(int i = 0; i < 2; i++)
     {
-        MvType *itemWidget = new MvType();
+        QString title = QString(u8"新歌首发--%1").arg(i+1);
+        QString leftpic = QString("://images/videosmv/rectitle/music%1.png").arg(i);
+        QString info1 = QString(u8"世界终结前一天---%1").arg(i);
+        QString info2 = QString(u8"张杰and谢娜--->%1").arg(i);
+        MvType *itemWidget = new MvType(title,leftpic,info1,info2);
         QListWidgetItem *item = new QListWidgetItem();
         item->setSizeHint(itemWidget->size());
 
@@ -45,7 +49,8 @@ void MVRecmmend::initWorkUI()
 
     for(int i = 0; i < 6; i++)
     {
-        RecmmendVideoItem *itemWidget = new RecmmendVideoItem();
+        QString title = QString(u8"新歌速递--->%1").arg(i+1);
+        RecmmendVideoItem *itemWidget = new RecmmendVideoItem(title);
         QListWidgetItem *item = new QListWidgetItem();
         item->setSizeHint(itemWidget->size());
 

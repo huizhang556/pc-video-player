@@ -24,6 +24,14 @@ public slots:
 
 private:
     Ui::VideoItem *ui;
+    QString     m_picPath;
+    QString     m_intro;
+    QString     m_author;
+
+private:
+    void        setItemPicture();
+    void        setItemIntroduce();
+    void        setItemAuthor();
 };
 
 #endif // VIDEOITEM_H

@@ -11,9 +11,10 @@ CusLabel2::CusLabel2(QWidget *parent) :
     handleSignalsAndSlots();
 }
 
-CusLabel2::CusLabel2(const QString &mainPic, const QString &topRightMark, const QString &playCounts, const bool play_on, QWidget *parent):
+CusLabel2::CusLabel2(const QString &picpath, const QString &mainPic, const QString &topRightMark, const QString &playCounts, const bool play_on, QWidget *parent):
     QLabel(parent),
     m_playOn(play_on),
+    m_picPath(picpath),
     ui(new Ui::CusLabel2)
 {
     ui->setupUi(this);
@@ -43,6 +44,11 @@ void CusLabel2::handleSignalsAndSlots()
     });
 }
 
+void CusLabel2::setItemPicture(const QString& path)
+{
+    m_picPath = path;
+}
+
 bool CusLabel2::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == this)
@@ -57,4 +63,20 @@ bool CusLabel2::eventFilter(QObject *watched, QEvent *event)
         }
     }
     return QWidget::eventFilter(watched,event);
+}
+
+void CusLabel2::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event)
+        QPainter painter(this);
+        painter.setRenderHint(QPainter::Antialiasing,true);
+        painter.setPen(Qt::NoPen);
+        painter.setBrush(QColor(14, 27, 44,10));//rgba 背景色一致
+
+        QPainterPath drawPath;
+        drawPath.addRoundedRect(this->rect(),6,6);
+        drawPath.addRect(this->rect());
+        //如果不绘制图片（其上面叠加的部分会被覆盖），通过setPixmap添加的图片，圆角失效，只能重绘（但是通过样式设置的图片是圆角生效的）
+        painter.drawPixmap(0,0,width(),height(),QPixmap(m_picPath));
+        painter.fillPath(drawPath,QBrush(QColor(14, 27, 44)));
 }

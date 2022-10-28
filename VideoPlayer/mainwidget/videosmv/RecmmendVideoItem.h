@@ -18,6 +18,7 @@ class RecmmendVideoItem : public QWidget
 
 public:
     explicit RecmmendVideoItem(QWidget *parent = nullptr);
+    explicit RecmmendVideoItem(const QString& title, QWidget *parent = nullptr);
     ~RecmmendVideoItem();
     void    initWorkUI();
     void    handleSignalsAndSlots();
@@ -37,6 +38,16 @@ private slots:
 private:
     Ui::RecmmendVideoItem *ui;
     QButtonGroup        *m_buttonGroup;
+    QString     m_title;
+//    QString     m_type1;
+//    QString     m_type2;
+//    QString     m_type3;
+
+private:
+    void    setItemTitle();
+//    void    setItemType1();
+//    void    setItemType2();
+//    void    setItemType3();
 };
 
 #endif // RECMMENDVIDEOITEM_H

@@ -137,13 +137,13 @@ void CusLabelItem::paintEvent(QPaintEvent *event)
         QPainter painter(this);
         painter.setRenderHint(QPainter::Antialiasing,true);
         painter.setPen(Qt::NoPen);
-        painter.setBrush(QColor(56, 67, 99,10));//rgba
+        painter.setBrush(QColor(0, 0, 0,10));//rgba 黑色
 
         QPainterPath drawPath;
-        drawPath.addRoundedRect(this->rect(),15,15);
+        drawPath.addRoundedRect(this->rect(),6,6);
         drawPath.addRect(this->rect());
         painter.drawPixmap(0,0,width(),height(),QPixmap(m_picPath));//不绘制图片（其上面叠加的部分会被覆盖）
-        painter.fillPath(drawPath,Qt::black);//先绘图片再填充外部边缘（准确来说叫颜色压住覆盖 ）
+        painter.fillPath(drawPath,QBrush(QColor(0, 0, 0)));//先绘图片再填充外部边缘（准确来说叫颜色压住覆盖）
 //        painter.drawPath(drawPath);//绘制路径组成的区域
 //        painter.eraseRect(QRect(5,5,width()-10,height()-10));//擦除矩形区域
 }

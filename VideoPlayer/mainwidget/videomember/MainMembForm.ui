@@ -43,6 +43,9 @@
         <height>241</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <layout class="QVBoxLayout" name="m_itemsLayout">
        <property name="spacing">
         <number>0</number>

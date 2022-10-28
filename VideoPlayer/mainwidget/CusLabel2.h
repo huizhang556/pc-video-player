@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include <QLabel>
+#include <QPainter>
+#include <QPainterPath>
+#include <QPaintEvent>
 
 namespace Ui {
 class CusLabel2;
@@ -14,16 +17,18 @@ class CusLabel2 : public QLabel
 
 public:
     explicit CusLabel2(QWidget *parent = nullptr);
-    explicit CusLabel2(const QString& mainPic, const QString& topRightMark, const QString& playCounts, const bool play_on,QWidget *parent = nullptr);
+    explicit CusLabel2(const QString& picpath, const QString& mainPic, const QString& topRightMark, const QString& playCounts, const bool play_on,QWidget *parent = nullptr);
     ~CusLabel2();
     void    initWorkUI();
     void    handleSignalsAndSlots();
+    void    setItemPicture(const QString& path);
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
-
+    void    paintEvent(QPaintEvent *event) override;
 private:
     Ui::CusLabel2 *ui;
+    QString m_picPath;
     bool    m_playOn;
 
 signals:

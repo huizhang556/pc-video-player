@@ -8,7 +8,7 @@ namespace Ui {
 class MemberVideoItem;
 }
 
-class MemberVideoItem : public QLabel
+class MemberVideoItem : public QWidget
 {
     Q_OBJECT
 
@@ -25,11 +25,15 @@ protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
 
 private:
-    void    slot_setItemPictures(const QString& picpath);
+    void    slot_setItemPictures();
+    void    slot_setItemInfos();
 
 private:
     Ui::MemberVideoItem *ui;
-    static  QString         m_appDir;
+    QString     m_picPath;
+    QString     m_info1;
+    QString     m_info2;
+
 };
 
 #endif // MEMBERVIDEOITEM_H

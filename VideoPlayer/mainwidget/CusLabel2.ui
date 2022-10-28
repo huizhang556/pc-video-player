@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <property name="spacing">
     <number>0</number>
@@ -50,14 +53,14 @@
         <widget class="QFrame" name="frame_mark">
          <property name="minimumSize">
           <size>
-           <width>40</width>
-           <height>20</height>
+           <width>42</width>
+           <height>22</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>40</width>
-           <height>20</height>
+           <width>42</width>
+           <height>22</height>
           </size>
          </property>
          <property name="frameShape">
@@ -264,7 +267,7 @@ border-image: url(:/images/tray/recvideo_play.png);
          <property name="maximumSize">
           <size>
            <width>95</width>
-           <height>16777215</height>
+           <height>26</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -272,6 +275,7 @@ border-image: url(:/images/tray/recvideo_play.png);
 {
 color: #e9bd6c;
 font-weight: 800;
+margin: 1px;
 background-color: rgba(26, 22, 13,0.8);
 }
 

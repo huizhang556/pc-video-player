@@ -792,10 +792,11 @@ font: 400 12px "微软雅黑";
 {
 max-width: 180px;
 height:24px;
-color: #07ccff；
+color: #585656;
 margin-right: 1px;
 border: 0px solid #c1c1c1;
 border-left-width:1px;
+font: 400 12px "微软雅黑";
 background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #7ebef6, stop:1  #b7b0fd);
 }
 
@@ -818,7 +819,7 @@ background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #a2ccf7,
 
 #m_webTabBar::tab:selected
 {
-color: #07ccff；
+color: black;
 background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #7ebef6, stop:1  #b7b0fd);
 }
 
@@ -1380,20 +1381,20 @@ background-color:#038387;
 QScrollBar:vertical
 {
 background-color:#3f3f48;/*背景颜色*/
-width:8px;/*整体宽度*/
+width:10px;/*整体宽度*/
 }
 
 /*水平滚动条整体样式*/
 QScrollBar:horizontal
 {
 background-color:#3f3f48;/*背景颜色*/
-height:8px;/*整体高度*/
+height:10px;/*整体高度*/
 }
 
 /*垂直滚动条内滑块样式*/
 QScrollBar::handle:vertical
 {
-min-height:20px;/*滑块宽度*/
+min-width:8px;/*滑块宽度*/
 border-radius:4px;/*滑块角度弯曲*/
 background-color: rgba(16, 168, 254,0.5);
 }
@@ -1401,7 +1402,7 @@ background-color: rgba(16, 168, 254,0.5);
 /*水平滚动条内滑块样式*/
 QScrollBar::handle:horizontal
 {
-min-width:20px;/*滑块高度*/
+min-height:8px;/*滑块高度*/
 border-radius:4px;/*滑块角度弯曲*/
 background-color: rgba(16, 168, 254,0.5);
 }

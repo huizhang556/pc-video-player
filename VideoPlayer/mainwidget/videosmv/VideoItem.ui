@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>318</width>
-    <height>213</height>
+    <height>219</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -51,7 +51,6 @@
        <property name="styleSheet">
         <string notr="true">QLabel
 {
-border-image: url(:/images/videosmv/mvsort/music0.png);
 border-radius: 10px;
 }</string>
        </property>
@@ -107,6 +106,7 @@ border-radius: 10px;
              <string notr="true">QPushButton
 {
 color: white;
+font: 400 14px &quot;微软雅黑&quot;;
 background-color: transparent;
 }
 
@@ -133,6 +133,7 @@ background-color: transparent;
              <string notr="true">QPushButton
 {
 color: white;
+font: 400 13px &quot;微软雅黑&quot;;
 background-color: transparent;
 }
 

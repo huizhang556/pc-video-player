@@ -4,7 +4,7 @@
 #include <QDebug>
 
 MemberVideoItem::MemberVideoItem(QWidget *parent) :
-    QLabel(parent),
+    QWidget(parent),
     ui(new Ui::MemberVideoItem)
 {
     ui->setupUi(this);
@@ -14,19 +14,18 @@ MemberVideoItem::MemberVideoItem(QWidget *parent) :
 }
 
 MemberVideoItem::MemberVideoItem(const QString &picpath, const QString &name, const QString &author, QWidget *parent) :
-    QLabel(parent),
+    QWidget(parent),
+    m_picPath(picpath),
+    m_info1(name),
+    m_info2(author),
     ui(new Ui::MemberVideoItem)
 {
     ui->setupUi(this);
     initWorkUI();
     handleSignalsAndSlots();
     setInstallEventFilter();
-
-    ui->label_videoPic->setPixmap(QPixmap(picpath));
-    this->setScaledContents(true);
-
-    ui->pushButton_intro->setText(name);
-    ui->pushButton_name->setText(author);
+    slot_setItemPictures();
+    slot_setItemInfos();
 }
 
 MemberVideoItem::~MemberVideoItem()
@@ -36,9 +35,6 @@ MemberVideoItem::~MemberVideoItem()
 
 void MemberVideoItem::initWorkUI()
 {
-//    QString path = Global::appDirPath + QString("/pictures/mylike/list_intro6.png");
-//    ui->label_videoPic->setPixmap(QPixmap(path));
-//    this->setScaledContents(true);
 }
 
 void MemberVideoItem::handleSignalsAndSlots()
@@ -56,8 +52,15 @@ bool MemberVideoItem::eventFilter(QObject *watched, QEvent *event)
     return QWidget::eventFilter(watched,event);
 }
 
-void MemberVideoItem::slot_setItemPictures(const QString &picpath)
+void MemberVideoItem::slot_setItemPictures()
 {
-    this->setPixmap(QPixmap(picpath));
-    this->setScaledContents(true);
+//    ui->label_videoPic->setPixmap(QPixmap(m_picPath));
+//    ui->label_videoPic->setScaledContents(true);
+    ui->label_videoPic->setItemPicture(m_picPath);
+}
+
+void MemberVideoItem::slot_setItemInfos()
+{
+    ui->pushButton_intro->setText(m_info1);
+    ui->pushButton_name->setText(m_info2);
 }

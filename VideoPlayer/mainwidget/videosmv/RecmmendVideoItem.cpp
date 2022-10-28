@@ -1,6 +1,6 @@
 ﻿#include "RecmmendVideoItem.h"
 #include "ui_RecmmendVideoItem.h"
-
+#include "global/Global.h"
 #include "mainwidget/videosmv/VideoItem.h"
 #include <QListWidgetItem>
 #include <QScrollBar>
@@ -14,6 +14,19 @@ RecmmendVideoItem::RecmmendVideoItem(QWidget *parent) :
     initWorkUI();
     handleSignalsAndSlots();
     setInstallEventFilter();
+}
+
+RecmmendVideoItem::RecmmendVideoItem(const QString &title, QWidget *parent):
+    QWidget(parent),
+    m_title(title),
+    ui(new Ui::RecmmendVideoItem)
+{
+    ui->setupUi(this);
+    initWorkUI();
+    handleSignalsAndSlots();
+    setInstallEventFilter();
+    setItemTitle();
+
 }
 
 RecmmendVideoItem::~RecmmendVideoItem()
@@ -43,7 +56,10 @@ void RecmmendVideoItem::initWorkUI()
 
     for(int i = 0; i < 10; i++)
     {
-        VideoItem *itemWidget = new VideoItem();
+        QString picpath = QString("://images/videosmv/mvsort/music%1.png").arg(i);
+        QString introduce = QString(u8"《少年中国说》--%1").arg(i+1);
+        QString author = QString(u8"梁启超--%1").arg(i+1);
+        VideoItem *itemWidget = new VideoItem(picpath,introduce,author);
         QListWidgetItem *item = new QListWidgetItem();
         item->setSizeHint(itemWidget->size());
 
@@ -96,4 +112,9 @@ void RecmmendVideoItem::resizeListWidgetItemSize()
 void RecmmendVideoItem::slot_setButtonChecked(QAbstractButton *button)
 {
     button->setChecked(true);
+}
+
+void RecmmendVideoItem::setItemTitle()
+{
+    ui->pushButton_title->setText(m_title);
 }

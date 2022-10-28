@@ -89,7 +89,7 @@ background-color: #0d1a2a;
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
-color: white;
+color: #e81010;;
 font: 75 12pt &quot;Microsoft YaHei UI&quot;;
 background-color: transparent;
 }</string>
