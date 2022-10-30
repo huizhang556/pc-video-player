@@ -35,6 +35,10 @@ signals:
 
 private:
     Ui::Login *ui;
+    int     m_startX;
+    int     m_startY;
+    int     m_triangleWidth;//小三角宽度
+    int     m_triangleHeight;//小三角高度
 };
 
 #endif // LOGIN_H

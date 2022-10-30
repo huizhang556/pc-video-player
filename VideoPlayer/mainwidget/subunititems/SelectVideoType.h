@@ -1,9 +1,10 @@
 ﻿#ifndef SELECTVIDEOTYPE_H
 #define SELECTVIDEOTYPE_H
-
+#define BTNSIZE QSize(66,26)
+#include <QSize>
 #include <QWidget>
-#include <QPushButton>
 #include <QLayout>
+#include <QPushButton>
 #include <QButtonGroup>
 #include <QDebug>
 
@@ -41,13 +42,14 @@ signals:
 
 private:
     Ui::SelectVideoType *ui;
-    QButtonGroup        *m_buttonGroup1 = nullptr;
-    QButtonGroup        *m_buttonGroup2 = nullptr;
-    QButtonGroup        *m_buttonGroup3 = nullptr;
-    QButtonGroup        *m_buttonGroup4 = nullptr;
-    QButtonGroup        *m_buttonGroup5 = nullptr;
-    QButtonGroup        *m_buttonGroup6 = nullptr;
-    QButtonGroup        *m_buttonGroup7 = nullptr;
+    QButtonGroup *m_buttonGroup0 = nullptr;
+    QButtonGroup *m_buttonGroup1 = nullptr;
+    QButtonGroup *m_buttonGroup2 = nullptr;
+    QButtonGroup *m_buttonGroup3 = nullptr;
+    QButtonGroup *m_buttonGroup4 = nullptr;
+    QButtonGroup *m_buttonGroup5 = nullptr;
+    QButtonGroup *m_buttonGroup6 = nullptr;
+    QButtonGroup *m_buttonGroup7 = nullptr;
     //分类
     QStringList list_videostyle =
     {

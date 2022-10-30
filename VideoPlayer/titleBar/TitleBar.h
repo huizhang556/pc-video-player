@@ -6,12 +6,16 @@
 #include "messagebox/SearchForm.h"
 #include "login/LoginPersonInfo.h"
 #include "login/NewLoginForm.h"
+#include "login/LoginTip.h"
 #include "browser/WebDownLoadList.h"
 #include "customer/CusLineEdit.h"
+#include "titlebar/WatchRecords.h"
 
 #include <QMenu>
 #include <QPoint>
 #include <QTimer>
+#include <QMenu>
+#include <QWidgetAction>
 #include <QWidget>
 #include <QLineEdit>
 #include <QPushButton>
@@ -46,6 +50,8 @@ protected:
 public slots:
     void    isNecessaryShowSearch(int index);
     void    receiveMainFormClose();
+    void    slot_callLoginTipsShow(QObject *watched, QEvent *event);//登录提示界面
+    void    slot_callWatchRecordShow(QObject *watched, QEvent *event);//观看历史提示界面
     void    slot_showUserInfoWgt(QObject *watched, QEvent *event);//显示用户信息
     void    mouseIsEnterLeaveLineEdit(QObject *watched, QEvent *event);
     void    setSelectAllTextStatus(QObject *watched, QEvent *event);//lineEdit按下
@@ -201,7 +207,7 @@ private:
     QPushButton     *m_engineSetBtn         =   nullptr;//引擎设置按钮
     QString         m_headUrl;
     QPixmap         m_headPixmap;
-
+    bool            m_signStatus;//登录状态，默认未未登录
     QNetworkAccessManager   *manager;
     QNetworkReply           *reply;
     Ui::TitleBar    *ui;

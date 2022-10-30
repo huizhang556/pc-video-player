@@ -49,6 +49,11 @@ void CusLabel2::setItemPicture(const QString& path)
     m_picPath = path;
 }
 
+void CusLabel2::setItemBGColor(const QColor &color)
+{
+    m_bgColor = color;
+}
+
 bool CusLabel2::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == this)
@@ -74,7 +79,7 @@ void CusLabel2::paintEvent(QPaintEvent *event)
         painter.setBrush(QColor(14, 27, 44,10));//rgba 背景色一致
 
         QPainterPath drawPath;
-        drawPath.addRoundedRect(this->rect(),6,6);
+        drawPath.addRoundedRect(this->rect(),8,8);
         drawPath.addRect(this->rect());
         //如果不绘制图片（其上面叠加的部分会被覆盖），通过setPixmap添加的图片，圆角失效，只能重绘（但是通过样式设置的图片是圆角生效的）
         painter.drawPixmap(0,0,width(),height(),QPixmap(m_picPath));

@@ -14,7 +14,7 @@ class MemberVideoItem : public QWidget
 
 public:
     explicit MemberVideoItem(QWidget *parent = nullptr);
-    explicit MemberVideoItem(const QString& picpath,const QString& name,const QString& author, QWidget *parent = nullptr);
+    explicit MemberVideoItem(const QString& picpath,const QString& name,const QString& author,const QColor& bgcolor, QWidget *parent = nullptr);
     ~MemberVideoItem();
     void    initWorkUI();
     void    handleSignalsAndSlots();
@@ -26,11 +26,13 @@ protected:
 
 private:
     void    slot_setItemPictures();
+    void    slot_setItemBGColor();
     void    slot_setItemInfos();
 
 private:
     Ui::MemberVideoItem *ui;
     QString     m_picPath;
+    QColor      m_bgcolor;
     QString     m_info1;
     QString     m_info2;
 

@@ -57,8 +57,7 @@
        <property name="styleSheet">
         <string notr="true">QLabel
 {
-border-radius: 10px;
-border-image: url(:/images/bgpic/cusvideoitem1.png);
+border-radius: 0px;
 }</string>
        </property>
        <property name="text">

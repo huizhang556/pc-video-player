@@ -20,6 +20,7 @@ public:
     ~Container01();
     void    initWorkUI();
     void    handleSignalsAndSlots();
+    void    setItemLeftPicture();
 
 public slots:
     void    slot_addItemToListWidget_top(const QString& url, const QString& picpath,const QString& info1,const QString& info2);
@@ -27,6 +28,7 @@ public slots:
 
 private:
     Ui::Container01 *ui;
+    QString     m_leftPic;
 };
 
 #endif // CONTAINER01_H

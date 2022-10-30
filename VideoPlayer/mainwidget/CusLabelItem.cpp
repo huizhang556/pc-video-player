@@ -140,7 +140,7 @@ void CusLabelItem::paintEvent(QPaintEvent *event)
         painter.setBrush(QColor(0, 0, 0,10));//rgba 黑色
 
         QPainterPath drawPath;
-        drawPath.addRoundedRect(this->rect(),6,6);
+        drawPath.addRoundedRect(this->rect(),8,8);
         drawPath.addRect(this->rect());
         painter.drawPixmap(0,0,width(),height(),QPixmap(m_picPath));//不绘制图片（其上面叠加的部分会被覆盖）
         painter.fillPath(drawPath,QBrush(QColor(0, 0, 0)));//先绘图片再填充外部边缘（准确来说叫颜色压住覆盖）

@@ -20,6 +20,7 @@ public:
     void    handleSignalsAndSlots();
     void    setEventFilter();
     void    setItemPicture(const QString path);
+    void    setItemBGColor(const QColor& color);
 protected:
     bool        eventFilter(QObject *watched, QEvent *event)override;
     void        paintEvent(QPaintEvent *event) override;//不要轻易绘制，否则 设置不了图片
@@ -27,6 +28,7 @@ protected:
 private:
     Ui::VideoHeadItem *ui;
     QString     m_picPath;
+    QColor  m_bgColor;
 
 signals:
     void    sig_sendPlayer();

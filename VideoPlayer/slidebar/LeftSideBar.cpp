@@ -58,6 +58,11 @@ void LeftSideBar::setLeftSliderFixedWidth(int width)
     m_expandBtn->setFixedWidth(width);
 }
 
+void LeftSideBar::slot_setCurrentIndex(int index)
+{
+    m_listWidget->setCurrentRow(index);
+}
+
 //初始化界面
 void LeftSideBar::initWidgetUi()
 {

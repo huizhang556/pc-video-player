@@ -523,6 +523,13 @@ void MainWidget::handleSignalAndSLots()
 //        m_webHistory->slot_globalResize();//历史记录界面更新
     });
 
+    //主界面resize
+    connect(this,&MainWidget::sig_sendWindowResize,m_titleBar,&TitleBar::slot_clearAllPopupUi);
+
+    //m_stackWidget_center改变
+    connect(m_stackWidget_center,&QStackedWidget::currentChanged,[=](int index){
+        m_leftSideBar->slot_setCurrentIndex(index);
+    });
 
     //侧边栏有关信号与槽函数处理
     connect(m_leftSideBar,&LeftSideBar::sig_sidebarItemChange,[=](int index)
@@ -1542,6 +1549,7 @@ void MainWidget::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
 //    updateWebAddButtonGeometry();
+    emit sig_sendWindowResize();
 }
 
 void MainWidget::keyPressEvent(QKeyEvent *event)

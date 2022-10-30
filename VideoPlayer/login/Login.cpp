@@ -2,15 +2,22 @@
 #include "ui_Login.h"
 #include "mainwidget/vipmember/BuyVip.h"
 #include <QPainter>
+#include <QPainterPath>
+#include <QDebug>
 
 Login::Login(QWidget *parent) :
     QDialog(parent),
+    m_startX(140),
+    m_startY(20),
+    m_triangleWidth(20),
+    m_triangleHeight(15),
     ui(new Ui::Login)
 {
     ui->setupUi(this);
     installEventFilter(this);
-    this->setFixedSize(260,200);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    this->setFixedSize(300,400);
+    setAttribute(Qt::WA_TranslucentBackground,true);
+    setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::Popup | Qt::Tool | Qt::WindowStaysOnTopHint);
     initWorkUI();
     handleSignalsAndSlots();
 
@@ -30,28 +37,11 @@ void Login::initWorkUI()
     ui->listWidget_person->addItem(item1);
     ui->listWidget_person->addItem(item2);
     ui->listWidget_person->addItem(item3);
-    ui->stackwidget_login->setCurrentIndex(0);
+//    ui->stackwidget_login->setCurrentIndex(1);
 }
 
 void Login::handleSignalsAndSlots()
 {
-    connect(ui->BtnLogin,&QPushButton::clicked,[=]()
-    {
-        if(NewLoginForm::getInstance())
-        {
-            if(!NewLoginForm::getInstance()->isHidden())//正常显示
-            {
-                NewLoginForm::getInstance()->hide();
-            }
-            else//隐藏
-            {
-                NewLoginForm::getInstance()->raise();
-//                NewLoginForm::getInstance()->setWindowModality(Qt::ApplicationModal);
-                NewLoginForm::getInstance()->slot_switchWinType(ShowType::LoginWin_1);
-            }
-        }
-
-    });
 
     //收到关闭程序信号
     connect(this,&Login::sig_LoginWinClose,NewLoginForm::getInstance(),&NewLoginForm::receiveLoginAppClose);
@@ -86,12 +76,24 @@ void Login::receiveMainWinCloseAppSignal()
 
 void Login::slot_setPersonVipPage(int index)
 {
-    ui->stackwidget_login->setCurrentIndex(index);
+//    ui->stackwidget_login->setCurrentIndex(index);
 }
 
 void Login::paintEvent(QPaintEvent *event)
 {
-    Q_UNUSED(event);
-//    QPainter painter(this);
-//    painter.drawPixmap(0,0,this->width(),this->height(),QPixmap(":/images/bgpic/login_bgpic.png"));
+    Q_UNUSED(event)
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing,true);
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(QColor(48, 48, 48));
+    //小三角区域
+    QPolygon trianglePolygon;
+    trianglePolygon << QPoint(m_startX , m_startY);
+    trianglePolygon << QPoint(m_startX + m_triangleWidth / 2, 20 - m_triangleHeight);
+    trianglePolygon << QPoint(m_startX + m_triangleWidth, m_startY);
+    QPainterPath drawPath;
+    //调整三角形高度：1.界面留出空白高度 2.三角形起点高度 3.三角形高度一致
+    drawPath.addRoundRect(0,m_startY,width(),height()-20,4,4);
+    drawPath.addPolygon(trianglePolygon);
+    painter.drawPath(drawPath);
 }

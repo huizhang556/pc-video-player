@@ -22,6 +22,7 @@ public:
     void    initWorkUI();
     void    handleSignalsAndSlots();
     void    setItemPicture(const QString& path);
+    void    setItemBGColor(const QColor& color);
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
@@ -29,6 +30,7 @@ protected:
 private:
     Ui::CusLabel2 *ui;
     QString m_picPath;
+    QColor  m_bgColor;
     bool    m_playOn;
 
 signals:

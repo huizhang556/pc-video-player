@@ -14,6 +14,7 @@ Container01::Container01(QWidget *parent) :
 
 Container01::Container01( const QString &titleText, const QString &leftPicPath, QWidget *parent):
     QWidget(parent),
+    m_leftPic(leftPicPath),
     ui(new Ui::Container01)
 {
     ui->setupUi(this);
@@ -21,11 +22,7 @@ Container01::Container01( const QString &titleText, const QString &leftPicPath, 
     handleSignalsAndSlots();
     if(!titleText.isEmpty())
         ui->pushButton_title->setText(titleText);
-    if(!leftPicPath.isEmpty())
-    {
-     ui->label_leftpic->setPixmap(QPixmap(leftPicPath));
-     ui->label_leftpic->setScaledContents(true);
-    }
+    setItemLeftPicture();
 }
 
 Container01::~Container01()
@@ -81,6 +78,11 @@ void Container01::handleSignalsAndSlots()
         int step2 = ui->listWidget_container02->horizontalScrollBar()->value();
         ui->listWidget_container02->horizontalScrollBar()->setValue(step2 + ui->listWidget_container02->item(0)->sizeHint().width());
     });
+}
+
+void Container01::setItemLeftPicture()
+{
+    ui->label_leftpic->setItemPicture(m_leftPic);
 }
 
 void Container01::slot_addItemToListWidget_top(const QString &url, const QString &picpath, const QString &info1, const QString &info2)

@@ -30,8 +30,9 @@ SubModules::~SubModules()
 
 void SubModules::setPicture()
 {
-    ui->label_header->setPixmap(QPixmap(m_header));
-    ui->label_header->setScaledContents(true);
+//    ui->label_header->setPixmap(QPixmap(m_header));
+//    ui->label_header->setScaledContents(true);
+    ui->label_header->setItemPicture(m_header);
 }
 
 void SubModules::setInfo1()

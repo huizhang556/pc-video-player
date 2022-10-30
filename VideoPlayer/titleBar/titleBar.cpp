@@ -21,6 +21,7 @@
 
 TitleBar::TitleBar(QWidget *parent) :
     QWidget(parent),
+    m_signStatus(false),
     m_headUrl("https://www.baidu.com/s?wd="),
     ui(new Ui::TitleBar)
 {
@@ -64,6 +65,9 @@ void TitleBar::initWorker()
 
     ui->pushButton_userlogin->setFlat(true);
     ui->pushButton_userregis->setFlat(true);
+
+    ui->Btnlogin->installEventFilter(this);
+    ui->BtnHistory->installEventFilter(this);
 
     ui->webProgressBar->setHidden(true);
     //LCD数字显示
@@ -306,7 +310,7 @@ void TitleBar::handleSignalAndSLots()
     //前进 浏览器处理
     connect(ui->pushButton_advance,&QPushButton::clicked,[=](){emit sig_sendUrlAdvance();});
     //显示登录窗口
-    connect(ui->Btnlogin,&QPushButton::clicked,[=](){qDebug() << "login had clicked!"; showLoginForm();});
+//    connect(ui->Btnlogin,&QPushButton::clicked,[=](){qDebug() << "login had clicked!"; showLoginForm();});
     //恢复
     connect(ui->pushButton_resume,&QPushButton::clicked,[=](){});
     //历史记录记录搜索历史
@@ -918,10 +922,10 @@ void TitleBar::slot_addWebEngine()
 void TitleBar::setShowToolTip()
 {
     ui->Btnhelp->setToolTip(QString::fromLocal8Bit("帮助"));
-    ui->Btnlogin->setToolTip(QString::fromLocal8Bit("登录"));
+//    ui->Btnlogin->setToolTip(QString::fromLocal8Bit("登录"));
     ui->Btnskin->setToolTip(QString::fromLocal8Bit("皮肤"));
     ui->BtnDownload->setToolTip(QString::fromLocal8Bit("上传下载"));
-    ui->BtnHistory->setToolTip(QString::fromLocal8Bit("历史记录"));
+//    ui->BtnHistory->setToolTip(QString::fromLocal8Bit("历史记录"));
     ui->BtnScreen->setToolTip(QString::fromLocal8Bit("截屏"));
 }
 
@@ -954,6 +958,8 @@ bool TitleBar::eventFilter(QObject *watched, QEvent *event)
     mouseIsPressReleaseLineEdit(watched,mouseEvent);//搜索框鼠标按下释放，处理历史记录
     setSelectAllTextStatus(watched,mouseEvent);//lineedit选中文本
     slot_showUserInfoWgt(watched,mouseEvent);//显示登录用户信息
+    slot_callLoginTipsShow(watched,mouseEvent);//登陆提示界面
+    slot_callWatchRecordShow(watched,mouseEvent);//观看历史提示界面
     if(watched == m_listWdgt_history)
     {
         if(event->type() == QEvent::Leave)
@@ -1228,6 +1234,7 @@ void TitleBar::slot_switchToLoginPage(int mark, QString nick)
         ui->pushButton_usernick->setToolTip(nick);
         m_loginForm->slot_setPersonVipPage(1);
         emit sig_userSign_in(nick);//上线 发出带用户名
+        m_signStatus = true;//登录状态
     }
 
 }
@@ -1383,6 +1390,7 @@ void TitleBar::slot_clearAllPopupUi()
     if(!m_searchForm->isHidden())       m_searchForm->hide();
     if(!m_listWdgt_history->isHidden()) m_listWdgt_history->hide();
     if(!m_listWdgt_engine->isHidden())  m_listWdgt_engine->hide();
+    if(!LoginTip::getInstance()->isHidden()) LoginTip::getInstance()->hide();
 }
 
 void TitleBar::slot_initCollectRecordListWgt(const QString &text)
@@ -1431,7 +1439,8 @@ void TitleBar::slot_receivedLoginInfo(const QString &name, const QString &head, 
 void TitleBar::slot_receivedSign_out()
 {
     emit sig_userSign_out(ui->pushButton_usernick->text());//下线带用户名
-    m_loginForm->slot_setPersonVipPage(0);
+//    m_loginForm->slot_setPersonVipPage(0);
+    m_signStatus = false;//未登录状态
 }
 
 /*槽函数 --- 获取系统时间并且显示*/
@@ -1451,7 +1460,6 @@ void TitleBar::setLineEditAddress(const QUrl url)
 
 void TitleBar::showLoginForm()
 {
-    qDebug() << "show login form";
     if(m_loginForm)
     {
         if(!m_loginForm->isHidden())
@@ -1463,7 +1471,7 @@ void TitleBar::showLoginForm()
             int x = ui->Btnlogin->parentWidget()->mapToGlobal(ui->Btnlogin->pos()).x();
             int y = ui->Btnlogin->parentWidget()->mapToGlobal(ui->Btnlogin->pos()).y();
             int h = ui->Btnlogin->height();
-            m_loginForm->setGeometry(x-310/2,y+h+10,m_loginForm->width(),m_loginForm->height());
+            m_loginForm->setGeometry(x-m_loginForm->width()/2+8,y+h-2,m_loginForm->width(),m_loginForm->height());
             m_loginForm->raise();
             m_loginForm->show();
         }
@@ -1518,6 +1526,88 @@ void TitleBar::receiveMainFormClose()
     m_loginForm->close();
     m_loginForm->receiveMainWinCloseAppSignal();
 }
+
+/*观看历史提示界面*/
+void TitleBar::slot_callWatchRecordShow(QObject *watched, QEvent *event)
+{
+    if(watched == ui->BtnHistory)//登录按钮
+    {
+        if(event->type() == QEvent::Enter)//进入
+        {
+            int x = ui->BtnHistory->parentWidget()->mapToGlobal(ui->BtnHistory->pos()).x();
+            int y = ui->BtnHistory->parentWidget()->mapToGlobal(ui->BtnHistory->pos()).y();
+            int h = ui->BtnHistory->height();
+            WatchRecords::getInstance()->setGeometry(x- WatchRecords::getInstance()->width()/2+8,
+                                                 y+h-2,//留出5px防止鼠标超出按钮位置
+                                                 WatchRecords::getInstance()->width(),
+                                                 WatchRecords::getInstance()->height());
+            WatchRecords::getInstance()->show();
+
+        }
+        else if(event->type() == QEvent::Leave)//离开
+        {
+            qDebug() << QString(u8"鼠标(转换为局部坐标)：") << mapFromGlobal(QCursor::pos());
+            QRect rect = QRect(ui->BtnHistory->geometry().x()+140,ui->BtnHistory->geometry().y(),20,400+20);//鼠标真实横坐标比控件横坐标大140
+            qDebug() <<QString(u8"处理后的矩形：") << rect;
+            if(!rect.contains(mapFromGlobal(QCursor::pos())))
+            {
+                WatchRecords::getInstance()->hide();
+            }
+        }
+    }
+}
+
+//登陆提示界面
+void TitleBar::slot_callLoginTipsShow(QObject *watched, QEvent *event)
+{
+    if(watched == ui->Btnlogin)//登录按钮
+    {
+        if(event->type() == QEvent::Enter)//进入
+        {
+            if(!m_signStatus)//未登录状态
+            {
+                int x = ui->Btnlogin->parentWidget()->mapToGlobal(ui->Btnlogin->pos()).x();
+                int y = ui->Btnlogin->parentWidget()->mapToGlobal(ui->Btnlogin->pos()).y();
+                int h = ui->Btnlogin->height();
+                LoginTip::getInstance()->setGeometry(x- LoginTip::getInstance()->width() + 78,
+                                                     y,//留出2px防止鼠标超出按钮位置
+                                                     LoginTip::getInstance()->width(),
+                                                     LoginTip::getInstance()->height());
+                LoginTip::getInstance()->show();
+            }
+            else//登录状态
+            {
+                showLoginForm();
+            }
+        }
+        else if(event->type() == QEvent::Leave)//离开
+        {
+            if(!m_signStatus)
+            {
+                //这里的意思是：虽然离开按钮，但是鼠标却在矩形内，依旧不能隐藏界面
+                qDebug() << QString(u8" 登录框矩形：") << ui->Btnlogin->geometry();//1132 15, 20 ,20
+                qDebug() << QString(u8"鼠标(转换为局部坐标)：") << mapFromGlobal(QCursor::pos());
+                QRect rect = QRect(ui->Btnlogin->geometry().x()+140,ui->Btnlogin->geometry().y(),20,193+20);//鼠标真实横坐标比控件横坐标大140
+                qDebug() <<QString(u8"处理后的矩形：") << rect;
+                if(!rect.contains(mapFromGlobal(QCursor::pos())))
+                {
+                    LoginTip::getInstance()->hide();//1275 - 1295  15-35
+                    //                qDebug() << QString(u8"鼠标不在矩形内");
+                }
+            }
+            else
+            {
+                QRect rect = QRect(ui->Btnlogin->geometry().x()+140,ui->Btnlogin->geometry().y(),20,400+20);//鼠标真实横坐标比控件横坐标大140
+                if(!rect.contains(mapFromGlobal(QCursor::pos())))
+                {
+                   m_loginForm->hide();
+                }
+
+            }
+        }
+    }
+}
+
 
 void TitleBar::slot_showUserInfoWgt(QObject *watched, QEvent *event)
 {

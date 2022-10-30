@@ -55,7 +55,8 @@ SOURCES += \
     $$PWD/hotsearch/HotSearchItem.cpp \
     $$PWD/cusvideosbox/CusVideosBox.cpp \
     $$PWD/subunititems/SelectVideoType.cpp \
-    $$PWD/videotypeselect/VideoTypeSelect.cpp
+    $$PWD/videotypeselect/VideoTypeSelect.cpp \
+    $$PWD/cusvideosbox/CusVideoBox2.cpp
 
 HEADERS += \
     $$PWD/songersort/SongerSort.h \
@@ -114,7 +115,8 @@ HEADERS += \
     $$PWD/hotsearch/HotSearchItem.h \
     $$PWD/cusvideosbox/CusVideosBox.h \
     $$PWD/subunititems/SelectVideoType.h \
-    $$PWD/videotypeselect/VideoTypeSelect.h
+    $$PWD/videotypeselect/VideoTypeSelect.h \
+    $$PWD/cusvideosbox/CusVideoBox2.h
 
 FORMS += \
     $$PWD/songersort/SongerSort.ui \
@@ -167,7 +169,8 @@ FORMS += \
     $$PWD/hotsearch/HotSearchForm.ui \
     $$PWD/hotsearch/HotSearchItem.ui \
     $$PWD/cusvideosbox/CusVideosBox.ui \
-    $$PWD/subunititems/SelectVideoType.ui
+    $$PWD/subunititems/SelectVideoType.ui \
+    $$PWD/cusvideosbox/CusVideoBox2.ui
 
 DISTFILES +=
 

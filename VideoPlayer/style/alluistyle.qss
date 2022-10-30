@@ -63,6 +63,29 @@ border-image: url(://images/skin/myskin_checkbtn_hover.png);
 border-image: url(://images/skin/myskin_checkbtn.png);
 }
 
+/**视频分类选择**/
+SelectVideoType
+{
+background-color: #25252b;
+}
+
+SelectVideoType QPushButton
+{
+color: #b4b4b6;
+background-color: transparent;
+}
+
+SelectVideoType QPushButton:checked
+{
+color: white;
+border-radius: 13px;
+background-color: rgb(70, 160, 239);
+}
+
+SelectVideoType QPushButton:hover
+{
+color: #d89010;
+}
 
 /**视频会员主界面---覆盖阴影**/
 QFrame#m_bottomFrame
@@ -164,12 +187,12 @@ background-color: rgba(44, 45, 54,0.8);
 /**视频分类结果**/
 #m_listWgt_sortResult
 {
+border: none;
 background-color: rgba(44, 45, 54,0.8);
 }
 
 #m_listWgt_sortResult::item
 {
-margin: 5px 3px 3px 5px;
 background-color: rgba(44, 45, 54,0.8);
 }
 
@@ -792,7 +815,7 @@ font: 400 12px "微软雅黑";
 {
 max-width: 180px;
 height:24px;
-color: #585656;
+color: black;
 margin-right: 1px;
 border: 0px solid #c1c1c1;
 border-left-width:1px;

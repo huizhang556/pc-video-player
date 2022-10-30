@@ -8,14 +8,16 @@ MemberVideoItem::MemberVideoItem(QWidget *parent) :
     ui(new Ui::MemberVideoItem)
 {
     ui->setupUi(this);
+    resize(225,360);
     initWorkUI();
     handleSignalsAndSlots();
     setInstallEventFilter();
 }
 
-MemberVideoItem::MemberVideoItem(const QString &picpath, const QString &name, const QString &author, QWidget *parent) :
+MemberVideoItem::MemberVideoItem(const QString &picpath, const QString &name, const QString &author, const QColor &bgcolor, QWidget *parent) :
     QWidget(parent),
     m_picPath(picpath),
+    m_bgcolor(bgcolor),
     m_info1(name),
     m_info2(author),
     ui(new Ui::MemberVideoItem)
@@ -25,6 +27,7 @@ MemberVideoItem::MemberVideoItem(const QString &picpath, const QString &name, co
     handleSignalsAndSlots();
     setInstallEventFilter();
     slot_setItemPictures();
+    slot_setItemBGColor();
     slot_setItemInfos();
 }
 
@@ -57,6 +60,11 @@ void MemberVideoItem::slot_setItemPictures()
 //    ui->label_videoPic->setPixmap(QPixmap(m_picPath));
 //    ui->label_videoPic->setScaledContents(true);
     ui->label_videoPic->setItemPicture(m_picPath);
+}
+
+void MemberVideoItem::slot_setItemBGColor()
+{
+    ui->label_videoPic->setItemBGColor(m_bgcolor);
 }
 
 void MemberVideoItem::slot_setItemInfos()

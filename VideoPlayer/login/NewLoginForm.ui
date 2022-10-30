@@ -1153,7 +1153,7 @@ border-bottom-width: 0px;
     subcontrol-position: top center; /* position at the top center */
     padding: 0 3px;
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #FFOECE, stop: 1 #FFFFFF);
+                                      stop: 0 #ffoece, stop: 1 #ffffff);
 }
 
 #groupBox_otherLogin::indicator 

@@ -205,6 +205,7 @@ signals:
     void        sig_canGoForward(bool status);
     void        sig_createNewWebTab();//创建新的tab
     void        sig_globalResize();
+    void        sig_sendWindowResize();
 
 private:
     QGraphicsOpacityEffect *opacity                = nullptr;

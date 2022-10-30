@@ -78,7 +78,7 @@ border: 0px solid #909090;
 }</string>
            </property>
            <property name="currentIndex">
-            <number>1</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="page_4">
             <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -156,11 +156,11 @@ border-image: url(:/images/icon/kugou.ico);
                   <string notr="true">QPushButton
 {
 background-color:transparent;
-color:#ffffff;
+color:#8c8c8f;
 }
 QPushButton:hover
 {
-color: #ff5500;
+color: #2de05d;
 }
 
 </string>
@@ -204,12 +204,14 @@ color: #ff5500;
                   <string notr="true">QPushButton
 {
 background-color:transparent;
-color:#ffffff;
+color:#8c8c8f;
 }
 QPushButton:hover
 {
-color: #ff5500;
-}</string>
+color: #2de05d;
+}
+
+</string>
                  </property>
                  <property name="text">
                   <string>注册</string>
@@ -323,7 +325,7 @@ color: #ff5500;
 {
 border: none;
 background-color:transparent;
-color:#ffffff;
+color:#8c8c8f;
 font-size:12px;
 margin-right:0px;
 padding-left:8px;
@@ -332,7 +334,7 @@ text-align:left;
 }
 QPushButton:hover
 {
-color: #ff5500;
+color: #2de05d;
 text-decoration:underline;
 }</string>
                    </property>

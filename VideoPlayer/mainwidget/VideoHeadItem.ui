@@ -12,7 +12,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>200</width>
+    <width>150</width>
     <height>270</height>
    </size>
   </property>
@@ -108,6 +108,7 @@ background-color: transparent;
              <string notr="true">QPushButton
 {
 background-color: transparent;
+margin-left: 2px;
 border-image: url(:/images/user/vip_start1.png);
 }
 
@@ -197,6 +198,7 @@ background-color: transparent;
              <string notr="true">QPushButton
 {
 background-color: transparent;
+margin-right:2px;
 border-image: url(:/images/home/mark_dubo.png);
 }
 
@@ -412,6 +414,7 @@ background-color: transparent;
 {
 border: none;
 font: 800 14px &quot;微软雅黑&quot;;
+margin-left:2px;
 background-color: rgba(26, 22, 13,0.8);
 color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #6df9c7, stop:1  #bafee3);
 }
@@ -503,6 +506,7 @@ background-color: transparent;
 {
 color: #55d6df;
 border: none;
+margin-right: 2px;
 font: 800 14px &quot;微软雅黑&quot;;
 background-color: rgba(26, 22, 13,0.8);
 }
