@@ -213,9 +213,13 @@ void MainWidget::initOtherWidgetUi()
     m_vipMember = new VipMember();
     m_vipMember->setObjectName(QString::fromLocal8Bit("m_vipMember"));
 
-    //视频盒子
+    //视频盒子1
     m_cusVideoBox = new CusVideosBox();
     m_cusVideoBox->setObjectName(QString::fromLocal8Bit("m_cusVideoBox"));
+
+    //视频盒子2
+    m_cusVideoBox2 = new CusVideoBox2();
+    m_cusVideoBox2->setObjectName(QString::fromLocal8Bit("m_cusVideoBox2"));
 
     //视频筛选结果
     videoFindResult = new VideoTypeSelect();
@@ -277,7 +281,8 @@ void MainWidget::setStackedWidgetPage()
     m_stackWidget_center->insertWidget(15,m_fileTrans);//文件传输
     m_stackWidget_center->insertWidget(16,m_tabWidget);//m_tabWidget
     m_stackWidget_center->insertWidget(17,m_cusVideoBox);
-    m_stackWidget_center->insertWidget(18,videoFindResult);//视频筛选结果
+    m_stackWidget_center->insertWidget(18,m_cusVideoBox2);
+    m_stackWidget_center->insertWidget(19,videoFindResult);//视频筛选结果
     m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
 }
 
@@ -1308,11 +1313,18 @@ MainWidget::~MainWidget()
         m_videoBlank = nullptr;
     }
 
-    if(m_mainPlayer != nullptr)
+    if(m_cusVideoBox != nullptr)
     {
-        delete m_mainPlayer;
-        m_mainPlayer = nullptr;
+        delete m_cusVideoBox;
+        m_cusVideoBox = nullptr;
     }
+
+    if(m_cusVideoBox2 != nullptr)
+    {
+        delete m_cusVideoBox2;
+        m_cusVideoBox2 = nullptr;
+    }
+
 }
 
 bool MainWidget::nativeEvent(const QByteArray &eventType, void *message, long *result)

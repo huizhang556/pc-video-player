@@ -56,7 +56,9 @@ SOURCES += \
     $$PWD/cusvideosbox/CusVideosBox.cpp \
     $$PWD/subunititems/SelectVideoType.cpp \
     $$PWD/videotypeselect/VideoTypeSelect.cpp \
-    $$PWD/cusvideosbox/CusVideoBox2.cpp
+    $$PWD/cusvideosbox/CusVideoBox2.cpp \
+    $$PWD/subunititems/SwitchButtons.cpp \
+    $$PWD/subunititems/SwitchStackWgt.cpp
 
 HEADERS += \
     $$PWD/songersort/SongerSort.h \
@@ -116,7 +118,9 @@ HEADERS += \
     $$PWD/cusvideosbox/CusVideosBox.h \
     $$PWD/subunititems/SelectVideoType.h \
     $$PWD/videotypeselect/VideoTypeSelect.h \
-    $$PWD/cusvideosbox/CusVideoBox2.h
+    $$PWD/cusvideosbox/CusVideoBox2.h \
+    $$PWD/subunititems/SwitchButtons.h \
+    $$PWD/subunititems/SwitchStackWgt.h
 
 FORMS += \
     $$PWD/songersort/SongerSort.ui \
@@ -170,7 +174,9 @@ FORMS += \
     $$PWD/hotsearch/HotSearchItem.ui \
     $$PWD/cusvideosbox/CusVideosBox.ui \
     $$PWD/subunititems/SelectVideoType.ui \
-    $$PWD/cusvideosbox/CusVideoBox2.ui
+    $$PWD/cusvideosbox/CusVideoBox2.ui \
+    $$PWD/subunititems/SwitchButtons.ui \
+    $$PWD/subunititems/SwitchStackWgt.ui
 
 DISTFILES +=
 

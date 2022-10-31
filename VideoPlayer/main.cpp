@@ -38,6 +38,8 @@
 #include "mainwidget/songlistsort/TagsMenu.h"
 #include "mainwidget/rankinglist/RankingList.h"
 #include "mainwidget/CusVerStackWgt.h"
+#include "mainwidget/subunititems/SwitchStackWgt.h"
+#include "mainwidget/subunititems/SwitchButtons.h"
 #include "mainwidget/videotypeselect/VideoTypeSelect.h"
 
 #include <QTranslator>
@@ -105,7 +107,6 @@ int main(int argc, char *argv[])
 //    MultipPlayer w1;
 //    w1.show();
     splashscream.finish(&w1);
-
 
 
     //06--->数据恢复初始化

@@ -19,6 +19,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
     <number>0</number>
@@ -52,7 +55,8 @@
         <string notr="true">#frame_vtitle
 {
 background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #276eb0, stop:1  #133b78);
-	border-image: url(:/images/home/fram_vtitle.png);
+background-color: #0e1b2c;
+	/*border-image: url(:/images/home/fram_vtitle.png);*/
 }
 </string>
        </property>

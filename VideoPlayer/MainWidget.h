@@ -34,6 +34,7 @@
 #include "mainwidget/vipmember/VipMember.h"
 #include "mainwidget/cusvideosbox/CusVideosBox.h"
 #include "mainwidget/hotsearch/HotSearchForm.h"
+#include "mainwidget/cusvideosbox/CusVideoBox2.h"
 #include "mainwidget/videotypeselect/VideoTypeSelect.h"
 
 
@@ -228,6 +229,7 @@ private:
     MusicScene          *m_musicScene              = nullptr;//音乐现场
     VipMember           *m_vipMember               = nullptr;//会员专区
     CusVideosBox        *m_cusVideoBox             = nullptr;//视频盒子
+    CusVideoBox2        *m_cusVideoBox2            = nullptr;//视频盒子
     VideoTypeSelect     *videoFindResult           = nullptr;//视频筛选结果
     PersonFileForm      *m_personForm              = nullptr;
     MultipPlayer        *m_mainPlayer              = nullptr;
