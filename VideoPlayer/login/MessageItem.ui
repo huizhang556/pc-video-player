@@ -6,14 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>389</width>
-    <height>67</height>
+    <width>280</width>
+    <height>60</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>280</width>
+    <height>60</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>280</width>
+    <height>60</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_4">
+  <layout class="QVBoxLayout" name="verticalLayout_3">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -32,44 +44,63 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLabel" name="label_header">
-         <property name="minimumSize">
-          <size>
-           <width>50</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">#label_header
+      <widget class="QFrame" name="frame">
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>6</number>
+        </property>
+        <property name="topMargin">
+         <number>5</number>
+        </property>
+        <property name="rightMargin">
+         <number>6</number>
+        </property>
+        <property name="bottomMargin">
+         <number>5</number>
+        </property>
+        <item>
+         <widget class="HeaderPic" name="label_header">
+          <property name="styleSheet">
+           <string notr="true">#label_header
 {
-border-radius: 25px;
-	border-image: url(:/images/bgpic/dieji.png);
+background-color: transparent;
 }</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-      </layout>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <widget class="QLabel" name="labNameMess">
            <property name="minimumSize">
             <size>
-             <width>100</width>
+             <width>120</width>
              <height>0</height>
             </size>
            </property>
@@ -79,30 +110,30 @@ border-radius: 25px;
              <pointsize>10</pointsize>
             </font>
            </property>
+           <property name="styleSheet">
+            <string notr="true">#labNameMess
+{
+padding-left: 3px;
+color: #5f92c1;
+}</string>
+           </property>
            <property name="text">
-            <string>name1</string>
+            <string>爱撒娇的 王狗蛋</string>
            </property>
           </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
          </item>
          <item>
           <widget class="QLabel" name="labTimer">
            <property name="minimumSize">
             <size>
-             <width>100</width>
+             <width>60</width>
              <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>60</height>
             </size>
            </property>
            <property name="font">
@@ -110,8 +141,15 @@ border-radius: 25px;
              <family>Microsoft YaHei UI</family>
             </font>
            </property>
+           <property name="styleSheet">
+            <string notr="true">#labTimer
+{
+padding-right:3px;
+color: #e8e5e6;
+}</string>
+           </property>
            <property name="text">
-            <string>time</string>
+            <string>2022-11-1</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -121,14 +159,36 @@ border-radius: 25px;
         </layout>
        </item>
        <item>
-        <widget class="QLabel" name="labInform">
-         <property name="font">
-          <font>
-           <family>Microsoft YaHei UI</family>
-          </font>
+        <widget class="QPushButton" name="labInform">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton
+{
+border: none;
+padding-left: 6px;
+color: rgb(85, 255, 0);
+text-align: left;
+font: 400 13px &quot;微软雅黑&quot;;
+}
+
+QPushButton:hover
+{
+color: rgb(87, 189, 12);
+}</string>
          </property>
          <property name="text">
-          <string>inform</string>
+          <string>开通会员！！！</string>
          </property>
         </widget>
        </item>
@@ -138,6 +198,13 @@ border-radius: 25px;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>HeaderPic</class>
+   <extends>QLabel</extends>
+   <header>mainwidget/subunititems/HeaderPic.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

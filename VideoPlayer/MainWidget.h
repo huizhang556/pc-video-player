@@ -24,6 +24,7 @@
 #include "videomodels/VideoTitleBar.h"
 #include "videomodels/PersonFileForm.h"
 #include "mainwidget/HomeWidget.h"
+#include "fileshandle/DownloadType.h"
 #include "mainwidget/videomember/MainMembForm.h"
 #include "mainwidget/videosmv/MainVideoMv.h"
 #include "mainwidget/songersort/SongerSort.h"

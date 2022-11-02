@@ -20,6 +20,7 @@ public:
     ~RecVideoItem();
     void    handleSignalsAndSlots();
     void    setVideoPicture(const QString path);//设置图片
+    void    setItemPicture(const QString path);
     void    setVideoTime(const QString &time);//设置时长
     void    setVideoText(QString &info);//视频介绍
     void    setVideoUpvoye(const QString &count);//点赞数

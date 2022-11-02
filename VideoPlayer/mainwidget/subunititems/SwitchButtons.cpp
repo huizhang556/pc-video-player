@@ -8,7 +8,6 @@ SwitchButtons::SwitchButtons(QWidget *parent) :
     ui(new Ui::SwitchButtons)
 {
     ui->setupUi(this);
-//    setAttribute(Qt::WA_TranslucentBackground,true);
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
     initWorkUI();
     handleSignalsAndSlots();

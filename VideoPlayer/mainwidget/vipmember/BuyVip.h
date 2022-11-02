@@ -25,6 +25,7 @@ private:
     explicit BuyVip(QWidget *parent = nullptr);
     Ui::BuyVip *ui;
     static BuyVip* m_pInstance;
+
     QStringList     m_yearVip =
     {
         QString(u8"连续包年"),

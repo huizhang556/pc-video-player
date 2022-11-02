@@ -510,5 +510,9 @@
         <file>images/bgpic/cusvideoitem3.png</file>
         <file>images/icon/web_hide.png</file>
         <file>images/home/mark_dubo.png</file>
+        <file>images/function/user_watched.png</file>
+        <file>images/home/file_music_free.png</file>
+        <file>images/home/file_music_vip.png</file>
+        <file>images/home/file_video_vip.png</file>
     </qresource>
 </RCC>

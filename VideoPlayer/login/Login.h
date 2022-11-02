@@ -1,10 +1,18 @@
 ﻿#ifndef LOGIN_H
 #define LOGIN_H
-
+#define ITEMSIZE QSize(290,63)
 #include <QDialog>
+#include <QSize>
 #include "NewLoginForm.h"
 #include "LoginPersonInfo.h"
 #include <QPaintEvent>
+
+enum MessType
+{
+    M_COMMENT,
+    M_ABOUTME,
+    M_NOTIFY
+};
 
 namespace Ui {
 class Login;
@@ -29,9 +37,11 @@ protected:
 public slots:
     void    receiveMainWinCloseAppSignal();
     void    slot_setPersonVipPage(int index);
+    void    slot_addMessageItemToBox(MessType mtype, const QString& pic,const QString& nickname,const QString& datatime,const QString& message);
 
 signals:
     void    sig_LoginWinClose();
+    void    sig_sendSign_out();//退出
 
 private:
     Ui::Login *ui;

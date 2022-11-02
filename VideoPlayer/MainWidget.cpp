@@ -548,6 +548,12 @@ void MainWidget::handleSignalAndSLots()
 //        emit sig_globalResize();
     });
 
+    /*******************下载选择界面---更多设置****************/
+    //文件下载配置
+    connect(DownloadType::getInstance(),&DownloadType::sig_sendToconfig,[=](){
+        help_stemAboutSetting();
+    });
+
     /**********************************标题栏---热词搜索**************************************/
     connect(m_titleBar,&TitleBar::sig_SendToMoreHots,[=](){m_stackWidget_center->setCurrentWidget(m_hotSearch);});
 

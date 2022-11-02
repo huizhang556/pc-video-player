@@ -214,6 +214,9 @@ void TitleBar::handleSignalAndSLots()
         qDebug() << "current select item ="<< text;
     });
 
+    //账号退出
+    connect(m_loginForm,&Login::sig_sendSign_out,[=](){ slot_receivedSign_out(); });
+
     //左上角---用户登录
     connect(ui->pushButton_userlogin,&QPushButton::clicked,[=](){
 //        LoginPersonInfo::getInstance()->showLoginWindow(0);
@@ -236,6 +239,7 @@ void TitleBar::handleSignalAndSLots()
         slot_setCurrentWebSiteCollectStatus(ui->lineEdit_webSearch->text());
         emit sig_sendClearTempRecords();
     });
+
 
     //new 登陆之前清除痕迹
     connect(NewLoginForm::getInstance(),&NewLoginForm::sig_sendClearTempRecords,[=](){
@@ -1547,7 +1551,7 @@ void TitleBar::slot_callWatchRecordShow(QObject *watched, QEvent *event)
         else if(event->type() == QEvent::Leave)//离开
         {
             qDebug() << QString(u8"鼠标(转换为局部坐标)：") << mapFromGlobal(QCursor::pos());
-            QRect rect = QRect(ui->BtnHistory->geometry().x()+140,ui->BtnHistory->geometry().y(),20,400+20);//鼠标真实横坐标比控件横坐标大140
+            QRect rect = QRect(ui->BtnHistory->geometry().x()+135,ui->BtnHistory->geometry().y(),25,400+20);//鼠标真实横坐标比控件横坐标大140
             qDebug() <<QString(u8"处理后的矩形：") << rect;
             if(!rect.contains(mapFromGlobal(QCursor::pos())))
             {
@@ -1587,7 +1591,7 @@ void TitleBar::slot_callLoginTipsShow(QObject *watched, QEvent *event)
                 //这里的意思是：虽然离开按钮，但是鼠标却在矩形内，依旧不能隐藏界面
                 qDebug() << QString(u8" 登录框矩形：") << ui->Btnlogin->geometry();//1132 15, 20 ,20
                 qDebug() << QString(u8"鼠标(转换为局部坐标)：") << mapFromGlobal(QCursor::pos());
-                QRect rect = QRect(ui->Btnlogin->geometry().x()+140,ui->Btnlogin->geometry().y(),20,193+20);//鼠标真实横坐标比控件横坐标大140
+                QRect rect = QRect(ui->Btnlogin->geometry().x()+135,ui->Btnlogin->geometry().y(),25,193+20);//鼠标真实横坐标比控件横坐标大140
                 qDebug() <<QString(u8"处理后的矩形：") << rect;
                 if(!rect.contains(mapFromGlobal(QCursor::pos())))
                 {
@@ -1597,7 +1601,7 @@ void TitleBar::slot_callLoginTipsShow(QObject *watched, QEvent *event)
             }
             else
             {
-                QRect rect = QRect(ui->Btnlogin->geometry().x()+140,ui->Btnlogin->geometry().y(),20,400+20);//鼠标真实横坐标比控件横坐标大140
+                QRect rect = QRect(ui->Btnlogin->geometry().x()+135,ui->Btnlogin->geometry().y(),25,400+20);//鼠标真实横坐标比控件横坐标大140
                 if(!rect.contains(mapFromGlobal(QCursor::pos())))
                 {
                    m_loginForm->hide();

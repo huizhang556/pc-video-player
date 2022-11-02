@@ -1,6 +1,7 @@
 ﻿#ifndef WATCHRECORDS_H
 #define WATCHRECORDS_H
-
+#define ITEMSIZE QSize(290,85)
+#include <QSize>
 #include <QWidget>
 
 namespace Ui {
@@ -13,6 +14,8 @@ class WatchRecords : public QWidget
 
 public:
     ~WatchRecords();
+    void    initWorkUI();
+    void    handleSignalsAndSlots();
     static  WatchRecords* getInstance();
 
 protected:

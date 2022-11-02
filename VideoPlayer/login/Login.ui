@@ -159,8 +159,13 @@ background-color: transparent;
 {
 border: none;
 font: 800 14px &quot;微软雅黑&quot;;
-color: white;
+color: #2ca5f9;
 background-color: transparent;
+}
+
+#pushButton_readAll:hover
+{
+color: #2ca5f9;
 }</string>
         </property>
         <property name="text">
@@ -182,73 +187,56 @@ background-color: transparent;
      <property name="styleSheet">
       <string notr="true">QTabWidget
 {
-background-color: #303030;
+background-color:#292929;
 }
 
 QTabWidget::pane 
 {
-    border-top: 1px solid rgba(58, 58, 65,0.9);
-	background-color: #303030;
+border-top: 1px solid rgba(58, 58, 65,0.9);
+background-color:#292929;
 }
 
 QTabWidget::tab-bar 
 {
-    left: 20px; /* move to the right by 5px */
+left: 26px;
+background-color:#292929;
 }
 
 QTabBar::tab 
 {
-    background-color: transparent;
-    /*border: 2px solid #C4C4C3;*/
-	/*border-bottom-color: #C2C7CB;*/
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
-    min-width: 60px;
-	height:30px;
-    padding: 2px;	
-	font: 75 10pt &quot;Microsoft YaHei UI&quot;;
+min-width: 60px;
+min-height:36;
+font: 75 10pt &quot;Microsoft YaHei UI&quot;;
+background-color: transparent;
 }
 
-QTabBar::tab:selected, QTabBar::tab:hover 
+QTabBar::tab:selected
 {
- background-color: transparent;
+color: #ff3731;
+margin: 0px;
 }
 
-QTabBar::tab:selected 
+QTabBar::tab:hover 
 {
-	color: #ff3731;
-	border: 0px solid #9B9B9B;
-    border-bottom-color: #C2C7CB; /* same as pane color */
+color: #ff3731;
 }
 
 QTabBar::tab:!selected 
 {
-	color: #7e7f81;
-    margin-top: 0px; /* make non-selected tabs look smaller */
+color: #7e7f81;
 }
 
-
-QTabBar::tab:first:selected 
-{
-    margin-left: 0; /* the first selected tab has nothing to overlap with on the left */
-}
-
-QTabBar::tab:last:selected 
-{
-    margin-right: 0; /* the last selected tab has nothing to overlap with on the right */
-}
-
-QTabBar::tab:only-one 
-{
-    margin: 0; /* if there is only one tab, we don't want overlapping margins */
-}</string>
+</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_perMessages">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <attribute name="title">
-       <string>私信</string>
+       <string>我的</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <property name="spacing">
@@ -276,7 +264,7 @@ QTabBar::tab:only-one
            <property name="styleSheet">
             <string notr="true">QFrame
 {
-background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #3d372a, stop:1  #2b2a2a);
+background-color: #292929;
 }</string>
            </property>
            <property name="frameShape">
@@ -307,59 +295,106 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #3d372a, 
                <number>0</number>
               </property>
               <item>
-               <widget class="QLabel" name="label_vipwarning">
+               <widget class="QWidget" name="widget_opvip" native="true">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QLabel
-{
-color:#999999;
-font: 25 10pt &quot;Microsoft YaHei UI&quot;;
-}</string>
-                </property>
-                <property name="text">
-                 <string>您的视频会员VIP已过期</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_openvip">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>36</height>
+                  <height>90</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>36</height>
+                  <height>90</height>
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QPushButton
+                 <string notr="true">#widget_opvip
+{
+border: none;
+background-color:#292929;
+}</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_6">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="label_vipwarning">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QLabel
+{
+color:#999999;
+font: 25 10pt &quot;Microsoft YaHei UI&quot;;
+background-color: transparent;
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>您的视频会员VIP已过期</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_openvip">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton
 {
 text-align: center;
-margin: 0px 30px 10px 30px;
-border-radius:13px;
+margin: 8px 30px 8px 30px;
+border-radius:16px;
 color: #663d00;
-font: 25 9pt &quot;Microsoft YaHei&quot;;
+font: 25 11pt &quot;微软雅黑&quot;;
 background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #fede88, stop:1  #f2ca5b);
 }
 
 QPushButton:hover
 {
-color:#ff4b38;
+color: #663d00;
 background-color: #fede88;
 }</string>
-                </property>
-                <property name="text">
-                 <string>开通VIP/超级会员看大片</string>
-                </property>
+                   </property>
+                   <property name="text">
+                    <string>开通VIP/超级会员看大片</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </item>
               <item>
@@ -368,25 +403,57 @@ background-color: #fede88;
                  <string notr="true">#listWidget_person
 {
 border: none;
-font: 25 10pt &quot;Microsoft YaHei&quot;;
+font: 25 10pt &quot;微软雅黑&quot;;
+background-color:#292929;
 }
 
 #listWidget_person::item
 {
-height:43px;
+height:40px;
 color: white;
 background-color:#292929;
 border: 0px solid #3e3e3e;
 border-bottom-width:1px;
-padding-left: 20px;
+margin: 0px 20px;
 
 }
 
 
 #listWidget_person::item:hover
 {
-color: #008bb5;
+color: #ff3e2e;
 }</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_exit">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton
+{
+text-align: center;
+border-radius:0px;
+color: rgba(0, 170, 255,0.7);
+font: 25 11pt &quot;微软雅黑&quot;;
+background-color:#292929;
+border: 0px solid #3e3e3e;
+border-top-width:1px;
+margin: 0px 20px;
+}
+
+QPushButton:hover
+{
+color: rgb(0, 170, 255);
+}</string>
+                </property>
+                <property name="text">
+                 <string>退出登录</string>
                 </property>
                </widget>
               </item>
@@ -425,77 +492,58 @@ color: #008bb5;
           <string notr="true">QListWidget
 {
 border: none;
-background-color: #16161a;
+background-color: rgb(41, 41, 41);
 }
 
 QListWidget::item
 {
+min-height: 60px;
 color: transparent;
-margin:0px 0px;
-border-radius: 0px;
-background-color: transparent;
+margin: 3px 6px 0px 6px;
+border-radius: 6px;
+background-color: rgb(41, 41, 41);
 }
 
 QListWidget::item:selected
 {
-/*background-color: rgb(255, 233, 192);*/
+border: 1px solid rgb(64, 66, 68);
 }
 
 QListWidget::item:hover
 {
-/*background-color: rgb(255, 233, 192);*/
-}</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_aboutme">
-      <attribute name="title">
-       <string>@我</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QListWidget" name="listWidget_aboutme">
-         <property name="styleSheet">
-          <string notr="true">QListWidget
-{
-border: none;
-background-color: #16161a;
+border: 1px solid rgb(64, 66, 68);
 }
 
-QListWidget::item
+QScrollBar:vertical
 {
-color: transparent;
-margin:0px 0px;
-border-radius: 0px;
-background-color: transparent;
+background:transparent; 
+width:6px;
 }
 
-QListWidget::item:selected
+QScrollBar::handle:vertical
 {
-/*background-color: rgb(255, 233, 192);*/
+min-height:10px;
+max-height:20px;
+background:rgb(224,224,224);
+ width:6px; 
+border-radius:3px;
 }
 
-QListWidget::item:hover
+QScrollBar::up-arrow:vertical
 {
-/*background-color: rgb(255, 233, 192);*/
-}</string>
+border:none;
+}
+
+QScrollBar::sub-line:vertical
+{
+background:transparent;
+}
+
+QScrollBar::add-line:vertical
+{
+background:transparent;
+}
+</string>
          </property>
         </widget>
        </item>
@@ -527,26 +575,141 @@ QListWidget::item:hover
           <string notr="true">QListWidget
 {
 border: none;
-background-color: #16161a;
+background-color: rgb(41, 41, 41);
 }
 
 QListWidget::item
 {
+min-height: 60px;
 color: transparent;
-margin:0px 0px;
-border-radius: 0px;
-background-color: transparent;
+margin: 3px 6px 0px 6px;
+border-radius: 6px;
+background-color: rgb(41, 41, 41);
 }
 
 QListWidget::item:selected
 {
-/*background-color: rgb(255, 233, 192);*/
+border: 1px solid rgb(64, 66, 68);
 }
 
 QListWidget::item:hover
 {
-/*background-color: rgb(255, 233, 192);*/
-}</string>
+border: 1px solid rgb(64, 66, 68);
+}
+
+QScrollBar:vertical
+{
+background:transparent; 
+width:6px;
+}
+
+QScrollBar::handle:vertical
+{
+min-height:10px;
+max-height:20px;
+background:rgb(224,224,224);
+ width:6px; 
+border-radius:3px;
+}
+
+QScrollBar::up-arrow:vertical
+{
+border:none;
+}
+
+QScrollBar::sub-line:vertical
+{
+background:transparent;
+}
+
+QScrollBar::add-line:vertical
+{
+background:transparent;
+}
+</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_aboutme">
+      <attribute name="title">
+       <string>@我</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QListWidget" name="listWidget_aboutme">
+         <property name="styleSheet">
+          <string notr="true">QListWidget
+{
+border: none;
+background-color: rgb(41, 41, 41);
+}
+
+QListWidget::item
+{
+min-height: 60px;
+color: transparent;
+margin: 3px 6px 0px 6px;
+border-radius: 6px;
+background-color: rgb(41, 41, 41);
+}
+
+QListWidget::item:selected
+{
+border: 1px solid rgb(64, 66, 68);
+}
+
+QListWidget::item:hover
+{
+border: 1px solid rgb(64, 66, 68);
+}
+
+QScrollBar:vertical
+{
+background:transparent; 
+width:6px;
+}
+
+QScrollBar::handle:vertical
+{
+min-height:10px;
+max-height:20px;
+background:rgb(224,224,224);
+ width:6px; 
+border-radius:3px;
+}
+
+QScrollBar::up-arrow:vertical
+{
+border:none;
+}
+
+QScrollBar::sub-line:vertical
+{
+background:transparent;
+}
+
+QScrollBar::add-line:vertical
+{
+background:transparent;
+}
+</string>
          </property>
         </widget>
        </item>

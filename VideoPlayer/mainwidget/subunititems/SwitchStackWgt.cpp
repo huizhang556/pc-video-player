@@ -43,7 +43,7 @@ void SwitchStackWgt::handleSignalsAndSlots()
     connect(m_switchButton,&SwitchButtons::sig_sendButtonNumber,[=](int num){
         this->setCurrentIndex(num);
         resizeSwitchButtonSize();//必须要更新
-        qDebug() << QString(u8"当前第%1页").arg(num);
+//        qDebug() << QString(u8"当前第%1页").arg(num);
     });
 
 

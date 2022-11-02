@@ -50,8 +50,9 @@ void RecomVideoTab::initWorkUI()
 //                  <<QString::fromLocal8Bit("测试视频-剧集列表-侯翠翠-考什么研还不如躺平");
 
 
-
+    ui->listWidget_recommend->setViewMode(QListView::ListMode);
     ui->listWidget_recommend->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->listWidget_recommend->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 //    for(int i = 0; i < m_tempVideoList.size(); i++)
 //    {
 //        QString url     = m_tempVideoList[i];

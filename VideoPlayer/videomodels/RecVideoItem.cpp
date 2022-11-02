@@ -68,6 +68,12 @@ void RecVideoItem::setVideoPicture(const QString path)
     connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(slot_replyFinished(QNetworkReply*)));
 }
 
+void RecVideoItem::setItemPicture(const QString path)
+{
+    ui->label_videoPic->setPixmap(QPixmap(path));
+    ui->label_videoPic->setScaledContents(true);
+}
+
 void RecVideoItem::setVideoTime(const QString &time)
 {
     ui->label_videoTime->setText(time);

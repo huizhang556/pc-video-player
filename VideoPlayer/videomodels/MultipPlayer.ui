@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1096</width>
+    <width>1141</width>
     <height>372</height>
    </rect>
   </property>
@@ -1037,6 +1037,32 @@ border-image: url(:/images/icon/player_xunhuan.png);
 QPushButton:hover
 {
 border-image: url(:/images/icon/player_xunhuan.png);
+}</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="pushButton_download">
+                         <property name="minimumSize">
+                          <size>
+                           <width>20</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>20</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton
+{
+background-color: transparent;
+border-image: url(:/images/icon/vtitle_download.png);
 }</string>
                          </property>
                          <property name="text">

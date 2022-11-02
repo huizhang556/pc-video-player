@@ -1,0 +1,862 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DownloadType</class>
+ <widget class="QDialog" name="DownloadType">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>652</width>
+    <height>460</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>650</width>
+    <height>460</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QFrame" name="frame_title">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame
+{
+background-color: #082840;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="pushButton_title">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>48</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>48</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border: 0px solid #dadada;
+color: rgb(40, 183, 194);
+border-radius:0px;
+text-align: left;
+padding-left: 10px;
+font: 400 18px &quot;微软雅黑&quot;;
+background-color: transparent;
+}
+
+QPushButton:checked
+{
+color: rgb(40, 183, 194);
+background-color: transparent;
+}
+
+QPushButton:hover
+{
+color: rgb(40, 183, 194);
+background-color: transparent;
+}</string>
+        </property>
+        <property name="text">
+         <string>资源下载</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>514</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_close">
+        <property name="minimumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border: none;
+color: #504f50;
+border-radius: 2px;
+font: 400 14px &quot;微软雅黑&quot;;
+background-color: transparent;
+}
+
+QPushButton:checked
+{
+background-color: rgb(40, 183, 194);
+}
+
+QPushButton:hover
+{
+background-color: rgb(40, 183, 194);
+}</string>
+        </property>
+        <property name="text">
+         <string>X</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>3</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="stackedWidget_middle">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>200</height>
+      </size>
+     </property>
+     <widget class="QWidget" name="page">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QPushButton" name="pushButton_songName">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton
+{
+border: none;
+color: black;
+text-align: left;
+padding-left: 6px;
+font: 600 16px &quot;微软雅黑&quot;;
+background-color: transparent;
+}</string>
+         </property>
+         <property name="text">
+          <string>少年行-张艺兴</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QScrollArea" name="scrollArea">
+         <property name="styleSheet">
+          <string notr="true">#scrollArea
+{
+border: none;
+}</string>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollArea1">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>634</width>
+            <height>190</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QTableWidget" name="tableWidget_source">
+             <property name="styleSheet">
+              <string notr="true">*{
+color: #404040;
+font: 400 14px &quot;微软雅黑&quot;;
+background-color: transparent;
+}
+
+#tableWidget_source
+{
+border: 1px solid #e9eaeb;
+border-radius: 5px;
+}
+
+QLabel
+{
+border: none;
+padding-left: 10px;
+}
+
+QPushButton
+{
+border: none;
+text-align: left;
+padding-left: 5px;
+}
+
+QRadioButton
+{
+color: #404040;
+}
+
+QRadioButton:checked
+{
+color: #a9dfe3;
+}
+
+QComboBox
+{
+border: 0px solid #d6d6d6;
+border-radius: 0px;
+background-color: transparent;
+}
+
+QComboBox::drop-down
+{
+border: none;
+background-color: transparent;
+}
+
+QComboBox::down-arrow
+{
+image: url(:/images/function/download_arrow_hover.png);
+}
+
+/*下拉列表item*/
+QComboBox QAbstractItemView 
+{
+height: 80px;
+border: 0px solid green;
+selection-background-color: blue;						/*选中下拉列表行背景色*/
+background-color: #f0f0f0;								/*下拉列表背景色*/
+}
+
+/*下拉项样式 背景蓝色*/
+QListView::item
+{
+min-height:26px;
+padding:0px 8px;
+background:0000ff;
+color:#404040;
+}  
+
+/*下拉项选中样式（效果不明显）背景绿色*/
+QListView::item:selected
+{ 
+color:#2ca5f9;
+border-radius: 4px;
+background-color: #d3d3d3; 
+}   
+
+/*下拉项鼠标悬浮样式 背景灰绿色*/
+QListView::item:hover
+{ 
+color:#2ca5f9;
+border-radius: 4px;
+background-color: #d3d3d3; 
+}
+
+
+
+</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frame_save">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLabel" name="label_downloadUrl">
+          <property name="minimumSize">
+           <size>
+            <width>66</width>
+            <height>36</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>66</width>
+            <height>36</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel
+{
+color: #a5a9ac;
+font: 400 14px &quot;微软雅黑&quot;;
+background-color: transparent;
+}</string>
+          </property>
+          <property name="text">
+           <string>下载链接：</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_downloadUrl">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>36</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>36</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLineEdit
+{
+border: 1px solid #d6d6d6;
+border-radius: 3px;
+color: #404040;
+font: 400 14px &quot;微软雅黑&quot;;
+background-color: transparent;
+}</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_copyUrl">
+          <property name="minimumSize">
+           <size>
+            <width>90</width>
+            <height>36</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>90</width>
+            <height>36</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+border: 1px solid #dadada;
+color: #5583b8;
+border-radius: 5px;
+font: 400 14px &quot;微软雅黑&quot;;
+background-color: rgb(242, 242, 242);
+}
+
+QPushButton:checked
+{
+background-color: rgb(40, 183, 194);
+}
+
+QPushButton:hover
+{
+color: white;
+background-color: rgb(40, 183, 194);
+}</string>
+          </property>
+          <property name="text">
+           <string>复制链接</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QLabel" name="label_savePath">
+          <property name="minimumSize">
+           <size>
+            <width>66</width>
+            <height>36</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>66</width>
+            <height>36</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel
+{
+color: #a5a9ac;
+font: 400 14px &quot;微软雅黑&quot;;
+background-color: transparent;
+}</string>
+          </property>
+          <property name="text">
+           <string>保存位置：</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QComboBox" name="comboBox_savePath">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QComboBox
+{
+border: 1px solid #d6d6d6;
+border-right-width: 1px;
+border-radius: 3px;
+color: #404040;
+font: 400 14px &quot;微软雅黑&quot;;
+background-color: transparent;
+}
+
+QComboBox::drop-down
+{
+border: 0px solid #d6d6d6;
+border-left-width: 1px;
+background-color: transparent;
+}
+
+QComboBox::down-arrow
+{
+image: url(:/images/function/download_arrow_hover.png);
+}
+
+/*下拉列表item*/
+QComboBox QAbstractItemView 
+{
+height: 100px;
+border: 0px solid green;
+selection-background-color: blue;						/*选中下拉列表行背景色*/
+background-color: #f0f0f0;								/*下拉列表背景色*/
+}
+
+/*下拉项样式 背景蓝色*/
+QListView::item
+{
+min-height:26px;
+padding:0px 8px;
+background:0000ff;
+color:#404040;
+}  
+
+/*下拉项选中样式（效果不明显）背景绿色*/
+QListView::item:selected
+{ 
+color:#2ca5f9;
+border-radius: 4px;
+background-color: #d3d3d3; 
+}   
+
+/*下拉项鼠标悬浮样式 背景灰绿色*/
+QListView::item:hover
+{ 
+color:#2ca5f9;
+border-radius: 4px;
+background-color: #d3d3d3; 
+}
+
+</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_openPath">
+            <property name="minimumSize">
+             <size>
+              <width>36</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>36</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+border-radius: 3px;
+border: 1px solid #d6d6d6;
+border-left-width: 1px;
+image: url(:/images/fileitem/fileitem_directory.png);
+}
+
+QPushButton:hover
+{
+
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_moreSet">
+          <property name="minimumSize">
+           <size>
+            <width>90</width>
+            <height>36</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>90</width>
+            <height>36</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+border: 1px solid #dadada;
+color: #504f50;
+border-radius: 5px;
+font: 400 14px &quot;微软雅黑&quot;;
+background-color: rgb(242, 242, 242);
+}
+
+QPushButton:checked
+{
+background-color: rgb(40, 183, 194);
+}
+
+QPushButton:hover
+{
+color: white;
+background-color: rgb(40, 183, 194);
+}</string>
+          </property>
+          <property name="text">
+           <string>更多设置</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frame_bottom">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>56</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>56</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>66</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QFrame" name="frame_tips">
+        <property name="minimumSize">
+         <size>
+          <width>365</width>
+          <height>36</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>365</width>
+          <height>36</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_tips">
+           <property name="styleSheet">
+            <string notr="true">QLabel
+{
+border: none;
+color: #23b7ae;
+text-align: left;
+padding-left: 6px;
+padding-bottom: 4px;
+font: 400 14px &quot;微软雅黑&quot;; 
+background-color: transparent;
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_ok">
+        <property name="minimumSize">
+         <size>
+          <width>90</width>
+          <height>36</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>90</width>
+          <height>36</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border: none;
+color: #9f9fa0;
+border-radius: 5px;
+font: 400 14px &quot;微软雅黑&quot;;
+background-color: #d3d3d3;
+}
+
+QPushButton:checked
+{
+color: white;
+background-color: rgb(40, 183, 194);
+}
+
+QPushButton:hover
+{
+color: white;
+background-color: rgb(40, 183, 194);
+}</string>
+        </property>
+        <property name="text">
+         <string>确定下载</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_cancel">
+        <property name="minimumSize">
+         <size>
+          <width>90</width>
+          <height>36</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>90</width>
+          <height>36</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border: none;
+color: #9f9fa0;
+border-radius: 5px;
+font: 400 14px &quot;微软雅黑&quot;;
+background-color: #d3d3d3;
+}
+
+QPushButton:checked
+{
+color: white;
+background-color: rgb(40, 183, 194);
+}
+
+QPushButton:hover
+{
+color: white;
+background-color: rgb(40, 183, 194);
+}</string>
+        </property>
+        <property name="text">
+         <string>取消下载</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -3,7 +3,8 @@ SOURCES += \
     $$PWD/DownLoadFile.cpp \
     $$PWD/CompletedFiles.cpp \
     $$PWD/FilesTrans.cpp \
-    $$PWD/FileItem.cpp
+    $$PWD/FileItem.cpp \
+    $$PWD/DownloadType.cpp
 
 
 HEADERS += \
@@ -11,7 +12,8 @@ HEADERS += \
     $$PWD/DownLoadFile.h \
     $$PWD/CompletedFiles.h \
     $$PWD/FilesTrans.h \
-    $$PWD/FileItem.h
+    $$PWD/FileItem.h \
+    $$PWD/DownloadType.h
 
 
 FORMS += \
@@ -19,4 +21,5 @@ FORMS += \
     $$PWD/DownLoadFile.ui \
     $$PWD/CompletedFiles.ui \
     $$PWD/FilesTrans.ui \
-    $$PWD/FileItem.ui
+    $$PWD/FileItem.ui \
+    $$PWD/DownloadType.ui

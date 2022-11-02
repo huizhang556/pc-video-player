@@ -52,6 +52,8 @@ private:
 
     QStringList             m_tempVideoList;//临时视频播放列表
     QStringList             m_tempInfoList;//临时视频信息列表
+
+private:
     QPushButton*    getListWidgetItemButton(QListWidgetItem* item, QString objname);//在item中查找指定按钮
 
 signals:

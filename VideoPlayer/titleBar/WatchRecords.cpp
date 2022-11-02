@@ -1,7 +1,11 @@
 ﻿#include "WatchRecords.h"
 #include "ui_WatchRecords.h"
+#include "global/Global.h"
+#include "titlebar/WHistoryItem.h"
 #include <QPainter>
+#include <QScrollBar>
 #include <QPainterPath>
+#include <QListWidgetItem>
 #include <QDebug>
 
 WatchRecords* WatchRecords::m_pInstance = nullptr;
@@ -18,6 +22,8 @@ WatchRecords::WatchRecords(QWidget *parent) :
     setFixedSize(300,400);
     setAttribute(Qt::WA_TranslucentBackground,true);
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::Popup | Qt::Tool | Qt::WindowStaysOnTopHint);
+    initWorkUI();
+    handleSignalsAndSlots();
 }
 
 WatchRecords::~WatchRecords()
@@ -26,6 +32,67 @@ WatchRecords::~WatchRecords()
     if(m_pInstance != nullptr)
         delete m_pInstance;
     m_pInstance = nullptr;
+}
+
+void WatchRecords::initWorkUI()
+{
+    ui->listWidget_watched->setViewMode(QListView::ListMode);
+    ui->listWidget_watched->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->listWidget_watched->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    ui->listWidget_subscrbe->setViewMode(QListView::ListMode);
+    ui->listWidget_subscrbe->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->listWidget_subscrbe->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    ui->listWidget_collect->setViewMode(QListView::ListMode);
+    ui->listWidget_collect->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->listWidget_collect->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    for(int i = 0; i < 20; i++)
+    {
+        QString url = QString(u8"www.hao123.com");
+        QString picpath = Global::appDirPath + QString("/pictures/videos/dramalist/temp_%1.png").arg(i+1);
+        QString info = QString(u8"赵本山经典之作%1").arg(i+1);
+        QString progress = QString(u8"观看至11:24:13");
+        WHistoryItem *itemWidget = new WHistoryItem(picpath,info,progress);
+        QListWidgetItem *item = new QListWidgetItem(url);
+        item->setSizeHint(ITEMSIZE);
+        ui->listWidget_watched->addItem(item);
+        ui->listWidget_watched->setItemWidget(item,itemWidget);
+    }
+
+    for(int i = 0; i < 20; i++)
+    {
+        QString url = QString(u8"www.hao123.com");
+        QString picpath = Global::appDirPath + QString("/pictures/videos/dramalist/temp_%1.png").arg(i+1);
+        QString info = QString(u8"赵本山经典之作%1").arg(i+1);
+        QString progress = QString(u8"观看至11:24:13");
+        WHistoryItem *itemWidget = new WHistoryItem(picpath,info,progress);
+        QListWidgetItem *item = new QListWidgetItem(url);
+        item->setSizeHint(ITEMSIZE);
+        ui->listWidget_subscrbe->addItem(item);
+        ui->listWidget_subscrbe->setItemWidget(item,itemWidget);
+    }
+
+    for(int i = 0; i < 20; i++)
+    {
+        QString url = QString(u8"www.hao123.com");
+        QString picpath = Global::appDirPath + QString("/pictures/videos/dramalist/temp_%1.png").arg(i+1);
+        QString info = QString(u8"赵本山经典之作%1").arg(i+1);
+        QString progress = QString(u8"观看至11:24:13");
+        WHistoryItem *itemWidget = new WHistoryItem(picpath,info,progress);
+        QListWidgetItem *item = new QListWidgetItem(url);
+        item->setSizeHint(ITEMSIZE);
+        ui->listWidget_collect->addItem(item);
+        ui->listWidget_collect->setItemWidget(item,itemWidget);
+    }
+
+    ui->tabWidget_watch->setCurrentIndex(0);
+}
+
+void WatchRecords::handleSignalsAndSlots()
+{
+
 }
 
 WatchRecords *WatchRecords::getInstance()

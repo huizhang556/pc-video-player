@@ -32,10 +32,12 @@ CONFIG      += warn_off
 
 SOURCES += \
         main.cpp \
-        MainWidget.cpp
+        MainWidget.cpp \
+    DesktopLyric.cpp
 
 HEADERS += \
-        MainWidget.h
+        MainWidget.h \
+    DesktopLyric.h
 
 #此处添加模块
 include($$PWD/skin/skin.pri)
@@ -73,4 +75,5 @@ RESOURCES += \
     res_image.qrc \
     res_font.qrc
 
-FORMS +=
+FORMS += \
+    DesktopLyric.ui

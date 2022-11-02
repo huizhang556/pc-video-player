@@ -325,6 +325,11 @@ void MultipPlayer::initMainWindow()
 /*处理信号与槽函数*/
 void MultipPlayer::handleSignalAndSLots()
 {
+    //文件下载
+    connect(ui->pushButton_download,&QPushButton::clicked,[=](){
+        DownloadType::getInstance()->exec();
+    });
+
     //清晰度选择
     connect(ui->pushButton_clarity,&QPushButton::clicked,[=](){
         if(m_videoClarity->isHidden())
