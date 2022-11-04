@@ -53,7 +53,7 @@ background-color: white;
 QLabel#label_lyric
 {
 border: none;
-font: 800 30px &quot;微软雅黑&quot;;
+/*font: 800 30px &quot;微软雅黑&quot;;*/
 color: rgb(70, 160, 239);
 background-color: rgba(64, 66, 68,0.6);
 }</string>
@@ -265,7 +265,7 @@ border-image: url(:/images/desktop/desktop_previous.png);
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_play">
+             <widget class="QPushButton" name="pushButton_deskplay">
               <property name="minimumSize">
                <size>
                 <width>20</width>
@@ -281,17 +281,12 @@ border-image: url(:/images/desktop/desktop_previous.png);
               <property name="styleSheet">
                <string notr="true">QPushButton
 {
-border-image: url(:/images/desktop/desktop_play.png);
+border-image: url(:/images/desktop/desktop_pause.png);
 }
 
 QPushButton:checked
 {
 border-image: url(:/images/desktop/desktop_play.png);
-}
-
-QPushButton:unchecked
-{
-border-image: url(:/images/desktop/desktop_pause.png);
 }</string>
               </property>
               <property name="text">
