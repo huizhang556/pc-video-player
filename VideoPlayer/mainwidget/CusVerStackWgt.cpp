@@ -1,5 +1,6 @@
 ﻿#include "CusVerStackWgt.h"
 #include "global/Global.h"
+
 #include <QListWidgetItem>
 
 
@@ -35,7 +36,7 @@ void CusVerStackWgt::initWorkUI()
         item->setTextAlignment(Qt::AlignLeft | Qt::AlignCenter);
         m_rightListWidget->addItem(item);
     }
-    slot_addToStackPictures(m_pictureList,m_pictureList);
+//    slot_addToStackPictures(m_pictureList,m_pictureList);
     m_rightListWidget->setCurrentRow(0);
 //    updateGeometry();
 }
@@ -66,6 +67,15 @@ void CusVerStackWgt::setInstallEventFilter()
     this->installEventFilter(this);
 }
 
+void CusVerStackWgt::slot_addItemToCusVerStackWgt(const QString &picpath)
+{
+    //添加图片
+    QLabel *label_pic = new QLabel(this);//此处需用指针，临时对象不行
+    label_pic->setPixmap(QPixmap(picpath));
+    label_pic->setScaledContents(true);
+    this->insertWidget(this->count(),label_pic);
+}
+
 void CusVerStackWgt::slot_addToStackPictures(const QStringList &introduce, const QStringList &list_pic)
 {
     for(int i = 0; i < list_pic.count(); i++)
@@ -75,6 +85,7 @@ void CusVerStackWgt::slot_addToStackPictures(const QStringList &introduce, const
         label_pic->setPixmap(QPixmap(list_pic.at(i)));
         label_pic->setScaledContents(true);
         this->insertWidget(this->count(),label_pic);
+
     }
 }
 

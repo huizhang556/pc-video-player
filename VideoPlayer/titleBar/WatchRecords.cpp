@@ -13,7 +13,7 @@ WatchRecords* WatchRecords::m_pInstance = nullptr;
 WatchRecords::WatchRecords(QWidget *parent) :
     QWidget(parent),
     m_startX(140),
-    m_startY(20),
+    m_startY(15),
     m_triangleWidth(20),
     m_triangleHeight(15),
     ui(new Ui::WatchRecords)
@@ -51,20 +51,23 @@ void WatchRecords::initWorkUI()
     for(int i = 0; i < 20; i++)
     {
         QString url = QString(u8"www.hao123.com");
-        QString picpath = Global::appDirPath + QString("/pictures/videos/dramalist/temp_%1.png").arg(i+1);
-        QString info = QString(u8"赵本山经典之作%1").arg(i+1);
-        QString progress = QString(u8"观看至11:24:13");
+//        QString picpath = Global::appDirPath + QString("/pictures/videos/dramalist/temp_%1.png").arg(i+1);
+        QString picpath = QString(Global::appDirPath +"/pictures/musics/recommend2/music%1.png").arg(i+1);
+        QString info = QString(u8"周杰伦现场演唱会%1").arg(i+1);
+        QString progress = QString(u8"观看至12:00:13");
         WHistoryItem *itemWidget = new WHistoryItem(picpath,info,progress);
         QListWidgetItem *item = new QListWidgetItem(url);
         item->setSizeHint(ITEMSIZE);
         ui->listWidget_watched->addItem(item);
         ui->listWidget_watched->setItemWidget(item,itemWidget);
     }
+    ui->listWidget_watched->setCurrentRow(0);
 
-    for(int i = 0; i < 20; i++)
+    for(int i = 0; i < 10; i++)
     {
         QString url = QString(u8"www.hao123.com");
-        QString picpath = Global::appDirPath + QString("/pictures/videos/dramalist/temp_%1.png").arg(i+1);
+//        QString picpath = Global::appDirPath + QString("/pictures/videos/dramalist/temp_%1.png").arg(i+1);
+        QString picpath = QString(Global::appDirPath +"/pictures/cusvideoitem/cusvideoitem%1.png").arg(i);
         QString info = QString(u8"赵本山经典之作%1").arg(i+1);
         QString progress = QString(u8"观看至11:24:13");
         WHistoryItem *itemWidget = new WHistoryItem(picpath,info,progress);
@@ -73,19 +76,22 @@ void WatchRecords::initWorkUI()
         ui->listWidget_subscrbe->addItem(item);
         ui->listWidget_subscrbe->setItemWidget(item,itemWidget);
     }
+    ui->listWidget_subscrbe->setCurrentRow(0);
 
-    for(int i = 0; i < 20; i++)
+    for(int i = 0; i < 22; i++)
     {
         QString url = QString(u8"www.hao123.com");
-        QString picpath = Global::appDirPath + QString("/pictures/videos/dramalist/temp_%1.png").arg(i+1);
-        QString info = QString(u8"赵本山经典之作%1").arg(i+1);
-        QString progress = QString(u8"观看至11:24:13");
+//        QString picpath = Global::appDirPath + QString("/pictures/videos/dramalist/temp_%1.png").arg(i+1);
+        QString picpath = QString(Global::appDirPath +"/pictures/mvsort/music%1.png").arg(i);
+        QString info = QString(u8"岳云鹏相声小品%1").arg(i+1);
+        QString progress = QString(u8"观看至08:24:13");
         WHistoryItem *itemWidget = new WHistoryItem(picpath,info,progress);
         QListWidgetItem *item = new QListWidgetItem(url);
         item->setSizeHint(ITEMSIZE);
         ui->listWidget_collect->addItem(item);
         ui->listWidget_collect->setItemWidget(item,itemWidget);
     }
+    ui->listWidget_collect->setCurrentRow(0);
 
     ui->tabWidget_watch->setCurrentIndex(0);
 }

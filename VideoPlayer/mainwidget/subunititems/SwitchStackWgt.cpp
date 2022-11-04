@@ -22,11 +22,11 @@ void SwitchStackWgt::initWorkUI()
 {
     this->installEventFilter(this);
 
-    for(int i = 0; i < 6; i++)
-    {
-        QString path = Global::appDirPath + QString("/pictures/stackwall/stack%1.png").arg(i);
-        this->slot_addToStackItemPicture(path);
-    }
+//    for(int i = 0; i < 6; i++)
+//    {
+//        QString path = Global::appDirPath + QString("/pictures/stackwall/stack%1.png").arg(i);
+//        this->slot_addToStackItemPicture(path);
+//    }
 
     m_switchButton = new SwitchButtons(this);
     m_switchButton->setFixedHeight(40);

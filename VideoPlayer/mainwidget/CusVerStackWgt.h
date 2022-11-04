@@ -26,6 +26,7 @@ public:
     void    setInstallEventFilter();
 
 public slots:
+    void    slot_addItemToCusVerStackWgt(const QString& picpath);
     void    slot_addToStackPictures(const QStringList & introduce,const QStringList & list_pic);
 
 protected:

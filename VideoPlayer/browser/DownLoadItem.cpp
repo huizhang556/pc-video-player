@@ -687,6 +687,11 @@ void DownLoadItem::openLocalFileSaveDirectory(const QString &dir)
     filePath.replace("/", "\\"); // 只能识别 "\"
     QString cmd = QString("explorer.exe /select,\"%1\"").arg(filePath);
     process.startDetached(cmd);
+//    一、启动外部程序的两种方式：
+//    （1）一体式：void QProcess::start(const QString & program, const QStringList & arguments, OpenMode mode = ReadWrite)
+//            外部程序启动后。将随主程序的退出而退出。
+//    （2）分离式：void QProcess::startDetached(const QString & program, const QStringList & arguments, const QString & workingDirectory = QString(), qint64 * pid = 0)
+//            外部程序启动后，当主程序退出时并不退出。而是继续执行。
 }
 
 

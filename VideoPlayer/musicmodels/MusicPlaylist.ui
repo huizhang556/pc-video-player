@@ -136,7 +136,7 @@ margin-top: 3px;
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab_danqu">
         <attribute name="title">
@@ -1652,6 +1652,9 @@ border:none;
 QListWidget::item
 {
 background-color:#2a2a31;
+border: 0px dashed rgba(132, 130, 135,0.5);
+border-bottom-width: 1px;
+margin: 0px 5px;
 }
 
 QListWidget::item:hover
@@ -1661,7 +1664,7 @@ background-color: rgba(18, 100, 119,0.6);
 
 QListWidget::item:selected
 {
-background-color: transparent;
+background-color: rgba(18, 100, 119,1.0);
 }
 
 QListWidget::item:!selected

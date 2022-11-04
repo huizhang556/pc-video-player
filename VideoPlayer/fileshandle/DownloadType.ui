@@ -227,7 +227,7 @@ background-color: transparent;
 }</string>
          </property>
          <property name="text">
-          <string>少年行-张艺兴</string>
+          <string/>
          </property>
         </widget>
        </item>

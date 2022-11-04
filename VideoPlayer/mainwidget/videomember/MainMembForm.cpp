@@ -1,4 +1,5 @@
 ﻿#include "MainMembForm.h"
+#include "global/Global.h"
 #include "ui_MainMembForm.h"
 #include "mainwidget/CusVerStackWgt.h"
 #include "CusStackWidget.h"
@@ -28,20 +29,23 @@ void MainMembForm::initWorkUI()
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     CusVerStackWgt *itemWidget    = new CusVerStackWgt();
-//    CusStackWidget *itemWidget    = new CusStackWidget();
+    for(int i = 0; i < 6; i++)
+    {
+        QString path = Global::appDirPath + QString("/pictures/stackwall/stack%1.png").arg(i);
+        itemWidget->slot_addItemToCusVerStackWgt(path);
+    }
+
     SwitchVideoType *switchItem   = new SwitchVideoType();
-    VideoSortType *videoSortItem1 = new VideoSortType();
-    VideoSortType *videoSortItem2 = new VideoSortType();
-    VideoSortType *videoSortItem3 = new VideoSortType();
-    VideoSortType *videoSortItem4 = new VideoSortType();
-    VideoSortType *videoSortItem5 = new VideoSortType();
+
     ui->m_itemsLayout->addWidget(itemWidget);
     ui->m_itemsLayout->addWidget(switchItem);
-    ui->m_itemsLayout->addWidget(videoSortItem1);
-    ui->m_itemsLayout->addWidget(videoSortItem2);
-    ui->m_itemsLayout->addWidget(videoSortItem3);
-    ui->m_itemsLayout->addWidget(videoSortItem4);
-    ui->m_itemsLayout->addWidget(videoSortItem5);
+
+    for(int i = 0; i < 20; i++)
+    {
+        VideoSortType *videoSortItem1 = new VideoSortType();
+        ui->m_itemsLayout->addWidget(videoSortItem1);
+    }
+
 }
 
 void MainMembForm::handleSignalsAndSlots()

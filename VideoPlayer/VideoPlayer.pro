@@ -32,12 +32,10 @@ CONFIG      += warn_off
 
 SOURCES += \
         main.cpp \
-        MainWidget.cpp \
-    DesktopLyric.cpp
+        MainWidget.cpp
 
 HEADERS += \
-        MainWidget.h \
-    DesktopLyric.h
+        MainWidget.h
 
 #此处添加模块
 include($$PWD/skin/skin.pri)
@@ -53,6 +51,7 @@ include($$PWD/delegate/delegate.pri)
 include($$PWD/slidebar/slidebar.pri)
 include($$PWD/titlebar/titlebar.pri)
 include($$PWD/customer/customer.pri)
+include($$PWD/desktoplyric/desktop.pri)
 include($$PWD/mainwidget/mainwidget.pri)
 include($$PWD/qcustomplot/qcustomplot.pri)
 include($$PWD/musicmodels/musicmodels.pri)
@@ -75,5 +74,4 @@ RESOURCES += \
     res_image.qrc \
     res_font.qrc
 
-FORMS += \
-    DesktopLyric.ui
+FORMS +=

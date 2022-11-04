@@ -514,5 +514,29 @@
         <file>images/home/file_music_free.png</file>
         <file>images/home/file_music_vip.png</file>
         <file>images/home/file_video_vip.png</file>
+        <file>images/desktop/desktop_close.png</file>
+        <file>images/desktop/desktop_collect.png</file>
+        <file>images/desktop/desktop_collected.png</file>
+        <file>images/desktop/desktop_fastbackward.png</file>
+        <file>images/desktop/desktop_fastforward.png</file>
+        <file>images/desktop/desktop_fontZoomIn.png</file>
+        <file>images/desktop/desktop_fontZoomUot.png</file>
+        <file>images/desktop/desktop_horizontal.png</file>
+        <file>images/desktop/desktop_icon.png</file>
+        <file>images/desktop/desktop_kalaOK.png</file>
+        <file>images/desktop/desktop_lock.png</file>
+        <file>images/desktop/desktop_next.png</file>
+        <file>images/desktop/desktop_pause.png</file>
+        <file>images/desktop/desktop_play.png</file>
+        <file>images/desktop/desktop_previous.png</file>
+        <file>images/desktop/desktop_search.png</file>
+        <file>images/desktop/desktop_set.png</file>
+        <file>images/desktop/desktop_switch.png</file>
+        <file>images/desktop/desktop_vertical.png</file>
+        <file>images/desktop/desktop_pallate.png</file>
+        <file>images/home/stackwall_play_hover.png</file>
+        <file>images/home/stackwall_start.png</file>
+        <file>images/home/stackwall_start_hover.png</file>
+        <file>images/home/stakwall_play.png</file>
     </qresource>
 </RCC>

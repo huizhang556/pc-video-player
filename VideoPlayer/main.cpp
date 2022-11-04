@@ -30,6 +30,7 @@
 #include "customer/CustomFileDialog.h"
 #include "videomodels/RecVideoItem.h"
 #include "splashscreen/CSplashScreen.h"
+#include "desktoplyric/DesktopLyric.h"
 
 #include "login/NewLoginForm.h"
 #include "videomodels/Danmu.h"
@@ -113,86 +114,6 @@ int main(int argc, char *argv[])
     QTimer::singleShot(1500,0,[=](){
         dataBase::getInstance()->initGlobalDate();
     });
-
-
-//    SongerSort s;
-//    s.show();
-
-//    TagsMenu t;
-//    t.show();
-
-    //播放器注册
-//    Global::registerLAVplayer();
-
-//    RecVideoItem c;
-//    c.show();
-
-//    CustomFileDialog s;
-//    s.show();
-
-//    RecVideoItem r;
-//    r.show();
-
-//    FloatPlayCtl::getInstance()->show();
-
-//    CusTabBar t;
-//    t.show();
-
-//    RotatePic p;
-//    p.show();
-
-//    WebDownLoadList f;
-//    f.show();
-
-//    NewWork m;
-//    m.show();
-
-//    CMessageBox e(MessageType::CQuestion,"question","are you sure exit?");
-//    e.exec();
-
-//    CusFileDialog s;
-//    s.show();
-
-//    SystemTray s;
-//    s.show();
-
-//    VideoProgressBar::getInstance()->show();
-
-//    StackItemForm s;
-//    s.show();
-
-//    GalleryItemForm g;
-//    g.show();
-
-//    SongItemForm s("001",QString("第%1"),true,QString("zhanghui%1"),QString("zhuanji%1"));;
-//    s.show();
-
-//    RecommendForm m;
-//    m.show();
-
-//    MySkin s;
-//    s.show();
-
-//    MySkinItem mskin(180,130,20,20,0);
-//    mskin.show();
-
-//    PersonFileForm f;
-//    f.show();
-
-//    CommentTab c;
-//    c.show();
-
-//    CusLineEdit x("123");
-//    x.show();
-
-//    Slideshow s;
-//    s.show();
-
-//    CusLineEdit c;
-//    c.show();
-
-//    TitleBar t;
-//    t.show();
 
     return a.exec();
 }

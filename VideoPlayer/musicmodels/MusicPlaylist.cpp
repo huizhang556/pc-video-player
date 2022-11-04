@@ -5,6 +5,7 @@
 #include <QMenu>
 #include <QDebug>
 #include <QPoint>
+#include <QCheckBox>
 #include <QHeaderView>
 #include <QMessageBox>
 #include <QListWidgetItem>
@@ -15,32 +16,50 @@ MusicPlaylist::MusicPlaylist(QWidget *parent) :
     ui(new Ui::MusicPlaylist)
 {
     ui->setupUi(this);
-//    QIcon icon_clsong(":/images/icon/clear.png");
-//    m_songAction = new QAction();
-//    m_songAction->setObjectName(QString::fromLocal8Bit("m_songAction"));
-//    ui->lineEdit_searchSong->addAction(m_songAction, QLineEdit::TrailingPosition);// 右侧显示
-//    connect(m_songAction,&QAction::triggered,[=](){ui->lineEdit_searchSong->clear();});
+    initWorkUI();
+    handleSignalsAndSlots();
+    setInstallEventFilter();
+}
 
-    ui->tabWidget->setCurrentIndex(0);
+MusicPlaylist::~MusicPlaylist()
+{
+    delete ui;
+    //    delete m_songAction;
+}
 
-    ui->listWidget_songer->installEventFilter(this);
-    ui->listWidget_songer->setViewMode(QListView::ListMode);
-    ui->listWidget_songer->setVerticalScrollMode(QAbstractItemView::ScrollPerItem);//像素滚动
-    ui->listWidget_songer->setContextMenuPolicy(Qt::CustomContextMenu);//自定义菜单
+void MusicPlaylist::initWorkUI()
+{
+    //    QIcon icon_clsong(":/images/icon/clear.png");
+    //    m_songAction = new QAction();
+    //    m_songAction->setObjectName(QString::fromLocal8Bit("m_songAction"));
+    //    ui->lineEdit_searchSong->addAction(m_songAction, QLineEdit::TrailingPosition);// 右侧显示
+    //    connect(m_songAction,&QAction::triggered,[=](){ui->lineEdit_searchSong->clear();});
 
-    ui->lineEdit_searchSong->setEnabled(false);//空时不能搜索
-    ui->tableView_songList->setMouseTracking(true);
-    ui->tableView_songList->setContextMenuPolicy(Qt::CustomContextMenu);
-    ui->lineEdit_searchSong->setPlaceholderText(QString::fromLocal8Bit("搜索想听的歌曲吧^_^"));
-    ui->tableView_songList->setEditTriggers(QAbstractItemView::NoEditTriggers);//表格不可编辑
-    ui->tableView_songList->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    delegate = new Delegate(this);
-    connect(this,&MusicPlaylist::hoverIndexChanged,delegate,&Delegate::onHoverIndexChanged);
-//    ui->tableView_songList->setItemDelegate(delegate);//使用自定义代理
+        ui->listWidget_songer->setViewMode(QListView::ListMode);
+        ui->listWidget_songer->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        ui->listWidget_songer->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);//像素滚动
+        ui->listWidget_songer->setContextMenuPolicy(Qt::CustomContextMenu);//自定义菜单
 
-//    ui->Btn_inStep->setFlat(true);
-//    ui->Btn_edit->setFlat(true);
+        ui->lineEdit_searchSong->setEnabled(false);//空时不能搜索
+        ui->tableView_songList->setMouseTracking(true);
+        ui->tableView_songList->setContextMenuPolicy(Qt::CustomContextMenu);
+        ui->lineEdit_searchSong->setPlaceholderText(QString::fromLocal8Bit("搜索想听的歌曲吧^_^"));
+        ui->tableView_songList->setEditTriggers(QAbstractItemView::NoEditTriggers);//表格不可编辑
+        ui->tableView_songList->setSelectionMode(QAbstractItemView::ExtendedSelection);
+        delegate = new Delegate(this);
+        connect(this,&MusicPlaylist::hoverIndexChanged,delegate,&Delegate::onHoverIndexChanged);
+    //    ui->tableView_songList->setItemDelegate(delegate);//使用自定义代理
 
+    //    ui->Btn_inStep->setFlat(true);
+    //    ui->Btn_edit->setFlat(true);
+        ui->tabWidget->setCurrentIndex(0);
+        QStringList list;
+        list << "1" << "2";
+        slots_addSonersToPage2(list);
+}
+
+void MusicPlaylist::handleSignalsAndSlots()
+{
     connect(ui->Btn_batch,&QPushButton::clicked,this,&MusicPlaylist::slots_btnBatchToNewUi);//批量操作
     connect(ui->Btn_bath_exit,&QPushButton::clicked,this,&MusicPlaylist::slots_btnBatchToNewUiExit);//退出批量操作
     connect(ui->lineEdit_searchSong,&QLineEdit::textChanged,this,&MusicPlaylist::selectTableAboutSongName);
@@ -67,17 +86,11 @@ MusicPlaylist::MusicPlaylist(QWidget *parent) :
     connect(ui->listWidget_songer,&QListWidget::itemPressed,[=](){
         qDebug() << "ui->listWidget_songer itemPressed";
     });
-
-
-    QStringList list;
-    list << "1" << "2";
-    slots_addSonersToPage2(list);
 }
 
-MusicPlaylist::~MusicPlaylist()
+void MusicPlaylist::setInstallEventFilter()
 {
-    delete ui;
-    //    delete m_songAction;
+    ui->listWidget_songer->installEventFilter(this);
 }
 
 void MusicPlaylist::sortCurrentIndex(int index)
@@ -107,49 +120,6 @@ QString MusicPlaylist::addPrefixNum(QString num)
         return num;
     }
 }
-
-//QWidget *MusicPlaylist::makeSongInfoItem()
-//{
-//    m_songNum      = new QLabel     ("011",this);
-//    m_songNum->setMinimumHeight(36);
-//    m_songName     = new QPushButton("songname",this);
-//    m_songName->setMinimumHeight(36);
-//    m_songMV       = new QPushButton("songmv",this);
-//    m_songMV->setMinimumHeight(36);
-//    m_songCollect  = new QPushButton("songcollect",this);
-//    m_songCollect->setMinimumHeight(36);
-//    m_songDownload = new QPushButton("songdownload",this);
-//    m_songDownload->setMinimumHeight(36);
-//    m_songDelete   = new QPushButton("songdelete",this);
-//    m_songDelete->setMinimumHeight(36);
-//    m_songMore     = new QPushButton("songmore",this);
-//    m_songMore->setMinimumHeight(36);
-//    m_songer       = new QPushButton("songer",this);
-//    m_songer->setMinimumHeight(36);
-//    m_songAlbum    = new QPushButton("songalbum",this);
-//    m_songAlbum->setMinimumHeight(36);
-//    m_songQuality  = new QPushButton("songquality",this);
-//    m_songQuality->setMinimumHeight(36);
-
-//    QHBoxLayout *hblayout1 = new QHBoxLayout(this);
-//    hblayout1->addWidget(m_songNum);
-//    hblayout1->addWidget(m_songName);
-//    hblayout1->addWidget(m_songMV);
-//    hblayout1->addWidget(m_songCollect);
-//    hblayout1->addWidget(m_songDownload);
-//    hblayout1->addWidget(m_songDelete);
-//    hblayout1->addWidget(m_songMore);
-//    hblayout1->addWidget(m_songer);
-//    hblayout1->addWidget(m_songAlbum);
-//    hblayout1->addWidget(m_songQuality);
-//    hblayout1->setContentsMargins(0,0,0,0);
-//    hblayout1->setMargin(0);
-//    QWidget *widget = new QWidget(this);
-//    widget->setLayout(hblayout1);
-//    widget->layout()->setContentsMargins(0,0,0,0);
-//    widget->setMinimumHeight(36);
-//    return widget;
-//}
 
 /*过滤事件*/
 bool MusicPlaylist::eventFilter(QObject *watched, QEvent *event)
@@ -340,7 +310,7 @@ void MusicPlaylist::on_tableView_songList_customContextMenuRequested(const QPoin
 /*不用关联直接右键可以打开*/
 void MusicPlaylist::on_listWidget_songer_customContextMenuRequested(const QPoint &pos)
 {
-    if(ui->listWidget_songer->count() < 1) return;
+    if(ui->listWidget_songer->count() == 0) return;
     Q_UNUSED(pos);
     QMenu *pmenu_songer = new QMenu(this);
     pmenu_songer->setObjectName(QString::fromLocal8Bit("pmenu_songer"));
@@ -430,6 +400,18 @@ void MusicPlaylist::slot_listWidget_songer_Delete(QListWidget *listWgt, QWidget 
     itemWgt->deleteLater();
     listWgt->takeItem(listWgt->row(item));
     delete item;
+    slot_listWidget_songer_sort(listWgt);
+}
+
+//删除后排序
+void MusicPlaylist::slot_listWidget_songer_sort(QListWidget *listWgt)
+{
+    int itemCounts = listWgt->count();
+    if(itemCounts  == 0) return;
+    for(int i = 0; i < itemCounts; i++)
+    {
+        getItem_Label(listWgt->item(i),"label_order")->setText(addPrefixNum(QString::number(i+1)));
+    }
 }
 
 //更多信息
@@ -443,6 +425,29 @@ void MusicPlaylist::slot_listWidget_songer_Quality()
 {
 
 }
+
+QPushButton *MusicPlaylist::getItem_Button(QListWidgetItem *item, const QString &objname)
+{
+    QWidget* itemWidget = item->listWidget()->itemWidget(item);
+    if(nullptr != itemWidget)
+    {
+        QPushButton *itemBtn = itemWidget->findChild<QPushButton*>(objname);//可以指定查找范围（最近一级的还是所有的）
+        if(nullptr != itemBtn)
+        return itemBtn;
+    }
+}
+
+QLabel *MusicPlaylist::getItem_Label(QListWidgetItem *item, const QString &objname)
+{
+    QWidget* itemWidget = item->listWidget()->itemWidget(item);
+    if(nullptr != itemWidget)
+    {
+        QLabel *itemLabel = itemWidget->findChild<QLabel*>(objname);//可以指定查找范围（最近一级的还是所有的）
+        if(nullptr != itemLabel)
+        return itemLabel;
+    }
+}
+
 
 /*播放当前歌曲*/
 void MusicPlaylist::slots_rightMenu_player()
@@ -505,16 +510,18 @@ void MusicPlaylist::slots_rightMenu_openFilePath()
 bool MusicPlaylist::slots_addSonersToPage2(const QStringList &list)
 {
     Q_UNUSED(list);
-    for(int i = 0; i < 50; i++)
+    for(int i = 0; i < 100; i++)
     {
         QListWidgetItem  *item  = new QListWidgetItem(ui->listWidget_songer);
-        SongItemForm *son_item = new SongItemForm(QString::fromLocal8Bit("%1").arg(i+1),
-                                                  QString::fromLocal8Bit("%1林俊杰&&张英俊&&张辉&&群星").arg(i+1),
+        SongItemForm *son_item = new SongItemForm(QString(u8"%1").arg(i+1),
+                                                  QString(u8"林俊杰&&张英俊&&张辉&&群星&&广而告知大众"),
                                                   true,
-                                                  QString::fromLocal8Bit("张辉"),
-                                                  QString::fromLocal8Bit("天使之约"),
+                                                  false,
+                                                  QString(u8"林俊杰&&周杰伦&&高进&&小沈阳&&沈春阳&&李宇春&&孙燕姿"),
+                                                  QString(u8"听妈妈的话不让妈妈受伤，让世界都有一份真挚的爱在身边"),
+                                                  QString(u8"无损音质"),
                                                   this);
-        item->setSizeHint(QSize(son_item->size().width(),son_item->size().height()-8));//在此可以微调整item的宽高
+        item->setSizeHint(QSize(ITEMSIZE)+ QSize(0,1));//在此可以微调整item的宽高
         ui->listWidget_songer->addItem(item);
         ui->listWidget_songer->setItemWidget(item,son_item);
 

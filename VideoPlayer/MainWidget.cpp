@@ -1,6 +1,7 @@
 ﻿#include "MainWidget.h"
 #include "database/dataBase.h"
 #include "customer/CustomTabStyle.h"
+#include "desktoplyric/DesktopLyric.h"
 
 #ifdef Q_OS_WIN
 #include <qt_windows.h>
@@ -221,6 +222,18 @@ void MainWidget::initOtherWidgetUi()
     m_cusVideoBox2 = new CusVideoBox2();
     m_cusVideoBox2->setObjectName(QString::fromLocal8Bit("m_cusVideoBox2"));
 
+    //视频盒子3
+    m_cusVideoBox3 = new CusVideoBox3();
+    m_cusVideoBox3->setObjectName(QString::fromLocal8Bit("m_cusVideoBox3"));
+
+    //视频盒子4
+    m_cusVideoBox4 = new CusVideoBox4();
+    m_cusVideoBox4->setObjectName(QString::fromLocal8Bit("m_cusVideoBox4"));
+
+    //视频盒子5
+    m_cusVideoBox5 = new CusVideoBox5();
+    m_cusVideoBox5->setObjectName(QString::fromLocal8Bit("m_cusVideoBox5"));
+
     //视频筛选结果
     videoFindResult = new VideoTypeSelect();
     videoFindResult->setObjectName(QString::fromLocal8Bit("videoFindResult"));
@@ -282,7 +295,10 @@ void MainWidget::setStackedWidgetPage()
     m_stackWidget_center->insertWidget(16,m_tabWidget);//m_tabWidget
     m_stackWidget_center->insertWidget(17,m_cusVideoBox);
     m_stackWidget_center->insertWidget(18,m_cusVideoBox2);
-    m_stackWidget_center->insertWidget(19,videoFindResult);//视频筛选结果
+    m_stackWidget_center->insertWidget(19,m_cusVideoBox3);
+    m_stackWidget_center->insertWidget(20,m_cusVideoBox4);
+    m_stackWidget_center->insertWidget(21,m_cusVideoBox5);
+    m_stackWidget_center->insertWidget(22,videoFindResult);//视频筛选结果
     m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
 }
 
@@ -546,6 +562,35 @@ void MainWidget::handleSignalAndSLots()
     connect(m_leftButton,&QPushButton::clicked,[=](){
         slot_on_leftButton_clicked();
 //        emit sig_globalResize();
+    });
+
+    /**********************浮动桌面***************************/
+    //桌面歌词关闭
+    connect(this,&MainWidget::sig_startCloseAppliction,DesktopLyric::getInstance(),&DesktopLyric::close);
+
+    //桌面歌词---上一首
+    connect(DesktopLyric::getInstance(),&DesktopLyric::sig_sendPrevious,[=](){
+        m_mainPlayer->on_pushButton_previous_clicked();
+    });
+
+    //桌面歌词---下一首
+    connect(DesktopLyric::getInstance(),&DesktopLyric::sig_sendNext,[=](){
+        m_mainPlayer->on_pushButton_next_clicked();
+    });
+
+    //桌面歌词---暂停、播放
+    connect(DesktopLyric::getInstance(),&DesktopLyric::sig_sendPlay,[=](){
+        m_mainPlayer->on_pushButton_pauseStart_clicked();
+    });
+
+    //桌面歌词---回调设置--暂停、播放
+    connect(m_mainPlayer,&MultipPlayer::sig_currentMediaPlayStatus,[=](bool status){
+        DesktopLyric::getInstance()->slot_setCurrentPlayStatus(status);
+    });
+
+    //桌面歌词---设置
+    connect(DesktopLyric::getInstance(),&DesktopLyric::sig_sendSetting,[=](){
+        m_systemSetting->exec();
     });
 
     /*******************下载选择界面---更多设置****************/
@@ -994,7 +1039,8 @@ void MainWidget::tray_showMainWidget()
 
 void MainWidget::tray_showDesktopLyric()
 {
-    QMessageBox::information(this,QString::fromLocal8Bit("功能提示"),QString::fromLocal8Bit("功能暂未开放，敬请期待！"));
+//    QMessageBox::information(this,QString::fromLocal8Bit("功能提示"),QString::fromLocal8Bit("功能暂未开放，敬请期待！"));
+    DesktopLyric::getInstance()->show();
 }
 
 void MainWidget::tray_systemSettting()
@@ -1017,7 +1063,8 @@ void MainWidget::tray_systemLogout()
     }
     else if(action->text() == QString::fromLocal8Bit("登录账号"))
     {
-        m_titleBar->showLoginForm();
+//        m_titleBar->showLoginForm();
+        NewLoginForm::getInstance()->exec();
         userSignIn();
     }
 }

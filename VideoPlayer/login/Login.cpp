@@ -11,7 +11,7 @@
 Login::Login(QWidget *parent) :
     QDialog(parent),
     m_startX(140),
-    m_startY(20),
+    m_startY(15),
     m_triangleWidth(20),
     m_triangleHeight(15),
     ui(new Ui::Login)

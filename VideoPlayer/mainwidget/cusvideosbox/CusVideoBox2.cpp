@@ -28,12 +28,12 @@ void CusVideoBox2::initWorkUI()
 
     for(int i = 0; i < 6; i++)
     {
-        QString path = Global::appDirPath + QString("/pictures/stackwall/stack%1.png").arg(i);
+        QString path = Global::appDirPath + QString("/pictures/stackwall3/stackwall%1.jpg").arg(i);
         m_switchStackWgt->slot_addToStackItemPicture(path);
     }
     addItemToVideosBox(m_switchStackWgt);
 
-    for(int i = 0; i < 6; i++)
+    for(int i = 0; i < 10; i++)
     {
         VideoSortType *videoSortItem1 = new VideoSortType();
 //        Container01 *container01_1 = new Container01();

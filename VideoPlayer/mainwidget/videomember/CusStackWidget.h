@@ -36,12 +36,14 @@ public:
     void    initWorkUI();
     void    handleSignalsAndSlots();
     void    setInstallEventFilter();
+    void    setSelectType(int type);
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
     void    paintEvent(QPaintEvent* event) override;
 
 public slots:
+    void    slot_addItemToStackWgt(const QString& list_pic);
     void    slot_addToStackPictures(const QStringList & introduce,const QStringList & list_pic);
     void    slot_setCheckButton(QAbstractButton* button);
     void    slot_setCurrentIndex(int index);
@@ -58,6 +60,8 @@ private:
     QStringList             m_pictureList;
     int                     m_counts = 0;
     int                     m_currentIndex = 0;
+    bool                    m_button;
+    bool                    m_frame;
     static  QString         m_appDir;
 };
 

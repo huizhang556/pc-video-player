@@ -52,6 +52,7 @@ void DownloadType::initWorkUI()
     ui->pushButton_cancel->installEventFilter(this);
     ui->pushButton_ok->setChecked(true);
     ui->lineEdit_downloadUrl->setReadOnly(true);
+    ui->lineEdit_downloadUrl->setContextMenuPolicy(Qt::NoContextMenu);
 
     ui->tableWidget_source->setLineWidth(0);
     ui->tableWidget_source->setGridStyle(Qt::NoPen);//网线类型
@@ -180,6 +181,27 @@ void DownloadType::handleSignalsAndSlots()
     connect(ui->pushButton_moreSet,&QPushButton::clicked,[=](){
         emit sig_sendToconfig();
     });
+}
+
+void DownloadType::showDownloadForm(int type, const QString &name)
+{
+    if(type == 0)//歌曲
+    {
+        QRadioButton *defRadioBtn =  qobject_cast<QRadioButton*>(ui->tableWidget_source->cellWidget(0,1));
+        defRadioBtn->setChecked(true);
+    }
+    else if(type == 1)//视频
+    {
+        QRadioButton *defRadioBtn =  qobject_cast<QRadioButton*>(ui->tableWidget_source->cellWidget(5,1));
+        defRadioBtn->setChecked(true);
+    }
+    else//其他
+    {
+        QRadioButton *defRadioBtn =  qobject_cast<QRadioButton*>(ui->tableWidget_source->cellWidget(0,1));
+        defRadioBtn->setChecked(true);
+    }
+    ui->pushButton_songName->setText(name);
+    this->show();
 }
 
 bool DownloadType::judgePathExist(const QString &path)

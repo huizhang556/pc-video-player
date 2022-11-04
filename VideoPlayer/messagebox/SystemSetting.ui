@@ -1047,45 +1047,56 @@ border-image: url(:/images/icon/uncheck_set.png);
               <string notr="true">/*整个进度条*/
 QSlider::groove:horizontal 
 {
-background:transparent;
-height: 8px;
-border-radius:4px;
+background-color: rgba(255,255,255,0.1);
+height: 1px;
+border-radius:1px;
+}
+
+
+/*整个进度条-hover*/
+QSlider::groove:horizontal:hover
+{
+background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
+stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+height: 2px;
+border-radius:1px;
 }
 
 /*J拖动按钮*/
 QSlider::handle:horizontal 
 {
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
-stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
-width: 8px;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 rgba(0, 205, 76,1.0), stop:1  rgba(24, 247, 51,1.0));
 height:8px;
-margin-top: -2px;
-margin-bottom: -2px;
+width:8px;
+margin-top: -4px;
+margin-bottom: -4px;
+border-radius:4px;
 padding-right:1px;
-border-radius: 4px;
-border:1px solid white;
 }
 
-/*J拖动按钮-hover*/
+/*J拖动按钮-hover,只跟groove的hover时高度影响*/
 QSlider::handle:horizontal:hover 
 {
-border-radius: 4px;
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 #2A8BDA,stop:0.778409 rgba(255, 255, 255, 255));
+background-color: red;
+height:8px;
+width:10px;
+margin-top: -4px;
+margin-bottom: -4px;
+border-radius:5px;
 }
 
 /*未划过的区域，右边界线*/
 QSlider::add-page:horizontal,QSlider::add-line:horizontal
 {
-background-color: rgb(87, 97, 106); 
-border-radius:4px;
+border-radius:2px;
+background-color:yellow;
 }
 
-/*已划过的区域，右边界线*/
+/*已划过的区域，左边界线*/
 QSlider::sub-page:horizontal,QSlider::sub-line:horizontal
 {
-/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));*/
-background-color:rgb(255, 94, 30);
-border-radius:4px;
+border-radius:2px;
+background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));
 }
 </string>
              </property>
@@ -1106,45 +1117,56 @@ border-radius:4px;
               <string notr="true">/*整个进度条*/
 QSlider::groove:horizontal 
 {
-background:transparent;
-height: 8px;
-border-radius:4px;
+background-color: rgba(255,255,255,0.1);
+height: 1px;
+border-radius:1px;
+}
+
+
+/*整个进度条-hover*/
+QSlider::groove:horizontal:hover
+{
+background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
+stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+height: 2px;
+border-radius:1px;
 }
 
 /*J拖动按钮*/
 QSlider::handle:horizontal 
 {
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
-stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
-width: 8px;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 rgba(0, 205, 76,1.0), stop:1  rgba(24, 247, 51,1.0));
 height:8px;
-margin-top: -2px;
-margin-bottom: -2px;
+width:8px;
+margin-top: -4px;
+margin-bottom: -4px;
+border-radius:4px;
 padding-right:1px;
-border-radius: 4px;
-border:1px solid white;
 }
 
-/*J拖动按钮-hover*/
+/*J拖动按钮-hover,只跟groove的hover时高度影响*/
 QSlider::handle:horizontal:hover 
 {
-border-radius: 4px;
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 #2A8BDA,stop:0.778409 rgba(255, 255, 255, 255));
+background-color: red;
+height:8px;
+width:10px;
+margin-top: -4px;
+margin-bottom: -4px;
+border-radius:5px;
 }
 
 /*未划过的区域，右边界线*/
 QSlider::add-page:horizontal,QSlider::add-line:horizontal
 {
-background-color: rgb(87, 97, 106); 
-border-radius:4px;
+border-radius:2px;
+background-color:yellow;
 }
 
-/*已划过的区域，右边界线*/
+/*已划过的区域，左边界线*/
 QSlider::sub-page:horizontal,QSlider::sub-line:horizontal
 {
-/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));*/
-background-color:rgb(255, 94, 30);
-border-radius:4px;
+border-radius:2px;
+background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));
 }
 </string>
              </property>
@@ -1165,45 +1187,56 @@ border-radius:4px;
               <string notr="true">/*整个进度条*/
 QSlider::groove:horizontal 
 {
-background:transparent;
-height: 8px;
-border-radius:4px;
+background-color: rgba(255,255,255,0.1);
+height: 1px;
+border-radius:1px;
+}
+
+
+/*整个进度条-hover*/
+QSlider::groove:horizontal:hover
+{
+background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
+stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+height: 2px;
+border-radius:1px;
 }
 
 /*J拖动按钮*/
 QSlider::handle:horizontal 
 {
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
-stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
-width: 8px;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 rgba(0, 205, 76,1.0), stop:1  rgba(24, 247, 51,1.0));
 height:8px;
-margin-top: -2px;
-margin-bottom: -2px;
+width:8px;
+margin-top: -4px;
+margin-bottom: -4px;
+border-radius:4px;
 padding-right:1px;
-border-radius: 4px;
-border:1px solid white;
 }
 
-/*J拖动按钮-hover*/
+/*J拖动按钮-hover,只跟groove的hover时高度影响*/
 QSlider::handle:horizontal:hover 
 {
-border-radius: 4px;
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 #2A8BDA,stop:0.778409 rgba(255, 255, 255, 255));
+background-color: red;
+height:8px;
+width:10px;
+margin-top: -4px;
+margin-bottom: -4px;
+border-radius:5px;
 }
 
 /*未划过的区域，右边界线*/
 QSlider::add-page:horizontal,QSlider::add-line:horizontal
 {
-background-color: rgb(87, 97, 106); 
-border-radius:4px;
+border-radius:2px;
+background-color:yellow;
 }
 
-/*已划过的区域，右边界线*/
+/*已划过的区域，左边界线*/
 QSlider::sub-page:horizontal,QSlider::sub-line:horizontal
 {
-/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));*/
-background-color:rgb(255, 94, 30);
-border-radius:4px;
+border-radius:2px;
+background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));
 }
 </string>
              </property>
@@ -1224,45 +1257,56 @@ border-radius:4px;
               <string notr="true">/*整个进度条*/
 QSlider::groove:horizontal 
 {
-background:transparent;
-height: 8px;
-border-radius:4px;
+background-color: rgba(255,255,255,0.1);
+height: 1px;
+border-radius:1px;
+}
+
+
+/*整个进度条-hover*/
+QSlider::groove:horizontal:hover
+{
+background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
+stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+height: 2px;
+border-radius:1px;
 }
 
 /*J拖动按钮*/
 QSlider::handle:horizontal 
 {
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
-stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
-width: 8px;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 rgba(0, 205, 76,1.0), stop:1  rgba(24, 247, 51,1.0));
 height:8px;
-margin-top: -2px;
-margin-bottom: -2px;
+width:8px;
+margin-top: -4px;
+margin-bottom: -4px;
+border-radius:4px;
 padding-right:1px;
-border-radius: 4px;
-border:1px solid white;
 }
 
-/*J拖动按钮-hover*/
+/*J拖动按钮-hover,只跟groove的hover时高度影响*/
 QSlider::handle:horizontal:hover 
 {
-border-radius: 4px;
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 #2A8BDA,stop:0.778409 rgba(255, 255, 255, 255));
+background-color: red;
+height:8px;
+width:10px;
+margin-top: -4px;
+margin-bottom: -4px;
+border-radius:5px;
 }
 
 /*未划过的区域，右边界线*/
 QSlider::add-page:horizontal,QSlider::add-line:horizontal
 {
-background-color: rgb(87, 97, 106); 
-border-radius:4px;
+border-radius:2px;
+background-color:yellow;
 }
 
-/*已划过的区域，右边界线*/
+/*已划过的区域，左边界线*/
 QSlider::sub-page:horizontal,QSlider::sub-line:horizontal
 {
-/*background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));*/
-background-color:rgb(255, 94, 30);
-border-radius:4px;
+border-radius:2px;
+background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));
 }
 </string>
              </property>
@@ -1685,11 +1729,11 @@ font-weight:bold;
 }</string>
                </property>
                <property name="currentIndex">
-                <number>2</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="tab_video">
                 <attribute name="title">
-                 <string>视频管理</string>
+                 <string>视频下载</string>
                 </attribute>
                 <widget class="QLabel" name="label_79">
                  <property name="geometry">
@@ -1988,7 +2032,7 @@ border-image: url(:/images/icon/all_openfile_hover.png);
                </widget>
                <widget class="QWidget" name="tab_game">
                 <attribute name="title">
-                 <string>游戏管理</string>
+                 <string>游戏下载</string>
                 </attribute>
                 <widget class="QLabel" name="label_89">
                  <property name="geometry">
@@ -2152,7 +2196,7 @@ border-image: url(:/images/icon/all_openfile_hover.png);
                </widget>
                <widget class="QWidget" name="tab">
                 <attribute name="title">
-                 <string>浏览器管理</string>
+                 <string>浏览器下载</string>
                 </attribute>
                 <widget class="QLabel" name="label_99">
                  <property name="geometry">

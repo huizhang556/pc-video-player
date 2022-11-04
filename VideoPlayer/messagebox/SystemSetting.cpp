@@ -106,6 +106,21 @@ void SystemSetting::chandleSignalAndSlot()
             qDebug() <<fpath;
         }
     });
+
+    //取消设置
+    connect(ui->pushButton_cancelset,&QPushButton::clicked,[=](){
+        this->close();
+    });
+
+    //应用设置
+    connect(ui->pushButton_apply,&QPushButton::clicked,[=](){
+        qDebug() << QString(u8"应用设置");
+    });
+
+    //恢复设置
+    connect(ui->pushButton_recover,&QPushButton::clicked,[=](){
+        qDebug() << QString(u8"恢复设置");
+    });
 }
 
 /*打开本地文件系统*/

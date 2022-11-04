@@ -43,12 +43,12 @@ background-color: rgb(41, 41, 41);
 
 QListWidget::item:selected
 {
-background-color: rgb(64, 66, 68);
+border: 1px solid rgb(64, 66, 68);
 }
 
 QListWidget::item:hover
 {
-background-color: rgb(64, 66, 68);
+border: 1px solid rgb(64, 66, 68);
 }
 
 QScrollBar:vertical
@@ -85,7 +85,7 @@ QPushButton
 {
 border: none;
 font: 400 14px &quot;微软雅黑&quot;;
-color: white;
+color: rgb(48, 169, 250);
 background-color: rgb(41, 41, 41);
 }
 

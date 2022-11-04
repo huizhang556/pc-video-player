@@ -175,13 +175,13 @@ color: #2de05d;
                  <property name="minimumSize">
                   <size>
                    <width>1</width>
-                   <height>20</height>
+                   <height>18</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>1</width>
-                   <height>20</height>
+                   <height>18</height>
                   </size>
                  </property>
                  <property name="styleSheet">

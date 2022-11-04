@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <appconfig>
 <database>
-<hostName>82.156.175.81</hostName>
+<hostName>43.143.226.251</hostName>
 <hostPort>3306</hostPort>
-<userName>zhang</userName>
-<userPawd>zhang_databases123</userPawd>
+<userName>zhanghui</userName>
+<userPawd>db_zhang_@databases</userPawd>
 <dataName>client_test</dataName>
 </database>
 <browser>

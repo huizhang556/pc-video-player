@@ -59,7 +59,11 @@ SOURCES += \
     $$PWD/cusvideosbox/CusVideoBox2.cpp \
     $$PWD/subunititems/SwitchButtons.cpp \
     $$PWD/subunititems/SwitchStackWgt.cpp \
-    $$PWD/subunititems/HeaderPic.cpp
+    $$PWD/subunititems/HeaderPic.cpp \
+    $$PWD/cusvideosbox/CusVideoBox3.cpp \
+    $$PWD/cusvideosbox/CusVideoBox4.cpp \
+    $$PWD/cusvideosbox/CusVideoBox5.cpp \
+    $$PWD/CusLabel3.cpp
 
 HEADERS += \
     $$PWD/songersort/SongerSort.h \
@@ -122,7 +126,11 @@ HEADERS += \
     $$PWD/cusvideosbox/CusVideoBox2.h \
     $$PWD/subunititems/SwitchButtons.h \
     $$PWD/subunititems/SwitchStackWgt.h \
-    $$PWD/subunititems/HeaderPic.h
+    $$PWD/subunititems/HeaderPic.h \
+    $$PWD/cusvideosbox/CusVideoBox3.h \
+    $$PWD/cusvideosbox/CusVideoBox4.h \
+    $$PWD/cusvideosbox/CusVideoBox5.h \
+    $$PWD/CusLabel3.h
 
 FORMS += \
     $$PWD/songersort/SongerSort.ui \
@@ -179,7 +187,11 @@ FORMS += \
     $$PWD/cusvideosbox/CusVideoBox2.ui \
     $$PWD/subunititems/SwitchButtons.ui \
     $$PWD/subunititems/SwitchStackWgt.ui \
-    $$PWD/subunititems/HeaderPic.ui
+    $$PWD/subunititems/HeaderPic.ui \
+    $$PWD/cusvideosbox/CusVideoBox3.ui \
+    $$PWD/cusvideosbox/CusVideoBox4.ui \
+    $$PWD/cusvideosbox/CusVideoBox5.ui \
+    $$PWD/CusLabel3.ui
 
 DISTFILES +=
 

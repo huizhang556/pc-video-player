@@ -327,7 +327,7 @@ void MultipPlayer::handleSignalAndSLots()
 {
     //文件下载
     connect(ui->pushButton_download,&QPushButton::clicked,[=](){
-        DownloadType::getInstance()->exec();
+        DownloadType::getInstance()->showDownloadForm(1,m_curMediaName);
     });
 
     //清晰度选择

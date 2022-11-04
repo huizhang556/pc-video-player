@@ -36,6 +36,7 @@ public:
     static DownloadType* getInstance();
     void    initWorkUI();
     void    handleSignalsAndSlots();
+    void    showDownloadForm(int type, const QString& name);
 
 protected:
    void  mousePressEvent(QMouseEvent *event) override;

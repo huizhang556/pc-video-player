@@ -292,12 +292,10 @@ void TitleBar::handleSignalAndSLots()
     connect(ui->BtnHistory,&QPushButton::clicked,[=](){emit sig_historyDownload(5,0);});//历史记录
     //截屏
     connect(ui->BtnScreen,&QPushButton::clicked,[=](){
-       qDebug()<< "emit sig_screenPicture();";
 //        QProcess process;
-//        process.setWorkingDirectory(Global::appDirPath + "/capture" );
-//        process.start( Global::appDirPath + "/capture/CaptureTool.exe");
-//        process.start("E:\\QtProjects\\000QtDemo_51ctodemo\\04_20SubVideoPlayer\\VideoPlayer\\capture\\CaptureTool.exe");
-
+//        process.setWorkingDirectory(Global::appDirPath);
+//        process.start(Global::appDirPath + "/CaptureTool.exe");
+//        qDebug() << QString(u8"截图程序运行路劲：%1").arg(process.workingDirectory());
     });//截屏
 
 

@@ -181,13 +181,13 @@ p, li { white-space: pre-wrap; }
 border: none;
 text-align: left;
 padding-left: 3px;
-color: white;
+color: rgb(136, 136, 136);
 font: 400 12px &quot;微软雅黑&quot;;
 }
 
 QPushButton:hover
 {
-color: rgb(255, 66, 53);
+color: rgb(136, 136, 136);
 }</string>
         </property>
         <property name="text">

@@ -1,9 +1,13 @@
 ﻿#include "CusStackWidget.h"
 #include "global/Global.h"
+#include "mainwidget/CusLabel3.h"
+
 #include <QDebug>
 
 
 CusStackWidget::CusStackWidget(QWidget *parent) :
+    m_button(true),
+    m_frame(true),
     QStackedWidget(parent)
 {
     setMinimumWidth(1160);//布局撑不开
@@ -78,6 +82,7 @@ void CusStackWidget::initWorkUI()
     }
     m_hbLayout->addSpacerItem(new QSpacerItem(10,20,QSizePolicy::Fixed,QSizePolicy::Fixed));
     m_bottomFrame->setLayout(m_hbLayout);
+    m_buttonGroup->button(0)->setChecked(true);//默认第一个选中
 
     for(int i = 0; i < 10; i++)
     {
@@ -86,7 +91,7 @@ void CusStackWidget::initWorkUI()
     }
     m_counts = m_pictureList.count();
 
-    slot_addToStackPictures(m_pictureList,m_pictureList);
+//    slot_addToStackPictures(m_pictureList,m_pictureList);
 }
 
 void CusStackWidget::handleSignalsAndSlots()
@@ -108,7 +113,7 @@ void CusStackWidget::handleSignalsAndSlots()
 
     //右移（向右增加）
     connect(m_buttonAdd,&QPushButton::clicked,[=](){
-        qDebug() << QString(u8"当前索引：")<<m_currentIndex;
+        qDebug() << QString(u8"当前索引：")<<m_currentIndex << QString(u8"this->count():")<<this->count();
         if(++m_currentIndex > 9)
         {
             m_currentIndex = 9;
@@ -124,6 +129,27 @@ void CusStackWidget::setInstallEventFilter()
     this->installEventFilter(this);
 }
 
+void CusStackWidget::setSelectType(int type)
+{
+    if(type == 0)
+    {
+        m_buttonSub->hide();
+        m_buttonAdd->hide();
+        m_button = false;
+    }
+    else if(type == 1)
+    {
+        m_bottomFrame->hide();
+        m_frame = false;
+    }
+    else
+    {
+        m_buttonSub->hide();
+        m_buttonAdd->hide();
+        m_button = false;
+    }
+}
+
 bool CusStackWidget::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == this && event->type() == QEvent::Resize)
@@ -132,13 +158,13 @@ bool CusStackWidget::eventFilter(QObject *watched, QEvent *event)
     }
     else if(watched == this && event->type() == QEvent::Enter)
     {
-        if(m_buttonAdd->isHidden()) m_buttonAdd->show();
-        if(m_buttonSub->isHidden()) m_buttonSub->show();
+        if(m_buttonAdd->isHidden() && m_button) m_buttonAdd->show();
+        if(m_buttonSub->isHidden() && m_button) m_buttonSub->show();
     }
     else if(watched == this && event->type() == QEvent::Leave)
     {
-        if(!m_buttonAdd->isHidden()) m_buttonAdd->hide();
-        if(!m_buttonSub->isHidden()) m_buttonSub->hide();
+        if(!m_buttonAdd->isHidden() && m_button) m_buttonAdd->hide();
+        if(!m_buttonSub->isHidden() && m_button) m_buttonSub->hide();
     }
     return QWidget::eventFilter(watched,event);
 }
@@ -148,12 +174,21 @@ void CusStackWidget::paintEvent(QPaintEvent *event)
     Q_UNUSED(event)
 }
 
+void CusStackWidget::slot_addItemToStackWgt(const QString &list_pic)
+{
+    //添加图片
+    CusLabel3 *label_pic = new CusLabel3(this);//此处需用指针，临时对象不行
+    label_pic->setPixmap(QPixmap(list_pic));
+    label_pic->setScaledContents(true);
+    this->insertWidget(this->count(),label_pic);
+}
+
 void CusStackWidget::slot_addToStackPictures(const QStringList &introduce, const QStringList &list_pic)
 {
     for(int i = 0; i < list_pic.count(); i++)
     {
         //添加图片
-        QLabel *label_pic = new QLabel(this);//此处需用指针，临时对象不行
+        CusLabel3 *label_pic = new CusLabel3(this);//此处需用指针，临时对象不行
         label_pic->setPixmap(QPixmap(list_pic.at(i)));
         label_pic->setScaledContents(true);
         this->insertWidget(this->count(),label_pic);
@@ -182,10 +217,16 @@ void CusStackWidget::slot_setCurrentIndex(int index)
 
 void CusStackWidget::updateButtonGeometry()
 {
-    m_buttonSub->setGeometry(BUTTONMARGIN,(height()/2 - m_buttonSub->height()/2),m_buttonSub->width(),m_buttonSub->height());
-    m_buttonAdd->setGeometry(width()-m_buttonAdd->width()-BUTTONMARGIN,(height()/2 - m_buttonAdd->height()/2),m_buttonAdd->width(),m_buttonAdd->height());
-    m_bottomFrame->setGeometry(0,height()-m_bottomFrame->height(),this->width(),m_bottomFrame->height());
-    m_buttonSub->raise();
-    m_buttonAdd->raise();
-    m_bottomFrame->raise();
+    if(m_button)
+    {
+        m_buttonSub->setGeometry(BUTTONMARGIN,(height()/2 - m_buttonSub->height()/2),m_buttonSub->width(),m_buttonSub->height());
+        m_buttonAdd->setGeometry(width()-m_buttonAdd->width()-BUTTONMARGIN,(height()/2 - m_buttonAdd->height()/2),m_buttonAdd->width(),m_buttonAdd->height());
+        m_buttonSub->raise();
+        m_buttonAdd->raise();
+    }
+    if(m_frame)
+    {
+        m_bottomFrame->setGeometry(0,height()-m_bottomFrame->height(),this->width(),m_bottomFrame->height());
+        m_bottomFrame->raise();
+    }
 }

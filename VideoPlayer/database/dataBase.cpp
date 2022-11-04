@@ -110,7 +110,7 @@ bool dataBase::creatMysqlConnection()
     }
     else
     {
-        qDebug()<<"82.156.175.81 database is open!";
+        qDebug()<<"database is open!";
         QSqlQuery query(getSqlDataBase());
         //sqlite2.3.4 版本开始,主键自动为自增，但是主键不能设置字符长度，否则失效
         //建表---用户信息表

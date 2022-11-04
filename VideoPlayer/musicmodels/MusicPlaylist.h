@@ -1,6 +1,6 @@
 ﻿#ifndef MUSICPLAYLIST_H
 #define MUSICPLAYLIST_H
-
+#define ITEMSIZE QSize(1000,40)
 #include "SongItemForm.h"
 #include "delegate/Delegate.h"
 #include <QMenu>
@@ -23,6 +23,9 @@ class MusicPlaylist : public QWidget
 public:
     explicit MusicPlaylist(QWidget *parent = nullptr);
     ~MusicPlaylist();
+    void    initWorkUI();
+    void    handleSignalsAndSlots();
+    void    setInstallEventFilter();
     void    sortCurrentIndex(int index);
     QString addPrefixNum(QString num);
 //    QWidget* makeSongInfoItem();
@@ -92,6 +95,8 @@ private slots:
 
    void slot_listWidget_songer_Delete(QListWidget *listWgt, QWidget *itemWgt, QListWidgetItem *item);//删除
 
+   void slot_listWidget_songer_sort(QListWidget *listWgt);//删除后排序
+
    void slot_listWidget_songer_More();//更多信息
 
    void slot_listWidget_songer_Quality();//音质
@@ -102,17 +107,10 @@ private:
     QSqlTableModel    *model_songInfo       = nullptr;
     Delegate          *delegate             = nullptr;
 
-    //音乐信息
-//    QLabel            *m_songNum            = nullptr;//01--歌曲序号
-//    QPushButton       *m_songName           = nullptr;//02--歌曲名称
-//    QPushButton       *m_songMV             = nullptr;//03--歌曲MV
-//    QPushButton       *m_songCollect        = nullptr;//04--歌曲收藏
-//    QPushButton       *m_songDownload       = nullptr;//05--歌曲下载
-//    QPushButton       *m_songDelete         = nullptr;//06--歌曲删除
-//    QPushButton       *m_songMore           = nullptr;//07--歌曲更多
-//    QPushButton       *m_songer             = nullptr;//07--歌曲歌手
-//    QPushButton       *m_songAlbum          = nullptr;//07--歌曲专辑
-//    QPushButton       *m_songQuality        = nullptr;//07--歌曲音质
+private:
+    QPushButton*    getItem_Button(QListWidgetItem *item,const QString& objname);
+    QLabel*         getItem_Label(QListWidgetItem *item,const QString& objname);
+
 };
 
 #endif // MUSICPLAYLIST_H
