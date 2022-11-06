@@ -54,6 +54,7 @@
 #include <QSystemTrayIcon>
 #include <QDesktopServices>
 
+/**唯一的播放器对象--单例**/
 
 namespace Ui {
 class MultipPlayer;
@@ -64,9 +65,14 @@ class MultipPlayer : public QWidget
 {
     Q_OBJECT
 
-public:
+private:
     explicit MultipPlayer(QWidget *parent = nullptr);
+    static MultipPlayer* m_pInstance;
+
+public:
     ~MultipPlayer();
+
+    static  MultipPlayer* getInstance();//获取单例
 
     void    initMainWindow();
 
@@ -171,6 +177,8 @@ public slots:
     void    on_pushButton_previous_clicked();//上一首
 
     void    slot_receiveSystemTraySendSoundValue(int value);//接收托盘发过来的音量信号
+
+    void    slot_receiveDesktopSoundValueChanged(bool add);//歌词桌面音量改变
 
     void    slot_setCurrentMediaSoundSatus(bool status);//设置静音样式状态
 
@@ -309,6 +317,8 @@ signals:
     void    sig_currentMediaPlayStatus(bool status);
 
     void    sig_currentMediaSoundValueChange(int value);
+
+    void    sig_currentMediaSoundChanged(bool);
 
     void    sig_mainPlayerClose();
 

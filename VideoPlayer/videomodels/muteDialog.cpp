@@ -40,6 +40,19 @@ void muteDialog::setSpliderValue(int value)
     ui->verticalSlider->setValue(value);
 }
 
+void muteDialog::slot_setSoundValue(bool add)
+{
+    int value = ui->verticalSlider->value();
+    if(add)
+    {
+        ui->verticalSlider->setValue(value+10);
+    }
+    else
+    {
+        ui->verticalSlider->setValue(value-10);
+    }
+}
+
 int muteDialog::getSpliderValue()
 {
     return ui->verticalSlider->value();

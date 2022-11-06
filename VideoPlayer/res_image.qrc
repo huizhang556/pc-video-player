@@ -538,5 +538,8 @@
         <file>images/home/stackwall_start.png</file>
         <file>images/home/stackwall_start_hover.png</file>
         <file>images/home/stakwall_play.png</file>
+        <file>images/desktop/deskop_unlock.png</file>
+        <file>images/desktop/desktop_sound_add.png</file>
+        <file>images/desktop/desktop_sound_sub.png</file>
     </qresource>
 </RCC>

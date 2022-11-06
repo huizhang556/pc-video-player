@@ -31,7 +31,7 @@ void CusVideoBox4::initWorkUI()
     }
     addItemToVideosBox(m_switchStackWgt);
 
-    for(int i = 0; i < 6; i++)
+    for(int i = 0; i < 3; i++)
     {
         VideoSortType *videoSortItem1 = new VideoSortType();
         Container01 *container01_1 = new Container01(QString(u8"热播电影"),QString(Global::appDirPath +"/pictures/cusvideoitem/cusvideoitem_left%1.png").arg(2));

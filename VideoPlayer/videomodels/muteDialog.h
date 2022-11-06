@@ -21,7 +21,7 @@ public:
     ~muteDialog();
 public slots:
     void setSpliderValue(int value);
-
+    void slot_setSoundValue(bool add);
     int  getSpliderValue();
 
 //    static muteDialog* getInstance();

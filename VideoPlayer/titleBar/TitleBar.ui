@@ -667,7 +667,6 @@ border-image: url(:/images/icon/history.png);
 {
 border-image: url(:/images/icon/historyhover.png);
 }
-
 </string>
                   </property>
                   <property name="text">

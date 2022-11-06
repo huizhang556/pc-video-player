@@ -959,7 +959,7 @@ bool TitleBar::eventFilter(QObject *watched, QEvent *event)
     mouseIsEnterLeaveLineEdit(watched,mouseEvent);//搜索框鼠标进入离开,处理样式
     mouseIsPressReleaseLineEdit(watched,mouseEvent);//搜索框鼠标按下释放，处理历史记录
     setSelectAllTextStatus(watched,mouseEvent);//lineedit选中文本
-    slot_showUserInfoWgt(watched,mouseEvent);//显示登录用户信息
+    slot_showUserInfoWgt(watched,mouseEvent);//左上角显示登录用户信息
     slot_callLoginTipsShow(watched,mouseEvent);//登陆提示界面
     slot_callWatchRecordShow(watched,mouseEvent);//观看历史提示界面
     if(watched == m_listWdgt_history)
@@ -1549,7 +1549,10 @@ void TitleBar::slot_callWatchRecordShow(QObject *watched, QEvent *event)
         else if(event->type() == QEvent::Leave)//离开
         {
             qDebug() << QString(u8"鼠标(转换为局部坐标)：") << mapFromGlobal(QCursor::pos());
-            QRect rect = QRect(ui->BtnHistory->geometry().x()+135,ui->BtnHistory->geometry().y(),25,400+20);//鼠标真实横坐标比控件横坐标大140
+            QRect rect = QRect(ui->BtnHistory->geometry().x()+140,
+                               ui->BtnHistory->geometry().y(),
+                               ui->BtnHistory->width(),
+                               ui->BtnHistory->height() + ui->BtnHistory->height() );//鼠标真实横坐标比控件横坐标大140
             qDebug() <<QString(u8"处理后的矩形：") << rect;
             if(!rect.contains(mapFromGlobal(QCursor::pos())))
             {
@@ -1570,7 +1573,6 @@ void TitleBar::slot_callLoginTipsShow(QObject *watched, QEvent *event)
             {
                 int x = ui->Btnlogin->parentWidget()->mapToGlobal(ui->Btnlogin->pos()).x();
                 int y = ui->Btnlogin->parentWidget()->mapToGlobal(ui->Btnlogin->pos()).y();
-                int h = ui->Btnlogin->height();
                 LoginTip::getInstance()->setGeometry(x- LoginTip::getInstance()->width() + 78,
                                                      y,//留出2px防止鼠标超出按钮位置
                                                      LoginTip::getInstance()->width(),
@@ -1587,19 +1589,28 @@ void TitleBar::slot_callLoginTipsShow(QObject *watched, QEvent *event)
             if(!m_signStatus)
             {
                 //这里的意思是：虽然离开按钮，但是鼠标却在矩形内，依旧不能隐藏界面
-                qDebug() << QString(u8" 登录框矩形：") << ui->Btnlogin->geometry();//1132 15, 20 ,20
                 qDebug() << QString(u8"鼠标(转换为局部坐标)：") << mapFromGlobal(QCursor::pos());
-                QRect rect = QRect(ui->Btnlogin->geometry().x()+135,ui->Btnlogin->geometry().y(),25,193+20);//鼠标真实横坐标比控件横坐标大140
-                qDebug() <<QString(u8"处理后的矩形：") << rect;
+                QRect rect = QRect(ui->Btnlogin->geometry().x()+140,//鼠标真实横坐标比控件横坐标大140
+                                   ui->Btnlogin->geometry().y(),
+                                   ui->Btnlogin->width(),
+                                   ui->Btnlogin->height()+LoginTip::getInstance()->height());
+                qDebug() <<QString(u8"登录提示框处理后的矩形：") << rect;
                 if(!rect.contains(mapFromGlobal(QCursor::pos())))
                 {
-                    LoginTip::getInstance()->hide();//1275 - 1295  15-35
-                    //                qDebug() << QString(u8"鼠标不在矩形内");
+                    LoginTip::getInstance()->hide();
+//                    qDebug() << QString(u8"鼠标不在矩形内");
+                }
+                else
+                {
+//                    qDebug() << QString(u8"鼠标在矩形内");
                 }
             }
             else
             {
-                QRect rect = QRect(ui->Btnlogin->geometry().x()+135,ui->Btnlogin->geometry().y(),25,400+20);//鼠标真实横坐标比控件横坐标大140
+                QRect rect = QRect(ui->Btnlogin->geometry().x()+140,
+                                   ui->Btnlogin->geometry().y(),
+                                   ui->Btnlogin->width(),
+                                   ui->Btnlogin->height() + m_loginForm->height());//鼠标真实横坐标比控件横坐标大140
                 if(!rect.contains(mapFromGlobal(QCursor::pos())))
                 {
                    m_loginForm->hide();

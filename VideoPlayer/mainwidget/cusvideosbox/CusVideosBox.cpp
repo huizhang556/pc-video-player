@@ -34,7 +34,7 @@ void CusVideosBox::initWorkUI()
     itemWidget->setSelectType(0);//去掉左右按钮
     ui->m_itemsLayout->addWidget(itemWidget);
 
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < 3; i++)
     {
         Container00 *containerItem1 = new Container00(QString(u8"独家剧有料"));
         Container00 *containerItem11 = new Container00(QString(u8"宠爱现场"));

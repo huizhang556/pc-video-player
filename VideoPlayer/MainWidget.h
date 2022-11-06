@@ -239,7 +239,6 @@ private:
     CusVideoBox5        *m_cusVideoBox5            = nullptr;//视频盒子
     VideoTypeSelect     *videoFindResult           = nullptr;//视频筛选结果
     PersonFileForm      *m_personForm              = nullptr;
-    MultipPlayer        *m_mainPlayer              = nullptr;
     LeftSideBar         *m_leftSideBar             = nullptr;
     MusicPlaylist       *m_musicList               = nullptr;
     MusicPlayShow       *m_musicShow               = nullptr;

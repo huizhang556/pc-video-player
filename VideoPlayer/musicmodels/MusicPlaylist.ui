@@ -136,7 +136,7 @@ margin-top: 3px;
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab_danqu">
         <attribute name="title">
@@ -406,7 +406,25 @@ image: url(:/images/icon/downloadhover.png);
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(61, 61, 61);</string>
+                   <string notr="true">#stackedWidget_3
+{
+background-color: rgb(61, 61, 61);
+}
+
+
+QPushButton
+{
+background-color: #46a0ef;
+color: white;
+border: 1px solid #3d4957;
+border-radius: 4px;
+}
+
+QPushButton:hover
+{
+background-color: #4093dc;
+}
+</string>
                   </property>
                   <property name="frameShape">
                    <enum>QFrame::StyledPanel</enum>
@@ -415,7 +433,7 @@ image: url(:/images/icon/downloadhover.png);
                    <enum>QFrame::Raised</enum>
                   </property>
                   <property name="currentIndex">
-                   <number>0</number>
+                   <number>1</number>
                   </property>
                   <widget class="QWidget" name="page_0">
                    <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -478,13 +496,13 @@ image: url(:/images/icon/downloadhover.png);
                        <widget class="QPushButton" name="Btn_downloadAll">
                         <property name="minimumSize">
                          <size>
-                          <width>0</width>
+                          <width>80</width>
                           <height>30</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>70</width>
+                          <width>80</width>
                           <height>30</height>
                          </size>
                         </property>
@@ -516,13 +534,13 @@ image: url(:/images/icon/downloadhover.png);
                        <widget class="QPushButton" name="Btn_batch">
                         <property name="minimumSize">
                          <size>
-                          <width>0</width>
+                          <width>80</width>
                           <height>30</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>70</width>
+                          <width>80</width>
                           <height>30</height>
                          </size>
                         </property>
@@ -554,13 +572,13 @@ image: url(:/images/icon/downloadhover.png);
                        <widget class="QPushButton" name="Btn_moreOperate">
                         <property name="minimumSize">
                          <size>
-                          <width>0</width>
+                          <width>80</width>
                           <height>30</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>70</width>
+                          <width>80</width>
                           <height>30</height>
                          </size>
                         </property>
@@ -736,7 +754,7 @@ border:1px solid #ff5c38;
                        <widget class="QPushButton" name="Btn_bath_addtolist">
                         <property name="minimumSize">
                          <size>
-                          <width>0</width>
+                          <width>70</width>
                           <height>30</height>
                          </size>
                         </property>
@@ -774,7 +792,7 @@ border:1px solid #ff5c38;
                        <widget class="QPushButton" name="Btn_batch_download">
                         <property name="minimumSize">
                          <size>
-                          <width>0</width>
+                          <width>70</width>
                           <height>30</height>
                          </size>
                         </property>
@@ -812,7 +830,7 @@ border:1px solid #ff5c38;
                        <widget class="QPushButton" name="Btn_bath_delete">
                         <property name="minimumSize">
                          <size>
-                          <width>0</width>
+                          <width>70</width>
                           <height>30</height>
                          </size>
                         </property>

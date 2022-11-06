@@ -464,22 +464,22 @@ color:#29aae2;
                     <property name="minimumSize">
                      <size>
                       <width>50</width>
-                      <height>18</height>
+                      <height>22</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
                       <width>50</width>
-                      <height>20</height>
+                      <height>22</height>
                      </size>
                     </property>
                     <property name="styleSheet">
                      <string notr="true">#pushButton_clarity
 {
 background-color: #393939;
-border-radius: 8px;
+border-radius: 10px;
 color: white;
-margin-top:2px;
+margin:1px 0px;
 }
 
 #pushButton_clarity:hover
@@ -693,7 +693,8 @@ border-image: url(://images/user/bullet_set_hover.png);
 QPushButton:unchecked
 {
 border-image: url(://images/user/bullet_set_normal.png);
-}</string>
+}
+</string>
                        </property>
                        <property name="text">
                         <string/>
@@ -869,7 +870,7 @@ color: #00f9e5;
                           <string notr="true">QPushButton
 {
 color: #8a8a8a;
-font: 75 10pt &quot;Microsoft YaHei UI&quot;;
+font: 75 9pt &quot;Microsoft YaHei UI&quot;;
 font-weight: 800;
 border-radius: 12px;
 background-color: #393939;
@@ -905,6 +906,7 @@ color: #d81e06;
 {
 color: #676767;
 font-weight: 800;
+font-size: 13px;
 background-color: transparent;
 }
 
@@ -937,6 +939,7 @@ color: white;
 {
 color: #676767;
 font-weight: 800;
+font-size: 13px;
 background-color: transparent;
 }
 
@@ -969,6 +972,7 @@ color: white;
 {
 color: #676767;
 font-weight: 800;
+font-size: 13px;
 background-color: transparent;
 }
 
@@ -1001,6 +1005,7 @@ color: white;
 {
 color: #676767;
 font-weight: 800;
+font-size: 13px;
 background-color: transparent;
 }
 
@@ -1019,13 +1024,13 @@ color: white;
                          <property name="minimumSize">
                           <size>
                            <width>20</width>
-                           <height>20</height>
+                           <height>18</height>
                           </size>
                          </property>
                          <property name="maximumSize">
                           <size>
                            <width>20</width>
-                           <height>20</height>
+                           <height>18</height>
                           </size>
                          </property>
                          <property name="styleSheet">
@@ -1049,18 +1054,19 @@ border-image: url(:/images/icon/player_xunhuan.png);
                          <property name="minimumSize">
                           <size>
                            <width>20</width>
-                           <height>20</height>
+                           <height>18</height>
                           </size>
                          </property>
                          <property name="maximumSize">
                           <size>
                            <width>20</width>
-                           <height>20</height>
+                           <height>18</height>
                           </size>
                          </property>
                          <property name="styleSheet">
                           <string notr="true">QPushButton
 {
+margin-bottom: 1px;
 background-color: transparent;
 border-image: url(:/images/icon/vtitle_download.png);
 }</string>
@@ -1075,13 +1081,13 @@ border-image: url(:/images/icon/vtitle_download.png);
                          <property name="minimumSize">
                           <size>
                            <width>24</width>
-                           <height>18</height>
+                           <height>19</height>
                           </size>
                          </property>
                          <property name="maximumSize">
                           <size>
                            <width>24</width>
-                           <height>18</height>
+                           <height>19</height>
                           </size>
                          </property>
                          <property name="styleSheet">
@@ -1100,14 +1106,14 @@ border-image: url(:/images/tray/tray_sound.png);
                         <widget class="QPushButton" name="pushButton_collect">
                          <property name="minimumSize">
                           <size>
-                           <width>18</width>
-                           <height>18</height>
+                           <width>17</width>
+                           <height>16</height>
                           </size>
                          </property>
                          <property name="maximumSize">
                           <size>
-                           <width>18</width>
-                           <height>18</height>
+                           <width>17</width>
+                           <height>16</height>
                           </size>
                          </property>
                          <property name="styleSheet">

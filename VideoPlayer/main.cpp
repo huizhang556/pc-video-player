@@ -54,7 +54,7 @@
 
 int main(int argc, char *argv[])
 {
-
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);//高分辨率支持
 //    QApplication::setAttribute(Qt::AA_UseOpenGLES);
     QApplication a(argc, argv);
     //00--->加载翻译文件
@@ -107,6 +107,10 @@ int main(int argc, char *argv[])
 
 //    MultipPlayer w1;
 //    w1.show();
+
+//    TitleBar w1;
+//    w1.show();
+
     splashscream.finish(&w1);
 
 

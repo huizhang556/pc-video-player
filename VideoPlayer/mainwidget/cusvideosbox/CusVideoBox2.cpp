@@ -33,7 +33,7 @@ void CusVideoBox2::initWorkUI()
     }
     addItemToVideosBox(m_switchStackWgt);
 
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < 3; i++)
     {
         VideoSortType *videoSortItem1 = new VideoSortType();
 //        Container01 *container01_1 = new Container01();

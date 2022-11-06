@@ -24,6 +24,8 @@
 #include <QHBoxLayout>
 #include <QWidgetAction>
 
+MultipPlayer* MultipPlayer::m_pInstance = nullptr;
+
 MultipPlayer::MultipPlayer(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MultipPlayer),
@@ -91,6 +93,18 @@ MultipPlayer::~MultipPlayer()
     delete m_adjustBright;
     delete m_videoTitleBar;
     delete m_hboxlayout_rlist;
+    if(m_pInstance != nullptr)
+        delete m_pInstance;
+    m_pInstance = nullptr;
+}
+
+MultipPlayer *MultipPlayer::getInstance()
+{
+    if(m_pInstance == nullptr)
+    {
+         m_pInstance = new MultipPlayer();
+    }
+    return m_pInstance;
 }
 
 /*初始化界面*/
@@ -498,6 +512,9 @@ void MultipPlayer::handleSignalAndSLots()
     connect(ui->pushButton_sound,&QPushButton::clicked,[=](){
         slot_setCurrentMediaMuted();
     });
+
+    //递增，递减音量值(步进：10)
+    connect(this,SIGNAL(sig_currentMediaSoundChanged(bool)),m_muteDlg,SLOT(slot_setSoundValue(bool)));
 
     //接收value值改变
     connect(this,SIGNAL(sig_currentMediaSoundValueChange(int)),m_muteDlg,SLOT(setSpliderValue(int)));
@@ -1462,6 +1479,11 @@ void MultipPlayer::slot_receiveSystemTraySendSoundValue(int value)
     emit sig_currentMediaSoundValueChange(value);
 }
 
+void MultipPlayer::slot_receiveDesktopSoundValueChanged(bool add)
+{
+    emit sig_currentMediaSoundChanged(add);
+}
+
 //设置静音按钮
 void MultipPlayer::slot_setCurrentMediaSoundSatus(bool status)
 {
@@ -1861,19 +1883,36 @@ void MultipPlayer::floatPlayCtrlEnterLeave(QObject *watched, QMouseEvent *mousev
 
 void MultipPlayer::slot_showDanmuSettingForm(QObject *watched, QMouseEvent *mousevent)
 {
+    int x = ui->pushButton_bulletSet->parentWidget()->mapToGlobal(ui->pushButton_bulletSet->pos()).x();
+    int y = ui->pushButton_bulletSet->parentWidget()->mapToGlobal(ui->pushButton_bulletSet->pos()).y();
     if(watched == ui->pushButton_bulletSet)
     {
         if(mousevent->type() == QEvent::Enter)
         {
-            int x = ui->pushButton_bulletSet->parentWidget()->mapToGlobal(ui->pushButton_bulletSet->pos()).x();
-            int y = ui->pushButton_bulletSet->parentWidget()->mapToGlobal(ui->pushButton_bulletSet->pos()).y();
-            m_danmuSetting->setGeometry(x-m_danmuSetting->width()/2,y-m_danmuSetting->height()+30,m_danmuSetting->width(),m_danmuSetting->height());
+            m_danmuSetting->setGeometry(x-m_danmuSetting->width()/2,
+                                        y-m_danmuSetting->height()+6,
+                                        m_danmuSetting->width(),
+                                        m_danmuSetting->height());
             m_danmuSetting->raise();
             m_danmuSetting->show();
         }
         else if(mousevent->type() == QEvent::Leave)
         {
-//            m_danmuSetting->hide();
+            qDebug() << QString(u8"鼠标(转换为局部坐标)：") << QCursor::pos();
+            QRect rect = QRect(x ,
+                               y - m_danmuSetting->height(),
+                               ui->pushButton_bulletSet->width(),
+                               ui->pushButton_bulletSet->height() + m_danmuSetting->height());//鼠标真实横坐标比控件横坐标大135
+            qDebug() <<QString(u8"处理后的矩形：") << rect;
+            if(!rect.contains(QCursor::pos()))
+            {
+                m_danmuSetting->hide();
+//                qDebug() <<QString(u8"弹幕鼠标不在矩形内");
+            }
+            else
+            {
+//                qDebug() <<QString(u8"弹幕鼠标在矩形内");
+            }
         }
     }
 }

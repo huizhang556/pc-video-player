@@ -50,12 +50,25 @@ void DesktopLyric::initWorkUI()
 
     ui->pushButton_deskplay->setCheckable(true);
     ui->pushButton_deskplay->setChecked(false);
+    ui->pushButton_lock->setCheckable(true);
 
     ui->pushButton_search->setText(QString(u8"搜索歌词"));
     ui->pushButton_search->setIcon(QIcon(":/images/desktop/desktop_search.png"));
 
+    //如果要设置字体大小，不要设置样式字体
     QFont font ("Microsoft YaHei",32,75);
     ui->label_lyric->setFont(font);
+
+//        QRadialGradient g();
+//        g.setSpread(QGradient::ReflectSpread);
+//        double s = 6;
+//        g.setColorAt(0/s,Qt::yellow);
+//        g.setColorAt(1/s,Qt::green);
+//        g.setColorAt(2/s,Qt::blue);
+//        g.setColorAt(3/s,Qt::red);
+//        g.setColorAt(4/s,Qt::magenta);
+//        g.setColorAt(5/s,Qt::cyan);
+//        g.setColorAt(6/s,Qt::white);
 }
 
 void DesktopLyric::handleSignalsAndSlots()
@@ -142,18 +155,39 @@ void DesktopLyric::handleSignalsAndSlots()
 
     //锁定
     connect(ui->pushButton_lock,&QPushButton::clicked,[=](){
-
+        if(ui->label_lyric->isHidden())
+        {
+            ui->label_lyric->show();
+            ui->pushButton_lock->setChecked(true);
+        }
+        else
+        {
+            ui->label_lyric->hide();
+            ui->pushButton_lock->setChecked(false);
+        }
     });
 
     //回到桌面
     connect(ui->pushButton_desktop,&QPushButton::clicked,[=](){
 
     });
+
+    //音量 +
+    connect(ui->pushButton_sound_add,&QPushButton::clicked,[=](){
+        emit sig_sendSound(true);
+    });
+
+    //音量 -
+    connect(ui->pushButton_sound_sub,&QPushButton::clicked,[=](){
+        emit sig_sendSound(false);
+    });
+
+
 }
 
 void DesktopLyric::slot_setCurrentPlayStatus(bool status)
 {
-    qDebug() << QString(u8"桌面歌词接收到播放状态是：")<<status;
+//    qDebug() << QString(u8"桌面歌词接收到播放状态是：")<<status;
     //需要注意：
     //采用checked实现两种状态的时候，样式表只能有正常样式和勾选样式，非勾选样式不要设置
     if(status)//播放状态

@@ -145,22 +145,23 @@ background-color: #2a2a31;
             <property name="styleSheet">
              <string notr="true"> QPushButton
 {
-	border:1px solid white;
-    background-color:gray;
-    color: rgb(0, 0, 2);
+border:1px solid white;
+background-color:gray;
+color: rgb(0, 0, 2);
+border-radius: 4px;
 }
  QPushButton:hover 
 {
-    background-color:rgb(14, 220, 0);
-    color: rgb(0, 0, 0);
+background-color:rgb(14, 220, 0);
+color: rgb(0, 0, 0);
 }
  
 /*checked设置为checkable为true生效*/
 QPushButton:checked 
 {
-    border:2px solid #f85a37;
-    background-color:rgb(14, 170, 79);
-    color: rgb(255, 255, 0);
+border:2px solid #f85a37;
+background-color:rgb(14, 170, 79);
+color: rgb(255, 255, 0);
 }
  
  </string>
@@ -203,22 +204,23 @@ QPushButton:checked
             <property name="styleSheet">
              <string notr="true"> QPushButton
 {
-	border:1px solid white;
-    background-color:gray;
-    color: rgb(0, 0, 2);
+border:1px solid white;
+background-color:gray;
+color: rgb(0, 0, 2);
+border-radius: 4px;
 }
  QPushButton:hover 
 {
-    background-color:rgb(14, 220, 0);
-    color: rgb(0, 0, 0);
+background-color:rgb(14, 220, 0);
+color: rgb(0, 0, 0);
 }
  
 /*checked设置为checkable为true生效*/
 QPushButton:checked 
 {
-    border:2px solid #f85a37;
-    background-color:rgb(14, 170, 79);
-    color: rgb(255, 255, 0);
+border:2px solid #f85a37;
+background-color:rgb(14, 170, 79);
+color: rgb(255, 255, 0);
 }
  
  </string>
@@ -261,22 +263,23 @@ QPushButton:checked
             <property name="styleSheet">
              <string notr="true"> QPushButton
 {
-	border:1px solid white;
-    background-color:gray;
-    color: rgb(0, 0, 2);
+border:1px solid white;
+background-color:gray;
+color: rgb(0, 0, 2);
+border-radius: 4px;
 }
  QPushButton:hover 
 {
-    background-color:rgb(14, 220, 0);
-    color: rgb(0, 0, 0);
+background-color:rgb(14, 220, 0);
+color: rgb(0, 0, 0);
 }
  
 /*checked设置为checkable为true生效*/
 QPushButton:checked 
 {
-    border:2px solid #f85a37;
-    background-color:rgb(14, 170, 79);
-    color: rgb(255, 255, 0);
+border:2px solid #f85a37;
+background-color:rgb(14, 170, 79);
+color: rgb(255, 255, 0);
 }
  
  </string>
@@ -319,22 +322,23 @@ QPushButton:checked
             <property name="styleSheet">
              <string notr="true"> QPushButton
 {
-	border:1px solid white;
-    background-color:gray;
-    color: rgb(0, 0, 2);
+border:1px solid white;
+background-color:gray;
+color: rgb(0, 0, 2);
+border-radius: 4px;
 }
  QPushButton:hover 
 {
-    background-color:rgb(14, 220, 0);
-    color: rgb(0, 0, 0);
+background-color:rgb(14, 220, 0);
+color: rgb(0, 0, 0);
 }
  
 /*checked设置为checkable为true生效*/
 QPushButton:checked 
 {
-    border:2px solid #f85a37;
-    background-color:rgb(14, 170, 79);
-    color: rgb(255, 255, 0);
+border:2px solid #f85a37;
+background-color:rgb(14, 170, 79);
+color: rgb(255, 255, 0);
 }
  
  </string>
@@ -377,22 +381,23 @@ QPushButton:checked
             <property name="styleSheet">
              <string notr="true"> QPushButton
 {
-	border:1px solid white;
-    background-color:gray;
-    color: rgb(0, 0, 2);
+border:1px solid white;
+background-color:gray;
+color: rgb(0, 0, 2);
+border-radius: 4px;
 }
  QPushButton:hover 
 {
-    background-color:rgb(14, 220, 0);
-    color: rgb(0, 0, 0);
+background-color:rgb(14, 220, 0);
+color: rgb(0, 0, 0);
 }
  
 /*checked设置为checkable为true生效*/
 QPushButton:checked 
 {
-    border:2px solid #f85a37;
-    background-color:rgb(14, 170, 79);
-    color: rgb(255, 255, 0);
+border:2px solid #f85a37;
+background-color:rgb(14, 170, 79);
+color: rgb(255, 255, 0);
 }
  
  </string>
@@ -808,7 +813,13 @@ background-color: #2a2a31;</string>
            <widget class="QLabel" name="label_baohedu">
             <property name="minimumSize">
              <size>
-              <width>35</width>
+              <width>46</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>46</width>
               <height>20</height>
              </size>
             </property>
@@ -936,7 +947,13 @@ background-color: #2a2a31;</string>
            <widget class="QLabel" name="label_duibidu">
             <property name="minimumSize">
              <size>
-              <width>35</width>
+              <width>46</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>46</width>
               <height>20</height>
              </size>
             </property>
@@ -960,7 +977,13 @@ margin-left:10px;
            <widget class="QLabel" name="label_liangdu">
             <property name="minimumSize">
              <size>
-              <width>35</width>
+              <width>46</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>46</width>
               <height>20</height>
              </size>
             </property>
@@ -1065,7 +1088,13 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba
            <widget class="QLabel" name="label_sediao">
             <property name="minimumSize">
              <size>
-              <width>35</width>
+              <width>46</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>46</width>
               <height>20</height>
              </size>
             </property>

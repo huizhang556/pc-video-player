@@ -3,6 +3,7 @@
 /*全局通过用样式*/
 * {
 outline:none;
+font-family: "微软雅黑";
 }
 
 /**依旧是万能大法所有可视化类的 Q_PROPERTY 包含的属性都可以这样设置**/
@@ -1219,7 +1220,7 @@ border:none;
 background-color: transparent;
 outline:none;
 color:black;
-font: 75 12pt "Microsoft YaHei UI";
+font: 75 13px "微软雅黑";
 }
 
 #m_tabWidget1 QTabBar::tab

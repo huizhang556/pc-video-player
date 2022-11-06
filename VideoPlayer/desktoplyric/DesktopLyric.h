@@ -5,6 +5,7 @@
 #include <QEvent>
 #include <QFont>
 #include <QMouseEvent>
+#include <QRadialGradient>
 #include <QDebug>
 
 namespace Ui {
@@ -40,6 +41,7 @@ signals:
     void    sig_sendPrevious();
     void    sig_sendPlay();
     void    sig_sendNext();
+    void    sig_sendSound(bool);
 
 };
 
