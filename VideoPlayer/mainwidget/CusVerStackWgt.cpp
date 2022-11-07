@@ -1,14 +1,14 @@
 ﻿#include "CusVerStackWgt.h"
 #include "global/Global.h"
-
+#include <QScrollBar>
 #include <QListWidgetItem>
 
 
 CusVerStackWgt::CusVerStackWgt(QWidget *parent) :
     QStackedWidget(parent)
 {
-    setMinimumWidth(1160);//布局撑不开
-    setFixedHeight(360);
+    setMinimumSize(MINWINSIZE);
+    resize(RESIZESIZE);
     initWorkUI();
     handleSignalsAndSlots();
     setInstallEventFilter();
@@ -23,15 +23,14 @@ void CusVerStackWgt::initWorkUI()
 {
     m_rightListWidget = new QListWidget(this);
     m_rightListWidget->setMouseTracking(true);//开启，才能使用itementer信号
-    m_rightListWidget->setFixedWidth(260);
-    m_rightListWidget->setFixedHeight(320);//必须指定固定大小，否则无法计算准确位置
+    m_rightListWidget->setMinimumSize(RDEFSIZE);//必须指定固定大小，否则无法计算准确位置
     m_rightListWidget->setObjectName(QString::fromUtf8("m_rightListWidget"));
 
     for(int i = 0; i < 6; i++)
     {
         QString path = Global::appDirPath + QString("/pictures/stackwall/stack%1.png").arg(i);
         m_pictureList.insert(i,path);
-        QListWidgetItem *item = new QListWidgetItem(QString(u8"长津湖%1水门桥").arg(i+1));
+        QListWidgetItem *item = new QListWidgetItem(m_itemsTextList.at(i));
         item->setSizeHint(QSize(258,53));//320/6
         item->setTextAlignment(Qt::AlignLeft | Qt::AlignCenter);
         m_rightListWidget->addItem(item);
@@ -93,7 +92,7 @@ bool CusVerStackWgt::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == this && event->type() == QEvent::Resize)
     {
-        qDebug() << "cusVerstackedwidget resized";
+        update_W_H_scale();
         updateListWidgetGeometry();
     }
     return QWidget::eventFilter(watched,event);
@@ -104,4 +103,29 @@ void CusVerStackWgt::updateListWidgetGeometry()
     m_rightListWidget->setGeometry(width()-m_rightListWidget->width()-30,(height()/2 - m_rightListWidget->height()/2),
                                    m_rightListWidget->width(),m_rightListWidget->height());
     m_rightListWidget->raise();
+}
+
+void CusVerStackWgt::update_W_H_scale()
+{
+    if(this->width() > SACLWIDTH)
+    {
+        this->setMinimumHeight((int)(this->width()*SCALSIZE));
+        m_rightListWidget->setFixedSize(QSize((int)(this->width()*RSACLE_W),(int)(this->height()*RSACLE_H)));
+        for(int i = 0; i <m_rightListWidget->count(); i++)
+        {
+            m_rightListWidget->item(i)->setSizeHint(QSize(
+                                                    m_rightListWidget->width()-m_rightListWidget->verticalScrollBar()->width()-1,
+                                                    (int)((m_rightListWidget->height()-m_rightListWidget->horizontalScrollBar()->height()-1)/6))
+                                                    );
+        }
+    }
+    else
+    {
+        this->setMinimumHeight(FIXEDHEIGHT);
+        m_rightListWidget->setFixedSize(RDEFSIZE);
+        for(int i = 0; i <m_rightListWidget->count(); i++)
+        {
+            m_rightListWidget->item(i)->setSizeHint(QSize(258,53));//320/6
+        }
+    }
 }

@@ -14,17 +14,18 @@ class PlayOrderForm : public QWidget
 
 public:
     ~PlayOrderForm();
-    void initWorkUI();
-    void chandleSignalsAndSlots();
+    void    initWorkUI();
+    void    chandleSignalsAndSlots();
     static  PlayOrderForm* getInstance();
 public slots:
-    bool clearAndSetButtonCheckedStatus(int index);
+    bool    clearAndSetButtonCheckedStatus(int index);
 
 protected:
-    void leaveEvent(QEvent *event) override;
+    void    leaveEvent(QEvent *event) override;
 private:
-    bool clearButtonCheckedStatus();
-    bool setButtonChedkedStatus(int index);
+    bool    clearButtonCheckedStatus();
+    bool    setButtonChedkedStatus(int index);
+
 
 private:
     explicit PlayOrderForm(QWidget *parent = nullptr);

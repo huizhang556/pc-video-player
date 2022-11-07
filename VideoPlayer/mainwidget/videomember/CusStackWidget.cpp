@@ -10,8 +10,8 @@ CusStackWidget::CusStackWidget(QWidget *parent) :
     m_frame(true),
     QStackedWidget(parent)
 {
-    setMinimumWidth(1160);//布局撑不开
-    setFixedHeight(360);
+    setMinimumSize(MINWINSIZE);
+    resize(RESIZESIZE);
     initWorkUI();
     handleSignalsAndSlots();
     setInstallEventFilter();
@@ -154,6 +154,7 @@ bool CusStackWidget::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == this && event->type() == QEvent::Resize)
     {
+        update_W_H_scale();
         updateButtonGeometry();
     }
     else if(watched == this && event->type() == QEvent::Enter)
@@ -213,6 +214,19 @@ void CusStackWidget::slot_setCurrentIndex(int index)
     m_buttonGroup->button(m_currentIndex)->setChecked(true);
     this->setCurrentIndex(m_currentIndex);
     updateButtonGeometry();
+}
+
+void CusStackWidget::update_W_H_scale()
+{
+    //图片标准大小（1920,670）
+    if(this->width() > SACLWIDTH)
+    {
+        this->setMinimumHeight((int)(this->width()*SCALSIZE));
+    }
+    else
+    {
+        this->setMinimumHeight(FIXEDHEIGHT);
+    }
 }
 
 void CusStackWidget::updateButtonGeometry()

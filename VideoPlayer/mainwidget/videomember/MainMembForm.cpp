@@ -28,7 +28,7 @@ void MainMembForm::initWorkUI()
     ui->scrollArea->setFrameShape(QFrame::NoFrame);//继承自QFrame的，都可以用此方法去掉边界线
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    CusVerStackWgt *itemWidget    = new CusVerStackWgt();
+    CusVerStackWgt *itemWidget  = new CusVerStackWgt();
     for(int i = 0; i < 6; i++)
     {
         QString path = Global::appDirPath + QString("/pictures/stackwall/stack%1.png").arg(i);

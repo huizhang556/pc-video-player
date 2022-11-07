@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1099</width>
+    <width>885</width>
     <height>52</height>
    </rect>
   </property>
@@ -41,7 +41,7 @@
       <widget class="QStackedWidget" name="stackedWidget_fileinfo">
        <property name="minimumSize">
         <size>
-         <width>400</width>
+         <width>365</width>
          <height>50</height>
         </size>
        </property>
@@ -108,13 +108,13 @@ border-image: url(:/images/function/download_key.png);
               <widget class="QPushButton" name="pushButton_filename">
                <property name="minimumSize">
                 <size>
-                 <width>360</width>
+                 <width>315</width>
                  <height>25</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>360</width>
+                 <width>320</width>
                  <height>25</height>
                 </size>
                </property>
@@ -135,13 +135,13 @@ text-align: left;
               <widget class="QLabel" name="label_fileSize">
                <property name="minimumSize">
                 <size>
-                 <width>360</width>
+                 <width>315</width>
                  <height>25</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>360</width>
+                 <width>320</width>
                  <height>25</height>
                 </size>
                </property>

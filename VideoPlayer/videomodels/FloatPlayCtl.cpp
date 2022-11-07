@@ -1,5 +1,6 @@
 ﻿#include "FloatPlayCtl.h"
 #include "ui_FloatPlayCtl.h"
+
 #include <QDebug>
 
 FloatPlayCtl* FloatPlayCtl::m_pInstance = NULL;//初始化指针
@@ -11,6 +12,7 @@ FloatPlayCtl::FloatPlayCtl(QWidget *parent) :
     ui(new Ui::FloatPlayCtl)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_TranslucentBackground, true);//背景透明
     //去掉标题栏,窗口始终在最前面（鼠标点击也在最前面）
     this->setWindowFlags(Qt::FramelessWindowHint| Qt::Tool | Qt::WindowStaysOnTopHint);
     this->setFixedHeight(80);
@@ -18,6 +20,7 @@ FloatPlayCtl::FloatPlayCtl(QWidget *parent) :
     initWorkUI();
     chandleSignalsAndSlots();
 }
+
 
 //获取单例
 FloatPlayCtl *FloatPlayCtl::getInstance()
@@ -42,6 +45,7 @@ void FloatPlayCtl::setHorzontalSlider_VoiceRange(int start, int end)
 FloatPlayCtl::~FloatPlayCtl()
 {
     delete ui;
+
     //删除创建的单例
     if(m_pInstance != NULL)
         delete m_pInstance;
@@ -59,10 +63,14 @@ void FloatPlayCtl::initWorkUI()
     //    QGraphicsOpacityEffect *goe = new QGraphicsOpacityEffect();
     //    this->setGraphicsEffect(goe);
     //    goe->setOpacity(0.0);
-    setAttribute(Qt::WA_TranslucentBackground, true);//背景透明
+
     //    setWindowOpacity(0.2);//子控件内所有的透明度都会变（不好用）
     ui->horizontalSlider_playProgress->installEventFilter(this);
 //    ui->horizontalSlider_playProgress->setTickInterval(1);//间隔为1（100份，间隔为2，分为50个间隔）
+
+        ui->pushButton_quicken->setText(QString(u8"1x"));
+        ui->pushButton_bulletOn->setCheckable(true);
+        ui->pushButton_bulletOn->setChecked(true);
 
     ui->horizontalSlider_voiceProgress->setRange(0,100);
     ui->horizontalSlider_voiceProgress->setPageStep(5);
@@ -82,6 +90,7 @@ void FloatPlayCtl::initWorkUI()
 
 void FloatPlayCtl::chandleSignalsAndSlots()
 {
+
     //退出全屏
     connect(ui->pushButton_fullScreen,&QPushButton::clicked,[=](){emit sig_sendExitFullscreen();});
     //上一首
@@ -118,6 +127,25 @@ void FloatPlayCtl::chandleSignalsAndSlots()
     connect(ui->horizontalSlider_voiceProgress,&QSlider::valueChanged,[=](int value){
         emit sig_sendProgress_voice(value);
         slot_setCurrentPlayMutedStatus(value);
+    });
+
+    //发送弹幕
+    connect(ui->pushButton_sendbullet,&QPushButton::clicked,[=](){
+        emit sig_sendDanmuText(ui->lineEdit_bullet->text());
+        ui->lineEdit_bullet->clear();
+    });
+
+    //回车快捷发送
+    connect(ui->lineEdit_bullet,&QLineEdit::returnPressed,[=](){
+        emit sig_sendDanmuText(ui->lineEdit_bullet->text());
+        ui->lineEdit_bullet->clear();
+    });
+
+    //禁止发送弹幕
+    connect(ui->pushButton_bulletOn,&QPushButton::clicked,[=](bool checked){
+        qDebug() << QString(u8"弹幕开关状态：")<<checked;
+        slot_setDanmuOn(checked);
+        emit sig_sendOpenDanmu(checked);
     });
 }
 
@@ -209,6 +237,34 @@ void FloatPlayCtl::slot_setCurrentPlayMutedStatus(int value)
                                            "}");
         m_soundStatus = true;
     }
+}
+
+void FloatPlayCtl::slot_setDanmuOn(bool on)
+{
+    //开关默认是打开的
+    if(!on)
+    {
+        ui->lineEdit_bullet->clear();
+        ui->lineEdit_bullet->setEnabled(false);
+        ui->pushButton_sendbullet->setEnabled(false);
+        ui->pushButton_bulletOn->setChecked(false);
+    }
+    else
+    {
+        ui->lineEdit_bullet->setEnabled(true);
+        ui->pushButton_sendbullet->setEnabled(true);
+        ui->pushButton_bulletOn->setChecked(true);
+    }
+}
+
+void FloatPlayCtl::slot_receiveQuickValue(const QString &value)
+{
+    ui->pushButton_quicken->setText(value);
+}
+
+void FloatPlayCtl::slot_resumeRateText()
+{
+    ui->pushButton_quicken->setText(QString(u8"1x"));
 }
 
 bool FloatPlayCtl::eventFilter(QObject *watched, QEvent *event)

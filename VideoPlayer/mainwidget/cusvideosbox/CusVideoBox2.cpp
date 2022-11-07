@@ -54,7 +54,7 @@ void CusVideoBox2::handleSignalsAndSlots()
 
 void CusVideoBox2::setInstallEventFilter()
 {
-
+    installEventFilter(this);
 }
 
 void CusVideoBox2::addItemToVideosBox(QWidget *widget)
@@ -65,4 +65,9 @@ void CusVideoBox2::addItemToVideosBox(QWidget *widget)
 void CusVideoBox2::removeItemToVideosBox(QWidget *widget)
 {
     ui->m_itemsLayout->removeWidget(widget);
+}
+
+bool CusVideoBox2::eventFilter(QObject *watched, QEvent *event)
+{
+    return QWidget::eventFilter(watched,event);
 }

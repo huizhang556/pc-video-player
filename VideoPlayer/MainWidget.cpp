@@ -22,7 +22,7 @@ MainWidget::MainWidget(QWidget *parent) :
     m_winMax(false),
     m_firstOpen(true)
 {
-    setMinimumSize(985,670);//1320,800 1500,950
+    setMinimumSize(1155,670);//1320,800 1500,950
     this->resize(QSize(1500,920));
     setMouseTracking(true);
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);//保留最大最小功能
@@ -37,7 +37,6 @@ MainWidget::MainWidget(QWidget *parent) :
 void MainWidget::initOtherWidgetUi()
 {
     m_titleBar = new TitleBar(this);
-    m_titleBar->setFixedHeight(50);
     m_titleBar->setWebDefUrl(dataBase::getWebDef_url());//设置默认显示标题
     m_titleBar->setObjectName(QString::fromLatin1("m_titleBar"));
 
@@ -829,7 +828,22 @@ void MainWidget::handleSignalAndSLots()
         tray_setCurrentPlayOrderStatus(action);
     });
 
+    //播放主界面----》浮动窗口倍速设置
 
+    //浮动窗口--发送弹幕（开关）
+    connect(FloatPlayCtl::getInstance(),&FloatPlayCtl::sig_sendOpenDanmu,[=](bool on){
+        MultipPlayer::getInstance()->slot_setDanmuOpenClose(on);
+    });
+
+    //播放器窗口--》浮动窗口接收播放器控制开关（开关）
+    connect(MultipPlayer::getInstance(),&MultipPlayer::sig_videoDanmuStatus,[=](bool on){
+        FloatPlayCtl::getInstance()->slot_setDanmuOn(on);
+    });
+
+    //浮动窗口--发送弹幕
+    connect(FloatPlayCtl::getInstance(),&FloatPlayCtl::sig_sendDanmuText,[=](QString danmuText){
+            MultipPlayer::getInstance()->slot_sendDanmuTextToScreen(danmuText);
+    });
 
     /************************************播放器部分信号处理************************************/
     //接收播放器关闭

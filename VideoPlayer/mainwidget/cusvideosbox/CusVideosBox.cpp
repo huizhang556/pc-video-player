@@ -26,6 +26,7 @@ void CusVideosBox::initWorkUI()
     ui->scrollArea->setFrameShape(QFrame::NoFrame);//继承自QFrame的，都可以用此方法去掉边界线
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     CusStackWidget *itemWidget  = new CusStackWidget();
+    itemWidget->setObjectName(QString::fromUtf8("m_cusStackWidget"));
     for(int i = 0; i < 10; i++)
     {
         QString path = Global::appDirPath + QString("/pictures/stackwall2/stackwall%1.jpg").arg(i);
@@ -53,5 +54,10 @@ void CusVideosBox::handleSignalsAndSlots()
 
 void CusVideosBox::setInstallEventFilter()
 {
+    this->installEventFilter(this);
+}
 
+bool CusVideosBox::eventFilter(QObject *watched, QEvent *event)
+{
+    return QWidget::eventFilter(watched,event);
 }

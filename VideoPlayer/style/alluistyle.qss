@@ -1142,31 +1142,46 @@ margin-left:10px;
 /*帮助按钮菜单-----------------------样式结束*/
 
 /*歌曲列表右键菜------------------------------开始*/
-#pmenu_songer,#pmenu_son_addto,#pmenu_son_sort,#pmenu_son_playmode,#pmenu_son_muctool
+#pmenu_right,#pmenu_songer,#pmenu_son_addto,#pmenu_son_sort,#pmenu_son_playmode,#pmenu_son_muctool,#menuSelection
 {
 background: white;
 color:#2a2a31;
 font: normal normal 15px '微软雅黑';
 }
 
-#pmenu_songer::item,#pmenu_son_addto::item,#pmenu_son_sort::item,#pmenu_son_playmode::item,#pmenu_son_muctool::item
+#pmenu_right::item,#pmenu_songer::item,#pmenu_son_addto::item,#pmenu_son_sort::item,#pmenu_son_playmode::item,#pmenu_son_muctool::item,#menuSelection::item
 {
 height:18px;
 padding: 4px 28px 4px 20px;/*上 右 下 左*/
 border: 1px solid transparent;
 }
 
-#pmenu_songer::item:selected,#pmenu_son_addto::item:selected,#pmenu_son_sort::item:selected,#pmenu_son_playmode::item:selected,#pmenu_son_muctool::item:selected
+#pmenu_right::item:selected,#pmenu_songer::item:selected,#pmenu_son_addto::item:selected,#pmenu_son_sort::item:selected,#pmenu_son_playmode::item:selected,#pmenu_son_muctool::item:selected,#menuSelection::item:selected
 {
 background: #00aabf;
 }
 
-#pmenu_songer::icon,#pmenu_son_addto::icon,#pmenu_son_sort::icon,#pmenu_son_playmode::icon,#pmenu_son_muctool::icon
+#pmenu_right::icon,#pmenu_songer::icon,#pmenu_son_addto::icon,#pmenu_son_sort::icon,#pmenu_son_playmode::icon,#pmenu_son_muctool::icon,#menuSelection::icon
 {
 width:20px;
 height:18px;
 margin-left:10px;
 }
+
+/*指示器---菜单勾选项*/
+#menuSelection::indicator
+{
+margin:5px;
+width:20px;
+height:20px;
+}
+
+/*菜单项指示器---互斥--选中*/
+#menuSelection::indicator:exclusive:checked
+{
+image: url(://images/tray/tray_checked.png);
+}
+
 /*歌曲列表右键菜单-----------------------------结束*/
 
 /*播放列表，收藏列表，历史列表右键菜单---开始*/

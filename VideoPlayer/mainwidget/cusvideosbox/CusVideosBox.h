@@ -52,6 +52,9 @@ public:
     void    handleSignalsAndSlots();
     void    setInstallEventFilter();
 
+protected:
+    bool    eventFilter(QObject *watched, QEvent *event) override;
+
 private:
     Ui::CusVideosBox *ui;
 };

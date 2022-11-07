@@ -35,6 +35,43 @@ void MusicPlaylist::initWorkUI()
     //    ui->lineEdit_searchSong->addAction(m_songAction, QLineEdit::TrailingPosition);// 右侧显示
     //    connect(m_songAction,&QAction::triggered,[=](){ui->lineEdit_searchSong->clear();});
 
+    //创建下拉菜单
+        ui->Btn_sort->setContextMenuPolicy(Qt::CustomContextMenu);
+        ui->Btn_sort->setPopupMode(QToolButton::MenuButtonPopup);
+        ui->Btn_sort->setToolButtonStyle(Qt::ToolButtonTextOnly);
+        ui->Btn_sort->setAutoRaise(false);
+        ui->Btn_sort->setAutoRepeat(false);
+        ui->Btn_sort->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);//文本显示在图标旁边（左右还得设置布局方式）
+//        ui->Btn_sort->setArrowType(Qt::UpArrow);//箭头类型（上下左右）
+
+        QMenu *menuSelection = new QMenu(this);
+        menuSelection->setObjectName(QString(u8"menuSelection"));
+        menuSelection->addAction(new QAction(QString(u8"默认排序")));
+        menuSelection->addAction(new QAction(QString(u8"按歌名")));
+        menuSelection->addAction(new QAction(QString(u8"按歌手")));
+        menuSelection->addAction(new QAction(QString(u8"按专辑")));
+        menuSelection->addAction(new QAction(QString(u8"按音质")));
+//        ui->Btn_sort->setDefaultAction(menuSelection->actions().at(0));//默认是 默认排序选项 不设置就没有
+        ui->Btn_sort->setText(QString(u8"默认排序"));
+        ui->Btn_sort->setIcon(QIcon("://images/music/song_default.png"));
+        ui->Btn_sort->setMenu(menuSelection);//点击右侧小箭头才弹出
+
+        connect(menuSelection,&QMenu::triggered,[=](QAction *action){
+            setToolButtonTextAndIcon(action);
+        });
+
+
+        //点击歌手排序
+        ui->checkBox_song->setLayoutDirection(Qt::RightToLeft);
+         //三种状态
+        ui->checkBox_song->setTristate(true);
+
+        //三种状态
+        ui->checkBox_selectall->setTristate(false);
+
+        //全选标签（默认）
+        ui->stackedWidget_select->setCurrentIndex(0);
+
         ui->listWidget_songer->setViewMode(QListView::ListMode);
         ui->listWidget_songer->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         ui->listWidget_songer->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);//像素滚动
@@ -56,6 +93,7 @@ void MusicPlaylist::initWorkUI()
         QStringList list;
         list << "1" << "2";
         slots_addSonersToPage2(list);
+        ui->label_order->setText(QString::number(ui->listWidget_songer->count()));
 }
 
 void MusicPlaylist::handleSignalsAndSlots()
@@ -64,28 +102,72 @@ void MusicPlaylist::handleSignalsAndSlots()
     connect(ui->Btn_bath_exit,&QPushButton::clicked,this,&MusicPlaylist::slots_btnBatchToNewUiExit);//退出批量操作
     connect(ui->lineEdit_searchSong,&QLineEdit::textChanged,this,&MusicPlaylist::selectTableAboutSongName);
     connect(ui->tableView_songList,SIGNAL(clicked(QModelIndex)),this,SLOT(slots_selectRowIndex(QModelIndex)));
-    connect(ui->Btn_sort,&QPushButton::clicked,this,&MusicPlaylist::slots_btnSortCustomMenu);
-
-
-    connect(ui->listWidget_songer,&QListWidget::itemClicked,[=](){
-        qDebug() << "ui->listWidget_songer itemClicked";
+//    connect(ui->Btn_sort,&QPushButton::clicked,this,&MusicPlaylist::slots_btnSortCustomMenu);
+    //选择排序
+    connect(ui->Btn_sort,&QToolButton::triggered,[=](QAction *action){
+        setToolButtonTextAndIcon(action);
     });
 
-    connect(ui->listWidget_songer,&QListWidget::itemDoubleClicked,[=](){
-        qDebug() << "ui->listWidget_songer itemDoubleClicked";
+    //排序按钮点击（默认是恢复到默认设置的选项,现改为弹出菜单）
+    connect(ui->Btn_sort,&QToolButton::clicked,[=](){
+        QPoint menuPoint = QPoint(ui->Btn_sort->parentWidget()->mapToGlobal(ui->Btn_sort->pos()).x(),
+                                  ui->Btn_sort->parentWidget()->mapToGlobal(ui->Btn_sort->pos()).y()+ui->Btn_sort->height()+2);
+        ui->Btn_sort->menu()->exec(menuPoint);
     });
 
-    connect(ui->listWidget_songer,&QListWidget::itemChanged,[=](){
-//        qDebug() << "ui->listWidget_songer itemChanged";
+    //歌名排序（normal desc asc）
+    connect(ui->checkBox_song,&QCheckBox::stateChanged,[=](int status){
+        if(status == 1)
+        {
+        //半选中--desc
+            qDebug() << QString(u8"歌名排序按钮选中状态：升序");
+        }
+        else if(status == 2)
+        {
+        //选中--asc
+            qDebug() << QString(u8"歌名排序按钮选中状态：降序");
+        }
+        else if(status == 0)
+        {
+        //未选中状态---normal
+            qDebug() << QString(u8"歌名排序按钮选中状态：正常");
+        }
     });
 
-    connect(ui->listWidget_songer,&QListWidget::itemEntered,[=](){
-        qDebug() << "ui->listWidget_songer itemEntered";
+    //全选/不全选
+    connect(ui->checkBox_selectall,&QCheckBox::clicked,[=](bool checked){
+        if(checked)
+        {
+            for(int i = 0; i < ui->listWidget_songer->count(); i++)
+            {
+                getItem_CheckBox(ui->listWidget_songer->item(i),"checkBox")->setChecked(true);
+            }
+        }
+        else
+        {
+            for(int i = 0; i < ui->listWidget_songer->count(); i++)
+            {
+                getItem_CheckBox(ui->listWidget_songer->item(i),"checkBox")->setChecked(false);
+            }
+        }
     });
 
-    connect(ui->listWidget_songer,&QListWidget::itemPressed,[=](){
-        qDebug() << "ui->listWidget_songer itemPressed";
+    //全选
+    connect(ui->label_order,&QPushButton::clicked,[=](){
+        for(int i = 0; i < ui->listWidget_songer->count(); i++)
+        {
+            QWidget *widget = ui->listWidget_songer->itemWidget(ui->listWidget_songer->item(i));//此时的item是删除后已经排好序的
+            QStackedWidget* stack_num = widget->findChild<QStackedWidget*>("stackedWidget_num");
+            if(stack_num != nullptr)
+            stack_num->setCurrentIndex(1);
+            getItem_CheckBox(ui->listWidget_songer->item(i),"checkBox")->setChecked(true);
+        }
+        ui->stackedWidget_select->setCurrentIndex(1);
+        ui->checkBox_selectall->setChecked(true);
     });
+
+    //更新歌曲总数
+
 }
 
 void MusicPlaylist::setInstallEventFilter()
@@ -124,6 +206,13 @@ QString MusicPlaylist::addPrefixNum(QString num)
 /*过滤事件*/
 bool MusicPlaylist::eventFilter(QObject *watched, QEvent *event)
 {
+    if(watched == ui->listWidget_songer)
+    {
+        if(event->type() == QEvent::Resize)
+        {
+            ui->listWidget_songer->updateGeometry();
+        }
+    }
     return QWidget::eventFilter(watched,event);
 }
 
@@ -227,10 +316,16 @@ void MusicPlaylist::slots_btnSortCustomMenu()
 {
     QMenu *pmenu_sort = new QMenu(this);
     pmenu_sort->setObjectName(QString::fromLocal8Bit("pmenu_sort"));
-    pmenu_sort->addAction(QString::fromLocal8Bit("升序"),this,SLOT(slots_btnSortAscOrder()));
+    pmenu_sort->addAction(QString::fromLocal8Bit("默认排序"),this,SLOT(slots_btnSortAscOrder()));
     pmenu_sort->addSeparator();
-    pmenu_sort->addAction(QString::fromLocal8Bit("降序"),this,SLOT(slots_btnSortDescOrder()));
-    ui->Btn_sort->setContextMenuPolicy(Qt::CustomContextMenu);
+    pmenu_sort->addAction(QString::fromLocal8Bit("按歌名"),this,SLOT(slots_btnSortDescOrder()));
+    pmenu_sort->addSeparator();
+    pmenu_sort->addAction(QString::fromLocal8Bit("按歌手"),this,SLOT(slots_btnSortDescOrder()));
+    pmenu_sort->addSeparator();
+    pmenu_sort->addAction(QString::fromLocal8Bit("按专辑"),this,SLOT(slots_btnSortDescOrder()));
+    pmenu_sort->addSeparator();
+    pmenu_sort->addAction(QString::fromLocal8Bit("按音质"),this,SLOT(slots_btnSortDescOrder()));
+
     QPoint point4 = QPoint(QCursor::pos().x()-50,QCursor::pos().y()+25);
     pmenu_sort->exec(point4);
     delete pmenu_sort;
@@ -426,6 +521,11 @@ void MusicPlaylist::slot_listWidget_songer_Quality()
 
 }
 
+void MusicPlaylist::slot_updateSongerAllCounts()
+{
+    ui->label_order->setText(QString::number(ui->listWidget_songer->count()));
+}
+
 QPushButton *MusicPlaylist::getItem_Button(QListWidgetItem *item, const QString &objname)
 {
     QWidget* itemWidget = item->listWidget()->itemWidget(item);
@@ -446,6 +546,42 @@ QLabel *MusicPlaylist::getItem_Label(QListWidgetItem *item, const QString &objna
         if(nullptr != itemLabel)
         return itemLabel;
     }
+}
+
+QCheckBox *MusicPlaylist::getItem_CheckBox(QListWidgetItem *item, const QString &objname)
+{
+    QWidget* itemWidget = item->listWidget()->itemWidget(item);
+    if(nullptr != itemWidget)
+    {
+        QCheckBox *itemCheckBox = itemWidget->findChild<QCheckBox*>(objname);//可以指定查找范围（最近一级的还是所有的）
+        if(nullptr != itemCheckBox)
+        return itemCheckBox;
+    }
+}
+
+void MusicPlaylist::setToolButtonTextAndIcon(const QAction *action)
+{
+    if(action->text() == QString(u8"默认排序"))
+    {
+        ui->Btn_sort->setIcon(QIcon("://images/music/song_default.png"));
+    }
+    else if(action->text() == QString(u8"按歌名"))
+    {
+        ui->Btn_sort->setIcon(QIcon("://images/music/song_songName.png"));
+    }
+    else if(action->text() == QString(u8"按歌手"))
+    {
+        ui->Btn_sort->setIcon(QIcon("://images/music/song_songer.png"));
+    }
+    else if(action->text() == QString(u8"按专辑"))
+    {
+        ui->Btn_sort->setIcon(QIcon("://images/music/song_album.png"));
+    }
+    else if(action->text() == QString(u8"按音质"))
+    {
+        ui->Btn_sort->setIcon(QIcon("://images/music/song_quality.png"));
+    }
+    ui->Btn_sort->setText(action->text());
 }
 
 
@@ -546,7 +682,6 @@ bool MusicPlaylist::slots_addSonersToPage2(const QStringList &list)
             slot_listWidget_songer_Delete(ui->listWidget_songer,son_item,item);
             qDebug() << "received on_son_deletebtn_clicked = " << index;
 
-//            sortCurrentIndex(index);
         });
         //下载
         connect(son_item,&SongItemForm::sig_son_downloadbtn_clicked,[=](int index){

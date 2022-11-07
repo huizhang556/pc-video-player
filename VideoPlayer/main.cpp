@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
         for(int i = 0; i< 10; ++i)
         {
             splashscream.slot_updateProgressbarValue(i*11);
-            QThread::sleep(1);
+            QThread::sleep(1);//450 280 270 100
         }
     }
 
@@ -105,7 +105,9 @@ int main(int argc, char *argv[])
     w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
     w1.show();
 
-//    MultipPlayer w1;
+//    MultipPlayer::getInstance()->show();
+
+//    MusicPlaylist w1;
 //    w1.show();
 
 //    TitleBar w1;

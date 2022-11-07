@@ -27,7 +27,7 @@ TitleBar::TitleBar(QWidget *parent) :
 {
     ui->setupUi(this);
     installEventFilter(this);
-    this->setFixedHeight(40);
+    this->setFixedHeight(60);
     initWorker();//初始化
     handleSignalAndSLots();
 }
@@ -1548,12 +1548,12 @@ void TitleBar::slot_callWatchRecordShow(QObject *watched, QEvent *event)
         }
         else if(event->type() == QEvent::Leave)//离开
         {
-            qDebug() << QString(u8"鼠标(转换为局部坐标)：") << mapFromGlobal(QCursor::pos());
+//            qDebug() << QString(u8"鼠标(转换为局部坐标)：") << mapFromGlobal(QCursor::pos());
             QRect rect = QRect(ui->BtnHistory->geometry().x()+140,
                                ui->BtnHistory->geometry().y(),
                                ui->BtnHistory->width(),
                                ui->BtnHistory->height() + ui->BtnHistory->height() );//鼠标真实横坐标比控件横坐标大140
-            qDebug() <<QString(u8"处理后的矩形：") << rect;
+//            qDebug() <<QString(u8"处理后的矩形：") << rect;
             if(!rect.contains(mapFromGlobal(QCursor::pos())))
             {
                 WatchRecords::getInstance()->hide();
@@ -1589,12 +1589,12 @@ void TitleBar::slot_callLoginTipsShow(QObject *watched, QEvent *event)
             if(!m_signStatus)
             {
                 //这里的意思是：虽然离开按钮，但是鼠标却在矩形内，依旧不能隐藏界面
-                qDebug() << QString(u8"鼠标(转换为局部坐标)：") << mapFromGlobal(QCursor::pos());
+//                qDebug() << QString(u8"鼠标(转换为局部坐标)：") << mapFromGlobal(QCursor::pos());
                 QRect rect = QRect(ui->Btnlogin->geometry().x()+140,//鼠标真实横坐标比控件横坐标大140
                                    ui->Btnlogin->geometry().y(),
                                    ui->Btnlogin->width(),
                                    ui->Btnlogin->height()+LoginTip::getInstance()->height());
-                qDebug() <<QString(u8"登录提示框处理后的矩形：") << rect;
+//                qDebug() <<QString(u8"登录提示框处理后的矩形：") << rect;
                 if(!rect.contains(mapFromGlobal(QCursor::pos())))
                 {
                     LoginTip::getInstance()->hide();

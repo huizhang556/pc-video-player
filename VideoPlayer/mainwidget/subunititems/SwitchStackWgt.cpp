@@ -7,8 +7,8 @@ SwitchStackWgt::SwitchStackWgt(QWidget *parent) :
     ui(new Ui::SwitchStackWgt)
 {
     ui->setupUi(this);
-    setMinimumWidth(1160);//布局撑不开
-    setFixedHeight(360);
+    setMinimumSize(MINWINSIZE);
+    resize(RESIZESIZE);
     initWorkUI();
     handleSignalsAndSlots();
 }
@@ -76,6 +76,7 @@ bool SwitchStackWgt::eventFilter(QObject *watched, QEvent *event)
     {
         if(event->type() == QEvent::Resize)
         {
+            update_W_H_scale();
             resizeSwitchButtonSize();
 //            qDebug() << QString(u8"选择stackwgt界面resize");
         }
@@ -89,4 +90,17 @@ void SwitchStackWgt::resizeSwitchButtonSize()
                                 height() - m_switchButton->height() - 0,
                                 m_switchButton->width(),m_switchButton->height());
     m_switchButton->raise();//非常重要，否则显示不了
+}
+
+void SwitchStackWgt::update_W_H_scale()
+{
+    //图片标准大小（1920,670）
+    if(this->width() > SACLWIDTH)
+    {
+        this->setMinimumHeight((int)(this->width()*SCALSIZE));
+    }
+    else
+    {
+        this->setMinimumHeight(FIXEDHEIGHT);
+    }
 }

@@ -2,6 +2,7 @@
 #define FLOATPLAYCTL_H
 
 #include <QWidget>
+#include <QMenu>
 
 namespace Ui {
 class FloatPlayCtl;
@@ -29,6 +30,9 @@ public slots:
     void    slot_setCurrentPlayStatus(bool status);
     void    slot_setCurrentMediaMutedStyleSheet(bool status);
     void    slot_setCurrentPlayMutedStatus(int value);
+    void    slot_setDanmuOn(bool on);
+    void    slot_receiveQuickValue(const QString& value);
+    void    slot_resumeRateText();
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
@@ -41,6 +45,9 @@ private:
     bool                    m_playStatus;
     bool                    m_soundStatus;
     bool                    m_bPress         =      false;//默认没有按下
+
+private:
+
 signals:
     void    sig_sendExitFullscreen();
     void    sig_sendPlayPrevious();
@@ -49,6 +56,9 @@ signals:
     void    sig_sendPlayMute(bool);
     void    sig_sendProgress_player(int);
     void    sig_sendProgress_voice(int);
+    void    sig_sendDanmuText(QString);
+    void    sig_sendOpenDanmu(bool);
+    void    sig_sendQuickenValue(QString);
 };
 
 #endif // FLOATPLAYCTL_H

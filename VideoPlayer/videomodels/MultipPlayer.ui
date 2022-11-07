@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1141</width>
-    <height>372</height>
+    <width>1041</width>
+    <height>432</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -53,8 +53,8 @@
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="minimumSize">
         <size>
-         <width>600</width>
-         <height>300</height>
+         <width>750</width>
+         <height>360</height>
         </size>
        </property>
        <property name="styleSheet">
@@ -80,7 +80,7 @@ margin:0px;
       <widget class="QStackedWidget" name="stackedWidget_player">
        <property name="minimumSize">
         <size>
-         <width>1000</width>
+         <width>750</width>
          <height>70</height>
         </size>
        </property>
@@ -721,19 +721,9 @@ border-image: url(://images/user/bullet_set_normal.png);
 border-image: url(:/images/icon/bullet_normal.png);
 }
 
-QPushButton:hover
-{
-/*border-image: url(:/images/icon/bullet_hover.png);*/
-}
-
 QPushButton:checked
 {
 border-image: url(:/images/icon/bullet_hover.png);
-}
-
-QPushButton:unchecked
-{
-border-image: url(:/images/icon/bullet_normal.png);
 }</string>
                        </property>
                        <property name="text">
@@ -761,7 +751,7 @@ border-image: url(:/images/icon/bullet_normal.png);
                       <widget class="QLineEdit" name="lineEdit_bullet">
                        <property name="minimumSize">
                         <size>
-                         <width>260</width>
+                         <width>150</width>
                          <height>26</height>
                         </size>
                        </property>
@@ -1080,13 +1070,13 @@ border-image: url(:/images/icon/vtitle_download.png);
                         <widget class="QPushButton" name="pushButton_sound">
                          <property name="minimumSize">
                           <size>
-                           <width>24</width>
+                           <width>22</width>
                            <height>19</height>
                           </size>
                          </property>
                          <property name="maximumSize">
                           <size>
-                           <width>24</width>
+                           <width>22</width>
                            <height>19</height>
                           </size>
                          </property>

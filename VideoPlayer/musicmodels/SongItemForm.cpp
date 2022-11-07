@@ -41,6 +41,8 @@ void SongItemForm::initWorkUI()
     ui->pushButton_son_delete->setFixedSize(21,21);
     ui->pushButton_son_more->setFixedSize(21,21);
     ui->pushButton_son_mv->setFixedSize(21,21);
+    ui->checkBox->setTristate(false);//二种状态按钮
+
 
     ui->pushButton_son_collect->setToolTip(QString(u8"收藏"));
     ui->pushButton_son_download->setToolTip(QString(u8"下载"));

@@ -28,6 +28,9 @@ public:
     void    addItemToVideosBox(QWidget* widget);
     void    removeItemToVideosBox(QWidget *widget);
 
+protected:
+    bool    eventFilter(QObject *watched, QEvent *event) override;
+
 private:
     Ui::CusVideoBox4 *ui;
     CusVerStackWgt      *m_switchStackWgt   =   nullptr;

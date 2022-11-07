@@ -128,6 +128,7 @@ margin-right:10px;
 margin-bottom:5px;
 color: #63fccd;
 border:none;
+font-size: 12px;
 }
 
 QPushButton:hover
@@ -196,6 +197,7 @@ margin-right:10px;
 margin-bottom:5px;
 color: #63fccd;
 border:none;
+font-size: 12px;
 }
 
 QPushButton:hover
@@ -230,6 +232,7 @@ margin-right:10px;
 margin-bottom:5px;
 color: #63fccd;
 border:none;
+font-size: 14px;
 text-align: center;
 }
 

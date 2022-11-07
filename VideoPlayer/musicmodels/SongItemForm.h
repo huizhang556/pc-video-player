@@ -2,6 +2,7 @@
 #define SONGITEMFORM_H
 
 #include <QWidget>
+#include <QCheckBox>
 #include <QPushbutton>
 
 namespace Ui {

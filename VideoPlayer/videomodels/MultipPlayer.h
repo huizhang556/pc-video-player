@@ -126,6 +126,11 @@ protected:
     void    keyPressEvent(QKeyEvent *event) override;
 
 public slots:
+
+    void    slot_setDanmuOpenClose(bool on);//设置弹幕开关
+
+    void    slot_sendDanmuTextToScreen(QString danmuText);//发送弹幕
+
     void    slot_loadFileInfoToWinTitle(int index);//标题栏显示视频名称
 
     void    slot_findFileFromLineEdit( QString name);//浮动曲库查找搜索内容
@@ -189,6 +194,7 @@ public slots:
     void    slot_clearAllPopupUi();//清理所有弹出的界面
 
 private slots:
+
     QMediaPlaylist *    slot_getCurrentPlayList();//获取当前正在播放的列表
 
     void    slot_switchPlayerList(QMediaPlaylist *list);//切换播放列表

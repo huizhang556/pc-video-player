@@ -164,7 +164,7 @@ void SongerSort::slot_addSongItem(const QString &url, const QString &path, const
     });
 }
 
-void SongerSort::slot_reserItem(const QString& path)
+void SongerSort::slot_resetItem(const QString& path)
 {
     for(int i = 0; i < ui->listWidget_songers->count(); i++)
     {
@@ -177,6 +177,7 @@ void SongerSort::slot_reserItem(const QString& path)
 void SongerSort::slot_resetSongItemInfo(QListWidgetItem *item, const QString &url, const QString &path, const QString &name, const QString &count)
 {
     SongItem *itemWidget = (SongItem*)(ui->listWidget_songers->itemWidget(item));
+    item->setSizeHint(itemWidget->size());
     item->setText(url);
     itemWidget->slot_setHeadPicture(path);
     itemWidget->slot_setSongerName(name);

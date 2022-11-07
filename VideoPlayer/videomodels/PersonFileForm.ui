@@ -533,7 +533,6 @@ color: rgb(255, 85, 0);
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-background-color:#222227;
 border-radius:5px;
 color: rgb(253, 253, 253);
 font: 23 10pt &quot;Microsoft YaHei&quot;;
@@ -569,6 +568,18 @@ border-image: url(:/images/icon/emails_open_hover.png);
                </item>
                <item>
                 <widget class="QLabel" name="label_prompt">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>36</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>36</height>
+                  </size>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">QLabel
 {
@@ -798,7 +809,13 @@ color: rgb(255, 85, 0);
                  <widget class="QPushButton" name="pushButton_his_select">
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
+                    <width>20</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>20</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -837,8 +854,14 @@ border-image: url(:/images/icon/all_openfile_hover.png);
                  <widget class="QPushButton" name="pushButton_his_alldelete">
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
-                    <height>24</height>
+                    <width>20</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>20</width>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="styleSheet">
@@ -1142,16 +1165,22 @@ color: rgb(255, 85, 0);
                 </item>
                 <item>
                  <widget class="QPushButton" name="pushButton_coll_select">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                    <horstretch>20</horstretch>
+                    <verstretch>20</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
-                    <height>24</height>
+                    <width>20</width>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>36</width>
-                    <height>16777215</height>
+                    <width>20</width>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="styleSheet">
@@ -1189,14 +1218,14 @@ border-image: url(:/images/icon/all_openfile_hover.png);
                  <widget class="QPushButton" name="pushButton_coll_alldelete">
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
-                    <height>24</height>
+                    <width>20</width>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>36</width>
-                    <height>16777215</height>
+                    <width>20</width>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="styleSheet">
@@ -1487,14 +1516,14 @@ color: rgb(255, 85, 0);
                  <widget class="QPushButton" name="pushButton_order_delete">
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
-                    <height>24</height>
+                    <width>20</width>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>36</width>
-                    <height>16777215</height>
+                    <width>20</width>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="styleSheet">
@@ -1757,14 +1786,14 @@ color: rgb(255, 85, 0);
                  <widget class="QPushButton" name="pushButton_skin_delete">
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
-                    <height>24</height>
+                    <width>20</width>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>36</width>
-                    <height>16777215</height>
+                    <width>20</width>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="styleSheet">
@@ -2027,14 +2056,14 @@ color: rgb(255, 85, 0);
                  <widget class="QPushButton" name="pushButton_down_open">
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
+                    <width>20</width>
                     <height>20</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
                     <width>20</width>
-                    <height>16777215</height>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="styleSheet">
@@ -2072,14 +2101,14 @@ border-image: url(:/images/icon/all_openfile_hover.png);
                  <widget class="QPushButton" name="pushButton_down_set">
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
+                    <width>20</width>
                     <height>20</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
                     <width>20</width>
-                    <height>16777215</height>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="styleSheet">
@@ -2117,14 +2146,14 @@ border-image: url(:/images/icon/all_set_hover.png);
                  <widget class="QPushButton" name="pushButton_down_allstart">
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
+                    <width>20</width>
                     <height>20</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
                     <width>20</width>
-                    <height>16777215</height>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="styleSheet">
@@ -2162,14 +2191,14 @@ border-image: url(:/images/icon/all_start_hover.png);
                  <widget class="QPushButton" name="pushButton_down_allpause">
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
+                    <width>20</width>
                     <height>20</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
                     <width>20</width>
-                    <height>16777215</height>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="styleSheet">
@@ -2207,14 +2236,14 @@ border-image: url(:/images/icon/all_pause_hover.png);
                  <widget class="QPushButton" name="pushButton_down_alldel">
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
+                    <width>20</width>
                     <height>20</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
                     <width>20</width>
-                    <height>16777215</height>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="styleSheet">

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1275</width>
+    <width>795</width>
     <height>60</height>
    </rect>
   </property>
@@ -114,7 +114,7 @@ background-color: #ffdea3;
          <widget class="QPushButton" name="pushButton_type1">
           <property name="minimumSize">
            <size>
-            <width>120</width>
+            <width>60</width>
             <height>30</height>
            </size>
           </property>
@@ -139,7 +139,7 @@ background-color: #ffdea3;
          <widget class="QPushButton" name="pushButton_type2">
           <property name="minimumSize">
            <size>
-            <width>120</width>
+            <width>60</width>
             <height>30</height>
            </size>
           </property>
@@ -164,7 +164,7 @@ background-color: #ffdea3;
          <widget class="QPushButton" name="pushButton_type3">
           <property name="minimumSize">
            <size>
-            <width>120</width>
+            <width>60</width>
             <height>30</height>
            </size>
           </property>
@@ -189,7 +189,7 @@ background-color: #ffdea3;
          <widget class="QPushButton" name="pushButton_type4">
           <property name="minimumSize">
            <size>
-            <width>120</width>
+            <width>60</width>
             <height>30</height>
            </size>
           </property>
@@ -214,7 +214,7 @@ background-color: #ffdea3;
          <widget class="QPushButton" name="pushButton_type5">
           <property name="minimumSize">
            <size>
-            <width>120</width>
+            <width>60</width>
             <height>30</height>
            </size>
           </property>
@@ -239,7 +239,7 @@ background-color: #ffdea3;
          <widget class="QPushButton" name="pushButton_type6">
           <property name="minimumSize">
            <size>
-            <width>120</width>
+            <width>60</width>
             <height>30</height>
            </size>
           </property>
@@ -264,7 +264,7 @@ background-color: #ffdea3;
          <widget class="QPushButton" name="pushButton_type7">
           <property name="minimumSize">
            <size>
-            <width>120</width>
+            <width>60</width>
             <height>30</height>
            </size>
           </property>
@@ -289,7 +289,7 @@ background-color: #ffdea3;
          <widget class="QPushButton" name="pushButton_type8">
           <property name="minimumSize">
            <size>
-            <width>120</width>
+            <width>60</width>
             <height>30</height>
            </size>
           </property>

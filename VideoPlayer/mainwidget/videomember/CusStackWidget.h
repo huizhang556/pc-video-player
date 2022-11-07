@@ -1,5 +1,11 @@
 ﻿#ifndef CUSSTACKWIDGET_H
 #define CUSSTACKWIDGET_H
+//主界面调节参数
+#define SACLWIDTH   1200 //开始放大最小宽度1200
+#define FIXEDHEIGHT 360  //小于放大宽度设置为固定高 360
+#define SCALSIZE    0.28 //放大时 高/宽 比例
+#define MINWINSIZE  QSize(830,FIXEDHEIGHT)  //界面最小size
+#define RESIZESIZE  QSize(1160,360)     //默认加载是size（一般会被重置）
 
 #define BUTTONSIZE  QSize(40,130)
 #define MINWIDTH   85
@@ -47,7 +53,9 @@ public slots:
     void    slot_addToStackPictures(const QStringList & introduce,const QStringList & list_pic);
     void    slot_setCheckButton(QAbstractButton* button);
     void    slot_setCurrentIndex(int index);
+
 private:
+    void    update_W_H_scale();
     void    updateButtonGeometry();
 
 private:

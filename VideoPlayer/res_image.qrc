@@ -541,5 +541,13 @@
         <file>images/desktop/deskop_unlock.png</file>
         <file>images/desktop/desktop_sound_add.png</file>
         <file>images/desktop/desktop_sound_sub.png</file>
+        <file>images/music/song_sort_asc.png</file>
+        <file>images/music/song_sort_desc.png</file>
+        <file>images/music/song_sort_normal.png</file>
+        <file>images/music/song_default.png</file>
+        <file>images/music/song_quality.png</file>
+        <file>images/music/song_songer.png</file>
+        <file>images/music/song_songName.png</file>
+        <file>images/music/song_album.png</file>
     </qresource>
 </RCC>
