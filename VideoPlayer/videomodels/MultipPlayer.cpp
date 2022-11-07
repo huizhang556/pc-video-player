@@ -1645,6 +1645,7 @@ void MultipPlayer::slot_setDanmuOpenClose(bool on)
         ui->lineEdit_bullet->setEnabled(false);
         ui->pushButton_sendbullet->setEnabled(false);
         ui->pushButton_bulletOn->setChecked(false);
+        emit sig_winResize();//弹幕消失用
         qDebug() << QString(u8"设置为未选中");
     }
     else
@@ -2654,6 +2655,7 @@ void MultipPlayer::slot_sendDanmuTextToScreen(QString danmuText)
         connect(m_videoTitleBar,&VideoTitleBar::sig_winVMinimum,danmu,&Danmu::release);
         connect(m_videoTitleBar,&VideoTitleBar::sig_winVRestore,danmu,&Danmu::release);
         connect(m_videoTitleBar,&VideoTitleBar::sig_doubleClick,danmu,&Danmu::release);
+        connect(this,&MultipPlayer::sig_winResize,danmu,&Danmu::release);//界面resize时，弹幕消失
         connect(this,SIGNAL(sig_videoDanmuStatus(bool)),danmu,SLOT(remove(bool)));
     }
 }
@@ -2749,7 +2751,7 @@ void MultipPlayer::slot_showNormalWindows()
     if(m_videoTitleBar->isHidden()) m_videoTitleBar->show();
     if(ui->stackedWidget_player->isHidden()) ui->stackedWidget_player->show();
     if(!FloatPlayCtl::getInstance()->isHidden()) FloatPlayCtl::getInstance()->hide();
-
+    emit sig_winResize();//弹幕消失用
 }
 
 //播放临时点击的媒体
@@ -2891,6 +2893,7 @@ void MultipPlayer::slot_setMainWindowShowFullgreen()
         FloatPlayCtl::getInstance()->setFocus();
     }
     this->resize(QApplication::desktop()->size());
+    emit sig_winResize();
 }
 
 /*播放次序按钮*/

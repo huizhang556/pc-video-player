@@ -336,6 +336,9 @@ signals:
 
     void    sig_videoDanmuStatus(bool);
 
+    void    sig_winResize();
+
+
 private:
     Ui::MultipPlayer *ui;
     QAction                     *m_actionBullet     = nullptr;//弹幕登录开关
