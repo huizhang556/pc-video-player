@@ -8,14 +8,14 @@ LoginTip* LoginTip::m_pInstance = nullptr;
 
 LoginTip::LoginTip(QWidget *parent) :
     QWidget(parent),
-    m_startX(300),
+    m_startX(320),
     m_startY(40),
     m_triangleWidth(20),
     m_triangleHeight(15),
     ui(new Ui::LoginTip)
 {
     ui->setupUi(this);
-    setFixedSize(380,193);
+    setFixedSize(400,213);
     setAttribute(Qt::WA_TranslucentBackground,true);
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::Popup | Qt::Tool | Qt::WindowStaysOnTopHint);
     initWorkUI();
@@ -61,7 +61,7 @@ void LoginTip::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing,true);
     painter.setPen(Qt::NoPen);
-    painter.setBrush(QColor(216, 217, 218));
+    painter.setBrush(QColor(21, 23, 26));
     //小三角区域
     QPolygon trianglePolygon;
     trianglePolygon << QPoint(m_startX , m_startY);// 30 30

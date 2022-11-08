@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>380</width>
-    <height>193</height>
+    <width>400</width>
+    <height>210</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>380</width>
-    <height>190</height>
+    <width>400</width>
+    <height>210</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>380</width>
-    <height>198</height>
+    <width>400</width>
+    <height>211</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -33,16 +33,16 @@
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>10</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>10</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>10</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>10</number>
    </property>
    <item>
     <spacer name="verticalSpacer">
@@ -78,7 +78,6 @@
       <string notr="true">#widget_main
 {
 border: none;
-background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #cdd1db, stop:1  #9498a3);
 border-radius: 6px;
 }</string>
      </property>
@@ -115,7 +114,8 @@ border-radius: 6px;
         <property name="styleSheet">
          <string notr="true">#frame_top
 {
-background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #fdfcfc, stop:1  #d4d5d6);
+/*background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #fdfcfc, stop:1  #d4d5d6);*/
+background-color: transparent;
 border-radius: 6px;
 border-bottom-left-radius: 0px;
 border-bottom-right-radius: 0px;
@@ -331,7 +331,8 @@ color: #757579;
         <property name="styleSheet">
          <string notr="true">#frame_bottom
 {
-border-radius: 0px 0px 6px 6px;
+border-radius:10px;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #cdd1db, stop:1  #9498a3);
 }</string>
         </property>
         <property name="frameShape">
