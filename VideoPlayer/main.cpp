@@ -30,7 +30,7 @@
 #include "customer/CustomFileDialog.h"
 #include "videomodels/RecVideoItem.h"
 #include "splashscreen/CSplashScreen.h"
-#include "desktoplyric/DesktopLyric.h"
+#include "desktoplyric/toplyric/DesktopLyric.h"
 
 #include "login/NewLoginForm.h"
 #include "videomodels/Danmu.h"

@@ -260,29 +260,33 @@ background-color: rgba(44, 45, 54,0.8);
 background-color: rgba(44, 45, 54,0.8);
 }
 
-/*自定义stackedwidget_listwidget*/
+/*自定义图片切换控件右侧stackedwidget_listwidget*/
 #m_rightListWidget
 {
 border: none;
+color:  transparent;
 font: 800 12pt "Microsoft YaHei UI";
 background-color: transparent;
+/*background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #bdc3c7, stop:0.3 #2c3e50, stop:0.7 #2c3e50, stop:1 #bdc3c7);*/
 }
 
 #m_rightListWidget::item
 {
-color:  rgba(216, 30, 6,1.0);
-background-color: rgba(64, 66, 68,0.3);
+color:  transparent;
+border: 0px solid white;
+padding: 0px 15px;
+background-color: rgba(64, 66, 68,0.2);
 }
 
 #m_rightListWidget::item:selected
 {
-color:  rgba(57, 176, 251,1.0);
+color:  transparent;
 background-color: rgba(64, 66, 68,0.5);
 }
 
 #m_rightListWidget::item:hover
 {
-color:  rgba(145, 145, 226,1.0);
+color:  transparent;
 }
 
 /*上次选择后保留的状态，鼠标离开后显示*/

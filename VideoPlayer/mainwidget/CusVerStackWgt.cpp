@@ -1,5 +1,6 @@
 ﻿#include "CusVerStackWgt.h"
 #include "global/Global.h"
+#include "mainwidget/subunititems/CusListItem1.h"
 #include <QScrollBar>
 #include <QListWidgetItem>
 
@@ -30,40 +31,54 @@ void CusVerStackWgt::initWorkUI()
     {
         QString path = Global::appDirPath + QString("/pictures/stackwall/stack%1.png").arg(i);
         m_pictureList.insert(i,path);
+        CusListItem1 *itemWidget = new CusListItem1(m_itemsTextList.at(i),m_itemsInfoList.at(i));
         QListWidgetItem *item = new QListWidgetItem(m_itemsTextList.at(i));
-        item->setSizeHint(QSize(258,53));//320/6
+        item->setSizeHint(QSize(258,53) + QSize(ITEMMARGIN));//留出 1px 探测enter leave
         item->setTextAlignment(Qt::AlignLeft | Qt::AlignCenter);
         m_rightListWidget->addItem(item);
+        m_rightListWidget->setItemWidget(item,itemWidget);
+        //结合it
+        connect(itemWidget,&CusListItem1::sig_itemEnter,[=](){
+            m_rightListWidget->setCurrentItem(item);
+            this->setCurrentIndex(m_rightListWidget->row(item));
+            updateListWidgetGeometry();
+        });
+
     }
 //    slot_addToStackPictures(m_pictureList,m_pictureList);
-    m_rightListWidget->setCurrentRow(0);
+    m_rightListWidget->setCurrentRow(0);//选中第一项
+    getItemStackWgt(m_rightListWidget->item(0),"stackedWidget_switch")->setCurrentIndex(1);//切换到index = 1
 //    updateGeometry();
 }
 
 void CusVerStackWgt::handleSignalsAndSlots()
 {
-    connect(m_rightListWidget,&QListWidget::itemEntered,[=](QListWidgetItem *current){
-        m_rightListWidget->setCurrentItem(current);
-        this->setCurrentIndex(m_rightListWidget->row(current));
-        updateListWidgetGeometry();
-    });
-//    connect(m_rightListWidget,&QListWidget::currentItemChanged,[=](QListWidgetItem *current,QListWidgetItem *previous){
-//        if(previous != nullptr)
-//        {
-//            qDebug() << QString::fromLocal8Bit("先前的item：")<<previous->text();
-//            current->setSizeHint(QSize(300,30));
-//        }
-//        if(current != nullptr)
-//        {
-//            qDebug() << QString::fromLocal8Bit("现在的item:")<<current->text();
-//            current->setSizeHint(QSize(300,80));
-//        }
+//    connect(m_rightListWidget,&QListWidget::itemEntered,[=](QListWidgetItem *current){
+//        qDebug() << QString(u8"右侧列表item进入：")<<current->text();
+//        m_rightListWidget->setCurrentItem(current);
+//        this->setCurrentIndex(m_rightListWidget->row(current));
+//        updateListWidgetGeometry();
 //    });
+
+
+    connect(m_rightListWidget,&QListWidget::currentItemChanged,[=](QListWidgetItem *current,QListWidgetItem *previous){
+        if(previous != nullptr)
+        {
+            qDebug() << QString::fromLocal8Bit("先前的item：")<<previous->text();
+            getItemStackWgt(previous,"stackedWidget_switch")->setCurrentIndex(0);
+        }
+        if(current != nullptr)
+        {
+            qDebug() << QString::fromLocal8Bit("现在的item:")<<current->text();
+            getItemStackWgt(current,"stackedWidget_switch")->setCurrentIndex(1);
+        }
+    });
 }
 
 void CusVerStackWgt::setInstallEventFilter()
 {
     this->installEventFilter(this);
+    m_rightListWidget->installEventFilter(this);
 }
 
 void CusVerStackWgt::slot_addItemToCusVerStackWgt(const QString &picpath)
@@ -95,6 +110,7 @@ bool CusVerStackWgt::eventFilter(QObject *watched, QEvent *event)
         update_W_H_scale();
         updateListWidgetGeometry();
     }
+
     return QWidget::eventFilter(watched,event);
 }
 
@@ -116,6 +132,7 @@ void CusVerStackWgt::update_W_H_scale()
             m_rightListWidget->item(i)->setSizeHint(QSize(
                                                     m_rightListWidget->width()-m_rightListWidget->verticalScrollBar()->width()-1,
                                                     (int)((m_rightListWidget->height()-m_rightListWidget->horizontalScrollBar()->height()-1)/6))
+                                                    + QSize(ITEMMARGIN)
                                                     );
         }
     }
@@ -123,9 +140,20 @@ void CusVerStackWgt::update_W_H_scale()
     {
         this->setMinimumHeight(FIXEDHEIGHT);
         m_rightListWidget->setFixedSize(RDEFSIZE);
-        for(int i = 0; i <m_rightListWidget->count(); i++)
+        for(int i = 0; i < m_rightListWidget->count(); i++)
         {
-            m_rightListWidget->item(i)->setSizeHint(QSize(258,53));//320/6
+            m_rightListWidget->item(i)->setSizeHint(QSize(258,53)+ QSize(ITEMMARGIN));//320/6
         }
+    }
+}
+
+QStackedWidget *CusVerStackWgt::getItemStackWgt(QListWidgetItem* item, const QString &objname)
+{
+    QWidget* itemWidget = item->listWidget()->itemWidget(item);
+    if(nullptr != itemWidget)
+    {
+        QStackedWidget *itemStack = itemWidget->findChild<QStackedWidget*>(objname);//可以指定查找范围（最近一级的还是所有的）
+        if(nullptr != itemStack)
+        return itemStack;
     }
 }

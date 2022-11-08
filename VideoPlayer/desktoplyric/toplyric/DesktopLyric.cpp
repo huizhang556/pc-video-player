@@ -1,6 +1,8 @@
 ﻿#include "DesktopLyric.h"
 #include "ui_DesktopLyric.h"
 
+#include "desktoplyric/toptooltips/DesktopTip1.h"
+
 #ifdef Q_OS_WIN
 #include <qt_windows.h>
 #pragma comment (lib,"user32.lib")
@@ -123,34 +125,53 @@ void DesktopLyric::handleSignalsAndSlots()
         emit sig_sendNext();
     });
 
+    //图标
+    connect(ui->pushButton_icon,&QPushButton::clicked,[=](){
+        QStringList list = {QString(u8"showTips,NoAnimation!")};
+        DesktopTip1::setMode(DesktopTip1::NoAnimation);//位置动画
+        DesktopTip1::showTip(list,5);
+    });
+
     //竖屏
     connect(ui->pushButton_vertical,&QPushButton::clicked,[=](){
-
+        QStringList list = {QString(u8"showTips,OpacityAnimation!")};
+        DesktopTip1::setMode(DesktopTip1::OpacityAnimation);//位置动画
+        DesktopTip1::showTip(list,5);
     });
 
     //加速
     connect(ui->pushButton_add,&QPushButton::clicked,[=](){
-
+        QStringList list = {QString(u8"showTips,PosAnimation!")};
+        DesktopTip1::setMode(DesktopTip1::PosAnimation);//位置动画
+        DesktopTip1::showTip(list,5);
     });
 
     //减速
     connect(ui->pushButton_sub,&QPushButton::clicked,[=](){
-
+        QStringList list = {QString(u8"showTips,AllAnimation!")};
+        DesktopTip1::setMode(DesktopTip1::AllAnimation);//位置动画
+        DesktopTip1::showTip(list,5);
     });
 
     //卡拉ok
     connect(ui->pushButton_kala,&QPushButton::clicked,[=](){
-
+        QStringList list = {QString(u8"keepTip,NoAnimation!")};
+        DesktopTip1::setMode(DesktopTip1::NoAnimation);//位置动画
+        DesktopTip1::keepTip(list);
     });
 
     //调色盘
     connect(ui->pushButton_color,&QPushButton::clicked,[=](){
-
+        QStringList list = {QString(u8"keepTip,OpacityAnimation!")};
+        DesktopTip1::setMode(DesktopTip1::OpacityAnimation);//位置动画
+        DesktopTip1::keepTip(list);
     });
 
     //搜索歌词
     connect(ui->pushButton_search,&QPushButton::clicked,[=](){
-
+        QStringList list = {QString(u8"keepTip,PosAnimation!")};
+        DesktopTip1::setMode(DesktopTip1::PosAnimation);//位置动画
+        DesktopTip1::keepTip(list);
     });
 
     //锁定
@@ -169,7 +190,9 @@ void DesktopLyric::handleSignalsAndSlots()
 
     //回到桌面
     connect(ui->pushButton_desktop,&QPushButton::clicked,[=](){
-
+        QStringList list = {QString(u8"keepTip,AllAnimation!")};
+        DesktopTip1::setMode(DesktopTip1::AllAnimation);//位置动画
+        DesktopTip1::keepTip(list);
     });
 
     //音量 +

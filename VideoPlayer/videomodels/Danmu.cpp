@@ -177,7 +177,7 @@ QRect Danmu::getScreenRect()
 
 Danmu::~Danmu()
 {
-//    qDebug()<<QString(u8"弹幕被析构")<<endl;
+    qDebug()<<QString(u8"弹幕被析构")<<endl;
 }
 
 int Danmu::getPosX()

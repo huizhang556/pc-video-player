@@ -45,11 +45,11 @@ void muteDialog::slot_setSoundValue(bool add)
     int value = ui->verticalSlider->value();
     if(add)
     {
-        ui->verticalSlider->setValue(value+10);
+        ui->verticalSlider->setValue(value+5);
     }
     else
     {
-        ui->verticalSlider->setValue(value-10);
+        ui->verticalSlider->setValue(value-5);
     }
 }
 

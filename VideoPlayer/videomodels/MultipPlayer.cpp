@@ -49,7 +49,7 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
     handleSignalAndSLots();//处理信号与槽函数
     //设置监听
     installEventFilter(this);
-    ui->pushButton_bulletSet->installEventFilter(this);//弹幕设置
+    ui->pushButton_bulletSet->installEventFilter(this);//弹幕设置按钮
     ui->pushButton_sound->installEventFilter(this);//音量调节按钮设置监听
     ui->stackedWidget->installEventFilter(this);//侧边按钮显隐用
     videoWidget->installEventFilter(this);//视频界面

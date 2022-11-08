@@ -1,7 +1,7 @@
 ﻿#include "MainWidget.h"
 #include "database/dataBase.h"
 #include "customer/CustomTabStyle.h"
-#include "desktoplyric/DesktopLyric.h"
+#include "desktoplyric/toplyric/DesktopLyric.h"
 
 #ifdef Q_OS_WIN
 #include <qt_windows.h>

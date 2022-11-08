@@ -1,9 +1,12 @@
 SOURCES += \
-    $$PWD/desktoplyric.cpp
+    $$PWD/toplyric/desktoplyric.cpp \
+    $$PWD/toptooltips/DesktopTip1.cpp
 
 
 HEADERS += \
-    $$PWD/desktoplyric.h
+    $$PWD/toplyric/desktoplyric.h \
+    $$PWD/toptooltips/DesktopTip1.h
 
 FORMS += \
-    $$PWD/desktoplyric.ui
+    $$PWD/toplyric/desktoplyric.ui \
+    $$PWD/toptooltips/DesktopTip1.ui
