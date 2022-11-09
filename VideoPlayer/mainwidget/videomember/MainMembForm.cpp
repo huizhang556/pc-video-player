@@ -40,7 +40,7 @@ void MainMembForm::initWorkUI()
     ui->m_itemsLayout->addWidget(itemWidget);
     ui->m_itemsLayout->addWidget(switchItem);
 
-    for(int i = 0; i < 20; i++)
+    for(int i = 0; i < 3; i++)
     {
         VideoSortType *videoSortItem1 = new VideoSortType();
         ui->m_itemsLayout->addWidget(videoSortItem1);

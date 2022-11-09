@@ -4,7 +4,13 @@ SOURCES += \
     $$PWD/CompletedFiles.cpp \
     $$PWD/FilesTrans.cpp \
     $$PWD/FileItem.cpp \
-    $$PWD/DownloadType.cpp
+    $$PWD/DownloadType.cpp \
+    $$PWD/MyVideosFile.cpp \
+    $$PWD/MyMusicsFile.cpp \
+    $$PWD/MyDocFile.cpp \
+    $$PWD/MyPicFile.cpp \
+    $$PWD/MyAllFile.cpp \
+    $$PWD/MyLastFile.cpp
 
 
 HEADERS += \
@@ -13,7 +19,13 @@ HEADERS += \
     $$PWD/CompletedFiles.h \
     $$PWD/FilesTrans.h \
     $$PWD/FileItem.h \
-    $$PWD/DownloadType.h
+    $$PWD/DownloadType.h \
+    $$PWD/MyVideosFile.h \
+    $$PWD/MyMusicsFile.h \
+    $$PWD/MyDocFile.h \
+    $$PWD/MyPicFile.h \
+    $$PWD/MyAllFile.h \
+    $$PWD/MyLastFile.h
 
 
 FORMS += \
@@ -22,4 +34,10 @@ FORMS += \
     $$PWD/CompletedFiles.ui \
     $$PWD/FilesTrans.ui \
     $$PWD/FileItem.ui \
-    $$PWD/DownloadType.ui
+    $$PWD/DownloadType.ui \
+    $$PWD/MyVideosFile.ui \
+    $$PWD/MyMusicsFile.ui \
+    $$PWD/MyDocFile.ui \
+    $$PWD/MyPicFile.ui \
+    $$PWD/MyAllFile.ui \
+    $$PWD/MyLastFile.ui

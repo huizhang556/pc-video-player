@@ -5,4 +5,6 @@ SOURCES += \
 HEADERS += \
     $$PWD/MyHttp.h
 
+FORMS +=
+
 

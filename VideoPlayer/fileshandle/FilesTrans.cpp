@@ -20,6 +20,21 @@ FilesTrans::~FilesTrans()
 
 void FilesTrans::initWorkUI()
 {
+    ui->listWidget_trans->setFixedHeight(70);
+    ui->listWidget_trans->setViewMode(QListView::IconMode);//默认是自动换行的
+    ui->listWidget_trans->setMovement(QListView::Static);//不可拖动
+    ui->listWidget_trans->setResizeMode(QListWidget::Adjust);
+    ui->listWidget_trans->setWrapping(false);// 不自动换行
+    ui->listWidget_trans->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->listWidget_trans->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_trans->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    //setLayoutDirection
+    //在列表模式下，控制图标在文本左（LeftToRight）边还是在右（RightToLeft）
+    //在图标模式下，不起作用
+//    ui->listWidget_trans->setLayoutDirection(Qt::LeftToRight);
+
+
     QListWidgetItem *myFileItem     = new QListWidgetItem(QIcon(":/images/fileitem/fileitem_files.png"),QString::fromLocal8Bit("我的文件"));
     QListWidgetItem *recentlyItem   = new QListWidgetItem(QIcon(":/images/fileitem/fileitem_recent.png"),QString::fromLocal8Bit("最近传输"));
     QListWidgetItem *videoItem      = new QListWidgetItem(QIcon(":/images/fileitem/fileitem_videos.png"),QString::fromLocal8Bit("我的视频"));
@@ -59,25 +74,41 @@ void FilesTrans::initWorkUI()
     ui->listWidget_trans->addItem(completeItem);
 
     ui->listWidget_trans->setCurrentRow(0);
-    ui->listWidget_trans->setFixedWidth(102);
-    ui->listWidget_trans->setViewMode(QListView::IconMode);
-    ui->listWidget_trans->setMovement(QListView::Static);//不可拖动
-    ui->listWidget_trans->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->listWidget_trans->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    //setLayoutDirection
-    //在列表模式下，控制图标在文本左（LeftToRight）边还是在右（RightToLeft）
-    //在图标模式下，不起作用
-//    ui->listWidget_trans->setLayoutDirection(Qt::LeftToRight);
 
+    //所有文件
+    m_myAllFiles = new MyAllFile();
+    m_myAllFiles->setObjectName(QString::fromLocal8Bit("m_myAllFiles"));
+    //最近传输
+    m_myLastFiles  = new MyLastFile();
+    m_myLastFiles->setObjectName(QString::fromLocal8Bit("m_myLastFiles"));
+    //视频文件
+    m_myVideoFiles = new MyVideosFile();
+    m_myVideoFiles->setObjectName(QString::fromLocal8Bit("m_myVideoFiles"));
+    //音乐
+    m_myMusicFiles = new MyMusicsFile();
+    m_myMusicFiles->setObjectName(QString::fromLocal8Bit("m_myMusicFiles"));
+    //图片
+    m_myPicFiles  = new MyPicFile();
+    m_myPicFiles->setObjectName(QString::fromLocal8Bit("m_myPicFiles"));
+    //文档
+    m_myDocFiles =  new MyDocFile();
+    m_myDocFiles->setObjectName(QString::fromLocal8Bit("m_myDocFiles"));
+    //上传记录
     m_uploadFiles = new UploadFile();
     m_uploadFiles->setObjectName(QString::fromLocal8Bit("m_uploadFiles"));
-
+    //下载记录
     m_downloadFiles = new DownLoadFile();
     m_downloadFiles->setObjectName(QString::fromLocal8Bit("m_downloadFiles"));
-
+    //总完成记录
     m_completeFiles = new CompletedFiles();
     m_completeFiles->setObjectName(QString::fromLocal8Bit("m_completeFiles"));
 
+    ui->stackedWidget_trans->addWidget(m_myAllFiles);
+    ui->stackedWidget_trans->addWidget(m_myLastFiles);
+    ui->stackedWidget_trans->addWidget(m_myVideoFiles);
+    ui->stackedWidget_trans->addWidget(m_myMusicFiles);
+    ui->stackedWidget_trans->addWidget(m_myPicFiles);
+    ui->stackedWidget_trans->addWidget(m_myDocFiles);
     ui->stackedWidget_trans->addWidget(m_downloadFiles);
     ui->stackedWidget_trans->addWidget(m_uploadFiles);
     ui->stackedWidget_trans->addWidget(m_completeFiles);

@@ -24,7 +24,7 @@ void UploadFile::initWorkUI()
 //    ui->listWidget_uploadlist->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_uploadlist->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
-    for(int i = 0; i< 10; i++)
+    for(int i = 0; i< 20; i++)
     {
         QListWidgetItem *item = new QListWidgetItem();
         FileItem *fileItem = new FileItem();

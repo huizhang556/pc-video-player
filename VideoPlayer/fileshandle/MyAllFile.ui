@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MyAllFile</class>
+ <widget class="QWidget" name="MyAllFile">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>767</width>
+    <height>513</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QFrame" name="frame_allfile">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QWidget" name="widget_dir" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>500</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>162</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QFrame" name="frame_showtype">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>6</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="pushButton_listMode">
+           <property name="minimumSize">
+            <size>
+             <width>22</width>
+             <height>22</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>22</width>
+             <height>22</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+border-image: url(:/images/fileitem/file_listMode.png);
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_iconMode">
+           <property name="minimumSize">
+            <size>
+             <width>22</width>
+             <height>22</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>22</width>
+             <height>22</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+border-image: url(:/images/fileitem/file_iconMode.png);
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QSplitter" name="splitter">
+     <property name="styleSheet">
+      <string notr="true">QSplitter::handle
+{
+    border: 0px solid #999999;
+    border-style: outset;
+    width: 1px;
+}
+
+QSplitter::handle:hover
+{/*splitter-&gt;handle(1)-&gt;setAttribute(Qt::WA_Hover, true);才生效*/
+    border-color: #EA2;
+}
+QSplitter::handle:pressed
+{
+    border-color: #59F;
+}
+</string>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QTreeWidget" name="treeWidget_allfiles">
+      <property name="minimumSize">
+       <size>
+        <width>215</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>280</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTreeWidget
+{
+/*show-decoration-selected: 1;*/
+}
+
+QTreeWidget::item 
+{
+border: 1px solid #d9d9d9;
+border-top-color: transparent;
+border-bottom-color: transparent;
+}
+
+QTreeWidget::item:hover 
+{
+background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #e7effd, stop: 1 #cbdaf1);
+border: 1px solid #bfcde4;
+}
+
+QTreeWidget::item:selected 
+{
+border: 1px solid #567dbc;
+}
+
+QTreeWidget::item:selected:active
+{
+background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6ea1f1, stop: 1 #567dbc);
+}
+
+QTreeWidget::item:selected:!active 
+{
+background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
+}
+
+QTreeView::branch:has-siblings:!adjoins-item 
+{
+border-image: url(:/images/fileitem/file-vline.png) 0;
+}
+
+QTreeView::branch:has-siblings:adjoins-item 
+{
+border-image: url(:/images/fileitem/file-branch-more.png) 0;
+}
+
+QTreeView::branch:!has-children:!has-siblings:adjoins-item 
+{
+border-image: url(:/images/fileitem/file-branch-end.png) 0;
+}
+
+QTreeView::branch:has-children:!has-siblings:closed,
+QTreeView::branch:closed:has-children:has-siblings 
+{
+border-image: none;
+image: url(:/images/fileitem/file-branch-closed.png);
+}
+
+QTreeView::branch:open:has-children:!has-siblings,
+QTreeView::branch:open:has-children:has-siblings  
+{
+border-image: none;
+image: url(:/images/fileitem/file-branch-open.png);
+}</string>
+      </property>
+      <column>
+       <property name="text">
+        <string>所有文件</string>
+       </property>
+      </column>
+      <item>
+       <property name="text">
+        <string>001视频</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>002音乐</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>003文档</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>004面试</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>005经验总结</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>006代码</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>007常用软件</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>008破解软件</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>009零声教育视频</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>010java自学视频</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>011Qt学习资料</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>012C++学习资料</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>013数据结构学习资料</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>014操作系统资料</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>015网络编程资料</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>016系统学习</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>001基础语法</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>关键字</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>inline</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>virtual</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>default</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>voltical</string>
+           </property>
+          </item>
+         </item>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>002数据结构</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>链表</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>单向链表</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>单项循环链表</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>指针域</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>本级节点</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>下一级节点</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>下一级节点首部</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>下一级节点尾部</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>下一级节点数据域</string>
+              </property>
+             </item>
+            </item>
+           </item>
+           <item>
+            <property name="text">
+             <string>数据域</string>
+            </property>
+           </item>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>双向链表</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>双向循环链表</string>
+           </property>
+          </item>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>图</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>有向图</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>无向图</string>
+          </property>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>树</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>二叉树</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>红黑树</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AVL</string>
+          </property>
+         </item>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>003网络编程</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>004并发编程</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>005数据库编程</string>
+        </property>
+       </item>
+      </item>
+     </widget>
+     <widget class="QTableWidget" name="tableWidget_dirFiles"/>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

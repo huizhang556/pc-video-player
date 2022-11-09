@@ -127,7 +127,23 @@ bool Global::isNetWorkOnline()
 //判断是否能上网
 void Global::checkNetWorkOnline()
 {
-    QHostInfo::lookupHost("www.baidu.com",this,SLOT(onLookupHost(QHostInfo)));
+//    QHostInfo::lookupHost("www.baidu.com",this,SLOT(onLookupHost(QHostInfo)));
+//    QLibrary lib("Wininet.dll");
+//    if (lib.load())
+//    {
+//        bool bOnline = false;//是否在线
+//        int  flags;
+
+//        //获取dll库中的函数InternetGetConnectedState函数地址`
+//        ConnectFun  myConnectFun = (ConnectFun)lib.resolve("InternetGetConnectedState");
+
+//        //判断是否连网
+//        bOnline = myConnectFun(&flags, 0);
+//        if(bOnline)
+//            qDebug() << __FUNCTION__ << "isOnline = true";
+//        else
+//            qDebug() << __FUNCTION__ << "isOnline = false";
+//    }
 }
 
 //读取注册状态

@@ -549,5 +549,12 @@
         <file>images/music/song_songer.png</file>
         <file>images/music/song_songName.png</file>
         <file>images/music/song_album.png</file>
+        <file>images/fileitem/file_iconMode.png</file>
+        <file>images/fileitem/file_listMode.png</file>
+        <file>images/fileitem/file-branch-closed.png</file>
+        <file>images/fileitem/file-branch-end.png</file>
+        <file>images/fileitem/file-branch-more.png</file>
+        <file>images/fileitem/file-branch-open.png</file>
+        <file>images/fileitem/file-vline.png</file>
     </qresource>
 </RCC>

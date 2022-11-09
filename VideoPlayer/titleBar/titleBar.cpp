@@ -46,6 +46,7 @@ void TitleBar::initWorker()
 {
     //网络请求
     manager = new QNetworkAccessManager(this);
+    m_ncmgr = new QNetworkConfigurationManager();//网络连接用
 
     //遮罩
     QRegion maskRegion(ui->label_userHead->rect(),QRegion::Ellipse);//创建圆形遮罩
@@ -182,12 +183,24 @@ void TitleBar::initWorker()
     slot_addWebEngine();
 
     slot_switchToLoginPage(0,QString::fromLocal8Bit(""));//0 注册 1登录
+
+    //检查网络状态
+    if(!m_ncmgr->isOnline())//如果首次网络就不在线
+        DesktopTip1::showTip(QStringList(u8"网络断连接异常，请检查网络！"),5);
 }
 
 
 /*处理信号与槽函数*/
 void TitleBar::handleSignalAndSLots()
 {
+    //网络连接状态（与之前状态不一样时时发送状态,首次状态不报，如果首次就是断网，很麻烦）
+    connect(m_ncmgr,&QNetworkConfigurationManager::onlineStateChanged,[=](bool isOnline){
+        if(isOnline)
+            DesktopTip1::showTip(QStringList(u8"网络已恢复正常！"),5);
+        else
+            DesktopTip1::showTip(QStringList(u8"网络断连接异常，请检查网络！"),5);
+    });
+
     //个人信息选择改变
     connect(m_headHover,&HeadHover::sig_itemChanged,[=](QString text){
         if(QString::fromLocal8Bit("个人主页") == text)
@@ -278,7 +291,10 @@ void TitleBar::handleSignalAndSLots()
     connect(this,&TitleBar::sig_winNormal,m_loginForm,&Login::close);
     //更新时间
     connect(m_timer3,&QTimer::timeout,this,&TitleBar::getSystemTimeShow);
-
+    //检测网络状态 方法1
+//    connect(m_timer3,&QTimer::timeout,this,&TitleBar::checkCurrentNetworkStatus_method1);
+    //检测网络状态 方法2
+//    connect(m_timer3,&QTimer::timeout,this,&TitleBar::checkCurrentNetworkStatus_method2);
     /*关于标题栏功能性按钮*/
     //帮助
     connect(ui->Btnhelp,&QPushButton::clicked,[=](){createHelpMenu();});//帮助菜单
@@ -1451,6 +1467,51 @@ void TitleBar::getSystemTimeShow()
     QDateTime curtime = QDateTime::currentDateTime();
     QString strTime = curtime.toString("yyyy-MM-dd hh:mm:ss");
     ui->lcdNumber->display(strTime);
+}
+
+void TitleBar::checkCurrentNetworkStatus_method2()
+{
+    //通过ping一个稳定的服务来判断是否有网
+    QHostInfo::lookupHost("www.baidu.com",this,SLOT(onLookupHost(QHostInfo)));
+}
+
+void TitleBar::checkCurrentNetworkStatus_method3()
+{
+
+}
+
+void TitleBar::onLookupHost(QHostInfo host)
+{
+    if (host.error() != QHostInfo::NoError)
+    {
+            qDebug() << "Lookup failed:" << host.errorString();
+            //网络未连接，发送信号通知
+            DesktopTip1::showTip(QStringList(u8"网络失去连接，请检查网络！"),5);
+        }
+        else{
+            DesktopTip1::showTip(QStringList(u8"网络连接已恢复！"),5);
+        }
+}
+
+//检查当前网络状态(有效果)
+void TitleBar::checkCurrentNetworkStatus_method1()
+{
+    QLibrary lib("Wininet.dll");//windows库
+        if (lib.load())
+        {
+            bool bOnline = false;//是否在线
+            int  flags;
+
+            //获取dll库中的函数InternetGetConnectedState函数地址
+            ConnectFun  myConnectFun = (ConnectFun)lib.resolve("InternetGetConnectedState");
+
+            //判断是否连网
+            bOnline = myConnectFun(&flags, 0);
+            if(bOnline)
+                DesktopTip1::showTip(QStringList(u8"网络已恢复！"),5);
+            else
+                DesktopTip1::showTip(QStringList(u8"网络失去连接，请检查网络!"),5);
+        }
 }
 
 /*槽函数 --- 地址栏显示当前url*/

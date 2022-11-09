@@ -22,7 +22,7 @@ MainWidget::MainWidget(QWidget *parent) :
     m_winMax(false),
     m_firstOpen(true)
 {
-    setMinimumSize(1155,670);//1320,800 1500,950
+    setMinimumSize(1160,680);//1320,800 1500,950
     this->resize(QSize(1500,920));
     setMouseTracking(true);
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);//保留最大最小功能
@@ -275,28 +275,28 @@ void MainWidget::initOtherWidgetUi()
 //设置StackedWidget布局每个page界面
 void MainWidget::setStackedWidgetPage()
 {
-    m_stackWidget_center->insertWidget(0,m_videoMember);//m_mainShowForm
-    m_stackWidget_center->insertWidget(1,m_webStackWgt);//m_webStackWgt
-    m_stackWidget_center->insertWidget(2,m_mainVideoMv);
-    m_stackWidget_center->insertWidget(3,m_hotSearch);
-    m_stackWidget_center->insertWidget(4,m_homeWidget);//m_videoMember
-    m_stackWidget_center->insertWidget(5,m_songerSort);
-    m_stackWidget_center->insertWidget(6,m_rankList);
-    m_stackWidget_center->insertWidget(7,m_songlistSort);
-    m_stackWidget_center->insertWidget(8,m_radioHost);
-    m_stackWidget_center->insertWidget(9,m_musicScene);
-    m_stackWidget_center->insertWidget(11,m_vipMember);
-    m_stackWidget_center->insertWidget(12,m_musicShow);//musicshow
-    m_stackWidget_center->insertWidget(13,m_musicList);//musiclist
-    m_stackWidget_center->insertWidget(14,m_personForm);//personform 个人管理
-    m_stackWidget_center->insertWidget(15,m_fileTrans);//文件传输
-    m_stackWidget_center->insertWidget(16,m_tabWidget);//m_tabWidget
-    m_stackWidget_center->insertWidget(17,m_cusVideoBox);
-    m_stackWidget_center->insertWidget(18,m_cusVideoBox2);
-    m_stackWidget_center->insertWidget(19,m_cusVideoBox3);
-    m_stackWidget_center->insertWidget(20,m_cusVideoBox4);
-    m_stackWidget_center->insertWidget(21,m_cusVideoBox5);
-    m_stackWidget_center->insertWidget(22,videoFindResult);//视频筛选结果
+    m_stackWidget_center->addWidget(m_videoMember);//会员视频
+    m_stackWidget_center->addWidget(m_webStackWgt);//浏览器
+    m_stackWidget_center->addWidget(m_mainVideoMv);//视频mv
+    m_stackWidget_center->addWidget(m_hotSearch);//热搜
+    m_stackWidget_center->addWidget(m_homeWidget);//推荐
+    m_stackWidget_center->addWidget(m_songerSort);//歌手排序
+    m_stackWidget_center->addWidget(m_rankList);//音乐排序
+    m_stackWidget_center->addWidget(m_songlistSort);//歌手筛选
+    m_stackWidget_center->addWidget(m_radioHost);//电台
+    m_stackWidget_center->addWidget(m_musicScene);//音乐场景
+    m_stackWidget_center->addWidget(m_vipMember);//vip会员
+    m_stackWidget_center->addWidget(m_musicShow);//显示歌词
+    m_stackWidget_center->addWidget(m_musicList);//歌曲列表
+    m_stackWidget_center->addWidget(m_personForm);//个人管理
+    m_stackWidget_center->addWidget(m_fileTrans);//文件传输
+    m_stackWidget_center->addWidget(m_tabWidget);//原始table界面
+    m_stackWidget_center->addWidget(m_cusVideoBox);
+    m_stackWidget_center->addWidget(m_cusVideoBox2);
+    m_stackWidget_center->addWidget(m_cusVideoBox3);
+    m_stackWidget_center->addWidget(m_cusVideoBox4);
+    m_stackWidget_center->addWidget(m_cusVideoBox5);
+    m_stackWidget_center->addWidget(videoFindResult);//视频筛选结果
     m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
 }
 

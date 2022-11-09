@@ -4,11 +4,12 @@
 #include <QObject>
 #include <QString>
 #include <QProcess>
+#include <QLibrary>
 #include <QHostInfo>
 #include <QApplication>
 #include <QNetworkConfigurationManager>
 
-
+typedef bool(*ConnectFun)(int* lpdwFlags, int  dwReserved);
 
 /*全局变量放在此处*/
 class Global : public QObject
@@ -20,11 +21,11 @@ public:
     static void         registerLAVplayer();//注册播放器
     static void         unRegisterLAVplayer();//卸载注册播放器
     bool                isNetWorkOnline();//判断是否在线
-    void                checkNetWorkOnline();//判断是都连接互联网
     static QString      readIni();//读取配置文件
     static void         setIni();
     static void         setIni_ungis();
     static bool         getRegisStatus();
+    static void         checkNetWorkOnline();//检查网络在线
 
 public:
     //声明共有静态变量

@@ -10,19 +10,25 @@
 #include "browser/WebDownLoadList.h"
 #include "customer/CusLineEdit.h"
 #include "titlebar/WatchRecords.h"
+#include "desktoplyric/toptooltips/DesktopTip1.h"
 
 #include <QMenu>
 #include <QPoint>
 #include <QTimer>
 #include <QMenu>
-#include <QWidgetAction>
 #include <QWidget>
+#include <QPixmap>
+#include <QLibrary>
 #include <QLineEdit>
+#include <QHostInfo>
 #include <QPushButton>
 #include <QMouseEvent>
-#include <QPixmap>
+#include <QWidgetAction>
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
+#include <QNetworkConfigurationManager>//网络配置管理类
+
+typedef bool(*ConnectFun)(int* lpdwFlags, int  dwReserved);
 
 namespace Ui {
 class TitleBar;
@@ -76,8 +82,12 @@ public slots:
 
 //私有槽函数，外部不能直接访问
 private slots:
+    void    onLookupHost(QHostInfo host);
     void    chandleMainWinStatus(bool status);
-    void    getSystemTimeShow();
+    void    getSystemTimeShow();//更新时间
+    void    checkCurrentNetworkStatus_method1();//检查当前网络状态 方法1
+    void    checkCurrentNetworkStatus_method2();//检查当前网络状态 方法2（不好使，检测结果比较慢，不及时）
+    void    checkCurrentNetworkStatus_method3();//检查当前网络状态 方法3
     void    setLineEditAddress(const QUrl url);
     void    showMySkin();//皮肤设置
     void    createHelpMenu();//帮助菜单
@@ -208,7 +218,9 @@ private:
     QString         m_headUrl;
     QPixmap         m_headPixmap;
     bool            m_signStatus;//登录状态，默认未未登录
+    bool            m_netStatus[2] = {false,false};//（前一刻）网络状态
     QNetworkAccessManager   *manager;
+    QNetworkConfigurationManager    *m_ncmgr = nullptr;
     QNetworkReply           *reply;
     Ui::TitleBar    *ui;
 };
