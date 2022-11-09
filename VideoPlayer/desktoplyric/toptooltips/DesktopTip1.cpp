@@ -1,6 +1,6 @@
 ﻿#include "DesktopTip1.h"
 #include "ui_DesktopTip1.h"
-
+#include <QSoundEffect>
 #include <QApplication>
 #include <QScreen>
 #include <QDebug>
@@ -39,6 +39,14 @@ DesktopTip1::~DesktopTip1()
 
 void DesktopTip1::showTip(const QStringList &texts, int timeout)
 {
+//    QSoundEffect *effect = new QSoundEffect;
+//    effect->setSource(QUrl::fromLocalFile(":/audio/browser/finished.wav"));
+//    effect->setLoopCount(1);  //循环次数
+//    effect->setVolume(1.00f); //音量  0~1之间
+//    effect->play();
+//    delete effect;
+//    effect = nullptr;
+
     if(!instance)
     {
         //仅在ui线程
@@ -49,10 +57,19 @@ void DesktopTip1::showTip(const QStringList &texts, int timeout)
     instance->setWindowModality(Qt::WindowModal);
     instance->setTextList(texts);
     instance->showAnimation();
+
 }
 
 void DesktopTip1::keepTip(const QStringList &texts)
 {
+//    QSoundEffect *effect = new QSoundEffect;
+//    effect->setSource(QUrl::fromLocalFile(":/audio/browser/finished.wav"));
+//    effect->setLoopCount(1);  //循环次数
+//    effect->setVolume(1.00f); //音量  0~1之间
+//    effect->play();
+//    delete effect;
+//    effect = nullptr;
+
     if(!instance)
     {
         //仅在ui线程
@@ -63,6 +80,7 @@ void DesktopTip1::keepTip(const QStringList &texts)
     instance->setWindowModality(Qt::WindowModal);
     instance->setTextList(texts);
     instance->keepAnimation();
+
 }
 
 void DesktopTip1::hideTip()

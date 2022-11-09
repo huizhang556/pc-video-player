@@ -21,9 +21,10 @@ public:
     static void         registerLAVplayer();//注册播放器
     static void         unRegisterLAVplayer();//卸载注册播放器
     bool                isNetWorkOnline();//判断是否在线
-    static QString      readIni();//读取配置文件
-    static void         setIni();
-    static void         setIni_ungis();
+    static QString      readIni_exit();//读取配置文件（退出窗口）
+    static QString      readIni_regis();//读取配置文件(播放器注册状态)
+    static void         setIni_exit(bool on);//设置配置文件（退出窗口）
+    static void         setIni_ungis(bool on);
     static bool         getRegisStatus();
     static void         checkNetWorkOnline();//检查网络在线
 

@@ -85,9 +85,9 @@ private slots:
     void    onLookupHost(QHostInfo host);
     void    chandleMainWinStatus(bool status);
     void    getSystemTimeShow();//更新时间
+    void    checkCurrentNetworkStatus_method0();//首次初始化网络状态
     void    checkCurrentNetworkStatus_method1();//检查当前网络状态 方法1
     void    checkCurrentNetworkStatus_method2();//检查当前网络状态 方法2（不好使，检测结果比较慢，不及时）
-    void    checkCurrentNetworkStatus_method3();//检查当前网络状态 方法3
     void    setLineEditAddress(const QUrl url);
     void    showMySkin();//皮肤设置
     void    createHelpMenu();//帮助菜单

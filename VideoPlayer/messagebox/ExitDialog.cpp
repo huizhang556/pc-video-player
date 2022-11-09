@@ -106,10 +106,8 @@ ExitDialog::~ExitDialog()
 /*读取配置文件值*/
 QString ExitDialog::readIni() const
 {
-    QSettings *pSet = new QSettings(m_iniPath,QSettings::IniFormat);
-    QString statusValue = pSet->value("/check_status/status").toString();
-    delete pSet;
-    return statusValue;
+//    qDebug() << QString(u8"读取到勾选退出窗口值：")<<Global::readIni_exit();
+   return Global::readIni_exit();
 }
 
 /*设置配置文件值*/
@@ -118,10 +116,7 @@ void ExitDialog::setIni()
     //只有被沟上，才将配置文件设为1
     if(ui->checkBox->isChecked())
     {
-        QSettings *pSet = new QSettings(m_iniPath,QSettings::IniFormat);
-        pSet->setValue("/check_status/status","0");
-        delete pSet;
-        pSet = NULL;
+       Global::setIni_exit(false);
     }
 
 }

@@ -1603,13 +1603,20 @@ void MainWidget::closeEvent(QCloseEvent *event)
         {
             m_pExitDlg->setCloseText(QString::fromLocal8Bit("您确定要退出软件吗？"));
         }
-    }
         m_pExitDlg->exec();
-     if(!m_isClose)
+    }
+    else
+    {
+        //没有退出界面提示，什么也不保存
+        m_isClose = true;//模拟点击确定按钮事件
+    }
+
+    //以下流程在有界面的情况下才执行
+     if(!m_isClose)//取消
      {
          event->ignore();
      }
-     else
+     else//确定退出 m_isClose = true
      {
          /*做一些数据保存*/
          emit sig_startCloseAppliction();

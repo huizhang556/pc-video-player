@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     {
         qDebug() << QString::fromLocal8Bit("播放器还未注册！");
         Global::registerLAVplayer();
-        Global::setIni();
+        Global::setIni_ungis(true);//设置播放器为注册状态
     }
     else
     {

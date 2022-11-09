@@ -114,7 +114,7 @@ void Global::unRegisterLAVplayer()
     {
         qDebug() << QString::fromLocal8Bit("卸载video失败！");
     }
-    setIni_ungis();//注册状态恢复为 0
+    setIni_ungis(false);//注册状态恢复为 0
 }
 
 //判断是否有网络连接（不一定能上网）
@@ -146,8 +146,18 @@ void Global::checkNetWorkOnline()
 //    }
 }
 
-//读取注册状态
-QString Global::readIni()
+//读取注册状态(退出)
+QString Global::readIni_exit()
+{
+    QSettings *set = new QSettings(appDirPath + "/config/config.ini",QSettings::IniFormat);
+    QString statusValue = set->value("/check_status/status").toString();
+    delete set;
+    set = nullptr;
+    return statusValue;
+}
+
+//播放器注册状态
+QString Global::readIni_regis()
 {
     QSettings *set = new QSettings(appDirPath + "/config/config.ini",QSettings::IniFormat);
     QString statusValue = set->value("/regis_status/status").toString();
@@ -156,30 +166,36 @@ QString Global::readIni()
     return statusValue;
 }
 
-//写入注册状态
-void Global::setIni()
+//写入注册状态（退出）
+void Global::setIni_exit(bool on)
 {
     QSettings *set = new QSettings(appDirPath + "/config/config.ini",QSettings::IniFormat);
-    set->setValue("/regis_status/status","1");
+    if(on)
+    set->setValue("/check_status/status","1");
+    else
+    set->setValue("/check_status/status","0");
     delete set;
     set = nullptr;
 }
 
-void Global::setIni_ungis()
+void Global::setIni_ungis(bool on)
 {
     QSettings *set = new QSettings(appDirPath + "/config/config.ini",QSettings::IniFormat);
+    if(!on)
     set->setValue("/regis_status/status","0");
+    else
+    set->setValue("/regis_status/status","1");
     delete set;
     set = nullptr;
 }
 
 bool Global::getRegisStatus()
 {
-    if(readIni() == "1")//1 已经注册
+    if(readIni_regis() == "1")//1 已经注册
     {
         return true;
     }
-    else if(readIni() == "0")//0 未注册
+    else if(readIni_regis() == "0")//0 未注册
     {
         return false;
     }

@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>audio/browser/finished.wav</file>
         <file>audio/browser/completed.wav</file>
+        <file>audio/player/tooltips.wav</file>
     </qresource>
 </RCC>

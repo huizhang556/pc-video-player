@@ -824,6 +824,8 @@ void DownLoadItem::slot_receive_finished()
     ui->stackedWidget_progressbar->setCurrentIndex(1);
     ui->stackedWidget_control->setCurrentIndex(1);
 //    qDebug() << QString::fromLocal8Bit("文件下载已完成！");
+    delete effect;
+    effect = nullptr;
 }
 
 void DownLoadItem::slot_receive_openDir(bool open)
