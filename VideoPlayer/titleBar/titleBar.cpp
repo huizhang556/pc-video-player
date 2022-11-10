@@ -1471,14 +1471,14 @@ void TitleBar::checkCurrentNetworkStatus_method0()
     //检查网络状态
     if(!m_ncmgr->isOnline())//如果首次网络就不在线
     {
-        qDebug() << QString(u8"网络连接异常");
-        DesktopTip1::showTip(QStringList(u8"网络断连接异常，请检查网络！"),5);
+//        qDebug() << QString(u8"网络连接异常");
+        DesktopTip1::showTip(QStringList(u8"网络连接异常，请检查网络！"),5);
         m_netStatus[1] = true;
         m_netStatus[0] = false;
     }
     else
     {
-        qDebug() << QString(u8"网络连接正常");
+//        qDebug() << QString(u8"网络连接正常");
         m_netStatus[0] = true;
         m_netStatus[1] = false;
     }
@@ -1521,20 +1521,20 @@ void TitleBar::checkCurrentNetworkStatus_method1()
         bOnline = myConnectFun(&flags, 0);
         if(bOnline)
         {
-            qDebug() << QString(u8"网络连接正常");
+//            qDebug() << QString(u8"网络连接正常");
             if(!m_netStatus[0])
             {
-                DesktopTip1::showTip(QStringList(u8"网络已恢复！"),5);
+                DesktopTip1::showTip(QStringList(u8"网络连接已恢复！"),5);
                 m_netStatus[0] = true;
                 m_netStatus[1] = false;
             }
         }
         else
         {
-            qDebug() << QString(u8"网络连接异常");
+//            qDebug() << QString(u8"网络连接异常");
             if(!m_netStatus[1])
             {
-                DesktopTip1::showTip(QStringList(u8"网络失去连接，请检查网络!"),5);
+                DesktopTip1::showTip(QStringList(u8"网络连接异常，请检查网络!"),5);
                 m_netStatus[1] = true;
                 m_netStatus[0] = false;
             }

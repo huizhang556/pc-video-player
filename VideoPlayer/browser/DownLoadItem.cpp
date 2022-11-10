@@ -816,7 +816,10 @@ void DownLoadItem::slot_receive_finished()
 //    QSoundEffect *sound = new QSoundEffect(":/audio/browser/finished.wav",this);
 //    sound->setLoops(1);//循环次数
 //    sound->play();
-    QSoundEffect *effect = new QSoundEffect;
+    //使用QSoundEffect注意事项
+    //1.文件格式只支持wav，且文件大小低于100kb
+    //2.不能使用临时变量且不得delete
+    QSoundEffect *effect = new QSoundEffect(this);
     effect->setSource(QUrl::fromLocalFile(":/audio/browser/finished.wav"));
     effect->setLoopCount(1);  //循环次数
     effect->setVolume(0.25f); //音量  0~1之间
@@ -824,8 +827,6 @@ void DownLoadItem::slot_receive_finished()
     ui->stackedWidget_progressbar->setCurrentIndex(1);
     ui->stackedWidget_control->setCurrentIndex(1);
 //    qDebug() << QString::fromLocal8Bit("文件下载已完成！");
-    delete effect;
-    effect = nullptr;
 }
 
 void DownLoadItem::slot_receive_openDir(bool open)

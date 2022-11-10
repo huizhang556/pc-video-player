@@ -2,6 +2,7 @@
 #define DESKTOPTIP1_H
 
 #include <QWidget>
+#include <QSoundEffect>
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
 #include <QTimer>
@@ -72,7 +73,6 @@ private:
     Ui::DesktopTip1 *ui;
     //唯一实例
     static DesktopTip1      *instance;
-
     //动画设置
      static AnimationMode   mode;
     //动画组

@@ -23,6 +23,7 @@
 #include <QHostInfo>
 #include <QPushButton>
 #include <QMouseEvent>
+#include <QSoundEffect>
 #include <QWidgetAction>
 #include <QNetworkReply>
 #include <QNetworkAccessManager>

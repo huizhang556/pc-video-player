@@ -39,13 +39,11 @@ DesktopTip1::~DesktopTip1()
 
 void DesktopTip1::showTip(const QStringList &texts, int timeout)
 {
-//    QSoundEffect *effect = new QSoundEffect;
-//    effect->setSource(QUrl::fromLocalFile(":/audio/browser/finished.wav"));
-//    effect->setLoopCount(1);  //循环次数
-//    effect->setVolume(1.00f); //音量  0~1之间
-//    effect->play();
-//    delete effect;
-//    effect = nullptr;
+    QSoundEffect    *effect = new QSoundEffect();
+    effect->setSource(QUrl::fromLocalFile(":/audio/player/tooltips.wav"));
+    effect->setLoopCount(1);  //循环次数
+    effect->setVolume(0.30f); //音量  0~1之间
+    effect->play();
 
     if(!instance)
     {
@@ -57,18 +55,20 @@ void DesktopTip1::showTip(const QStringList &texts, int timeout)
     instance->setWindowModality(Qt::WindowModal);
     instance->setTextList(texts);
     instance->showAnimation();
-
+    //延迟删除
+    QTimer::singleShot(1000,0,[=](){
+        qDebug() << QString(u8"showTip delete effect");
+        delete effect;
+    });
 }
 
 void DesktopTip1::keepTip(const QStringList &texts)
 {
-//    QSoundEffect *effect = new QSoundEffect;
-//    effect->setSource(QUrl::fromLocalFile(":/audio/browser/finished.wav"));
-//    effect->setLoopCount(1);  //循环次数
-//    effect->setVolume(1.00f); //音量  0~1之间
-//    effect->play();
-//    delete effect;
-//    effect = nullptr;
+    QSoundEffect    *effect = new QSoundEffect();
+    effect->setSource(QUrl::fromLocalFile(":/audio/player/tooltips.wav"));
+    effect->setLoopCount(1);  //循环次数
+    effect->setVolume(0.30f); //音量  0~1之间
+    effect->play();
 
     if(!instance)
     {
@@ -80,7 +80,11 @@ void DesktopTip1::keepTip(const QStringList &texts)
     instance->setWindowModality(Qt::WindowModal);
     instance->setTextList(texts);
     instance->keepAnimation();
-
+    //延迟删除
+    QTimer::singleShot(1000,0,[=](){
+        delete effect;
+        qDebug() << QString(u8"Keeptip delete effect");
+    });
 }
 
 void DesktopTip1::hideTip()
