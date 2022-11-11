@@ -96,16 +96,21 @@ void CusStackWidget::initWorkUI()
 
 void CusStackWidget::handleSignalsAndSlots()
 {
+    //全局定时器
+    connect(Global::getInstance(),&Global::sig_sendGlobalTimeOut,[=](){
+        m_buttonAdd->click();//模拟右加按钮
+    });
+
     connect(m_buttonGroup,SIGNAL(buttonClicked(QAbstractButton*)),this,SLOT(slot_setCheckButton(QAbstractButton*)));
 
     //左移(向左减少)
     connect(m_buttonSub,&QPushButton::clicked,[=](){
-        qDebug() << QString(u8"当前索引：")<<m_currentIndex;
+//        qDebug() << QString(u8"当前索引：")<<m_currentIndex;
         if(--m_currentIndex < 0)
         {
             m_currentIndex = 0;
         }
-        qDebug() << QString(u8"当前索引：")<<m_currentIndex;
+//        qDebug() << QString(u8"当前索引：")<<m_currentIndex;
         this->setCurrentIndex(m_currentIndex);
         m_buttonGroup->button(m_currentIndex)->setChecked(true);
         updateButtonGeometry();
@@ -113,10 +118,10 @@ void CusStackWidget::handleSignalsAndSlots()
 
     //右移（向右增加）
     connect(m_buttonAdd,&QPushButton::clicked,[=](){
-        qDebug() << QString(u8"当前索引：")<<m_currentIndex << QString(u8"this->count():")<<this->count();
-        if(++m_currentIndex > 9)
+//        qDebug() << QString(u8"当前索引：")<<m_currentIndex << QString(u8"this->count():")<<this->count();
+        if(++m_currentIndex > this->count()-1)
         {
-            m_currentIndex = 9;
+            m_currentIndex = 0;
         }
         m_buttonGroup->button(m_currentIndex)->setChecked(true);
         this->setCurrentIndex(m_currentIndex);

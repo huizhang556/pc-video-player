@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1178</width>
+    <width>1365</width>
     <height>60</height>
    </rect>
   </property>
@@ -613,6 +613,54 @@ padding:-1px;
                   <property name="sizeHint" stdset="0">
                    <size>
                     <width>50</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_flush">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>20</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton
+{
+background-color: transparent;
+border-image: url(:/images/icon/refreshen.png);
+}
+
+QPushButton:hover
+{
+border-image: url(:/images/icon/refreshen_hover.png);
+border: 1px solid #3C80B1;
+}</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_29">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Minimum</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>25</width>
                     <height>20</height>
                    </size>
                   </property>

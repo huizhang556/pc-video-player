@@ -84,7 +84,8 @@ background-color: transparent;
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">#pushButton_videoInfo
+    <string notr="true">
+#pushButton_videoInfo
 {
 font-size: 13px;
 color: #e6e9f0;
@@ -103,8 +104,7 @@ text-decoration:underline;
 #pushButton_videoInfo::checked
 {
 color: #ff4335;
-}
-</string>
+}</string>
    </property>
    <property name="text">
     <string/>

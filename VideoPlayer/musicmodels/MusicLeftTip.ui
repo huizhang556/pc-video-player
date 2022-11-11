@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MusicLeftTip</class>
+ <widget class="QWidget" name="MusicLeftTip">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>233</width>
+    <height>360</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>200</width>
+    <height>360</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>2</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>2</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QListWidget" name="listWidget_proSet">
+     <property name="styleSheet">
+      <string notr="true">QListWidget
+{
+border:none;
+color: white;
+font: 800 16px &quot;微软雅黑&quot;;
+background-color: rgba(37, 49, 65,0.3);
+}
+
+QListWidget::item
+{
+border: 0px solid rgba(132, 130, 135,0.5);
+border-bottom-width: 0px;
+background-color: transparent;
+}
+
+QListWidget::item:hover
+{
+color:#ff0000;
+background-color: rgba(37, 49, 65,0.5);
+}
+
+QListWidget::item:selected
+{
+background-color: rgba(37, 49, 65,0.5);
+}
+
+QListWidget::item:selected:!active
+{
+color: white;
+}</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

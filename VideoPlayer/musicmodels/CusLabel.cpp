@@ -8,6 +8,7 @@
 CusLabel::CusLabel(QWidget *parent) :
     QLabel(parent),
     m_pos(0),
+    m_font("Microsoft YaHei",23,75),
     ui(new Ui::CusLabel)
 {
     ui->setupUi(this);
@@ -27,7 +28,7 @@ void CusLabel::initWorkUI()
     ui->plainTextEdit->setReadOnly(true);//只读模式
     ui->plainTextEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->plainTextEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
+    ui->plainTextEdit->setFont(m_font);
     ui->plainTextEdit->document()->setDefaultTextOption(QTextOption(Qt::AlignCenter));//设置字体居中显示
 }
 
@@ -37,6 +38,23 @@ void CusLabel::chandleSinalsAndSlots()
         m_pos++;
         slot_setCurPosition(m_pos);
     });
+}
+
+void CusLabel::setCurrentTextFontSize(int size)
+{
+//    qDebug() << QString(u8"接收到的字体大小：")<<size;
+    m_font.setPointSize(size);
+    ui->plainTextEdit->setFont(m_font);
+}
+
+void CusLabel::setCurrentTextFontColor(const QString &color)
+{
+//    qDebug() << QString(u8"接收到的字体颜色：")<<color;
+//    m_palette.setColor(QPalette::Text,m_color);
+//    ui->plainTextEdit->setPalette(m_palette);
+    //测试采用样式才会生效
+    QString style = QString("#plainTextEdit{border:none;background-color: transparent;font-weight:800; color:rgb(%1);}").arg(color);
+    ui->plainTextEdit->setStyleSheet(style);
 }
 
 void CusLabel::slot_setCurPosition(int pos)

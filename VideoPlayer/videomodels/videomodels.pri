@@ -17,7 +17,8 @@ SOURCES += \
     $$PWD/RecVideoItem.cpp \
     $$PWD/VideoClarity.cpp \
     $$PWD/Danmu.cpp \
-    $$PWD/DanmuSetting.cpp
+    $$PWD/DanmuSetting.cpp \
+    $$PWD/MediaItem.cpp
 
 
 HEADERS += \
@@ -39,7 +40,8 @@ HEADERS += \
     $$PWD/RecVideoItem.h \
     $$PWD/VideoClarity.h \
     $$PWD/Danmu.h \
-    $$PWD/DanmuSetting.h
+    $$PWD/DanmuSetting.h \
+    $$PWD/MediaItem.h
 
 
 FORMS += \
@@ -58,7 +60,8 @@ FORMS += \
     $$PWD/FloatPlayCtl.ui \
     $$PWD/RecVideoItem.ui \
     $$PWD/VideoClarity.ui \
-    $$PWD/DanmuSetting.ui
+    $$PWD/DanmuSetting.ui \
+    $$PWD/MediaItem.ui
 
 #添加库文件
 #LIBS += -L ../lib/lib -luser32

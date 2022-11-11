@@ -41,6 +41,7 @@ void CusVerStackWgt::initWorkUI()
         connect(itemWidget,&CusListItem1::sig_itemEnter,[=](){
             m_rightListWidget->setCurrentItem(item);
             this->setCurrentIndex(m_rightListWidget->row(item));
+            m_currentIndex = m_rightListWidget->currentRow();
             updateListWidgetGeometry();
         });
 
@@ -61,15 +62,27 @@ void CusVerStackWgt::handleSignalsAndSlots()
 //    });
 
 
+    connect(Global::getInstance(),&Global::sig_sendGlobalTimeOut,[=](){
+        if(++m_currentIndex > m_rightListWidget->count() - 1)
+        {
+            m_currentIndex = 0;
+        }
+        m_rightListWidget->setCurrentRow(m_currentIndex);
+        getItemStackWgt(m_rightListWidget->item(m_currentIndex),"stackedWidget_switch")->setCurrentIndex(1);
+        this->setCurrentIndex(m_currentIndex);
+        updateListWidgetGeometry();
+    });
+
+
     connect(m_rightListWidget,&QListWidget::currentItemChanged,[=](QListWidgetItem *current,QListWidgetItem *previous){
         if(previous != nullptr)
         {
-            qDebug() << QString::fromLocal8Bit("先前的item：")<<previous->text();
+//            qDebug() << QString::fromLocal8Bit("先前的item：")<<previous->text();
             getItemStackWgt(previous,"stackedWidget_switch")->setCurrentIndex(0);
         }
         if(current != nullptr)
         {
-            qDebug() << QString::fromLocal8Bit("现在的item:")<<current->text();
+//            qDebug() << QString::fromLocal8Bit("现在的item:")<<current->text();
             getItemStackWgt(current,"stackedWidget_switch")->setCurrentIndex(1);
         }
     });

@@ -1,6 +1,8 @@
 ﻿#include "MySkin.h"
 #include "ui_MySkin.h"
+
 #include <QListWidgetItem>
+#include <QDebug>
 
 MySkin::MySkin(QWidget *parent) :
     QDialog(parent),
@@ -88,6 +90,12 @@ void MySkin::initWorkUI()
         connect(skitem,&MySkinItem::sig_checkedStatus,[=](bool checkStatus){
             ui->listWidget_desktop->setCurrentItem(item);
         });
+        //移除item
+        connect(skitem,&MySkinItem::sig_closewindow,[=](){
+            skitem->deleteLater();
+            ui->listWidget_desktop->takeItem(ui->listWidget_desktop->row(item));
+            delete item;
+        });
     }
 
     //主题皮肤
@@ -99,6 +107,12 @@ void MySkin::initWorkUI()
         item->setSizeHint(QSize(250,160));//给skitem 宽高 留出位置20px
         ui->listWidget_zhuti->addItem(item);
         ui->listWidget_zhuti->setItemWidget(item,skitem);
+        //移除item
+        connect(skitem,&MySkinItem::sig_closewindow,[=](){
+            skitem->deleteLater();
+            ui->listWidget_zhuti->takeItem(ui->listWidget_zhuti->row(item));
+            delete item;
+        });
     }
 
     //背景皮肤
@@ -110,6 +124,12 @@ void MySkin::initWorkUI()
         item->setSizeHint(QSize(250,160));
         ui->listWidget_yuzhi->addItem(item);
         ui->listWidget_yuzhi->setItemWidget(item,skitem);
+        //移除item
+        connect(skitem,&MySkinItem::sig_closewindow,[=](){
+            skitem->deleteLater();
+            ui->listWidget_yuzhi->takeItem(ui->listWidget_yuzhi->row(item));
+            delete item;
+        });
     }
 
     //自己皮肤
@@ -121,6 +141,12 @@ void MySkin::initWorkUI()
         item->setSizeHint(QSize(250,160));
         ui->listWidget_custom->addItem(item);
         ui->listWidget_custom->setItemWidget(item,skitem);
+        //移除item
+        connect(skitem,&MySkinItem::sig_closewindow,[=](){
+            skitem->deleteLater();
+            ui->listWidget_custom->takeItem(ui->listWidget_custom->row(item));
+            delete item;
+        });
     }
 }
 
@@ -212,12 +238,12 @@ void MySkin::setItemChangedStyle(QListWidget *listWidget, QListWidgetItem *curre
     qDebug() <<"item changed enter";
     if(previous != nullptr)
     {
-        qDebug() << QString::fromLocal8Bit("先前的item：")<<previous->text();
+//        qDebug() << QString::fromLocal8Bit("先前的item：")<<previous->text();
         getListWidgetItemButton(listWidget,previous,"m_skinCheckedBtn")->setChecked(false);
     }
     if(current != nullptr)
     {
-        qDebug() << QString::fromLocal8Bit("现在的item:")<<current->text();
+//        qDebug() << QString::fromLocal8Bit("现在的item:")<<current->text();
         getListWidgetItemButton(listWidget,current,"m_skinCheckedBtn")->setChecked(true);
     }
 

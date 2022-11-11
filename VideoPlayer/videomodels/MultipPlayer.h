@@ -2,11 +2,12 @@
 #define MULTIPPLAYER_H
 
 #define MARWIDTH 2 //窗口边距,进过测试最小需要2px
-#define LEFTWIDTH   260
+#define LEFTWIDTH   280
 
 #include "network/MyHttp.h"
 #include "database/dataBase.h"
 #include "videomodels/Danmu.h"
+#include "videomodels/MediaItem.h"
 #include "videomodels/VideoBlank.h"
 #include "videomodels/muteDialog.h"
 #include "videomodels/CommentTab.h"
@@ -24,6 +25,7 @@
 #include "videomodels/VideoProgressBar.h"
 #include "fileshandle/DownloadType.h"
 #include "mainwidget/vipmember/BuyVip.h"
+#include "desktoplyric/toplyric/DesktopLyric.h"
 
 #include <QMap>
 #include <QMenu>
@@ -130,8 +132,6 @@ public slots:
     void    slot_setDanmuOpenClose(bool on);//设置弹幕开关
 
     void    slot_sendDanmuTextToScreen(QString danmuText);//发送弹幕
-
-    void    slot_loadFileInfoToWinTitle(int index);//标题栏显示视频名称
 
     void    slot_findFileFromLineEdit( QString name);//浮动曲库查找搜索内容
 

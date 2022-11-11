@@ -157,7 +157,7 @@ void MultipPlayer::initMainWindow()
     ui->stackedWidget->insertWidget(1,videoWidget);
     ui->stackedWidget->insertWidget(2,m_musicUi);
     ui->stackedWidget->setCurrentIndex(0);//默认显示空白界面
-    ui->stackedWidget->setMinimumSize(760,555);//必须设置最小尺寸，否则播放控制栏位置不正确
+    ui->stackedWidget->setMinimumSize(700,555);//必须设置最小尺寸，否则播放控制栏位置不正确
 
     //我的歌单（暂时）
     m_listWisget1 = new QListWidget;
@@ -203,13 +203,13 @@ void MultipPlayer::initMainWindow()
 
 
     m_lineEdit = new QLineEdit;//曲库列表搜索框
-    m_lineEdit->setObjectName(QString::fromLocal8Bit("m_lineEdit"));
+    m_lineEdit->setObjectName(QString::fromLocal8Bit("m_lineEdit_player"));
     m_lineEdit->setMinimumWidth(200);
     m_lineEdit->setFixedHeight(30);
     m_lineEdit->installEventFilter(this);
 
     m_searchBtn = new QPushButton;//曲库列表搜索按钮
-    m_searchBtn->setObjectName(QString::fromLocal8Bit("m_searchBtn"));
+    m_searchBtn->setObjectName(QString::fromLocal8Bit("m_searchBtn_player"));
     m_searchBtn->setFixedSize(33,30);
 
     m_hLayout = new QHBoxLayout();
@@ -230,7 +230,7 @@ void MultipPlayer::initMainWindow()
     //添加抽屉
     m_toolBox = new QToolBox;
     m_toolBox->setFixedWidth(LEFTWIDTH);
-    m_toolBox->setObjectName(QString::fromLocal8Bit("m_toolBox_list)"));
+    m_toolBox->setObjectName(QString::fromLocal8Bit("m_toolBox_list"));
 
     QIcon icon_playlist(":/images/icon/playerlist.png");
     QIcon icon_musiclist(":/images/icon/musiclist.png");
@@ -492,12 +492,12 @@ void MultipPlayer::handleSignalAndSLots()
         m_player->setVolume(value);
         if(value != 0)
         {
-            qDebug() << "value != 0";
+//            qDebug() << "value != 0";
             ui->pushButton_sound->setIcon(QIcon(":/images/icon/yingling.png"));
         }
         else
         {
-            qDebug() << "value == 0";
+//            qDebug() << "value == 0";
             ui->pushButton_sound->setIcon(QIcon(":/images/icon/jingyin.png"));
         }
     });
@@ -875,20 +875,20 @@ bool MultipPlayer::fileType(QStringList &filenames, int index)
 /*判断文件类型2*/
 bool MultipPlayer::fileType(int index)
 {
-    QString filename = m_mapList2[index];
-    m_curMediaName = filename;
-    bool mp3 = filename.endsWith(QString::fromLocal8Bit(".mp3"),Qt::CaseInsensitive);//判断是否以.mp3结尾，去除大小写敏感
+//    QString filename = m_mapList2[index];
+    m_curMediaName = m_listWisget2->item(index)->text();
+    bool mp3 = m_curMediaName.endsWith(QString::fromLocal8Bit(".mp3"),Qt::CaseInsensitive);//判断是否以.mp3结尾，去除大小写敏感
     if(mp3)
     {
         //音乐显示3，音乐界面
-        emit sig_sendSwitchToMusicPage(filename);
+        emit sig_sendSwitchToMusicPage(m_curMediaName);
         ui->stackedWidget->setCurrentIndex(2);
         return true;//这里true代表以.mp3结尾的文件
     }
     else
     {
         //视屏显示4，视屏界面
-        emit sig_sendSwitchToMusicPage(filename);
+        emit sig_sendSwitchToMusicPage(m_curMediaName);
         ui->stackedWidget->setCurrentIndex(1);
         return false;//这里false代表非.mp3结尾的文件，默认为视频文件
     }
@@ -1003,72 +1003,77 @@ void MultipPlayer::addFileToList(const QStringList &strList)
         QString path = strList.at(i);//文件绝对路径
         QFileInfo fileInfo(path);
         QString name = fileInfo.fileName();//文件名称
-        qDebug()<<"file name = "<<name;
+//        qDebug()<<"file name = "<<name;
         QString fileSuffix = fileInfo.suffix();//文件后缀
-        qDebug()<<"file suffix = "<<fileSuffix;
+//        qDebug()<<"file suffix = "<<fileSuffix;
 //        QString fullname = path.split(".").last();//文件名称,此法也可行
 //        qDebug() << "fullname = " << fullname;
         m_mapList.insert(i,path);//存储路径
         m_mapList2.insert(i,name);//存储歌名带后缀
 
 
-        QIcon btnIcon1(":/images/icon/video.png");//视频
-        QIcon btnIcon2(":/images/icon/mp3.png");//音乐
+        QString btnIcon1 = QString(":/images/icon/video.png");//视频
+        QString btnIcon2 = QString(":/images/icon/mp3.png");//音乐
 
-        QListWidgetItem *pItem = nullptr;
+        QListWidgetItem *pItem  = nullptr;
+        MediaItem   *itemWidget = nullptr;
 
         //判断一下文件类型，加载不同图标
         if(fileSuffix == "mp4")//返回的是mp4,而非 .mp4
         {
-            pItem = new QListWidgetItem(btnIcon1,name);
+            pItem = new QListWidgetItem(name);
+            itemWidget = new MediaItem(name,btnIcon1,name,false);
         }
         else if(fileSuffix == "mp3")
         {
-            pItem = new QListWidgetItem(btnIcon2,name);
+            pItem = new QListWidgetItem(name);
+            itemWidget = new MediaItem(name,btnIcon2,name,false);
         }
         else if(fileSuffix == "flv")
         {
-            pItem = new QListWidgetItem(btnIcon1,name);
+            pItem = new QListWidgetItem(name);
+            itemWidget = new MediaItem(name,btnIcon1,name,false);
+        }
+        else if(fileSuffix == "aac")
+        {
+            pItem = new QListWidgetItem(name);
+            itemWidget = new MediaItem(name,btnIcon2,name,false);
         }
         else//后面有需要还可以添加文件类型判断
         {
-            pItem = new QListWidgetItem(btnIcon1,name);
+            pItem = new QListWidgetItem(name);
+            itemWidget = new MediaItem(name,btnIcon1,name,false);
         }
 
-        pItem->setToolTip(name);
 //        pItem->setCheckState(Qt::Unchecked);//未选中
         pItem->setSizeHint(QSize(180,30));//每个item与整体空间宽度一致,效果不理想，需要在样式中设置
+        pItem->setToolTip(name);
+        m_listWisget2->addItem(pItem);
+        m_listWisget2->setItemWidget(pItem,itemWidget);
+        //关于item的信号与槽函数
+        connect(itemWidget,&MediaItem::sig_media_collect,[=](){
+            addCurrentMediaToList_Collect(m_listWisget3,pItem->text());
+        });
 
-//        QWidget *w = new QWidget;
-//        QHBoxLayout *layout = new QHBoxLayout;
+        connect(itemWidget,&MediaItem::sig_media_download,[=](){
+            qDebug() << QString(u8"当前item的row = ")<< m_listWisget2->row(pItem);
+            DownloadType::getInstance()->showDownloadForm(1,pItem->text());
+        });
 
-//        QPushButton *pushButton1 = new QPushButton(btnIcon1,QString::fromLocal8Bit("%1.").arg(i+1) + name, w);
-//        pushButton1->setFixedHeight(30);
-//        pushButton1->setFixedWidth(170);
-//        pushButton1->setAttribute(Qt::WA_TransparentForMouseEvents,true);//设置鼠标穿透
-//        pushButton1->setFixedWidth(30);
-//        QIcon btnIcondelete(":/images/icon/itemdelete.png");
-//        QPushButton *pushButton2 = new QPushButton(btnIcondelete,QString::fromLocal8Bit("删除"),w);
-//        pushButton2->setFixedHeight(30);
-//        pushButton2->setFixedWidth(30);
-//        QIcon btnIcon3(":/images/icon/selection.png");
-//        QPushButton *pushButton3 = new QPushButton(btnIcon3,QString::fromLocal8Bit("收藏"),w);
-//        pushButton3->setFixedHeight(30);
-//        pushButton3->setFixedWidth(30);
-//        layout->addWidget(pushButton1);
-//        layout->addStretch(25);
-//        layout->addWidget(pushButton2);
-//        layout->addWidget(pushButton3);
-//        layout->addStretch(5);
-//        layout->setSpacing(0);
-//        w->setLayout(layout);
+        connect(itemWidget,&MediaItem::sig_media_delete,[=](){
+            qDebug() << QString(u8"删除的媒体索引：") << m_listWisget2->row(pItem);
+            m_mapList2.remove(m_listWisget2->row(pItem));//MAP容器删除后不自动排序
+            playlist->removeMedia(m_listWisget2->row(pItem));
+            qDebug() << QString(u8"删除后剩余的媒体数量：")<<playlist->mediaCount();
+            itemWidget->deleteLater();
+            m_listWisget2->takeItem(m_listWisget2->row(pItem));
+            delete pItem;
+        });
 
         QSqlQuery query(dataBase::getSqlDataBase());
         //加上用户id
         query.exec(QString("insert into localmusic values(%1,'%2','%3','%4')").arg(0).arg(name).arg(path).arg((QString::fromLocal8Bit("高音品质"))));
         qDebug()<<"localmusic one data insert successful!";
-
-        m_listWisget2->addItem(pItem);
     }
     emit sig_sendToMusicList();//全部插入到数据库中，才可以通知音乐列表可以加载信息
     m_listWisget2->setCurrentRow(0);
@@ -1123,13 +1128,6 @@ void MultipPlayer::slot_itemDoubleClick(QListWidgetItem *item)
     m_player->setMedia(url);
 }
 
-void MultipPlayer::slot_loadFileInfoToWinTitle(int index)
-{
-        Q_UNUSED(index);
-//              QString path = m_mapList[index];
-//              qDebug()<<path;
-//              ui->label_title->setText(path);
-}
 
 /*第一次打开文件*/
 void MultipPlayer::on_pushButton_5_clicked()
@@ -1153,13 +1151,12 @@ void MultipPlayer::on_pushButton_5_clicked()
             addToPlaylist(playlist,m_fileNames);//1.添加进播放列表playlist
             addFileToList(m_fileNames);//2.媒体界面显示
             fileType(m_fileNames,0);//3.判断文件类型并作出界面反应
-            slot_loadFileInfoToWinTitle(0);//显示第1首歌的title
             ui->horizontalSlider->setEnabled(true);//滚动条
             m_lineEdit->setEnabled(true);//浮动输入框
             m_pTimer2->start(80);//加定时器给界面一个缓冲
             connect(m_pTimer2,&QTimer::timeout,[=](){
             //这里必须加一个定时器，以解决界面缓冲，是的界面来得及反应（主要是标题栏反应不过来）
-//                ui->stackedWidget->setCurrentIndex(2);//索引2,界面显示视频
+                ui->stackedWidget->setCurrentIndex(2);//索引2,界面显示视频
                 m_playerState = QMediaPlayer::PlayingState;
                 m_newStart = true;
             });
@@ -1206,7 +1203,7 @@ void MultipPlayer::on_pushButton_6_clicked()
 //            truncate不会激活与表有关的删除触发器；delete可以。
 //            truncate后会使表和索引所占用的空间会恢复到初始大小；delete操作不会减少表或索引所占用的空间，drop语句将表所占用的空间全释放掉。
 //            query.exec("delete from localmusic;");//sqlite
-            //sqlite不支持truncate清除主键自增id，只能手动清除id序列，使新数据id从0开始
+            //sqlite不支持truncate主键自增id，只能手动id序列，使新数据id从0开始
 //            query.exec("delete from sqlite_sequence where name = 'localmusic';");//sqlite
             query.exec("truncate table localmusic;");//mysql
             playlist->clear();
@@ -2073,10 +2070,10 @@ void MultipPlayer::adjust_aspectRatioMode(int index)
 void MultipPlayer::update_adjustBright()
 {
     //此处两个操作：01.videoWidget设置02.滑动条设置
-    videoWidget->setBrightness(videoWidget->brightness());qDebug() << "Brightness" <<videoWidget->brightness();
-    videoWidget->setSaturation(videoWidget->saturation());qDebug() << "Saturation"  << videoWidget->saturation();
-    videoWidget->setContrast(videoWidget->contrast());qDebug() << "Contrast"  <<videoWidget->contrast();
-    videoWidget->setHue(videoWidget->hue());qDebug() << "Hue"  <<videoWidget->hue();
+    videoWidget->setBrightness(videoWidget->brightness());
+    videoWidget->setSaturation(videoWidget->saturation());
+    videoWidget->setContrast(videoWidget->contrast());
+    videoWidget->setHue(videoWidget->hue());
 }
 
 void MultipPlayer::downloadInternetPathRecource()
@@ -2176,7 +2173,7 @@ bool MultipPlayer::findCollectListStatus(QListWidget *listdgt, QString name)
         qDebug() << line << "\n";
         if(name == line)
         {
-            qDebug() << "source = "<< name << "finded media" << "line =" << line;
+//            qDebug() << "source = "<< name << "finded media" << "line =" << line;
             return true;//循环当中找到了，直接返回true
         }
        row++;
@@ -2339,7 +2336,7 @@ void MultipPlayer::slot_createRight_playListTable(const QPoint &pos)
 //    playMenu->addAction(selectallAction);
     playMenu->addAction(collectAction);
     playMenu->addAction(clearAction);
-    playMenu->exec(m_listWisget2->mapToGlobal(pos));//deng同于playMenu->exec(this->mapToGlobal(m_listWisget2->mapToParent(pos)));
+    playMenu->exec(m_listWisget2->mapToGlobal(pos));//等同于playMenu->exec(this->mapToGlobal(m_listWisget2->mapToParent(pos)));
     delete playMenu;
     playMenu = nullptr;
 }
@@ -2719,24 +2716,30 @@ void MultipPlayer::setDanmuInfo(Danmu *danmu, const QString &color, const QFont 
 
 void MultipPlayer::slot_closeCurrentWindow()
 {
-    m_player->stop();//暂停播放
-    playlist->clear();//播放列表清空
-    m_mapList.clear();//清空容器
-    m_mapList2.clear();//清空容器
-    m_mapList_collect.clear();
-    m_mapList_history.clear();
-    ui->stackedWidget->setCurrentIndex(0);//空白页
-//    clearListWidgetList_user();
-    slot_clearListWidgetList_playlist();//播放列表清空
-    slot_clearListWidgetList_collection();//收藏列表清空
-    slot_clearListWidgetList_history();//历史列表清空
-    slot_clearUserInputSearchInfo();//登陆列表以往输入的信息清空
-    if(VideoProgressBar::getInstance())
+    //桌面歌词显示的情况下不关闭（或者有歌曲视频播放的情况下）
+    if(DesktopLyric::getInstance())
     {
-        VideoProgressBar::getInstance()->close();
+        this->hide();//只是隐藏起来
     }
-    slot_clearAllPopupUi();//清空未关闭在界面上的
-    emit sig_mainPlayerClose();//主界面处理内存删除
+    else
+    {
+        m_player->stop();//暂停播放
+        playlist->clear();//播放列表清空
+        m_mapList.clear();//清空容器
+        m_mapList2.clear();//清空容器
+        m_mapList_collect.clear();
+        m_mapList_history.clear();
+        ui->stackedWidget->setCurrentIndex(0);//空白页
+        //    clearListWidgetList_user();
+        slot_clearListWidgetList_playlist();//播放列表清空
+        slot_clearListWidgetList_collection();//收藏列表清空
+        slot_clearListWidgetList_history();//历史列表清空
+        slot_clearUserInputSearchInfo();//登陆列表以往输入的信息清空
+        slot_clearAllPopupUi();//清空未关闭在界面上的
+        emit sig_mainPlayerClose();//主界面处理内存删除
+    }
+    if(VideoProgressBar::getInstance())
+        VideoProgressBar::getInstance()->close();
 }
 
 //全屏退出统一操作
@@ -2888,7 +2891,7 @@ void MultipPlayer::slot_setMainWindowShowFullgreen()
         QRect deskRect = QApplication::desktop()->frameGeometry();//注意区分：availableGeometry()
         FloatPlayCtl::getInstance()->setGeometry(0,deskRect.height()-FloatPlayCtl::getInstance()->height(),
                                                  deskRect.width(),FloatPlayCtl::getInstance()->height());
-        clearFocus();//全局清除聚焦
+        clearFocus();//全局聚焦
         FloatPlayCtl::getInstance()->show();
         FloatPlayCtl::getInstance()->setFocus();
     }

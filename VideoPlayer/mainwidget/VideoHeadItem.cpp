@@ -1,5 +1,6 @@
 ﻿#include "VideoHeadItem.h"
 #include "ui_VideoHeadItem.h"
+
 #include <QPainter>
 #include <QPainterPath>
 #include <QDebug>
@@ -18,12 +19,17 @@ VideoHeadItem::VideoHeadItem(QWidget *parent) :
 VideoHeadItem::~VideoHeadItem()
 {
     delete ui;
+    if(m_videoItemHover != nullptr)
+        delete m_videoItemHover;
+    m_videoItemHover = nullptr;
 }
 
 void VideoHeadItem::initWorkUI()
 {
 //    this->setAttribute(Qt::WA_TranslucentBackground,true);
     ui->pushButton_mainPlayer->hide();
+    m_videoItemHover = new VideoItemHover();//指定父亲，就用相对坐标
+    m_videoItemHover->setObjectName(QString::fromUtf8("m_videoItemHover"));
 }
 
 void VideoHeadItem::handleSignalsAndSlots()
@@ -56,10 +62,22 @@ bool VideoHeadItem::eventFilter(QObject *watched, QEvent *event)
         if(event->type() == QEvent::Enter)
         {
             ui->pushButton_mainPlayer->show();
+//            m_videoItemHover->resize(this->size() + QSize(40,40));
+            int x = this->mapToGlobal(this->pos()).x();
+            int y = this->mapToGlobal(this->pos()).y();
+            m_videoItemHover->setGeometry(x-20,y-20,this->width()+40,this->height()+40);
+            if(m_videoItemHover->isHidden())
+            {
+                //超出边界如何处理？show or not show ?
+//                m_videoItemHover->show();
+            }
         }
         else if(event->type() == QEvent::Leave)
         {
+            //BUG:这里不能用leave事件，会造成反复hide和show，应该把hide交给m_videoItemHover去处理
             ui->pushButton_mainPlayer->hide();
+//            if(!m_videoItemHover->isHidden())
+//                m_videoItemHover->hide();
         }
     }
     return QWidget::eventFilter(watched,event);

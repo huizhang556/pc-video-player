@@ -1,5 +1,6 @@
 ﻿#include "SwitchButtons.h"
 #include "ui_SwitchButtons.h"
+#include "global/Global.h"
 
 SwitchButtons::SwitchButtons(QWidget *parent) :
     QWidget(parent),
@@ -21,9 +22,6 @@ SwitchButtons::~SwitchButtons()
 
 void SwitchButtons::initWorkUI()
 {
-    m_countDownTimer = new QTimer(this);
-    m_countDownTimer->start(5000);//5000ms更新一次
-
     m_buttonGroup1 = new QButtonGroup(this);
     m_buttonGroup1->addButton(ui->pushButton_selet1,0);
     m_buttonGroup1->addButton(ui->pushButton_selet2,1);
@@ -45,7 +43,7 @@ void SwitchButtons::handleSignalsAndSlots()
 //        slot_setCheckedButton(index);
 //    });
 
-    connect(m_countDownTimer,&QTimer::timeout,[=](){
+    connect(Global::getInstance(),&Global::sig_sendGlobalTimeOut,[=](){
         m_curIndex++;
         if(m_curIndex  == m_allCounts)//等于最后一页，显示最后一页
         {

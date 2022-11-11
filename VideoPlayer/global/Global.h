@@ -1,6 +1,8 @@
 ﻿#ifndef GLOBAL_H
 #define GLOBAL_H
+#define UPDATTIME   5000
 #include <QDir>
+#include <QTimer>
 #include <QObject>
 #include <QString>
 #include <QProcess>
@@ -15,8 +17,8 @@ typedef bool(*ConnectFun)(int* lpdwFlags, int  dwReserved);
 class Global : public QObject
 {
     Q_OBJECT
-public:
     explicit Global(QObject *parent = nullptr);
+public:
     ~Global();
     static void         registerLAVplayer();//注册播放器
     static void         unRegisterLAVplayer();//卸载注册播放器
@@ -27,16 +29,21 @@ public:
     static void         setIni_ungis(bool on);
     static bool         getRegisStatus();
     static void         checkNetWorkOnline();//检查网络在线
-
+    static Global*  getInstance();
 public:
     //声明共有静态变量
-    static QString appDirPath;
-
+    static QString  appDirPath;
+    static QTimer   *m_globalTimer;
+    static Global   *m_pInstance;
 public slots:
     void        onLookupHost(QHostInfo host);
 
 signals:
     void        sig_sendLookUpHostResult(bool);
+    void        sig_sendGlobalTimeOut();
+
+private:
+
 };
 
 #endif // GLOBAL_H

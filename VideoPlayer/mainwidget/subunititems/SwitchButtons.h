@@ -34,7 +34,6 @@ protected:
 
 private:
     Ui::SwitchButtons *ui;
-    QTimer          *m_countDownTimer   =   nullptr;
     QButtonGroup    *m_buttonGroup1     = nullptr;
     int             m_allCounts;
     int             m_curIndex;

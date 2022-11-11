@@ -1003,9 +1003,18 @@ void MainWidget::help_openWebSite()
 /*播放本地文件*/
 void MainWidget::help_aboutLocalFile()
 {
-//    MultipPlayer::getInstance()->openLocalFile();
-    MultipPlayer::getInstance()->slot_setMainCurrentIndex(0);//视频播放界面
-    MultipPlayer::getInstance()->show();//只显示播放器界面
+    if(MultipPlayer::getInstance())
+    {
+        if(MultipPlayer::getInstance()->isHidden())
+        {
+            MultipPlayer::getInstance()->slot_setMainCurrentIndex(0);//视频播放界面
+            MultipPlayer::getInstance()->show();//只显示播放器界面
+        }
+        else
+        {
+            MultipPlayer::getInstance()->show();
+        }
+    }
 }
 
 /*播放网络资源*/
@@ -1057,8 +1066,18 @@ void MainWidget::tray_showMainWidget()
 
 void MainWidget::tray_showDesktopLyric()
 {
-//    QMessageBox::information(this,QString::fromLocal8Bit("功能提示"),QString::fromLocal8Bit("功能暂未开放，敬请期待！"));
-    DesktopLyric::getInstance()->show();
+    if(DesktopLyric::getInstance())
+    {
+        if(DesktopLyric::getInstance()->isHidden())
+        {
+            DesktopLyric::getInstance()->show();
+        }
+        else
+        {
+            DesktopLyric::getInstance()->show();
+        }
+    }
+
 }
 
 void MainWidget::tray_systemSettting()

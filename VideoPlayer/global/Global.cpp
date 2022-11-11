@@ -11,14 +11,28 @@
         QString Global::appDirPath = QDir::currentPath();//release时使用
 #endif
 //QString Global::appDirPath = QDir::currentPath();//静态全局变量使用applicationDirPath();为空
+
+QTimer* Global::m_globalTimer = new QTimer();//类外初始化
+Global* Global::m_pInstance   = nullptr;
+
 Global::Global(QObject *parent) : QObject(parent)
 {
-
+    m_globalTimer->start(5000);//更新一次时间
+    connect(m_globalTimer,&QTimer::timeout,[=](){
+//        qDebug() << QString(u8"全局定时器已更新一次");
+        emit sig_sendGlobalTimeOut();
+    });
 }
 
 Global::~Global()
 {
 //    unRegisterLAVplayer();
+    if(m_globalTimer != nullptr)
+        delete m_globalTimer;
+    m_globalTimer = nullptr;
+    if(m_pInstance != nullptr)
+        delete m_pInstance;
+    m_pInstance = nullptr;
 }
 
 //注册LAV播放器
@@ -143,7 +157,16 @@ void Global::checkNetWorkOnline()
 //            qDebug() << __FUNCTION__ << "isOnline = true";
 //        else
 //            qDebug() << __FUNCTION__ << "isOnline = false";
-//    }
+    //    }
+}
+
+Global *Global::getInstance()
+{
+    if(m_pInstance == nullptr)
+    {
+        m_pInstance = new Global();
+    }
+    return m_pInstance;
 }
 
 //读取注册状态(退出)

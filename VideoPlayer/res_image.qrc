@@ -556,5 +556,13 @@
         <file>images/fileitem/file-branch-more.png</file>
         <file>images/fileitem/file-branch-open.png</file>
         <file>images/fileitem/file-vline.png</file>
+        <file>images/fileitem/file_del.png</file>
+        <file>images/fileitem/file_isdel.png</file>
+        <file>images/fileitem/file_islove.png</file>
+        <file>images/fileitem/file_ismore.png</file>
+        <file>images/fileitem/file_love.png</file>
+        <file>images/fileitem/file_more.png</file>
+        <file>images/fileitem/file_downloadmini.png</file>
+        <file>images/fileitem/file_isdownloadmini.png</file>
     </qresource>
 </RCC>

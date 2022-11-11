@@ -84,12 +84,12 @@ void RecomVideoTab::handleSignalsAndSLots()
     {
         if(previous != nullptr)
         {
-            qDebug() << QString::fromLocal8Bit("先前的item：")<<previous->text();
+//            qDebug() << QString::fromLocal8Bit("先前的item：")<<previous->text();
             getListWidgetItemButton(previous,"pushButton_videoInfo")->setChecked(false);
         }
         if(current != nullptr)
         {
-            qDebug() << QString::fromLocal8Bit("现在的item:")<<current->text();
+//            qDebug() << QString::fromLocal8Bit("现在的item:")<<current->text();
             getListWidgetItemButton(current,"pushButton_videoInfo")->setChecked(true);
         }
 

@@ -93,9 +93,9 @@ int main(int argc, char *argv[])
         a.processEvents();
         splashscream.show();
         splashscream.setCursor(Qt::BlankCursor);
-        for(int i = 0; i< 10; ++i)
+        for(int i = 0; i< 3; ++i)
         {
-            splashscream.slot_updateProgressbarValue(i*11);
+            splashscream.slot_updateProgressbarValue(i*33);
             QThread::sleep(1);//450 280 270 100
         }
     }

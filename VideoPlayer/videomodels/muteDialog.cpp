@@ -70,7 +70,7 @@ int muteDialog::getSpliderValue()
 void muteDialog::leaveEvent(QEvent *event)
 {
     Q_UNUSED(event);
-    qDebug() << "voice ui leave";
+//    qDebug() << "voice ui leave";
     this->close();
 
 }

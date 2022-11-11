@@ -1,6 +1,6 @@
 ﻿#ifndef VIDEOHEADITEM_H
 #define VIDEOHEADITEM_H
-
+#include "mainwidget/VideoItemHover.h"
 #include <QWidget>
 #include <QLabel>
 #include <QPaintEvent>
@@ -27,6 +27,7 @@ protected:
 
 private:
     Ui::VideoHeadItem *ui;
+    VideoItemHover  *m_videoItemHover = nullptr;
     QString     m_picPath;
     QColor  m_bgColor;
 

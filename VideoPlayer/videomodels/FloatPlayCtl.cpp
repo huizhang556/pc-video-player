@@ -183,7 +183,7 @@ void FloatPlayCtl::slot_setMediaPlayTime(QString time)
 
 void FloatPlayCtl::slot_setCurrentPlayStatus(bool status)
 {
-    qDebug() << "TRAY HAS RECEIVED CURRENT MEDIA NEW STATUS:" << status;
+//    qDebug() << "TRAY HAS RECEIVED CURRENT MEDIA NEW STATUS:" << status;
     if(!status)//播放
     {
         ui->pushButton_start->setStyleSheet("QPushButton{"

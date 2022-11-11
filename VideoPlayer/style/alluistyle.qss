@@ -1242,9 +1242,14 @@ color:black;
 font: 75 13px "微软雅黑";
 }
 
+#m_tabWidget1::tab-bar
+{
+left: 0px;
+}
+
 #m_tabWidget1 QTabBar::tab
 {
-width:130px;
+width:140px;
 height:35px;
 color: white;
 background-color:#3f3f48;
@@ -1271,7 +1276,7 @@ border-bottom:2px solid #ff5c38;
 }
 
 /*通过icon-size来撑大item的高度*/
-QToolBox
+#m_toolBox_list
 {
 border-right:2px;
 background-color:#3d3d3d;
@@ -1279,7 +1284,7 @@ background-color:#3d3d3d;
 }
 
 /*抽屉控件,有效*/
-QToolBox::tab
+#m_toolBox_list::tab
 {
 border-bottom: 2px groove blue; 
 border-radius: 2px;
@@ -1289,14 +1294,14 @@ text-align: center;
 }
 
 /*tab样式-hover*/
-QToolBox::tab:hover
+#m_toolBox_list::tab:hover
 {
 background-color:rgb(101,210,105);
 color: white;
 }
 
 /*tab样式-selected*/
-QToolBox::tab:selected
+#m_toolBox_list::tab:selected
 {
 background-color: #36a5c1;
 color: white;
@@ -1315,7 +1320,7 @@ border-left-color: #3f4042;
 
 
 /*搜索框(事件监视器控制)*/
-QToolBox QWidget QLineEdit
+#m_lineEdit_player
 {
 color:#cccccc;
 font-family:"微软雅黑";
@@ -1327,7 +1332,7 @@ border:none;
 }
 
 /*搜索按钮(事件监视器控制)*/
-QToolBox QWidget QPushButton
+#m_searchBtn_player
 {
 border: none;
 background-color: #162a33;
@@ -1336,14 +1341,14 @@ padding:5px;
 }
 
 /*搜索按钮-按下*/
-QToolBox QWidget QPushButton:pressed
+#m_searchBtn_player:pressed
 {
 border-style: inset;
 background-color: #162a33;
 }
 
 /*搜索按钮-鼠标滑过*/
-QToolBox QWidget QPushButton:hover
+#m_searchBtn_player:hover
 {
 padding:5px;
 image: url(:/images/icon/file_open_hover.png);
@@ -1351,7 +1356,7 @@ background-color: #162a33;
 }
 
 /**************************播放器右侧列表设置---开始****************************/
-/*QListWidget播放列表*/
+/*QListWidget播放列表（四个表统一的样式）*/
 QToolBox QWidget  QListWidget
 {
 font-family:"Mircrosoft YaHei";
@@ -1361,7 +1366,7 @@ background-color: #333333;
 
 QToolBox QWidget  QListWidget::item
 {
-color:#cccccc;
+color: transparent;
 min-height:30px;
 font-size:15px;
 background-color: #333333;
@@ -1371,27 +1376,17 @@ QToolBox QWidget  QListWidget::item:hover
 {
 show-decoration-selected:5;
 background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #5104e4, stop:1  #8e2ce1);
-border-style:outset;
-color:white;
-font-size:18px;	
+border-style:outset;	
 }
 
 QToolBox QWidget  QListWidget::item:selected
 {
-padding:0px;
-margin:0px;
-color:#ff5c38;
-font-size:18px;
-background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #c11432, stop:1  #730f33);
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #5104e4, stop:1  #8e2ce1);
 }
 
 /*上次选择后保留的状态，鼠标离开后显示,会影响selected*/
 QToolBox QWidget  QListWidget::item:selected:!active
 {
-border-width:0px;
-padding:0px;
-margin:0px;
-color: rgb(85, 255, 0);
 background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #c11432, stop:1  #730f33);
 }
 

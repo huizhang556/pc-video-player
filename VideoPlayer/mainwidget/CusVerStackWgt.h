@@ -46,6 +46,7 @@ protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
 
 private:
+    int                     m_currentIndex = 0;
     QListWidget             *m_rightListWidget  =   nullptr;
     QStringList             m_pictureList;
 

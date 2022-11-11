@@ -71,12 +71,12 @@ bool CusListItem1::eventFilter(QObject *watched, QEvent *event)
         if(event->type() == QEvent::Enter)
         {
             emit sig_itemEnter();
-            qDebug()<< QString(u8"stack enter");
+//            qDebug()<< QString(u8"stack enter");
         }
         else if(event->type() == QEvent::Leave)
         {
             emit sig_itemLeave();
-            qDebug()<< QString(u8"stack leave");
+//            qDebug()<< QString(u8"stack leave");
         }
     }
     return QWidget::eventFilter(watched,event);
