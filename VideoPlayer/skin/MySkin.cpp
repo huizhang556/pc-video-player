@@ -4,13 +4,15 @@
 #include <QListWidgetItem>
 #include <QDebug>
 
+MySkin* MySkin::m_pInstance = nullptr;
+
 MySkin::MySkin(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MySkin)
 {
     ui->setupUi(this);
     installEventFilter(this);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);//自动消失 Popup
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowStaysOnTopHint);
     this->setAttribute(Qt::WA_StyledBackground,true);//脱离父窗口样式继承
     this->setFocusPolicy(Qt::NoFocus);
     this->setFixedSize(751,500);//记得留出10px 的滚动条宽度
@@ -21,6 +23,9 @@ MySkin::MySkin(QWidget *parent) :
 MySkin::~MySkin()
 {
     delete ui;
+    if(m_pInstance != nullptr)
+        delete m_pInstance;
+    m_pInstance = nullptr;
 }
 
 void MySkin::initWorkUI()
@@ -87,15 +92,16 @@ void MySkin::initWorkUI()
         ui->listWidget_desktop->addItem(item);
         ui->listWidget_desktop->setItemWidget(item,skitem);
         //信号与槽函数
-        connect(skitem,&MySkinItem::sig_checkedStatus,[=](bool checkStatus){
+        connect(skitem,&MySkinItem::sig_checkedStatus,[=](){
             ui->listWidget_desktop->setCurrentItem(item);
         });
-        //移除item
+        //close--->item
         connect(skitem,&MySkinItem::sig_closewindow,[=](){
             skitem->deleteLater();
             ui->listWidget_desktop->takeItem(ui->listWidget_desktop->row(item));
             delete item;
         });
+
     }
 
     //主题皮肤
@@ -107,6 +113,10 @@ void MySkin::initWorkUI()
         item->setSizeHint(QSize(250,160));//给skitem 宽高 留出位置20px
         ui->listWidget_zhuti->addItem(item);
         ui->listWidget_zhuti->setItemWidget(item,skitem);
+        //信号与槽函数
+        connect(skitem,&MySkinItem::sig_checkedStatus,[=](){
+            ui->listWidget_zhuti->setCurrentItem(item);
+        });
         //移除item
         connect(skitem,&MySkinItem::sig_closewindow,[=](){
             skitem->deleteLater();
@@ -124,6 +134,10 @@ void MySkin::initWorkUI()
         item->setSizeHint(QSize(250,160));
         ui->listWidget_yuzhi->addItem(item);
         ui->listWidget_yuzhi->setItemWidget(item,skitem);
+        //信号与槽函数
+        connect(skitem,&MySkinItem::sig_checkedStatus,[=](){
+            ui->listWidget_yuzhi->setCurrentItem(item);
+        });
         //移除item
         connect(skitem,&MySkinItem::sig_closewindow,[=](){
             skitem->deleteLater();
@@ -141,6 +155,10 @@ void MySkin::initWorkUI()
         item->setSizeHint(QSize(250,160));
         ui->listWidget_custom->addItem(item);
         ui->listWidget_custom->setItemWidget(item,skitem);
+        //信号与槽函数
+        connect(skitem,&MySkinItem::sig_checkedStatus,[=](){
+            ui->listWidget_custom->setCurrentItem(item);
+        });
         //移除item
         connect(skitem,&MySkinItem::sig_closewindow,[=](){
             skitem->deleteLater();
@@ -176,6 +194,15 @@ void MySkin::chandleSignalAndSlot()
     {
          setItemChangedStyle(ui->listWidget_custom, current, previous);
     });
+}
+
+MySkin *MySkin::getInstance()
+{
+    if(m_pInstance == nullptr)
+    {
+        m_pInstance = new MySkin();
+    }
+    return m_pInstance;
 }
 
 
@@ -240,6 +267,7 @@ void MySkin::setItemChangedStyle(QListWidget *listWidget, QListWidgetItem *curre
     {
 //        qDebug() << QString::fromLocal8Bit("先前的item：")<<previous->text();
         getListWidgetItemButton(listWidget,previous,"m_skinCheckedBtn")->setChecked(false);
+        getListWidgetItemButton(listWidget,previous,"m_skinCheckedBtn")->hide();
     }
     if(current != nullptr)
     {

@@ -275,6 +275,12 @@ void MainWidget::initOtherWidgetUi()
 //设置StackedWidget布局每个page界面
 void MainWidget::setStackedWidgetPage()
 {
+    m_stackWidget_center->addWidget(m_cusVideoBox);
+    m_stackWidget_center->addWidget(m_cusVideoBox2);
+    m_stackWidget_center->addWidget(m_cusVideoBox3);
+    m_stackWidget_center->addWidget(m_cusVideoBox4);
+    m_stackWidget_center->addWidget(m_cusVideoBox5);
+    m_stackWidget_center->addWidget(videoFindResult);//视频筛选结果
     m_stackWidget_center->addWidget(m_videoMember);//会员视频
     m_stackWidget_center->addWidget(m_webStackWgt);//浏览器
     m_stackWidget_center->addWidget(m_mainVideoMv);//视频mv
@@ -291,12 +297,6 @@ void MainWidget::setStackedWidgetPage()
     m_stackWidget_center->addWidget(m_personForm);//个人管理
     m_stackWidget_center->addWidget(m_fileTrans);//文件传输
     m_stackWidget_center->addWidget(m_tabWidget);//原始table界面
-    m_stackWidget_center->addWidget(m_cusVideoBox);
-    m_stackWidget_center->addWidget(m_cusVideoBox2);
-    m_stackWidget_center->addWidget(m_cusVideoBox3);
-    m_stackWidget_center->addWidget(m_cusVideoBox4);
-    m_stackWidget_center->addWidget(m_cusVideoBox5);
-    m_stackWidget_center->addWidget(videoFindResult);//视频筛选结果
     m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
 }
 
@@ -658,12 +658,12 @@ void MainWidget::handleSignalAndSLots()
     connect(this,SIGNAL(sig_canGoForward(bool)),m_titleBar,SLOT(slot_setCanGoForward(bool)));
     //上传下载
     connect(m_titleBar,&TitleBar::sig_filesUploadDownLoad,[=](int index1,int index2){
-       m_stackWidget_center->setCurrentIndex(index1);//个人信息界面
+       m_stackWidget_center->setCurrentWidget(m_fileTrans);//个人信息界面
        m_personForm->getCurrentShowWidget_TW()->setCurrentIndex(index2);
     });
     //历史记录
     connect(m_titleBar,&TitleBar::sig_historyDownload,[=](int index1,int index2){
-        m_stackWidget_center->setCurrentIndex(index1);//个人信息界面
+        m_stackWidget_center->setCurrentWidget(m_personForm);//个人信息界面
         m_personForm->getCurrentShowWidget_TW()->setCurrentIndex(index2);
     });
     //网页下载请求3
@@ -941,12 +941,13 @@ void MainWidget::createTrayMenu()
     m_tray->setContextMenu(m_menuTray);
 }
 
-/*处理设置按钮发过来的信号*/
+/*处理设置按钮菜单发过来的信号*/
 void MainWidget::chandleSetHelpItem(int index)
 {
     if(index == 0)//个人账户
     {
         qDebug() << "person login";
+        m_stackWidget_center->setCurrentWidget(m_personForm);
     }
     else if(index == 1)//系统设置
     {
@@ -1066,18 +1067,7 @@ void MainWidget::tray_showMainWidget()
 
 void MainWidget::tray_showDesktopLyric()
 {
-    if(DesktopLyric::getInstance())
-    {
-        if(DesktopLyric::getInstance()->isHidden())
-        {
-            DesktopLyric::getInstance()->show();
-        }
-        else
-        {
-            DesktopLyric::getInstance()->show();
-        }
-    }
-
+    DesktopLyric::getInstance()->show();
 }
 
 void MainWidget::tray_systemSettting()

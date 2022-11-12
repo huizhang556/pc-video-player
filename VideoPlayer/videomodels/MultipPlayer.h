@@ -3,6 +3,7 @@
 
 #define MARWIDTH 2 //窗口边距,进过测试最小需要2px
 #define LEFTWIDTH   280
+#define ITEMSIZE    QSize(280,30)
 
 #include "network/MyHttp.h"
 #include "database/dataBase.h"
@@ -58,6 +59,16 @@
 
 /**唯一的播放器对象--单例**/
 
+struct mediaBody
+{
+    MEDTYPE type;
+    QString url;
+    QString icon;
+    QString name;
+    QString duration;
+    bool    isLove;//是否收藏
+};
+
 namespace Ui {
 class MultipPlayer;
 }
@@ -85,6 +96,10 @@ public:
     void    addToPlaylist(QMediaPlaylist* mylist,const QString& fileName);//重载2
 
     void    addFileToList(const QStringList &strList);//浮动歌曲列表
+
+    const QString switchFileIconType(const QString& filename);//判断文件图标类型
+
+    bool    getCurrentFileType(const QString& filename);//视频 or 音乐
 
     bool    fileType(int index);// 重载函数1  判断文件类型显示视频还是音乐
 
@@ -270,6 +285,8 @@ private slots:
 
     void    addCurrentMediaToList_Collect(QListWidget *destList,QString text);//重载函数2：添加进收藏列表1
 
+    void    addCurrentMediaToList_Collect(QListWidget *destList,QListWidgetItem *item);//重载函数3：添加进收藏列表1
+
     void    addCurrentMediaToList_History(QListWidget *destList);//添加进历史记录
 
     void    mediaLoadingStatusProgressBar_Start();
@@ -405,6 +422,8 @@ private:
     QMap<int,QString>           m_mapList_history;
     QMediaPlayer::State         m_playerState;
     QString                     m_curMediaName;
+    mediaBody                   m_curMediaBody;
+
 /*以下为界面拉伸所用*/
     bool                        _isleftpressed      = false;    //判断是否是左键点击
     int                         _curpos = 0;                    //鼠标左键按下时光标所在区域

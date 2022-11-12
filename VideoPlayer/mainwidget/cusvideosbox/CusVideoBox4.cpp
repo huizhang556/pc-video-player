@@ -21,7 +21,7 @@ void CusVideoBox4::initWorkUI()
     ui->scrollArea->setFrameShape(QFrame::NoFrame);//继承自QFrame的，都可以用此方法去掉边界线
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    m_switchStackWgt = new CusVerStackWgt(this);
+    m_switchStackWgt = new CusVerStackWgt();
     m_switchStackWgt->setObjectName(QString::fromLocal8Bit("m_switchStackWgt"));
 
     for(int i = 0; i < 6; i++)

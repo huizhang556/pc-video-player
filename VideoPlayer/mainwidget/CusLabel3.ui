@@ -118,12 +118,13 @@ background-color: rgba(20, 20, 20,0.0);
              <string notr="true">QPushButton
 {
 border: none;
-border-image: url(:/images/home/stakwall_play.png);
+image: url(:/images/home/stakwall_play.png);
+background-color: transparent;
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/home/stackwall_play_hover.png);
+image: url(:/images/home/stackwall_play_hover.png);
 }</string>
             </property>
             <property name="text">
@@ -165,12 +166,13 @@ border-image: url(:/images/home/stackwall_play_hover.png);
              <string notr="true">QPushButton
 {
 border: none;
-border-image: url(:/images/home/stackwall_start.png);
+image: url(:/images/home/stackwall_start.png);
+background-color: transparent;
 }
 
 QPushButton:hover
 {
-border-image: url(:/images/home/stackwall_start_hover.png);
+image: url(:/images/home/stackwall_start_hover.png);
 }</string>
             </property>
             <property name="text">

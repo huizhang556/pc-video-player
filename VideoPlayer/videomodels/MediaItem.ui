@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>574</width>
+    <width>281</width>
     <height>30</height>
    </rect>
   </property>
@@ -84,29 +84,29 @@ border: none;
       <widget class="QPushButton" name="pushButton_mediaName">
        <property name="minimumSize">
         <size>
-         <width>0</width>
+         <width>180</width>
          <height>30</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>16777215</width>
+         <width>180</width>
          <height>16777215</height>
         </size>
        </property>
        <property name="styleSheet">
         <string notr="true">QPushButton
 {
-color:#cccccc;
 text-align: left;
 padding: 0px 5px;
-font: 400 13px &quot;微软雅黑&quot;;
+color: #8a8a8a;
+font: 400 14px &quot;Mircrosoft YaHei&quot;;
 background-color: transparent;
 }
 
 QPushButton:hover
 {
-color: white;
+color: rgb(120, 120, 120);
 }</string>
        </property>
        <property name="text">
@@ -118,13 +118,13 @@ color: white;
       <widget class="QStackedWidget" name="stackedWidget_control">
        <property name="minimumSize">
         <size>
-         <width>70</width>
+         <width>80</width>
          <height>30</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>70</width>
+         <width>80</width>
          <height>16777215</height>
         </size>
        </property>
@@ -132,9 +132,15 @@ color: white;
         <string notr="true"/>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="page1">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>30</height>
+         </size>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="spacing">
           <number>0</number>
@@ -241,9 +247,106 @@ image: url(:/images/fileitem/file_del.png);
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_more">
+           <property name="minimumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+image: url(:/images/fileitem/file_more.png);
+}
+
+QPushButton:hover
+{
+image: url(:/images/fileitem/file_ismore.png);
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="page2"/>
+       <widget class="QWidget" name="page2">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>30</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>37</width>
+             <height>18</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_duration">
+           <property name="minimumSize">
+            <size>
+             <width>40</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+color: #aaaaff;
+text-align: right;
+padding-right: 4px;
+font: 400 14px &quot;Mircrosoft YaHei&quot;;
+}
+
+QPushButton:hover
+{
+color: rgb(120, 120, 120);
+}</string>
+           </property>
+           <property name="text">
+            <string>24:03</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </item>
     </layout>

@@ -4,7 +4,6 @@
 
 MySkinItem::MySkinItem(QWidget *parent) :
     QWidget(parent),
-    m_status(false),
     ui(new Ui::MySkinItem)
 {
     ui->setupUi(this);
@@ -12,19 +11,16 @@ MySkinItem::MySkinItem(QWidget *parent) :
 
 MySkinItem::MySkinItem(int x, int y, int w, int h,int type, QWidget *parent) :
     QWidget(parent),
-    m_status(false),
     ui(new Ui::MySkinItem)
 {
     ui->setupUi(this);
     this->installEventFilter(this);
     this->setFixedSize(x,y);
-    QIcon icon_close(":/images/icon/close3.png");
+    QIcon icon_close("://images/icon/closehover.png");
     m_closeBtn = new QPushButton(icon_close,"",this);
     m_closeBtn->setObjectName(QString::fromLocal8Bit("m_skinCloseBtn"));
     m_closeBtn->setFlat(true);
-//    m_closeBtn->setGeometry(130,0,20,20);// x-w,0,,w,h
     setCloseButtonGeometry(m_closeBtn,x,y,w,h);
-//    setCloseButtonStyleSheet();
     m_closeBtn->hide();
 
     QIcon icon_check("://images/skin/myskin_checkbtn.png");
@@ -32,9 +28,7 @@ MySkinItem::MySkinItem(int x, int y, int w, int h,int type, QWidget *parent) :
     m_checkedBtn->setObjectName(QString::fromLocal8Bit("m_skinCheckedBtn"));
     m_checkedBtn->setFlat(true);
     m_checkedBtn->setCheckable(true);//可选
-//    m_checkedBtn->setChecked(false);
-    setCheckButtonStatus();
-//    m_checkedBtn->setGeometry(130,80,20,20);//x-w,y-h-间距,w,h
+    m_checkedBtn->setChecked(false);
     setCheckedButtonGeometry(m_checkedBtn,x,y,w,h,type);
     m_checkedBtn->hide();//默认隐藏
 
@@ -44,7 +38,7 @@ MySkinItem::MySkinItem(int x, int y, int w, int h,int type, QWidget *parent) :
     });
 
     connect(m_checkedBtn,&QPushButton::clicked,[=](){
-        setCheckButtonStatus();
+        emit sig_checkedStatus();
     });
 }
 
@@ -64,72 +58,6 @@ void MySkinItem::setSkinPicture(QString path)
     ui->label_skin->setScaledContents(true);//图片自适应
 }
 
-void MySkinItem::setCheckButtonText(QString text)
-{
-//    m_checkedBtn->setText(text);
-}
-
-void MySkinItem::setcheckedStatus()
-{
-    m_status = true;
-}
-
-void MySkinItem::setUnCheckedStatus()
-{
-    m_status = false;
-}
-
-void MySkinItem::setCheckButtonStatus()
-{
-    if(m_status)//勾选状态
-    {
-        m_checkedBtn->setStyleSheet("QPushButton"
-                                    "{"
-                                    "background:transparent;"
-                                    "border-image: url(://images/skin/myskin_checkbtn_hover.png);"
-                                    "}");
-        emit sig_checkedStatus(m_status);
-    }
-    else//未勾选状态（默认状态）
-    {
-        m_checkedBtn->setStyleSheet("QPushButton"
-                                    "{"
-                                    "background:transparent;"
-                                    "border-image: url(://images/skin/myskin_checkbtn.png);"
-                                    "}");
-        emit sig_checkedStatus(m_status);
-    }
-//    if(m_status)
-//    {
-//        m_checkedBtn->setChecked(false);
-//    }
-//    else
-//    {
-//        m_checkedBtn->setChecked(true);
-//    }
-
-    m_status = !m_status;//状态置为反面
-}
-
-void MySkinItem::setCloseButtonStyleSheet()
-{
-    m_closeBtn->setStyleSheet("QPushButton"
-                              "{"
-                              "background:transparent;"
-                              "border-image: url(:/images/icon/close3.png);"
-                              "}"
-                              );
-}
-
-void MySkinItem::setCheckedButtonStyleSheet()
-{
-    m_checkedBtn->setStyleSheet("QPushButton"
-                              "{"
-                              "background:transparent;"
-                              "border-image: url(://images/skin/myskin_checkbtn.png);"
-                              "}"
-                              );
-}
 
 bool MySkinItem::eventFilter(QObject *watched, QEvent *event)
 {
@@ -138,7 +66,7 @@ bool MySkinItem::eventFilter(QObject *watched, QEvent *event)
         m_closeBtn->show();
         m_checkedBtn->show();
     }
-    else if(event->type() == QEvent::Leave && m_status)
+    else if(event->type() == QEvent::Leave && !m_checkedBtn->isChecked())//如果没有checked,则hide
     {
         m_closeBtn->hide();
         m_checkedBtn->hide();

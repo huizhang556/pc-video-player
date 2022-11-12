@@ -73,7 +73,7 @@ void SystemTray::chandleSignalsAndSlots()
         emit sig_playProgressValue(value);
         slot_setCurrentPlayMutedStatus(value);
         slot_setCurrentMediaSoundShowToop(value);
-        qDebug() << "emit sig_playProgressValue(value);" << value;
+//        qDebug() << "emit sig_playProgressValue(value);" << value;
     });
 
 }

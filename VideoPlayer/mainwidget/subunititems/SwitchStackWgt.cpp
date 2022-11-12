@@ -52,7 +52,7 @@ void SwitchStackWgt::handleSignalsAndSlots()
 void SwitchStackWgt::slot_addToStackItemPicture(const QString &list_pic)
 {
     //添加图片
-    QLabel *label_pic = new QLabel(this);//此处需用指针，临时对象不行
+    CusLabel3 *label_pic = new CusLabel3(this);//此处需用指针，临时对象不行
     label_pic->setPixmap(QPixmap(list_pic));
     label_pic->setScaledContents(true);
     this->insertWidget(this->count(),label_pic);
@@ -63,7 +63,7 @@ void SwitchStackWgt::slot_addToStackItemPictures(const QStringList &list_pic)
     for(int i = 0; i < list_pic.count(); i++)
     {
         //添加图片
-        QLabel *label_pic = new QLabel(this);//此处需用指针，临时对象不行
+        CusLabel3 *label_pic = new CusLabel3(this);//此处需用指针，临时对象不行
         label_pic->setPixmap(QPixmap(list_pic.at(i)));
         label_pic->setScaledContents(true);
         this->insertWidget(this->count(),label_pic);

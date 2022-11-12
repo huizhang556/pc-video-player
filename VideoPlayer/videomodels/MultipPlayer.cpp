@@ -160,7 +160,7 @@ void MultipPlayer::initMainWindow()
     ui->stackedWidget->setMinimumSize(700,555);//必须设置最小尺寸，否则播放控制栏位置不正确
 
     //我的歌单（暂时）
-    m_listWisget1 = new QListWidget;
+    m_listWisget1 = new QListWidget();
     m_listWisget1->setObjectName(QString::fromLocal8Bit("m_listWisget1"));
     m_listWisget1->setMinimumWidth(LEFTWIDTH);
     m_listWisget1->setAlternatingRowColors(false);//交替显示
@@ -170,7 +170,7 @@ void MultipPlayer::initMainWindow()
     m_listWisget1->clear();
 
     //播放列表
-    m_listWisget2 = new QListWidget;
+    m_listWisget2 = new QListWidget();
     m_listWisget2->setObjectName(QString::fromLocal8Bit("m_listWisget2"));
     m_listWisget2->setContextMenuPolicy(Qt::CustomContextMenu);
     m_listWisget2->setMinimumWidth(LEFTWIDTH);
@@ -181,7 +181,7 @@ void MultipPlayer::initMainWindow()
     m_listWisget2->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     m_listWisget2->clear();
     //我的收藏
-    m_listWisget3 = new QListWidget;
+    m_listWisget3 = new QListWidget();
     m_listWisget3->setObjectName(QString::fromLocal8Bit("m_listWisget3"));
     m_listWisget3->setContextMenuPolicy(Qt::CustomContextMenu);
     m_listWisget3->setMinimumWidth(LEFTWIDTH);
@@ -192,7 +192,7 @@ void MultipPlayer::initMainWindow()
     m_listWisget3->clear();
 
     //网络曲库
-    m_listWisget4 = new QListWidget;
+    m_listWisget4 = new QListWidget();
     m_listWisget4->setObjectName(QString::fromLocal8Bit("m_listWisget4"));
     m_listWisget4->setContextMenuPolicy(Qt::CustomContextMenu);
     m_listWisget4->setMinimumWidth(LEFTWIDTH);
@@ -202,13 +202,13 @@ void MultipPlayer::initMainWindow()
     m_listWisget4->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
 
-    m_lineEdit = new QLineEdit;//曲库列表搜索框
+    m_lineEdit = new QLineEdit();//曲库列表搜索框
     m_lineEdit->setObjectName(QString::fromLocal8Bit("m_lineEdit_player"));
     m_lineEdit->setMinimumWidth(200);
     m_lineEdit->setFixedHeight(30);
     m_lineEdit->installEventFilter(this);
 
-    m_searchBtn = new QPushButton;//曲库列表搜索按钮
+    m_searchBtn = new QPushButton();//曲库列表搜索按钮
     m_searchBtn->setObjectName(QString::fromLocal8Bit("m_searchBtn_player"));
     m_searchBtn->setFixedSize(33,30);
 
@@ -511,7 +511,7 @@ void MultipPlayer::handleSignalAndSLots()
         slot_switchPlayerList(playlist);//切换为正式列表
         int row = m_listWisget2->row(item);
         playlist->setCurrentIndex(row);
-        fileType(row);
+//        fileType(row);//不需要，列表带动playlist的item变化，从而触发fileType-->转换页面
         m_player->play();
     });
 
@@ -571,7 +571,7 @@ void MultipPlayer::handleSignalAndSLots()
         }
         else
         {
-            slot_setMainCurrentIndex(1);
+            slot_setMainCurrentIndex(1);//推荐列表的临时视频显示
             setCollectBtnShowStatus();//处理所有的item改变时的操作
             slot_updateRateTypeUiLayout();//速率恢复正常
             m_videoTitleBar->clearTitleText();
@@ -591,7 +591,7 @@ void MultipPlayer::handleSignalAndSLots()
         }
         else
         {
-            slot_setMainCurrentIndex(1);
+            slot_setMainCurrentIndex(1);//推荐列表的临时视频显示
             setCollectBtnShowStatus();//处理所有的item改变时的操作
             slot_updateRateTypeUiLayout();//速率恢复正常
             emit sig_playlistCurrentIndex(index);//item样式
@@ -857,8 +857,9 @@ bool MultipPlayer::fileType(QStringList &filenames, int index)
 {
     QString filename = filenames[index];
     m_curMediaName = filename;
-    bool mp3 = filename.endsWith(QString::fromLocal8Bit(".mp3"),Qt::CaseInsensitive);//判断是否以.mp3结尾，去除大小写敏感
-    if(mp3)
+//    bool mp3 = filename.endsWith(QString(".mp3"),Qt::CaseInsensitive);//判断是否以.mp3结尾，去除大小写敏感
+    bool mp3 = getCurrentFileType(m_curMediaName);
+    if(!mp3)
     {
         emit sig_sendSwitchToMusicPage(filename);
         ui->stackedWidget->setCurrentIndex(3);
@@ -875,10 +876,11 @@ bool MultipPlayer::fileType(QStringList &filenames, int index)
 /*判断文件类型2*/
 bool MultipPlayer::fileType(int index)
 {
-//    QString filename = m_mapList2[index];
-    m_curMediaName = m_listWisget2->item(index)->text();
-    bool mp3 = m_curMediaName.endsWith(QString::fromLocal8Bit(".mp3"),Qt::CaseInsensitive);//判断是否以.mp3结尾，去除大小写敏感
-    if(mp3)
+    QString filename = m_mapList2[index];
+    m_curMediaName = filename;
+//    bool mp3 = m_curMediaName.endsWith(QString(".mp3"),Qt::CaseInsensitive);//判断是否以.mp3结尾，去除大小写敏感
+    bool mp3 = getCurrentFileType(m_curMediaName);
+    if(!mp3)
     {
         //音乐显示3，音乐界面
         emit sig_sendSwitchToMusicPage(m_curMediaName);
@@ -898,8 +900,9 @@ bool MultipPlayer::fileType(int index)
 bool MultipPlayer::fileType(QString filename)
 {
     m_curMediaName = filename;
-    bool mp3 = filename.endsWith(QString::fromLocal8Bit(".mp3"),Qt::CaseInsensitive);//判断是否以.mp3结尾，去除大小写敏感
-    if(mp3)
+//    bool mp3 = filename.endsWith(QString(".mp3"),Qt::CaseInsensitive);//判断是否以.mp3结尾，去除大小写敏感
+    bool mp3 = getCurrentFileType(m_curMediaName);
+    if(!mp3)
     {
         //音乐显示3，音乐界面
         emit sig_sendSwitchToMusicPage(filename);
@@ -1004,52 +1007,24 @@ void MultipPlayer::addFileToList(const QStringList &strList)
         QFileInfo fileInfo(path);
         QString name = fileInfo.fileName();//文件名称
 //        qDebug()<<"file name = "<<name;
-        QString fileSuffix = fileInfo.suffix();//文件后缀
+//        QString fileSuffix = fileInfo.suffix();//文件后缀
 //        qDebug()<<"file suffix = "<<fileSuffix;
 //        QString fullname = path.split(".").last();//文件名称,此法也可行
 //        qDebug() << "fullname = " << fullname;
         m_mapList.insert(i,path);//存储路径
         m_mapList2.insert(i,name);//存储歌名带后缀
 
-
-        QString btnIcon1 = QString(":/images/icon/video.png");//视频
-        QString btnIcon2 = QString(":/images/icon/mp3.png");//音乐
-
-        QListWidgetItem *pItem  = nullptr;
-        MediaItem   *itemWidget = nullptr;
-
         //判断一下文件类型，加载不同图标
-        if(fileSuffix == "mp4")//返回的是mp4,而非 .mp4
-        {
-            pItem = new QListWidgetItem(name);
-            itemWidget = new MediaItem(name,btnIcon1,name,false);
-        }
-        else if(fileSuffix == "mp3")
-        {
-            pItem = new QListWidgetItem(name);
-            itemWidget = new MediaItem(name,btnIcon2,name,false);
-        }
-        else if(fileSuffix == "flv")
-        {
-            pItem = new QListWidgetItem(name);
-            itemWidget = new MediaItem(name,btnIcon1,name,false);
-        }
-        else if(fileSuffix == "aac")
-        {
-            pItem = new QListWidgetItem(name);
-            itemWidget = new MediaItem(name,btnIcon2,name,false);
-        }
-        else//后面有需要还可以添加文件类型判断
-        {
-            pItem = new QListWidgetItem(name);
-            itemWidget = new MediaItem(name,btnIcon1,name,false);
-        }
+        QString fileIcon = switchFileIconType(name);
+        QListWidgetItem *pItem = new QListWidgetItem(name);
+        MediaItem *itemWidget = new MediaItem(MEDTYPE::MED_NORMAL,name,fileIcon,name,false,"11:18:36");
 
-//        pItem->setCheckState(Qt::Unchecked);//未选中
+        //        pItem->setCheckState(Qt::Unchecked);//未选中
         pItem->setSizeHint(QSize(180,30));//每个item与整体空间宽度一致,效果不理想，需要在样式中设置
         pItem->setToolTip(name);
         m_listWisget2->addItem(pItem);
         m_listWisget2->setItemWidget(pItem,itemWidget);
+
         //关于item的信号与槽函数
         connect(itemWidget,&MediaItem::sig_media_collect,[=](){
             addCurrentMediaToList_Collect(m_listWisget3,pItem->text());
@@ -1088,6 +1063,78 @@ void MultipPlayer::addFileToList(const QStringList &strList)
 //    {
 //        qDebug()<<"key = "<<it.key()<<"value = "<<it.value();
     //    }
+}
+
+const QString MultipPlayer::switchFileIconType(const QString &filename)
+{
+    QString fileIcon;
+    QFileInfo fileInfo(filename);
+    QString fileSuffix = fileInfo.suffix();//文件后缀
+    //判断一下文件类型，加载不同图标
+    if(fileSuffix == "mp4")//返回的是mp4,而非 .mp4
+    {
+        fileIcon = QString(":/images/icon/video.png");//视频
+    }
+    else if(fileSuffix == "mp3")
+    {
+        fileIcon = QString(":/images/icon/mp3.png");//音乐
+    }
+    else if(fileSuffix == "flv")
+    {
+        fileIcon = QString(":/images/icon/video.png");//视频
+    }
+    else if(fileSuffix == "aac")
+    {
+        fileIcon = QString(":/images/icon/mp3.png");//音乐
+    }
+    else//后面有需要还可以添加文件类型判断
+    {
+        fileIcon = QString(":/images/icon/video.png");//视频
+    }
+    return fileIcon;
+}
+
+bool MultipPlayer::getCurrentFileType(const QString &filename)
+{
+    QFileInfo fileInfo(filename);
+    QString fileSuffix = fileInfo.suffix();//文件后缀
+    //判断一下文件类型，加载不同图标
+    if(fileSuffix == "mp4")//返回的是mp4,而非 .mp4
+    {
+        return true;
+    }
+    else if(fileSuffix == "mov")
+    {
+        return true;
+    }
+    else if(fileSuffix == "avi")
+    {
+        return true;
+    }
+    else if(fileSuffix == "flv")
+    {
+        return true;
+    }
+    else if(fileSuffix == "mp3")
+    {
+        return false;
+    }
+    else if(fileSuffix == "aac")
+    {
+        return false;
+    }
+    else if(fileSuffix == "wav")
+    {
+        return false;
+    }
+    else if(fileSuffix == "wma")
+    {
+        return false;
+    }
+    else//后面有需要还可以添加文件类型判断
+    {
+        return true;
+    }
 }
 
 /*查找搜索内容并显示*/
@@ -1148,21 +1195,21 @@ void MultipPlayer::on_pushButton_5_clicked()
         //多文件打开
         if(!m_fileNames.isEmpty())
         {
-            addToPlaylist(playlist,m_fileNames);//1.添加进播放列表playlist
-            addFileToList(m_fileNames);//2.媒体界面显示
-            fileType(m_fileNames,0);//3.判断文件类型并作出界面反应
+            addToPlaylist(playlist,m_fileNames);//1.全部媒体文件添加进播放列表playlist
+            addFileToList(m_fileNames);//2.全部媒体文件添加进列表界面显示
             ui->horizontalSlider->setEnabled(true);//滚动条
             m_lineEdit->setEnabled(true);//浮动输入框
             m_pTimer2->start(80);//加定时器给界面一个缓冲
             connect(m_pTimer2,&QTimer::timeout,[=](){
             //这里必须加一个定时器，以解决界面缓冲，是的界面来得及反应（主要是标题栏反应不过来）
-                ui->stackedWidget->setCurrentIndex(2);//索引2,界面显示视频
+//                ui->stackedWidget->setCurrentIndex(2);//索引2,界面显示视频
                 m_playerState = QMediaPlayer::PlayingState;
                 m_newStart = true;
             });
             slot_switchPlayerList(playlist);//转换为当前列表
             m_player->play();//调试暂停2022-05-14
-            slot_setMainCurrentIndex(1);
+//            fileType(m_fileNames,0);//3.判断文件类型并作出界面反应（应该是一条一条播放的时候检测）
+//            slot_setMainCurrentIndex(1);
         }
         else
         {
@@ -1211,10 +1258,10 @@ void MultipPlayer::on_pushButton_6_clicked()
             m_listWisget2->clear();
             m_listWisget3->clear();
             addFileToList(m_fileNames);
-            fileType(m_fileNames,0);//判断文件类型并作出界面反应
             slot_switchPlayerList(playlist);//转换为当前列表
             m_player->play();
-            slot_setMainCurrentIndex(1);
+//            fileType(m_fileNames,0);//判断文件类型并作出界面反应
+//            slot_setMainCurrentIndex(1);
             m_playerState = QMediaPlayer::PlayingState;
         }
         else
@@ -1530,7 +1577,6 @@ void MultipPlayer::on_pushButton_previous_clicked()
         current = 0;//第一首不能再往前
     }
     slot_getCurrentPlayList()->setCurrentIndex(current);
-//    fileType(current);
     m_player->play();
     m_playerState = QMediaPlayer::PlayingState;
 }
@@ -1547,7 +1593,6 @@ void MultipPlayer::on_pushButton_next_clicked()
         current = row;//最后一首不能再往后
     }
     slot_getCurrentPlayList()->setCurrentIndex(current);
-//    fileType(current);
     m_player->play();
     m_playerState = QMediaPlayer::PlayingState;
 }
@@ -2211,7 +2256,22 @@ void MultipPlayer::addCurrentMediaToList_Collect(QListWidget *destList)
     if(!hasValue)//不存在则添加进收藏
     {
         if(m_curMediaName.isEmpty()) return;
-        destList->insertItem(0,m_curMediaName);//头插法
+        //判断一下文件类型，加载不同图标
+        QString fileIcon = switchFileIconType(m_curMediaName);
+        QListWidgetItem *item  = new QListWidgetItem(m_curMediaName);
+        item->setSizeHint(ITEMSIZE);
+        MediaItem *itemWidget = new MediaItem(MEDTYPE::MED_COLLECT,m_curMediaName,fileIcon,m_curMediaName,true,"11:18:36");
+        destList->insertItem(0,item);//头插法
+        destList->setItemWidget(item,itemWidget);
+        //关于item的信号与槽函数
+        connect(itemWidget,&MediaItem::sig_media_collect,[=](){
+            addCurrentMediaToList_Collect(m_listWisget3,item->text());
+        });
+
+        connect(itemWidget,&MediaItem::sig_media_download,[=](){
+            qDebug() << QString(u8"当前item的row = ")<< m_listWisget3->row(item);
+            DownloadType::getInstance()->showDownloadForm(1,item->text());
+        });
         ui->pushButton_collect->setStyleSheet("QPushButton{"
                                               "border-image: url(:/images/icon/play_collect_checked.png);"
                                               "}");
@@ -2220,9 +2280,11 @@ void MultipPlayer::addCurrentMediaToList_Collect(QListWidget *destList)
     {
         //按理第一步能确认媒体在收藏列表，那么一定能返回行号，所以对-1不做处理
         QListWidgetItem *item = destList->takeItem(getCurrentMediaRowOfCollectList(destList,m_curMediaName));
+        QWidget *itemWidget = destList->itemWidget(item);
         ui->pushButton_collect->setStyleSheet("QPushButton{"
                                               "border-image: url(:/images/icon/play_collect_unchecked.png);"
                                               "}");
+        itemWidget->deleteLater();
         delete item;//手动释放
     }
     qDebug() << QString::fromLocal8Bit("添加后收藏总数：") << destList->count();
@@ -2237,7 +2299,22 @@ void MultipPlayer::addCurrentMediaToList_Collect(QListWidget *destList, QString 
     if(!hasValue)//不存在则添加进收藏
     {
         if(text.isEmpty()) return;
-        destList->insertItem(0,text);//头插法
+        //判断一下文件类型，加载不同图标
+        QString fileIcon = switchFileIconType(text);
+        QListWidgetItem *item  = new QListWidgetItem(text);
+        item->setSizeHint(ITEMSIZE);
+        MediaItem *itemWidget = new MediaItem(MEDTYPE::MED_COLLECT,text,fileIcon,text,true,"11:18:36");
+        destList->insertItem(0,item);//头插法
+        destList->setItemWidget(item,itemWidget);
+        //关于item的信号与槽函数
+        connect(itemWidget,&MediaItem::sig_media_collect,[=](){
+            addCurrentMediaToList_Collect(m_listWisget3,item->text());
+        });
+
+        connect(itemWidget,&MediaItem::sig_media_download,[=](){
+            qDebug() << QString(u8"当前item的row = ")<< m_listWisget3->row(item);
+            DownloadType::getInstance()->showDownloadForm(1,item->text());
+        });
         ui->pushButton_collect->setStyleSheet("QPushButton{"
                                               "border-image: url(:/images/icon/play_collect_checked.png);"
                                               "}");
@@ -2246,23 +2323,79 @@ void MultipPlayer::addCurrentMediaToList_Collect(QListWidget *destList, QString 
     {
         //按理第一步能确认媒体在收藏列表，那么一定能返回行号，所以对-1不做处理
         QListWidgetItem *item = destList->takeItem(getCurrentMediaRowOfCollectList(destList,text));
+        QWidget *itemWidget = destList->itemWidget(item);
         ui->pushButton_collect->setStyleSheet("QPushButton{"
                                               "border-image: url(:/images/icon/play_collect_unchecked.png);"
                                               "}");
+        itemWidget->deleteLater();
         delete item;//手动释放
     }
     qDebug() << QString::fromLocal8Bit("添加后收藏总数：") << destList->count();
 }
 
+void MultipPlayer::addCurrentMediaToList_Collect(QListWidget *destList, QListWidgetItem *item)
+{
+    bool hasValue = findCollectListStatus(destList,item->text());//判断是否收藏
+    qDebug() << QString::fromLocal8Bit("当前播放媒体收藏状态：") << hasValue;
+    qDebug() << QString::fromLocal8Bit("添加前收藏总数：") << destList->count();
+    if(!hasValue)//不存在则添加进收藏
+    {
+        if(item->text().isEmpty()) return;
+        //判断一下文件类型，加载不同图标
+        QString fileIcon = switchFileIconType(item->text());
+        QListWidgetItem *item  = new QListWidgetItem(item->text());
+        item->setSizeHint(ITEMSIZE);
+        MediaItem *itemWidget = new MediaItem(MEDTYPE::MED_COLLECT,item->text(),fileIcon,item->text(),true,"11:18:36");
+        destList->insertItem(0,item);//头插法
+        destList->setItemWidget(item,itemWidget);
+        //关于item的信号与槽函数
+        connect(itemWidget,&MediaItem::sig_media_collect,[=](){
+            addCurrentMediaToList_Collect(destList,item->text());
+        });
+
+        connect(itemWidget,&MediaItem::sig_media_download,[=](){
+            qDebug() << QString(u8"当前item的row = ")<< destList->row(item);
+            DownloadType::getInstance()->showDownloadForm(1,item->text());
+        });
+        ui->pushButton_collect->setStyleSheet("QPushButton{"
+                                              "border-image: url(:/images/icon/play_collect_checked.png);"
+                                              "}");
+    }
+    else//存在则取消收藏
+    {
+        //按理第一步能确认媒体在收藏列表，那么一定能返回行号，所以对-1不做处理
+        destList->takeItem(getCurrentMediaRowOfCollectList(destList,item->text()));
+        QWidget *itemWidget = destList->itemWidget(item);
+        ui->pushButton_collect->setStyleSheet("QPushButton{"
+                                              "border-image: url(:/images/icon/play_collect_unchecked.png);"
+                                              "}");
+        itemWidget->deleteLater();
+        delete item;//手动释放
+    }
+    qDebug() << QString::fromLocal8Bit("添加后收藏总数：") << destList->count();
+}
+
+/*媒体变化时，通知添加进历史记录:信号：sig_sendSwitchToMusicPage*/
 void MultipPlayer::addCurrentMediaToList_History(QListWidget *destList)
 {
-    bool hasValue = findCollectListStatus(destList,m_curMediaName);//判断是否收藏
+    bool hasValue = findCollectListStatus(destList,m_curMediaName);//判断是否收藏(通用)
     qDebug() << "current media collect status = " << hasValue;
     if(!hasValue)//不存在则添加进收藏
     {
         if(m_curMediaName.isEmpty()) return;
-        qDebug() << "now collect list's count = " << destList->count();
-        destList->insertItem(0,m_curMediaName);//头插法
+        qDebug() << u8"现在历史列表播放记录条数为： " << destList->count();
+        qDebug() << u8"当前添加进历史记录表的名称是：" << m_curMediaName;
+
+        //判断一下文件类型，加载不同图标
+        QString fileIcon = switchFileIconType(m_curMediaName);
+        QListWidgetItem *item  = new QListWidgetItem(m_curMediaName);
+        item->setToolTip(m_curMediaName);
+
+        MediaItem *itemWidget = new MediaItem(MEDTYPE::MED_HISTORY,m_curMediaName,
+                                              fileIcon,m_curMediaName,false,
+                                              QDateTime::currentDateTime().toString("mm:ss"));
+        destList->insertItem(0,item);//头插法
+        destList->setItemWidget(item,itemWidget);
     }
     else
     {
@@ -2716,13 +2849,8 @@ void MultipPlayer::setDanmuInfo(Danmu *danmu, const QString &color, const QFont 
 
 void MultipPlayer::slot_closeCurrentWindow()
 {
-    //桌面歌词显示的情况下不关闭（或者有歌曲视频播放的情况下）
-    if(DesktopLyric::getInstance())
-    {
-        this->hide();//只是隐藏起来
-    }
-    else
-    {
+    if(!VideoProgressBar::getInstance()->isHidden())
+        VideoProgressBar::getInstance()->close();
         m_player->stop();//暂停播放
         playlist->clear();//播放列表清空
         m_mapList.clear();//清空容器
@@ -2736,10 +2864,7 @@ void MultipPlayer::slot_closeCurrentWindow()
         slot_clearListWidgetList_history();//历史列表清空
         slot_clearUserInputSearchInfo();//登陆列表以往输入的信息清空
         slot_clearAllPopupUi();//清空未关闭在界面上的
-        emit sig_mainPlayerClose();//主界面处理内存删除
-    }
-    if(VideoProgressBar::getInstance())
-        VideoProgressBar::getInstance()->close();
+        emit sig_mainPlayerClose();//主界面处理内存删除  
 }
 
 //全屏退出统一操作

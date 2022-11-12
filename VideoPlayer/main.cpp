@@ -101,11 +101,11 @@ int main(int argc, char *argv[])
     }
 
     //05--->显示主界面
-    MainWidget w1;
-    w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
-    w1.show();
+//    MainWidget w1;
+//    w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
+//    w1.show();
 
-//    MultipPlayer::getInstance()->show();
+    MultipPlayer::getInstance()->show();
 
 //    MusicPlaylist w1;
 //    w1.show();
@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
 //    TitleBar w1;
 //    w1.show();
 
-    splashscream.finish(&w1);
+//    splashscream.finish(&w1);
 
 
     //06--->数据恢复初始化

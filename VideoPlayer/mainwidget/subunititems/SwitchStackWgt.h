@@ -7,6 +7,7 @@
 #define MINWINSIZE  QSize(830,FIXEDHEIGHT)  //界面最小size
 #define RESIZESIZE  QSize(1160,360)     //默认加载是size（一般会被重置）
 
+#include "mainwidget/CusLabel3.h"
 #include "mainwidget/subunititems/SwitchButtons.h"
 
 #include <QWidget>

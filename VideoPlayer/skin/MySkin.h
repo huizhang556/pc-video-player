@@ -19,11 +19,12 @@ class MySkin : public QDialog
 {
     Q_OBJECT
 
-public:
     explicit MySkin(QWidget *parent = nullptr);
+public:
     ~MySkin();
     void initWorkUI();
     void chandleSignalAndSlot();
+    static  MySkin* getInstance();
 
 protected:
     bool eventFilter(QObject *watch, QEvent *event) override;
@@ -41,6 +42,7 @@ private:
     Ui::MySkin *ui;
     QButtonGroup        *btngroup   = nullptr;
     QPoint              m_mvPos;
+    static MySkin  *m_pInstance;
 };
 
 #endif // MYSKIN_H

@@ -211,7 +211,6 @@ private:
     SearchForm      *m_searchForm           =   nullptr;
     HeadHover       *m_headHover            =   nullptr;
     Login           *m_loginForm            =   nullptr;
-    MySkin          *m_mySkin               =   nullptr;
     QListWidget     *m_listWdgt_colloect    =   nullptr;//收藏列表
     QListWidget     *m_listWdgt_history     =   nullptr;//搜索历史记录
     QListWidget     *m_listWdgt_engine      =   nullptr;//搜索引擎

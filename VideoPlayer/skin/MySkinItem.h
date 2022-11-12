@@ -19,12 +19,6 @@ public:
 
 public slots:
     void        setSkinPicture(QString path);
-    void        setCheckButtonText(QString text);
-    void        setcheckedStatus();
-    void        setUnCheckedStatus();
-    void        setCheckButtonStatus();
-    void        setCloseButtonStyleSheet();
-    void        setCheckedButtonStyleSheet();
 
 protected:
     bool        eventFilter(QObject *watched, QEvent *event) override;
@@ -37,11 +31,10 @@ private:
     Ui::MySkinItem *ui;
     QPushButton         *m_closeBtn         =   nullptr;
     QPushButton         *m_checkedBtn       =   nullptr;
-    bool                m_status;
 
 signals:
     void        sig_closewindow();
-    void        sig_checkedStatus(bool status);
+    void        sig_checkedStatus();
 };
 
 #endif // MYSKINITEM_H

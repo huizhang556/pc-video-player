@@ -149,9 +149,6 @@ void TitleBar::initWorker()
     m_headHover = new HeadHover();
     m_headHover->setObjectName(QString::fromLocal8Bit("m_headHover"));
 
-    m_mySkin = new MySkin();
-    m_mySkin->setObjectName(QString::fromLocal8Bit("m_mySkin"));
-
     //收藏列表
     m_listWdgt_colloect = new QListWidget();
     m_listWdgt_colloect->setObjectName(QString::fromLocal8Bit("m_listWdgt_colloect"));
@@ -1100,7 +1097,7 @@ void TitleBar::isNecessaryShowSearch(int index)
     {
         ui->stackedWidget->setCurrentIndex(0);//显示主页搜索框item
     }
-    else if(index == 1)
+    else if(index == 7)
     {
         ui->stackedWidget->setCurrentIndex(1);//浏览器搜索按钮
     }
@@ -1582,32 +1579,7 @@ void TitleBar::showLoginForm()
 /*皮肤设置*/
 void TitleBar::showMySkin()
 {
-    if(m_mySkin)
-    {
-        if(!m_mySkin->isHidden())
-        {
-            m_mySkin->hide();
-        }
-        else
-        {
-//            int x = ui->Btnskin->parentWidget()->mapToGlobal(ui->Btnskin->pos()).x();
-//            int y = ui->Btnskin->parentWidget()->mapToGlobal(ui->Btnskin->pos()).y();
-//            int h = ui->Btnskin->height();
-//            m_mySkin->setGeometry(x-150,y+h+10,m_mySkin->width(),m_mySkin->height());
-            m_mySkin->raise();
-            m_mySkin->exec();
-        }
-    }
-    else
-    {
-        m_mySkin = new MySkin();
-//        int x = ui->Btnskin->parentWidget()->mapToGlobal(ui->Btnskin->pos()).x();
-//        int y = ui->Btnskin->parentWidget()->mapToGlobal(ui->Btnskin->pos()).y();
-//        int h = ui->Btnskin->height();
-//        m_mySkin->setGeometry(x-150,y+h+10,m_mySkin->width(),m_mySkin->height());
-        m_mySkin->raise();
-        m_mySkin->exec();
-    }
+    MySkin::getInstance()->exec();
 }
 
 

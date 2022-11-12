@@ -114,17 +114,13 @@ background-color: rgb(21, 196, 52);
 #m_skinCheckedBtn
 {
 border-image: url(://images/skin/myskin_checkbtn.png);
+background:transparent;
 }
 
 /*选中*/
 #m_skinCheckedBtn:checked
 {
 border-image: url(://images/skin/myskin_checkbtn_hover.png);
-}
-
-#m_skinCheckedBtn:unchecked
-{
-border-image: url(://images/skin/myskin_checkbtn.png);
 }
 
 /**视频分类选择**/
@@ -1192,13 +1188,22 @@ image: url(://images/tray/tray_checked.png);
 #playlist_playMenu,#playlist_collectMenu,#playlist_historytMenu
 {
 background-color:white;
-width:100px;
+width:120px;
+font: 400 14px "微软雅黑";
 border-radius:20px;
 }
 
 #playlist_playMenu::item,#playlist_collectMenu::item,#playlist_historytMenu::item
 {
 background-color:white;
+height:28px;
+/*padding可修改item高度*/
+}
+
+#playlist_playMenu::icon,#playlist_collectMenu::icon,#playlist_historytMenu::icon
+{
+background-color:white;
+height:28px;
 }
 
 #playlist_playMenu::item:selected,#playlist_collectMenu::item:selected,#playlist_historytMenu::item:selected
@@ -1377,16 +1382,20 @@ QToolBox QWidget  QListWidget::item:hover
 show-decoration-selected:5;
 background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #5104e4, stop:1  #8e2ce1);
 border-style:outset;	
+color: transparent;
 }
+
 
 QToolBox QWidget  QListWidget::item:selected
 {
+color: transparent;
 background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #5104e4, stop:1  #8e2ce1);
 }
 
 /*上次选择后保留的状态，鼠标离开后显示,会影响selected*/
 QToolBox QWidget  QListWidget::item:selected:!active
 {
+color: transparent;
 background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #c11432, stop:1  #730f33);
 }
 

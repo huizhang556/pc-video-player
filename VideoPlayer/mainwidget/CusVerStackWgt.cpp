@@ -1,5 +1,6 @@
 ﻿#include "CusVerStackWgt.h"
 #include "global/Global.h"
+#include "mainwidget/CusLabel3.h"
 #include "mainwidget/subunititems/CusListItem1.h"
 #include <QScrollBar>
 #include <QListWidgetItem>
@@ -97,7 +98,7 @@ void CusVerStackWgt::setInstallEventFilter()
 void CusVerStackWgt::slot_addItemToCusVerStackWgt(const QString &picpath)
 {
     //添加图片
-    QLabel *label_pic = new QLabel(this);//此处需用指针，临时对象不行
+    CusLabel3 *label_pic = new CusLabel3(this);//此处需用指针，临时对象不行
     label_pic->setPixmap(QPixmap(picpath));
     label_pic->setScaledContents(true);
     this->insertWidget(this->count(),label_pic);
@@ -108,7 +109,7 @@ void CusVerStackWgt::slot_addToStackPictures(const QStringList &introduce, const
     for(int i = 0; i < list_pic.count(); i++)
     {
         //添加图片
-        QLabel *label_pic = new QLabel(this);//此处需用指针，临时对象不行
+        CusLabel3 *label_pic = new CusLabel3(this);//此处需用指针，临时对象不行
         label_pic->setPixmap(QPixmap(list_pic.at(i)));
         label_pic->setScaledContents(true);
         this->insertWidget(this->count(),label_pic);
