@@ -110,6 +110,7 @@ MultipPlayer *MultipPlayer::getInstance()
 /*初始化界面*/
 void MultipPlayer::initMainWindow()
 {
+    ui->label_media_name->initMoveText(MOVETYPE::FILO,QString(u8""),QFont("微软雅黑",10,75),QColor(0, 170, 127,255),50);
     m_cusDialog = new CustomFileDialog;
     m_cusDialog->setObjectName(QString::fromLocal8Bit("m_cusDialog"));
     m_cusDialog->setFileMode(QFileDialog::ExistingFiles);//多选

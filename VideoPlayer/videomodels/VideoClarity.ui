@@ -86,6 +86,27 @@
 }
 
 /* proceed with styling just like QCheckBox */
+QPushButton
+{
+background-color: transparent;
+color: #ffffff;
+text-align: left;
+margin-left: 10px;
+}
+QPushButton:hover
+{
+color:#ff5500;
+}
+QPushButton:checked
+{
+color:#5e9ef5;
+}
+
+QPushButton:disabled
+{
+color: #6d6d6d;
+}
+
 </string>
        </property>
        <property name="title">
@@ -143,27 +164,7 @@
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">QPushButton
-{
-background-color: transparent;
-color: #ffffff;
-text-align: left;
-margin-left: 15px;
-}
-QPushButton:hover
-{
-color:#ff5500;
-}
-QPushButton:checked
-{
-color:#5e9ef5;
-}
-
-QPushButton:disabled
-{
-color: #6d6d6d;
-}
-</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>超清</string>
@@ -185,27 +186,7 @@ color: #6d6d6d;
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">QPushButton
-{
-background-color: transparent;
-color: #ffffff;
-text-align: left;
-margin-left: 15px;
-}
-QPushButton:hover
-{
-color:#ff5500;
-}
-QPushButton:checked
-{
-color:#5e9ef5;
-}
-
-QPushButton:disabled
-{
-color: #6d6d6d;
-}
-</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>1080P</string>
@@ -227,26 +208,7 @@ color: #6d6d6d;
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">QPushButton
-{
-background-color: transparent;
-color: #ffffff;
-text-align: left;
-margin-left: 15px;
-}
-QPushButton:hover
-{
-color:#ff5500;
-}
-QPushButton:checked
-{
-color:#5e9ef5;
-}
-
-QPushButton:disabled
-{
-color: #6d6d6d;
-}</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>720P</string>
@@ -268,26 +230,7 @@ color: #6d6d6d;
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">QPushButton
-{
-background-color: transparent;
-color: #ffffff;
-text-align: left;
-margin-left: 15px;
-}
-QPushButton:hover
-{
-color:#ff5500;
-}
-QPushButton:checked
-{
-color:#5e9ef5;
-}
-
-QPushButton:disabled
-{
-color: #6d6d6d;
-}</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>480P</string>
@@ -309,27 +252,7 @@ color: #6d6d6d;
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">QPushButton
-{
-background-color: transparent;
-color: #ffffff;
-text-align: left;
-margin-left: 15px;
-}
-QPushButton:hover
-{
-color:#ff5500;
-}
-QPushButton:checked
-{
-color:#5e9ef5;
-}
-
-QPushButton:disabled
-{
-color: #6d6d6d;
-}
-</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>标清</string>

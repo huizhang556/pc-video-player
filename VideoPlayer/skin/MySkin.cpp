@@ -247,14 +247,12 @@ void MySkin::switchButtonToStackWidget(QAbstractButton *button)
 
 QPushButton *MySkin::getListWidgetItemButton(QListWidget* listWidget, QListWidgetItem *item, QString objname)
 {
-    qDebug() << "item changed start finded!";
     QWidget* itemWidget = listWidget->itemWidget(item);
     if(nullptr != itemWidget)
     {
         QPushButton *itemBtn = itemWidget->findChild<QPushButton*>(objname);//查找指定名称的按钮
         if(nullptr != itemBtn)
         {
-            qDebug() << "item changed finded!";
             return itemBtn;
         }
     }
@@ -262,16 +260,14 @@ QPushButton *MySkin::getListWidgetItemButton(QListWidget* listWidget, QListWidge
 
 void MySkin::setItemChangedStyle(QListWidget *listWidget, QListWidgetItem *current, QListWidgetItem *previous)
 {
-    qDebug() <<"item changed enter";
     if(previous != nullptr)
     {
-//        qDebug() << QString::fromLocal8Bit("先前的item：")<<previous->text();
         getListWidgetItemButton(listWidget,previous,"m_skinCheckedBtn")->setChecked(false);
+        getListWidgetItemButton(listWidget,previous,"m_skinCloseBtn")->hide();
         getListWidgetItemButton(listWidget,previous,"m_skinCheckedBtn")->hide();
     }
     if(current != nullptr)
     {
-//        qDebug() << QString::fromLocal8Bit("现在的item:")<<current->text();
         getListWidgetItemButton(listWidget,current,"m_skinCheckedBtn")->setChecked(true);
     }
 

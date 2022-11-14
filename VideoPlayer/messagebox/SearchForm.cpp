@@ -23,26 +23,31 @@ SearchForm::~SearchForm()
 
 void SearchForm::initWorkUi()
 {
+    m_manger=new QNetworkAccessManager(this);
     this->setFocusPolicy(Qt::NoFocus);
     ui->listWidget_his1->setFocusPolicy(Qt::NoFocus);
     ui->listWidget_his2->setFocusPolicy(Qt::NoFocus);
     ui->listWidget_hot1->setFocusPolicy(Qt::NoFocus);
     ui->listWidget_hot2->setFocusPolicy(Qt::NoFocus);
+    ui->listWidget_findresult->setFocusPolicy(Qt::NoFocus);
 
     ui->listWidget_his1->setViewMode(QListView::ListMode);
     ui->listWidget_his2->setViewMode(QListView::ListMode);
     ui->listWidget_hot1->setViewMode(QListView::ListMode);
     ui->listWidget_hot2->setViewMode(QListView::ListMode);
+    ui->listWidget_findresult->setViewMode(QListView::ListMode);
 
     ui->listWidget_his1->setMovement(QListView::Static);//图标不可拖动
     ui->listWidget_his2->setMovement(QListView::Static);//图标不可拖动
     ui->listWidget_hot1->setMovement(QListView::Static);//图标不可拖动
     ui->listWidget_hot2->setMovement(QListView::Static);//图标不可拖动
+    ui->listWidget_findresult->setMovement(QListView::Static);//图标不可拖动
 
     ui->listWidget_his1->setResizeMode(QListWidget::Adjust);
     ui->listWidget_his2->setResizeMode(QListWidget::Adjust);
     ui->listWidget_hot1->setResizeMode(QListWidget::Adjust);
     ui->listWidget_hot2->setResizeMode(QListWidget::Adjust);
+    ui->listWidget_findresult->setResizeMode(QListWidget::Adjust);
 
     ui->listWidget_his1->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_his1->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -59,6 +64,10 @@ void SearchForm::initWorkUi()
     ui->listWidget_hot2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_hot2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_hot2->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+
+    ui->listWidget_findresult->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_findresult->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_findresult->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     ui->btn_his_delete->setFlat(true);
     ui->btn_hot_more->setFlat(true);
@@ -94,6 +103,30 @@ void SearchForm::chandleSignalsAndSlot()
 
 }
 
+void SearchForm::showUI(SHOWTYPE type)
+{
+    switch (type)
+    {
+        case SHOWTYPE::HISHOT:
+        {
+            ui->stackedWidget_search->setCurrentWidget(ui->page_his);
+        }
+            break;
+        case SHOWTYPE::RESFIND:
+        {
+        ui->stackedWidget_search->setCurrentWidget(ui->page_result);
+        }
+        case SHOWTYPE::NORMAL:
+        {
+
+        }
+            break;
+        default:
+            break;
+    }
+    this->show();
+}
+
 
 void SearchForm::slot_addHotRecommendItems(const QStringList &str_list)
 {
@@ -111,6 +144,49 @@ void SearchForm::slot_addHotRecommendItems(const QStringList &str_list)
             ui->listWidget_hot2->addItem(hotItem);
         }
     }
+}
+
+void SearchForm::slot_showSearchResult(const QString str)
+{
+    ui->listWidget_findresult->clear();
+//       int count = ui->listWidget_findresult->count();
+//       for(int i = 0; i < count; i++)
+//       {
+//          QListWidgetItem *item= ui->listWidget_findresult->takeItem(i);
+//          delete item;
+//       }
+       QNetworkRequest request;
+       request.setUrl(QUrl("http://i.y.qq.com/s.plcloud/fcgi-bin/smartbox_new.fcg?key="+str+"&utf8=1&is_json=1"));
+       request.setRawHeader("Accept","*/*");
+       request.setRawHeader("Accept-Language","zh-CN");
+       request.setRawHeader("User-Agent","Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)");
+       request.setRawHeader("Host","i.y.qq.com");
+       request.setRawHeader("Content-Type","application/x-www-form-urlencoded");
+       request.setRawHeader("Accept-Encoding","deflate");
+       request.setRawHeader("Cookie","qqmusic_fromtag=3; qqmusic_miniversion=57; qqmusic_version=12;");
+       QNetworkReply *reply = m_manger->get(request);
+       QEventLoop loop;
+       connect(reply,SIGNAL(finished()),&loop,SLOT(quit()));
+       loop.exec();
+
+       if(reply->error() == QNetworkReply::NoError)
+       {
+           QByteArray byt = reply->readAll();
+           QJsonDocument doc = QJsonDocument::fromJson(byt);
+           QJsonObject obj  = doc.object();
+           QJsonObject obj1 = obj.value("data").toObject();
+           QJsonObject obj2 = obj1.value("song").toObject();
+           QJsonArray arry = obj2.value("itemlist").toArray();
+           for(int i = 0; i < arry.count(); i++)
+           {
+               QJsonObject obj3   = arry.at(i).toObject();
+               QString songname   = obj3.value("name").toString();
+               QString songsinger = obj3.value("singer").toString();
+               ui->listWidget_findresult->addItem(new QListWidgetItem(QString::number(ui->listWidget_findresult->count()+1) + " " + songsinger+ "-" + songname));
+//               qDebug() << QString(u8"查询到的结果：")<<songsinger+"-"+songname;
+           }
+       }
+       reply->deleteLater();
 }
 
 void SearchForm::leaveEvent(QEvent *event)

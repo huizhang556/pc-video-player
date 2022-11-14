@@ -417,7 +417,7 @@ border: 0px solid white;
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_4">
                   <item>
-                   <widget class="QLabel" name="label_media_name">
+                   <widget class="TextMovingLabel" name="label_media_name">
                     <property name="minimumSize">
                      <size>
                       <width>220</width>
@@ -434,7 +434,6 @@ border: 0px solid white;
                      <string notr="true">QLabel
 {
 margin-top:3px;
-color:#29aae2;
 }
 </string>
                     </property>
@@ -449,11 +448,11 @@ color:#29aae2;
                      <enum>Qt::Horizontal</enum>
                     </property>
                     <property name="sizeType">
-                     <enum>QSizePolicy::Minimum</enum>
+                     <enum>QSizePolicy::Fixed</enum>
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>50</width>
+                      <width>10</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -840,7 +839,7 @@ color: #00f9e5;
                      <item>
                       <layout class="QHBoxLayout" name="horizontalLayout_8">
                        <property name="spacing">
-                        <number>8</number>
+                        <number>6</number>
                        </property>
                        <item>
                         <widget class="QPushButton" name="pushButton_openVip">
@@ -1241,6 +1240,11 @@ border:none;
    <extends>QWidget</extends>
    <header location="global">videomodels/RotatePic.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TextMovingLabel</class>
+   <extends>QLabel</extends>
+   <header>customer/TextMovingLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

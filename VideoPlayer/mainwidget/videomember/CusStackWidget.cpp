@@ -40,16 +40,16 @@ void CusStackWidget::initWorkUI()
     m_hbLayout = new QHBoxLayout();
     m_hbLayout->addSpacerItem(new QSpacerItem(10,20,QSizePolicy::Fixed,QSizePolicy::Fixed));
 
-    CusPushButton   *button0 = new CusPushButton(QString(u8"动漫"),0);
-    CusPushButton   *button1 = new CusPushButton(QString(u8"综艺"),1);
-    CusPushButton   *button2 = new CusPushButton(QString(u8"少儿"),2);
-    CusPushButton   *button3 = new CusPushButton(QString(u8"影视"),3);
-    CusPushButton   *button4 = new CusPushButton(QString(u8"相声"),4);
-    CusPushButton   *button5 = new CusPushButton(QString(u8"音乐"),5);
-    CusPushButton   *button6 = new CusPushButton(QString(u8"游戏"),6);
-    CusPushButton   *button7 = new CusPushButton(QString(u8"直播"),7);
-    CusPushButton   *button8 = new CusPushButton(QString(u8"戏曲"),8);
-    CusPushButton   *button9 = new CusPushButton(QString(u8"评书"),9);
+    CusPushButton   *button0 = new CusPushButton(QString(u8"非凡守护"),0);
+    CusPushButton   *button1 = new CusPushButton(QString(u8"东北往事"),1);
+    CusPushButton   *button2 = new CusPushButton(QString(u8"杨戬-战神归来"),2);
+    CusPushButton   *button3 = new CusPushButton(QString(u8"独行月球"),3);
+    CusPushButton   *button4 = new CusPushButton(QString(u8"狼群-引爆荷尔蒙"),4);
+    CusPushButton   *button5 = new CusPushButton(QString(u8"天才不能承受之重"),5);
+    CusPushButton   *button6 = new CusPushButton(QString(u8"世间有她"),6);
+    CusPushButton   *button7 = new CusPushButton(QString(u8"神探大战"),7);
+    CusPushButton   *button8 = new CusPushButton(QString(u8"搜救"),8);
+    CusPushButton   *button9 = new CusPushButton(QString(u8"摇滚狂花"),9);
 
     connect(button0,SIGNAL(sig_buttonHover(int)),this,SLOT(slot_setCurrentIndex(int)));
     connect(button1,SIGNAL(sig_buttonHover(int)),this,SLOT(slot_setCurrentIndex(int)));

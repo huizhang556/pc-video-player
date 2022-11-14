@@ -93,27 +93,30 @@ int main(int argc, char *argv[])
         a.processEvents();
         splashscream.show();
         splashscream.setCursor(Qt::BlankCursor);
-        for(int i = 0; i< 3; ++i)
+        for(int i = 0; i< 5; ++i)
         {
-            splashscream.slot_updateProgressbarValue(i*33);
+            splashscream.slot_updateProgressbarValue(i*19);
             QThread::sleep(1);//450 280 270 100
         }
     }
 
     //05--->显示主界面
-//    MainWidget w1;
-//    w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
-//    w1.show();
+    MainWidget w1;
+    w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
+    w1.show();
 
-    MultipPlayer::getInstance()->show();
+//    MultipPlayer::getInstance()->show();
 
 //    MusicPlaylist w1;
 //    w1.show();
 
+//    MySkin::getInstance()->show();
+
+
 //    TitleBar w1;
 //    w1.show();
 
-//    splashscream.finish(&w1);
+    splashscream.finish(&w1);
 
 
     //06--->数据恢复初始化

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1202</width>
+    <width>1253</width>
     <height>40</height>
    </rect>
   </property>
@@ -157,7 +157,7 @@ color: #06e1f4;
           <widget class="QStackedWidget" name="stackedWidget">
            <property name="minimumSize">
             <size>
-             <width>800</width>
+             <width>600</width>
              <height>38</height>
             </size>
            </property>
@@ -191,23 +191,10 @@ color: #06e1f4;
               <number>0</number>
              </property>
              <item>
-              <spacer name="horizontalSpacer_5">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_title">
+              <widget class="TextMovingLabel" name="label_title">
                <property name="minimumSize">
                 <size>
-                 <width>200</width>
+                 <width>600</width>
                  <height>30</height>
                 </size>
                </property>
@@ -227,11 +214,7 @@ color: #06e1f4;
                 </font>
                </property>
                <property name="styleSheet">
-                <string notr="true">QLabel
-{
-color:#29aae2;
-font: 13pt &quot;楷体&quot;;
-}
+                <string notr="true">
 </string>
                </property>
                <property name="text">
@@ -241,19 +224,6 @@ font: 13pt &quot;楷体&quot;;
                 <set>Qt::AlignCenter</set>
                </property>
               </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_6">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
             </layout>
            </widget>
@@ -350,16 +320,16 @@ border:1px solid #ff5c38;
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="frame_win">
+          <widget class="QFrame" name="frame_winctrl">
            <property name="minimumSize">
             <size>
-             <width>260</width>
+             <width>280</width>
              <height>38</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>260</width>
+             <width>280</width>
              <height>38</height>
             </size>
            </property>
@@ -697,6 +667,13 @@ border: 1px solid #3C80B1;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TextMovingLabel</class>
+   <extends>QLabel</extends>
+   <header>customer/TextMovingLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

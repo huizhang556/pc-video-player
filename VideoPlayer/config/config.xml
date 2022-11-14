@@ -17,6 +17,6 @@
 <skin>
 <defaultSkin>blackTheme</defaultSkin>
 <splashOn>false</splashOn>
-<defaultSplash>/pictures/splashscreen/splash1.gif</defaultSplash>
+<defaultSplash>/pictures/splashscreen/splash.png</defaultSplash>
 </skin>
 </appconfig>

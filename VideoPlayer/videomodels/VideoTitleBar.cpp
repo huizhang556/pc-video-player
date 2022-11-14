@@ -32,6 +32,7 @@ void VideoTitleBar::initUi()
     ui->pushButton_return->installEventFilter(this);
     ui->pushButton_return->setIcon(QIcon(":/images/icon/returnhome.png"));
     ui->pushButton_return->setText(QString::fromLocal8Bit("返回主界面"));
+    ui->label_title->initMoveText(MOVETYPE::FIFO,QString(u8""),QFont("微软雅黑",13,75),QColor(47, 228, 82,255),20);
 }
 
 void VideoTitleBar::chandleSignalsAndSlots()
@@ -76,6 +77,7 @@ void VideoTitleBar::setTitleText(const QString &text)
         return;
     ui->label_title->setText(QString::fromLocal8Bit("正在播放：")+text);
 }
+
 
 /*清除标题栏*/
 void VideoTitleBar::clearTitleText()

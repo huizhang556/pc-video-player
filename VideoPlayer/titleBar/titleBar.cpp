@@ -374,6 +374,19 @@ void TitleBar::handleSignalAndSLots()
               slot_setCurrentWebSiteCollectStatus(text);//设置样式
     });
 
+    //搜索框---搜索文本改变
+    connect(ui->lineEditSearch,&CusLineEdit::textChanged,[=](QString text){
+        if(!text.trimmed().isEmpty())
+        {
+            m_searchForm->showUI(SHOWTYPE::RESFIND);
+             m_searchForm->slot_showSearchResult(text);
+        }
+        else
+        {
+            m_searchForm->showUI(SHOWTYPE::HISHOT);
+        }
+    });
+
     //搜索框---回车
     connect(ui->lineEditSearch,&CusLineEdit::returnPressed,[=](){
         QString his = ui->lineEditSearch->text().trimmed();
@@ -1214,7 +1227,7 @@ void TitleBar::mouseIsPressReleaseLineEdit(QObject *watched, QEvent *event)
             int height = ui->lineEditSearch->height();
             m_searchForm->setGeometry(x+10,y+height-2,ui->lineEditSearch->width()-26,m_searchForm->height());
             m_searchForm->raise();//必须提升界面所处层次
-            m_searchForm->show();
+            m_searchForm->showUI(SHOWTYPE::HISHOT);
         }
         else if(event->type() == QEvent::FocusOut)
         {

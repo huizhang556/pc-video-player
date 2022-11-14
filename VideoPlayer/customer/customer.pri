@@ -7,7 +7,8 @@ SOURCES += \
     $$PWD/CusFileDialog.cpp \
     $$PWD/CustomTabStyle.cpp \
     $$PWD/CustomFileDialog.cpp \
-    $$PWD/CPushButton.cpp
+    $$PWD/CPushButton.cpp \
+    $$PWD/TextMovingLabel.cpp
 
 HEADERS += \
     $$PWD/CusTabWidget.h \
@@ -18,7 +19,8 @@ HEADERS += \
     $$PWD/CusFileDialog.h \
     $$PWD/CustomTabStyle.h \
     $$PWD/CustomFileDialog.h \
-    $$PWD/CPushButton.h
+    $$PWD/CPushButton.h \
+    $$PWD/TextMovingLabel.h
 
 FORMS += \
     $$PWD/CusTabWidget.ui \
