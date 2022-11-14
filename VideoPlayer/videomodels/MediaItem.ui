@@ -300,19 +300,6 @@ image: url(:/images/fileitem/file_ismore.png);
           <number>0</number>
          </property>
          <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>37</width>
-             <height>18</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
           <widget class="QPushButton" name="pushButton_duration">
            <property name="minimumSize">
             <size>
@@ -322,7 +309,7 @@ image: url(:/images/fileitem/file_ismore.png);
            </property>
            <property name="maximumSize">
             <size>
-             <width>40</width>
+             <width>16777215</width>
              <height>25</height>
             </size>
            </property>
@@ -331,7 +318,7 @@ image: url(:/images/fileitem/file_ismore.png);
 {
 color: #aaaaff;
 text-align: right;
-padding-right: 4px;
+padding-right: 5px;
 font: 400 14px &quot;Mircrosoft YaHei&quot;;
 }
 

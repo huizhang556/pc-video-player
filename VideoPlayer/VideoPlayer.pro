@@ -14,7 +14,7 @@ RC_ICONS = favicon.ico
 
 # 以管理员运行(msvc方式)
 #mingw需要通过加入文件的形式
-QMAKE_LFLAGS += /MANIFESTUAC:\"level=\'requireAdministrator\' uiAccess=\'false\'\"
+#QMAKE_LFLAGS += /MANIFESTUAC:\"level=\'requireAdministrator\' uiAccess=\'false\'\"
 
 DEFINES += QT_DEPRECATED_WARNINGS
 #禁用qdebug打印输出
@@ -42,6 +42,7 @@ include($$PWD/skin/skin.pri)
 include($$PWD/style/style.pri)
 include($$PWD/login/login.pri)
 include($$PWD/global/global.pri)
+include($$PWD/updater/updater.pri)
 include($$PWD/lunbotu/lunbotu.pri)
 include($$PWD/network/network.pri)
 include($$PWD/browser/browser.pri)
@@ -74,4 +75,3 @@ RESOURCES += \
     res_image.qrc \
     res_font.qrc
 
-FORMS +=

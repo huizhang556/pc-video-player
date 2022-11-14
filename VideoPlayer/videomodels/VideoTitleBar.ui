@@ -214,8 +214,7 @@ color: #06e1f4;
                 </font>
                </property>
                <property name="styleSheet">
-                <string notr="true">
-</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string/>

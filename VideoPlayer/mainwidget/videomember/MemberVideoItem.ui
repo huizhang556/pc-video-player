@@ -91,7 +91,7 @@ border-radius: 10px;
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <property name="spacing">
          <number>0</number>
         </property>
@@ -108,26 +108,21 @@ border-radius: 10px;
          <number>0</number>
         </property>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <property name="spacing">
-           <number>0</number>
+         <widget class="QPushButton" name="pushButton_intro">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>25</height>
+           </size>
           </property>
-          <item>
-           <widget class="QPushButton" name="pushButton_intro">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
 {
 color: #878787;
 border-radius: 5px;
@@ -139,17 +134,22 @@ QPushButton:hover
 {
 color: white;
 }</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QPushButton" name="pushButton_name">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>130</width>
               <height>25</height>
              </size>
             </property>
@@ -175,6 +175,53 @@ color: white;
             </property>
             <property name="text">
              <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_order">
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+color: #767f78;
+border-radius: 6px;
+border: 1px solid #ff008c;
+font: 800 14px &quot;微软雅黑&quot;;
+background-color: transparent;
+}
+
+QPushButton:hover
+{
+color: #ff4034;
+}</string>
+            </property>
+            <property name="text">
+             <string>预约</string>
             </property>
            </widget>
           </item>

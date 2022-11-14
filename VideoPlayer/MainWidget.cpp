@@ -1,7 +1,9 @@
 ﻿#include "MainWidget.h"
+#include "updater/Updater.h"
 #include "database/dataBase.h"
 #include "customer/CustomTabStyle.h"
 #include "desktoplyric/toplyric/DesktopLyric.h"
+
 
 #ifdef Q_OS_WIN
 #include <qt_windows.h>
@@ -1077,7 +1079,8 @@ void MainWidget::tray_systemSettting()
 
 void MainWidget::tray_onlineUpgrade()
 {
-    QMessageBox::information(this,QString::fromLocal8Bit("更新提示"),QString::fromLocal8Bit("请前往官网下载更新！"));
+//    QMessageBox::information(this,QString::fromLocal8Bit("更新提示"),QString::fromLocal8Bit("请前往官网下载更新！"));
+    Updater::getInstance()->exec();
 }
 
 void MainWidget::tray_systemLogout()

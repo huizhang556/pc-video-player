@@ -8,7 +8,8 @@ SOURCES += \
     $$PWD/CustomTabStyle.cpp \
     $$PWD/CustomFileDialog.cpp \
     $$PWD/CPushButton.cpp \
-    $$PWD/TextMovingLabel.cpp
+    $$PWD/TextMovingLabel.cpp \
+    $$PWD/EllipButton.cpp
 
 HEADERS += \
     $$PWD/CusTabWidget.h \
@@ -20,13 +21,15 @@ HEADERS += \
     $$PWD/CustomTabStyle.h \
     $$PWD/CustomFileDialog.h \
     $$PWD/CPushButton.h \
-    $$PWD/TextMovingLabel.h
+    $$PWD/TextMovingLabel.h \
+    $$PWD/EllipButton.h
 
 FORMS += \
     $$PWD/CusTabWidget.ui \
     $$PWD/SystemTray.ui \
     $$PWD/CusFileDialog.ui \
-    $$PWD/CustomFileDialog.ui
+    $$PWD/CustomFileDialog.ui \
+    $$PWD/EllipButton.ui
 
 SUBDIRS +=
 
