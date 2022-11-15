@@ -2,11 +2,6 @@
 #include "ui_Updater.h"
 #include "updater/Installer.h"
 
-#ifdef Q_OS_WIN
-#include <qt_windows.h>
-#pragma comment (lib,"user32.lib")
-#endif
-
 Updater* Updater::m_pInstance = nullptr;
 
 Updater::Updater(QWidget *parent) :
@@ -43,7 +38,7 @@ void Updater::initWorkUI()
 {
     ui->stackedWidget_select->setCurrentIndex(1);
     ui->textEdit_info->setAlignment(Qt::AlignLeft);
-    ui->textEdit_info->setText(QString(u8"Windows客户端V1.1.6版本\n,\n,最新版本：客户端V1.1.7版本"));
+    ui->textEdit_info->setText(QString(u8"Windows客户端V1.1.6版本\n\n,最新版本：客户端V1.1.7版本"));
 }
 
 void Updater::handleSignalsAndSlots()
@@ -70,19 +65,4 @@ void Updater::handleSignalsAndSlots()
     connect(ui->pushButton_reject,&QPushButton::clicked,[=](){
         this->reject();
     });
-
-
-}
-
-void Updater::mousePressEvent(QMouseEvent *event)
-{
-    if(ReleaseCapture())
-    {
-        QWidget* pWindow = this->window();
-        if(pWindow->isTopLevel())
-        {
-            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
-        }
-    }
-    event->ignore();
 }

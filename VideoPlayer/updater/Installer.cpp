@@ -2,6 +2,11 @@
 #include "ui_Installer.h"
 #include "global/Global.h"
 
+#ifdef Q_OS_WIN
+#include <qt_windows.h>
+#pragma comment (lib,"user32.lib")
+#endif
+
 Installer* Installer::m_pInstance = nullptr;
 
 Installer::Installer(QWidget *parent) :
@@ -86,6 +91,7 @@ void Installer::handleSignalsAndSlots()
         else if(ui->pushButton_cancel->text() == QString(u8"完成"))
         {
             emit sig_sendFinished();
+            this->accept();
         }
     });
 
@@ -140,4 +146,17 @@ void Installer::handleSignalsAndSlots()
             }
     });
 
+}
+
+void Installer::mousePressEvent(QMouseEvent *event)
+{
+    if(ReleaseCapture())
+    {
+        QWidget* pWindow = this->window();
+        if(pWindow->isTopLevel())
+        {
+            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
+        }
+    }
+    event->ignore();
 }

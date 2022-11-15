@@ -2,7 +2,6 @@
 #define UPDATER_H
 
 #include <QDialog>
-#include <QMouseEvent>
 
 namespace Ui {
 class Updater;
@@ -20,7 +19,6 @@ public:
     void    handleSignalsAndSlots();
 
 protected:
-   void  mousePressEvent(QMouseEvent *event) override;
 
 private:
     Ui::Updater *ui;

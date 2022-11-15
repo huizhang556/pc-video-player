@@ -327,13 +327,14 @@ border: 1px solid #3C80B1;
             <string notr="true">QListWidget
 {
 border:none;
+background-color:#25252b;
 }
 
 QListWidget::item
 {
 margin-left:10px;
 margin-top:10px;
-background-color:;
+background-color:#25252b;
 }
 
 QListWidget::item:hover

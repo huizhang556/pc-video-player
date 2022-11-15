@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QFileDialog>
 #include <QButtonGroup>
+#include <QMouseEvent>
 #include <QTreeWidgetItem>
 #include <QDebug>
 
@@ -22,10 +23,13 @@ public:
     void    initWorkUI();
     void    handleSignalsAndSlots();
 
+protected:
+   void  mousePressEvent(QMouseEvent *event) override;
+
 private:
     Ui::Installer *ui;
-     static Installer* m_pInstance;
-     int    m_curPageIndex;
+     static         Installer* m_pInstance;
+     int            m_curPageIndex;
      QButtonGroup   *m_buttonGroup  =   nullptr;
 
 signals:
