@@ -72,8 +72,8 @@ void MainWidget::initOtherWidgetUi()
     m_musicList = new MusicPlaylist();
     m_musicList->setObjectName(QString::fromLatin1("m_musicList"));
 
-    m_musicShow = new MusicPlayShow();
-    m_musicShow->setObjectName(QString::fromLatin1("m_musicShow"));
+//    m_musicShow = new MusicPlayShow();
+//    m_musicShow->setObjectName(QString::fromLatin1("m_musicShow"));
 
     m_tabWidget = new CusTabWidget();
     m_tabWidget->setObjectName(QString::fromLatin1("m_tabWidget"));
@@ -294,7 +294,7 @@ void MainWidget::setStackedWidgetPage()
     m_stackWidget_center->addWidget(m_radioHost);//电台
     m_stackWidget_center->addWidget(m_musicScene);//音乐场景
     m_stackWidget_center->addWidget(m_vipMember);//vip会员
-    m_stackWidget_center->addWidget(m_musicShow);//显示歌词
+//    m_stackWidget_center->addWidget(m_musicShow);//显示歌词
     m_stackWidget_center->addWidget(m_musicList);//歌曲列表
     m_stackWidget_center->addWidget(m_personForm);//个人管理
     m_stackWidget_center->addWidget(m_fileTrans);//文件传输
@@ -1374,11 +1374,11 @@ MainWidget::~MainWidget()
         m_musicList = nullptr;
     }
 
-    if(m_musicShow != nullptr)
-    {
-        delete m_musicShow;
-        m_musicShow = nullptr;
-    }
+//    if(m_musicShow != nullptr)
+//    {
+//        delete m_musicShow;
+//        m_musicShow = nullptr;
+//    }
     if(m_musicList != nullptr)
     {
         delete m_musicList;

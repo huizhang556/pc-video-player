@@ -241,7 +241,7 @@ private:
     PersonFileForm      *m_personForm              = nullptr;
     LeftSideBar         *m_leftSideBar             = nullptr;
     MusicPlaylist       *m_musicList               = nullptr;
-    MusicPlayShow       *m_musicShow               = nullptr;
+//    MusicPlayShow       *m_musicShow               = nullptr;
     FilesTrans          *m_fileTrans               = nullptr;//文件传输界面
     CusTabWidget        *m_tabWidget               = nullptr;
     VideoBlank          *m_videoBlank              = nullptr;

@@ -6,6 +6,7 @@
 
 MusicPlayShow::MusicPlayShow(QWidget *parent) :
     QWidget(parent),
+    m_skinPath(u8"本地图片"),//默认显示
     ui(new Ui::MusicPlayShow)
 {
 
@@ -18,20 +19,29 @@ MusicPlayShow::MusicPlayShow(QWidget *parent) :
 MusicPlayShow::~MusicPlayShow()
 {
     delete ui;
+
+//    if(photo != nullptr)
+//        delete photo;
+//    photo = nullptr;
 }
 
 void MusicPlayShow::initWorkUI()
 {
-    photo = new QPixmap;
+    photo = new QPixmap();
 }
 
 void MusicPlayShow::handleSignalsAndSlots()
 {
     connect(Global::getInstance(),&Global::sig_sendGlobalTimeOut,[=]()
     {
-        fileName = Global::appDirPath + QString("/pictures/musicwall/%1.png").arg(i);
+        fileName = Global::appDirPath + switchSkin(m_skinPath).arg(i);
         loadPictures(fileName);
         changeTimeCout();
+    });
+
+    //切换皮肤
+    connect(FontColor::getInstance(),&FontColor::sig_send_switchskin,[=](QString skin){
+        m_skinPath = skin;
     });
 
     //字体大小
@@ -56,12 +66,11 @@ void MusicPlayShow::loadPictures(QString &path) const
     ui->labelPicture->setPixmap(*photo);
     //图片自适应显示
     ui->labelPicture->setScaledContents(true);
-
 }
 
 void MusicPlayShow::changeTimeCout()
 {
-    if(++i > 15)
+    if(++i > 9)
         i = 1;
 }
 
@@ -85,4 +94,24 @@ bool MusicPlayShow::eventFilter(QObject *watched, QEvent *event)
         }
     }
     return QWidget::eventFilter(watched,event);
+}
+
+const QString MusicPlayShow::switchSkin(const QString &text)
+{
+    QString path_t;
+    if(text == QString(u8"歌手写真"))
+    {
+        path_t = QString("/pictures/songers/songer%1.jpg");
+        ui->stackedWidget->setCurrentIndex(0);
+    }
+    else if(text == QString(u8"酷我皮肤"))
+    {
+        path_t = QString("/pictures/musics/fashion/music%1.png");
+        ui->stackedWidget->setCurrentIndex(1);
+    }
+    else if(text == QString(u8"本地图片"))
+    {
+        path_t = QString("/pictures/musicwall/%1.png");
+    }
+    return path_t;
 }

@@ -110,6 +110,9 @@ int main(int argc, char *argv[])
 //    MusicPlaylist w1;
 //    w1.show();
 
+//    MusicPlayShow w1;
+//    w1.show();
+
 //    MySkin::getInstance()->show();
 
 

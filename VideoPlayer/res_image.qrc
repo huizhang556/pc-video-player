@@ -564,5 +564,7 @@
         <file>images/fileitem/file_more.png</file>
         <file>images/fileitem/file_downloadmini.png</file>
         <file>images/fileitem/file_isdownloadmini.png</file>
+        <file>images/bgpic/mediaDisk.png</file>
+        <file>images/bgpic/Pole.png</file>
     </qresource>
 </RCC>

@@ -1,5 +1,6 @@
 ﻿#include "FontColor.h"
 #include "ui_FontColor.h"
+#include <QDebug>
 
 FontColor* FontColor::m_pInstance = nullptr;
 
@@ -27,10 +28,20 @@ void FontColor::initWorkUI()
 {
     ui->horizontalSlider_font->setRange(10,40);
     ui->horizontalSlider_font->setValue(23);
+    m_buttonGroup = new QButtonGroup(this);
+    m_buttonGroup->setExclusive(true);
+    m_buttonGroup->addButton(ui->pushButton_localpic,0);
+    m_buttonGroup->addButton(ui->pushButton_skin,1);
+    m_buttonGroup->addButton(ui->pushButton_songer,2);
 }
 
 void FontColor::handleSinalsAndSlots()
 {
+    connect(m_buttonGroup,QOverload<QAbstractButton*>::of(&QButtonGroup::buttonClicked),this,[&](QAbstractButton* button){
+        if(button->text().isEmpty()) return;
+        emit sig_send_switchskin(button->text());
+    });
+
     //放大
     connect(ui->pushButton_fontIn,&QPushButton::clicked,[=](){
         int size = ui->horizontalSlider_font->value() + 3;

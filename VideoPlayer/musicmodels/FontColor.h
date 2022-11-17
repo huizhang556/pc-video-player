@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QEvent>
 #include <QColor>
+#include <QButtonGroup>
 
 namespace Ui {
 class FontColor;
@@ -27,10 +28,12 @@ protected:
 private:
     Ui::FontColor *ui;
     static FontColor* m_pInstance;
+    QButtonGroup    *m_buttonGroup = nullptr;
 
 signals:
     void    sig_send_fontsize(int);
     void    sig_send_fontcolor(QString);
+    void    sig_send_switchskin(QString);//切换皮肤
 };
 
 #endif // FONTCOLOR_H

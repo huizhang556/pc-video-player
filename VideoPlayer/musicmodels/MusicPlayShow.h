@@ -38,7 +38,11 @@ private:
     Ui::MusicPlayShow *ui;
     QPixmap     *photo;
     QString     fileName;
+    QString     m_skinPath;
     int         i = 1;
+
+private:
+    const QString    switchSkin(const QString& text);//切换皮肤
 };
 
 #endif // MUSICPLAYSHOW_H
