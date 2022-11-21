@@ -31,7 +31,7 @@
 #include "videomodels/RecVideoItem.h"
 #include "splashscreen/CSplashScreen.h"
 #include "desktoplyric/toplyric/DesktopLyric.h"
-
+#include "mainwidget/shortvideo/ShortVideo.h"
 #include "login/NewLoginForm.h"
 #include "videomodels/Danmu.h"
 #include "mainwidget/TrianButton.h"
@@ -117,6 +117,9 @@ int main(int argc, char *argv[])
 
 
 //    TitleBar w1;
+//    w1.show();
+
+//    ShortVideo w1;
 //    w1.show();
 
     splashscream.finish(&w1);

@@ -566,5 +566,23 @@
         <file>images/fileitem/file_isdownloadmini.png</file>
         <file>images/bgpic/mediaDisk.png</file>
         <file>images/bgpic/Pole.png</file>
+        <file>images/player/player_collect.png</file>
+        <file>images/player/player_collect_hover.png</file>
+        <file>images/player/player_download.png</file>
+        <file>images/player/player_download_hover.png</file>
+        <file>images/player/player_more.png</file>
+        <file>images/player/player_more_hover.png</file>
+        <file>images/player/player_muted.png</file>
+        <file>images/player/player_muted_hover.png</file>
+        <file>images/player/player_next.png</file>
+        <file>images/player/player_next_hover.png</file>
+        <file>images/player/player_pause.png</file>
+        <file>images/player/player_pause_hover.png</file>
+        <file>images/player/player_sound.png</file>
+        <file>images/player/player_sound_hover.png</file>
+        <file>images/player/player_start.png</file>
+        <file>images/player/player_start_hover.png</file>
+        <file>images/player/player_toplayer.png</file>
+        <file>images/player/player_toplayer_hover.png</file>
     </qresource>
 </RCC>

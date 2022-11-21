@@ -16,7 +16,7 @@
   <property name="styleSheet">
    <string notr="true">#MySkin
 {
-background-color:rgba(239, 239, 239,0.5);
+background-color:rgba(93, 197, 47,0.3);
 }
 </string>
   </property>
@@ -301,8 +301,36 @@ border: 1px solid #3C80B1;
      </item>
      <item>
       <widget class="QStackedWidget" name="stackedWidget_skin">
+       <property name="styleSheet">
+        <string notr="true">#stackedWidget_skin
+{
+background-color: transparent;
+}
+
+QListWidget
+{
+border:none;
+background-color: transparent;
+}
+
+QListWidget::item
+{
+margin-left:10px;
+margin-top:10px;
+}
+
+QListWidget::item:hover
+{
+
+}
+
+QListWidget::item:selected
+{
+border:none;
+}</string>
+       </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>3</number>
        </property>
        <widget class="QWidget" name="page_musicdesktop">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -324,28 +352,7 @@ border: 1px solid #3C80B1;
          <item>
           <widget class="QListWidget" name="listWidget_desktop">
            <property name="styleSheet">
-            <string notr="true">QListWidget
-{
-border:none;
-background-color:#25252b;
-}
-
-QListWidget::item
-{
-margin-left:10px;
-margin-top:10px;
-background-color:#25252b;
-}
-
-QListWidget::item:hover
-{
-
-}
-
-QListWidget::item:selected
-{
-border:none;
-}</string>
+            <string notr="true"/>
            </property>
            <property name="flow">
             <enum>QListView::LeftToRight</enum>
@@ -377,25 +384,7 @@ border:none;
          <item>
           <widget class="QListWidget" name="listWidget_zhuti">
            <property name="styleSheet">
-            <string notr="true">QListWidget
-{
-border:none;
-}
-
-QListWidget::item
-{
-margin:10px;
-}
-
-QListWidget::item:hover
-{
-
-}
-
-QListWidget::item:selected
-{
-border:none;
-}</string>
+            <string notr="true"/>
            </property>
           </widget>
          </item>
@@ -421,25 +410,7 @@ border:none;
          <item>
           <widget class="QListWidget" name="listWidget_yuzhi">
            <property name="styleSheet">
-            <string notr="true">QListWidget
-{
-border:none;
-}
-
-QListWidget::item
-{
-margin:10px;
-}
-
-QListWidget::item:hover
-{
-
-}
-
-QListWidget::item:selected
-{
-border:none;
-}</string>
+            <string notr="true"/>
            </property>
           </widget>
          </item>
@@ -465,25 +436,7 @@ border:none;
          <item>
           <widget class="QListWidget" name="listWidget_custom">
            <property name="styleSheet">
-            <string notr="true">QListWidget
-{
-border:none;
-}
-
-QListWidget::item
-{
-margin:10px;
-}
-
-QListWidget::item:hover
-{
-
-}
-
-QListWidget::item:selected
-{
-border:none;
-}</string>
+            <string notr="true"/>
            </property>
           </widget>
          </item>

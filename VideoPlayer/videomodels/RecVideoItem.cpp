@@ -54,9 +54,9 @@ RecVideoItem::~RecVideoItem()
 void RecVideoItem::handleSignalsAndSlots()
 {
     //点击 信息部分 获取播放连接
-    connect(ui->pushButton_videoInfo,&QPushButton::clicked,[=](){emit sig_sendVideoUrl();});
+    connect(ui->pushButton_videoInfo,&QPushButton::clicked,[=](){emit sig_sendVideoUrl(m_picInfo);});
     //点击 播放部分 获取播放连接
-    connect(ui->pushButton_play,&QPushButton::clicked,[=](){emit sig_sendVideoUrl();});
+    connect(ui->pushButton_play,&QPushButton::clicked,[=](){emit sig_sendVideoUrl(m_picInfo);});
 }
 
 void RecVideoItem::setVideoPicture(const QString path)
@@ -79,8 +79,9 @@ void RecVideoItem::setVideoTime(const QString &time)
     ui->label_videoTime->setText(time);
 }
 
-void RecVideoItem::setVideoText(QString &info)
+void RecVideoItem::setVideoText(QString info)
 {
+    //参数使用引用导致成员数据改变，所以指定为值传递
     if(info.length() > 10)
     {
         info = info.insert(10,"\n");
@@ -123,7 +124,7 @@ bool RecVideoItem::eventFilter(QObject *watched, QEvent *event)
     {
         if(event->type() == QEvent::MouseButtonPress)
         {
-            emit sig_sendVideoUrl();
+            emit sig_sendVideoUrl(m_picInfo);
         }
     }
     return QWidget::eventFilter(watched,event);

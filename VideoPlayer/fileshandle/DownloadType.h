@@ -8,6 +8,7 @@
 #include <QVariant>
 #include <QListView>
 #include <QComboBox>
+#include <QClipboard>
 #include <QRadioButton>
 #include <QButtonGroup>
 #include <QFileDialog>
@@ -36,7 +37,7 @@ public:
     static DownloadType* getInstance();
     void    initWorkUI();
     void    handleSignalsAndSlots();
-    void    showDownloadForm(int type, const QString& name);
+    void    showDownloadForm(int type, const QString& name = "",const QString& url = "");
 
 protected:
    void  mousePressEvent(QMouseEvent *event) override;

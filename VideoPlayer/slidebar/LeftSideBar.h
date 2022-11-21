@@ -18,23 +18,24 @@ class LeftSideBar : public QWidget
 public:
     explicit LeftSideBar(QWidget *parent = nullptr);
     ~LeftSideBar();
-    void setSlideBarListText(QStringList strList);
-    void setLeftSliderFixedWidth(int width);
+    void    setSlideBarListText(QStringList strList);
+    void    setLeftSliderFixedWidth(int width);
 
 public  slots:
     void    slot_setCurrentIndex(int index);
 
 private:
     //私有函数
-    void initWidgetUi();
-    void handleSignalAndSLots();
+    void    initWidgetUi();
+    void    handleSignalAndSLots();
+
 private:
     QVBoxLayout         *m_vbayout      = nullptr;
     QPushButton         *m_expandBtn    = nullptr;     //底部展开按钮
     QListWidget         *m_listWidget   = nullptr;    //侧边栏节目列表
 
 signals:
-    void sig_sidebarItemChange(int index);//item发生改变是发出的信号
+    void    sig_sidebarItemChange(int index);//item发生改变是发出的信号
 
 };
 

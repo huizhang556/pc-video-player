@@ -157,6 +157,7 @@ void DownloadType::handleSignalsAndSlots()
 
     //copy下载路径
     connect(ui->pushButton_copyUrl,&QPushButton::clicked,[=](){
+        QApplication::clipboard()->setText(ui->lineEdit_downloadUrl->text());
         ui->label_tips->setText(QString(u8"该资源链接已复制！"));
         QTimer::singleShot(1500,0,[=](){
             ui->label_tips->clear();
@@ -183,7 +184,7 @@ void DownloadType::handleSignalsAndSlots()
     });
 }
 
-void DownloadType::showDownloadForm(int type, const QString &name)
+void DownloadType::showDownloadForm(int type, const QString &name, const QString &url)
 {
     if(type == 0)//歌曲
     {
@@ -201,6 +202,7 @@ void DownloadType::showDownloadForm(int type, const QString &name)
         defRadioBtn->setChecked(true);
     }
     ui->pushButton_songName->setText(name);
+    ui->lineEdit_downloadUrl->setText(url);
     this->show();
 }
 

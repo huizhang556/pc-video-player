@@ -65,7 +65,8 @@ SOURCES += \
     $$PWD/cusvideosbox/CusVideoBox5.cpp \
     $$PWD/CusLabel3.cpp \
     $$PWD/subunititems/CusListItem1.cpp \
-    $$PWD/VideoItemHover.cpp
+    $$PWD/VideoItemHover.cpp \
+    $$PWD/shortvideo/ShortVideo.cpp
 
 HEADERS += \
     $$PWD/songersort/SongerSort.h \
@@ -134,7 +135,8 @@ HEADERS += \
     $$PWD/cusvideosbox/CusVideoBox5.h \
     $$PWD/CusLabel3.h \
     $$PWD/subunititems/CusListItem1.h \
-    $$PWD/VideoItemHover.h
+    $$PWD/VideoItemHover.h \
+    $$PWD/shortvideo/ShortVideo.h
 
 FORMS += \
     $$PWD/songersort/SongerSort.ui \
@@ -197,7 +199,8 @@ FORMS += \
     $$PWD/cusvideosbox/CusVideoBox5.ui \
     $$PWD/CusLabel3.ui \
     $$PWD/subunititems/CusListItem1.ui \
-    $$PWD/VideoItemHover.ui
+    $$PWD/VideoItemHover.ui \
+    $$PWD/shortvideo/ShortVideo.ui
 
 DISTFILES +=
 

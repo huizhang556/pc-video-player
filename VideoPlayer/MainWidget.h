@@ -33,6 +33,7 @@
 #include "mainwidget/radiohost/RadioHost.h"
 #include "mainwidget/musicscene/MusicScene.h"
 #include "mainwidget/vipmember/VipMember.h"
+#include "mainwidget/shortvideo/ShortVideo.h"
 #include "mainwidget/cusvideosbox/CusVideosBox.h"
 #include "mainwidget/cusvideosbox/CusVideoBox2.h"
 #include "mainwidget/cusvideosbox/CusVideoBox3.h"
@@ -241,7 +242,7 @@ private:
     PersonFileForm      *m_personForm              = nullptr;
     LeftSideBar         *m_leftSideBar             = nullptr;
     MusicPlaylist       *m_musicList               = nullptr;
-//    MusicPlayShow       *m_musicShow               = nullptr;
+    ShortVideo          *m_shortVideo              = nullptr;
     FilesTrans          *m_fileTrans               = nullptr;//文件传输界面
     CusTabWidget        *m_tabWidget               = nullptr;
     VideoBlank          *m_videoBlank              = nullptr;

@@ -1,0 +1,186 @@
+﻿#include "ShortVideo.h"
+#include "ui_ShortVideo.h"
+
+ShortVideo::ShortVideo(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::ShortVideo)
+{
+    ui->setupUi(this);
+    initWorkUI();
+    handleSignalsAndSLots();
+}
+
+ShortVideo::~ShortVideo()
+{
+    delete ui;
+}
+
+void ShortVideo::initWorkUI()
+{
+    ui->pushButton_title->setText(QString(u8"热点资讯"));
+    ui->pushButton_love->setIcon(QIcon("://images/user/default_woman00.png"));
+    ui->pushButton_toPlayer->setToolTip(QString(u8"转到主播放器"));
+    ui->pushButton_collect->setToolTip(QString(u8"收藏"));
+    ui->pushButton_download->setToolTip(QString(u8"下载"));
+    ui->pushButton_suggest->setToolTip(QString(u8"反馈"));
+
+    ui->listWidget_type->setViewMode(QListView::IconMode);
+    ui->listWidget_type->setWrapping(false);
+    ui->listWidget_type->setMovement(QListView::Static);
+    ui->listWidget_type->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_type->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_type->setHorizontalScrollMode(QAbstractItemView::ScrollPerItem);
+
+    ui->listWidget_medialist->setViewMode(QListView::ListMode);
+    ui->listWidget_medialist->setWrapping(false);
+    ui->listWidget_medialist->setMovement(QListView::Static);
+    ui->listWidget_medialist->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_medialist->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    ui->listWidget_medialist->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+
+    ui->stackedWidget_player->setCurrentWidget(ui->stackPage_novideo);
+
+    slot_addSelectTypeToList(typelist);
+}
+
+void ShortVideo::handleSignalsAndSLots()
+{
+    //节目类型选择
+    connect(ui->listWidget_type,&CusListWidget::itemClicked,[=](QListWidgetItem *item){
+        qDebug() << item->text();
+    });
+
+    connect(ui->listWidget_medialist,&QListWidget::currentItemChanged,[=](QListWidgetItem *current,QListWidgetItem *previous)
+    {
+        if(previous != nullptr)
+        {
+            getListWidgetItemButton(previous,"pushButton_videoInfo")->setChecked(false);
+        }
+        if(current != nullptr)
+        {
+            getListWidgetItemButton(current,"pushButton_videoInfo")->setChecked(true);
+            m_curMediaUrl = current->text();
+            m_curMediaName = current->data(Qt::UserRole).toString();
+            ui->widget_player->slot_receivePlayMediaFile(m_curMediaUrl,m_curMediaName);
+        }
+    });
+
+    //转到主 播放器
+    connect(ui->pushButton_toPlayer,&QPushButton::clicked,[=](){
+        qDebug() << QString(u8"转到主 播放器");
+    });
+
+    //收藏
+    connect(ui->pushButton_collect,&QPushButton::clicked,[=](){
+        qDebug() << QString(u8"收藏");
+    });
+
+    //下载
+    connect(ui->pushButton_download,&QPushButton::clicked,[=](){
+        DownloadType::getInstance()->showDownloadForm(1,m_curMediaName,m_curMediaUrl);
+    });
+
+    //反馈
+    connect(ui->pushButton_suggest,&QPushButton::clicked,[=](){
+        qDebug() << QString(u8"反馈");
+    });
+
+    //播放器下一首
+    connect(ui->widget_player,&MiniPlayer::sig_player_next,[=](){
+        if(ui->listWidget_medialist->currentRow() == ui->listWidget_medialist->count()-1)
+        {
+            ui->listWidget_medialist->setCurrentItem(ui->listWidget_medialist->item(0));
+        }
+        else
+        {
+            ui->listWidget_medialist->setCurrentItem(ui->listWidget_medialist->item(ui->listWidget_medialist->currentRow()+1));
+        }
+    });
+
+    //播放器状态改变
+    connect(ui->widget_player,&MiniPlayer::sig_player_status,[=](bool playing){
+        if(playing)
+        {
+            ui->stackedWidget_player->setCurrentWidget(ui->stackPage_video);
+        }
+//        else
+//        {
+//            ui->stackedWidget_player->setCurrentWidget(ui->stackPage_novideo);
+//        }
+    });
+
+    //播放器---右键--下载
+    connect(ui->widget_player,&MiniPlayer::sig_player_download,[=](){
+        ui->pushButton_download->click();//模拟下载按钮
+    });
+
+    //播放器---右键--主播放器播放
+    connect(ui->widget_player,&MiniPlayer::sig_player_toMainPlayer,[=](){
+        ui->pushButton_toPlayer->click();//模拟下载按钮
+    });
+
+    //播放器---右键--视频信息
+    connect(ui->widget_player,&MiniPlayer::sig_player_videoInfo,[=](){
+        qDebug() << QString(u8"接收到显示视频信息请求！");
+    });
+
+    //播放器---右键--视频设置
+    connect(ui->widget_player,&MiniPlayer::sig_player_videoSetting,[=](){
+        qDebug() << QString(u8"接收到视频设置请求！");
+    });
+}
+
+void ShortVideo::slot_addSelectTypeToList(const QStringList &typelist)
+{
+    foreach (const QString itenText, typelist)
+    {
+        QListWidgetItem *item = new QListWidgetItem(itenText);
+        item->setSizeHint(QSize(180,75));
+        ui->listWidget_type->addItem(item);
+    }
+    if(ui->listWidget_type->count() != 0)
+        ui->listWidget_type->setCurrentRow(0);
+}
+
+bool ShortVideo::slot_addRecVideoItem(QVariant musicVariant)
+{
+    MusicData data = musicVariant.value<MusicData>();// 通用类型转为专用类型
+    RecVideoItem *videoItem = new RecVideoItem(data.url,data.cover,data.duration,data.alias,data.uplove);
+    QListWidgetItem *item = new QListWidgetItem(data.url);
+    item->setData(Qt::UserRole,data.alias);
+    item->setSizeHint(videoItem->size());//留出来1px的边框
+    ui->listWidget_medialist->addItem(item);
+    ui->listWidget_medialist->setItemWidget(item,videoItem);
+
+    //信号与槽函数
+    connect(videoItem,&RecVideoItem::sig_sendVideoUrl,[=](){
+        ui->listWidget_medialist->setCurrentItem(item);//实现选中样式
+    });
+    return true;
+}
+
+bool ShortVideo::slot_addRecVideoItem(QString url, QString path, QString time, QString info, QString count)
+{
+    RecVideoItem *videoItem = new RecVideoItem(url,path,time,info,count);
+    QListWidgetItem *item = new QListWidgetItem(url);
+    item->setSizeHint(videoItem->size());//留出来1px的边框
+    ui->listWidget_medialist->addItem(item);
+    ui->listWidget_medialist->setItemWidget(item,videoItem);
+
+    //信号与槽函数
+    connect(videoItem,&RecVideoItem::sig_sendVideoUrl,[=](){
+        ui->listWidget_medialist->setCurrentItem(item);//实现选中样式
+    });
+    return true;
+}
+
+QPushButton *ShortVideo::getListWidgetItemButton(QListWidgetItem *item, QString objname)
+{
+    QWidget* itemWidget = ui->listWidget_medialist->itemWidget(item);
+    if(nullptr != itemWidget)
+    {
+        QPushButton *itemBtn = itemWidget->findChild<QPushButton*>(objname);//可以指定查找范围（最近一级的还是所有的）
+        if(nullptr != itemBtn)
+        return itemBtn;
+    }
+}

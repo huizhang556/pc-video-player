@@ -46,7 +46,7 @@ background-color: #2c2d36;
      <property name="styleSheet">
       <string notr="true">#frame_newLogin
 {
-border-radius: 10px;
+border-radius: 6px;
 }</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_21">

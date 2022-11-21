@@ -33,7 +33,6 @@ CONFIG      += warn_off
 SOURCES += \
         main.cpp \
         MainWidget.cpp
-
 HEADERS += \
         MainWidget.h
 
@@ -53,6 +52,7 @@ include($$PWD/slidebar/slidebar.pri)
 include($$PWD/titlebar/titlebar.pri)
 include($$PWD/customer/customer.pri)
 include($$PWD/desktoplyric/desktop.pri)
+include($$PWD/miniplayer/miniplayer.pri)
 include($$PWD/mainwidget/mainwidget.pri)
 include($$PWD/qcustomplot/qcustomplot.pri)
 include($$PWD/musicmodels/musicmodels.pri)
@@ -74,4 +74,6 @@ RESOURCES += \
     res_audio.qrc \
     res_image.qrc \
     res_font.qrc
+
+FORMS +=
 

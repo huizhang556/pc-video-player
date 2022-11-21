@@ -19,11 +19,13 @@ CusListWidget::~CusListWidget()
 void CusListWidget::handleSignalsAndSlots()
 {
     connect(ui->pushButton_left,&QPushButton::clicked,[=](){
+        if(this->count() == 0) return;
         int step = this->horizontalScrollBar()->value();
         this->horizontalScrollBar()->setValue(step - this->item(0)->sizeHint().width());
     });
 
     connect(ui->pushButton_right,&QPushButton::clicked,[=](){
+        if(this->count() == 0) return;
         int step = this->horizontalScrollBar()->value();
         this->horizontalScrollBar()->setValue(step + this->item(0)->sizeHint().width());
     });

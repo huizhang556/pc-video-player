@@ -1,7 +1,7 @@
 ﻿#include "RecomVideoTab.h"
 #include "ui_RecomVideoTab.h"
-#include "RecVideoItem.h"
 #include "global/Global.h"
+#include "videomodels/RecVideoItem.h"
 
 #include <QListWidgetItem>
 #include <QDebug>
@@ -76,7 +76,6 @@ void RecomVideoTab::initWorkUI()
 
 void RecomVideoTab::handleSignalsAndSLots()
 {
-
     //开关（连续推送）
     connect(ui->Btn_turn,&QPushButton::clicked,this,&RecomVideoTab::slots_switchTurn);
     //当前项改变（设置样式）

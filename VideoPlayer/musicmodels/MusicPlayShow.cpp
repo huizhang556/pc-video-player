@@ -42,6 +42,9 @@ void MusicPlayShow::handleSignalsAndSlots()
     //切换皮肤
     connect(FontColor::getInstance(),&FontColor::sig_send_switchskin,[=](QString skin){
         m_skinPath = skin;
+        fileName = Global::appDirPath + switchSkin(m_skinPath).arg(i);
+        loadPictures(fileName);
+        changeTimeCout();
     });
 
     //字体大小

@@ -22,7 +22,7 @@ public:
     void    setVideoPicture(const QString path);//设置图片
     void    setItemPicture(const QString path);
     void    setVideoTime(const QString &time);//设置时长
-    void    setVideoText(QString &info);//视频介绍
+    void    setVideoText(QString info);//视频介绍
     void    setVideoUpvoye(const QString &count);//点赞数
 
 public slots:
@@ -42,7 +42,7 @@ private:
     QNetworkReply           *reply;
 
 signals:
-    void    sig_sendVideoUrl();
+    void    sig_sendVideoUrl(QString);
 };
 
 #endif // RECVIDEOITEM_H

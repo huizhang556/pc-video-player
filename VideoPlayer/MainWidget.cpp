@@ -72,8 +72,8 @@ void MainWidget::initOtherWidgetUi()
     m_musicList = new MusicPlaylist();
     m_musicList->setObjectName(QString::fromLatin1("m_musicList"));
 
-//    m_musicShow = new MusicPlayShow();
-//    m_musicShow->setObjectName(QString::fromLatin1("m_musicShow"));
+    m_shortVideo = new ShortVideo();
+    m_shortVideo->setObjectName(QString::fromLatin1("m_shortVideo"));
 
     m_tabWidget = new CusTabWidget();
     m_tabWidget->setObjectName(QString::fromLatin1("m_tabWidget"));
@@ -257,7 +257,7 @@ void MainWidget::initOtherWidgetUi()
 
     //侧边栏+QStackedWidget--->水平布局
     m_hblayout->addWidget(m_stackWidget_left,0,Qt::AlignLeft);
-//    m_hblayout->addWidget(m_stackWidget_center,1,Qt::AlignCenter);//此处不能添加布局，否则导致界面错乱
+//    m_hblayout->addStretch(50);
     m_hblayout->addWidget(m_stackWidget_center);
     m_hblayout->setSpacing(0);
     m_hblayout->setContentsMargins(0,0,0,0);
@@ -294,7 +294,7 @@ void MainWidget::setStackedWidgetPage()
     m_stackWidget_center->addWidget(m_radioHost);//电台
     m_stackWidget_center->addWidget(m_musicScene);//音乐场景
     m_stackWidget_center->addWidget(m_vipMember);//vip会员
-//    m_stackWidget_center->addWidget(m_musicShow);//显示歌词
+    m_stackWidget_center->addWidget(m_shortVideo);//资讯速览
     m_stackWidget_center->addWidget(m_musicList);//歌曲列表
     m_stackWidget_center->addWidget(m_personForm);//个人管理
     m_stackWidget_center->addWidget(m_fileTrans);//文件传输
@@ -563,6 +563,10 @@ void MainWidget::handleSignalAndSLots()
         slot_on_leftButton_clicked();
 //        emit sig_globalResize();
     });
+
+    /**********************热点资讯************************/
+    //热点资讯
+    connect(dataBase::getInstance(),SIGNAL(sig_sendVideoDramaInfo(QVariant)),m_shortVideo,SLOT(slot_addRecVideoItem(QVariant)));
 
     /**********************浮动桌面***************************/
     //桌面歌词关闭
@@ -1374,11 +1378,12 @@ MainWidget::~MainWidget()
         m_musicList = nullptr;
     }
 
-//    if(m_musicShow != nullptr)
-//    {
-//        delete m_musicShow;
-//        m_musicShow = nullptr;
-//    }
+    if(m_shortVideo != nullptr)
+    {
+        delete m_shortVideo;
+        m_shortVideo = nullptr;
+    }
+
     if(m_musicList != nullptr)
     {
         delete m_musicList;
