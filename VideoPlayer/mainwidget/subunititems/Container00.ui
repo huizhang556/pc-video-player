@@ -164,10 +164,15 @@ background-color: transparent;
               <string notr="true">QPushButton
 {
 border: none;
-color: #ff0000;
+color: #45c3dc;
 font: 800 16px &quot;微软雅黑&quot;;
 border-radius: 15px;
-background-color: rgba(24, 24, 24,0.8);
+background-color: #2a2a2b;
+}
+
+QPushButton:hover
+{
+color: white;
 }</string>
              </property>
              <property name="text">
@@ -206,10 +211,15 @@ background-color: rgba(24, 24, 24,0.8);
               <string notr="true">QPushButton
 {
 border: none;
-color: #ff0000;
+color: #45c3dc;
 font: 800 16px &quot;微软雅黑&quot;;
 border-radius: 15px;
-background-color: rgba(24, 24, 24,0.8);
+background-color: #2a2a2b;
+}
+
+QPushButton:hover
+{
+color: white;
 }</string>
              </property>
              <property name="text">

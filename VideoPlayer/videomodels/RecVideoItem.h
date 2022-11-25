@@ -42,7 +42,7 @@ private:
     QNetworkReply           *reply;
 
 signals:
-    void    sig_sendVideoUrl(QString);
+    void    sig_sendVideoUrl();
 };
 
 #endif // RECVIDEOITEM_H

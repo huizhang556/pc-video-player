@@ -10,8 +10,7 @@ RecVideoItem::RecVideoItem(QWidget *parent) :
     ui(new Ui::RecVideoItem)
 {
     ui->setupUi(this);
-    this->setFixedHeight(85);
-    this->setFixedWidth(260);
+    this->setFixedSize(260,85);
     handleSignalsAndSlots();
     manager = new QNetworkAccessManager(this);
     ui->label_videoPic->installEventFilter(this);
@@ -54,9 +53,9 @@ RecVideoItem::~RecVideoItem()
 void RecVideoItem::handleSignalsAndSlots()
 {
     //点击 信息部分 获取播放连接
-    connect(ui->pushButton_videoInfo,&QPushButton::clicked,[=](){emit sig_sendVideoUrl(m_picInfo);});
+    connect(ui->pushButton_videoInfo,&QPushButton::clicked,[=](){emit sig_sendVideoUrl();});
     //点击 播放部分 获取播放连接
-    connect(ui->pushButton_play,&QPushButton::clicked,[=](){emit sig_sendVideoUrl(m_picInfo);});
+    connect(ui->pushButton_play,&QPushButton::clicked,[=](){emit sig_sendVideoUrl();});
 }
 
 void RecVideoItem::setVideoPicture(const QString path)
@@ -124,7 +123,7 @@ bool RecVideoItem::eventFilter(QObject *watched, QEvent *event)
     {
         if(event->type() == QEvent::MouseButtonPress)
         {
-            emit sig_sendVideoUrl(m_picInfo);
+            emit sig_sendVideoUrl();
         }
     }
     return QWidget::eventFilter(watched,event);

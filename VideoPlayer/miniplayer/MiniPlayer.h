@@ -8,6 +8,7 @@
 #include <QVideoWidget>
 #include <QMediaPlaylist>
 #include <QActionGroup>
+#include <QListWidget>
 #include <QSlider>
 #include <QMenu>
 #include <QAction>
@@ -34,7 +35,9 @@ public:
 
 public  slots:
     void    slot_receivePlayMediaFile(const QString& mediaUrl,const QString& mediaName);
-
+    void    slot_mouseEnter();
+    void    slot_mouseLeave();
+    void    slot_player_on();
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
     void    enterEvent(QEvent *event) override;
@@ -48,7 +51,10 @@ private:
     QAction         *m_screenAction     =   nullptr;//全屏/退出全屏
     QFrame          *m_frameTitle       =   nullptr;//标题栏
     QFrame          *m_frameControl     =   nullptr;//底部控制栏
-    QSlider         *m_horSlider        =   nullptr;//进度条
+    QListWidget     *m_clityListWgt     =   nullptr;//清晰度
+    QFrame          *m_frameSound       =   nullptr;//音量调节
+    QSlider         *m_verSlider        =   nullptr;//音量进度
+    QSlider         *m_horSlider        =   nullptr;//视频进度
     QPushButton     *m_buttonTitle      =   nullptr;//标题
     QPushButton     *m_buttonPlayer     =   nullptr;//播放
     QPushButton     *m_buttonNext       =   nullptr;//下一首

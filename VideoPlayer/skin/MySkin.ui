@@ -16,7 +16,7 @@
   <property name="styleSheet">
    <string notr="true">#MySkin
 {
-background-color:rgba(93, 197, 47,0.3);
+/*background-color:rgba(93, 197, 47,0.3);*/
 }
 </string>
   </property>

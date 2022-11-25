@@ -47,6 +47,41 @@ background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #2f4359,
 color: rgb(85, 255, 0);
 }
 
+/*热播榜---头部*/
+#m_buttonTitle_rank
+{
+border: none;
+text-align: left;
+padding-left: 6px;
+color: #30e551;
+font: 800 20px "微软雅黑";
+background-color: #16161a;
+}
+
+#m_buttonTitle_rank:hover
+{
+color: #30e551;
+}
+
+/*热播榜---列表item*/
+#m_rankListWgt_rank
+{
+border: none;
+background-color: #16161a;
+}
+
+#m_rankListWgt_rank::item
+{
+color: transparent;
+background-color: #16161a;
+}
+
+#m_rankListWgt_rank::item:hover
+{
+color: transparent;
+background-color: #242428;
+}
+
 /***mini播放器---start**/
 /**顶部标题栏**/
 #m_miniframeTitle
@@ -126,6 +161,8 @@ background-color: transparent;
 border-image:url(://images/player/player_muted_hover.png);
 }
 
+/*视频进度---声音进度---*/
+/*视频横向进度条---start*/
 #m_minihorSlider::groove:horizontal
 {
 background-color: rgba(255,255,255,0.1);
@@ -173,6 +210,67 @@ background-color:yellow;
 border-radius:2px;
 background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));
 }
+/*视频横向进度条--end*/
+
+/*声音纵向进度条---start*/
+#m_miniverSlider::groove:vertical 
+{
+border: 1px solid #4A708B;
+background: #C0C0C0;
+width: 5px;
+border-radius: 1px;
+padding-left:-1px;
+padding-right:-1px;
+padding-top:-1px;
+padding-bottom:-1px;
+}
+
+#m_miniverSlider::sub-page:vertical 
+{
+background: #575757;
+border: 1px solid #4A708B;
+border-radius: 2px;
+}
+
+#m_miniverSlider::add-page:vertical 
+{
+background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
+    stop:0 #c4c4c4, stop:1 #B1B1B1);
+background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,
+    stop: 0 #5DCCFF, stop: 1 #1874CD);
+border: 0px solid #777;
+width: 10px;
+border-radius: 2px;
+}
+
+#m_miniverSlider::handle:vertical 
+{
+    background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+    height: 11px;
+    margin-left: -3px;
+    margin-right: -3px;
+    border-radius: 5px;
+}
+
+#m_miniverSlider::sub-page:vertical:disabled 
+{
+background: #00009C;
+border-color: #999;
+}
+
+#m_miniverSlider::add-page:vertical:disabled 
+{
+background: #eee;
+border-color: #999;
+}
+
+#m_miniverSlider::handle:vertical:disabled 
+{
+background: #eee;
+border: 1px solid #aaa;
+border-radius: 4px;
+}
+/*声音纵向进度条---end*/
 
 /*视频右键菜单*/
 #m_mainVideoMenu,#m_miniVideoMenu,#m_miniSub1Menu,#m_miniSub2Menu
@@ -214,6 +312,48 @@ height: 20px;
 {
 image: url(://images/tray/tray_checked.png);
 }
+
+/*清晰度列表*/
+#m_miniclityListWgt
+{
+border-radius: 10px;
+color: white;
+background-color: rgba(7, 3, 1,0.7);
+}
+
+#m_miniclityListWgt::icon
+{
+/*图标大小生效*/
+width: 25px;
+height: 20px;
+}
+
+#m_miniclityListWgt::item
+{
+border-radius: 6px;
+background-color: rgba(80, 80, 80,0.9);
+}
+
+#m_miniclityListWgt::item:selected
+{
+color: #57c1ab;
+background-color: gray;
+}
+
+#m_miniclityListWgt::item:hover
+{
+color: #57c1ab;
+background-color: gray;
+}
+
+
+
+/*声音slider*/
+#m_miniframeSound
+{
+background-color: rgba(80, 80, 80,0.9);
+}
+
 /***mini播放器---end**/
 
 /***主界面中心---嵌套区域***/
@@ -645,87 +785,61 @@ border: 0px solid #f0f0f0;
 border-top-width: 0px;
 }
 
-/*********************浏览器---标题栏右键菜单************************/
-/**一级菜单**/
+/*********************浏览器---标题栏---右键菜单---start************************/
+/**一级菜单+二级菜单**/
 
-#pmenu_funclist
+#pmenu_funclist,#pmenu_func_tool
 {
-border-radius:4px;
-background-color: #ffffff;
-width: 135px;
+background-color:white;
+font: 400 12px "微软雅黑";
+border-radius: 0px;
 }
 
-#pmenu_func_tool
+#pmenu_funclist::item,#pmenu_func_tool::item
 {
-border-radius:4px;
-background-color: #ffffff;
-width: 100px;
-/*二级子菜单宽度是根据文字宽度决定，设置宽度item不会全部铺满*/
+background-color:white;
+height:24px;
+width: 160px;
+/*padding不包括指示器和icon的部分*/
+padding: 1px 0px 1px 15px;
+/*height+padding共同决定item的高度*/
 }
 
-#pmenu_funclist::item
+#pmenu_funclist::item:selected,#pmenu_func_tool::item:selected
 {
-border-radius: 4px;
-height: 26px;
-padding-left:10px;
+color:#2ca5fc;
+background-color:#cccccc;
 }
 
-#pmenu_func_tool::item
+#pmenu_funclist::icon,#pmenu_func_tool::icon
 {
-border-radius: 4px;
-height: 26px;
-padding-left:10px;
+background-color: transparent;
+padding-left: 6px;
+width: 24px;
+height: 24px;
 }
 
-#pmenu_funclist::item:selected
+
+#pmenu_funclist::indicator,#pmenu_func_tool::indicator
 {
-background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #6768ee, stop:1  #7184fb);
+padding-left: 0px;
+width: 0px;
+height: 0px;
 }
 
-#pmenu_func_tool::item:selected
+/*菜单项指示器---互斥--选中*/
+#pmenu_funclist::indicator:exclusive:checked,#pmenu_func_tool::indicator:exclusive:checked
 {
-background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #6768ee, stop:1  #7184fb);
-}
-
-/**图标**/
-#pmenu_funclist::icon
-{
-position: absolute;
-top: 1px;
-right: 1px;
-bottom: 1px;
-left: 1px;
-}
-
-/**图标**/
-#pmenu_func_tool::icon
-{
-position: absolute;
-top: 1px;
-right: 1px;
-bottom: 1px;
-left: 1px;
+image: url(://images/tray/tray_checked.png);
 }
 
 /**分割线**/
-#pmenu_funclist::separator
+#pmenu_func_tool::separator,#pmenu_func_tool::separator
 {
 height: 1px;
 background: #cccccc;
-margin-left: 5px;
-margin-right: 5px;
 }
-
-/**分割线**/
-#pmenu_func_tool::separator
-{
-height: 1px;
-background: #cccccc;
-margin-left: 5px;
-margin-right: 5px;
-
-}
-/*********************浏览器---标题栏右键菜单************************/
+/*********************浏览器---标题栏---右键菜单---end************************/
 
 /*浏览器---状态栏*/
 #m_statusBar
@@ -1061,7 +1175,37 @@ background-color:transparent;
 background-color:transparent;
 }
 /**浏览器承载QTabWidget整体设置---end**/
-/**右上侧承载**/
+
+/**浏览器---右键菜单---start**/
+#browser_rmenu
+{
+background-color:white;
+font: 400 13px "微软雅黑";
+border-radius: 0px;
+}
+
+#browser_rmenu::icon
+{
+background-color:white;
+height:30px;
+}
+
+#browser_rmenu::item
+{
+background-color:white;
+height:24px;
+width: 150px;
+padding: 1px 0px 1px 15px;
+}
+
+#browser_rmenu::item:selected
+{
+color:#2ca5fc;
+background-color:#cccccc;
+}
+
+/**浏览器---右键菜单---end**/
+
 #m_addWidget
 {
 background-color: yellow;
@@ -1224,13 +1368,13 @@ border:none;/*去边线*/
 {
 background-color:white;
 color:#2a2a31;
-font:normal normal 15px '微软雅黑';
+font:normal normal 13px '微软雅黑';
 }
 
 /*一级菜单tiem*/
 #m_menuTray::item
 {
-height:30px;
+height:28px;
 padding: 2px 15px 2px 15px;/*上 右 下 左*/
 border: 1px solid transparent;
 }
@@ -1238,7 +1382,7 @@ border: 1px solid transparent;
 /*二级菜单tiem*/
 #m_playMode::item
 {
-height:30px;
+height:28px;
 padding: 2px 5px 2px 15px;/*上 右 下 左*/
 border: 1px solid transparent;
 }
@@ -1253,8 +1397,8 @@ background: #90c8f6;
 /*一级菜单--图标*/
 #m_menuTray::icon
 {
-width:30px;
-height:30px;
+width:28px;
+height:28px;
 margin-left:10px;
 }
 

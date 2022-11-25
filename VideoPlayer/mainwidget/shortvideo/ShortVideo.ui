@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>912</width>
+    <width>922</width>
     <height>434</height>
    </rect>
   </property>
@@ -225,9 +225,9 @@ color: #ff4335;
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
-           <widget class="QWidget" name="stackPage_video" native="true">
+           <widget class="QWidget" name="stackPage_video">
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <property name="spacing">
               <number>0</number>
@@ -267,13 +267,9 @@ color: #ff4335;
               <number>0</number>
              </property>
              <item>
-              <widget class="QLabel" name="label_novideo">
+              <widget class="CusLabelItem" name="label_novideo">
                <property name="styleSheet">
-                <string notr="true">#label_novideo
-{
-border-image: url(:/images/bgpic/cusvideoitem2.png);
-}
-</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string/>
@@ -415,9 +411,14 @@ border-image: url(:/images/player/player_toplayer_hover.png);
 border-image: url(:/images/player/player_collect_hover.png);
 }
 
-QPushButton:hover
+QPushButton:checked
 {
 border-image: url(:/images/player/player_collect.png);
+}
+
+QPushButton:hover
+{
+/*border-image: url(:/images/player/player_collect.png);*/
 }</string>
               </property>
               <property name="text">
@@ -550,6 +551,11 @@ color: transparent;
    <extends>QWidget</extends>
    <header>miniplayer/MiniPlayer.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CusLabelItem</class>
+   <extends>QLabel</extends>
+   <header>mainwidget/CusLabelItem.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

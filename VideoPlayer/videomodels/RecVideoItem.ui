@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>259</width>
-    <height>78</height>
+    <width>260</width>
+    <height>85</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>200</width>
-    <height>78</height>
+    <width>260</width>
+    <height>85</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>500</width>
-    <height>16777215</height>
+    <width>300</width>
+    <height>85</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -31,22 +31,22 @@
   <widget class="QPushButton" name="pushButton_playAmount">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>51</y>
-     <width>140</width>
-     <height>26</height>
+     <x>111</x>
+     <y>53</y>
+     <width>148</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>140</width>
-     <height>26</height>
+     <width>148</width>
+     <height>30</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>140</width>
-     <height>26</height>
+     <width>148</width>
+     <height>30</height>
     </size>
    </property>
    <property name="styleSheet">
@@ -65,21 +65,21 @@ background-color: transparent;
   <widget class="QPushButton" name="pushButton_videoInfo">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>0</y>
-     <width>140</width>
+     <x>111</x>
+     <y>2</y>
+     <width>148</width>
      <height>50</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>140</width>
+     <width>148</width>
      <height>50</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>140</width>
+     <width>148</width>
      <height>50</height>
     </size>
    </property>
@@ -116,26 +116,27 @@ color: #ff4335;
      <x>0</x>
      <y>0</y>
      <width>110</width>
-     <height>80</height>
+     <height>85</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
      <width>110</width>
-     <height>80</height>
+     <height>85</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
      <width>110</width>
-     <height>80</height>
+     <height>85</height>
     </size>
    </property>
    <property name="styleSheet">
     <string notr="true">#label_videoPic
 {
 border: none;
-margin:1px;
+margin:4px;
+border-radius: 8px;
 }</string>
    </property>
    <property name="text">

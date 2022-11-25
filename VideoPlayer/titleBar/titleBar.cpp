@@ -734,23 +734,19 @@ void TitleBar::slot_changeEngineIcon(const QString &text)
 void TitleBar::slot_updateShowListSettigMenu()
 {
     QMenu *pmenu_funclist = new QMenu(this);
-    pmenu_funclist->setWindowFlag(Qt::FramelessWindowHint);        //重要
-    pmenu_funclist->setAttribute(Qt::WA_TranslucentBackground);    //重要
-    pmenu_funclist->setObjectName(QString::fromLocal8Bit("pmenu_funclist"));
+    pmenu_funclist->setObjectName(QString::fromUtf8("pmenu_funclist"));
 
-    QMenu *pmenu_func_tool = new QMenu(QString::fromLocal8Bit("工具"));
-    pmenu_func_tool->setWindowFlag(Qt::FramelessWindowHint);        //重要
-    pmenu_func_tool->setAttribute(Qt::WA_TranslucentBackground);    //重要
-    pmenu_func_tool->setObjectName(QString::fromLocal8Bit("pmenu_func_tool"));
-
-    pmenu_funclist->addAction(QIcon("://images/icon/help_account.png"),QString::fromLocal8Bit("新建窗口(Shift+C)"),this,SLOT(slot_browser_setMenu_createTab()));
+    QMenu *pmenu_func_tool = new QMenu(QString(u8"工具"),this);
+    pmenu_func_tool->setObjectName(QString::fromUtf8("pmenu_func_tool"));
+    //中文菜单使用(&c)不生效，英文下一般代表alt+c快捷键
+    pmenu_funclist->addAction(QIcon("://images/icon/help_account.png"),QString::fromLocal8Bit("新建窗口(Shift+&C)"),this,SLOT(slot_browser_setMenu_createTab()));
     pmenu_funclist->addAction(QIcon("://images/icon/help_account.png"),QString::fromLocal8Bit("新建隐身窗口"),this,SLOT(slot_browser_setMenu_createHiddenTab()));
     pmenu_funclist->addSeparator();
     pmenu_funclist->addAction(QIcon("://images/icon/setlogin.png"),QString::fromLocal8Bit("保存网页"),this,SLOT(slot_browser_setMenu_savePage()));//注意：槽函数不加分号，且不能带参数
     pmenu_funclist->addAction(QIcon("://images/icon/help_internet.png"),QString::fromLocal8Bit("查找"),this,SLOT(slot_browser_setMenu_findText()));
     pmenu_funclist->addAction(QIcon("://images/icon/help_qahelp.png"),QString::fromLocal8Bit("全屏"),this,SLOT(slot_browser_setMenu_fullScreen()));
     pmenu_funclist->addSeparator();
-    pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("显示收藏栏(Alt+S)"),this,SLOT(slot_browser_setMenu_showCollectRecords()));
+    pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("显示收藏栏(Alt+&S)"),this,SLOT(slot_browser_setMenu_showCollectRecords()));
     pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("清空搜索记录"),this,SLOT(slot_browser_setMenu_clearSearchRecords()));
     pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("显示收藏夹"),this,SLOT(slot_browser_setMenu_showCollectList()));
     pmenu_funclist->addAction(QIcon("://images/icon/help_local.png"),QString::fromLocal8Bit("显示历史记录"),this,SLOT(slot_browser_setMenu_showHistories()));
@@ -920,6 +916,11 @@ void TitleBar::slot_browser_setMenu_FAQ()
 void TitleBar::slot_browser_setMenu_help()
 {
     emit sig_sendBrowserHelp();
+}
+
+void TitleBar::createRightMenu()
+{
+
 }
 
 //添加搜索引擎

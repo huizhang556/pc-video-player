@@ -234,6 +234,10 @@ void MainWidget::initOtherWidgetUi()
     m_cusVideoBox5 = new CusVideoBox5();
     m_cusVideoBox5->setObjectName(QString::fromLocal8Bit("m_cusVideoBox5"));
 
+    //视频盒子6
+    m_cusVideoBox6 = new CusVideoBox6();
+    m_cusVideoBox6->setObjectName(QString::fromLocal8Bit("m_cusVideoBox6"));
+
     //视频筛选结果
     videoFindResult = new VideoTypeSelect();
     videoFindResult->setObjectName(QString::fromLocal8Bit("videoFindResult"));
@@ -298,6 +302,7 @@ void MainWidget::setStackedWidgetPage()
     m_stackWidget_center->addWidget(m_musicList);//歌曲列表
     m_stackWidget_center->addWidget(m_personForm);//个人管理
     m_stackWidget_center->addWidget(m_fileTrans);//文件传输
+    m_stackWidget_center->addWidget(m_cusVideoBox6);
     m_stackWidget_center->addWidget(m_tabWidget);//原始table界面
     m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
 }

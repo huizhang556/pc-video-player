@@ -1,47 +1,13 @@
 ﻿#include "MainWidget.h"
 #include <QApplication>
-#include "skin/MySkin.h"
-#include "global/Global.h"
-#include "browser/NewWork.h"
-#include "skin/MySkinItem.h"
-#include "database/dataBase.h"
 #include "titleBar/TitleBar.h"
 #include "style/loadGlobalQss.h"
-#include "customer/SystemTray.h"
-#include "customer/CusLineEdit.h"
-#include "mainwidget/recommend/Slideshow.h"
-#include "customer/CusLineEdit.h"
-#include "lunbotu/PictureWidget.h"
-#include "videomodels/CommentTab.h"
-#include "customer/CusFileDialog.h"
-#include "browser/WebDownLoadList.h"
-#include "messagebox/CMessageBox.h"
-#include "mainwidget/recommend/RecommendForm.h"
 #include "videomodels/MultipPlayer.h"
-#include "videomodels/PersonFileForm.h"
-#include "musicmodels/SongItemForm.h"
-#include "mainwidget/recommend/StackItemForm.h"
-#include "mainwidget/recommend/GalleryItemForm.h"
-#include "videomodels/VideoProgressBar.h"
-#include "videomodels/RotatePic.h"
-#include "browser/DownLoadItem.h"
-#include "browser/CusTabBar.h"
-#include "videomodels/FloatPlayCtl.h"
-#include "customer/CustomFileDialog.h"
-#include "videomodels/RecVideoItem.h"
 #include "splashscreen/CSplashScreen.h"
-#include "desktoplyric/toplyric/DesktopLyric.h"
-#include "mainwidget/shortvideo/ShortVideo.h"
-#include "login/NewLoginForm.h"
-#include "videomodels/Danmu.h"
-#include "mainwidget/TrianButton.h"
-#include "mainwidget/songersort/SongerSort.h"
-#include "mainwidget/songlistsort/TagsMenu.h"
-#include "mainwidget/rankinglist/RankingList.h"
-#include "mainwidget/CusVerStackWgt.h"
-#include "mainwidget/subunititems/SwitchStackWgt.h"
-#include "mainwidget/subunititems/SwitchButtons.h"
-#include "mainwidget/videotypeselect/VideoTypeSelect.h"
+
+#include "mainwidget/subunititems/HotRankList.h"
+#include "mainwidget/cusvideosbox/CusVideoBox6.h"
+#include "miniplayer/MiniPlayer.h"
 
 #include <QTranslator>
 #include <QThread>
@@ -107,19 +73,16 @@ int main(int argc, char *argv[])
 
 //    MultipPlayer::getInstance()->show();
 
-//    MusicPlaylist w1;
-//    w1.show();
-
-//    MusicPlayShow w1;
-//    w1.show();
-
-//    MySkin::getInstance()->show();
-
-
 //    TitleBar w1;
 //    w1.show();
 
+//    RankList w1(QString(u8"动画热播榜"),10);
+//    w1.show();
+
 //    ShortVideo w1;
+//    w1.show();
+
+//    CusVideoBox6 w1;
 //    w1.show();
 
     splashscream.finish(&w1);

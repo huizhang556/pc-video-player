@@ -39,6 +39,7 @@
 #include "mainwidget/cusvideosbox/CusVideoBox3.h"
 #include "mainwidget/cusvideosbox/CusVideoBox4.h"
 #include "mainwidget/cusvideosbox/CusVideoBox5.h"
+#include "mainwidget/cusvideosbox/CusVideoBox6.h"
 #include "mainwidget/hotsearch/HotSearchForm.h"
 #include "mainwidget/videotypeselect/VideoTypeSelect.h"
 
@@ -238,6 +239,7 @@ private:
     CusVideoBox3        *m_cusVideoBox3            = nullptr;//视频盒子
     CusVideoBox4        *m_cusVideoBox4            = nullptr;//视频盒子
     CusVideoBox5        *m_cusVideoBox5            = nullptr;//视频盒子
+    CusVideoBox6        *m_cusVideoBox6            = nullptr;//视频盒子
     VideoTypeSelect     *videoFindResult           = nullptr;//视频筛选结果
     PersonFileForm      *m_personForm              = nullptr;
     LeftSideBar         *m_leftSideBar             = nullptr;

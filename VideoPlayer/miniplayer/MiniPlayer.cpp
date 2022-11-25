@@ -9,7 +9,11 @@ MiniPlayer::MiniPlayer(QWidget *parent) :
 
 MiniPlayer::~MiniPlayer()
 {
-
+    delete  m_subMenu1;
+    delete  m_subMenu2;
+    delete  m_videoMenu;
+    delete  m_clityListWgt;
+    delete  m_frameSound;
 }
 
 void MiniPlayer::initWorkUI()
@@ -33,7 +37,7 @@ void MiniPlayer::initWorkUI()
     hblayout1->setMargin(0);
     hblayout1->setContentsMargins(0,0,0,0);
     hblayout1->addWidget(m_buttonTitle);
-    hblayout1->addSpacerItem(new QSpacerItem(100,FIXEDHEIGHT,QSizePolicy::Expanding,QSizePolicy::Fixed));
+    hblayout1->addSpacerItem(new QSpacerItem(10,FIXEDHEIGHT,QSizePolicy::Expanding,QSizePolicy::Fixed));
     m_frameTitle->setLayout(hblayout1);
 
     m_frameControl = new QFrame(this);
@@ -41,6 +45,55 @@ void MiniPlayer::initWorkUI()
     m_frameControl->setFixedHeight(FIXEDHEIGHT+12);//加一个进度条高度
     m_frameControl->setMinimumWidth(700);
     m_frameControl->setObjectName(QString::fromUtf8(u8"m_miniframeControl"));
+
+    m_clityListWgt = new QListWidget();
+    m_clityListWgt->installEventFilter(this);
+    m_clityListWgt->setFixedSize(80,150);
+    m_clityListWgt->setLayoutDirection(Qt::RightToLeft);//图标在右侧,文字的布局方向也变反了
+    m_clityListWgt->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool);
+    m_clityListWgt->setHidden(true);//指定父亲默认是显示在父亲的左上角
+    m_clityListWgt->setFrameShape(QFrame::NoFrame);
+    m_clityListWgt->setObjectName(QString::fromUtf8("m_miniclityListWgt"));
+    QListWidgetItem *item_clity1 = new QListWidgetItem(QIcon("://images/user/itemmark_vyp.png"),QString(u8"标清"));
+    QListWidgetItem *item_clity2 = new QListWidgetItem(QIcon("://images/user/itemmark_vyp.png"),QString(u8"720P"));
+    QListWidgetItem *item_clity3 = new QListWidgetItem(QIcon("://images/user/itemmark_vyp.png"),QString(u8"高清"));
+    QListWidgetItem *item_clity4 = new QListWidgetItem(QIcon("://images/user/itemmark_vyp.png"),QString(u8"1080P"));
+    QListWidgetItem *item_clity5 = new QListWidgetItem(QIcon("://images/user/itemmark_vyp.png"),QString(u8"蓝光"));
+    item_clity1->setSizeHint(QSize(80,30));
+    item_clity2->setSizeHint(QSize(80,30));
+    item_clity3->setSizeHint(QSize(80,30));
+    item_clity4->setSizeHint(QSize(80,30));
+    item_clity5->setSizeHint(QSize(80,30));
+    item_clity1->setTextAlignment(Qt::AlignRight | Qt::AlignCenter);
+    item_clity2->setTextAlignment(Qt::AlignRight | Qt::AlignCenter);
+    item_clity3->setTextAlignment(Qt::AlignRight | Qt::AlignCenter);
+    item_clity4->setTextAlignment(Qt::AlignRight | Qt::AlignCenter);
+    item_clity5->setTextAlignment(Qt::AlignRight | Qt::AlignCenter);
+    m_clityListWgt->addItem(item_clity5);
+    m_clityListWgt->addItem(item_clity4);
+    m_clityListWgt->addItem(item_clity3);
+    m_clityListWgt->addItem(item_clity2);
+    m_clityListWgt->addItem(item_clity1);
+
+    m_frameSound = new QFrame();
+    m_frameSound->installEventFilter(this);
+    m_frameSound->setContentsMargins(0,0,0,0);
+    m_frameSound->setFixedSize(30,120);//加一个进度条高度
+    m_frameSound->setHidden(true);//指定父亲默认是显示在父亲的左上角
+    m_frameSound->setObjectName(QString::fromUtf8(u8"m_miniframeSound"));
+    m_frameSound->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool);
+
+    m_verSlider = new QSlider(Qt::Vertical);
+    m_verSlider->setFixedSize(30,100);
+    m_verSlider->setRange(0,100);
+    m_verSlider->setValue(10);
+    m_verSlider->setSingleStep(5);
+    m_verSlider->setObjectName(QString::fromUtf8("m_miniverSlider"));
+    QVBoxLayout *vblayout0 = new QVBoxLayout(m_frameSound);//指定父亲，相当于设置布局
+    vblayout0->setSpacing(0);
+    vblayout0->setContentsMargins(0,0,0,0);
+    vblayout0->setMargin(0);
+    vblayout0->addWidget(m_verSlider);
 
     m_horSlider = new QSlider(Qt::Horizontal);
     m_horSlider->setFixedHeight(12);
@@ -56,15 +109,17 @@ void MiniPlayer::initWorkUI()
     m_buttonNext->setFixedSize(20,20);
 
     m_labelProgress = new QLabel();
-    m_labelProgress->setText(QString(u8"00:25:32/20:12:50"));
+    m_labelProgress->setText(QString(u8""));
     m_labelProgress->setObjectName(QString::fromUtf8("m_minilabelProgress"));
     m_labelProgress->setFixedSize(220,FIXEDHEIGHT-4);
 
     m_buttonClarity = new QPushButton(QString(u8"清晰度"));
+    m_buttonClarity->installEventFilter(this);
     m_buttonClarity->setObjectName(QString::fromUtf8("m_minibuttonClarity"));
     m_buttonClarity->setFixedSize(60,20);
 
     m_buttonSound = new QPushButton();
+    m_buttonSound->installEventFilter(this);
     m_buttonSound->setObjectName(QString::fromUtf8("m_minibuttonSound"));
     m_buttonSound->setFixedSize(20,20);
     m_buttonSound->setCheckable(true);
@@ -89,7 +144,7 @@ void MiniPlayer::initWorkUI()
     m_frameControl->setLayout(vblayout1);
 
     m_videoWidget = new QVideoWidget();
-    m_videoWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    m_videoWidget->setContextMenuPolicy(Qt::CustomContextMenu);//自定义右键菜单
 
     QVBoxLayout *vblayout2 = new QVBoxLayout();
     vblayout2->setSpacing(0);
@@ -101,12 +156,13 @@ void MiniPlayer::initWorkUI()
 
     m_player = new QMediaPlayer(this);
     m_playlist = new QMediaPlaylist(m_player);
-    m_playlist->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
+    m_playlist->setPlaybackMode(QMediaPlaylist::Loop);
     m_playlist->addMedia(QUrl("http://43.143.226.251:8080/group1/tempvideo/temp001.flv"));
     m_player->setPlaylist(m_playlist);
     m_player->setVideoOutput(m_videoWidget);
     m_player->setMuted(false);//静音
-    m_player->stop();
+    m_player->setVolume(10);
+//    m_player->play();
 }
 
 void MiniPlayer::handleSignalsAndSlots()
@@ -214,6 +270,11 @@ void MiniPlayer::handleSignalsAndSlots()
         action->setChecked(true);
         slot_menu_playrate(action);//发送信号
     });
+
+    //音量大小
+    connect(m_verSlider,&QSlider::valueChanged,[=](int value){
+        m_player->setVolume(value);
+    });
 }
 
 void MiniPlayer::slot_receivePlayMediaFile(const QString &mediaUrl, const QString &mediaName)
@@ -225,14 +286,100 @@ void MiniPlayer::slot_receivePlayMediaFile(const QString &mediaUrl, const QStrin
     m_buttonTitle->setText(mediaName);
 }
 
+void MiniPlayer::slot_mouseEnter()
+{
+    m_frameTitle->show();
+    m_frameControl->show();
+}
+
+void MiniPlayer::slot_mouseLeave()
+{
+    m_frameTitle->hide();
+    m_frameControl->hide();
+}
+
+void MiniPlayer::slot_player_on()
+{
+    m_buttonPlayer->click();
+}
+
 bool MiniPlayer::eventFilter(QObject *watched, QEvent *event)
 {
+    if(watched == m_buttonClarity)
+    {
+        int x = m_buttonClarity->parentWidget()->mapToGlobal(m_buttonClarity->pos()).x();
+        int y = m_buttonClarity->parentWidget()->mapToGlobal(m_buttonClarity->pos()).y();
+        if(event->type() == QEvent::Enter)
+        {
+            qDebug() << QString("m_buttonClarity->geometry()")<< m_buttonClarity->geometry();
+            qDebug() << QString("mouse pos()")<< QCursor::pos();
+            m_clityListWgt->move(x - 9,y - m_clityListWgt->height()-m_buttonClarity->height()-1);//80 150
+            m_clityListWgt->show();
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+            QRect rect = QRect(x ,
+                               y - m_clityListWgt->height(),
+                               m_buttonClarity->width(),
+                               m_clityListWgt->height() + m_buttonClarity->height());//鼠标真实横坐标比控件横坐标大140
+            qDebug() <<QString(u8"处理后的矩形：") << rect;
+            if(!rect.contains(QCursor::pos()))
+            {
+                m_clityListWgt->hide();
+//                qDebug() << QString(u8"鼠标不在区域内！");
+            }
+            else
+            {
+//                qDebug() << QString(u8"鼠标在区域内！");
+            }
+        }
+    }
+    else if(watched == m_buttonSound)
+    {
+        int x = m_buttonSound->parentWidget()->mapToGlobal(m_buttonSound->pos()).x();
+        int y = m_buttonSound->parentWidget()->mapToGlobal(m_buttonSound->pos()).y();
+        if(event->type() == QEvent::Enter)
+        {
+            qDebug() << QString("m_buttonClarity->geometry()")<< m_buttonSound->geometry();
+            qDebug() << QString("mouse pos()")<< QCursor::pos();
+            m_frameSound->move(x-8,y-m_frameSound->height()-m_buttonSound->height()-1);//26 120
+            m_frameSound->show();
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+            QRect rect = QRect(x,
+                               y - m_frameSound->height(),
+                               m_buttonSound->width(),
+                               m_frameSound->height() + m_buttonSound->height());//鼠标真实横坐标比控件横坐标大140
+            qDebug() <<QString(u8"处理后的矩形：") << rect;
+            if(!rect.contains(QCursor::pos()))
+            {
+                m_frameSound->hide();
+//                qDebug() << QString(u8"鼠标不在区域内！");
+            }
+            else
+            {
+//                qDebug() << QString(u8"鼠标在区域内！");
+            }
+        }
+    }
+    else if(watched == m_frameSound)
+    {
+        if(event->type() == QEvent::Leave)
+            m_frameSound->hide();
+    }
+    else if(watched == m_clityListWgt)
+    {
+        if(event->type() == QEvent::Leave)
+            m_clityListWgt->hide();
+    }
     return QWidget::eventFilter(watched,event);
 }
 
 void MiniPlayer::enterEvent(QEvent *event)
 {
     Q_UNUSED(event)
+    if(!m_clityListWgt->isHidden() || !m_frameSound->isHidden()) return;
     m_frameTitle->show();
     m_frameControl->show();
 }
@@ -240,6 +387,7 @@ void MiniPlayer::enterEvent(QEvent *event)
 void MiniPlayer::leaveEvent(QEvent *event)
 {
     Q_UNUSED(event)
+    if(!m_clityListWgt->isHidden() || !m_frameSound->isHidden()) return;
     m_frameTitle->hide();
     m_frameControl->hide();
 }
@@ -265,6 +413,7 @@ void MiniPlayer::resizeEvent(QResizeEvent *event)
 
 void MiniPlayer::createRightMenu()
 {
+    //菜单变量需要在堆上创建（指针）,否则勾选项不生效，每次都是新的变量
     m_videoMenu = new QMenu(this);
     m_videoMenu->setObjectName(QString(u8"m_miniVideoMenu"));
 
@@ -337,10 +486,6 @@ void MiniPlayer::createRightMenu()
 
     m_videoMenu->addAction(QString(u8"视频信息"),this,SLOT(slot_menu_videoinfo()));
     m_videoMenu->addAction(QString(u8"设置"),this,SLOT(slot_menu_setting()));
-//    m_videoMenu->exec(QCursor::pos());
-//    delete m_subMenu1;
-//    delete m_subMenu2;
-//    delete m_videoMenu;
 }
 
 void MiniPlayer::on_updatePosition()
@@ -395,15 +540,15 @@ void MiniPlayer::slot_menu_scale(QAction *action)
     qDebug() << action->text();
     if(action->text() == QString(u8"原始比例"))
     {
-        m_videoWidget->setAspectRatioMode(Qt::IgnoreAspectRatio);
+        m_videoWidget->setAspectRatioMode(Qt::KeepAspectRatio);
     }
     else if(action->text() == QString(u8"铺满窗口"))
     {
-        m_videoWidget->setAspectRatioMode(Qt::KeepAspectRatioByExpanding);
+        m_videoWidget->setAspectRatioMode(Qt::IgnoreAspectRatio);
     }
     else if(action->text() == QString(u8"4:3"))
     {
-        m_videoWidget->setAspectRatioMode(Qt::KeepAspectRatio);
+        m_videoWidget->setAspectRatioMode(Qt::KeepAspectRatioByExpanding);
     }
     else if(action->text() == QString(u8"16:9"))
     {

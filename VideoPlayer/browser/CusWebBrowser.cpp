@@ -33,7 +33,7 @@ CusWebBrowser::CusWebBrowser(QWidget *parent) :
     this->page()->setAudioMuted(false);//不自动静音
     this->settings()->setAttribute(QWebEngineSettings::PluginsEnabled,true);//支持插件
     this->settings()->setAttribute(QWebEngineSettings::SpatialNavigationEnabled, true);
-    setContextMenuPolicy(Qt::DefaultContextMenu);
+    this->setContextMenuPolicy(Qt::DefaultContextMenu);
     this->page()->setBackgroundColor(QColor(38,40,41));
 
 //    this->page()->settings()->setAttribute(QWebEngineSettings::ShowScrollBars,false);//不显示滚动条    
@@ -217,7 +217,6 @@ void CusWebBrowser::slots_sendToNewAddress()
 //自定义右键菜单
 void CusWebBrowser::slot_createCustomRightMenu()
 {
-//    qDebug() << QString::fromLocal8Bit("右键菜单");
     QMenu *rmenu = new QMenu(this);
     rmenu->setObjectName(QString::fromLocal8Bit("browser_rmenu"));
     rmenu->addAction(QIcon(""),QString::fromLocal8Bit("返回"),this,SLOT(slot_back()));

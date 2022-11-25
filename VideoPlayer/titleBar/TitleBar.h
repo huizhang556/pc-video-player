@@ -133,6 +133,7 @@ private slots:
     void    slot_browser_setMenu_help();                    //帮助
 
 private:
+    void    createRightMenu();//浏览器网页右键
     void    setShowToolTip();
     void    setUserHeadPicture(const QString & path);
 

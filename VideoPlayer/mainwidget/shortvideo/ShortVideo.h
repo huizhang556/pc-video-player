@@ -30,6 +30,9 @@ public  slots:
     bool    slot_addRecVideoItem(QVariant   musicVariant);//通过结构体传递信息
     bool    slot_addRecVideoItem(QString url, QString path,QString time,QString info,QString count);//添加item
 
+protected:
+    bool    eventFilter(QObject *watched, QEvent *event) override;
+
 private:
     QPushButton*    getListWidgetItemButton(QListWidgetItem* item, QString objname);//在item中查找指定按钮
 
@@ -49,6 +52,9 @@ private:
 
     QString     m_curMediaName;
     QString     m_curMediaUrl;
+
+signals:
+
 };
 
 #endif // SHORTVIDEO_H

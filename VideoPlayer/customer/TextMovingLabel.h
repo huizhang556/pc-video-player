@@ -1,4 +1,6 @@
-﻿#ifndef TEXTMOVINGLABEL_H
+﻿/***跑马灯***/
+
+#ifndef TEXTMOVINGLABEL_H
 #define TEXTMOVINGLABEL_H
 
 #include <QEvent>
