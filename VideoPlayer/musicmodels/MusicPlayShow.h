@@ -28,6 +28,7 @@ public:
 public slots:
     //公共函数可以再类外访问，私有只能在类内
     void receiveMainWinData(QString name);
+    void slot_controlPlayStatus(bool status);
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;

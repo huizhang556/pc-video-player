@@ -42,6 +42,7 @@ void MusicPlayShow::handleSignalsAndSlots()
     //切换皮肤
     connect(FontColor::getInstance(),&FontColor::sig_send_switchskin,[=](QString skin){
         m_skinPath = skin;
+        qDebug() << QString(u8"当前设置路径：") << skin;
         fileName = Global::appDirPath + switchSkin(m_skinPath).arg(i);
         loadPictures(fileName);
         changeTimeCout();
@@ -65,6 +66,7 @@ void MusicPlayShow::setInstallEventFilter()
 /*显示图片*/
 void MusicPlayShow::loadPictures(QString &path) const
 {
+//    qDebug() << QString(u8"当前接收到的图片路径：")<<path;
     photo->load(path);
     ui->labelPicture->setPixmap(*photo);
     //图片自适应显示
@@ -83,6 +85,11 @@ void MusicPlayShow::receiveMainWinData(QString name)
 //    ui->labelSong->clear();
 //    ui->label_title->setText(QString::fromLocal8Bit(""));
     //    ui->labelSong->setText(name);
+}
+
+void MusicPlayShow::slot_controlPlayStatus(bool status)
+{
+    ui->widget_deiji->slot_setPlayingStatus(status);
 }
 
 bool MusicPlayShow::eventFilter(QObject *watched, QEvent *event)
@@ -114,7 +121,9 @@ const QString MusicPlayShow::switchSkin(const QString &text)
     }
     else if(text == QString(u8"本地图片"))
     {
+
         path_t = QString("/pictures/musicwall/%1.png");
+        ui->stackedWidget->setCurrentIndex(0);
     }
     return path_t;
 }

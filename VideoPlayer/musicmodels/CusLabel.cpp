@@ -26,6 +26,7 @@ void CusLabel::initWorkUI()
     m_timer = new QTimer(this);
     m_timer->start(1500);
     ui->plainTextEdit->setReadOnly(true);//只读模式
+    ui->plainTextEdit->setContextMenuPolicy(Qt::NoContextMenu);//不弹出菜单
     ui->plainTextEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->plainTextEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->plainTextEdit->setFont(m_font);

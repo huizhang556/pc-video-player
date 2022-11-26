@@ -49,19 +49,19 @@ PlayStateControl::~PlayStateControl()
 {
 }
 
-void PlayStateControl::setPlayingStatus(bool paying)
+void PlayStateControl::slot_setPlayingStatus(bool paying)
 {
-    isPlaying = !isPlaying;
-    poleIsSpin = true;
-    poleSpinTimer.start();
-    if(isPlaying)
-    {
-        angleTimer.stop();
-    }
-    else
-    {
-        angleTimer.start();
-    }
+//        isPlaying = !isPlaying;
+//        poleIsSpin = true;
+//        poleSpinTimer.start();
+//        if(isPlaying)
+//        {
+//            angleTimer.stop();
+//        }
+//        else
+//        {
+//            angleTimer.start();
+//        }
 }
 
 void PlayStateControl::paintEvent(QPaintEvent *event)

@@ -11,7 +11,9 @@ class PlayStateControl : public QWidget
 public:
     PlayStateControl(QWidget *parent = nullptr);
     ~PlayStateControl()override;
-    void    setPlayingStatus(bool paying);//设置播放/暂停
+
+public slots:
+    void    slot_setPlayingStatus(bool paying);//设置播放/暂停
 
 protected:
     void paintEvent(QPaintEvent *event)override;

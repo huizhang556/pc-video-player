@@ -434,6 +434,8 @@ void MultipPlayer::handleSignalAndSLots()
     connect(m_pTimer,&QTimer::timeout,this,&MultipPlayer::updateProgressBarGeometry);//每0.3秒更新不管有没有缓冲
     //监测媒体播放状态 StoppedState PlayingState PausedState，并向外部发送信号
     connect(m_player,SIGNAL(stateChanged(QMediaPlayer::State)),this,SLOT(checkChandleMediaPlayerStatus(QMediaPlayer::State)));
+    //外界使用状态改变信号
+    connect(this,SIGNAL(sig_currentMediaPlayStatus(bool)),m_musicUi,SLOT(slot_controlPlayStatus(bool)));
     //监测媒体本身状态,所带参数为新的媒体状态，比如缓冲状态 BufferingMedia BufferedMedia
     connect(m_player,&QMediaPlayer::mediaStatusChanged,this,&MultipPlayer::checkChandleMediaStatus);
     //计算媒体播放数值范围

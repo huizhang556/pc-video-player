@@ -1,8 +1,10 @@
 ﻿#ifndef COMMENTTAB_H
 #define COMMENTTAB_H
+#define MAX_SIZE 30
 #include <QWidget>
 #include <QButtonGroup>
 #include <QAction>
+#include <QTimer>
 
 #include "videomodels/CommentForm.h"
 namespace Ui {

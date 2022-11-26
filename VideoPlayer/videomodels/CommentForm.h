@@ -15,6 +15,7 @@ class CommentForm : public QWidget
 public:
     explicit CommentForm(QWidget *parent = nullptr);
     ~CommentForm();
+    void initWorkUI();
     void chandleSignalsAndSLots();
 
     void setUserPicture(QPixmap &pix);//评论者头像

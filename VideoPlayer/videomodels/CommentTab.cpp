@@ -20,6 +20,7 @@ CommentTab::~CommentTab()
 
 void CommentTab::initWorkUI()
 {
+    ui->textEdit_comment->setContextMenuPolicy(Qt::NoContextMenu);
     ui->textEdit_comment->setPlaceholderText(QString::fromLocal8Bit("美好的评论由你而生^_^"));
     ui->listWidget_comlist->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->pushButton_hotcomment->setFlat(true);
@@ -57,20 +58,58 @@ void CommentTab::chandleSignalsAndSLots()
     {
         qDebug() << "comment load pic";
     });
+
+    //限制字符输入
+    connect(ui->textEdit_comment,&QTextEdit::textChanged,[=]()
+    {
+        QString textContent = ui->textEdit_comment->toPlainText();
+        qDebug() << textContent;
+
+        int length = textContent.count();
+
+        int maxLength = MAX_SIZE; // 最大字符数
+
+        if(length > maxLength)
+        {
+            QTextCursor cursor = ui->textEdit_comment->textCursor();
+            cursor.movePosition(QTextCursor::End);
+            if(cursor.hasSelection())
+            {
+                cursor.clearSelection();
+            }
+            cursor.deletePreviousChar();
+            //设置当前的光标为更改后的光标
+            ui->textEdit_comment->setTextCursor(cursor);
+        }
+        length = ui->textEdit_comment->toPlainText().count();
+        ui->label_tips->setText(QString("%1/%2").arg(MAX_SIZE-length).arg(MAX_SIZE));
+    });
+
     //提交评论
     connect(ui->pushButton_publish,&QPushButton::clicked,[=]()
     {
-        QPixmap             pix(":/images/icon/collect_title.png");
-        pix = pix.scaled(40,40,Qt::KeepAspectRatio);
-        QString nick        = QString::fromLocal8Bit("伟大的评论家");
-        QString datetime    = QDateTime::currentDateTime().toString("yyyy-MM-dd");
-        qDebug()            << "current time =" << datetime;
-        QString comdata     = ui->textEdit_comment->toPlainText();
-        qDebug()            << comdata;
-        int count           = 1;
-        if(comdata.remove(QRegExp("\\s")).length() != 0)//去除空格
-        slot_insertNewCommentForm(pix,nick,datetime,comdata,count);
-        qDebug() << "comment new publish";
+        if(!ui->textEdit_comment->toPlainText().trimmed().isEmpty())
+        {
+            QPixmap  pix(":/images/icon/collect_title.png");
+            pix = pix.scaled(40,40,Qt::KeepAspectRatio);
+            QString nick        = QString::fromLocal8Bit("伟大的评论家");
+            QString datetime    = QDateTime::currentDateTime().toString("yyyy-MM-dd");
+            qDebug()            << "current time =" << datetime;
+            QString comdata     = ui->textEdit_comment->toPlainText();
+            qDebug()            << comdata;
+            int count           = 1;
+            if(comdata.remove(QRegExp("\\s")).length() != 0)//去除空格
+            slot_insertNewCommentForm(pix,nick,datetime,comdata,count);
+            ui->textEdit_comment->clear();
+            qDebug() << "comment new publish";
+        }
+        else
+        {
+            ui->label_tips->setText(QString(u8"请输入评论内容^_^"));
+            QTimer::singleShot(1500,0,[=](){
+                ui->label_tips->clear();
+            });
+        }
     });
 }
 
