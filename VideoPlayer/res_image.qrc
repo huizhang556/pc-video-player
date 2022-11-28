@@ -584,5 +584,6 @@
         <file>images/player/player_start_hover.png</file>
         <file>images/player/player_toplayer.png</file>
         <file>images/player/player_toplayer_hover.png</file>
+        <file>images/fileitem/fileitem_manager.png</file>
     </qresource>
 </RCC>

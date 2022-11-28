@@ -232,15 +232,10 @@ void MultipPlayer::initMainWindow()
     m_toolBox = new QToolBox;
     m_toolBox->setFixedWidth(LEFTWIDTH);
     m_toolBox->setObjectName(QString::fromLocal8Bit("m_toolBox_list"));
-
-    QIcon icon_playlist(":/images/icon/playerlist.png");
-    QIcon icon_musiclist(":/images/icon/musiclist.png");
-    QIcon icon_collect(":/images/icon/play_collect_checked.png");
-    QIcon icon_internet(":/images/icon/playerinternet.png");
-    m_toolBox->addItem(m_widget2,icon_playlist,QString::fromLocal8Bit("播放列表"));
-    m_toolBox->addItem(m_listWisget1,icon_musiclist,QString::fromLocal8Bit("我的歌单"));
-    m_toolBox->addItem(m_listWisget3,icon_collect,QString::fromLocal8Bit("我的收藏"));
-    m_toolBox->addItem(m_listWisget4,icon_internet,QString::fromLocal8Bit("播放记录"));
+    m_toolBox->addItem(m_widget2,QIcon(":/images/icon/playerlist.png"),QString::fromLocal8Bit("播放列表"));
+    m_toolBox->addItem(m_listWisget1,QIcon(":/images/icon/musiclist.png"),QString::fromLocal8Bit("我的歌单"));
+    m_toolBox->addItem(m_listWisget3,QIcon(":/images/icon/play_collect_checked.png"),QString::fromLocal8Bit("我的收藏"));
+    m_toolBox->addItem(m_listWisget4,QIcon(":/images/icon/playerinternet.png"),QString::fromLocal8Bit("播放记录"));
     m_toolBox->layout()->setSpacing(3);//item之间的间距
     m_toolBox->setCurrentIndex(3);
 

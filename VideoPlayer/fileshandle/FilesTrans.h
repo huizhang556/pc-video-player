@@ -10,6 +10,7 @@
 #include "fileshandle/DownLoadFile.h"
 #include "fileshandle/UploadFile.h"
 #include "fileshandle/CompletedFiles.h"
+#include "browser/CusWebBrowser.h"
 
 #include <QWidget>
 #include <QListWidgetItem>
@@ -41,6 +42,7 @@ private:
     CompletedFiles      *m_completeFiles    =   nullptr;
     DownLoadFile        *m_downloadFiles    =   nullptr;
     UploadFile          *m_uploadFiles      =   nullptr;
+    CusWebBrowser       *m_managerWeb       =   nullptr;
 };
 
 #endif // FILESTRANS_H

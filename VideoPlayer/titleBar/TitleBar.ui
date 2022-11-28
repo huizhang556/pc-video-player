@@ -667,7 +667,7 @@ border: 1px solid #3C80B1;
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="BtnScreen">
+                 <widget class="QPushButton" name="BtnCreate">
                   <property name="maximumSize">
                    <size>
                     <width>20</width>
@@ -675,13 +675,13 @@ border: 1px solid #3C80B1;
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">#BtnScreen
+                   <string notr="true">QPushButton
 {
 background-color: transparent;
 border-image: url(:/images/icon/create.png);
 }
 
-#BtnScreen:hover
+QPushButton:hover
 {
 border-image: url(:/images/icon/createhover.png);
 }

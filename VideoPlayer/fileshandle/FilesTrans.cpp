@@ -16,6 +16,16 @@ FilesTrans::FilesTrans(QWidget *parent) :
 FilesTrans::~FilesTrans()
 {
     delete ui;
+    delete  m_myAllFiles;
+    delete  m_myLastFiles;
+    delete  m_myVideoFiles;
+    delete  m_myMusicFiles;
+    delete  m_myPicFiles;
+    delete  m_myDocFiles;
+    delete  m_uploadFiles;
+    delete  m_downloadFiles;
+    delete  m_completeFiles;
+    delete  m_managerWeb;
 }
 
 void FilesTrans::initWorkUI()
@@ -44,6 +54,7 @@ void FilesTrans::initWorkUI()
     QListWidgetItem *downItem       = new QListWidgetItem(QIcon(":/images/fileitem/file_download.png"),QString::fromLocal8Bit("正在下载"));
     QListWidgetItem *uploadItem     = new QListWidgetItem(QIcon(":/images/fileitem/file_upload.png"),QString::fromLocal8Bit("正在上传"));
     QListWidgetItem *completeItem   = new QListWidgetItem(QIcon(":/images/fileitem/file_completed.png"),QString::fromLocal8Bit("传输完成"));
+    QListWidgetItem *managerItem    = new QListWidgetItem(QIcon("://images/fileitem/fileitem_manager.png"),QString::fromLocal8Bit("文件管理"));
 
 
     myFileItem->setSizeHint(QSize(100,70));
@@ -73,35 +84,42 @@ void FilesTrans::initWorkUI()
     completeItem->setSizeHint(QSize(100,70));
     ui->listWidget_trans->addItem(completeItem);
 
+    managerItem->setSizeHint(QSize(100,70));
+    ui->listWidget_trans->addItem(managerItem);
+
     ui->listWidget_trans->setCurrentRow(0);
 
-    //所有文件
+    //所有文件01
     m_myAllFiles = new MyAllFile();
     m_myAllFiles->setObjectName(QString::fromLocal8Bit("m_myAllFiles"));
-    //最近传输
+    //最近传输02
     m_myLastFiles  = new MyLastFile();
     m_myLastFiles->setObjectName(QString::fromLocal8Bit("m_myLastFiles"));
-    //视频文件
+    //视频文件03
     m_myVideoFiles = new MyVideosFile();
     m_myVideoFiles->setObjectName(QString::fromLocal8Bit("m_myVideoFiles"));
-    //音乐
+    //音乐04
     m_myMusicFiles = new MyMusicsFile();
     m_myMusicFiles->setObjectName(QString::fromLocal8Bit("m_myMusicFiles"));
-    //图片
+    //图片05
     m_myPicFiles  = new MyPicFile();
     m_myPicFiles->setObjectName(QString::fromLocal8Bit("m_myPicFiles"));
-    //文档
+    //文档06
     m_myDocFiles =  new MyDocFile();
     m_myDocFiles->setObjectName(QString::fromLocal8Bit("m_myDocFiles"));
-    //上传记录
+    //上传记录07
     m_uploadFiles = new UploadFile();
     m_uploadFiles->setObjectName(QString::fromLocal8Bit("m_uploadFiles"));
-    //下载记录
+    //下载记录08
     m_downloadFiles = new DownLoadFile();
     m_downloadFiles->setObjectName(QString::fromLocal8Bit("m_downloadFiles"));
-    //总完成记录
+    //总完成记录09
     m_completeFiles = new CompletedFiles();
     m_completeFiles->setObjectName(QString::fromLocal8Bit("m_completeFiles"));
+    //文件管理10
+    m_managerWeb = new CusWebBrowser();
+    m_managerWeb->load(QUrl("http://43.143.226.251:8088/"));//管理页面
+    m_managerWeb->setObjectName(QString::fromLocal8Bit("m_m_managerWeb"));
 
     ui->stackedWidget_trans->addWidget(m_myAllFiles);
     ui->stackedWidget_trans->addWidget(m_myLastFiles);
@@ -112,6 +130,7 @@ void FilesTrans::initWorkUI()
     ui->stackedWidget_trans->addWidget(m_downloadFiles);
     ui->stackedWidget_trans->addWidget(m_uploadFiles);
     ui->stackedWidget_trans->addWidget(m_completeFiles);
+    ui->stackedWidget_trans->addWidget(m_managerWeb);
     ui->stackedWidget_trans->setCurrentIndex(0);//默认显示第一页
 
 }
@@ -160,6 +179,10 @@ void FilesTrans::setCurrentShowPage(QString page)
     else if(QString::fromLocal8Bit("传输完成") == page)
     {
         ui->stackedWidget_trans->setCurrentIndex(8);
+    }
+    else if(QString::fromLocal8Bit("文件管理") == page)
+    {
+        ui->stackedWidget_trans->setCurrentIndex(9);
     }
     else
     {

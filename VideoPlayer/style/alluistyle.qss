@@ -330,7 +330,7 @@ height: 20px;
 
 #m_miniclityListWgt::item
 {
-border-radius: 6px;
+border-radius: 0px;
 background-color: rgba(80, 80, 80,0.9);
 }
 
@@ -348,7 +348,7 @@ background-color: gray;
 
 
 
-/*声音slider*/
+/*声音frame*/
 #m_miniframeSound
 {
 background-color: rgba(80, 80, 80,0.9);

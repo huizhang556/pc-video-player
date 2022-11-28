@@ -88,7 +88,7 @@ void CommentTab::chandleSignalsAndSLots()
     //提交评论
     connect(ui->pushButton_publish,&QPushButton::clicked,[=]()
     {
-        if(!ui->textEdit_comment->toPlainText().trimmed().isEmpty())
+        if(!ui->textEdit_comment->toPlainText().isEmpty())
         {
             QPixmap  pix(":/images/icon/collect_title.png");
             pix = pix.scaled(40,40,Qt::KeepAspectRatio);
@@ -98,10 +98,10 @@ void CommentTab::chandleSignalsAndSLots()
             QString comdata     = ui->textEdit_comment->toPlainText();
             qDebug()            << comdata;
             int count           = 1;
-            if(comdata.remove(QRegExp("\\s")).length() != 0)//去除空格
+//            if(comdata.remove(QRegExp("\\s")).length() != 0)//去除空格
             slot_insertNewCommentForm(pix,nick,datetime,comdata,count);
             ui->textEdit_comment->clear();
-            qDebug() << "comment new publish";
+//            qDebug() << "comment new publish";
         }
         else
         {

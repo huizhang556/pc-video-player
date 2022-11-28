@@ -301,11 +301,9 @@ void TitleBar::handleSignalAndSLots()
     //历史记录
     connect(ui->BtnHistory,&QPushButton::clicked,[=](){emit sig_historyDownload(5,0);});//历史记录
     //截屏
-    connect(ui->BtnScreen,&QPushButton::clicked,[=](){
-//        QProcess process;
-//        process.setWorkingDirectory(Global::appDirPath);
-//        process.start(Global::appDirPath + "/CaptureTool.exe");
-//        qDebug() << QString(u8"截图程序运行路劲：%1").arg(process.workingDirectory());
+    connect(ui->BtnCreate,&QPushButton::clicked,[=](){
+        CreateCenter::getInstance()->show();
+        qDebug() <<QString(u8"创作中心");
     });//截屏
 
 
@@ -952,7 +950,7 @@ void TitleBar::setShowToolTip()
     ui->Btnskin->setToolTip(QString::fromLocal8Bit("皮肤"));
     ui->BtnDownload->setToolTip(QString::fromLocal8Bit("上传下载"));
 //    ui->BtnHistory->setToolTip(QString::fromLocal8Bit("历史记录"));
-    ui->BtnScreen->setToolTip(QString::fromLocal8Bit("截屏"));
+    ui->BtnCreate->setToolTip(QString::fromLocal8Bit("创作中心"));
 }
 
 void TitleBar::setUserHeadPicture(const QString &path)
