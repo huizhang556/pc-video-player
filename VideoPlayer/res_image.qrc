@@ -585,5 +585,14 @@
         <file>images/player/player_toplayer.png</file>
         <file>images/player/player_toplayer_hover.png</file>
         <file>images/fileitem/fileitem_manager.png</file>
+        <file>images/creator/caledar_hover.png</file>
+        <file>images/creator/caledar_normal.png</file>
+        <file>images/creator/file_upload.png</file>
+        <file>images/creator/file_upload_hover.png</file>
+        <file>images/creator/fileitem_music.png</file>
+        <file>images/creator/fileitem_picture.png</file>
+        <file>images/creator/fileitem_videos.png</file>
+        <file>images/creator/label_tto.png</file>
+        <file>images/creator/returnhome.png</file>
     </qresource>
 </RCC>

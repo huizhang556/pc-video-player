@@ -28,7 +28,7 @@ MainWidget::MainWidget(QWidget *parent) :
     this->resize(QSize(1500,920));
     setMouseTracking(true);
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);//保留最大最小功能
-    setWindowTitle(QString::fromLocal8Bit("Qt简易视频播放器主界面"));
+    setWindowTitle(QString::fromLocal8Bit("主界面"));
     initOtherWidgetUi();//初始化界面
     setLeftSliderCurrentIndex(0);//主界面左侧列表内容
     setStackedWidgetPage();//设置StackedWidget布局每个page界面

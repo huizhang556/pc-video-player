@@ -1347,7 +1347,7 @@ void TitleBar::slot_setWebLineEditCurentUrl(QUrl url)
     if(!url.isEmpty())
     {
         ui->lineEdit_webSearch->setText(url.toString());
-        ui->lineEdit_webSearch->setCursorPosition(0);
+        ui->lineEdit_webSearch->setCursorPosition(0);//从最左边字符开始显示
     }  
 }
 

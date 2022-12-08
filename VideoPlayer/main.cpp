@@ -2,9 +2,9 @@
 #include <QApplication>
 #include "titleBar/TitleBar.h"
 #include "style/loadGlobalQss.h"
+#include "creator/CreateCenter.h"
 #include "videomodels/MultipPlayer.h"
 #include "splashscreen/CSplashScreen.h"
-
 #include "mainwidget/subunititems/HotRankList.h"
 #include "mainwidget/cusvideosbox/CusVideoBox6.h"
 #include "miniplayer/MiniPlayer.h"
@@ -84,6 +84,9 @@ int main(int argc, char *argv[])
 
 //    CusVideoBox6 w1;
 //    w1.show();
+
+//    CreateCenter::getInstance()->show();
+
 
     splashscream.finish(&w1);
 

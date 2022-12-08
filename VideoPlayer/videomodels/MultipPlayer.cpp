@@ -44,7 +44,7 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
                          Qt::WindowMinMaxButtonsHint);
     this->setAttribute(Qt::WA_Hover);//窗口拖拽用
 
-    this->setWindowTitle(QString::fromLocal8Bit("Qt简易视频播放器"));
+    this->setWindowTitle(QString::fromLocal8Bit("播放器"));
     initMainWindow();//初始化界面
     handleSignalAndSLots();//处理信号与槽函数
     //设置监听
