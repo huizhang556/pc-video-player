@@ -5,7 +5,8 @@ FORMS += \
     $$PWD/CreateCenter.ui \
     $$PWD/CreTitleBar.ui \
     $$PWD/CusCalendar.ui \
-    $$PWD/FilesItem.ui
+    $$PWD/FilesItem.ui \
+    $$PWD/MoveLabel.ui
 
 HEADERS += \
     $$PWD/AddMediaInfo.h \
@@ -15,7 +16,8 @@ HEADERS += \
     $$PWD/CreTitleBar.h \
     $$PWD/CusCalendar.h \
     $$PWD/FilesItem.h \
-    $$PWD/UploadWork.h
+    $$PWD/UploadWork.h \
+    $$PWD/MoveLabel.h
 
 SOURCES += \
     $$PWD/AddMediaInfo.cpp \
@@ -25,7 +27,8 @@ SOURCES += \
     $$PWD/CreTitleBar.cpp \
     $$PWD/CusCalendar.cpp \
     $$PWD/FilesItem.cpp \
-    $$PWD/UploadWork.cpp
+    $$PWD/UploadWork.cpp \
+    $$PWD/MoveLabel.cpp
 
 DISTFILES += \
     $$PWD/creator.pri

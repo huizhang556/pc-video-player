@@ -8,6 +8,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QStringList>
+#include <QStringList>
 #include <QSqlDatabase>
 #include <QDesktopWidget>
 #include <QDebug>
@@ -119,6 +120,7 @@ public slots:
     void                    browser_deleteAllHisRecordToList();//往数据库删除所有历史记录
 
     //推荐视频
+    void                    video_insertRecDramaListDB(const QStringList& parma);//插入视频
     bool                    video_recDramaInfo();//查询推荐列表
 
 protected:

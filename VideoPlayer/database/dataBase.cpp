@@ -982,6 +982,23 @@ void dataBase::browser_deleteAllHisRecordToList()
     }
 }
 
+//推荐列表插入视频
+void dataBase::video_insertRecDramaListDB(const QStringList &parma)
+{
+    QSqlQuery query(getSqlDataBase());
+    //自增id插入时，id为0
+    QString  insert_sql = QString("insert into dramalist values (%1, '%2', '%3', '%4', '%5', '%6', '%7');").arg(0).arg(parma.at(0)).arg(parma.at(1)).arg(parma.at(2)).arg(parma.at(3)).arg(parma.at(4)).arg(parma.at(5));
+    bool isOK = query.exec(insert_sql);
+    if(isOK)
+    {
+        qDebug()<< QString::fromLocal8Bit("插入剧集信息成功~");
+    }
+    else
+    {
+        qDebug()<< QString::fromLocal8Bit("插入剧集信息错误：") << query.lastError();
+    }
+}
+
 //查询推荐列表
 bool dataBase::video_recDramaInfo()
 {

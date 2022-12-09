@@ -11,10 +11,11 @@ FilesItem::FilesItem(QWidget *parent) :
     setInstallEventFilter();
 }
 
-FilesItem::FilesItem(const FILEEDIT edit, const QString &name, const qint64 size, const QString &picpath, QWidget *parent):
+FilesItem::FilesItem(const FILEEDIT edit, const QUrl &url, const qint64 size, const QString &picpath, QWidget *parent):
     QWidget(parent),
     m_canedit(edit),
-    m_name(name),
+    m_furl(url.path().remove(0,1)),
+    m_name(url.fileName()),
     m_size(size),
     m_picpath(picpath),
     m_status(READY),
@@ -75,8 +76,10 @@ void FilesItem::initWorkUI()
     ui->comboBox_mtheme->addItem(QString(u8"艺术"),QString(u8"艺术"));
     ui->comboBox_mtheme->addItem(QString(u8"体育"),QString(u8"体育"));
     ui->comboBox_mtheme->addItem(QString(u8"脱口秀"),QString(u8"脱口秀"));
-    ui->stackedWidget_info->setCurrentIndex(0);
 
+    ui->lineEdit_displaycover->setReadOnly(true);//只读
+
+    ui->stackedWidget_info->setCurrentIndex(0);
 }
 
 void FilesItem::handleSignalsAndSlots()
@@ -96,7 +99,8 @@ void FilesItem::handleSignalsAndSlots()
             {
                 ui->pushButton_pause->setText(QString(u8"开始"));
             }
-            emit sig_sendItem_pause(checked);
+            qDebug() <<QString(u8"发送下载的URL：%1").arg(m_furl);
+            emit sig_sendItem_pause(checked,QUrl(m_furl),QUrl(m_picpath));
         }
         else if(m_canedit == FILEEDIT::CANEDIT)
         {
@@ -108,6 +112,7 @@ void FilesItem::handleSignalsAndSlots()
 //        ui->pushButton_editinfo->click();
 //    });
 
+    //媒体信息编辑
     connect(ui->pushButton_editinfo,&QPushButton::clicked,[=](bool checked){
         if(checked)
         {
@@ -148,6 +153,16 @@ void FilesItem::handleSignalsAndSlots()
         }
     });
 
+    //自定义封面
+    connect(ui->lineEdit_displaycover,&QLineEdit::returnPressed,[=](){
+        if(!ui->lineEdit_displaycover->text().trimmed().isEmpty())
+        {
+            ui->lineEdit_displaycover->setText(ui->lineEdit_displaycover->text().trimmed());
+            if(ui->lineEdit_displaycover->hasFocus()) ui->lineEdit_displaycover->clearFocus();
+        }
+    });
+
+
     //时长修改
     connect(ui->lineEdit_mduration,&QLineEdit::returnPressed,[=](){
         if(!ui->lineEdit_mduration->text().trimmed().isEmpty())
@@ -156,6 +171,7 @@ void FilesItem::handleSignalsAndSlots()
             if(ui->lineEdit_mduration->hasFocus()) ui->lineEdit_mduration->clearFocus();
         }
     });
+
 
     //媒体类型选择
     connect(ui->comboBox_mtype,QOverload<int>::of(&QComboBox::currentIndexChanged),[=](int index){
@@ -167,6 +183,21 @@ void FilesItem::handleSignalsAndSlots()
     connect(ui->comboBox_mtheme,QOverload<int>::of(&QComboBox::currentIndexChanged),[=](int index){
         qDebug() << QString(u8"当前项发生改变：%1").arg(ui->comboBox_mtheme->itemText(index));
         qDebug() << QString(u8"当前项发生改变,item data：%1").arg(ui->comboBox_mtheme->currentData().toString());
+    });
+
+    //自定义封面
+    connect(ui->pushButton_opencover,&QPushButton::clicked,[=](){
+        QString filename_cover = QFileDialog::getOpenFileName();
+        qDebug() << filename_cover;
+        if(filename_cover.isEmpty())
+        {
+            return;
+        }
+        else
+        {
+            m_picpath = filename_cover;
+            slot_setItemPicture();
+        }
     });
 }
 
@@ -206,6 +237,7 @@ void FilesItem::slot_setItemEdit(const FILEEDIT edit)
         ui->pushButton_pause->setCheckable(false);
         ui->pushButton_finish->setText(QString(u8"已上传"));
         ui->pushButton_finish->setDisabled(true);
+        ui->pushButton_opencover->setDisabled(true);
     }
         break;
     default:
@@ -293,16 +325,25 @@ void FilesItem::slot_setItemName()
 
 void FilesItem::slot_setItemPicture()
 {
+    qDebug() << "new picpath =" << m_picpath;
+    ui->lineEdit_displaycover->setText(m_picpath);
     ui->label_pic->setPixmap(QPixmap(m_picpath));
     ui->label_pic->setScaledContents(true);
 }
 
 void FilesItem::slot_updateProgress(qint64 bytesSent, qint64 bytesTotal)
 {
-//    qDebug() << "received" <<bytesSent << "total" << bytesTotal;
     if(bytesSent > 0 && bytesTotal != 0 )
     {
         ui->progressBar->setValue(bytesSent*100/bytesTotal);//下载进度百分比（进度条）
+    }
+}
+
+void FilesItem::slot_updateProgress_header(qint64 bytesSent, qint64 bytesTotal)
+{
+    if(bytesSent > 0 && bytesTotal != 0 )
+    {
+        qDebug() << QString(u8"图片上传进度：") << (bytesSent*100/bytesTotal);//下载进度百分比（进度条）
     }
 }
 
@@ -315,14 +356,6 @@ void FilesItem::slot_updateStatus(qint64 bytesSent, qint64 bytesTotal)
         {
             slot_setItemStatus(FINISHED);
 
-            m_body.fname    =  ui->lineEdit_filename->text();
-            m_body.ftype    =  m_picpath;
-            m_body.fsize    =  m_size;
-            m_body.fnick    =  ui->lineEdit_displaytitle->text();
-            m_body.fmedtype =  ui->comboBox_mtype->currentData().toString();
-            m_body.fmedtheme=  ui->comboBox_mtheme->currentData().toString();
-            m_body.fduration=  ui->lineEdit_mduration->text();
-            emit sig_sendItem_finished(m_body);
             //延时移除
             QTimer::singleShot(1000,0,[=](){
                 slot_statusButtonClick();//移除
@@ -341,10 +374,42 @@ void FilesItem::slot_updateStatus(qint64 bytesSent, qint64 bytesTotal)
     });
 }
 
-void FilesItem::slot_updateBody(const QString &url, const QString &md5)
+void FilesItem::slot_update_url_md5(const QString &url, const QString &md5)
 {
-    m_body.furl = url;
-    m_body.fmd5 = md5;
+//    qDebug() << QString(u8"video接收到传回的信息：")<< url << md5;
+    m_body.furl     = url;
+    m_body.fmd5     = md5;
+    m_body.fname    =  ui->lineEdit_filename->text();
+    m_body.fcover   =  ui->lineEdit_displaycover->text();//body创建新的item用的本地路径
+    m_body.fsize    =  m_size;
+    m_body.fnick    =  ui->lineEdit_displaytitle->text();
+    m_body.fmedtype =  ui->comboBox_mtype->currentData().toString();
+    m_body.fmedtheme=  ui->comboBox_mtheme->currentData().toString();
+    m_body.fduration=  ui->lineEdit_mduration->text();
+    //插入数据
+    file_insertItemDataTodb(m_body);//插入数据库用的http传回来的路径
+    emit sig_sendItem_finished(m_body);//创建新的完成的item
+}
+
+void FilesItem::slot_update_header(const QString &url_header, const QString &md5)
+{
+    //必须保证header的回传信息在video之前接收到
+    qDebug() << QString(u8"header接收到传回的信息：")<< url_header << md5;
+    m_picpath = url_header;
+//    m_body.fcover = m_picpath;
+}
+
+/*插入数据库媒体信息*/
+void FilesItem::file_insertItemDataTodb(const fileBody &body)
+{
+    qDebug() <<QString(u8"数据库插入前接收到的数据：");
+    qDebug() << "alias      = :" << body.fnick;
+    qDebug() << "url        = :" << body.furl;
+    qDebug() << "fcover      = :" << body.fcover;
+    qDebug() << "duration   = :" << body.fduration;
+    qDebug() << "part of    = :" << body.fmedtheme;
+    QStringList parma = {body.fnick,body.furl,body.fduration,m_picpath,QString(u8"8.8万"),body.fmedtheme};
+    dataBase::getInstance()->video_insertRecDramaListDB(parma);//插入数据
 }
 
 //模拟点击
@@ -430,3 +495,5 @@ QString FilesItem::getCurtentComboBoxText(const QComboBox *combobox, const QStri
         }
     }
 }
+
+

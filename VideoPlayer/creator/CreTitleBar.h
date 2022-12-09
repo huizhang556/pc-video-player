@@ -22,6 +22,7 @@ public:
 
 protected:
     void    mousePressEvent(QMouseEvent *event)override;
+    bool    eventFilter(QObject *watched, QEvent *event)override;
 
 private:
     Ui::CreTitleBar *ui;

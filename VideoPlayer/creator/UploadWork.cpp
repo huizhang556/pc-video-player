@@ -11,10 +11,10 @@ UploadWork::~UploadWork()
     delete m_manager;
 }
 
-void UploadWork::slot_receiveData_accept(const QUrl &url)
+void UploadWork::slot_receiveData_accept(const QUrl &media_url)
 {
     //00---打开文件
-    QString filePath = QDir::toNativeSeparators(url.path().remove(0,1));//移除第一个/ 重点：MSVC编译器一定要把文件路径转换正确
+    QString filePath = QDir::toNativeSeparators(media_url.toString());//移除第一个/ 重点：MSVC编译器一定要把文件路径转换正确
     if(filePath.isNull() || filePath.isEmpty()) return;
     m_file = new QFile(filePath);
     QString fileNamee = m_file->fileName();
@@ -173,6 +173,7 @@ void UploadWork::getJson(QJsonObject &jsonObj)
     //      "retcode": 0,
     //      "src": "/group1/video0822/《青花瓷》.flv"
     //    }
+        qDebug() <<QString(u8"上传完成解析到的数据：");
         QString url     = jsonObj.value("url").toString();      qDebug() << url;
         QString md5     = jsonObj.value("md5").toString();      qDebug() << md5;
         QString path    = jsonObj.value("path").toString();     qDebug() << path;
@@ -183,7 +184,11 @@ void UploadWork::getJson(QJsonObject &jsonObj)
         QString savePath = url.left(pos);
         qDebug() << "really file savepath = " << savePath;
         //插入数据库
-        emit sig_work_finished(savePath,md5);
+        if(!savePath.isEmpty() && !md5.isEmpty())
+        {
+            emit sig_work_finished(savePath,md5);
+//            qDebug() << QString(u8"回传信息已发出！");
+        }
 }
 
 void UploadWork::getStatusCode(QNetworkReply *reply)

@@ -5,9 +5,11 @@
 #include "CreTitleBar.h"
 #include "CusCalendar.h"
 #include "FilesItem.h"
+#include "UploadWork.h"
 #include "CloseButton.h"
 #include "AddMediaInfo.h"
-#include "UploadWork.h"
+#include "miniplayer/MiniPlayer.h"
+
 #include <QLayout>
 #include <QWidget>
 #include <QEvent>
@@ -56,17 +58,17 @@ private:
     QList<QUrl>    getOpenFileSystem();
     void           checkListItemsCounts();
     void           addFileItemsToList(const QList<QUrl> urlLists);
-    void           file_upload_start(const QUrl &url, FilesItem *fileItem);//上传文件到服务器
+    void           file_upload_start(const QUrl media_url,const QUrl pic_url, FilesItem *fileItem);//上传文件到服务器
     void           file_upload_pause();//暂停
     void           file_upload_stop();//移除
     void           file_createItemToAnotherListWgt(const fileBody& body);
-    void           file_insertItemDataTodb(const fileBody& body);
     QString        file_getFileSuffix(const QString& suffix);//获取文件类型
 
 
 private:
     Ui::CreateCenter *ui;
-    static  CreateCenter* m_pInstance;
+    static  CreateCenter*  m_pInstance;
+    MiniPlayer      *m_miniPlayer   =   nullptr;
     CreTitleBar     *m_ctitleBar    =   nullptr;
     CusCalendar     *m_calendar     =   nullptr;
     QMenu           *m_menuDataTime =   nullptr;
@@ -95,8 +97,9 @@ private:
         QString(u8"图片")
     };
 
-    UploadWork  *upWorker   =   nullptr;
-    QThread     *workThread =   nullptr;
+//    UploadWork  *upWorker   =   nullptr;
+//    QThread     *workThread =   nullptr;
+
 signals:
     void    sig_file_uploadall_start();
     void    sig_file_uploadall_stop();

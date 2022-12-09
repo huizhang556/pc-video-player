@@ -14,6 +14,8 @@ CreateCenter::CreateCenter(QWidget *parent) :
     ui(new Ui::CreateCenter)
 {
     ui->setupUi(this);
+    this->setMinimumSize(QSize(1100,700));
+    this->resize(1100,700);
     this->setWindowTitle(QString::fromLocal8Bit("创作中心"));
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);
     initWorkUI();
@@ -28,6 +30,7 @@ CreateCenter::~CreateCenter()
     delete m_calendar;
     delete m_wgtAction;
     delete m_menuDataTime;
+    delete m_miniPlayer;
     if(m_pInstance != nullptr)
         delete m_pInstance;
     m_pInstance = nullptr;
@@ -44,6 +47,8 @@ CreateCenter *CreateCenter::getInstance()
 
 void CreateCenter::initWorkUI()
 {
+    m_miniPlayer = new MiniPlayer();
+
     ui->pushButton_uploadFiles->setCheckable(true);
     ui->pushButton_uploadFiles->setChecked(false);
     ui->pushButton_uploadFiles->setText(QString(u8"上传"));
@@ -116,10 +121,10 @@ void CreateCenter::initWorkUI()
     ui->stackedWidget_upload->setCurrentWidget(ui->stacked_blank);
 
     ui->toolBox_center->layout()->setSpacing(1);//item之间的间距
-    ui->toolBox_center->setItemIcon(0,QIcon(":/images/fileitem_documents.png"));
-    ui->toolBox_center->setItemIcon(1,QIcon(":/images/fileitem_manager.png"));
-    ui->toolBox_center->setItemIcon(2,QIcon(":/images/fileitem_musics.png"));
-    ui->toolBox_center->setItemIcon(3,QIcon(":/images/fileitem_videos.png"));
+    ui->toolBox_center->setItemIcon(0,QIcon(""));
+    ui->toolBox_center->setItemIcon(1,QIcon(""));
+    ui->toolBox_center->setItemIcon(2,QIcon(""));
+    ui->toolBox_center->setItemIcon(3,QIcon(""));
 
     for(int i = 0; i < ui->listWidget_perCenter->count(); i++)
     {
@@ -251,14 +256,10 @@ void CreateCenter::handleSignalsAndSlots()
 
 
     //小窗口关闭
-    connect(ui->pushButton_minClose,&QPushButton::clicked,[=](){
-        this->close();
-    });
+    connect(ui->label_loginbg,&MoveLabel::sig_sendClose,[=](){this->close();});
 
     //登录
-    connect(ui->pushButton_clogin,&QPushButton::clicked,[=](){
-        ui->stackedWidget_switch->setCurrentWidget(ui->page_create);
-    });
+    connect(ui->label_loginbg,&MoveLabel::sig_sendLogin,[=](){ui->stackedWidget_switch->setCurrentWidget(ui->page_create);});
 
     //选择文件
     connect(ui->pushButton_openfile,&QPushButton::clicked,[=](){
@@ -505,7 +506,7 @@ void CreateCenter::addFileItemsToList(const QList<QUrl> urlLists)
         QFileInfo file(filepath);//file必须是堆
         qDebug() << QString(u8"文件大小：%1字节").arg(file.size());
         QString suffixpic  = file_getFileSuffix(file.suffix());
-        FilesItem *itemWidget = new FilesItem(FILEEDIT::CANWRITE,fileUrl.fileName(),file.size(),suffixpic);//文件名 大小 图标
+        FilesItem *itemWidget = new FilesItem(FILEEDIT::CANWRITE,fileUrl,file.size(),suffixpic);//文件名 大小 图标
         QListWidgetItem *item = new QListWidgetItem();
         item->setData(Qt::UserRole,fileUrl);
         item->setSizeHint(QSize(225,155));
@@ -514,7 +515,7 @@ void CreateCenter::addFileItemsToList(const QList<QUrl> urlLists)
         ui->listWidget_videopolish->addItem(item);
         ui->listWidget_videopolish->setItemWidget(item,itemWidget);
         //关联信号槽
-        //移除item
+        //移除item(1.未上传时移除2.上传进度100%时，模拟按钮点击移除)
         connect(itemWidget,&FilesItem::sig_sendItem_remove,[=](){
             itemWidget->deleteLater();
             item->listWidget()->takeItem(item->listWidget()->row(item));
@@ -522,9 +523,9 @@ void CreateCenter::addFileItemsToList(const QList<QUrl> urlLists)
             checkListItemsCounts();
         });
 
-        //完成添加进入另一个list
-        connect(itemWidget,&FilesItem::sig_sendItem_finished,[=](const fileBody& body ){
-            file_createItemToAnotherListWgt(body);
+        //完成添加进入另一个list（url回传回来的时候body齐全，发出finished）
+        connect(itemWidget,&FilesItem::sig_sendItem_finished,[=](fileBody body){
+            file_createItemToAnotherListWgt(body);//上传以后的body信息
         });
 
         //全部上传（点击按钮）
@@ -539,12 +540,12 @@ void CreateCenter::addFileItemsToList(const QList<QUrl> urlLists)
         });
 
         //开始上传（单个）
-        connect(itemWidget,&FilesItem::sig_sendItem_pause,[=](bool start){
+        connect(itemWidget,&FilesItem::sig_sendItem_pause,[=](bool start,QUrl media_url,QUrl media_cover){
             qDebug() << start;
             if(!start)
             {
-                file_upload_start(fileUrl,itemWidget);
-                qDebug() << QString(u8"开始上传");
+                file_upload_start(media_url,media_cover,itemWidget);
+                qDebug() << QString(u8"开始上传") <<media_url<< endl << media_cover ;
             }
             else
             {
@@ -556,27 +557,54 @@ void CreateCenter::addFileItemsToList(const QList<QUrl> urlLists)
 }
 
 //开始上传
-void CreateCenter::file_upload_start(const QUrl &url,FilesItem *fileItem)
+void CreateCenter::file_upload_start(const QUrl media_url, const QUrl pic_url, FilesItem *fileItem)
 {
-    //创建工作对象
-    upWorker = new UploadWork();
-    //创建线程
-    workThread = new QThread();
-    //工作对象移动到线程中
-    upWorker->moveToThread(workThread);
-    workThread->start();//开启线程
-    qDebug() << QString(u8"新的线程启动，地址：")<< workThread;
-    upWorker->slot_receiveData_accept(url);
-    //有关文件操作的信号与槽函数
-    connect(workThread,&QThread::finished,upWorker,&QObject::deleteLater);//线程结束时，工作对象自动删除
-    connect(workThread,&QThread::finished,workThread,&QThread::deleteLater);//线程结束时，线程内对象自动删除
+    if(!media_url.toString().isEmpty() && !media_url.toString().startsWith(":/",Qt::CaseInsensitive))
+    {
+        qDebug() << QString(u8"video:合法路径，文件路径：-->%1").arg(media_url.toString());
+        //创建工作对象
+        UploadWork* upWorker = new UploadWork();
+        //创建线程
+        QThread *workThread = new QThread();
+        //工作对象移动到线程中
+        upWorker->moveToThread(workThread);
+        //开启线程
+        workThread->start();//开启线程
+        qDebug() << QString(u8"新的线程启动(thread_1)，地址：")<< workThread;
+        upWorker->slot_receiveData_accept(media_url);
+        //信号与槽函数
+        connect(workThread,&QThread::finished,upWorker,&QObject::deleteLater);//线程结束时，工作对象自动删除
+        connect(workThread,&QThread::finished,workThread,&QThread::deleteLater);//线程结束时，线程内对象自动删除
+        //下载进度
+        connect(upWorker,SIGNAL(sig_work_uploadprogress(qint64,qint64)),fileItem,SLOT(slot_updateProgress(qint64,qint64)));
+        //关联文件状态()
+        connect(upWorker,SIGNAL(sig_work_uploadprogress(qint64,qint64)),fileItem,SLOT(slot_updateStatus(qint64,qint64)));
+        //上传完成--传回信息
+        connect(upWorker,SIGNAL(sig_work_finished(QString,QString)),fileItem,SLOT(slot_update_url_md5(QString,QString)));
+    }
+    else
+    {
+        qDebug() << QString(u8"video:非法路径，无法获取文件-->%1").arg(media_url.toString());
+    }
 
-    //关联文件下载进度
-    connect(upWorker,SIGNAL(sig_work_uploadprogress(qint64,qint64)),fileItem,SLOT(slot_updateProgress(qint64,qint64)));
-    //上传完成--传回信息
-    connect(upWorker,SIGNAL(sig_work_finished(QString,QString)),fileItem,SLOT(slot_updateBody(QString,QString)));
-    //关联文件状态
-    connect(upWorker,SIGNAL(sig_work_uploadprogress(qint64,qint64)),fileItem,SLOT(slot_updateStatus(qint64,qint64)));
+    if(!pic_url.toString().isEmpty() && !pic_url.toString().startsWith(":/",Qt::CaseInsensitive))
+    {
+        qDebug() << QString(u8"header:合法路径，文件路径：-->%1").arg(pic_url.toString());
+        UploadWork* upWorker2 = new UploadWork();
+        QThread *workThread2 = new QThread();
+        upWorker2->moveToThread(workThread2);
+        workThread2->start();
+        qDebug() << QString(u8"新的线程启动(thread_2)，地址：")<< workThread2;
+        upWorker2->slot_receiveData_accept(pic_url);
+        connect(workThread2,&QThread::finished,upWorker2,&QThread::deleteLater);
+        connect(workThread2,&QThread::finished,workThread2,&QObject::deleteLater);
+        connect(upWorker2,SIGNAL(sig_work_uploadprogress(qint64,qint64)),fileItem,SLOT(slot_updateProgress_header(qint64,qint64)));
+        connect(upWorker2,SIGNAL(sig_work_finished(QString,QString)),fileItem,SLOT(slot_update_header(QString,QString)));
+    }
+    else
+    {
+        qDebug() << QString(u8"header:非法路径，无法获取文件-->%1").arg(pic_url.toString());
+    }
 
     //文件上传完成（自动移除item）
 //    connect(workThread,&QThread::finished,fileItem,&FilesItem::slot_statusButtonClick);//传输完成线程并不立即退出
@@ -596,8 +624,11 @@ void CreateCenter::file_upload_stop()
 
 void CreateCenter::file_createItemToAnotherListWgt(const fileBody &body)
 {
+    qDebug() << QString(u8"新的完成的item被创建");
     QListWidgetItem *item = new QListWidgetItem();
-    FilesItem *itemWidget = new FilesItem(FILEEDIT::CANEDIT,body.fname,body.fsize,body.ftype);
+    item->setData(Qt::UserRole,body.furl);
+    qDebug()<< "new body =" << body.fname << body.fsize << body.fcover;
+    FilesItem *itemWidget = new FilesItem(FILEEDIT::CANEDIT,body.fname,body.fsize,body.fcover);
     itemWidget->initFileItem(body);
     item->setSizeHint(QSize(225,155));
     if(body.fmedtype == QString("movies"))
@@ -640,19 +671,13 @@ void CreateCenter::file_createItemToAnotherListWgt(const fileBody &body)
     });
     //播放
     connect(itemWidget,&FilesItem::sig_sendItem_play,[=](){
-        qDebug() << QString(u8"只读状态：播放");
+//        m_miniPlayer->resize(1000,666);
+//        m_miniPlayer->move((QApplication::desktop()->width() - m_miniPlayer->width())/2,(QApplication::desktop()->height() - m_miniPlayer->height())/2);//居中显示
+//        m_miniPlayer->c_show();//关闭按钮处出现
+//        m_miniPlayer->slot_receivePlayMediaFile(item->data(Qt::UserRole).toString(),QUrl(item->data(Qt::UserRole).toString()).fileName());
+//        qDebug() << QString(u8"接收到的播放地址：")<< item->data(Qt::UserRole).toString();
     });
 
-    //插入数据
-    file_insertItemDataTodb(body);
-}
-
-void CreateCenter::file_insertItemDataTodb(const fileBody &body)
-{
-    qDebug() << "alias      = :" << body.fnick;
-    qDebug() << "url        = :" << body.furl;
-    qDebug() << "duration   = :" << body.fduration;
-    qDebug() << "part of    = :" << body.fmedtheme;
 }
 
 QString CreateCenter::file_getFileSuffix(const QString &suffix)

@@ -24,7 +24,7 @@ public:
     ~UploadWork();
 
 public slots:
-    void    slot_receiveData_accept(const QUrl& url);
+    void    slot_receiveData_accept(const QUrl& media_url);
 
 signals:
 
@@ -44,7 +44,7 @@ private:
 
 signals:
     void    sig_work_uploadprogress(qint64,qint64);
-    void    sig_work_finished(const QString&,const QString&);
+    void    sig_work_finished(QString,QString);
 
 };
 

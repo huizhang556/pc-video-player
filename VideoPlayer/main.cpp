@@ -87,9 +87,7 @@ int main(int argc, char *argv[])
 
 //    CreateCenter::getInstance()->show();
 
-
     splashscream.finish(&w1);
-
 
     //06--->数据恢复初始化
     QTimer::singleShot(1500,0,[=](){

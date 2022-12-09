@@ -9,14 +9,15 @@ class VideoSurface : public QAbstractVideoSurface
 public:
     explicit VideoSurface(QObject *parent = nullptr);
 
-signals:
-    void showImage(QImage img);
-public slots:
-
     // QAbstractVideoSurface interface
 public:
     QList<QVideoFrame::PixelFormat> supportedPixelFormats(QAbstractVideoBuffer::HandleType type) const;
     bool present(const QVideoFrame &frame);
+
+public slots:
+
+signals:
+    void showImage(QImage img);
 };
 
 #endif // VIDEOSURFACE_H

@@ -489,7 +489,18 @@ border: 0px solid rgb(204, 204, 204);
 background-color: transparent;
 }
 
+#pushButton_opencover
+{
+color: gray;
+border-radius: 2px;
+border: 1px solid gray;
+}
 
+#pushButton_opencover:hover
+{
+color: #2bde57;
+border: 1px solid #2bde57;
+}
 
 QComboBox 
 {
@@ -497,12 +508,13 @@ border-radius: 3px;
 border: 1px solid rgb(204, 204, 204);
 padding: 1px 18px 1px 3px;
 min-width: 6em;
-margin: 3px 0px;
+margin: 1px 0px;
 background-color: transparent;
 }
 
 QComboBox::drop-down
 {
+width: 10px;
 border: 0px solid rgb(204, 204, 204);
 border-left-width: 1px;
 background-color: transparent;
@@ -510,7 +522,7 @@ background-color: transparent;
 
 QComboBox::down-arrow
 {
-image: url(:/images/function/download_arrow_hover.png);
+image: url(://images/dialog/drop-down.png);
 }
 
 /*下拉列表item*/
@@ -526,7 +538,7 @@ background-color: #f0f0f0;								/*下拉列表背景色*/
 QListView::item
 {
 /*单个item高度*/
-min-height:28px;
+min-height:24px;
 padding:0px 8px;
 background:0000ff;
 color:#404040;
@@ -552,7 +564,7 @@ background-color: #d3d3d3;
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_6">
           <property name="spacing">
-           <number>1</number>
+           <number>0</number>
           </property>
           <property name="leftMargin">
            <number>3</number>
@@ -576,13 +588,13 @@ background-color: #d3d3d3;
               <property name="minimumSize">
                <size>
                 <width>36</width>
-                <height>32</height>
+                <height>26</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>36</width>
-                <height>16777215</height>
+                <height>26</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -598,20 +610,90 @@ background-color: #d3d3d3;
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>32</height>
+                <height>26</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>16777215</height>
+                <height>26</height>
                </size>
               </property>
               <property name="styleSheet">
                <string notr="true"/>
               </property>
               <property name="text">
-               <string>张小斐&amp;&amp;贾玲爆笑相亲张小斐&amp;&amp;贾玲爆笑相亲</string>
+               <string>自定义标题</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_8">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_cover">
+              <property name="minimumSize">
+               <size>
+                <width>36</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>36</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>封面：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_displaycover">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>自定义封面</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_opencover">
+              <property name="minimumSize">
+               <size>
+                <width>30</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>30</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>选择</string>
               </property>
              </widget>
             </item>
@@ -627,13 +709,13 @@ background-color: #d3d3d3;
               <property name="minimumSize">
                <size>
                 <width>36</width>
-                <height>32</height>
+                <height>26</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>36</width>
-                <height>16777215</height>
+                <height>26</height>
                </size>
               </property>
               <property name="text">
@@ -646,13 +728,13 @@ background-color: #d3d3d3;
               <property name="minimumSize">
                <size>
                 <width>125</width>
-                <height>32</height>
+                <height>26</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>16777215</height>
+                <height>26</height>
                </size>
               </property>
              </widget>
@@ -669,13 +751,13 @@ background-color: #d3d3d3;
               <property name="minimumSize">
                <size>
                 <width>36</width>
-                <height>32</height>
+                <height>26</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>36</width>
-                <height>16777215</height>
+                <height>26</height>
                </size>
               </property>
               <property name="text">
@@ -688,13 +770,13 @@ background-color: #d3d3d3;
               <property name="minimumSize">
                <size>
                 <width>125</width>
-                <height>32</height>
+                <height>26</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>16777215</height>
+                <height>26</height>
                </size>
               </property>
              </widget>
@@ -711,13 +793,13 @@ background-color: #d3d3d3;
               <property name="minimumSize">
                <size>
                 <width>36</width>
-                <height>32</height>
+                <height>26</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>36</width>
-                <height>16777215</height>
+                <height>26</height>
                </size>
               </property>
               <property name="text">
@@ -730,17 +812,17 @@ background-color: #d3d3d3;
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>32</height>
+                <height>26</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>16777215</height>
+                <height>26</height>
                </size>
               </property>
               <property name="text">
-               <string>12：25：01</string>
+               <string>00:02:00</string>
               </property>
              </widget>
             </item>

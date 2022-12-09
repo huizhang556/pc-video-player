@@ -3,6 +3,7 @@
 MiniPlayer::MiniPlayer(QWidget *parent) :
     QWidget(parent)
 {
+    setWindowFlags(Qt::FramelessWindowHint);
     initWorkUI();
     handleSignalsAndSlots();
 }
@@ -14,6 +15,9 @@ MiniPlayer::~MiniPlayer()
     delete  m_videoMenu;
     delete  m_clityListWgt;
     delete  m_frameSound;
+//    delete  m_player;
+//    delete  m_playlist;
+//    delete  m_videoWidget;
 }
 
 void MiniPlayer::initWorkUI()
@@ -29,15 +33,21 @@ void MiniPlayer::initWorkUI()
     m_frameTitle->setMinimumWidth(700);
     m_frameTitle->setObjectName(QString::fromUtf8(u8"m_miniframeTitle"));
 
-    m_buttonTitle = new QPushButton(QString(u8"我是播放器我是播放器我是播放器我是播放器我是播放器"));
+    m_buttonTitle = new QPushButton(QString(u8"mini播放器"));
     m_buttonTitle->setObjectName(QString::fromUtf8("m_minibuttonTitle"));
     m_buttonTitle->setMinimumSize(600,FIXEDHEIGHT-4);
+
+    m_buttonClose = new QPushButton(QString(u8"X"));
+    m_buttonClose->setObjectName(QString::fromUtf8("m_minim_buttonClose"));
+    m_buttonClose->setFixedSize(30,30);
+    m_buttonClose->hide();//默认没有关闭按钮
     QHBoxLayout *hblayout1 = new QHBoxLayout();
     hblayout1->setSpacing(0);
     hblayout1->setMargin(0);
     hblayout1->setContentsMargins(0,0,0,0);
     hblayout1->addWidget(m_buttonTitle);
     hblayout1->addSpacerItem(new QSpacerItem(10,FIXEDHEIGHT,QSizePolicy::Expanding,QSizePolicy::Fixed));
+    hblayout1->addWidget(m_buttonClose);
     m_frameTitle->setLayout(hblayout1);
 
     m_frameControl = new QFrame(this);
@@ -167,6 +177,15 @@ void MiniPlayer::initWorkUI()
 
 void MiniPlayer::handleSignalsAndSlots()
 {
+    //关闭
+    connect(m_buttonClose,&QPushButton::clicked,[=](){
+        if(m_player->state() == QMediaPlayer::State::PlayingState)
+        {
+            m_player->stop();
+        }
+        this->close();
+    });
+
     //定时器
     connect(m_timer,&QTimer::timeout,[=](){
         on_updatePosition();
@@ -275,6 +294,12 @@ void MiniPlayer::handleSignalsAndSlots()
     connect(m_verSlider,&QSlider::valueChanged,[=](int value){
         m_player->setVolume(value);
     });
+}
+
+void MiniPlayer::c_show()
+{
+    this->show();
+    m_buttonClose->show();
 }
 
 void MiniPlayer::slot_receivePlayMediaFile(const QString &mediaUrl, const QString &mediaName)

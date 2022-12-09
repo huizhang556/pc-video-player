@@ -83,10 +83,17 @@ background-color: #242428;
 }
 
 /***mini播放器---start**/
+
+MiniPlayer
+{
+background-color: transparent;
+}
+
 /**顶部标题栏**/
-#m_miniframeTitle
+QFrame#m_miniframeTitle
 {
 background-color: rgba(38, 40, 41,0.5);
+background-color: transparent;
 }
 
 /*标题栏--按钮*/
@@ -99,10 +106,18 @@ font-size: 16px;
 background-color: transparent;
 }
 
+#m_minim_buttonClose
+{
+color: red;
+font-size: 12px;
+background-color: transparent;
+}
+
 /**底部控制栏**/
-#m_miniframeControl
+QFrame#m_miniframeControl
 {
 background-color: rgba(38, 40, 41,0.5);
+background-color: transparent;
 }
 
 /*播放/暂停*/

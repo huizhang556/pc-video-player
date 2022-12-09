@@ -56,7 +56,7 @@ void CreTitleBar::handleSignalsAndSlots()
 
 void CreTitleBar::setInstallEventer()
 {
-
+    this->installEventFilter(this);
 }
 
 void CreTitleBar::mousePressEvent(QMouseEvent *event)
@@ -71,4 +71,17 @@ void CreTitleBar::mousePressEvent(QMouseEvent *event)
         }
     }
     event->ignore();
+}
+
+bool CreTitleBar::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == this &&event->type() == QEvent::MouseButtonPress)
+    {
+        if(!this->hasFocus())
+        {
+            clearFocus();
+            setFocus();
+        }
+    }
+    return QWidget::eventFilter(watched,event);
 }

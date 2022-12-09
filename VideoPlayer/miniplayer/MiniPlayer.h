@@ -32,7 +32,7 @@ public:
     ~MiniPlayer();
     void    initWorkUI();
     void    handleSignalsAndSlots();
-
+    void    c_show();
 public  slots:
     void    slot_receivePlayMediaFile(const QString& mediaUrl,const QString& mediaName);
     void    slot_mouseEnter();
@@ -56,6 +56,7 @@ private:
     QSlider         *m_verSlider        =   nullptr;//音量进度
     QSlider         *m_horSlider        =   nullptr;//视频进度
     QPushButton     *m_buttonTitle      =   nullptr;//标题
+    QPushButton     *m_buttonClose      =   nullptr;//标题栏关闭按钮
     QPushButton     *m_buttonPlayer     =   nullptr;//播放
     QPushButton     *m_buttonNext       =   nullptr;//下一首
     QLabel          *m_labelProgress    =   nullptr;//进度显示
