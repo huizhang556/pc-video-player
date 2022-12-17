@@ -1,6 +1,7 @@
 ﻿#ifndef MINIPLAYER_H
 #define MINIPLAYER_H
 #define FIXEDHEIGHT 36
+
 #include <QResizeEvent>
 #include <QVideoWidget>
 #include <QPushButton>
@@ -10,6 +11,7 @@
 #include <QActionGroup>
 #include <QListWidget>
 #include <QSlider>
+#include <QMovie>
 #include <QMenu>
 #include <QAction>
 #include <QEvent>
@@ -60,6 +62,8 @@ private:
     QPushButton     *m_buttonPlayer     =   nullptr;//播放
     QPushButton     *m_buttonNext       =   nullptr;//下一首
     QLabel          *m_labelProgress    =   nullptr;//进度显示
+    QLabel          *m_loadingLabel     =   nullptr;//加载状态
+    QMovie          *m_loadMovie        =   nullptr;//动图加载
     QPushButton     *m_buttonClarity    =   nullptr;//清晰度
     QPushButton     *m_buttonSound      =   nullptr;//音量
     QTimer          *m_timer            =   nullptr;
@@ -81,6 +85,11 @@ private slots:
     void    slot_menu_playrate(QAction *action);
     void    slot_menu_videoinfo();
     void    slot_menu_setting();
+    void    slot_mediaLoadingStatus(QMediaPlayer::MediaStatus status);
+
+private:
+    void    media_loading_start();
+    void    media_loading_end();
 
 signals:
     void    sig_player_toMainPlayer();

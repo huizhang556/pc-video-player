@@ -89,6 +89,12 @@ MiniPlayer
 background-color: transparent;
 }
 
+/*缓冲提示*/
+#m_loadingLabel
+{
+background-color: transparent;
+}
+
 /**顶部标题栏**/
 QFrame#m_miniframeTitle
 {

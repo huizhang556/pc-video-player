@@ -164,6 +164,14 @@ void MiniPlayer::initWorkUI()
     this->setLayout(vblayout2);
     this->setContentsMargins(0,0,0,0);
 
+    //动图
+    m_loadingLabel = new QLabel(this);
+    m_loadingLabel->setFixedSize(66,66);
+    m_loadingLabel->setObjectName(QString::fromUtf8("m_loadingLabel"));
+    m_loadMovie = new QMovie("://images/bgpic/loading_000.gif");
+    m_loadingLabel->setMovie(m_loadMovie);
+    m_loadingLabel->hide();
+
     m_player = new QMediaPlayer(this);
     m_playlist = new QMediaPlaylist(m_player);
     m_playlist->setPlaybackMode(QMediaPlaylist::Loop);
@@ -217,6 +225,9 @@ void MiniPlayer::handleSignalsAndSlots()
             break;
         }
     });
+
+    //媒体资源加载状态
+    connect(m_player,&QMediaPlayer::mediaStatusChanged,this,&MiniPlayer::slot_mediaLoadingStatus);
 
     connect(m_buttonPlayer,&QPushButton::clicked,[=](bool checked){
         if(checked)
@@ -618,4 +629,67 @@ void MiniPlayer::slot_menu_setting()
 {
     emit sig_player_videoSetting();
     qDebug() <<QString(u8"视频设置");
+}
+
+void MiniPlayer::slot_mediaLoadingStatus(QMediaPlayer::MediaStatus status)
+{
+    if(m_player->media().isNull()) return;
+    if(m_player->mediaStatus() == QMediaPlayer::UnknownMediaStatus)//未知媒体状态
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::UnknownMediaStatus");
+    }
+    else if(m_player->mediaStatus() == QMediaPlayer::NoMedia)//无媒体状态
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::NoMedia");
+    }
+    else if(m_player->mediaStatus() == QMediaPlayer::LoadingMedia)//加载媒体中
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::LoadingMedia");
+        media_loading_start();
+    }
+    else if(m_player->mediaStatus() == QMediaPlayer::LoadedMedia)//媒体加载完毕
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::LoadedMedia");
+        media_loading_end();
+    }
+    else if(m_player->mediaStatus() == QMediaPlayer::StalledMedia)//媒体停顿
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::StalledMedia");
+    }
+    else if(m_player->mediaStatus() == QMediaPlayer::BufferingMedia)//媒体正在缓冲
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::BufferingMedia");
+        media_loading_start();
+    }
+    else if(m_player->mediaStatus() == QMediaPlayer::BufferedMedia)//媒体缓冲完毕
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::BufferedMedia");
+        media_loading_end();
+    }
+    else if(m_player->mediaStatus() == QMediaPlayer::EndOfMedia)//媒体结束
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::EndOfMedia");
+    }
+    else if(m_player->mediaStatus() == QMediaPlayer::InvalidMedia)//媒体无效
+    {
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::InvalidMedia");
+    }
+    else
+    {
+        qDebug() << QString::fromLocal8Bit("other unknow problem!");
+    }
+}
+
+void MiniPlayer::media_loading_start()
+{
+    m_loadingLabel->move(this->width()/2-m_loadingLabel->width()/2,this->height()/2-m_loadingLabel->height()/2);
+    m_loadingLabel->raise();
+    m_loadingLabel->show();
+    m_loadMovie->start();
+}
+
+void MiniPlayer::media_loading_end()
+{
+    m_loadingLabel->hide();
+    m_loadMovie->stop();
 }

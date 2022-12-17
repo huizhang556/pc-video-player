@@ -102,7 +102,7 @@ void CSplashScreen::drawContents(QPainter *painter)
     painter->setPen(QColor(65, 205, 82));
     painter->drawText(QPointF(30, 260), QString::fromLocal8Bit("Based on: Qt 5.12.0 (MSVC 2015, 32 bit) + MySQL 5.7.36 for Linux (x86_64)"));
 
-    painter->setFont(QFont("Helvetica", 16));
+    painter->setFont(QFont("Helvetica", 16, 800));
     painter->setPen(QColor(Qt::white));
     QRect r = rect();
     r.setRect(r.x(), r.y(), r.width(), r.height() -75);

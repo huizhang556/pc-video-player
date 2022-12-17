@@ -594,5 +594,7 @@
         <file>images/creator/fileitem_videos.png</file>
         <file>images/creator/label_tto.png</file>
         <file>images/creator/returnhome.png</file>
+        <file>images/bgpic/loading_000.gif</file>
+        <file>images/bgpic/loading_001.gif</file>
     </qresource>
 </RCC>
