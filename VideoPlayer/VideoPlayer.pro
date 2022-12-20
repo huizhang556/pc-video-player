@@ -1,7 +1,7 @@
 #-------------------------------------------------
 #
 # Project created by QtCreator 2022-01-23T05:25:36
-#
+#音视频播放器
 #-------------------------------------------------
 
 QT       += core gui xml  multimediawidgets multimedia sql network webenginewidgets
@@ -51,7 +51,7 @@ include($$PWD/delegate/delegate.pri)
 include($$PWD/slidebar/slidebar.pri)
 include($$PWD/titlebar/titlebar.pri)
 include($$PWD/customer/customer.pri)
-include($$PWD/creator/creator.pri)
+#include($$PWD/creator/creator.pri)
 include($$PWD/desktoplyric/desktop.pri)
 include($$PWD/miniplayer/miniplayer.pri)
 include($$PWD/mainwidget/mainwidget.pri)

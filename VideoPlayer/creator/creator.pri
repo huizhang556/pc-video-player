@@ -30,5 +30,4 @@ SOURCES += \
     $$PWD/UploadWork.cpp \
     $$PWD/MoveLabel.cpp
 
-DISTFILES += \
-    $$PWD/creator.pri
+DISTFILES +=
