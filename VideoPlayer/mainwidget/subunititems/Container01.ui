@@ -468,7 +468,7 @@ background-color: #16161a;
            <number>0</number>
           </property>
           <item>
-           <widget class="QListWidget" name="listWidget_container01">
+           <widget class="CusListWidget" name="listWidget_container01">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -503,7 +503,7 @@ QListWidget::item:hover
            </widget>
           </item>
           <item>
-           <widget class="QListWidget" name="listWidget_container02">
+           <widget class="CusListWidget" name="listWidget_container02">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -551,6 +551,11 @@ QListWidget::item:hover
    <class>SubUnitItem</class>
    <extends>QLabel</extends>
    <header>mainwidget/subunititems/SubUnitItem.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CusListWidget</class>
+   <extends>QListWidget</extends>
+   <header>mainwidget/CusListWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

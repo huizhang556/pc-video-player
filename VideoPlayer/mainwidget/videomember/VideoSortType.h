@@ -18,8 +18,14 @@ public:
     void    handleSignalsAndSlots();
     void    setInstallEventFilter();
 
+protected:
+//    bool    eventFilter(QObject *watched, QEvent *event) override;
+
 private:
     Ui::VideoSortType *ui;
+
+private:
+    void    autoResizeListItems();
 
 };
 

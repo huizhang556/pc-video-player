@@ -6,6 +6,7 @@ SubModules::SubModules(QWidget *parent) :
     ui(new Ui::SubModules)
 {
     ui->setupUi(this);
+    installEventFilter(this);
     setMinimumSize(230,200);
 }
 
@@ -17,6 +18,7 @@ SubModules::SubModules(const QString &picpath, const QString &info1, const QStri
     ui(new Ui::SubModules)
 {
      ui->setupUi(this);
+     installEventFilter(this);
      setMinimumSize(230,200);
      setPicture();
      setInfo1();
@@ -26,6 +28,11 @@ SubModules::SubModules(const QString &picpath, const QString &info1, const QStri
 SubModules::~SubModules()
 {
     delete ui;
+}
+
+bool SubModules::eventFilter(QObject *watched, QEvent *event)
+{
+    return QWidget::eventFilter(watched,event);
 }
 
 void SubModules::setPicture()

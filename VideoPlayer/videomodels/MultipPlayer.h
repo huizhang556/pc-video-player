@@ -1,13 +1,14 @@
 ﻿#ifndef MULTIPPLAYER_H
 #define MULTIPPLAYER_H
 
-#define MARWIDTH 2 //窗口边距,进过测试最小需要2px
-#define LEFTWIDTH   280
+#define MARWIDTH 2 //窗口边距宽
+#define LISTWIDTH_R   280 //右侧停靠列表宽度
 #define ITEMSIZE    QSize(280,30)
 
 #include "network/MyHttp.h"
 #include "database/dataBase.h"
 #include "videomodels/Danmu.h"
+#include "customer/BaseWidget.h"
 #include "videomodels/MediaItem.h"
 #include "videomodels/VideoBlank.h"
 #include "videomodels/muteDialog.h"
@@ -74,7 +75,7 @@ class MultipPlayer;
 }
 
 
-class MultipPlayer : public QWidget
+class MultipPlayer : public BaseWidget
 {
     Q_OBJECT
 
@@ -107,8 +108,6 @@ public:
 
     bool    fileType(QStringList &filenames,int index);// 重载函数3  判断文件类型显示视频还是音乐
 
-    void    get_fileFromServer();
-
     void    removeTabwidgetTabBar(QTabWidget *tabwidget);
 
     void    set_showTwoTabBar(QTabWidget *tabwidget, int index1, QWidget *obj1,QString tabtext1);
@@ -124,15 +123,15 @@ public:
     int     getMapKeyFromValue(const QString& value);//map-->根据value找id
 
 protected:
-    bool    nativeEvent(const QByteArray& eventType, void* message, long* result) override;
+//    bool    nativeEvent(const QByteArray& eventType, void* message, long* result) override;//拉升
 
     bool    eventFilter(QObject *watched, QEvent *event) override;
 
-    void    mousePressEvent(QMouseEvent *event) override;
+//    void    mousePressEvent(QMouseEvent *event) override;
 
-    void    mouseMoveEvent(QMouseEvent *event) override;
+//    void    mouseMoveEvent(QMouseEvent *event) override;
 
-    void    mouseReleaseEvent(QMouseEvent *event) override;
+//    void    mouseReleaseEvent(QMouseEvent *event) override;
 
     void    changeEvent(QEvent *event) override;
 

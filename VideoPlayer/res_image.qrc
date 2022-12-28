@@ -596,5 +596,10 @@
         <file>images/creator/returnhome.png</file>
         <file>images/bgpic/loading_000.gif</file>
         <file>images/bgpic/loading_001.gif</file>
+        <file>images/icon/leftbar_day.png</file>
+        <file>images/icon/leftbar_more.png</file>
+        <file>images/icon/leftbar_night.png</file>
+        <file>images/icon/leftbar_set.png</file>
+        <file>images/icon/leftbar_msg.png</file>
     </qresource>
 </RCC>

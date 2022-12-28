@@ -9,7 +9,10 @@ SOURCES += \
     $$PWD/CustomFileDialog.cpp \
     $$PWD/CPushButton.cpp \
     $$PWD/TextMovingLabel.cpp \
-    $$PWD/EllipButton.cpp
+    $$PWD/EllipButton.cpp \
+    $$PWD/BaseWidget.cpp \
+    $$PWD/BaseMainWindow.cpp \
+    $$PWD/BaseDialog.cpp
 
 HEADERS += \
     $$PWD/CusTabWidget.h \
@@ -22,14 +25,18 @@ HEADERS += \
     $$PWD/CustomFileDialog.h \
     $$PWD/CPushButton.h \
     $$PWD/TextMovingLabel.h \
-    $$PWD/EllipButton.h
+    $$PWD/EllipButton.h \
+    $$PWD/BaseWidget.h \
+    $$PWD/BaseMainWindow.h \
+    $$PWD/BaseDialog.h
 
 FORMS += \
     $$PWD/CusTabWidget.ui \
     $$PWD/SystemTray.ui \
     $$PWD/CusFileDialog.ui \
     $$PWD/CustomFileDialog.ui \
-    $$PWD/EllipButton.ui
+    $$PWD/EllipButton.ui \
+    $$PWD/BaseDialog.ui
 
 SUBDIRS +=
 

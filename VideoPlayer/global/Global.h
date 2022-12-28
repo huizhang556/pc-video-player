@@ -1,6 +1,8 @@
 ﻿#ifndef GLOBAL_H
 #define GLOBAL_H
+
 #define UPDATTIME   5000
+
 #include <QDir>
 #include <QTimer>
 #include <QObject>
@@ -29,7 +31,7 @@ public:
     static void         setIni_ungis(bool on);
     static bool         getRegisStatus();
     static void         checkNetWorkOnline();//检查网络在线
-    static Global*  getInstance();
+    static Global*      getInstance();
 public:
     //声明共有静态变量
     static QString  appDirPath;

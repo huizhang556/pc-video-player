@@ -45,17 +45,20 @@ void LeftSideBar::setSlideBarListText(QStringList strList)
         QIcon strIcon = QIcon(QString(":/images/icon/hot%1.png").arg(i));
         QString name = t_strList.at(i);
         QListWidgetItem *ppItem = new QListWidgetItem(strIcon,name);
-        ppItem->setTextAlignment(Qt::AlignVCenter);
+        ppItem->setSizeHint(QSize(80,68));
+        ppItem->setTextAlignment(Qt::AlignBottom);
         m_listWidget->addItem(ppItem);
     }
         m_listWidget->setCurrentRow(0);//默认选中第一个，必须在加载内容的情况下设置，否则无效
 }
 
 /*设置左侧边栏宽度*/
-void LeftSideBar::setLeftSliderFixedWidth(int width)
+void LeftSideBar::setLeftSliderFixedWidth(const int width)
 {
     m_listWidget->setFixedWidth(width);
-    m_expandBtn->setFixedWidth(width);
+    m_moreBtn->setFixedWidth(width);
+    m_modeBtn->setFixedWidth(width);
+    m_setBtn->setFixedWidth(width);
 }
 
 void LeftSideBar::slot_setCurrentIndex(int index)
@@ -67,26 +70,53 @@ void LeftSideBar::slot_setCurrentIndex(int index)
 void LeftSideBar::initWidgetUi()
 {
     m_listWidget = new QListWidget(this);
-    m_listWidget->setFixedWidth(140);
     m_listWidget->setObjectName(QString::fromLatin1("listWidget_playlist"));//对象名称用于设置样式
+    m_listWidget->setMinimumWidth(60);
+    m_listWidget->setViewMode(QListView::IconMode);//图标模式下，默认是自动换行的
+    m_listWidget->setMovement(QListView::Static);//不可拖动
+//    m_listWidget->setLayoutDirection(Qt::RightToLeft);
     m_listWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//关闭滚动条可见
     m_listWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_listWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);//像素滚动
     m_listWidget->setFocusPolicy(Qt::NoFocus);//作用是点击item去掉虚线边框
 
-    m_expandBtn = new QPushButton(this);
-    m_expandBtn->setFixedSize(140,40);
-    m_expandBtn->setCheckable(true);
-    m_expandBtn->setText(QString::fromLocal8Bit("展开更多>>"));
-    m_expandBtn->setObjectName(QString::fromLatin1("m_expandBtn"));
+    //消息
+    m_msgBtn = new QPushButton(QIcon("://images/icon/leftbar_msg.png"),QString(u8""), this);
+    m_msgBtn->setObjectName(QString::fromLatin1("m_msgBtn"));
+    m_msgBtn->setFixedHeight(BTN_HEIGHT);
+    m_msgBtn->setCheckable(true);
 
-    m_vbayout = new QVBoxLayout(this);
-    m_vbayout->setObjectName(QString::fromLatin1("m_vbayout"));
-    m_vbayout->addWidget(m_listWidget);
-    m_vbayout->addWidget(m_expandBtn);
-    m_vbayout->setSpacing(0);
-    m_vbayout->setMargin(0);
-    m_vbayout->setContentsMargins(0,0,0,0);
+    //设置
+    m_setBtn = new QPushButton(QIcon("://images/icon/leftbar_set.png"),QString(u8""), this);
+    m_setBtn->setObjectName(QString::fromLatin1("m_setBtn"));
+    m_setBtn->setFixedHeight(BTN_HEIGHT);
+    m_setBtn->setCheckable(true);
+
+    //模式（白天/夜晚）
+    m_modeBtn = new QPushButton(QIcon("://images/icon/leftbar_day.png"),QString(u8""), this);
+    m_modeBtn->setObjectName(QString::fromLatin1("m_modeBtn"));
+    m_modeBtn->setFixedHeight(BTN_HEIGHT);
+    m_modeBtn->setCheckable(true);
+    //更多
+    m_moreBtn = new QPushButton(QIcon("://images/icon/leftbar_more.png"),QString(u8""),this);
+    m_moreBtn->setObjectName(QString::fromLatin1("m_moreBtn"));
+    m_moreBtn->setFixedHeight(BTN_HEIGHT);
+    m_moreBtn->setCheckable(true);
+
+    QVBoxLayout *m_vbayout1 = new QVBoxLayout(this);
+    QVBoxLayout *m_vbayout2 = new QVBoxLayout(this);
+
+    m_vbayout2->addWidget(m_msgBtn);
+    m_vbayout2->addWidget(m_modeBtn);
+    m_vbayout2->addWidget(m_setBtn);
+    m_vbayout2->addWidget(m_moreBtn);
+    m_vbayout2->setSpacing(0);
+    m_vbayout2->setContentsMargins(0,0,0,0);
+
+    m_vbayout1->addWidget(m_listWidget);
+    m_vbayout1->addLayout(m_vbayout2);
+    m_vbayout1->setSpacing(0);
+    m_vbayout1->setContentsMargins(0,0,0,0);
 }
 
 /*处理信号与槽函数*/
@@ -95,6 +125,34 @@ void LeftSideBar::handleSignalAndSLots()
     connect(m_listWidget,&QListWidget::itemClicked,[=](QListWidgetItem *item)
     {
         emit sig_sidebarItemChange(m_listWidget->row(item));
+    });
+
+    //消息
+    connect(m_msgBtn,&QPushButton::clicked,[=](bool checked){
+        emit sig_sendPersonMessage(checked);
+    });
+
+    //模式转换
+    connect(m_modeBtn,&QPushButton::clicked,[=](bool checked){
+        if(checked)
+        {
+            m_modeBtn->setIcon(QIcon("://images/icon/leftbar_night.png"));
+        }
+        else
+        {
+            m_modeBtn->setIcon(QIcon("://images/icon/leftbar_day.png"));
+        }
+        emit sig_sendSkinMode(checked);
+    });
+
+    //设置
+    connect(m_setBtn,&QPushButton::clicked,[=](bool checked){
+        emit sig_sendSetting(checked);
+    });
+
+    //更多
+    connect(m_moreBtn,&QPushButton::clicked,[=](){
+        emit sig_sendMore();
     });
 }
 

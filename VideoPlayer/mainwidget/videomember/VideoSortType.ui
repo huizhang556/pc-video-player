@@ -307,7 +307,7 @@ color: #00d661;
       </widget>
      </item>
      <item>
-      <widget class="QListWidget" name="listWidget_items">
+      <widget class="CusListWidget" name="listWidget_items">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -348,6 +348,13 @@ background-color: rgba(14, 27, 44,0.8);
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CusListWidget</class>
+   <extends>QListWidget</extends>
+   <header>mainwidget/CusListWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

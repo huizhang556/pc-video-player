@@ -2,6 +2,9 @@
 #define SUBMODULES_H
 
 #include <QWidget>
+#include <QEvent>
+#include <QPixmap>
+#include <QDebug>
 
 namespace Ui {
 class SubModules;
@@ -15,6 +18,9 @@ public:
     explicit SubModules(QWidget *parent = nullptr);
     explicit SubModules(const QString& picpath,const QString& info1,const QString& info2,  QWidget *parent = nullptr);
     ~SubModules();
+
+protected:
+    bool eventFilter(QObject *watched, QEvent *event)override;
 
 private:
     Ui::SubModules *ui;

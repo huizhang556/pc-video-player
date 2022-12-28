@@ -1,11 +1,13 @@
 ﻿#ifndef MAINWIDGET_H
 #define MAINWIDGET_H
+#define LISTWIDTH_L   80 //左边列表宽度 原140
 #define MARGIN 2 //窗口边距
 
 #include "browser/NewWork.h"
 #include "titleBar/TitleBar.h"
 #include "browser/CusTabBar.h"
 #include "browser/WebHistory.h"
+#include "customer/BaseWidget.h"
 #include "customer/SystemTray.h"
 #include "slidebar/LeftSideBar.h"
 #include "customer/CusTabWidget.h"
@@ -69,7 +71,7 @@ namespace Ui {
 class MainWidget;
 }
 
-class MainWidget : public QWidget
+class MainWidget : public BaseWidget
 {
     Q_OBJECT
 
@@ -78,15 +80,15 @@ public:
     ~MainWidget();
 
 protected:
-    bool        nativeEvent(const QByteArray& eventType, void* message, long* result) override;
+//    bool        nativeEvent(const QByteArray& eventType, void* message, long* result) override;
 
     bool        eventFilter(QObject *watched, QEvent *event) override;  
 
-    void        mousePressEvent(QMouseEvent *event) override;
+//    void        mousePressEvent(QMouseEvent *event) override;
 
-    void        mouseMoveEvent(QMouseEvent *event) override;
+//    void        mouseMoveEvent(QMouseEvent *event) override;
 
-    void        mouseReleaseEvent(QMouseEvent *event) override;
+//    void        mouseReleaseEvent(QMouseEvent *event) override;
 
     void        changeEvent(QEvent *event) override;
 
@@ -102,6 +104,8 @@ private:
     void        initOtherWidgetUi();
 
     void        handleSignalAndSLots();
+
+    void        setInstallEventFilter();
 
     void        updateAddWebButtonPosition();//更新新增网页按钮的位置
 

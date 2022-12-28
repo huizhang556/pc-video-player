@@ -34,6 +34,8 @@ void VideoSortType::initWorkUI()
     ui->listWidget_items->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_items->setVerticalScrollMode(QListView::ScrollPerPixel);
     ui->listWidget_items->horizontalScrollBar()->setDisabled(true);
+    ui->listWidget_items->setOffset(225,-100);
+    ui->listWidget_items->setButtonControl(false);
 
     for(int i = 0; i < 17; i++)
     {
@@ -42,7 +44,7 @@ void VideoSortType::initWorkUI()
         QString path2 = Global::appDirPath + QString("/pictures/mylike/videos_list2/list_intro%1.jpg").arg(i);
         MemberVideoItem *itemWidget = new MemberVideoItem(path2,QString(u8"沸腾人生%1").arg(i),QString(u8"再现中国重卡制造史"),QColor(14, 27, 44));
         QListWidgetItem *item = new QListWidgetItem();
-        item->setSizeHint(itemWidget->size());
+        item->setSizeHint(QSize(225,360));
         ui->listWidget_items->addItem(item);
         ui->listWidget_items->setItemWidget(item,itemWidget);
     }
@@ -68,5 +70,23 @@ void VideoSortType::handleSignalsAndSlots()
 
 void VideoSortType::setInstallEventFilter()
 {
+    ui->listWidget_items->installEventFilter(this);
+}
+
+//bool VideoSortType::eventFilter(QObject *watched, QEvent *event)
+//{
+//    if(watched == ui->listWidget_items)
+//    {
+//        if(event->type() == QEvent::Resize)
+//        {
+//            autoResizeListItems();
+//        }
+//    }
+//    return QWidget::eventFilter(watched,event);
+//}
+
+void VideoSortType::autoResizeListItems()
+{
+    if(ui->listWidget_items->count() == 0) return;
 
 }

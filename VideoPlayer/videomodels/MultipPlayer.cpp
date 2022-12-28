@@ -2,10 +2,10 @@
 #include "ui_MultipPlayer.h"
 
 #ifdef Q_OS_WIN
-#include <qt_windows.h>
-#include <Windows.h>
-#include <windowsx.h>
-#pragma comment (lib,"user32.lib")
+//#include <qt_windows.h>
+//#include <Windows.h>
+//#include <windowsx.h>
+//#pragma comment (lib,"user32.lib")
 #endif
 
 #include <QFile>
@@ -27,7 +27,7 @@
 MultipPlayer* MultipPlayer::m_pInstance = nullptr;
 
 MultipPlayer::MultipPlayer(QWidget *parent) :
-    QWidget(parent),
+    BaseWidget(parent),
     ui(new Ui::MultipPlayer),
     m_winMax(false),
     m_times(0),
@@ -39,9 +39,9 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
     ui->setupUi(this);
     this->setMinimumSize(1028,670);//1320,800
     this->resize(QSize(1240,775));
-    this->setMouseTracking(true);//开启鼠标跟踪，适应捕捉屏幕
-    this->setWindowFlags(Qt::FramelessWindowHint| //去掉标题栏
-                         Qt::WindowMinMaxButtonsHint);
+//    this->setMouseTracking(true);//开启鼠标跟踪，适应捕捉屏幕
+//    this->setWindowFlags(Qt::FramelessWindowHint| //去掉标题栏
+//                         Qt::WindowMinMaxButtonsHint);
     this->setAttribute(Qt::WA_Hover);//窗口拖拽用
 
     this->setWindowTitle(QString::fromLocal8Bit("播放器"));
@@ -143,13 +143,13 @@ void MultipPlayer::initMainWindow()
     m_widget2 = new QWidget;//listwidget显示（暂时不用）
     m_widget2->setObjectName(QString::fromLocal8Bit("m_widget2"));
 
-    m_videoBlank = new VideoBlank();
+    m_videoBlank = new VideoBlank(ui->stackedWidget);
     m_videoBlank->setObjectName(QString::fromLocal8Bit("m_videoBlank"));
 
-    m_musicUi = new MusicPlayShow();
+    m_musicUi = new MusicPlayShow(ui->stackedWidget);
     m_musicUi->setObjectName(QString::fromLocal8Bit("m_musicUi"));
 
-    m_videoTitleBar = new VideoTitleBar();
+    m_videoTitleBar = new VideoTitleBar(this);
     m_videoTitleBar->setObjectName(QString::fromLocal8Bit("m_videoTitleBar"));
 
     //中间主显示部分，视频显示部分
@@ -163,7 +163,7 @@ void MultipPlayer::initMainWindow()
     //我的歌单（暂时）
     m_listWisget1 = new QListWidget();
     m_listWisget1->setObjectName(QString::fromLocal8Bit("m_listWisget1"));
-    m_listWisget1->setMinimumWidth(LEFTWIDTH);
+    m_listWisget1->setMinimumWidth(LISTWIDTH_R);
     m_listWisget1->setAlternatingRowColors(false);//交替显示
     m_listWisget1->verticalScrollBar()->setObjectName(QString::fromUtf8("list1_vertical_scrollBar"));//单独设置样式
     m_listWisget1->horizontalScrollBar()->setHidden(true);
@@ -174,7 +174,7 @@ void MultipPlayer::initMainWindow()
     m_listWisget2 = new QListWidget();
     m_listWisget2->setObjectName(QString::fromLocal8Bit("m_listWisget2"));
     m_listWisget2->setContextMenuPolicy(Qt::CustomContextMenu);
-    m_listWisget2->setMinimumWidth(LEFTWIDTH);
+    m_listWisget2->setMinimumWidth(LISTWIDTH_R);
     m_listWisget2->setFocusPolicy(Qt::NoFocus);//作用是点击item去掉虚线边框
     m_listWisget2->setAlternatingRowColors(false);//交替显示
     m_listWisget2->verticalScrollBar()->setObjectName(QString::fromUtf8("list2_vertical_scrollBar"));//单独设置样式
@@ -185,7 +185,7 @@ void MultipPlayer::initMainWindow()
     m_listWisget3 = new QListWidget();
     m_listWisget3->setObjectName(QString::fromLocal8Bit("m_listWisget3"));
     m_listWisget3->setContextMenuPolicy(Qt::CustomContextMenu);
-    m_listWisget3->setMinimumWidth(LEFTWIDTH);
+    m_listWisget3->setMinimumWidth(LISTWIDTH_R);
     m_listWisget3->setAlternatingRowColors(false);//交替显示
     m_listWisget3->verticalScrollBar()->setObjectName(QString::fromUtf8("list3_vertical_scrollBar"));
     m_listWisget3->horizontalScrollBar()->setHidden(true);
@@ -196,7 +196,7 @@ void MultipPlayer::initMainWindow()
     m_listWisget4 = new QListWidget();
     m_listWisget4->setObjectName(QString::fromLocal8Bit("m_listWisget4"));
     m_listWisget4->setContextMenuPolicy(Qt::CustomContextMenu);
-    m_listWisget4->setMinimumWidth(LEFTWIDTH);
+    m_listWisget4->setMinimumWidth(LISTWIDTH_R);
     m_listWisget4->setAlternatingRowColors(false);//交替显示
     m_listWisget4->verticalScrollBar()->setObjectName(QString::fromUtf8("list4_vertical_scrollBar"));
     m_listWisget4->horizontalScrollBar()->setHidden(true);
@@ -230,7 +230,7 @@ void MultipPlayer::initMainWindow()
     m_widget2->setLayout(m_vHlayout);
     //添加抽屉
     m_toolBox = new QToolBox;
-    m_toolBox->setFixedWidth(LEFTWIDTH);
+    m_toolBox->setFixedWidth(LISTWIDTH_R);
     m_toolBox->setObjectName(QString::fromLocal8Bit("m_toolBox_list"));
     m_toolBox->addItem(m_widget2,QIcon(":/images/icon/playerlist.png"),QString::fromLocal8Bit("播放列表"));
     m_toolBox->addItem(m_listWisget1,QIcon(":/images/icon/musiclist.png"),QString::fromLocal8Bit("我的歌单"));
@@ -246,17 +246,17 @@ void MultipPlayer::initMainWindow()
     //推荐
     m_recomTab = new RecomVideoTab;
     m_recomTab->setObjectName(QString::fromLocal8Bit("m_recomTab"));
-    m_recomTab->setFixedWidth(LEFTWIDTH);
+    m_recomTab->setFixedWidth(LISTWIDTH_R);
 
     //评论
     m_commentTab = new CommentTab;
     m_commentTab->setObjectName(QString::fromLocal8Bit("m_commentTab"));
-    m_commentTab->setFixedWidth(LEFTWIDTH);
+    m_commentTab->setFixedWidth(LISTWIDTH_R);
 
     //节目列表分块
     m_tabWidget1 = new QTabWidget;//不用手动释放，有包含关系
     m_tabWidget1->setObjectName(QString::fromLocal8Bit("m_tabWidget1"));
-    m_tabWidget1->setFixedWidth(LEFTWIDTH);//固定宽度
+    m_tabWidget1->setFixedWidth(LISTWIDTH_R);//固定宽度
     set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_recomTab,QString::fromLocal8Bit("推荐视频"));
     m_tabWidget1->setCurrentWidget(m_toolBox);
 
@@ -268,7 +268,7 @@ void MultipPlayer::initMainWindow()
 
     m_widget1 = new QWidget(this);//右侧列表整体父亲
     m_widget1->setObjectName(QString::fromLocal8Bit("m_widget1"));
-    m_widget1->setFixedWidth(LEFTWIDTH);
+    m_widget1->setFixedWidth(LISTWIDTH_R);
     m_widget1->setContentsMargins(0,0,0,0);//m_widget1的内容与m_widget1的间距
     m_widget1->setLayout(m_vHlayout_jianjie);
     m_widget1->layout()->setContentsMargins(1,0,0,0);//包裹m_widget1的布局 左 上 右 下
@@ -289,8 +289,9 @@ void MultipPlayer::initMainWindow()
     ui->verticalLayout_main->setStretch(2,1);
     ui->verticalLayout_main->setContentsMargins(0,0,0,0);
     ui->verticalLayout_main->setSpacing(0);
-    ui->verticalLayout_main->setMargin(0);//注意边线的颜色
 
+    //这是一种布局实现方式
+    this->setContentsMargins(0,0,0,0);
     this->layout()->setContentsMargins(MARWIDTH,MARWIDTH,MARWIDTH,MARWIDTH);//鼠标捕获拉伸宽度
     loadDefaultLogo();//加载默认图标
 
@@ -916,28 +917,6 @@ bool MultipPlayer::fileType(QString filename)
     }
 }
 
-/*共服务端获取文件列表*/
-void MultipPlayer::get_fileFromServer()
-{
-    MyHttp http;
-    QString content = http.get_fileList("192.168.191.5",80);
-    qDebug()<<"CONTENT = "<< content;
-    //content的格式如下
-    //难忘今宵.mv   \n为分隔符
-    //快乐至上.mv
-    //将资源列表中的内容,编程listwidhet中item的条目
-    QStringList ls = content.split("\n");
-    for(int i = 0; i< ls.count(); i++)
-    {
-//        qDebug()<<ls[i];
-        QString item = ls[i];
-        if(!item.isEmpty())//不为空才会添加到listwidget
-        {
-            set_fileTolistWidget(ls[i]);
-        }
-
-    }
-}
 
 void MultipPlayer::removeTabwidgetTabBar(QTabWidget *tabwidget)
 {
@@ -1602,17 +1581,17 @@ void MultipPlayer::on_pushButton_next_clicked()
  *2.获取光标在屏幕中的位置 _plast
  *3.左键按下时光标所在区域 _curpos
  */
-void MultipPlayer::mousePressEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event);
-//    if (event->button() == Qt::LeftButton)
-//    {
-//        this->_isleftpressed = true;
-//        QPoint temp = event->globalPos();
-//        _plast = temp;
-//        _curpos = countFlag(event->pos(), countRow(event->pos()));
-//    }
-}
+//void MultipPlayer::mousePressEvent(QMouseEvent *event)
+//{
+//    Q_UNUSED(event);
+////    if (event->button() == Qt::LeftButton)
+////    {
+////        this->_isleftpressed = true;
+////        QPoint temp = event->globalPos();
+////        _plast = temp;
+////        _curpos = countFlag(event->pos(), countRow(event->pos()));
+////    }
+//}
 
 //鼠标释放事件
 /*
@@ -1620,13 +1599,13 @@ void MultipPlayer::mousePressEvent(QMouseEvent *event)
  *1.将_isleftpressed 设为false
  *2.将光标样式恢复原样式  setCursor(Qt::ArrowCursor);
  */
-void MultipPlayer::mouseReleaseEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event);
-//    if (_isleftpressed)
-//        _isleftpressed = false;
-//    setCursor(Qt::ArrowCursor);
-}
+//void MultipPlayer::mouseReleaseEvent(QMouseEvent *event)
+//{
+//    Q_UNUSED(event);
+////    if (_isleftpressed)
+////        _isleftpressed = false;
+////    setCursor(Qt::ArrowCursor);
+//}
 
 void MultipPlayer::changeEvent(QEvent *event)
 {
@@ -1697,43 +1676,43 @@ void MultipPlayer::slot_setDanmuOpenClose(bool on)
     }
 }
 
-//鼠标移动事件
-void MultipPlayer::mouseMoveEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event)
-    //拖动之前判断是否处于最大化
-    if(this->isMaximized()) return;
-    if(this->isFullScreen()) return;	//窗口铺满全屏，直接返回，不做任何操作
-//    int poss = countFlag(event->pos(), countRow(event->pos()));
-//    setCursorType(poss);
-//    if (_isleftpressed)//是否左击
-//    {
-//        QPoint ptemp = event->globalPos();
-//        ptemp = ptemp - _plast;
-//        if (_curpos == 22)//移动窗口
-//        {
-//            ptemp = ptemp + pos();
-//            move(ptemp);
-//        }
-//        else
-//        {
-//            QRect wid = geometry();
-//            switch (_curpos)//改变窗口的大小
-//            {
-//            case 11:wid.setTopLeft(wid.topLeft() + ptemp); break;//左上角
-//            case 13:wid.setTopRight(wid.topRight() + ptemp); break;//右上角
-//            case 31:wid.setBottomLeft(wid.bottomLeft() + ptemp); break;//左下角
-//            case 33:wid.setBottomRight(wid.bottomRight() + ptemp); break;//右下角
-//            case 12:wid.setTop(wid.top() + ptemp.y()); break;//中上角
-//            case 21:wid.setLeft(wid.left() + ptemp.x()); break;//中左角
-//            case 23:wid.setRight(wid.right() + ptemp.x()); break;//中右角
-//            case 32:wid.setBottom(wid.bottom() + ptemp.y()); break;//中下角
-//            }
-//            setGeometry(wid);
-//        }
-//        _plast = event->globalPos();//更新位置
-//    }
-}
+////鼠标移动事件
+//void MultipPlayer::mouseMoveEvent(QMouseEvent *event)
+//{
+//    Q_UNUSED(event)
+//    //拖动之前判断是否处于最大化
+//    if(this->isMaximized()) return;
+//    if(this->isFullScreen()) return;	//窗口铺满全屏，直接返回，不做任何操作
+////    int poss = countFlag(event->pos(), countRow(event->pos()));
+////    setCursorType(poss);
+////    if (_isleftpressed)//是否左击
+////    {
+////        QPoint ptemp = event->globalPos();
+////        ptemp = ptemp - _plast;
+////        if (_curpos == 22)//移动窗口
+////        {
+////            ptemp = ptemp + pos();
+////            move(ptemp);
+////        }
+////        else
+////        {
+////            QRect wid = geometry();
+////            switch (_curpos)//改变窗口的大小
+////            {
+////            case 11:wid.setTopLeft(wid.topLeft() + ptemp); break;//左上角
+////            case 13:wid.setTopRight(wid.topRight() + ptemp); break;//右上角
+////            case 31:wid.setBottomLeft(wid.bottomLeft() + ptemp); break;//左下角
+////            case 33:wid.setBottomRight(wid.bottomRight() + ptemp); break;//右下角
+////            case 12:wid.setTop(wid.top() + ptemp.y()); break;//中上角
+////            case 21:wid.setLeft(wid.left() + ptemp.x()); break;//中左角
+////            case 23:wid.setRight(wid.right() + ptemp.x()); break;//中右角
+////            case 32:wid.setBottom(wid.bottom() + ptemp.y()); break;//中下角
+////            }
+////            setGeometry(wid);
+////        }
+////        _plast = event->globalPos();//更新位置
+////    }
+//}
 
 //获取光标在窗口所在区域的 列  返回行列坐标
 int MultipPlayer::countFlag(QPoint p,int row)//计算鼠标在哪一列和哪一行
@@ -1875,6 +1854,7 @@ void MultipPlayer::stackWidgetSliderButtonEventFilter(QObject *watched, QEvent *
             slot_updateFoldButtonGeometry();
             slot_setFoldButtonStyle();
             m_foldBtn->show();
+            setCursor(Qt::ArrowCursor);
         }
         else if(event->type() == QEvent::Leave)//鼠标离开监视对象
         {
@@ -3078,61 +3058,61 @@ bool MultipPlayer::eventFilter(QObject *watched, QEvent *event)
     return QWidget::eventFilter(watched,event);
 }
 
-bool MultipPlayer::nativeEvent(const QByteArray &eventType, void *message, long *result)
-{
-    Q_UNUSED(eventType)
-//    qDebug() <<"enter nativeEvent";
-    MSG* param = static_cast<MSG*>(message);
+//bool MultipPlayer::nativeEvent(const QByteArray &eventType, void *message, long *result)
+//{
+//    Q_UNUSED(eventType)
+////    qDebug() <<"enter nativeEvent";
+//    MSG* param = static_cast<MSG*>(message);
 
-    switch (param->message)
-    {
-    case WM_NCHITTEST:
-    {
-        int nX = GET_X_LPARAM(param->lParam) - this->geometry().x();
-        int nY = GET_Y_LPARAM(param->lParam) - this->geometry().y();
+//    switch (param->message)
+//    {
+//    case WM_NCHITTEST:
+//    {
+//        int nX = GET_X_LPARAM(param->lParam) - this->geometry().x();
+//        int nY = GET_Y_LPARAM(param->lParam) - this->geometry().y();
 
-        // 如果鼠标位于子控件上，则不进行处理
-        if(nX > MARWIDTH && nX <this->width() - MARWIDTH &&
-                nY > MARWIDTH && nY < this->height() - MARWIDTH)
-        {
-            if (childAt(nX, nY) != nullptr)
-                return QWidget::nativeEvent(eventType, message, result);
-        }
+//        // 如果鼠标位于子控件上，则不进行处理
+//        if(nX > MARWIDTH && nX <this->width() - MARWIDTH &&
+//                nY > MARWIDTH && nY < this->height() - MARWIDTH)
+//        {
+//            if (childAt(nX, nY) != nullptr)
+//                return QWidget::nativeEvent(eventType, message, result);
+//        }
 
-        // 鼠标区域位于窗体边框，进行缩放
-        if ((nX > 0) && (nX < MARWIDTH))//左边
-            *result = HTLEFT;
+//        // 鼠标区域位于窗体边框，进行缩放
+//        if ((nX > 0) && (nX < MARWIDTH))//左边
+//            *result = HTLEFT;
 
-        if ((nX > this->width() - MARWIDTH) && (nX < this->width()))
-            *result = HTRIGHT;
+//        if ((nX > this->width() - MARWIDTH) && (nX < this->width()))
+//            *result = HTRIGHT;
 
-        if ((nY > 0) && (nY < MARWIDTH))//上边
-            *result = HTTOP;
+//        if ((nY > 0) && (nY < MARWIDTH))//上边
+//            *result = HTTOP;
 
-        if ((nY > this->height() - MARWIDTH) && (nY < this->height()))
-            *result = HTBOTTOM;
+//        if ((nY > this->height() - MARWIDTH) && (nY < this->height()))
+//            *result = HTBOTTOM;
 
-        if ((nX > 0) && (nX < MARWIDTH) && (nY > 0)
-                && (nY < MARWIDTH))
-            *result = HTTOPLEFT;
+//        if ((nX > 0) && (nX < MARWIDTH) && (nY > 0)
+//                && (nY < MARWIDTH))
+//            *result = HTTOPLEFT;
 
-        if ((nX > this->width() - MARWIDTH) && (nX < this->width())
-                && (nY > 0) && (nY < MARWIDTH))
-            *result = HTTOPRIGHT;
+//        if ((nX > this->width() - MARWIDTH) && (nX < this->width())
+//                && (nY > 0) && (nY < MARWIDTH))
+//            *result = HTTOPRIGHT;
 
-        if ((nX > 0) && (nX < MARWIDTH)
-                && (nY > this->height() - MARWIDTH) && (nY < this->height()))
-            *result = HTBOTTOMLEFT;
+//        if ((nX > 0) && (nX < MARWIDTH)
+//                && (nY > this->height() - MARWIDTH) && (nY < this->height()))
+//            *result = HTBOTTOMLEFT;
 
-        if ((nX > this->width() - MARWIDTH) && (nX < this->width())
-                && (nY > this->height() - MARWIDTH) && (nY < this->height()))
-            *result = HTBOTTOMRIGHT;
+//        if ((nX > this->width() - MARWIDTH) && (nX < this->width())
+//                && (nY > this->height() - MARWIDTH) && (nY < this->height()))
+//            *result = HTBOTTOMRIGHT;
 
-        return true;
-        }
-    }
-    return QWidget::nativeEvent(eventType, message, result);
-}
+//        return true;
+//        }
+//    }
+//    return QWidget::nativeEvent(eventType, message, result);
+//}
 
 
 

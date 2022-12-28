@@ -41,7 +41,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-15</y>
         <width>579</width>
         <height>600</height>
        </rect>
@@ -238,6 +238,11 @@ QTreeView::item:selected:!active
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
 }</string>
                  </property>
+                 <column>
+                  <property name="text">
+                   <string notr="true">1</string>
+                  </property>
+                 </column>
                 </widget>
                </item>
                <item>
@@ -307,6 +312,11 @@ QTreeView::item:selected:!active
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
 }</string>
                  </property>
+                 <column>
+                  <property name="text">
+                   <string notr="true">1</string>
+                  </property>
+                 </column>
                 </widget>
                </item>
                <item>
@@ -376,6 +386,11 @@ QTreeView::item:selected:!active
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
 }</string>
                  </property>
+                 <column>
+                  <property name="text">
+                   <string notr="true">1</string>
+                  </property>
+                 </column>
                 </widget>
                </item>
               </layout>
@@ -452,6 +467,11 @@ QTreeView::item:selected:!active
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
 }</string>
                  </property>
+                 <column>
+                  <property name="text">
+                   <string notr="true">1</string>
+                  </property>
+                 </column>
                 </widget>
                </item>
                <item>
@@ -521,6 +541,11 @@ QTreeView::item:selected:!active
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
 }</string>
                  </property>
+                 <column>
+                  <property name="text">
+                   <string notr="true">1</string>
+                  </property>
+                 </column>
                 </widget>
                </item>
                <item>
@@ -590,6 +615,11 @@ QTreeView::item:selected:!active
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
 }</string>
                  </property>
+                 <column>
+                  <property name="text">
+                   <string notr="true">1</string>
+                  </property>
+                 </column>
                 </widget>
                </item>
               </layout>
@@ -666,6 +696,11 @@ QTreeView::item:selected:!active
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
 }</string>
                  </property>
+                 <column>
+                  <property name="text">
+                   <string notr="true">1</string>
+                  </property>
+                 </column>
                 </widget>
                </item>
                <item>
@@ -735,6 +770,11 @@ QTreeView::item:selected:!active
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
 }</string>
                  </property>
+                 <column>
+                  <property name="text">
+                   <string notr="true">1</string>
+                  </property>
+                 </column>
                 </widget>
                </item>
                <item>
@@ -804,6 +844,11 @@ QTreeView::item:selected:!active
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
 }</string>
                  </property>
+                 <column>
+                  <property name="text">
+                   <string notr="true">1</string>
+                  </property>
+                 </column>
                 </widget>
                </item>
               </layout>

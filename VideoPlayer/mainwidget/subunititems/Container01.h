@@ -20,15 +20,22 @@ public:
     ~Container01();
     void    initWorkUI();
     void    handleSignalsAndSlots();
+    void    setInstallEventFilter();
     void    setItemLeftPicture();
 
 public slots:
     void    slot_addItemToListWidget_top(const QString& url, const QString& picpath,const QString& info1,const QString& info2);
     void    slot_addItemToListWidget_bottom(const QString& url, const QString& picpath,const QString& info1,const QString& info2);
 
+protected:
+//    bool    eventFilter(QObject *watched, QEvent *event) override;
+
 private:
     Ui::Container01 *ui;
     QString     m_leftPic;
+
+private:
+
 };
 
 #endif // CONTAINER01_H

@@ -1,9 +1,8 @@
-SOURCES += \
-    $$PWD/MyHttp.cpp
+SOURCES +=
 
 
 HEADERS += \
-    $$PWD/MyHttp.h
+    $$PWD/HttpClient.h
 
 FORMS +=
 

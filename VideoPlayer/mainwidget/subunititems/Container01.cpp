@@ -10,6 +10,7 @@ Container01::Container01(QWidget *parent) :
     ui->setupUi(this);
     initWorkUI();
     handleSignalsAndSlots();
+    setInstallEventFilter();
 }
 
 Container01::Container01( const QString &titleText, const QString &leftPicPath, QWidget *parent):
@@ -20,6 +21,7 @@ Container01::Container01( const QString &titleText, const QString &leftPicPath, 
     ui->setupUi(this);
     initWorkUI();
     handleSignalsAndSlots();
+    setInstallEventFilter();
     if(!titleText.isEmpty())
         ui->pushButton_title->setText(titleText);
     setItemLeftPicture();
@@ -40,6 +42,8 @@ void Container01::initWorkUI()
     ui->listWidget_container01->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_container01->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_container01->horizontalScrollBar()->setDisabled(true);//禁用横向滚动条
+    ui->listWidget_container01->setOffset(230,-100);
+    ui->listWidget_container01->setButtonControl(false);
 
 
     ui->listWidget_container02->setViewMode(QListView::IconMode);
@@ -50,6 +54,9 @@ void Container01::initWorkUI()
     ui->listWidget_container02->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_container02->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_container02->horizontalScrollBar()->setDisabled(true);//禁用横向滚动条
+    ui->listWidget_container02->setOffset(230,-100);
+    ui->listWidget_container02->setButtonControl(false);
+
 
     for(int i = 0; i < 10; i++)
     {
@@ -80,6 +87,12 @@ void Container01::handleSignalsAndSlots()
     });
 }
 
+void Container01::setInstallEventFilter()
+{
+    ui->listWidget_container01->installEventFilter(this);
+    ui->listWidget_container02->installEventFilter(this);
+}
+
 void Container01::setItemLeftPicture()
 {
     ui->label_leftpic->setItemPicture(m_leftPic);
@@ -89,7 +102,7 @@ void Container01::slot_addItemToListWidget_top(const QString &url, const QString
 {
     SubModules *itemWidget1 = new SubModules(picpath,info1,info2);
     QListWidgetItem *item1 = new QListWidgetItem(url);
-    item1->setSizeHint(itemWidget1->size());
+    item1->setSizeHint(QSize(230,200));
     ui->listWidget_container01->addItem(item1);
     ui->listWidget_container01->setItemWidget(item1,itemWidget1);
 
@@ -99,7 +112,13 @@ void Container01::slot_addItemToListWidget_bottom(const QString &url, const QStr
 {
     SubModules *itemWidget2 = new SubModules(picpath,info1,info2);
     QListWidgetItem *item2 = new QListWidgetItem(url);
-    item2->setSizeHint(itemWidget2->size());
+    item2->setSizeHint(QSize(230,200));
     ui->listWidget_container02->addItem(item2);
     ui->listWidget_container02->setItemWidget(item2,itemWidget2);
 }
+
+//bool Container01::eventFilter(QObject *watched, QEvent *event)
+//{
+//    return QWidget::eventFilter(watched,event);
+//}
+

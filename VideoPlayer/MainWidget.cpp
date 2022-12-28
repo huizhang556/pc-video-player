@@ -6,10 +6,10 @@
 
 
 #ifdef Q_OS_WIN
-#include <qt_windows.h>
-#include <Windows.h>
-#include <windowsx.h>
-#pragma comment (lib,"user32.lib")
+//#include <qt_windows.h>
+//#include <Windows.h>
+//#include <windowsx.h>
+//#pragma comment (lib,"user32.lib")
 #endif
 
 #include <QDebug>
@@ -19,17 +19,18 @@
 #include <QWidgetAction>
 
 MainWidget::MainWidget(QWidget *parent) :
-    QWidget(parent),
+    BaseWidget(parent),
     m_isHide(false),
     m_winMax(false),
     m_firstOpen(true)
 {
     setMinimumSize(1160,680);//1320,800 1500,950
     this->resize(QSize(1500,920));
-    setMouseTracking(true);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);//保留最大最小功能
+//    setMouseTracking(true);
+//    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);//保留最大最小功能
     setWindowTitle(QString::fromLocal8Bit("主界面"));
     initOtherWidgetUi();//初始化界面
+    setInstallEventFilter();
     setLeftSliderCurrentIndex(0);//主界面左侧列表内容
     setStackedWidgetPage();//设置StackedWidget布局每个page界面
     handleSignalAndSLots();//处理所有的信号与槽函数
@@ -41,16 +42,16 @@ void MainWidget::initOtherWidgetUi()
     m_titleBar = new TitleBar(this);
     m_titleBar->setWebDefUrl(dataBase::getWebDef_url());//设置默认显示标题
     m_titleBar->setObjectName(QString::fromLatin1("m_titleBar"));
+    setTitleBarMoveArea(m_titleBar,5);//这里的5是setContentsMargins
 
     m_leftSideBar = new LeftSideBar(this);
     m_leftSideBar->setObjectName(QString::fromLatin1("m_leftSideBar"));
     QStringList list = {};
     m_leftSideBar->setSlideBarListText(list);//侧边栏目录
-    m_leftSideBar->setFixedWidth(140);
+    m_leftSideBar->setLeftSliderFixedWidth(LISTWIDTH_L);//左侧列表+按钮
 
     m_stackWidget_center = new QStackedWidget(this);
     m_stackWidget_center->setObjectName(QString::fromLatin1("m_stackWidget_center"));    
-    m_stackWidget_center->installEventFilter(this);//安装事件监听器
     //QStackedWidget此处不能指定父参数，否则界面会出问题
 
     m_leftButton = new QPushButton(m_stackWidget_center);
@@ -58,24 +59,24 @@ void MainWidget::initOtherWidgetUi()
     m_leftButton->setFixedSize(20,60);
     m_leftButton->hide();
     //首页推荐
-    m_homeWidget = new HomeWidget();
+    m_homeWidget = new HomeWidget(m_stackWidget_center);
     m_homeWidget->setObjectName(QString::fromLocal8Bit("m_homeWidget"));
 
-    m_mainVideoMv = new VideoMv();
+    m_mainVideoMv = new VideoMv(m_stackWidget_center);
     m_mainVideoMv->setObjectName(QString::fromLocal8Bit("m_mainVideoMv"));
 
-    m_videoMember = new MainMembForm();
+    m_videoMember = new MainMembForm(m_stackWidget_center);
     m_videoMember->setObjectName(QString::fromLocal8Bit("m_videoMember"));
 
     MultipPlayer::getInstance()->setObjectName(QString::fromLatin1("m_mainPlayer"));
 
-    m_musicList = new MusicPlaylist();
+    m_musicList = new MusicPlaylist(m_stackWidget_center);
     m_musicList->setObjectName(QString::fromLatin1("m_musicList"));
 
-    m_shortVideo = new ShortVideo();
+    m_shortVideo = new ShortVideo(m_stackWidget_center);
     m_shortVideo->setObjectName(QString::fromLatin1("m_shortVideo"));
 
-    m_tabWidget = new CusTabWidget();
+    m_tabWidget = new CusTabWidget(m_stackWidget_center);
     m_tabWidget->setObjectName(QString::fromLatin1("m_tabWidget"));
 
     m_videoBlank = new VideoBlank();
@@ -106,7 +107,6 @@ void MainWidget::initOtherWidgetUi()
     m_addHblayout->addSpacerItem(sparcer_item);
 //    m_addHblayout->addStretch(50);
     m_addHblayout->setSpacing(0);
-    m_addHblayout->setMargin(0);
     m_addHblayout->setContentsMargins(0,0,0,0);
 
     m_addWidget = new QWidget();
@@ -142,7 +142,6 @@ void MainWidget::initOtherWidgetUi()
     m_webTabWidget->setMovable(true);//标签可拖动
     m_webTabWidget->setElideMode(Qt::ElideRight);//文字过长省略号代替
 //    m_webTabWidget->setDocumentMode(true);
-    m_webTabWidget->installEventFilter(this);
     m_webTabWidget->tabBar()->setStyle(new CustomTabStyle);//调整体字、图标
 
 //    m_webTabWidget->tabBar()->setTabButton(0,QTabBar::RightSide,m_addWebButton);
@@ -151,22 +150,22 @@ void MainWidget::initOtherWidgetUi()
     m_webVblayout = new QVBoxLayout();
     m_webVblayout->setSpacing(0);
     m_webVblayout->setContentsMargins(0,0,0,0);
-    m_webVblayout->setMargin(0);
+
     m_webVblayout->addWidget(m_cusTabbar);
     m_webVblayout->addWidget(m_webTabWidget);
     m_webVblayout->addWidget(m_statusBar);
 
-    m_webWidget  = new QWidget();
+    m_webWidget  = new QWidget(m_webStackWgt);
     m_webWidget->setObjectName(QString::fromLocal8Bit("m_webWidget"));
     m_webWidget->setLayout(m_webVblayout);
 
-    m_webRecords = new CollectRecords();
+    m_webRecords = new CollectRecords(m_webStackWgt);
     m_webRecords->setObjectName(QString::fromLocal8Bit("m_webRecords"));
 
-    m_webHistory = new WebHistory();
+    m_webHistory = new WebHistory(m_webStackWgt);
     m_webHistory->setObjectName(QString::fromLocal8Bit("m_webHistory"));
 
-    m_webStackWgt = new QStackedWidget();
+    m_webStackWgt = new QStackedWidget(m_stackWidget_center);
     m_webStackWgt->setObjectName(QString::fromLocal8Bit("m_webStackWgt"));
     m_webStackWgt->addWidget(m_webWidget);// 0 浏览器
     m_webStackWgt->addWidget(m_webRecords);//1 浏览器收藏记录
@@ -174,72 +173,72 @@ void MainWidget::initOtherWidgetUi()
     m_webStackWgt->setCurrentWidget(m_webWidget);
 
 
-    m_fileTrans = new FilesTrans();
+    m_fileTrans = new FilesTrans(m_stackWidget_center);
     m_fileTrans->setObjectName(QString::fromLocal8Bit("m_fileTrans"));
 
-    m_personForm = new PersonFileForm();
+    m_personForm = new PersonFileForm(m_stackWidget_center);
     m_personForm->setObjectName(QString::fromLatin1("m_personForm"));
 
     //弹出对话框
     m_pExitDlg = new ExitDialog(this);
     m_pExitDlg->setObjectName(QString::fromLatin1("m_pExitDlg"));
 
-    m_hotSearch = new HotSearchForm();
+    m_hotSearch = new HotSearchForm(m_stackWidget_center);
     m_hotSearch->setObjectName(QString::fromLocal8Bit("m_hotSearch"));
 
     m_systemSetting = new SystemSetting();
     m_systemSetting->setObjectName(QString::fromLocal8Bit("m_systemSetting"));
 
     //歌手排行
-    m_songerSort = new SongerSort();
+    m_songerSort = new SongerSort(m_stackWidget_center);
     m_songerSort->setObjectName(QString::fromLocal8Bit("m_songerSort"));
 
     //排行榜
-    m_rankList = new RankingList();
+    m_rankList = new RankingList(m_stackWidget_center);
     m_rankList->setObjectName(QString::fromLocal8Bit("m_rankList"));
 
     //歌单分类
-    m_songlistSort = new SonglistSort();
+    m_songlistSort = new SonglistSort(m_stackWidget_center);
     m_songlistSort->setObjectName(QString::fromLocal8Bit("m_songlistSort"));
 
     //主播电台
-    m_radioHost = new RadioHost();
+    m_radioHost = new RadioHost(m_stackWidget_center);
     m_radioHost->setObjectName(QString::fromLocal8Bit("m_radioHost"));
 
     //音乐现场
-    m_musicScene = new MusicScene();
+    m_musicScene = new MusicScene(m_stackWidget_center);
     m_musicScene->setObjectName(QString::fromLocal8Bit("m_musicScene"));
 
     //会员专区
-    m_vipMember = new VipMember();
+    m_vipMember = new VipMember(m_stackWidget_center);
     m_vipMember->setObjectName(QString::fromLocal8Bit("m_vipMember"));
 
     //视频盒子1
-    m_cusVideoBox = new CusVideosBox();
+    m_cusVideoBox = new CusVideosBox(m_stackWidget_center);
     m_cusVideoBox->setObjectName(QString::fromLocal8Bit("m_cusVideoBox"));
 
     //视频盒子2
-    m_cusVideoBox2 = new CusVideoBox2();
+    m_cusVideoBox2 = new CusVideoBox2(m_stackWidget_center);
     m_cusVideoBox2->setObjectName(QString::fromLocal8Bit("m_cusVideoBox2"));
 
     //视频盒子3
-    m_cusVideoBox3 = new CusVideoBox3();
+    m_cusVideoBox3 = new CusVideoBox3(m_stackWidget_center);
     m_cusVideoBox3->setObjectName(QString::fromLocal8Bit("m_cusVideoBox3"));
 
     //视频盒子4
-    m_cusVideoBox4 = new CusVideoBox4();
+    m_cusVideoBox4 = new CusVideoBox4(m_stackWidget_center);
     m_cusVideoBox4->setObjectName(QString::fromLocal8Bit("m_cusVideoBox4"));
 
     //视频盒子5
-    m_cusVideoBox5 = new CusVideoBox5();
+    m_cusVideoBox5 = new CusVideoBox5(m_stackWidget_center);
     m_cusVideoBox5->setObjectName(QString::fromLocal8Bit("m_cusVideoBox5"));
 
     //视频盒子6
-    m_cusVideoBox6 = new CusVideoBox6();
+    m_cusVideoBox6 = new CusVideoBox6(m_stackWidget_center);
     m_cusVideoBox6->setObjectName(QString::fromLocal8Bit("m_cusVideoBox6"));
 
     //视频筛选结果
-    videoFindResult = new VideoTypeSelect();
+    videoFindResult = new VideoTypeSelect(m_stackWidget_center);
     videoFindResult->setObjectName(QString::fromLocal8Bit("videoFindResult"));
 
     //托盘
@@ -250,9 +249,9 @@ void MainWidget::initOtherWidgetUi()
     m_tray->show();
     createTrayMenu();
 
-    m_stackWidget_left = new QStackedWidget();
+    m_stackWidget_left = new QStackedWidget(this);
     m_stackWidget_left->setObjectName(QString::fromLocal8Bit("m_stackWidget_left"));
-    m_stackWidget_left->setFixedWidth(140);//固定宽度140
+    m_stackWidget_left->setFixedWidth(LISTWIDTH_L);//固定宽度66
     m_stackWidget_left->insertWidget(0,m_leftSideBar);
 //    m_stackWidget_left->insertWidget(1,new CentralHomeForm());
 
@@ -265,17 +264,21 @@ void MainWidget::initOtherWidgetUi()
     m_hblayout->addWidget(m_stackWidget_center);
     m_hblayout->setSpacing(0);
     m_hblayout->setContentsMargins(0,0,0,0);
-    m_hblayout->setMargin(0);
+
     //标题栏+水平布局--->垂直布局
     m_vblayout->addWidget(m_titleBar,0,Qt::AlignTop);
     m_vblayout->addLayout(m_hblayout,1);
-    m_vblayout->setContentsMargins(MARGIN,MARGIN,MARGIN,MARGIN);
+//    m_vblayout->setContentsMargins(MARGIN,MARGIN,MARGIN,MARGIN);
     m_vblayout->setSpacing(0);
-    m_hblayout->setMargin(0);
+
     //说明：
     //setlayout接口使用时，所有的布局没有指定父亲为this
     //如果有布局父亲为this,可以不设置setlayout
+
+    //这是一种布局实现方式
     this->setLayout(m_vblayout);
+    this->setContentsMargins(MARWIDTH,MARWIDTH,MARWIDTH,MARWIDTH);//界面拉伸的边缘宽度
+    this->layout()->setContentsMargins(0,0,0,0);//布局的边缘宽度
 }
 
 //设置StackedWidget布局每个page界面
@@ -885,6 +888,12 @@ void MainWidget::handleSignalAndSLots()
     });
 }
 
+void MainWidget::setInstallEventFilter()
+{
+    m_webTabWidget->installEventFilter(this);
+    m_stackWidget_center->installEventFilter(this);
+}
+
 //更新新增网页按钮的位置
 void MainWidget::updateAddWebButtonPosition()
 {
@@ -1312,7 +1321,7 @@ void MainWidget::slot_on_leftButton_clicked()
     //隐藏设为宽度为1
     if(m_isHide)
     {
-        m_stackWidget_left->show();//左侧边栏 固定宽度 140px
+        m_stackWidget_left->show();//左侧边栏
         updateLeftButtonGeometry();
         setLeftButtonStyleSheetStatus();
         m_leftButton->hide();
@@ -1420,60 +1429,60 @@ MainWidget::~MainWidget()
 
 }
 
-bool MainWidget::nativeEvent(const QByteArray &eventType, void *message, long *result)
-{
-    Q_UNUSED(eventType)
-    MSG* param = static_cast<MSG*>(message);
-       switch (param->message)
-       {
-       case WM_NCHITTEST:
-       {
-           int nX = GET_X_LPARAM(param->lParam) - this->geometry().x();
-           int nY = GET_Y_LPARAM(param->lParam) - this->geometry().y();
+//bool MainWidget::nativeEvent(const QByteArray &eventType, void *message, long *result)
+//{
+//    Q_UNUSED(eventType)
+//    MSG* param = static_cast<MSG*>(message);
+//       switch (param->message)
+//       {
+//       case WM_NCHITTEST:
+//       {
+//           int nX = GET_X_LPARAM(param->lParam) - this->geometry().x();
+//           int nY = GET_Y_LPARAM(param->lParam) - this->geometry().y();
 
-           // 如果鼠标位于子控件上，则不进行处理
-           if(nX > MARWIDTH && nX <this->width() - MARWIDTH &&
-                   nY > MARWIDTH && nY < this->height() - MARWIDTH)
-           {
-               if (childAt(nX, nY) != nullptr)
-                   return QWidget::nativeEvent(eventType, message, result);
-           }
+//           // 如果鼠标位于子控件上，则不进行处理
+//           if(nX > MARWIDTH && nX <this->width() - MARWIDTH &&
+//                   nY > MARWIDTH && nY < this->height() - MARWIDTH)
+//           {
+//               if (childAt(nX, nY) != nullptr)
+//                   return QWidget::nativeEvent(eventType, message, result);
+//           }
 
-           // 鼠标区域位于窗体边框，进行缩放
-           if ((nX > 0) && (nX < MARWIDTH))//左边
-               *result = HTLEFT;
+//           // 鼠标区域位于窗体边框，进行缩放
+//           if ((nX > 0) && (nX < MARWIDTH))//左边
+//               *result = HTLEFT;
 
-           if ((nX > this->width() - MARWIDTH) && (nX < this->width()))
-               *result = HTRIGHT;
+//           if ((nX > this->width() - MARWIDTH) && (nX < this->width()))
+//               *result = HTRIGHT;
 
-           if ((nY > 0) && (nY < MARWIDTH))//上边
-               *result = HTTOP;
+//           if ((nY > 0) && (nY < MARWIDTH))//上边
+//               *result = HTTOP;
 
-           if ((nY > this->height() - MARWIDTH) && (nY < this->height()))
-               *result = HTBOTTOM;
+//           if ((nY > this->height() - MARWIDTH) && (nY < this->height()))
+//               *result = HTBOTTOM;
 
-           if ((nX > 0) && (nX < MARWIDTH) && (nY > 0)
-                   && (nY < MARWIDTH))
-               *result = HTTOPLEFT;
+//           if ((nX > 0) && (nX < MARWIDTH) && (nY > 0)
+//                   && (nY < MARWIDTH))
+//               *result = HTTOPLEFT;
 
-           if ((nX > this->width() - MARWIDTH) && (nX < this->width())
-                   && (nY > 0) && (nY < MARWIDTH))
-               *result = HTTOPRIGHT;
+//           if ((nX > this->width() - MARWIDTH) && (nX < this->width())
+//                   && (nY > 0) && (nY < MARWIDTH))
+//               *result = HTTOPRIGHT;
 
-           if ((nX > 0) && (nX < MARWIDTH)
-                   && (nY > this->height() - MARWIDTH) && (nY < this->height()))
-               *result = HTBOTTOMLEFT;
+//           if ((nX > 0) && (nX < MARWIDTH)
+//                   && (nY > this->height() - MARWIDTH) && (nY < this->height()))
+//               *result = HTBOTTOMLEFT;
 
-           if ((nX > this->width() - MARWIDTH) && (nX < this->width())
-                   && (nY > this->height() - MARWIDTH) && (nY < this->height()))
-               *result = HTBOTTOMRIGHT;
+//           if ((nX > this->width() - MARWIDTH) && (nX < this->width())
+//                   && (nY > this->height() - MARWIDTH) && (nY < this->height()))
+//               *result = HTBOTTOMRIGHT;
 
-//           updateWinTitleBarButtons();//判断是否最大化
-           return true;
-           }
-       }
-       return QWidget::nativeEvent(eventType,message,result);
-}
+////           updateWinTitleBarButtons();//判断是否最大化
+//           return true;
+//           }
+//       }
+//       return QWidget::nativeEvent(eventType,message,result);
+//}
 
 /*事件过滤器*/
 bool MainWidget::eventFilter(QObject *watched, QEvent *event)
@@ -1485,6 +1494,7 @@ bool MainWidget::eventFilter(QObject *watched, QEvent *event)
 //            updateLeftButtonGeometry();
 //            setLeftButtonStyleSheetStatus();
 //            m_leftButton->show();
+            setCursor(Qt::ArrowCursor);
         }
         else if(event->type() == QEvent::Leave)
         {
@@ -1518,75 +1528,75 @@ bool MainWidget::eventFilter(QObject *watched, QEvent *event)
     return QWidget::eventFilter(watched,event);
 }
 
-void MainWidget::mousePressEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event);
-    //    if (event->button() == Qt::LeftButton)
-    //    {
-    //        this->_isleftpressed = true;
-    //        QPoint temp = event->globalPos();
-    //        _plast = temp;
-    //        _curpos = countFlag(event->pos(), countRow(event->pos()));
-    //    }
+//void MainWidget::mousePressEvent(QMouseEvent *event)
+//{
+//    Q_UNUSED(event);
+//    //    if (event->button() == Qt::LeftButton)
+//    //    {
+//    //        this->_isleftpressed = true;
+//    //        QPoint temp = event->globalPos();
+//    //        _plast = temp;
+//    //        _curpos = countFlag(event->pos(), countRow(event->pos()));
+//    //    }
 
-//    if(ReleaseCapture())
+////    if(ReleaseCapture())
+////    {
+////        QWidget* pWindow = this->window();
+////        if(pWindow->isTopLevel())
+////        {
+////            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
+////        }
+////    }
+////    event->ignore();
+//}
+
+//void MainWidget::mouseMoveEvent(QMouseEvent *event)
+//{
+//    Q_UNUSED(event)
+//    //拖动之前判断是否串口处于最大化
+//    if(this->isMaximized())
 //    {
-//        QWidget* pWindow = this->window();
-//        if(pWindow->isTopLevel())
-//        {
-//            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
-//        }
+//        return;
 //    }
-//    event->ignore();
-}
+//    if(this->isFullScreen()) return;	//窗口铺满全屏，直接返回，不做任何操作
+//    int poss = countFlag(event->pos(), countRow(event->pos()));
+//    setCursorType(poss);
+//    if (_isleftpressed)//是否左击
+//    {
+//        QPoint ptemp = event->globalPos();
+//        ptemp = ptemp - _plast;
+//        if (_curpos == 22)//移动窗口
+//        {
+//            ptemp = ptemp + pos();
+//            move(ptemp);
+//        }
+//        else
+//        {
+//            QRect wid = geometry();
+//            switch (_curpos)//改变窗口的大小
+//            {
+//            case 11:wid.setTopLeft(wid.topLeft() + ptemp); break;//左上角
+//            case 13:wid.setTopRight(wid.topRight() + ptemp); break;//右上角
+//            case 31:wid.setBottomLeft(wid.bottomLeft() + ptemp); break;//左下角
+//            case 33:wid.setBottomRight(wid.bottomRight() + ptemp); break;//右下角
+//            case 12:wid.setTop(wid.top() + ptemp.y()); break;//中上角
+//            case 21:wid.setLeft(wid.left() + ptemp.x()); break;//中左角
+//            case 23:wid.setRight(wid.right() + ptemp.x()); break;//中右角
+//            case 32:wid.setBottom(wid.bottom() + ptemp.y()); break;//中下角
+//            }
+//            setGeometry(wid);
+//        }
+//        _plast = event->globalPos();//更新位置
+//    }
+//}
 
-void MainWidget::mouseMoveEvent(QMouseEvent *event)
-{
-    //拖动之前判断是否串口处于最大化
-    if(this->isMaximized())
-    {
-        return;
-    }
-    Q_UNUSED(event);
-    if(this->isFullScreen()) return;	//窗口铺满全屏，直接返回，不做任何操作
-    int poss = countFlag(event->pos(), countRow(event->pos()));
-    setCursorType(poss);
-    if (_isleftpressed)//是否左击
-    {
-        QPoint ptemp = event->globalPos();
-        ptemp = ptemp - _plast;
-        if (_curpos == 22)//移动窗口
-        {
-            ptemp = ptemp + pos();
-            move(ptemp);
-        }
-        else
-        {
-            QRect wid = geometry();
-            switch (_curpos)//改变窗口的大小
-            {
-            case 11:wid.setTopLeft(wid.topLeft() + ptemp); break;//左上角
-            case 13:wid.setTopRight(wid.topRight() + ptemp); break;//右上角
-            case 31:wid.setBottomLeft(wid.bottomLeft() + ptemp); break;//左下角
-            case 33:wid.setBottomRight(wid.bottomRight() + ptemp); break;//右下角
-            case 12:wid.setTop(wid.top() + ptemp.y()); break;//中上角
-            case 21:wid.setLeft(wid.left() + ptemp.x()); break;//中左角
-            case 23:wid.setRight(wid.right() + ptemp.x()); break;//中右角
-            case 32:wid.setBottom(wid.bottom() + ptemp.y()); break;//中下角
-            }
-            setGeometry(wid);
-        }
-        _plast = event->globalPos();//更新位置
-    }
-}
-
-void MainWidget::mouseReleaseEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event);
-    if (_isleftpressed)
-        _isleftpressed = false;
-    setCursor(Qt::ArrowCursor);
-}
+//void MainWidget::mouseReleaseEvent(QMouseEvent *event)
+//{
+//    Q_UNUSED(event);
+//    if (_isleftpressed)
+//        _isleftpressed = false;
+//    setCursor(Qt::ArrowCursor);
+//}
 
 void MainWidget::changeEvent(QEvent *event)
 {

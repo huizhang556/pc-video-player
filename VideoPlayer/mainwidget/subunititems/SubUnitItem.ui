@@ -38,15 +38,17 @@
    <item>
     <widget class="QWidget" name="widget_mask" native="true">
      <property name="styleSheet">
-      <string notr="true">#widget_mask
+      <string notr="true">/*
+#widget_mask
 {
-/*background-color: transparent;*/
+background-color: transparent;
 }
 
 #widget_mask:hover
 {
 background-color: rgba(20, 20, 20,0.6);
-}</string>
+}
+*/</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <property name="spacing">

@@ -302,7 +302,7 @@ void TitleBar::handleSignalAndSLots()
     connect(ui->BtnHistory,&QPushButton::clicked,[=](){emit sig_historyDownload(5,0);});//历史记录
     //截屏
     connect(ui->BtnCreate,&QPushButton::clicked,[=](){
-//        CreateCenter::getInstance()->show();
+        CreateCenter::getInstance()->show();
         qDebug() <<QString(u8"创作中心");
     });//截屏
 

@@ -10,7 +10,7 @@
 #include "browser/WebDownLoadList.h"
 #include "customer/CusLineEdit.h"
 #include "titlebar/WatchRecords.h"
-//#include "creator/CreateCenter.h"
+#include "creator/CreateCenter.h"
 #include "desktoplyric/toptooltips/DesktopTip1.h"
 
 #include <QMenu>
