@@ -134,6 +134,7 @@ border-bottom-width: 1px;
                   <string notr="true">QPushButton
 {
 color: #9da1a8;
+border: none;
 background-color: transparent;
 font: bold 12pt &quot;Microsoft YaHei UI&quot;;
 }
@@ -188,6 +189,7 @@ color: #ffffff;
                   <string notr="true">QPushButton
 {
 color: #9da1a8;
+border: none;
 background-color: transparent;
 font: bold 12pt &quot;Microsoft YaHei UI&quot;;
 }

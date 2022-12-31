@@ -4,7 +4,7 @@
 #define MARGIN 2 //窗口边距
 
 #include "browser/NewWork.h"
-#include "titleBar/TitleBar.h"
+#include "titlebar/TitleBar.h"
 #include "browser/CusTabBar.h"
 #include "browser/WebHistory.h"
 #include "customer/BaseWidget.h"

@@ -372,21 +372,6 @@ void LoginPersonInfo::receiveLoginAppClose()
 
 /*使用移动功能会导致combobox下拉错位*/
 
-/*按下事件*/
-void LoginPersonInfo::mousePressEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event);
-//   QPoint winPos = this->pos();//界面位置
-//    QPoint nowPos = event->globalPos();//鼠标位置
-//    m_mvPos = nowPos - winPos;
-}
-/*移动事件*/
-void LoginPersonInfo::mouseMoveEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event);
-    //    this->move(event->globalPos() - m_mvPos);
-}
-
 void LoginPersonInfo::showEvent(QShowEvent *event)
 {
     Q_UNUSED(event);

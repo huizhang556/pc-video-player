@@ -1073,19 +1073,6 @@ void TitleBar::keyPressEvent(QKeyEvent *event)
     qDebug() << event->key();//78（key）需要鼠标焦点在标题栏
 }
 
-//void TitleBar::mousePressEvent(QMouseEvent *event)
-//{
-//    Q_UNUSED(event)
-//    if(ReleaseCapture())
-//    {
-//        QWidget* pWindow = this->window();
-//        if(pWindow->isTopLevel())
-//        {
-//            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
-//        }
-//    }
-//    event->ignore();
-//}
 
 /*根据窗口状态设置样式*/
 void TitleBar::chandleMainWinStatus(bool status)

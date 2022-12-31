@@ -2,7 +2,8 @@
 /**所有的注释不要使用双斜杠!!!**/
 /*全局通过用样式*/
 * {
-outline:none;
+border: none;
+outline: none;
 font-family: "微软雅黑";
 }
 

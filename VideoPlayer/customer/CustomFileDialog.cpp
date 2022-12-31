@@ -1,5 +1,4 @@
-#include "customfiledialog.h"
-
+#include "CustomFileDialog.h"
 #include <QPainter>
 #include <QMouseEvent>
 #include <QHeaderView>
@@ -99,7 +98,7 @@ void CustomFileDialog::paintEvent(QPaintEvent *event)
 	opt.init(this);
 	QPainter p(this);
 	style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
-	__super::paintEvent(event);
+//	__super::paintEvent(event);
 }
 
 void CustomFileDialog::mousePressEvent(QMouseEvent *event)

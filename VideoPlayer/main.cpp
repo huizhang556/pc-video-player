@@ -1,6 +1,6 @@
 ﻿#include "MainWidget.h"
 #include <QApplication>
-#include "titleBar/TitleBar.h"
+#include "titlebar/TitleBar.h"
 #include "style/loadGlobalQss.h"
 #include "creator/CreateCenter.h"
 #include "videomodels/MultipPlayer.h"

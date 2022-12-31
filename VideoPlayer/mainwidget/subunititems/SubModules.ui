@@ -79,6 +79,12 @@ border-radius: 0px;
          <height>65</height>
         </size>
        </property>
+       <property name="styleSheet">
+        <string notr="true">#frame_info
+{
+border: none;
+}</string>
+       </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
        </property>
@@ -121,6 +127,7 @@ color: #b7bec3;
 font: 400 15px &quot;微软雅黑&quot;;
 text-align: left;
 padding-left: 6px;
+border: none;
 background-color: transparent;
 }
 
@@ -149,6 +156,7 @@ color: #b7bec3;
 font: 400 13px &quot;微软雅黑&quot;;
 text-align: left;
 padding-left: 6px;
+border: none;
 background-color: transparent;
 }
 

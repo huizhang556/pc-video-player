@@ -85,6 +85,12 @@ border-radius: 10px;
          <height>55</height>
         </size>
        </property>
+       <property name="styleSheet">
+        <string notr="true">#frame_info
+{
+border: none;
+}</string>
+       </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
        </property>
@@ -125,6 +131,7 @@ border-radius: 10px;
            <string notr="true">QPushButton
 {
 color: #878787;
+border: none;
 border-radius: 5px;
 font: 800 15px &quot;微软雅黑&quot;;
 background-color: transparent;
@@ -163,6 +170,7 @@ color: white;
              <string notr="true">QPushButton
 {
 color: #878787;
+border: none;
 border-radius: 5px;
 font: 800 14px &quot;微软雅黑&quot;;
 background-color: transparent;

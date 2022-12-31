@@ -31,9 +31,6 @@ public slots:
     void        receiveLoginAppClose();
 
 protected:
-    void        mousePressEvent(QMouseEvent *event) override;
-
-    void        mouseMoveEvent(QMouseEvent *event) override;
 
     void        showEvent(QShowEvent *event) override;
 
@@ -71,7 +68,7 @@ private:
     explicit LoginPersonInfo(QWidget *parent = nullptr);
     Ui::LoginPersonInfo *ui;
     QListWidget         *m_listWgt_UserList     =   nullptr;
-    QPoint              m_mvPos;
+
     QAction             *userAction;
     QAction             *keybordAction;
     QAction             *clearAction1;

@@ -143,15 +143,6 @@ BuyVip *BuyVip::getInstance()
 
 void BuyVip::mousePressEvent(QMouseEvent *event)
 {
-//    if(ReleaseCapture())
-//    {
-//        QWidget* pWindow = this->window();
-//        if(pWindow->isTopLevel())
-//        {
-//            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
-//        }
-//    }
-    //event->ignore();
     Q_UNUSED(event)
     m_mvPos = event->globalPos() - this->pos();
 }

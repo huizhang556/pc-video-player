@@ -1,4 +1,4 @@
-﻿#include "playstatecontrol.h"
+﻿#include "PlayStateControl.h"
 #include <QPainter>
 #include <QPaintEvent>
 #include <QPainterPath>

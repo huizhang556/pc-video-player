@@ -1,5 +1,4 @@
-﻿#include "videosurface.h"
-
+﻿#include "VideoSurface.h"
 VideoSurface::VideoSurface(QObject *parent) : QAbstractVideoSurface(parent)
 {
 
@@ -7,7 +6,7 @@ VideoSurface::VideoSurface(QObject *parent) : QAbstractVideoSurface(parent)
 
 QList<QVideoFrame::PixelFormat> VideoSurface::supportedPixelFormats(QAbstractVideoBuffer::HandleType type) const
 {
-    Q_UNUSED(type);
+    Q_UNUSED(type)
     QList<QVideoFrame::PixelFormat> list;
     list<<QVideoFrame::Format_RGB32<<QVideoFrame::Format_RGB32;
     return  list;

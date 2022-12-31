@@ -134,10 +134,6 @@ QString SystemSetting::openLocalFileSystem()
         fpath = fpath + QString(tr("/"));
         return fpath;
     }
-    else
-    {
-        return false;//打开不选择有问题
-    }
 }
 
 void SystemSetting::setTitleWarningText(QString text, int msec)
