@@ -8,6 +8,7 @@
 #include "mainwidget/subunititems/HotRankList.h"
 #include "mainwidget/cusvideosbox/CusVideoBox6.h"
 #include "miniplayer/MiniPlayer.h"
+#include "pernotice/MainNotice.h"
 
 #include <QTranslator>
 #include <QThread>
@@ -83,6 +84,9 @@ int main(int argc, char *argv[])
 //    w1.show();
 
 //    CusVideoBox6 w1;
+//    w1.show();
+
+//    MainNotice w1;
 //    w1.show();
 
 //    CreateCenter::getInstance()->show();

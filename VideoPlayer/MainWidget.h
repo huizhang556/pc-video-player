@@ -25,6 +25,7 @@
 #include "videomodels/PlayOrderForm.h"
 #include "videomodels/VideoTitleBar.h"
 #include "videomodels/PersonFileForm.h"
+#include "pernotice/MainNotice.h"
 #include "mainwidget/HomeWidget.h"
 #include "fileshandle/DownloadType.h"
 #include "mainwidget/videomember/MainMembForm.h"
@@ -125,7 +126,10 @@ private:
 
     void        updateWinTitleBarButtons();
 
+    void        updateLeftNoticeSliderBar(bool show);//控制消息栏渐入渐出
+
 private slots:
+
     void        slot_setWebProgreeBarValue(int value);//网页进度
 
     void        slot_setCurrentCenterStackWidget(int index);//设置中心区域

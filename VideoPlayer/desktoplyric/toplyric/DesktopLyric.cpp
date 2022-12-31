@@ -3,10 +3,10 @@
 
 #include "desktoplyric/toptooltips/DesktopTip1.h"
 
-#ifdef Q_OS_WIN
-#include <qt_windows.h>
-#pragma comment (lib,"user32.lib")
-#endif
+//#ifdef Q_OS_WIN
+//#include <qt_windows.h>
+//#pragma comment (lib,"user32.lib")
+//#endif
 
 DesktopLyric* DesktopLyric::m_pInstance = nullptr;
 
@@ -225,15 +225,23 @@ void DesktopLyric::slot_setCurrentPlayStatus(bool status)
 
 void DesktopLyric::mousePressEvent(QMouseEvent *event)
 {
-    if(ReleaseCapture())
-    {
-        QWidget* pWindow = this->window();
-        if(pWindow->isTopLevel())
-        {
-            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
-        }
-    }
-    event->ignore();
+//    if(ReleaseCapture())
+//    {
+//        QWidget* pWindow = this->window();
+//        if(pWindow->isTopLevel())
+//        {
+//            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
+//        }
+//    }
+//    event->ignore();
+    Q_UNUSED(event)
+    m_mvPos = event->globalPos() - this->pos();
+}
+
+void DesktopLyric::mouseMoveEvent(QMouseEvent *event)
+{
+    Q_UNUSED(event)
+    this->move(event->globalPos() - m_mvPos);
 }
 
 bool DesktopLyric::eventFilter(QObject *watched, QEvent *event)

@@ -41,6 +41,7 @@ public:
 
 protected:
    void  mousePressEvent(QMouseEvent *event) override;
+   void  mouseMoveEvent(QMouseEvent *event) override;
    bool  eventFilter(QObject *watched, QEvent *event) override;
 
 private:
@@ -54,7 +55,7 @@ private:
     QRadioButton    *m_radioBtn3   = nullptr;
     QRadioButton    *m_radioBtn4   = nullptr;
     QRadioButton    *m_radioBtn5   = nullptr;
-
+    QPoint             m_mvPos;
     int                m_userRow;//已占用行
     int                m_userType;//用户等级
     int                m_sourceType;//资源类型 0 song 1 video

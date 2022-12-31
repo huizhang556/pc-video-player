@@ -42,7 +42,7 @@ void MainWidget::initOtherWidgetUi()
     m_titleBar = new TitleBar(this);
     m_titleBar->setWebDefUrl(dataBase::getWebDef_url());//设置默认显示标题
     m_titleBar->setObjectName(QString::fromLatin1("m_titleBar"));
-    setTitleBarMoveArea(m_titleBar,5);//这里的5是setContentsMargins
+    setTitleBarMoveArea(m_titleBar,2);//这里的5是setContentsMargins
 
     m_leftSideBar = new LeftSideBar(this);
     m_leftSideBar->setObjectName(QString::fromLatin1("m_leftSideBar"));
@@ -566,11 +566,28 @@ void MainWidget::handleSignalAndSLots()
         slot_setCurrentCenterStackWidget(index);
         m_titleBar->isNecessaryShowSearch(index);//标题栏显示
     });
+
+    //左侧边栏---消息处理
+    connect(m_leftSideBar,&LeftSideBar::sig_sendPersonMessage,[=](bool done){
+        updateLeftNoticeSliderBar(done);
+    });
+
+    //左侧边栏---设置
+    connect(m_leftSideBar,&LeftSideBar::sig_sendSetting,[=](bool done){
+
+    });
+
+    //左侧边栏---更多
+    connect(m_leftSideBar,&LeftSideBar::sig_sendMore,[=](){
+
+    });
+
     //左侧边栏控制显示/隐藏的按钮
     connect(m_leftButton,&QPushButton::clicked,[=](){
         slot_on_leftButton_clicked();
 //        emit sig_globalResize();
     });
+
 
     /**********************热点资讯************************/
     //热点资讯
@@ -1211,6 +1228,50 @@ void MainWidget::updateWinTitleBarButtons()
     }
 }
 
+void MainWidget::updateLeftNoticeSliderBar(bool show)
+{
+    MainNotice::getInstance()->setMinimumSize(0,0);
+    const int slider_x = m_leftSideBar->parentWidget()->mapToGlobal(m_leftSideBar->pos()).x();
+    const int slider_y = m_leftSideBar->parentWidget()->mapToGlobal(m_leftSideBar->pos()).y();
+    if(show)
+    {
+        qDebug() << "start animation";
+//            MainNotice::getInstance()->setGeometry(slider_x + m_leftSideBar->width(),
+//                                                   slider_y,
+//                                                   MainNotice::getInstance()->width(),
+//                                                   m_leftSideBar->height());
+
+        MainNotice::getInstance()->show();//必须show出来，否则看不到动画
+        QPropertyAnimation *pAnimation = new QPropertyAnimation(MainNotice::getInstance(),"geometry",this);
+        pAnimation->setDuration(800);
+//        pAnimation->setStartValue(QRect(slider_x + m_leftSideBar->width(),slider_y,0,m_leftSideBar->height()));
+//        pAnimation->setEndValue(QRect(slider_x + m_leftSideBar->width(),slider_y,400,m_leftSideBar->height()));
+//        pAnimation->setEasingCurve(QEasingCurve::OutQuad);//一般使用setKeyValueAt不要设置曲线
+//        pAnimation->setKeyValueAt(0,QPoint(slider_x,slider_y));
+//        pAnimation->setKeyValueAt(1,QPoint(slider_x + m_leftSideBar->width(),slider_y));
+        pAnimation->setKeyValueAt(0,QRect(slider_x + m_leftSideBar->width(),slider_y,0,m_leftSideBar->height()));
+        pAnimation->setKeyValueAt(1,QRect(slider_x + m_leftSideBar->width(),slider_y,400,m_leftSideBar->height()));
+        pAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+    }
+    else
+    {
+        qDebug() << "stop animation";
+        qDebug() << MainNotice::getInstance()->pos();
+
+        QPropertyAnimation *pAnimation = new QPropertyAnimation(MainNotice::getInstance(),"geometry",this);
+        pAnimation->setDuration(800);
+//        pAnimation->setStartValue(QRect(slider_x + m_leftSideBar->width(),slider_y,400,m_leftSideBar->height()));
+//        pAnimation->setEndValue(QRect(slider_x + m_leftSideBar->width(),slider_y,0,m_leftSideBar->height()));
+//        pAnimation->setEasingCurve(QEasingCurve::Linear);
+//        pAnimation->setKeyValueAt(0,QPoint(slider_x + m_leftSideBar->width(),slider_y));
+//        pAnimation->setKeyValueAt(1,QPoint(slider_x,slider_y));
+        pAnimation->setKeyValueAt(0,QRect(slider_x + m_leftSideBar->width(),slider_y,400,m_leftSideBar->height()));
+        pAnimation->setKeyValueAt(1,QRect(slider_x + m_leftSideBar->width(),slider_y,0,m_leftSideBar->height()));
+        pAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+//        MainNotice::getInstance()->close();//宽度设为0，达到隐藏的效果
+    }
+}
+
 void MainWidget::slot_setWebProgreeBarValue(int value)
 {
     opacity->setOpacity(1);//恢复透明度值
@@ -1672,6 +1733,7 @@ void MainWidget::resizeEvent(QResizeEvent *event)
     Q_UNUSED(event);
 //    updateWebAddButtonGeometry();
     emit sig_sendWindowResize();
+    MainNotice::getInstance()->setMinimumSize(0,0);
 }
 
 void MainWidget::keyPressEvent(QKeyEvent *event)

@@ -970,13 +970,21 @@ void TitleBar::mouseDoubleClickEvent(QMouseEvent *event)
 /*监听事件*/
 bool TitleBar::eventFilter(QObject *watched, QEvent *event)
 {
-    if(event->type() == QEvent::MouseButtonPress && watched == this)
+    if(watched == this)
     {
-       //搜索框---鼠标单击空白处，获得焦点
-        ui->lineEditSearch->clearFocus();
-        this->setFocus();
-        slot_clearAllPopupUi();
+        if(event->type() == QEvent::MouseButtonPress)
+        {
+            //搜索框---鼠标单击空白处，获得焦点
+             ui->lineEditSearch->clearFocus();
+             this->setFocus();
+             slot_clearAllPopupUi();
+        }
+        else if(event->type() == QEvent::Enter)
+        {
+            this->setCursor(Qt::ArrowCursor);
+        }
     }
+
     QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);//转换为鼠标事件
     mouseIsEnterLeaveLineEdit(watched,mouseEvent);//搜索框鼠标进入离开,处理样式
     mouseIsPressReleaseLineEdit(watched,mouseEvent);//搜索框鼠标按下释放，处理历史记录
@@ -1065,19 +1073,19 @@ void TitleBar::keyPressEvent(QKeyEvent *event)
     qDebug() << event->key();//78（key）需要鼠标焦点在标题栏
 }
 
-void TitleBar::mousePressEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event)
-    if(ReleaseCapture())
-    {
-        QWidget* pWindow = this->window();
-        if(pWindow->isTopLevel())
-        {
-            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
-        }
-    }
-    event->ignore();
-}
+//void TitleBar::mousePressEvent(QMouseEvent *event)
+//{
+//    Q_UNUSED(event)
+//    if(ReleaseCapture())
+//    {
+//        QWidget* pWindow = this->window();
+//        if(pWindow->isTopLevel())
+//        {
+//            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
+//        }
+//    }
+//    event->ignore();
+//}
 
 /*根据窗口状态设置样式*/
 void TitleBar::chandleMainWinStatus(bool status)

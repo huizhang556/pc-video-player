@@ -1,13 +1,11 @@
 ﻿#include "CusListWidget.h"
-#include "ui_CusListWidget.h"
+
 #include <QScrollBar>
 #include <QDebug>
 
 CusListWidget::CusListWidget(QWidget *parent) :
-    QListWidget(parent),
-    ui(new Ui::CusListWidget)
+    QListWidget(parent)
 {
-    ui->setupUi(this);
     initWorkUI();
     handleSignalsAndSlots();
     setInstallEventFilter();
@@ -17,13 +15,11 @@ CusListWidget::CusListWidget(QWidget *parent) :
 
 CusListWidget::~CusListWidget()
 {
-    delete ui;
+
 }
 
 void CusListWidget::initWorkUI()
 {
-    ui->pushButton_left->hide();
-    ui->pushButton_right->hide();
 
     this->setFrameShape(QFrame::NoFrame);
     m_videoButton_L = new QPushButton("<",this);
@@ -49,17 +45,6 @@ void CusListWidget::handleSignalsAndSlots()
             this->horizontalScrollBar()->setValue(step + this->item(0)->sizeHint().width());
         });
 
-//    connect(ui->pushButton_left,&QPushButton::clicked,[=](){
-//        if(this->count() == 0) return;
-//        int step = this->horizontalScrollBar()->value();
-//        this->horizontalScrollBar()->setValue(step - this->item(0)->sizeHint().width());
-//    });
-
-//    connect(ui->pushButton_right,&QPushButton::clicked,[=](){
-//        if(this->count() == 0) return;
-//        int step = this->horizontalScrollBar()->value();
-//        this->horizontalScrollBar()->setValue(step + this->item(0)->sizeHint().width());
-//    });
 }
 
 void CusListWidget::setInstallEventFilter()
@@ -80,10 +65,12 @@ void CusListWidget::setButtonControl(bool enabled)
     }
 }
 
-void CusListWidget::setOffset(int itemwidth, int width_offset)
+void CusListWidget::setOffset(int itemwidth, int width_offset, int adjust_w, int adjust_h)
 {
     m_itemWidth = itemwidth;
     m_widthOffset = width_offset;
+    m_adjust_w = adjust_w;
+    m_adjust_h = adjust_h;
 }
 
 bool CusListWidget::eventFilter(QObject *object, QEvent *event)
@@ -119,6 +106,7 @@ void CusListWidget::autoResizeListItemsSize()
             this->item(i)->setSizeHint(QSize(avgWidth,sizeHint_h));
         }
     }
+    this->horizontalScrollBar()->setValue(0);//回到最顶端
 }
 
 int CusListWidget::calAvergeWidth()
@@ -170,12 +158,12 @@ void CusListWidget::updataAdjustButton_LR()
 {
     if(m_isShow)
     {
-        m_videoButton_L->setGeometry(5,
-                               this->height()/2 - m_videoButton_L->height()/2 - 45,
+        m_videoButton_L->setGeometry(m_adjust_w,
+                               this->height()/2 - m_videoButton_L->height()/2 - m_adjust_h,
                                m_videoButton_L->width(),m_videoButton_L->height());
 
-        m_videoButton_R->setGeometry(this->width()-m_videoButton_R->width(),
-                                   this->height()/2 - m_videoButton_R->height()/2 - 45,
+        m_videoButton_R->setGeometry(this->width()-m_videoButton_R->width()- m_adjust_w,
+                                   this->height()/2 - m_videoButton_R->height()/2 - m_adjust_h,
                                 m_videoButton_R->width(),m_videoButton_R->height());
         m_videoButton_L->raise();
         m_videoButton_L->show();

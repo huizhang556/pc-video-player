@@ -8,6 +8,7 @@
 #include "UploadWork.h"
 #include "CloseButton.h"
 #include "AddMediaInfo.h"
+#include "customer/BaseWidget.h"
 #include "miniplayer/MiniPlayer.h"
 
 #include <QLayout>
@@ -32,7 +33,7 @@ namespace Ui {
 class CreateCenter;
 }
 
-class CreateCenter : public QWidget
+class CreateCenter : public BaseWidget
 {
     Q_OBJECT
 
@@ -47,7 +48,7 @@ public:
 protected:
 //    void    mousePressEvent(QMouseEvent *event)override;
     bool    eventFilter(QObject *watched, QEvent *event) override;
-    bool    nativeEvent(const QByteArray& eventType, void* message, long* result) override;
+//    bool    nativeEvent(const QByteArray& eventType, void* message, long* result) override;
 
 private slots:
     void            addMediaType(const QString& title);

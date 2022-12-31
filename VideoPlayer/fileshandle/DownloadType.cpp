@@ -2,10 +2,10 @@
 #include "ui_DownloadType.h"
 #include "global/Global.h"
 
-#ifdef Q_OS_WIN
-#include <qt_windows.h>
-#pragma comment (lib,"user32.lib")
-#endif
+//#ifdef Q_OS_WIN
+//#include <qt_windows.h>
+//#pragma comment (lib,"user32.lib")
+//#endif
 
 DownloadType* DownloadType::m_pInstance = nullptr;
 
@@ -398,10 +398,6 @@ const QString DownloadType::openLocalFileSystem()
     {
         return fpath;
     }
-    else
-    {
-        return false;//打开不选择有问题
-    }
 }
 
 
@@ -417,15 +413,23 @@ DownloadType *DownloadType::getInstance()
 
 void DownloadType::mousePressEvent(QMouseEvent *event)
 {
-    if(ReleaseCapture())
-    {
-        QWidget* pWindow = this->window();
-        if(pWindow->isTopLevel())
-        {
-            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
-        }
-    }
-    event->ignore();
+//    if(ReleaseCapture())
+//    {
+//        QWidget* pWindow = this->window();
+//        if(pWindow->isTopLevel())
+//        {
+//            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
+//        }
+//    }
+    //    event->ignore();
+    Q_UNUSED(event)
+    m_mvPos = event->globalPos() - this->pos();
+}
+
+void DownloadType::mouseMoveEvent(QMouseEvent *event)
+{
+    Q_UNUSED(event)
+    this->move(event->globalPos() - m_mvPos);
 }
 
 bool DownloadType::eventFilter(QObject *watched, QEvent *event)

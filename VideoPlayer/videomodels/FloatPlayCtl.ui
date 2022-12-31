@@ -310,7 +310,7 @@ border-right-width: 0px;
 border-radius: 5px;
 border-top-right-radius: 0px;
 border-bottom-right-radius: 0px;
-background-color: #000000;
+background-color: rgba(38, 40, 41,0.3);
 }
 
 QLineEdit:hover
@@ -351,7 +351,7 @@ border-top-right-radius: 11px;
 border-bottom-right-radius: 11px;
 border: 1px solid #28a6dd;
 border-left-width: 0px;
-background-color: rgba(57, 57, 57,0.9);
+background-color: rgba(57, 57, 57,0.8);
 }
 
 QPushButton:hover

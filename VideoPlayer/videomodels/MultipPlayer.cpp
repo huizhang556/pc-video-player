@@ -1,12 +1,12 @@
 ﻿#include "MultipPlayer.h"
 #include "ui_MultipPlayer.h"
 
-#ifdef Q_OS_WIN
+//#ifdef Q_OS_WIN
 //#include <qt_windows.h>
 //#include <Windows.h>
 //#include <windowsx.h>
 //#pragma comment (lib,"user32.lib")
-#endif
+//#endif
 
 #include <QFile>
 #include <QMenu>
@@ -39,21 +39,12 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
     ui->setupUi(this);
     this->setMinimumSize(1028,670);//1320,800
     this->resize(QSize(1240,775));
-//    this->setMouseTracking(true);//开启鼠标跟踪，适应捕捉屏幕
-//    this->setWindowFlags(Qt::FramelessWindowHint| //去掉标题栏
-//                         Qt::WindowMinMaxButtonsHint);
     this->setAttribute(Qt::WA_Hover);//窗口拖拽用
-
     this->setWindowTitle(QString::fromLocal8Bit("播放器"));
     initMainWindow();//初始化界面
     handleSignalAndSLots();//处理信号与槽函数
-    //设置监听
-    installEventFilter(this);
-    ui->pushButton_bulletSet->installEventFilter(this);//弹幕设置按钮
-    ui->pushButton_sound->installEventFilter(this);//音量调节按钮设置监听
-    ui->stackedWidget->installEventFilter(this);//侧边按钮显隐用
-    videoWidget->installEventFilter(this);//视频界面
-    FloatPlayCtl::getInstance()->installEventFilter(this);
+    setInstallEventFilter();//设置监听
+    this->setTitleBarMoveArea(m_videoTitleBar,2);
 
   //测试功能
   list_temp
@@ -743,6 +734,17 @@ void MultipPlayer::handleSignalAndSLots()
     connect(m_listWisget3,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(slot_createRight_playCollectTable(QPoint)));
     //历史列表右键
     connect(m_listWisget4,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(slot_createRight_playHistoryTable(QPoint)));
+}
+
+void MultipPlayer::setInstallEventFilter()
+{
+    this->installEventFilter(this);
+    ui->stackedWidget_player->installEventFilter(this);
+    ui->pushButton_bulletSet->installEventFilter(this);//弹幕设置按钮
+    ui->pushButton_sound->installEventFilter(this);//音量调节按钮设置监听
+    ui->stackedWidget->installEventFilter(this);//侧边按钮显隐用
+    videoWidget->installEventFilter(this);//视频界面
+    FloatPlayCtl::getInstance()->installEventFilter(this);
 }
 
 /*加载默认图标*/
@@ -1965,6 +1967,14 @@ void MultipPlayer::playlistMouseEnterLeave(QObject *watched, QEvent *event)
     }
 }
 
+void MultipPlayer::stackWidget_player_enter(QObject *watched, QEvent *event)
+{
+    if(watched == ui->stackedWidget_player && event->type() == QEvent::Enter)
+    {
+        this->setCursor(Qt::ArrowCursor);
+    }
+}
+
 
 /*打开本地文件*/
 void MultipPlayer::help_aboutLocalFile()
@@ -3055,6 +3065,7 @@ bool MultipPlayer::eventFilter(QObject *watched, QEvent *event)
     floatPlayCtrlEnterLeave(watched,mousevent);//浮动播放
     slot_showDanmuSettingForm(watched,mousevent);//弹幕设置
 //    videoDouleExit(watched,mousevent);
+    stackWidget_player_enter(watched,mousevent);
     return QWidget::eventFilter(watched,event);
 }
 

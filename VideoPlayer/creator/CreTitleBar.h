@@ -21,7 +21,7 @@ public:
     void    setInstallEventer();
 
 protected:
-    void    mousePressEvent(QMouseEvent *event)override;
+//    void    mousePressEvent(QMouseEvent *event)override;
     bool    eventFilter(QObject *watched, QEvent *event)override;
 
 private:

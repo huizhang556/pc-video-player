@@ -16,6 +16,7 @@ MySkin::MySkin(QWidget *parent) :
     this->setAttribute(Qt::WA_StyledBackground,true);//脱离父窗口样式继承
     this->setFocusPolicy(Qt::NoFocus);
     this->setFixedSize(751,500);//记得留出10px 的滚动条宽度
+
     initWorkUI();
     chandleSignalAndSlot();
 }
@@ -222,9 +223,7 @@ bool MySkin::eventFilter(QObject *watch, QEvent *event)
 void MySkin::mousePressEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);
-   QPoint winPos = this->pos();//界面位置
-    QPoint nowPos = event->globalPos();//鼠标位置
-    m_mvPos = nowPos - winPos;
+    m_mvPos = event->globalPos() - this->pos();
 }
 
 void MySkin::mouseMoveEvent(QMouseEvent *event)

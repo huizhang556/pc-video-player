@@ -1,6 +1,8 @@
 ﻿#ifndef BUYVIP_H
 #define BUYVIP_H
 
+#include "mainwidget/vipmember/BuyVipItem.h"
+
 #include <QDialog>
 #include <QStringList>
 
@@ -20,12 +22,13 @@ public:
 
 protected:
    void  mousePressEvent(QMouseEvent *event) override;
+   void  mouseMoveEvent(QMouseEvent *event) override;
 
 private:
     explicit BuyVip(QWidget *parent = nullptr);
     Ui::BuyVip *ui;
     static BuyVip* m_pInstance;
-
+    QPoint          m_mvPos;
     QStringList     m_yearVip =
     {
         QString(u8"连续包年"),

@@ -2,10 +2,10 @@
 #include "ui_Installer.h"
 #include "global/Global.h"
 
-#ifdef Q_OS_WIN
-#include <qt_windows.h>
-#pragma comment (lib,"user32.lib")
-#endif
+//#ifdef Q_OS_WIN
+//#include <qt_windows.h>
+//#pragma comment (lib,"user32.lib")
+//#endif
 
 Installer* Installer::m_pInstance = nullptr;
 
@@ -150,13 +150,21 @@ void Installer::handleSignalsAndSlots()
 
 void Installer::mousePressEvent(QMouseEvent *event)
 {
-    if(ReleaseCapture())
-    {
-        QWidget* pWindow = this->window();
-        if(pWindow->isTopLevel())
-        {
-            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
-        }
-    }
-    event->ignore();
+//    if(ReleaseCapture())
+//    {
+//        QWidget* pWindow = this->window();
+//        if(pWindow->isTopLevel())
+//        {
+//            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
+//        }
+//    }
+    //    event->ignore();
+    Q_UNUSED(event)
+    m_mvPos = event->globalPos() - this->pos();
+}
+
+void Installer::mouseMoveEvent(QMouseEvent *event)
+{
+    Q_UNUSED(event)
+    this->move(event->globalPos() - m_mvPos);
 }

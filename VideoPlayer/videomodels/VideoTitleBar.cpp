@@ -1,10 +1,10 @@
 ﻿#include "VideoTitleBar.h"
 #include "ui_VideoTitleBar.h"
 
-#ifdef Q_OS_WIN
-#include <qt_windows.h>
-#pragma comment (lib,"user32.lib")
-#endif
+//#ifdef Q_OS_WIN
+//#include <qt_windows.h>
+//#pragma comment (lib,"user32.lib")
+//#endif
 
 #include <QDebug>
 
@@ -24,6 +24,7 @@ VideoTitleBar::~VideoTitleBar()
 
 void VideoTitleBar::initUi()
 {
+    this->installEventFilter(this);
     this->setFixedHeight(40);
     setTitleStackWidgetPage(0);
     ui->pushButton_close->setFlat(true);
@@ -105,21 +106,26 @@ bool VideoTitleBar::eventFilter(QObject *watched, QEvent *event)
             ui->pushButton_return->setIcon(QIcon(":/images/icon/returnhome.png"));
         }
     }
+
+    if(watched == this && event->type() == QEvent::Enter)
+    {
+        this->setCursor(Qt::ArrowCursor);
+    }
     return QWidget::eventFilter(watched,event);
 }
 
-void VideoTitleBar::mousePressEvent(QMouseEvent *event)
-{
-        if(ReleaseCapture())
-        {
-            QWidget* pWindow = this->window();
-            if(pWindow->isTopLevel())
-            {
-                SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
-            }
-        }
-    event->ignore();
-}
+//void VideoTitleBar::mousePressEvent(QMouseEvent *event)
+//{
+//        if(ReleaseCapture())
+//        {
+//            QWidget* pWindow = this->window();
+//            if(pWindow->isTopLevel())
+//            {
+//                SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
+//            }
+//        }
+//    event->ignore();
+//}
 
 /*处理样式*/
 void VideoTitleBar::chandleVMainWinStatus(bool status)

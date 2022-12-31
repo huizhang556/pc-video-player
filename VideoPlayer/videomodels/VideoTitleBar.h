@@ -27,7 +27,7 @@ public slots:
 protected:
     void        mouseDoubleClickEvent(QMouseEvent *event) override;
     bool        eventFilter(QObject *watched, QEvent *event) override;
-    void        mousePressEvent(QMouseEvent *event) override;
+//    void        mousePressEvent(QMouseEvent *event) override;
 
 private slots:
 

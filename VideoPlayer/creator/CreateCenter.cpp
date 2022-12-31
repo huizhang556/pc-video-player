@@ -1,26 +1,28 @@
 ﻿#include "CreateCenter.h"
 #include "ui_CreateCenter.h"
 
-#ifdef Q_OS_WIN
-#include <qt_windows.h>
-#include <Windows.h>
-#include <windowsx.h>
-#pragma comment (lib,"user32.lib")
-#endif
+//#ifdef Q_OS_WIN
+//#include <qt_windows.h>
+//#include <Windows.h>
+//#include <windowsx.h>
+//#pragma comment (lib,"user32.lib")
+//#endif
 CreateCenter* CreateCenter::m_pInstance = nullptr;
 
 CreateCenter::CreateCenter(QWidget *parent) :
-    QWidget(parent),
+    BaseWidget(parent),
     ui(new Ui::CreateCenter)
 {
     ui->setupUi(this);
-    this->setMinimumSize(QSize(1100,700));
-    this->resize(1100,700);
-    this->setWindowTitle(QString::fromLocal8Bit("创作中心"));
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);
     initWorkUI();
     handleSignalsAndSlots();
     setInstallEventer();
+    this->resize(1100,700);
+    this->setMinimumSize(QSize(1100,700));
+    this->setTitleBarMoveArea(m_ctitleBar,2);
+    this->setWindowTitle(QString::fromLocal8Bit("创作中心"));
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);
+
 }
 
 CreateCenter::~CreateCenter()
@@ -47,6 +49,7 @@ CreateCenter *CreateCenter::getInstance()
 
 void CreateCenter::initWorkUI()
 {
+    this->setContentsMargins(2,2,2,2);
     m_miniPlayer = new MiniPlayer();
 
     ui->pushButton_uploadFiles->setCheckable(true);
@@ -391,61 +394,61 @@ bool CreateCenter::eventFilter(QObject *watched, QEvent *event)
     return QWidget::eventFilter(watched,event);
 }
 
-bool CreateCenter::nativeEvent(const QByteArray &eventType, void *message, long *result)
-{
-    Q_UNUSED(eventType)
-//    qDebug() <<"enter nativeEvent";
-    MSG* param = static_cast<MSG*>(message);
+//bool CreateCenter::nativeEvent(const QByteArray &eventType, void *message, long *result)
+//{
+//    Q_UNUSED(eventType)
+////    qDebug() <<"enter nativeEvent";
+//    MSG* param = static_cast<MSG*>(message);
 
-    switch (param->message)
-    {
-    case WM_NCHITTEST:
-    {
-        int nX = GET_X_LPARAM(param->lParam) - this->geometry().x();
-        int nY = GET_Y_LPARAM(param->lParam) - this->geometry().y();
+//    switch (param->message)
+//    {
+//    case WM_NCHITTEST:
+//    {
+//        int nX = GET_X_LPARAM(param->lParam) - this->geometry().x();
+//        int nY = GET_Y_LPARAM(param->lParam) - this->geometry().y();
 
-        // 如果鼠标位于子控件上，则不进行处理
-        if(nX > MARWIDTH && nX <this->width() - MARWIDTH &&
-                nY > MARWIDTH && nY < this->height() - MARWIDTH)
-        {
-            if (childAt(nX, nY) != nullptr)
-                return QWidget::nativeEvent(eventType, message, result);
-        }
+//        // 如果鼠标位于子控件上，则不进行处理
+//        if(nX > MARWIDTH && nX <this->width() - MARWIDTH &&
+//                nY > MARWIDTH && nY < this->height() - MARWIDTH)
+//        {
+//            if (childAt(nX, nY) != nullptr)
+//                return QWidget::nativeEvent(eventType, message, result);
+//        }
 
-        // 鼠标区域位于窗体边框，进行缩放
-        if ((nX > 0) && (nX < MARWIDTH))//左边
-            *result = HTLEFT;
+//        // 鼠标区域位于窗体边框，进行缩放
+//        if ((nX > 0) && (nX < MARWIDTH))//左边
+//            *result = HTLEFT;
 
-        if ((nX > this->width() - MARWIDTH) && (nX < this->width()))
-            *result = HTRIGHT;
+//        if ((nX > this->width() - MARWIDTH) && (nX < this->width()))
+//            *result = HTRIGHT;
 
-        if ((nY > 0) && (nY < MARWIDTH))//上边
-            *result = HTTOP;
+//        if ((nY > 0) && (nY < MARWIDTH))//上边
+//            *result = HTTOP;
 
-        if ((nY > this->height() - MARWIDTH) && (nY < this->height()))
-            *result = HTBOTTOM;
+//        if ((nY > this->height() - MARWIDTH) && (nY < this->height()))
+//            *result = HTBOTTOM;
 
-        if ((nX > 0) && (nX < MARWIDTH) && (nY > 0)
-                && (nY < MARWIDTH))
-            *result = HTTOPLEFT;
+//        if ((nX > 0) && (nX < MARWIDTH) && (nY > 0)
+//                && (nY < MARWIDTH))
+//            *result = HTTOPLEFT;
 
-        if ((nX > this->width() - MARWIDTH) && (nX < this->width())
-                && (nY > 0) && (nY < MARWIDTH))
-            *result = HTTOPRIGHT;
+//        if ((nX > this->width() - MARWIDTH) && (nX < this->width())
+//                && (nY > 0) && (nY < MARWIDTH))
+//            *result = HTTOPRIGHT;
 
-        if ((nX > 0) && (nX < MARWIDTH)
-                && (nY > this->height() - MARWIDTH) && (nY < this->height()))
-            *result = HTBOTTOMLEFT;
+//        if ((nX > 0) && (nX < MARWIDTH)
+//                && (nY > this->height() - MARWIDTH) && (nY < this->height()))
+//            *result = HTBOTTOMLEFT;
 
-        if ((nX > this->width() - MARWIDTH) && (nX < this->width())
-                && (nY > this->height() - MARWIDTH) && (nY < this->height()))
-            *result = HTBOTTOMRIGHT;
+//        if ((nX > this->width() - MARWIDTH) && (nX < this->width())
+//                && (nY > this->height() - MARWIDTH) && (nY < this->height()))
+//            *result = HTBOTTOMRIGHT;
 
-        return true;
-        }
-    }
-    return QWidget::nativeEvent(eventType, message, result);
-}
+//        return true;
+//        }
+//    }
+//    return QWidget::nativeEvent(eventType, message, result);
+//}
 
 void CreateCenter::addMediaType(const QString &title)
 {

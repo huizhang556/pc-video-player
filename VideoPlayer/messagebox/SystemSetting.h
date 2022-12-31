@@ -24,8 +24,6 @@ public slots:
     QString openLocalFileSystem();
     void setTitleWarningText(QString text = "",int msec = 50000);//默认参数
 protected:
-    void mousePressEvent(QMouseEvent *event) override;
-    void mouseMoveEvent(QMouseEvent *event) override;
     void savesSettingConfigFile();//保存配置
     void loadDefaultConfig();//加载一些默认配置
     void setObjectShowTip(QObject *obj, QString &text);

@@ -35,7 +35,8 @@ SOURCES += \
     FilesItem.cpp \
     MoveLabel.cpp \
     UploadWork.cpp \
-    Global.cpp
+    Global.cpp \
+    BaseWidget.cpp
 
 HEADERS += \
     CreateCenter.h \
@@ -47,7 +48,8 @@ HEADERS += \
     FilesItem.h \
     MoveLabel.h \
     UploadWork.h \
-    Global.h
+    Global.h \
+    BaseWidget.h
 
 FORMS += \
     CreateCenter.ui \

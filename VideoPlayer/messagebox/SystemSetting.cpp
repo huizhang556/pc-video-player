@@ -148,19 +148,6 @@ void SystemSetting::setTitleWarningText(QString text, int msec)
     connect(m_timer,&QTimer::timeout,[=](){ ui->label_warning->clear(); });
 }
 
-void SystemSetting::mousePressEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event)
-//    QPoint orign_point = this->pos();
-//    QPoint new_point = event->globalPos();
-//    m_mvPos = new_point - orign_point;
-}
-
-void SystemSetting::mouseMoveEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event)
-//        this->move(event->globalPos() - m_mvPos);
-}
 
 //保存设置
 void SystemSetting::savesSettingConfigFile()

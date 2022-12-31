@@ -34,7 +34,7 @@ void VideoSortType::initWorkUI()
     ui->listWidget_items->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_items->setVerticalScrollMode(QListView::ScrollPerPixel);
     ui->listWidget_items->horizontalScrollBar()->setDisabled(true);
-    ui->listWidget_items->setOffset(225,-100);
+    ui->listWidget_items->setOffset(225,-100,0,45);
     ui->listWidget_items->setButtonControl(false);
 
     for(int i = 0; i < 17; i++)

@@ -1,12 +1,12 @@
 ﻿#include "CreTitleBar.h"
 #include "ui_CreTitleBar.h"
 
-#ifdef Q_OS_WIN
-#include <qt_windows.h>
-#include <Windows.h>
-#include <windowsx.h>
-#pragma comment (lib,"user32.lib")
-#endif
+//#ifdef Q_OS_WIN
+//#include <qt_windows.h>
+//#include <Windows.h>
+//#include <windowsx.h>
+//#pragma comment (lib,"user32.lib")
+//#endif
 
 CreTitleBar::CreTitleBar(QWidget *parent) :
     QWidget(parent),
@@ -59,19 +59,19 @@ void CreTitleBar::setInstallEventer()
     this->installEventFilter(this);
 }
 
-void CreTitleBar::mousePressEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event)
-    if(ReleaseCapture())
-    {
-        QWidget* pWindow = this->window();
-        if(pWindow->isTopLevel())
-        {
-            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
-        }
-    }
-    event->ignore();
-}
+//void CreTitleBar::mousePressEvent(QMouseEvent *event)
+//{
+//    Q_UNUSED(event)
+//    if(ReleaseCapture())
+//    {
+//        QWidget* pWindow = this->window();
+//        if(pWindow->isTopLevel())
+//        {
+//            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
+//        }
+//    }
+//    event->ignore();
+//}
 
 bool CreTitleBar::eventFilter(QObject *watched, QEvent *event)
 {

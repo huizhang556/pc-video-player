@@ -35,6 +35,8 @@ void ShortVideo::initWorkUI()
     ui->listWidget_type->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_type->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_type->setHorizontalScrollMode(QAbstractItemView::ScrollPerItem);
+    ui->listWidget_type->setOffset(180,0,0,0);
+    ui->listWidget_type->setButtonControl(true);
 
     ui->listWidget_medialist->setFocusPolicy(Qt::NoFocus);
     ui->listWidget_medialist->setViewMode(QListView::ListMode);

@@ -1,6 +1,7 @@
 ﻿#ifndef LEFTSIDEBAR_H
 #define LEFTSIDEBAR_H
 #define BTN_HEIGHT   40
+#include <QEvent>
 #include <QWidget>
 #include <QLayout>
 #include <QPushButton>
@@ -23,6 +24,9 @@ public:
 
 public  slots:
     void    slot_setCurrentIndex(int index);
+
+protected:
+    bool    eventFilter(QObject *watched, QEvent *event)override;
 
 private:
     //私有函数

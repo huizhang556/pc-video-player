@@ -187,7 +187,6 @@ FORMS += \
     $$PWD/VideoHeadItem.ui \
     $$PWD/vipmember/BuyVip.ui \
     $$PWD/vipmember/BuyVipItem.ui \
-    $$PWD/CusListWidget.ui \
     $$PWD/subunititems/SubUnitItem.ui \
     $$PWD/subunititems/SubModules.ui \
     $$PWD/subunititems/Container00.ui \

@@ -263,28 +263,6 @@ void NewLoginForm::paintEvent(QPaintEvent *event)
     painter.setClipPath(drawPath);
 }
 
-void NewLoginForm::mousePressEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event)
-//    QPoint orign_point = this->pos();
-//    QPoint new_point = event->globalPos();
-//    m_mvPos = new_point - orign_point;
-}
-
-void NewLoginForm::mouseMoveEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event)
-//    this->move(event->globalPos() - m_mvPos);
-//    if(ReleaseCapture())
-//    {
-//        QWidget* pWindow = this->window();
-//        if(pWindow->isTopLevel())
-//        {
-//            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
-//        }
-//    }
-//    event->ignore();
-}
 
 bool NewLoginForm::eventFilter(QObject *obj, QEvent *ev)
 {

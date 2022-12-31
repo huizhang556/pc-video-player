@@ -252,10 +252,6 @@ QString NewWork::openLocalFileSystem()
     {
         return fpath;
     }
-    else
-    {
-        return false;//打开不选择有问题
-    }
 }
 
 bool NewWork::eventFilter(QObject *watched, QEvent *event)
@@ -272,15 +268,13 @@ bool NewWork::eventFilter(QObject *watched, QEvent *event)
 
 void NewWork::mousePressEvent(QMouseEvent *event)
 {
-    Q_UNUSED(event);
-    QPoint winPos = this->pos();//界面位置
-    QPoint nowPos = event->globalPos();//鼠标位置
-    m_mvPos = nowPos - winPos;
+    Q_UNUSED(event)
+    m_mvPos = event->globalPos() - this->pos();
 }
 
 void NewWork::mouseMoveEvent(QMouseEvent *event)
 {
-    Q_UNUSED(event);
+    Q_UNUSED(event)
     this->move(event->globalPos() - m_mvPos);
 }
 

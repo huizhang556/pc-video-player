@@ -66,9 +66,19 @@ void LeftSideBar::slot_setCurrentIndex(int index)
     m_listWidget->setCurrentRow(index);
 }
 
+bool LeftSideBar::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == this && event->type() == QEvent::Enter)
+    {
+        this->setCursor(Qt::ArrowCursor);
+    }
+    return QWidget::eventFilter(watched,event);
+}
+
 //初始化界面
 void LeftSideBar::initWidgetUi()
 {
+    this->installEventFilter(this);
     m_listWidget = new QListWidget(this);
     m_listWidget->setObjectName(QString::fromLatin1("listWidget_playlist"));//对象名称用于设置样式
     m_listWidget->setMinimumWidth(60);

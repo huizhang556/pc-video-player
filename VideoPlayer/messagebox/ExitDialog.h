@@ -40,8 +40,6 @@ private:
     Ui::ExitDialog      *ui;
     QPoint              m_mvPoint;
     QString             m_iniPath;
-    QPoint              winPos;
-    QPoint              nowPos;
 
 };
 

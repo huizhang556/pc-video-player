@@ -1,18 +1,19 @@
-﻿#include "BaseDialog.h"
+﻿#include "BaseWidget.h"
 
-BaseDialog::BaseDialog(QWidget *parent) :
-    QDialog(parent)
+BaseWidget::BaseWidget(QWidget *parent) :
+    QWidget(parent)
 {
     this->setMouseTracking(true);//设置鼠标跟踪，检测鼠标状态
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);
+//    this->setStyleSheet("background-color: yellow;");
 }
 
-BaseDialog::~BaseDialog()
+BaseWidget::~BaseWidget()
 {
 
 }
 
-void BaseDialog::setTitleBarMoveArea(QWidget *titleBar, const int margin)
+void BaseWidget::setTitleBarMoveArea(QWidget *titleBar = nullptr, const int margin = 0)
 {
     if(titleBar == nullptr)
     {
@@ -27,7 +28,7 @@ void BaseDialog::setTitleBarMoveArea(QWidget *titleBar, const int margin)
     }
 }
 
-void BaseDialog::mouseMoveEvent(QMouseEvent *event)
+void BaseWidget::mouseMoveEvent(QMouseEvent *event)
 {
     //根据位置设置鼠标样式
     SetMouseCursor(event->pos().x(), event->pos().y());
@@ -79,13 +80,13 @@ void BaseDialog::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
-void BaseDialog::mouseReleaseEvent(QMouseEvent *event)
+void BaseWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     Q_UNUSED(event)
     left_button_pressed_ = false;
 }
 
-void BaseDialog::mousePressEvent(QMouseEvent *event)
+void BaseWidget::mousePressEvent(QMouseEvent *event)
 {
     QPoint tempPos = event->pos();
 
@@ -98,7 +99,7 @@ void BaseDialog::mousePressEvent(QMouseEvent *event)
     }
 }
 
-void BaseDialog::SetMouseCursor(int x, int y)
+void BaseWidget::SetMouseCursor(int x, int y)
 {
     Qt::CursorShape cursor = Qt::ArrowCursor;
     int region = GetMouseRegion(x, y);
@@ -124,7 +125,7 @@ void BaseDialog::SetMouseCursor(int x, int y)
     setCursor(cursor);
 }
 
-int BaseDialog::GetMouseRegion(int x, int y)
+int BaseWidget::GetMouseRegion(int x, int y)
 {
     int w = this->width();
 

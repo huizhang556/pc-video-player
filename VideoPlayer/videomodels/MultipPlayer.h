@@ -92,6 +92,8 @@ public:
 
     void    handleSignalAndSLots();
 
+    void    setInstallEventFilter();
+
     void    addToPlaylist(QMediaPlaylist* mylist,const QStringList& fileNames);//重载1
 
     void    addToPlaylist(QMediaPlaylist* mylist,const QString& fileName);//重载2
@@ -253,6 +255,8 @@ private slots:
     void   slot_showDanmuSettingForm(QObject *watched, QMouseEvent *mousevent);
 
     void    playlistMouseEnterLeave(QObject *watched, QEvent *event);
+
+    void    stackWidget_player_enter(QObject *watched, QEvent *event);
 
 
     //帮助菜单槽函数

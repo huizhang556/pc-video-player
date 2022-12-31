@@ -25,12 +25,14 @@ public:
 
 protected:
    void  mousePressEvent(QMouseEvent *event) override;
+   void  mouseMoveEvent(QMouseEvent *event) override;
 
 private:
     Ui::Installer *ui;
      static         Installer* m_pInstance;
      int            m_curPageIndex;
      QButtonGroup   *m_buttonGroup  =   nullptr;
+     QPoint          m_mvPos;
 
 signals:
      void   sig_sendFinished();

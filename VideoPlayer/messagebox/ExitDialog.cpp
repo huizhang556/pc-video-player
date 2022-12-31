@@ -129,9 +129,7 @@ void ExitDialog::setCloseText(QString waring)
 /*按下事件*/
 void ExitDialog::mousePressEvent(QMouseEvent *event)
 {
-    winPos = this->pos();//界面位置
-    nowPos = event->globalPos();//鼠标位置
-    m_mvPoint = nowPos - winPos;
+    m_mvPoint = event->globalPos() - this->pos();
 }
 /*移动事件*/
 void ExitDialog::mouseMoveEvent(QMouseEvent *event)

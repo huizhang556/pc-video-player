@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QEvent>
 #include <QFont>
+#include <QPoint>
 #include <QMouseEvent>
 #include <QRadialGradient>
 #include <QDebug>
@@ -27,6 +28,7 @@ public slots:
 
 protected:
    void  mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
    bool  eventFilter(QObject *watched, QEvent *event) override;
 
 private:
@@ -35,7 +37,7 @@ private:
     static DesktopLyric* m_pInstance;
 
 private:
-
+    QPoint              m_mvPos;
 signals:
     void    sig_sendSetting();
     void    sig_sendPrevious();
