@@ -193,21 +193,15 @@ FORMS += \
     $$PWD/subunititems/Container01.ui \
     $$PWD/hotsearch/HotSearchForm.ui \
     $$PWD/hotsearch/HotSearchItem.ui \
-    $$PWD/cusvideosbox/CusVideosBox.ui \
     $$PWD/subunititems/SelectVideoType.ui \
-    $$PWD/cusvideosbox/CusVideoBox2.ui \
     $$PWD/subunititems/SwitchButtons.ui \
     $$PWD/subunititems/SwitchStackWgt.ui \
     $$PWD/subunititems/HeaderPic.ui \
-    $$PWD/cusvideosbox/CusVideoBox3.ui \
-    $$PWD/cusvideosbox/CusVideoBox4.ui \
-    $$PWD/cusvideosbox/CusVideoBox5.ui \
     $$PWD/CusLabel3.ui \
     $$PWD/subunititems/CusListItem1.ui \
     $$PWD/VideoItemHover.ui \
     $$PWD/shortvideo/ShortVideo.ui \
-    $$PWD/subunititems/HotListItem.ui \
-    $$PWD/cusvideosbox/CusVideoBox6.ui
+    $$PWD/subunititems/HotListItem.ui
 
 
 DISTFILES +=

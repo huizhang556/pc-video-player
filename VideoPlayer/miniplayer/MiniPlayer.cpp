@@ -682,14 +682,14 @@ void MiniPlayer::slot_mediaLoadingStatus(QMediaPlayer::MediaStatus status)
 
 void MiniPlayer::media_loading_start()
 {
+    m_loadMovie->start();
     m_loadingLabel->move(this->width()/2-m_loadingLabel->width()/2,this->height()/2-m_loadingLabel->height()/2);
     m_loadingLabel->raise();
     m_loadingLabel->show();
-    m_loadMovie->start();
 }
 
 void MiniPlayer::media_loading_end()
 {
-    m_loadingLabel->hide();
     m_loadMovie->stop();
+    m_loadingLabel->hide();
 }

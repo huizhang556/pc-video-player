@@ -44,6 +44,7 @@ void MainWidget::initOtherWidgetUi()
     m_titleBar->setObjectName(QString::fromLatin1("m_titleBar"));
     setTitleBarMoveArea(m_titleBar,2);//这里的5是setContentsMargins
 
+
     m_leftSideBar = new LeftSideBar(this);
     m_leftSideBar->setObjectName(QString::fromLatin1("m_leftSideBar"));
     QStringList list = {};
@@ -285,10 +286,15 @@ void MainWidget::initOtherWidgetUi()
 void MainWidget::setStackedWidgetPage()
 {
     m_stackWidget_center->addWidget(m_cusVideoBox);
+    connectToTopWidget(m_cusVideoBox);//建立关联
     m_stackWidget_center->addWidget(m_cusVideoBox2);
+    connectToTopWidget(m_cusVideoBox2);//建立关联
     m_stackWidget_center->addWidget(m_cusVideoBox3);
+    connectToTopWidget(m_cusVideoBox3);//建立关联
     m_stackWidget_center->addWidget(m_cusVideoBox4);
+    connectToTopWidget(m_cusVideoBox4);//建立关联
     m_stackWidget_center->addWidget(m_cusVideoBox5);
+    connectToTopWidget(m_cusVideoBox5);//建立关联
     m_stackWidget_center->addWidget(videoFindResult);//视频筛选结果
     m_stackWidget_center->addWidget(m_videoMember);//会员视频
     m_stackWidget_center->addWidget(m_webStackWgt);//浏览器
@@ -306,6 +312,7 @@ void MainWidget::setStackedWidgetPage()
     m_stackWidget_center->addWidget(m_personForm);//个人管理
     m_stackWidget_center->addWidget(m_fileTrans);//文件传输
     m_stackWidget_center->addWidget(m_cusVideoBox6);
+    connectToTopWidget(m_cusVideoBox6);//建立关联
     m_stackWidget_center->addWidget(m_tabWidget);//原始table界面
     m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
 }
@@ -554,10 +561,14 @@ void MainWidget::handleSignalAndSLots()
 
     //主界面resize
     connect(this,&MainWidget::sig_sendWindowResize,m_titleBar,&TitleBar::slot_clearAllPopupUi);
-
     //m_stackWidget_center改变
     connect(m_stackWidget_center,&QStackedWidget::currentChanged,[=](int index){
-        m_leftSideBar->slot_setCurrentIndex(index);
+        m_leftSideBar->slot_setCurrentIndex(index);//标题栏改变
+        //判断是否显示置顶工具
+        if(m_stackWidget_center->currentWidget() == m_webStackWgt)//浏览器界面不需要
+        {
+            ScrollToTop::getInstance()->hide();
+        }
     });
 
     //侧边栏有关信号与槽函数处理
@@ -907,6 +918,7 @@ void MainWidget::handleSignalAndSLots()
 
 void MainWidget::setInstallEventFilter()
 {
+    this->installEventFilter(this);
     m_webTabWidget->installEventFilter(this);
     m_stackWidget_center->installEventFilter(this);
 }
@@ -1233,7 +1245,7 @@ void MainWidget::updateLeftNoticeSliderBar(bool show)
     MainNotice::getInstance()->setMinimumSize(0,0);
     const int slider_x = m_leftSideBar->parentWidget()->mapToGlobal(m_leftSideBar->pos()).x();
     const int slider_y = m_leftSideBar->parentWidget()->mapToGlobal(m_leftSideBar->pos()).y();
-    if(show)
+    if(MainNotice::getInstance()->isHidden())
     {
         qDebug() << "start animation";
 //            MainNotice::getInstance()->setGeometry(slider_x + m_leftSideBar->width(),
@@ -1249,7 +1261,7 @@ void MainWidget::updateLeftNoticeSliderBar(bool show)
 //        pAnimation->setEasingCurve(QEasingCurve::OutQuad);//一般使用setKeyValueAt不要设置曲线
 //        pAnimation->setKeyValueAt(0,QPoint(slider_x,slider_y));
 //        pAnimation->setKeyValueAt(1,QPoint(slider_x + m_leftSideBar->width(),slider_y));
-        pAnimation->setKeyValueAt(0,QRect(slider_x + m_leftSideBar->width(),slider_y,0,m_leftSideBar->height()));
+        pAnimation->setKeyValueAt(0,QRect(slider_x + m_leftSideBar->width(),slider_y,400,0));
         pAnimation->setKeyValueAt(1,QRect(slider_x + m_leftSideBar->width(),slider_y,400,m_leftSideBar->height()));
         pAnimation->start(QAbstractAnimation::DeleteWhenStopped);
     }
@@ -1266,9 +1278,38 @@ void MainWidget::updateLeftNoticeSliderBar(bool show)
 //        pAnimation->setKeyValueAt(0,QPoint(slider_x + m_leftSideBar->width(),slider_y));
 //        pAnimation->setKeyValueAt(1,QPoint(slider_x,slider_y));
         pAnimation->setKeyValueAt(0,QRect(slider_x + m_leftSideBar->width(),slider_y,400,m_leftSideBar->height()));
-        pAnimation->setKeyValueAt(1,QRect(slider_x + m_leftSideBar->width(),slider_y,0,m_leftSideBar->height()));
+        pAnimation->setKeyValueAt(1,QRect(slider_x + m_leftSideBar->width(),slider_y + m_leftSideBar->height(),400,0));
         pAnimation->start(QAbstractAnimation::DeleteWhenStopped);
-//        MainNotice::getInstance()->close();//宽度设为0，达到隐藏的效果
+        QTimer::singleShot(1000,0,[=](){MainNotice::getInstance()->close();});//先让动画演完，再关闭
+    }
+}
+
+void MainWidget::updateRightScrollToTop()
+{
+    ScrollToTop::getInstance()->setGeometry(this->pos().x() + width() - ScrollToTop::getInstance()->width()-15,
+                                            this->pos().y() + height() - ScrollToTop::getInstance()->height()-40,
+                                            ScrollToTop::getInstance()->width(),
+                                            ScrollToTop::getInstance()->height());
+    ScrollToTop::getInstance()->hide();
+}
+
+void MainWidget::connectToTopWidget(CToTopWidget *widget)
+{
+    connect(widget,&CToTopWidget::sig_scroll_verticalbar,[=](bool s){slot_update_R_B_geometry(s);});
+    connect(ScrollToTop::getInstance(),&ScrollToTop::sig_sendToTop,[=](){widget->setScrollBarToTop();});
+    connect(ScrollToTop::getInstance(),&ScrollToTop::sig_sendToFlush,[=](){widget->setFlushContent();});
+}
+
+void MainWidget::slot_update_R_B_geometry(bool on)
+{
+    if(on)
+    {
+        updateRightScrollToTop();//更新一下位置
+        ScrollToTop::getInstance()->show();
+    }
+    else
+    {
+        ScrollToTop::getInstance()->hide();
     }
 }
 
@@ -1548,6 +1589,15 @@ MainWidget::~MainWidget()
 /*事件过滤器*/
 bool MainWidget::eventFilter(QObject *watched, QEvent *event)
 {
+    if(watched == this)//捕捉事件和重写事件是不一样的
+    {
+        if(event->type() == QEvent::Move)
+        {
+            MainNotice::getInstance()->hide();
+//            ScrollToTop::getInstance()->hide();
+            updateRightScrollToTop();
+        }
+    }
     if(watched == m_stackWidget_center)
     {
         if(event->type() == QEvent::Enter)
@@ -1614,41 +1664,41 @@ bool MainWidget::eventFilter(QObject *watched, QEvent *event)
 //void MainWidget::mouseMoveEvent(QMouseEvent *event)
 //{
 //    Q_UNUSED(event)
-//    //拖动之前判断是否串口处于最大化
-//    if(this->isMaximized())
-//    {
-//        return;
-//    }
-//    if(this->isFullScreen()) return;	//窗口铺满全屏，直接返回，不做任何操作
-//    int poss = countFlag(event->pos(), countRow(event->pos()));
-//    setCursorType(poss);
-//    if (_isleftpressed)//是否左击
-//    {
-//        QPoint ptemp = event->globalPos();
-//        ptemp = ptemp - _plast;
-//        if (_curpos == 22)//移动窗口
-//        {
-//            ptemp = ptemp + pos();
-//            move(ptemp);
-//        }
-//        else
-//        {
-//            QRect wid = geometry();
-//            switch (_curpos)//改变窗口的大小
-//            {
-//            case 11:wid.setTopLeft(wid.topLeft() + ptemp); break;//左上角
-//            case 13:wid.setTopRight(wid.topRight() + ptemp); break;//右上角
-//            case 31:wid.setBottomLeft(wid.bottomLeft() + ptemp); break;//左下角
-//            case 33:wid.setBottomRight(wid.bottomRight() + ptemp); break;//右下角
-//            case 12:wid.setTop(wid.top() + ptemp.y()); break;//中上角
-//            case 21:wid.setLeft(wid.left() + ptemp.x()); break;//中左角
-//            case 23:wid.setRight(wid.right() + ptemp.x()); break;//中右角
-//            case 32:wid.setBottom(wid.bottom() + ptemp.y()); break;//中下角
-//            }
-//            setGeometry(wid);
-//        }
-//        _plast = event->globalPos();//更新位置
-//    }
+////    //拖动之前判断是否串口处于最大化
+////    if(this->isMaximized())
+////    {
+////        return;
+////    }
+////    if(this->isFullScreen()) return;	//窗口铺满全屏，直接返回，不做任何操作
+////    int poss = countFlag(event->pos(), countRow(event->pos()));
+////    setCursorType(poss);
+////    if (_isleftpressed)//是否左击
+////    {
+////        QPoint ptemp = event->globalPos();
+////        ptemp = ptemp - _plast;
+////        if (_curpos == 22)//移动窗口
+////        {
+////            ptemp = ptemp + pos();
+////            move(ptemp);
+////        }
+////        else
+////        {
+////            QRect wid = geometry();
+////            switch (_curpos)//改变窗口的大小
+////            {
+////            case 11:wid.setTopLeft(wid.topLeft() + ptemp); break;//左上角
+////            case 13:wid.setTopRight(wid.topRight() + ptemp); break;//右上角
+////            case 31:wid.setBottomLeft(wid.bottomLeft() + ptemp); break;//左下角
+////            case 33:wid.setBottomRight(wid.bottomRight() + ptemp); break;//右下角
+////            case 12:wid.setTop(wid.top() + ptemp.y()); break;//中上角
+////            case 21:wid.setLeft(wid.left() + ptemp.x()); break;//中左角
+////            case 23:wid.setRight(wid.right() + ptemp.x()); break;//中右角
+////            case 32:wid.setBottom(wid.bottom() + ptemp.y()); break;//中下角
+////            }
+////            setGeometry(wid);
+////        }
+////        _plast = event->globalPos();//更新位置
+////    }
 //}
 
 //void MainWidget::mouseReleaseEvent(QMouseEvent *event)
@@ -1725,15 +1775,20 @@ void MainWidget::closeEvent(QCloseEvent *event)
          dataBase::removeMysqlConnection();//关闭数据库，移除连接
          event->accept();
      }
+     MainNotice::getInstance()->close();
+     ScrollToTop::getInstance()->close();
 }
 
 /*界面缩放调整事件*/
 void MainWidget::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
-//    updateWebAddButtonGeometry();
     emit sig_sendWindowResize();
-    MainNotice::getInstance()->setMinimumSize(0,0);
+    updateRightScrollToTop();
+    if(!MainNotice::getInstance()->isHidden())
+    {
+        MainNotice::getInstance()->hide();
+    }
 }
 
 void MainWidget::keyPressEvent(QKeyEvent *event)

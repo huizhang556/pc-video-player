@@ -1,11 +1,8 @@
 ﻿#include "CusVideoBox5.h"
-#include "ui_CusVideoBox5.h"
 
 CusVideoBox5::CusVideoBox5(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::CusVideoBox5)
+    CToTopWidget(parent)
 {
-    ui->setupUi(this);
     initWorkUI();
     handleSignalsAndSlots();
     setInstallEventFilter();
@@ -13,14 +10,11 @@ CusVideoBox5::CusVideoBox5(QWidget *parent) :
 
 CusVideoBox5::~CusVideoBox5()
 {
-    delete ui;
+
 }
 
 void CusVideoBox5::initWorkUI()
 {
-    ui->scrollArea->setFrameShape(QFrame::NoFrame);//继承自QFrame的，都可以用此方法去掉边界线
-    ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
     m_switchStackWgt = new CusStackWidget();
     m_switchStackWgt->setObjectName(QString::fromLocal8Bit("m_switchStackWgt"));
 
@@ -56,12 +50,12 @@ void CusVideoBox5::setInstallEventFilter()
 
 void CusVideoBox5::addItemToVideosBox(QWidget *widget)
 {
-    ui->m_itemsLayout->addWidget(widget);
+    this->addItemToWidget(widget);
 }
 
 void CusVideoBox5::removeItemToVideosBox(QWidget *widget)
 {
-    ui->m_itemsLayout->removeWidget(widget);
+    this->removeItemFromWidget(widget);
 }
 
 bool CusVideoBox5::eventFilter(QObject *watched, QEvent *event)

@@ -1,11 +1,8 @@
 ﻿#include "CusVideoBox6.h"
-#include "ui_CusVideoBox6.h"
 
 CusVideoBox6::CusVideoBox6(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::CusVideoBox6)
+    CToTopWidget(parent)
 {
-    ui->setupUi(this);
     initWorkUI();
     handleSignalsAndSlots();
     setInstallEventFilter();
@@ -13,13 +10,11 @@ CusVideoBox6::CusVideoBox6(QWidget *parent) :
 
 CusVideoBox6::~CusVideoBox6()
 {
-    delete ui;
+
 }
 
 void CusVideoBox6::initWorkUI()
 {
-    ui->scrollArea->setFrameShape(QFrame::NoFrame);//继承自QFrame的，都可以用此方法去掉边界线
-    ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_switchStackWgt = new CusVerStackWgt();
     m_switchStackWgt->setObjectName(QString::fromLocal8Bit("m_switchStackWgt"));
     for(int i = 0; i < 6; i++)
@@ -77,22 +72,22 @@ void CusVideoBox6::setInstallEventFilter()
 
 void CusVideoBox6::addItemToVideosBox(QWidget *widget)
 {
-    ui->m_itemsLayout->addWidget(widget);
+    this->addItemToWidget(widget);
 }
 
 void CusVideoBox6::removeItemToVideosBox(QWidget *widget)
 {
-    ui->m_itemsLayout->removeWidget(widget);
+    this->removeItemFromWidget(widget);
 }
 
 void CusVideoBox6::addItemToVideosBox(QLayout *layout)
 {
-    ui->m_itemsLayout->addLayout(layout);
+    this->addItemToWidget(layout);
 }
 
 void CusVideoBox6::removeItemToVideosBox(QLayoutItem *layout)
 {
-    ui->m_itemsLayout->removeItem(layout);
+    this->removeItemFromWidget(layout);
 }
 
 bool CusVideoBox6::eventFilter(QObject *watched, QEvent *event)

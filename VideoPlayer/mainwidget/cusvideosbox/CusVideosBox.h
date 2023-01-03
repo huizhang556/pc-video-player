@@ -1,10 +1,13 @@
 ﻿#ifndef CUSVIDEOSBOX_H
 #define CUSVIDEOSBOX_H
 
+#include "customer/CToTopWidget.h"
+
 #include <QWidget>
 #include <QLayout>
 #include <QListWidget>
 #include <QScrollArea>
+#include <QScrollBar>
 #include <QListWidgetItem>
 #include <QDebug>
 
@@ -37,11 +40,7 @@ struct item2Info
     itemInfo item;
 };
 
-namespace Ui {
-class CusVideosBox;
-}
-
-class CusVideosBox : public QWidget
+class CusVideosBox : public CToTopWidget
 {
     Q_OBJECT
 
@@ -56,7 +55,9 @@ protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
 
 private:
-    Ui::CusVideosBox *ui;
+
+signals:
+
 };
 
 #endif // CUSVIDEOSBOX_H

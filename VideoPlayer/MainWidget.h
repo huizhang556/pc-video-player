@@ -26,6 +26,7 @@
 #include "videomodels/VideoTitleBar.h"
 #include "videomodels/PersonFileForm.h"
 #include "pernotice/MainNotice.h"
+#include "pernotice/ScrollToTop.h"
 #include "mainwidget/HomeWidget.h"
 #include "fileshandle/DownloadType.h"
 #include "mainwidget/videomember/MainMembForm.h"
@@ -44,6 +45,7 @@
 #include "mainwidget/cusvideosbox/CusVideoBox5.h"
 #include "mainwidget/cusvideosbox/CusVideoBox6.h"
 #include "mainwidget/hotsearch/HotSearchForm.h"
+
 #include "mainwidget/videotypeselect/VideoTypeSelect.h"
 
 
@@ -87,9 +89,9 @@ protected:
 
 //    void        mousePressEvent(QMouseEvent *event) override;
 
-//    void        mouseMoveEvent(QMouseEvent *event) override;
-
 //    void        mouseReleaseEvent(QMouseEvent *event) override;
+
+//    void        mouseMoveEvent(QMouseEvent *event) override;
 
     void        changeEvent(QEvent *event) override;
 
@@ -128,7 +130,12 @@ private:
 
     void        updateLeftNoticeSliderBar(bool show);//控制消息栏渐入渐出
 
+    void        updateRightScrollToTop();//置顶
+
+    void        connectToTopWidget(CToTopWidget* widget);//与置顶小部件建立关联
+
 private slots:
+    void        slot_update_R_B_geometry(bool on);//更显显示右下角置顶小部件
 
     void        slot_setWebProgreeBarValue(int value);//网页进度
 

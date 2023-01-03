@@ -12,7 +12,8 @@ SOURCES += \
     $$PWD/EllipButton.cpp \
     $$PWD/BaseWidget.cpp \
     $$PWD/BaseMainWindow.cpp \
-    $$PWD/BaseDialog.cpp
+    $$PWD/BaseDialog.cpp \
+    $$PWD/CToTopWidget.cpp
 
 HEADERS += \
     $$PWD/CusTabWidget.h \
@@ -28,7 +29,8 @@ HEADERS += \
     $$PWD/EllipButton.h \
     $$PWD/BaseWidget.h \
     $$PWD/BaseMainWindow.h \
-    $$PWD/BaseDialog.h
+    $$PWD/BaseDialog.h \
+    $$PWD/CToTopWidget.h
 
 FORMS += \
     $$PWD/CusTabWidget.ui \
@@ -36,7 +38,8 @@ FORMS += \
     $$PWD/CusFileDialog.ui \
     $$PWD/CustomFileDialog.ui \
     $$PWD/EllipButton.ui \
-    $$PWD/BaseDialog.ui
+    $$PWD/BaseDialog.ui \
+    $$PWD/CToTopWidget.ui
 
 SUBDIRS +=
 

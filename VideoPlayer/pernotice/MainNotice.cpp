@@ -9,7 +9,8 @@ MainNotice::MainNotice(QWidget *parent) :
 {
     ui->setupUi(this);
     setMinimumSize(0,0);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool |Qt::WindowStaysOnTopHint);
+    setAttribute(Qt::WA_NoMouseReplay);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool |Qt::WindowStaysOnTopHint | Qt::Popup);
     initWorkUI();
     handleSignalsAndSlots();
 }

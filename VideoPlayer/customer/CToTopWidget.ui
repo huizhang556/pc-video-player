@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CusVideoBox2</class>
- <widget class="QWidget" name="CusVideoBox2">
+ <class>CToTopWidget</class>
+ <widget class="QWidget" name="CToTopWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>524</width>
-    <height>259</height>
+    <width>683</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,8 +42,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>522</width>
-        <height>257</height>
+        <width>681</width>
+        <height>298</height>
        </rect>
       </property>
       <property name="styleSheet">

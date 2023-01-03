@@ -1,6 +1,6 @@
 ﻿#ifndef CUSVIDEOBOX5_H
 #define CUSVIDEOBOX5_H
-
+#include "customer/CToTopWidget.h"
 #include "global/Global.h"
 #include "mainwidget/CusVerStackWgt.h"
 #include "mainwidget/videomember/CusStackWidget.h"
@@ -11,11 +11,8 @@
 #include <QWidget>
 #include <QDebug>
 
-namespace Ui {
-class CusVideoBox5;
-}
 
-class CusVideoBox5 : public QWidget
+class CusVideoBox5 : public CToTopWidget
 {
     Q_OBJECT
 
@@ -32,7 +29,7 @@ protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
 
 private:
-    Ui::CusVideoBox5 *ui;
+
     CusStackWidget      *m_switchStackWgt   =   nullptr;
 };
 

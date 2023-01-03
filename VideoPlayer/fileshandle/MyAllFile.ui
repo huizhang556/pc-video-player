@@ -208,6 +208,7 @@ QSplitter::handle:pressed
        <string notr="true">QTreeWidget
 {
 /*show-decoration-selected: 1;*/
+border-width: 1px;
 }
 
 QTreeWidget::item 
