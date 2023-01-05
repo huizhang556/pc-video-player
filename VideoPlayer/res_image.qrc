@@ -601,5 +601,14 @@
         <file>images/icon/leftbar_night.png</file>
         <file>images/icon/leftbar_set.png</file>
         <file>images/icon/leftbar_msg.png</file>
+        <file>images/home/toTop_hover.png</file>
+        <file>images/home/toTop_normal.png</file>
+        <file>images/fileitem/fileitem_delete.png</file>
+        <file>images/fileitem/fileitem_delete_hover.png</file>
+        <file>images/fileitem/fileitem_like.png</file>
+        <file>images/fileitem/fileitem_like_hover.png</file>
+        <file>images/fileitem/fileitem_reply.png</file>
+        <file>images/fileitem/fileitem_reply_hover.png</file>
+        <file>images/fileitem/fileitem_more.png</file>
     </qresource>
 </RCC>

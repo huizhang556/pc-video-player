@@ -1,5 +1,6 @@
 ﻿#ifndef CENTRALHOMEFORM_H
 #define CENTRALHOMEFORM_H
+
 #include "mainwidget/recommend/RecommendForm.h"
 #include "mainwidget/recommend/GalleryItemForm.h"
 
@@ -9,10 +10,6 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QListWidgetItem>
-
-namespace Ui {
-class CentralHomeForm;
-}
 
 class CentralHomeForm : public QWidget
 {

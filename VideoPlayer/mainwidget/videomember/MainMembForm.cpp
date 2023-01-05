@@ -1,6 +1,6 @@
 ﻿#include "MainMembForm.h"
 #include "global/Global.h"
-#include "ui_MainMembForm.h"
+
 #include "mainwidget/CusVerStackWgt.h"
 #include "CusStackWidget.h"
 #include "VideoSortType.h"
@@ -9,10 +9,8 @@
 #include <QDebug>
 
 MainMembForm::MainMembForm(QWidget *parent):
-    QWidget(parent),
-    ui(new Ui::MainMembForm)
+    CToTopWidget(parent)
 {
-    ui->setupUi(this);
     initWorkUI();
     handleSignalsAndSlots();
     setInstallEventFilter();
@@ -20,14 +18,11 @@ MainMembForm::MainMembForm(QWidget *parent):
 
 MainMembForm::~MainMembForm()
 {
-    delete ui;
+
 }
 
 void MainMembForm::initWorkUI()
 {
-    ui->scrollArea->setFrameShape(QFrame::NoFrame);//继承自QFrame的，都可以用此方法去掉边界线
-    ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
     CusVerStackWgt *itemWidget  = new CusVerStackWgt();
     for(int i = 0; i < 6; i++)
     {
@@ -36,14 +31,13 @@ void MainMembForm::initWorkUI()
     }
 
     SwitchVideoType *switchItem   = new SwitchVideoType();
-
-    ui->m_itemsLayout->addWidget(itemWidget);
-    ui->m_itemsLayout->addWidget(switchItem);
+    this->addItemToWidget(itemWidget);
+    this->addItemToWidget(switchItem);
 
     for(int i = 0; i < 3; i++)
     {
         VideoSortType *videoSortItem1 = new VideoSortType();
-        ui->m_itemsLayout->addWidget(videoSortItem1);
+        this->addItemToWidget(videoSortItem1);
     }
 
 }

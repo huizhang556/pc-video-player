@@ -457,7 +457,7 @@ background-color: rgba(170, 170, 255,0.2);
                  <number>30</number>
                 </property>
                 <item>
-                 <widget class="QListWidget" name="listWidget_left">
+                 <widget class="QListWidget" name="listWidget_right">
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
@@ -489,7 +489,7 @@ background-color: transparent;
                  </widget>
                 </item>
                 <item>
-                 <widget class="QListWidget" name="listWidget_right">
+                 <widget class="QListWidget" name="listWidget_left">
                   <property name="minimumSize">
                    <size>
                     <width>0</width>

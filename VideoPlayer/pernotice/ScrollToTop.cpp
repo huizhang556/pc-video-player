@@ -25,7 +25,7 @@ ScrollToTop::~ScrollToTop()
 
 void ScrollToTop::initWorkUI()
 {
-
+    ui->pushButton_totop->hide();//默认先隐藏起来
 }
 
 void ScrollToTop::handleSignalsAndSlots()
@@ -51,11 +51,13 @@ ScrollToTop *ScrollToTop::getInstance()
 void ScrollToTop::scrollToTopShow()
 {
     this->setFixedHeight(110);
-    ui->pushButton_flush->show();
+    ui->pushButton_totop->show();
+    this->show();
 }
 
 void ScrollToTop::scrollToTopHide()
 {
-    ui->pushButton_flush->hide();
+    ui->pushButton_totop->hide();
     this->setFixedHeight(55);
+    this->show();
 }

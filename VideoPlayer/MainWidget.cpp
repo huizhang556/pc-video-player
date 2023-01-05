@@ -297,6 +297,7 @@ void MainWidget::setStackedWidgetPage()
     connectToTopWidget(m_cusVideoBox5);//建立关联
     m_stackWidget_center->addWidget(videoFindResult);//视频筛选结果
     m_stackWidget_center->addWidget(m_videoMember);//会员视频
+    connectToTopWidget(m_videoMember);//建立关联
     m_stackWidget_center->addWidget(m_webStackWgt);//浏览器
     m_stackWidget_center->addWidget(m_mainVideoMv);//视频mv
     m_stackWidget_center->addWidget(m_hotSearch);//热搜
@@ -565,7 +566,7 @@ void MainWidget::handleSignalAndSLots()
     connect(m_stackWidget_center,&QStackedWidget::currentChanged,[=](int index){
         m_leftSideBar->slot_setCurrentIndex(index);//标题栏改变
         //判断是否显示置顶工具
-        if(m_stackWidget_center->currentWidget() == m_webStackWgt)//浏览器界面不需要
+        if(!ScrollToTop::getInstance()->isHidden())//浏览器界面不需要
         {
             ScrollToTop::getInstance()->hide();
         }
@@ -670,8 +671,12 @@ void MainWidget::handleSignalAndSLots()
     connect(this,&MainWidget::sig_startCloseAppliction,MultipPlayer::getInstance(),&MultipPlayer::slot_closeCurrentWindow);//转到重写事件
     connect(m_titleBar,&TitleBar::sig_winClose,this,&MainWidget::close);//转到重写事件
     connect(m_titleBar,&TitleBar::sig_winNormal,this,&MainWidget::chandleRestoreWindow);//根据不同状态处理窗口
-    connect(m_titleBar,&TitleBar::sig_winMinimum,[=](){this->showMinimized();});
     connect(m_titleBar,&TitleBar::sig_doubleClick,[=](){chandleRestoreWindow();});
+    connect(m_titleBar,&TitleBar::sig_winMinimum,[=](){
+        if(!ScrollToTop::getInstance()->isHidden()) ScrollToTop::getInstance()->hide();
+        if(!MainNotice::getInstance()->isHidden()) MainNotice::getInstance()->hide();
+        this->showMinimized();
+    });
     //响应 标题栏 帮助设置发来信号，弹出右键菜单
     connect(m_titleBar,SIGNAL(sig_settingHelpItem(int)),this,SLOT(chandleSetHelpItem(int)));
 
@@ -1286,11 +1291,10 @@ void MainWidget::updateLeftNoticeSliderBar(bool show)
 
 void MainWidget::updateRightScrollToTop()
 {
-    ScrollToTop::getInstance()->setGeometry(this->pos().x() + width() - ScrollToTop::getInstance()->width()-15,
-                                            this->pos().y() + height() - ScrollToTop::getInstance()->height()-40,
-                                            ScrollToTop::getInstance()->width(),
-                                            ScrollToTop::getInstance()->height());
-    ScrollToTop::getInstance()->hide();
+        ScrollToTop::getInstance()->setGeometry(this->pos().x() + width() - ScrollToTop::getInstance()->width()-15,
+                                                this->pos().y() + height() - ScrollToTop::getInstance()->height()-40,
+                                                ScrollToTop::getInstance()->width(),
+                                                ScrollToTop::getInstance()->height());
 }
 
 void MainWidget::connectToTopWidget(CToTopWidget *widget)
@@ -1304,12 +1308,13 @@ void MainWidget::slot_update_R_B_geometry(bool on)
 {
     if(on)
     {
-        updateRightScrollToTop();//更新一下位置
-        ScrollToTop::getInstance()->show();
+        ScrollToTop::getInstance()->scrollToTopShow();
+        updateRightScrollToTop();//按照不隐藏2个的位置计算
     }
     else
     {
-        ScrollToTop::getInstance()->hide();
+        ScrollToTop::getInstance()->scrollToTopHide();
+        updateRightScrollToTop();//按照隐藏1个的位置计算
     }
 }
 
@@ -1594,8 +1599,7 @@ bool MainWidget::eventFilter(QObject *watched, QEvent *event)
         if(event->type() == QEvent::Move)
         {
             MainNotice::getInstance()->hide();
-//            ScrollToTop::getInstance()->hide();
-            updateRightScrollToTop();
+            ScrollToTop::getInstance()->hide();
         }
     }
     if(watched == m_stackWidget_center)
@@ -1784,7 +1788,7 @@ void MainWidget::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
     emit sig_sendWindowResize();
-    updateRightScrollToTop();
+    ScrollToTop::getInstance()->hide();
     if(!MainNotice::getInstance()->isHidden())
     {
         MainNotice::getInstance()->hide();

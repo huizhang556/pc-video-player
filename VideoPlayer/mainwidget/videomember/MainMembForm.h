@@ -1,17 +1,14 @@
 ﻿#ifndef MAINMEMBFORM_H
 #define MAINMEMBFORM_H
-
+#include "customer/CToTopWidget.h"
 #include <QWidget>
 #include <QLayout>
 #include <QListWidget>
 #include <QScrollArea>
 #include <QListWidgetItem>
 
-namespace Ui {
-class MainMembForm;
-}
 
-class MainMembForm : public QWidget
+class MainMembForm : public CToTopWidget
 {
     Q_OBJECT
 
@@ -23,7 +20,7 @@ public:
     void    setInstallEventFilter();
 
 private:
-    Ui::MainMembForm *ui;
+
 };
 
 #endif // MAINMEMBFORM_H
