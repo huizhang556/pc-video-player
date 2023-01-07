@@ -562,6 +562,7 @@ void MainWidget::handleSignalAndSLots()
 
     //主界面resize
     connect(this,&MainWidget::sig_sendWindowResize,m_titleBar,&TitleBar::slot_clearAllPopupUi);
+
     //m_stackWidget_center改变
     connect(m_stackWidget_center,&QStackedWidget::currentChanged,[=](int index){
         m_leftSideBar->slot_setCurrentIndex(index);//标题栏改变
@@ -570,6 +571,11 @@ void MainWidget::handleSignalAndSLots()
         {
             ScrollToTop::getInstance()->hide();
         }
+    });
+
+    //消息提界面---设置
+    connect(MainNotice::getInstance(),&MainNotice::sig_sendSetting,[=](){
+        help_stemAboutSetting();//显示设置界面
     });
 
     //侧边栏有关信号与槽函数处理

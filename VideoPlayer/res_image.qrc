@@ -610,5 +610,9 @@
         <file>images/fileitem/fileitem_reply.png</file>
         <file>images/fileitem/fileitem_reply_hover.png</file>
         <file>images/fileitem/fileitem_more.png</file>
+        <file>images/fileitem/fileitem_sendemoj.png</file>
+        <file>images/fileitem/fileitem_sendemoj_hover.png</file>
+        <file>images/fileitem/fileitem_sendpic.png</file>
+        <file>images/fileitem/fileitem_sendpic_hover.png</file>
     </qresource>
 </RCC>

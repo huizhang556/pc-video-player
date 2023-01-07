@@ -57,7 +57,7 @@ QListWidget::item
 color: transparent;
 margin: 0px 4px 0px 4px;
 border-radius: 6px;
-background-color: #000000;
+background-color: #242628;
 }
 
 QListWidget::item:selected
@@ -68,6 +68,7 @@ border: 1px solid rgb(64, 66, 68);
 QListWidget::item:hover
 {
 border: 1px solid rgb(64, 66, 68);
+background-color: #2f3134;
 }
 
 QScrollBar:vertical
@@ -110,6 +111,27 @@ background:transparent;
 border: 0px solid rgb(64, 66, 68);
 }
 
+#listWidget_chat[istop = &quot;true&quot;]
+{
+background-color: #000000;
+}
+
+#listWidget_chat[istop = &quot;false&quot;]
+{
+background-color: #2a2a31;
+}
+
+#listWidget_details
+{
+background-color: #000000;
+}
+
+#listWidget_details::item
+{
+color: transparent;
+background-color: transparent;
+}
+
 #listWidget_details::item:selected
 {
 border: 0px solid rgb(64, 66, 68);
@@ -117,7 +139,7 @@ border: 0px solid rgb(64, 66, 68);
 </string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_switch_allmessage">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -248,7 +270,7 @@ background-color: #404244;
 background-color: transparent;
 border: 1px solid gray;
 border-radius: 20px;
-margin: 0px 5px;
+margin: 0px 10px;
 }
 
 QPushButton
@@ -717,7 +739,7 @@ background-color: #17181a;
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout">
             <property name="spacing">
-             <number>8</number>
+             <number>5</number>
             </property>
             <property name="leftMargin">
              <number>3</number>
@@ -751,6 +773,11 @@ background-color: #17181a;
 color: white;
 border-radius: 6px;
 font: 400 13px &quot;微软雅黑&quot;;
+}
+
+QLineEdit:focus
+{
+border: 1px solid #ef6f95;
 }</string>
               </property>
               <property name="text">
@@ -759,16 +786,16 @@ font: 400 13px &quot;微软雅黑&quot;;
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_send">
+             <widget class="QPushButton" name="pushButton_send_picture">
               <property name="minimumSize">
                <size>
-                <width>40</width>
+                <width>30</width>
                 <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
+                <width>30</width>
                 <height>30</height>
                </size>
               </property>
@@ -778,15 +805,53 @@ font: 400 13px &quot;微软雅黑&quot;;
 color: gray;
 font: 800 14px &quot;微软雅黑&quot;;
 border-radius: 6px;
+border-image: url(:/images/fileitem/fileitem_sendpic.png);
+background-color: transparent;
 }
 
 QPushButton:hover
 {
 color: white;
+border-image: url(:/images/fileitem/fileitem_sendpic_hover.png);
 }</string>
               </property>
               <property name="text">
-               <string>发送</string>
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_send_emoj">
+              <property name="minimumSize">
+               <size>
+                <width>30</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>30</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton
+{
+color: gray;
+font: 800 14px &quot;微软雅黑&quot;;
+border-radius: 15px;
+border-image: url(:/images/fileitem/fileitem_sendemoj.png);
+background-color: transparent;
+}
+
+QPushButton:hover
+{
+color: white;
+border-image: url(:/images/fileitem/fileitem_sendemoj_hover.png);
+}</string>
+              </property>
+              <property name="text">
+               <string/>
               </property>
              </widget>
             </item>

@@ -2,7 +2,7 @@
 #include "ui_CusItemMsg.h"
 
 //chat list
-CusItemMsg::CusItemMsg(const QString &header, const QString &author, const QString &Newcontent, const QString &datatime, QWidget *parent) :
+CusItemMsg::CusItemMsg(const QString &header, const QString &author, const QString &Newcontent, const QString &datatime, const bool read, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CusItemMsg)
 {
@@ -11,6 +11,7 @@ CusItemMsg::CusItemMsg(const QString &header, const QString &author, const QStri
     setMaximumWidth(400);
     initWorkUI();
     handleSignalsAndSlots();
+    setReadStatus(read);
     ui->pushButton_authName->setText(author);
     ui->label_pubTime->setText(datatime);
     ui->pushButton_describle->setText(Newcontent);
@@ -64,7 +65,6 @@ void CusItemMsg::initWorkUI()
 {
     ui->label_pubTime->setAlignment(Qt::AlignCenter);
     ui->label_readStatus->setAlignment(Qt::AlignCenter);
-    ui->label_readStatus->setText(QString(u8"[未读]"));
 
     ui->label_abooutCtl_reply->setAlignment(Qt::AlignLeft);
     ui->label_abooutCtl_reply->setText(QString(u8"回复了我的评论"));
@@ -81,16 +81,33 @@ void CusItemMsg::initWorkUI()
 void CusItemMsg::handleSignalsAndSlots()
 {
     connect(ui->pushButton_describle,&QPushButton::clicked,[=](){
+        setReadStatus(true);
         emit sig_sendClicked();
-        ui->label_readStatus->setText(QString(u8"[已读]"));
-        ui->label_readStatus->setProperty("read",true);
-        ui->label_readStatus->style()->polish(ui->label_readStatus);
     });
     connect(ui->pushButton_expand,&QPushButton::clicked,[=](){
+        setReadStatus(true);
         emit sig_sendClicked();
+    });
+}
+
+void CusItemMsg::setReadStatus(bool read)
+{
+    if(read)
+    {
         ui->label_readStatus->setText(QString(u8"[已读]"));
         ui->label_readStatus->setProperty("read",true);
         ui->label_readStatus->style()->polish(ui->label_readStatus);
-    });
+    }
+    else
+    {
+        ui->label_readStatus->setText(QString(u8"[未读]"));
+        ui->label_readStatus->setProperty("read",false);
+        ui->label_readStatus->style()->polish(ui->label_readStatus);
+    }
+}
+
+bool *CusItemMsg::getArroy_ON_Mark()
+{
+    return array_on;
 }
 

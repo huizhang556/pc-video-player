@@ -25,13 +25,13 @@ background-color: transparent;
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>8</number>
    </property>
    <property name="topMargin">
     <number>3</number>
    </property>
    <property name="rightMargin">
-    <number>10</number>
+    <number>8</number>
    </property>
    <property name="bottomMargin">
     <number>3</number>
@@ -39,7 +39,7 @@ background-color: transparent;
    <item>
     <widget class="QStackedWidget" name="stackedWidget_MSG">
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="page_systemMsg">
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -159,6 +159,9 @@ color: #757a81;
                 <property name="text">
                  <string/>
                 </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
                </widget>
               </item>
               <item>
@@ -181,12 +184,13 @@ color: #757a81;
 font: 800 12px &quot;微软雅黑&quot;;
 color: white;
 border-radius: 6px;
-image: url(:/images/fileitem/fileitem_more.png);
+image: url(:/images/fileitem/fileitem_delete.png);
 }
 
 QPushButton:hover
 {
 background-color: #404244;
+image: url(:/images/fileitem/fileitem_delete_hover.png);
 }</string>
                 </property>
                 <property name="text">
@@ -204,7 +208,7 @@ background-color: #404244;
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>20</height>
+             <height>0</height>
             </size>
            </property>
            <property name="styleSheet">
@@ -405,7 +409,7 @@ border-image: url(:/images/bgpic/dieji.png);
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>20</height>
+               <height>0</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -599,7 +603,7 @@ color: #757a81;
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>20</height>
+               <height>0</height>
               </size>
              </property>
              <property name="styleSheet">

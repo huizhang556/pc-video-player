@@ -9,6 +9,7 @@
 #include "mainwidget/cusvideosbox/CusVideoBox6.h"
 #include "miniplayer/MiniPlayer.h"
 #include "pernotice/MainNotice.h"
+//#include "facebread/myemotionwindow.h"
 
 #include <QTranslator>
 #include <QThread>
@@ -90,6 +91,9 @@ int main(int argc, char *argv[])
     w1.show();
 
 //    CreateCenter::getInstance()->show();
+
+//    MyEmotionWindow w1;
+//    w1.showNormalEmotion(QPoint(500 , 500));
 
     splashscream.finish(&w1);
 

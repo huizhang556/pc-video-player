@@ -29,6 +29,7 @@
    <string notr="true">*
 {
 border: none;
+background-color: transparent;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -65,7 +66,7 @@ border: none;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_chat">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -332,7 +333,7 @@ color: #e7e9eb;
               <property name="styleSheet">
                <string notr="true">QPushButton
 {
-color: #e7e9eb;
+color: gray;
 font: 800 15px &quot;微软雅黑&quot;;
 }
 

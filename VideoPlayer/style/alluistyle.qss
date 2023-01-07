@@ -1481,6 +1481,30 @@ height:20px;
 margin-left:10px;
 }
 
+/*NOTICE设置--右键菜单*/
+#m_setMenu_notice
+{
+background-color: #242628;
+color:#9a9fa6;
+border-radius: 6px;
+font: 400 normal 15px '微软雅黑';
+}
+
+/*左右边距通过padding调整*/
+#m_setMenu_notice::item
+{
+height:18px;
+padding: 4px 28px 4px 20px;
+border: 1px solid transparent;
+}
+
+/*hover*/
+#m_setMenu_notice::item:selected
+{
+color: white;
+background-color: #2f3134;
+}
+
 /*帮助按钮菜单-----------------------样式结束*/
 
 /*歌曲列表右键菜------------------------------开始*/

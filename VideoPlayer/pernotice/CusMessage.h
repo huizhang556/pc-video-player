@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QTextBrowser>
 #include <QScrollBar>
+#include <QDesktopServices>
 #include <QDebug>
 
 enum NEWSTYPE
@@ -32,7 +33,10 @@ private:
 
 private:
     void    selectType(NEWSTYPE type,const QString& header,const QString& datatime,const QString& cotent);
-    int     getDynamicHeight(const QTextBrowser* browser);
+    int     getDynamicHeight(QTextBrowser *browser);
+
+signals:
+    void    sig_item_delete();
 };
 
 #endif // CUSMESSAGE_H

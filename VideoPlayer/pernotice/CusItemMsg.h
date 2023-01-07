@@ -14,7 +14,7 @@ class CusItemMsg : public QWidget
 
 public:
     //chat list
-    explicit CusItemMsg(const QString& header,const QString& author,const QString& Newcontent,const QString& datatime, QWidget *parent = nullptr);
+    explicit CusItemMsg(const QString& header, const QString& author, const QString& Newcontent, const QString& datatime, const bool read, QWidget *parent = nullptr);
     //reply list
     explicit CusItemMsg(const QString& header,const QString& author,const QString& newContent,const QString& oldContent,const QString& datatime,QWidget *parent = nullptr);
     //@ list
@@ -26,12 +26,13 @@ public:
     ~CusItemMsg();
     void        initWorkUI();
     void        handleSignalsAndSlots();
-
+    void        setReadStatus(bool read);
+    bool*       getArroy_ON_Mark();
 private:
     Ui::CusItemMsg *ui;
 
 private:
-
+    bool    array_on[4];//4个标志位
 signals:
     void    sig_sendClicked();
 };
