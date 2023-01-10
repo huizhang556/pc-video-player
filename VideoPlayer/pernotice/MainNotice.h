@@ -5,6 +5,7 @@
 
 #include "pernotice/CusItemMsg.h"
 #include "pernotice/CusMessage.h"
+
 #include <QWidget>
 #include <QSize>
 #include <QMenu>

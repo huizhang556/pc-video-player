@@ -9,7 +9,7 @@ ScrollToTop::ScrollToTop(QWidget *parent) :
 {
     ui->setupUi(this);
     setFixedSize(55,110);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
     setAttribute(Qt::WA_TranslucentBackground,true);//透明
     initWorkUI();
     handleSignalsAndSlots();

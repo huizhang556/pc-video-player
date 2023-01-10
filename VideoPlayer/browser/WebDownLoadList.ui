@@ -705,9 +705,11 @@ border:1px solid #cdcdcd;
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">#lineEdit_search
+                  <string notr="true">QLineEdit
 {
 margin-right:5px;
+border: 1px solid gray;
+background-color: white;
 }</string>
                  </property>
                 </widget>
@@ -802,6 +804,14 @@ margin-left:5px;
                    <width>16777215</width>
                    <height>28</height>
                   </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLineEdit
+{
+margin-right:5px;
+border: 1px solid gray;
+background-color: white;
+}</string>
                  </property>
                 </widget>
                </item>

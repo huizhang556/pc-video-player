@@ -69,9 +69,9 @@ int main(int argc, char *argv[])
     }
 
     //05--->显示主界面
-//    MainWidget w1;
-//    w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
-//    w1.show();
+    MainWidget w1;
+    w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
+    w1.show();
 
 //    MultipPlayer::getInstance()->show();
 
@@ -87,8 +87,8 @@ int main(int argc, char *argv[])
 //    CusVideoBox6 w1;
 //    w1.show();
 
-    MainNotice w1;
-    w1.show();
+//    MainNotice w1;
+//    w1.show();
 
 //    CreateCenter::getInstance()->show();
 

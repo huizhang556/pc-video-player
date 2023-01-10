@@ -35,6 +35,8 @@ private:
     bool    array_on[4];//4个标志位
 signals:
     void    sig_sendClicked();
+    void    sig_sendLike();
+    void    sig_sendDelete();
 };
 
 #endif // CUSITEMMSG_H

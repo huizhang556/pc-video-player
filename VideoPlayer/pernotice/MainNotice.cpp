@@ -1,6 +1,6 @@
 ﻿#include "MainNotice.h"
 #include "ui_MainNotice.h"
-#include "facebread/myemotionwindow.h"
+//#include "facebread/myemotionwindow.h"
 
 MainNotice* MainNotice::m_pInstance = nullptr;
 
@@ -224,6 +224,12 @@ void MainNotice::slot_addAboutUserMessages(MSGTYPE type)
             item->setSizeHint(itemWidget->size());
             ui->listWidget_reply->addItem(item);
             ui->listWidget_reply->setItemWidget(item,itemWidget);
+            //信号与槽函数
+            connect(itemWidget,&CusItemMsg::sig_sendDelete,[=](){
+                itemWidget->deleteLater();
+                ui->listWidget_reply->takeItem(ui->listWidget_reply->row(item));
+                delete item;
+            });
         }
     }
         break;

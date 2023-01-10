@@ -49,25 +49,25 @@ background-color: #2a2a31;
       <string notr="true">QListWidget
 {
 border: none;
-background-color: #000000;
+background-color: #242628;
 }
 
 QListWidget::item
 {
 color: transparent;
 margin: 0px 4px 0px 4px;
-border-radius: 6px;
+border-radius: 0px;
 background-color: #242628;
 }
 
 QListWidget::item:selected
 {
-border: 1px solid rgb(64, 66, 68);
+background-color: #2f3134;
 }
 
 QListWidget::item:hover
 {
-border: 1px solid rgb(64, 66, 68);
+border-radius: 6px;
 background-color: #2f3134;
 }
 

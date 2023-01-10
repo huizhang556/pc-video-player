@@ -72,7 +72,7 @@ void CusItemMsg::initWorkUI()
     ui->label_abooutCtl_about->setText(QString(u8"@了我的评论"));
     ui->label_abooutCtl_like->setAlignment(Qt::AlignLeft);
     ui->label_abooutCtl_like->setText(QString(u8"点赞了我的评论"));
-
+    ui->pushButton_like->setCheckable(true);
     ui->pushButton_reply->setIcon(QIcon("://images/fileitem/fileitem_reply.png"));
     ui->pushButton_like->setIcon(QIcon("://images/fileitem/fileitem_like.png"));
     ui->pushButton_delete->setIcon(QIcon("://images/fileitem/fileitem_delete.png"));
@@ -87,6 +87,21 @@ void CusItemMsg::handleSignalsAndSlots()
     connect(ui->pushButton_expand,&QPushButton::clicked,[=](){
         setReadStatus(true);
         emit sig_sendClicked();
+    });
+
+    connect(ui->pushButton_like,&QPushButton::clicked,[=](bool checked){
+        if(checked)
+        {
+            ui->pushButton_like->setIcon(QIcon("://images/fileitem/fileitem_like_hover.png"));
+        }
+        else
+        {
+            ui->pushButton_like->setIcon(QIcon("://images/fileitem/fileitem_like.png"));
+        }
+        emit sig_sendLike();
+    });
+    connect(ui->pushButton_delete,&QPushButton::clicked,[=](){
+       emit sig_sendDelete();
     });
 }
 

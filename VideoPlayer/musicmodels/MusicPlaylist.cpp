@@ -238,7 +238,7 @@ void MusicPlaylist::addFileInfoToListView()
     ui->tableView_songList->setModel(model_songInfo);
     model_songInfo->select();
 
-    ui->tableView_songList->verticalHeader()->hide();//隐藏第0列
+    ui->tableView_songList->verticalHeader()->hide();//隐藏垂直表头
 //    ui->tableView_songList->resizeRowsToContents();//行高度自适应
 
     ui->tableView_songList->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);//垂直表头固定高度
