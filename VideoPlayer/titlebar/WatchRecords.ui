@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WatchRecords</class>
+ <widget class="QWidget" name="WatchRecords">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>300</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>300</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>300</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QListWidget
+{
+border: none;
+background-color: rgb(41, 41, 41);
+}
+
+QListWidget::item
+{
+min-height: 85px;
+color: transparent;
+margin: 0px 6px 0px 6px;
+border-radius: 6px;
+background-color: rgb(41, 41, 41);
+}
+
+QListWidget::item:selected
+{
+border: 1px solid rgb(64, 66, 68);
+}
+
+QListWidget::item:hover
+{
+border: 1px solid rgb(64, 66, 68);
+}
+
+QScrollBar:vertical
+{
+background:transparent; 
+width:6px;
+}
+
+QScrollBar::handle:vertical
+{
+min-height:10px;
+max-height:20px;
+background:rgb(224,224,224);
+ width:6px; 
+border-radius:3px;
+}
+
+QScrollBar::up-arrow:vertical
+{
+border:none;
+}
+
+QScrollBar::sub-line:vertical
+{
+background:transparent;
+}
+
+QScrollBar::add-line:vertical
+{
+background:transparent;
+}
+
+QPushButton
+{
+border: none;
+font: 400 14px &quot;微软雅黑&quot;;
+color: rgb(48, 169, 250);
+background-color: rgb(41, 41, 41);
+}
+
+QPushButton:hover
+{
+color: rgb(48, 169, 250);
+}
+</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="tabWidget_watch">
+     <property name="minimumSize">
+      <size>
+       <width>300</width>
+       <height>380</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QTabWidget
+{
+border: none;
+background-color: black;
+}
+
+QTabWidget::pane 
+{
+    border-top: 1px solid rgba(58, 58, 65,0.9);
+	background-color: black;
+}
+
+QTabWidget::tab-bar 
+{
+    left: 60px; /* move to the right by 5px */
+}
+
+QTabBar::tab 
+{
+    /*border: 2px solid #C4C4C3;*/
+	/*border-bottom-color: #C2C7CB;*/
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    min-width: 60px;
+	height:30px;
+    padding: 2px;	
+	font: 75 10pt &quot;Microsoft YaHei UI&quot;;
+}
+
+QTabBar::tab:selected, QTabBar::tab:hover 
+{
+ background-color: transparent;
+}
+
+QTabBar::tab:selected 
+{
+	color: #ff3e33;
+	border: 0px solid #9B9B9B;
+    border-bottom-color: #C2C7CB; /* same as pane color */
+}
+
+QTabBar::tab:!selected 
+{
+	color: #7e7f81;
+    margin-top: 0px; /* make non-selected tabs look smaller */
+}
+
+
+QTabBar::tab:first:selected 
+{
+    margin-left: 0; /* the first selected tab has nothing to overlap with on the left */
+}
+
+QTabBar::tab:last:selected 
+{
+    margin-right: 0; /* the last selected tab has nothing to overlap with on the right */
+}
+
+QTabBar::tab:only-one 
+{
+    margin: 0; /* if there is only one tab, we don't want overlapping margins */
+}</string>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab_watched">
+      <attribute name="title">
+       <string>看过</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QListWidget" name="listWidget_watched">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_watched">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>看过---查看全部20条记录</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_collect">
+      <attribute name="title">
+       <string>收藏</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QListWidget" name="listWidget_collect">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_collect">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>收藏---查看全部20条记录</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_subscrbe">
+      <attribute name="title">
+       <string>订阅</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QListWidget" name="listWidget_subscrbe">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_subscribe">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>订阅---查看全部20条记录</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
