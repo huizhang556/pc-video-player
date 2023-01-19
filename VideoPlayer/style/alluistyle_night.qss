@@ -416,7 +416,8 @@ background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #28405d,
 {
 color: #00e8f7;
 padding-left: 5px;
-padding-right: 0px;
+padding-top: 3px;
+padding-bottom: 4px;
 border-radius: 6px;
 margin: 2px 4px;
 background-color: transparent;
@@ -499,7 +500,16 @@ border-image: url(://images/skin/myskin_checkbtn_hover.png);
 /**视频分类选择**/
 SelectVideoType
 {
+font: 400 15px "微软雅黑";
 background-color: #25252b;
+}
+
+/*背景*/
+#widget_sort
+{
+border-radius: 8px;
+margin: 0px 15px 10px 5px;
+background-color: #2b2c35;
 }
 
 SelectVideoType QPushButton

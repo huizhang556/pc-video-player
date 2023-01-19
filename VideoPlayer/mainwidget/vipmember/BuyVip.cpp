@@ -61,9 +61,9 @@ void BuyVip::initWorkUI()
     ui->listWidget_rightmusic->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_rightmusic->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
-    ui->listWidget_musicvip->setOffset(170,0,0,0);
-    ui->listWidget_videovip->setOffset(170,0,0,0);
-    ui->listWidget_rightmusic->setOffset(170,0,0,0);
+    ui->listWidget_musicvip->setOffset(170,0,0,0,0);
+    ui->listWidget_videovip->setOffset(170,0,0,0,0);
+    ui->listWidget_rightmusic->setOffset(170,0,0,0,0);
 
     ui->tabWidget_vipType->setCurrentIndex(0);
 

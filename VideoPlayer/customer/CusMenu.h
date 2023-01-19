@@ -1,10 +1,13 @@
 ﻿#ifndef CUSMENU_H
 #define CUSMENU_H
-
-#include <QWidget>
+#include <QPaintEvent>
+#include <QBitmap>
+#include <QPainter>
+#include <QBrush>
+#include <QMenu>
 #include <QMap>
 
-class CusMenu : public QWidget
+class CusMenu : public QMenu
 {
     Q_OBJECT
 
@@ -21,6 +24,9 @@ public:
     void removeCusMenuAction(int index);
 
     void setCusMenuHidden(bool hide);
+
+protected:
+    void    paintEvent(QPaintEvent* event);
 
 private:
 

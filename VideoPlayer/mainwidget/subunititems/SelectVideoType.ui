@@ -414,19 +414,20 @@ border-image: url(:/images/fileitem/hot_down.png);
           <property name="minimumSize">
            <size>
             <width>22</width>
-            <height>22</height>
+            <height>32</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>22</width>
-            <height>22</height>
+            <height>32</height>
            </size>
           </property>
           <property name="styleSheet">
            <string notr="true">#frame_hidden
 {
 margin-right:0px;
+margin-bottom: 10px;
 background-color: transparent;
 }</string>
           </property>

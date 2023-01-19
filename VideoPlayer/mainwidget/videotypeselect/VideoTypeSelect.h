@@ -9,10 +9,6 @@
 #include <QListWidgetItem>
 #include <QDebug>
 
-namespace Ui {
-class VideoTypeSelect;
-}
-
 class VideoTypeSelect : public QWidget
 {
     Q_OBJECT

@@ -9,6 +9,7 @@
 #include <QWidget>
 #include <QSize>
 #include <QMenu>
+#include <QAction>
 #include <QVariant>
 #include <QScrollBar>
 #include <QDateTime>
@@ -85,7 +86,7 @@ private:
 private:
     Ui::MainNotice *ui;
     static  MainNotice* m_pInstance;
-    QButtonGroup    *m_buttonGroup1     =   nullptr;
+    QButtonGroup    *m_buttonGroup1 =   nullptr;
 
     bool    array[10] = {true,false,true,false,true,false,true,false,true,false};
 

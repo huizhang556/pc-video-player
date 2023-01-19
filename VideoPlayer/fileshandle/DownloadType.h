@@ -40,8 +40,6 @@ public:
     void    showDownloadForm(int type, const QString& name = "",const QString& url = "");
 
 protected:
-   void  mousePressEvent(QMouseEvent *event) override;
-   void  mouseMoveEvent(QMouseEvent *event) override;
    bool  eventFilter(QObject *watched, QEvent *event) override;
 
 private:

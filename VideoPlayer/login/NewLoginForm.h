@@ -9,6 +9,7 @@
 #include <QColor>
 #include <QToolTip>
 #include <QPropertyAnimation>
+#include <QGraphicsDropShadowEffect>
 #include <QDebug>
 
 

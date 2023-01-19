@@ -14,7 +14,7 @@ CusItemMsg::CusItemMsg(const QString &header, const QString &author, const QStri
     setReadStatus(read);
     ui->pushButton_authName->setText(author);
     ui->label_pubTime->setText(datatime);
-    ui->pushButton_describle->setText(Newcontent);
+    setMultiTextToElidedText(ui->pushButton_describle,Newcontent,300);
     ui->stackedWidget_msgType->setCurrentWidget(ui->page_chat);
 }
 
@@ -29,7 +29,7 @@ CusItemMsg::CusItemMsg(const QString &header, const QString &author, const QStri
     initWorkUI();
     handleSignalsAndSlots();
     ui->pushButton_author_reply->setText(author);
-    ui->pushButton_replyContent->setText(newContent);
+    setMultiTextToElidedText(ui->pushButton_replyContent,newContent,260);
     ui->textBrowser_replyContent->setPlainText(oldContent);
     ui->label_time_reply->setText(datatime);
     ui->stackedWidget_msgType->setCurrentWidget(ui->page_reply);
@@ -124,5 +124,14 @@ void CusItemMsg::setReadStatus(bool read)
 bool *CusItemMsg::getArroy_ON_Mark()
 {
     return array_on;
+}
+
+void CusItemMsg::setMultiTextToElidedText(QAbstractButton *button, QString text,const int twidth)
+{
+    button->setToolTip(text);
+    QFont font = button->font();
+    QFontMetrics fontMetric = QFontMetrics(font);
+    QString text_t = fontMetric.elidedText(text,Qt::ElideRight,twidth,0);//19个字宽以后，省略为...(10x19，字号x字数)
+    button->setText(text_t);
 }
 

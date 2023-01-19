@@ -42,6 +42,17 @@ VideoTypeSelect::VideoTypeSelect(QWidget *parent) :
     connect(m_sortVideoForm,&SelectVideoType::sig_selectResult,[=](QString text){
         qDebug() << QString(u8"接收到查询结果：") << text;
     });
+
+    connect(m_listWgt_sortResult->verticalScrollBar(),&QScrollBar::valueChanged,[=](int value){
+        if(value > 80)
+        {
+            m_sortVideoForm->slot_setSortHidden(false);
+        }
+        else
+        {
+            m_sortVideoForm->slot_setSortHidden(true);
+        }
+    });
 }
 
 VideoTypeSelect::~VideoTypeSelect()

@@ -36,15 +36,50 @@ void CusListWidget::initWorkUI()
 void CusListWidget::handleSignalsAndSlots()
 {
         connect(m_videoButton_L,&QPushButton::clicked,[=](){
+            if(this->horizontalScrollBar()->value() == this->horizontalScrollBar()->minimum()) return;
+            if(m_isShow)
+            {
+                m_videoButton_L->hide();
+                m_videoButton_R->hide();
+
+            }
             int step = this->horizontalScrollBar()->value();
-                    this->horizontalScrollBar()->setValue(step - this->item(0)->sizeHint().width());
+            QPropertyAnimation *pAnimation = new QPropertyAnimation(this->horizontalScrollBar(),"value",this);
+            pAnimation->setDuration(500);
+            pAnimation->setStartValue(step);
+            pAnimation->setEndValue(step - this->item(0)->sizeHint().width());
+            pAnimation->start();
+            connect(pAnimation,&QPropertyAnimation::finished,[=](){
+            pAnimation->deleteLater();
+            checkPositonAdjust_LR();
+            });
+//            this->horizontalScrollBar()->setValue(step - this->item(0)->sizeHint().width());
         });
 
         connect(m_videoButton_R,&QPushButton::clicked,[=](){
+            if(this->horizontalScrollBar()->value() == this->horizontalScrollBar()->maximum()) return;
+            if(m_isShow)
+            {
+                m_videoButton_L->hide();
+                m_videoButton_R->hide();
+
+            }
             int step = this->horizontalScrollBar()->value();
-            this->horizontalScrollBar()->setValue(step + this->item(0)->sizeHint().width());
+            QPropertyAnimation *pAnimation = new QPropertyAnimation(this->horizontalScrollBar(),"value",this);
+            pAnimation->setDuration(500);
+            pAnimation->setStartValue(step);
+            pAnimation->setEndValue(step + this->item(0)->sizeHint().width());
+            pAnimation->start();
+            connect(pAnimation,&QPropertyAnimation::finished,[=](){
+            pAnimation->deleteLater();
+            checkPositonAdjust_LR();
+            });
+//            this->horizontalScrollBar()->setValue(step + this->item(0)->sizeHint().width());
         });
 
+//        connect(this->horizontalScrollBar(),&QScrollBar::valueChanged,[=](int val){
+//            checkPositonAdjust_LR();
+//        });
 }
 
 void CusListWidget::setInstallEventFilter()
@@ -65,11 +100,20 @@ void CusListWidget::setButtonControl(bool enabled)
     }
 }
 
-void CusListWidget::setOffset(int itemwidth, int width_offset, int adjust_w, int adjust_h)
+/********************************************
+ 1. @ProjName:   04_20SubVideoPlayer
+ 2. @Author:     ZhangHui
+ 3. @Date:       2023-01-15
+ 4. @Brief:      调节左右调节按钮偏移位置
+ 5. @Param:      itemwidth：一个item的保持的宽度（固定），width_offset：左右边距，adjust_w：高度，adjust_h：高度
+ 6. @Return:     void
+*********************************************/
+void CusListWidget::setOffset(int itemwidth,int width_offset,int adjust_lw,int adjust_rw,int adjust_h)
 {
     m_itemWidth = itemwidth;
     m_widthOffset = width_offset;
-    m_adjust_w = adjust_w;
+    m_adjust_lw = adjust_lw;
+    m_adjust_rw = adjust_rw;
     m_adjust_h = adjust_h;
 }
 
@@ -78,7 +122,8 @@ bool CusListWidget::eventFilter(QObject *object, QEvent *event)
     if(object == this && event->type() == QEvent::Resize)
     {
         autoResizeListItemsSize();
-        updataAdjustButton_LR();
+        updataAdjustButton_LR();//更新位置
+        checkPositonAdjust_LR();//判断是否应该显示
     }
     return QWidget::eventFilter(object,event);
 }
@@ -154,15 +199,38 @@ int CusListWidget::calAvergeWidth()
     return avgWidth;
 }
 
+void CusListWidget::checkPositonAdjust_LR()
+{
+    int val = this->horizontalScrollBar()->value();
+    if(m_isShow)
+    {
+        if(this->horizontalScrollBar()->minimum() == val)
+        {
+            m_videoButton_L->hide();
+            m_videoButton_R->show();
+        }
+        else if(this->horizontalScrollBar()->maximum() == val)
+        {
+            m_videoButton_R->hide();
+            m_videoButton_L->show();
+        }
+        else if(this->horizontalScrollBar()->minimum() < val < this->horizontalScrollBar()->maximum())
+        {
+            m_videoButton_R->show();
+            m_videoButton_L->show();
+        }
+    }
+}
+
 void CusListWidget::updataAdjustButton_LR()
 {
     if(m_isShow)
     {
-        m_videoButton_L->setGeometry(m_adjust_w,
+        m_videoButton_L->setGeometry(m_adjust_lw,
                                this->height()/2 - m_videoButton_L->height()/2 - m_adjust_h,
                                m_videoButton_L->width(),m_videoButton_L->height());
 
-        m_videoButton_R->setGeometry(this->width()-m_videoButton_R->width()- m_adjust_w,
+        m_videoButton_R->setGeometry(this->width()-m_videoButton_R->width()- m_adjust_rw,
                                    this->height()/2 - m_videoButton_R->height()/2 - m_adjust_h,
                                 m_videoButton_R->width(),m_videoButton_R->height());
         m_videoButton_L->raise();

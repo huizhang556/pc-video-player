@@ -36,6 +36,13 @@ NewLoginForm::~NewLoginForm()
 
 void NewLoginForm::initWorkUI()
 {
+    this->setContentsMargins(15,15,15,15);//为阴影留出空间
+    QGraphicsDropShadowEffect *shadow_effect = new QGraphicsDropShadowEffect(this);
+    shadow_effect->setOffset(0,0);//阴影往边外（下和右）移出的距离
+    shadow_effect->setColor(QColor(93, 95, 96));
+    shadow_effect->setBlurRadius(15);//阴影也是个矩形，需要圆角
+    this->setGraphicsEffect(shadow_effect);
+
     //登录部分
     m_actionShowPwd = new QAction(QIcon(":/images/icon/passwd_hide.png"),"");
     m_actionShowPwd->setObjectName(QString("m_actionShowPwd"));
@@ -83,7 +90,7 @@ void NewLoginForm::chandleSignalsAndSLots()
     //关闭
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){
         QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity",this);
-        animation->setDuration(1500);
+        animation->setDuration(1000);
         animation->setStartValue(1);
         animation->setEndValue(0);
 //        animation->start(QAbstractAnimation::DeleteWhenStopped);//如果动画设置这个参数，就不要关联信号与槽

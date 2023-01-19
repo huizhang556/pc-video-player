@@ -5,6 +5,9 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QListWidget>
+#include <QScrollBar>
+#include <QTimer>
+#include <QPropertyAnimation>
 #include <QDebug>
 
 class CusListWidget : public QListWidget
@@ -18,13 +21,14 @@ public:
     void        handleSignalsAndSlots();
     void        setInstallEventFilter();
     void        setButtonControl(bool enabled);//是否需要显示左右调节按钮
-    void        setOffset(int itemwidth,int width_offset,int adjust_w,int adjust_h);
+    void        setOffset(int itemwidth,int width_offset,int adjust_lw,int adjust_rw,int adjust_h);
 
 protected:
     bool        eventFilter(QObject *object, QEvent *event)override;
 
 private:
-    int         m_adjust_w;
+    int         m_adjust_lw;
+    int         m_adjust_rw;
     int         m_adjust_h;
     int         m_itemWidth;
     int         m_widthOffset;
@@ -36,6 +40,7 @@ private:
 private:
     void    autoResizeListItemsSize();//动态调节item显示的个数
     int     calAvergeWidth();
+    void    checkPositonAdjust_LR();
     void    updataAdjustButton_LR();//随着窗口变化调节左右按钮的位置
 };
 

@@ -26,8 +26,7 @@ MainWidget::MainWidget(QWidget *parent) :
 {
     setMinimumSize(1160,680);//1320,800 1500,950
     this->resize(QSize(1500,920));
-//    setMouseTracking(true);
-//    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);//保留最大最小功能
+
     setWindowTitle(QString::fromLocal8Bit("主界面"));
     initOtherWidgetUi();//初始化界面
     setInstallEventFilter();

@@ -1,0 +1,1923 @@
+/*所有控件需要有明确的对象名称，需要设置共同样式，指明控件的层次次序*/
+/**所有的注释不要使用双斜杠!!!**/
+/*全局通过用样式*/
+* {
+border: none;
+outline: none;
+font-family: "微软雅黑";
+}
+
+/**依旧是万能大法所有可视化类的 Q_PROPERTY 包含的属性都可以这样设置**/
+/**对整个系统的选项卡设置无切换按钮**/
+QTabBar
+{
+/*对整个系统的选项卡设置无切换按钮*/
+/*等同于ui->tabWidget->tabBar()->setUsesScrollButtons(false);*/
+qproperty-usesScrollButtons: false;
+}
+
+/*类选择器在代码里有效，样式表中无效，防止子控件继承样式*/
+MultipPlayer
+{
+/*包含5px的margin*/
+background-color: #1a1a1b;
+}
+
+MainWidget
+{
+/*整个主界面大背景，所有背景透明都继承此背景颜色*/
+background-color: #1a1a1b;
+/*5px边界线颜色在这里设置*/
+}
+
+/*去白边*/
+QTabWidget::pane 
+{
+border-right: 0;
+}
+
+/*弹幕---登录按钮*/
+
+/**登录状态按钮**/
+#m_loginStatusBtn
+{
+border-radius: 7px;
+background-color: #c0ff02;
+}
+
+/*主界面标题栏---内衬*/
+#stackedWidget_title
+{
+/*深蓝色*/
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #2f4359, stop:1  #03223a);
+/*渐变红*/
+/*background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #e60012, stop:1  #c91116);*/
+color: rgb(85, 255, 0);
+}
+
+/*热播榜---头部*/
+#m_buttonTitle_rank
+{
+border: none;
+text-align: left;
+padding-left: 6px;
+color: #30e551;
+font: 800 20px "微软雅黑";
+background-color: #16161a;
+}
+
+#m_buttonTitle_rank:hover
+{
+color: #30e551;
+}
+
+/*热播榜---列表item*/
+#m_rankListWgt_rank
+{
+border: none;
+background-color: #16161a;
+}
+
+#m_rankListWgt_rank::item
+{
+color: transparent;
+background-color: #16161a;
+}
+
+#m_rankListWgt_rank::item:hover
+{
+color: transparent;
+background-color: #242428;
+}
+
+/***mini播放器---start**/
+
+MiniPlayer
+{
+background-color: transparent;
+}
+
+/*缓冲提示*/
+#m_loadingLabel
+{
+background-color: transparent;
+}
+
+/**顶部标题栏**/
+QFrame#m_miniframeTitle
+{
+background-color: rgba(38, 40, 41,0.5);
+background-color: transparent;
+}
+
+/*标题栏--按钮*/
+#m_minibuttonTitle
+{
+color: white;
+text-align: left;
+padding-left: 6px;
+font-size: 16px;
+background-color: transparent;
+}
+
+#m_minim_buttonClose
+{
+color: red;
+font-size: 12px;
+background-color: transparent;
+}
+
+/**底部控制栏**/
+QFrame#m_miniframeControl
+{
+background-color: rgba(38, 40, 41,0.5);
+background-color: transparent;
+}
+
+/*播放/暂停*/
+#m_minibuttonPlayer
+{
+border-image:url(://images/player/player_start_hover.png);
+background-color: transparent;
+}
+
+#m_minibuttonPlayer:checked
+{
+border-image:url(://images/player/player_pause_hover.png);
+}
+
+/*下一首*/
+#m_minibuttonNext
+{
+border-image:url(://images/player/player_next_hover.png);
+background-color: transparent;
+}
+
+#m_minibuttonNext:hover
+{
+border-image:url(://images/player/player_next_hover.png);
+background-color: transparent;
+}
+
+/*进度显示*/
+#m_minilabelProgress
+{
+color: #2ea9f6;
+background-color: transparent;
+}
+
+/*清晰度*/
+#m_minibuttonClarity
+{
+color: #2ea9f6;
+background-color: transparent;
+}
+
+#m_minibuttonClarity:hover
+{
+color: blue;
+}
+
+/*声音*/
+#m_minibuttonSound
+{
+border-image:url(://images/player/player_sound_hover.png);
+background-color: transparent;
+}
+
+#m_minibuttonSound:checked
+{
+border-image:url(://images/player/player_muted_hover.png);
+}
+
+/*视频进度---声音进度---*/
+/*视频横向进度条---start*/
+#m_minihorSlider::groove:horizontal
+{
+background-color: rgba(255,255,255,0.1);
+height: 1px;
+border-radius:1px;
+}
+
+#m_minihorSlider::groove:horizontal:hover
+{
+background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
+stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+height: 2px;
+border-radius:1px;
+}
+
+#m_minihorSlider::handle:horizontal 
+{
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 rgba(0, 205, 76,1.0), stop:1  rgba(24, 247, 51,1.0));
+height:8px;
+width:8px;
+margin-top: -4px;
+margin-bottom: -4px;
+border-radius:4px;
+padding-right:1px;
+}
+
+#m_minihorSlider::handle:horizontal:hover 
+{
+background-color: red;
+height:8px;
+width:10px;
+margin-top: -4px;
+margin-bottom: -4px;
+border-radius:5px;
+}
+
+#m_minihorSlider::add-page:horizontal,#m_minihorSlider::add-line:horizontal
+{
+border-radius:2px;
+background-color:yellow;
+}
+
+#m_minihorSlider::sub-page:horizontal,#m_minihorSlider::sub-line:horizontal
+{
+border-radius:2px;
+background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));
+}
+/*视频横向进度条--end*/
+
+/*声音纵向进度条---start*/
+#m_miniverSlider::groove:vertical 
+{
+border: 1px solid #4A708B;
+background: #C0C0C0;
+width: 5px;
+border-radius: 1px;
+padding-left:-1px;
+padding-right:-1px;
+padding-top:-1px;
+padding-bottom:-1px;
+}
+
+#m_miniverSlider::sub-page:vertical 
+{
+background: #575757;
+border: 1px solid #4A708B;
+border-radius: 2px;
+}
+
+#m_miniverSlider::add-page:vertical 
+{
+background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
+    stop:0 #c4c4c4, stop:1 #B1B1B1);
+background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,
+    stop: 0 #5DCCFF, stop: 1 #1874CD);
+border: 0px solid #777;
+width: 10px;
+border-radius: 2px;
+}
+
+#m_miniverSlider::handle:vertical 
+{
+    background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+    height: 11px;
+    margin-left: -3px;
+    margin-right: -3px;
+    border-radius: 5px;
+}
+
+#m_miniverSlider::sub-page:vertical:disabled 
+{
+background: #00009C;
+border-color: #999;
+}
+
+#m_miniverSlider::add-page:vertical:disabled 
+{
+background: #eee;
+border-color: #999;
+}
+
+#m_miniverSlider::handle:vertical:disabled 
+{
+background: #eee;
+border: 1px solid #aaa;
+border-radius: 4px;
+}
+/*声音纵向进度条---end*/
+
+/*视频右键菜单*/
+#m_mainVideoMenu,#m_miniVideoMenu,#m_miniSub1Menu,#m_miniSub2Menu
+{
+background-color:white;
+font: 400 13px "微软雅黑";
+border-radius: 0px;
+}
+
+#m_mainVideoMenu::icon,#m_miniVideoMenu::icon,#m_miniSub1Menu::icon,#m_miniSub2Menu::icon
+{
+background-color:white;
+height:30px;
+}
+
+#m_mainVideoMenu::item,#m_miniVideoMenu::item,#m_miniSub1Menu::item,#m_miniSub2Menu::item
+{
+background-color:white;
+height:30px;
+width: 125px;
+padding: 1px 0px 1px 22px;
+}
+
+#m_mainVideoMenu::item:selected,#m_miniVideoMenu::item:selected,#m_miniSub1Menu::item:selected,#m_miniSub2Menu::item:selected
+{
+color:#2ca5fc;
+background-color:#cccccc;
+}
+
+#m_mainVideoMenu::indicator,#m_miniVideoMenu::indicator,#m_miniSub1Menu::indicator,#m_miniSub2Menu::indicator
+{
+padding-left: 10px;
+width: 20px;
+height: 20px;
+}
+
+/*菜单项指示器---互斥--选中*/
+#m_mainVideoMenu::indicator:exclusive:checked,#m_miniVideoMenu::indicator:exclusive:checked,#m_miniSub1Menu::indicator:exclusive:checked,#m_miniSub2Menu::indicator:exclusive:checked
+{
+image: url(://images/tray/tray_checked.png);
+}
+
+/*清晰度列表*/
+#m_miniclityListWgt
+{
+border-radius: 10px;
+color: white;
+background-color: rgba(7, 3, 1,0.7);
+}
+
+#m_miniclityListWgt::icon
+{
+/*图标大小生效*/
+width: 25px;
+height: 20px;
+}
+
+#m_miniclityListWgt::item
+{
+border-radius: 0px;
+background-color: rgba(80, 80, 80,0.9);
+}
+
+#m_miniclityListWgt::item:selected
+{
+color: #57c1ab;
+background-color: gray;
+}
+
+#m_miniclityListWgt::item:hover
+{
+color: #57c1ab;
+background-color: gray;
+}
+
+
+
+/*声音frame*/
+#m_miniframeSound
+{
+background-color: rgba(80, 80, 80,0.9);
+}
+
+/***mini播放器---end**/
+
+/***主界面中心---嵌套区域***/
+#m_stackWidget_center
+{
+border: none;
+background-color: #16161a;
+margin: 0px 0px;
+}
+
+/*播放器界面标题栏---内衬*/
+#stackedWidget_videoTitle
+{
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0, stop:0 #055690, stop:1  #081f4a);
+}
+
+/*------------------------左侧节目侧边栏列表----start-----------------------------*/
+
+#listWidget_playlist
+{
+font-family:"微软雅黑";
+border:none;
+icon-size:36px;
+font-size:14px;
+font-weight: bold;
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #28405d, stop:1  #223a55);
+}
+
+/*侧边栏列表item*/
+#listWidget_playlist::item
+{
+color: #00e8f7;
+padding-left: 5px;
+padding-top: 3px;
+padding-bottom: 4px;
+border-radius: 6px;
+margin: 2px 4px;
+background-color: transparent;
+}
+
+#listWidget_playlist::item:hover
+{
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #630f34, stop:1  #c2152f);
+show-decoration-selected:5;
+border-style:outset;
+color: #00d661;
+}
+
+#listWidget_playlist::item:selected
+{
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #630f34, stop:1  #c2152f);
+color: #00d661;
+}
+
+#listWidget_playlist::item:selected:active
+{
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #630f34, stop:1  #c2152f);
+color: #00d661;
+}
+
+/*上次选择后保留的状态，鼠标离开后显示*/
+#listWidget_playlist::item:selected:!active
+{
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #630f34, stop:1  #c2152f);
+color: #00d661;
+}
+
+/*侧边栏底部--展开按钮*/
+#m_moreBtn,#m_modeBtn,#m_setBtn,#m_msgBtn
+{
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #28405d, stop:1  #223a55);
+text-align: center;
+icon-size:20px;
+font-family:"微软雅黑";
+font-size:14px;
+color:#00e8f7;
+border:none;
+margin: 0px;
+}
+
+#m_moreBtn:hover,#m_modeBtn:hover,#m_setBtn:hover,#m_msgBtn:hover
+{
+
+}
+
+#m_moreBtn:selected,#m_modeBtn:selected,#m_setBtn:selected,#m_msgBtn:selected
+{
+
+}
+/*------------------------左侧节目侧边栏列表----end-----------------------------*/
+
+/*特价优惠*/
+#m_itemMarkButton
+{
+border: none;
+color: #ffd386;
+border-radius: 8px;
+background-color: rgb(21, 196, 52);
+}
+
+/*********皮肤设置********/
+/*未选中*/
+#m_skinCheckedBtn
+{
+border-image: url(://images/skin/myskin_checkbtn.png);
+background:transparent;
+}
+
+/*选中*/
+#m_skinCheckedBtn:checked
+{
+border-image: url(://images/skin/myskin_checkbtn_hover.png);
+}
+
+/**视频分类选择**/
+SelectVideoType
+{
+font: 400 15px "微软雅黑";
+background-color: #25252b;
+}
+
+/*背景*/
+#widget_sort
+{
+border-radius: 8px;
+margin: 0px 15px 10px 5px;
+background-color: #2b2c35;
+}
+
+SelectVideoType QPushButton
+{
+color: #b4b4b6;
+background-color: transparent;
+}
+
+SelectVideoType QPushButton:checked
+{
+color: white;
+border-radius: 13px;
+background-color: rgb(70, 160, 239);
+}
+
+SelectVideoType QPushButton:hover
+{
+color: #d89010;
+}
+
+/**视频会员主界面---覆盖阴影**/
+QFrame#m_bottomFrame
+{
+background-color:  transparent;
+}
+
+/*阴影item*/
+QFrame#m_bottomFrame QPushButton
+{
+color:#00aaff;
+border: none;
+font-weight: 800;
+font: 75 11pt "Microsoft JhengHei UI";
+background-color: rgba(38, 40, 41,0.5);
+}
+
+QFrame#m_bottomFrame QPushButton:checked
+{
+color: #f6d18e;
+border: none;
+font-weight: 800;
+background-color: rgba(38, 40, 41,0.5);
+}
+
+QFrame#m_bottomFrame QPushButton:hover
+{
+color: #f6d18e;
+border: none;
+font-weight: 800;
+background-color: rgba(38, 40, 41,0.5);
+} 
+
+/*向右按钮*/
+#m_buttonAdd
+{
+font-size: 12px;
+background-color: rgba(242, 212, 145,0.4); 
+border-radius:20px;
+}
+
+#m_buttonAdd:hover
+{
+font-weight: 800;
+color: #ee5024;
+font-size: 14px;
+}
+
+/**向左按钮*/
+#m_buttonSub
+{
+font-size: 12px;
+background-color: rgba(242, 212, 145,0.4); 
+border-radius:20px;
+}
+
+#m_buttonSub:hover
+{
+font-size: 14px;
+font-weight: 800;
+color: #ee5024;
+}
+
+/*自定义视频盒子*/
+/*左移按钮*/
+#m_videoButton_L
+{
+color: white;
+font-weight: 800;
+border: none;
+border-radius: 15px;
+border-top-left-radius: 0px;
+border-bottom-left-radius: 0px;
+background-color: rgba(44, 45, 54,0.5);
+}
+
+#m_videoButton_R
+{
+color: white;
+font-weight: 800;
+border: none;
+border-radius: 15px;
+border-top-right-radius: 0px;
+border-bottom-right-radius: 0px;
+background-color: rgba(44, 45, 54,0.5);
+}
+
+#m_videoButton_L:hover,#m_videoButton_R:hover
+{
+color: #00e1f3;
+background-color: rgba(44, 45, 54,0.8);
+}
+
+/**视频分类结果**/
+#m_listWgt_sortResult
+{
+border: none;
+background-color: rgba(44, 45, 54,0.8);
+}
+
+#m_listWgt_sortResult::item
+{
+background-color: rgba(44, 45, 54,0.8);
+}
+
+/*自定义图片切换控件右侧stackedwidget_listwidget*/
+#m_rightListWidget
+{
+border: none;
+color:  transparent;
+font: 800 12pt "Microsoft YaHei UI";
+background-color: transparent;
+/*background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #bdc3c7, stop:0.3 #2c3e50, stop:0.7 #2c3e50, stop:1 #bdc3c7);*/
+}
+
+#m_rightListWidget::item
+{
+color:  transparent;
+border: 0px solid white;
+padding: 0px 15px;
+background-color: rgba(64, 66, 68,0.2);
+}
+
+#m_rightListWidget::item:selected
+{
+color:  transparent;
+background-color: rgba(64, 66, 68,0.5);
+}
+
+#m_rightListWidget::item:hover
+{
+color:  transparent;
+}
+
+/*******************01精选********************/
+QWidget#widget_songer  QPushButton
+{
+background-color: transparent;
+color: #fbfbfc;
+font: 75 10pt "Microsoft YaHei UI";
+}
+
+QWidget#widget_songer  QPushButton:hover
+{
+color: #fca60b;
+}
+
+QWidget#widget_songer  QPushButton:checked
+{
+background-color: #46a0ef;
+border-radius: 15px;
+color: white;
+}
+
+#pushButton_fasthot
+{
+
+}
+
+/*******************02歌手********************/
+
+/*******************03排行榜******************/
+
+/*******************04歌单分类****************/
+QFrame#frame_style QPushButton
+{
+background-color: transparent;
+color: #fbfbfc;
+font: 75 10pt "Microsoft YaHei UI";
+}
+
+QFrame#frame_style QPushButton:hover
+{
+color: #fca60b;
+}
+
+QFrame#frame_style QPushButton:checked
+{
+background-color: #46a0ef;
+border-radius: 12px;
+color: white;
+}
+
+#songerlist_menu
+{
+/**去标题栏，背景透明，才能设置圆角**/
+/*去掉标题栏圆角生效*/
+border-radius: 5px;
+/**去标题栏，背景透明，还要设置样式才真的变透明**/
+background-color:  transparent;
+border: 0px solid transparent;
+}
+
+#songerlist_menu::item
+{
+/**去标题栏，背景透明，才能设置圆角**/
+/*去掉标题栏圆角生效*/
+border-radius: 5px;
+/**去标题栏，背景透明，还要设置样式才真的变透明**/
+background-color:  transparent;
+border: 0px solid transparent;
+}
+
+#m_tagBtn
+{
+border-image:url(://images/home/songlist_new.png);
+}
+
+#m_tagsCountBtn
+{
+background-color:  transparent;
+color: #0070d9;
+padding-left: 3px;
+}
+
+#m_tagsPlayBtn
+{
+border-image:url(://images/tray/recvideo_play.png);
+}
+
+/*******************05主播电台****************/
+
+/*******************06音乐现场****************/
+
+/*******************07会员专区****************/
+
+/**主界面折叠按钮**/
+#m_leftButton
+{
+/*宽度需要在20px以上*/
+border-top-right-radius:10px;
+border-bottom-right-radius:10px;
+}
+
+/***播放器主界面折叠按钮***/
+#m_foldBtn
+{
+/*此处只做圆角修改，其他部分样式代码设置*/
+background-color: transparent;
+border-top-left-radius:8px;
+border-bottom-left-radius:8px;
+}
+
+/*推荐栏左右调节按钮*/
+#m_recLeftBtn
+{
+border-radius:20px;
+background: rbga(255, 255, 255,0.2) url(://images/icon/page_leftBtn.png) no-repeat no-repeat center center;
+}
+#m_recLeftBtn:hover
+{
+border-radius:20px;
+background: rbga(255, 255, 255,0.3) url(://images/icon/page_leftBtn.png) no-repeat no-repeat center center;
+}
+
+#m_recRightBtn
+{
+border-radius:20px;
+background: rbga(255, 255, 255,0.3) url(://images/icon/page_rightBtn.png) no-repeat no-repeat center center;
+}
+#m_recRightBtn:hover
+{
+border-radius:20px;
+background: rbga(255, 255, 255,0.3) url(://images/icon/page_rightBtn.png) no-repeat no-repeat center center;
+}
+
+/*收藏记录---修改*/
+WebMessageBox
+{
+background-color: #ffffff;
+}
+
+/*中心控件承载区域（历史和收藏的大背景）*/
+#m_webStackWgt
+{
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #2f4359, stop:1  #03223a);
+border:none;
+}
+
+/*浏览器---收藏栏和浏览器承载的widget界面*/
+#m_webWidget
+{
+background-color: #2b2b2b;
+border: 0px solid #f0f0f0;
+border-top-width: 0px;
+}
+
+/*********************浏览器---标题栏---右键菜单---start************************/
+/**一级菜单+二级菜单**/
+
+#pmenu_funclist,#pmenu_func_tool
+{
+background-color:white;
+font: 400 12px "微软雅黑";
+border-radius: 0px;
+}
+
+#pmenu_funclist::item,#pmenu_func_tool::item
+{
+background-color:white;
+height:24px;
+width: 160px;
+/*padding不包括指示器和icon的部分*/
+padding: 1px 0px 1px 15px;
+/*height+padding共同决定item的高度*/
+}
+
+#pmenu_funclist::item:selected,#pmenu_func_tool::item:selected
+{
+color:#2ca5fc;
+background-color:#cccccc;
+}
+
+#pmenu_funclist::icon,#pmenu_func_tool::icon
+{
+background-color: transparent;
+padding-left: 6px;
+width: 24px;
+height: 24px;
+}
+
+
+#pmenu_funclist::indicator,#pmenu_func_tool::indicator
+{
+padding-left: 0px;
+width: 0px;
+height: 0px;
+}
+
+/*菜单项指示器---互斥--选中*/
+#pmenu_funclist::indicator:exclusive:checked,#pmenu_func_tool::indicator:exclusive:checked
+{
+image: url(://images/tray/tray_checked.png);
+}
+
+/**分割线**/
+#pmenu_func_tool::separator,#pmenu_func_tool::separator
+{
+height: 1px;
+background: #cccccc;
+}
+/*********************浏览器---标题栏---右键菜单---end************************/
+
+/*浏览器---状态栏*/
+#m_statusBar
+{
+color: #cccccc;
+}
+
+/*浏览器---进度条*/
+#m_progressBar
+{
+color: #cccccc;
+}
+
+/*浏览器---整个收藏栏(包括展开按钮、隐藏按钮)样式*/
+#m_tabframe
+{
+background-color: #454c59;
+border: 0px solid transparent;
+}
+
+/*浏览器---收藏栏tabbar样式*/
+#m_tabBar
+{
+background-color: #454c59;
+color: #4c4c4c;
+border: 0px solid transparent;
+}
+
+/*浏览器---收藏栏tab样式*/
+#m_tabBar::tab
+{
+min-width: 100px;
+max-width: 100px;
+/*magin-top和height实现tab居中，留下tabbar的大背景*/
+height:18px;
+margin-top:3px;
+margin-left:1px;
+margin-right:1px;
+border-radius: 2px;
+background-color: #48484c;
+}
+
+#m_tabBar::tab:first
+{
+margin-left: 2px;
+}
+
+#m_tabBar::tab:last
+{
+margin-right: 2px;
+}
+
+#m_tabBar::tab:selected
+{
+background-color: #ffffff;
+}
+
+#m_tabBar::tab:hover
+{
+background-color: #ffffff;
+border-radius: 2px;
+}
+
+#m_tabBar::tab:!selected
+{
+background-color: #ffffff;
+}
+
+#m_tabBar::tab::tab:only-one
+{
+border-right-width:0px;
+}
+
+#m_tabBar QToolButton
+{
+background-color:transparent;
+}
+
+#m_tabBar QToolButton::right-arrow
+{
+background-color:transparent;
+}
+
+#m_tabBar QToolButton::left-arrow
+{
+background-color:transparent;
+}
+
+/*添加标签addweb按钮*/
+#m_addTabBtn
+{
+border: 1px solid transparent;
+background-color: #337ab7;
+color:white;
+font-size:26px;
+}
+
+#m_addTabBtn:hover
+{
+background-color: #286090;
+color:white;
+}
+
+/*展开标签栏按钮*/
+#m_webExpandBtn,#m_webExpandBtn::pressed
+{
+background-color: #233b56;
+color:  #cccccc;
+border:1px solid #6768ee;
+border-top-left-radius:8px;
+border-bottom-right-radius:8px;
+margin:3px 0px;
+text-align:center;
+}
+
+#m_webExpandBtn:hover
+{
+background-color: #454c59;
+color: white;
+}
+
+/*标签隐藏按钮*/
+#m_webHideBtn,#m_webHideBtn::pressed
+{
+background-color: #233b56;
+color:  #cccccc;
+border:1px solid #6768ee;
+border-top-left-radius:8px;
+border-bottom-right-radius:8px;
+margin:3px 3px 3px 0px;
+border-image:url(://images/icon/web_hide.png);
+}
+
+#m_webHideBtn:hover
+{
+background-color: #454c59;
+color: white;
+}
+
+/*浏览器---收藏列表*/
+#m_listWdgt_colloect
+{
+color:#979aa4;
+background-color: #f8f8f8;
+border-radius:0px;
+}
+
+#m_listWdgt_colloect::item
+{
+background-color:#f0f0f0;
+padding: 2px;
+}
+
+#m_listWdgt_colloect::icon:hover
+{
+border-image:url(://images/function/collect_list_item.png);
+}
+
+#m_listWdgt_colloect::item:selected
+{
+background-color: #d6eff7;
+}
+
+#m_listWdgt_colloect::item:hover
+{
+background-color: #ffffff;
+color:#2b2b2b;
+}
+
+/*浏览器---搜索记录*/
+#m_listWdgt_history
+{
+border: none;
+color: #d3d3ba;
+background-color: #363639;
+}
+
+#m_listWdgt_history::item
+{
+padding: 2px;
+background-color: #363639;
+}
+
+#m_listWdgt_history::icon:hover
+{
+border-image:url(://images/function/history_list_item.png);
+}
+
+#m_listWdgt_history::item:selected
+{
+color:#3385ff;
+}
+
+#m_listWdgt_history::item:hover
+{
+background-color: #4a4a4d;
+color: #d3ccae;
+}
+
+/*浏览器---搜索引擎*/
+#m_listWdgt_engine
+{
+border:none;
+color:#979aa4;
+background-color: #f8f8f8;
+}
+
+#m_listWdgt_engine::item
+{
+padding: 2px;
+background-color:#f0f0f0;
+background-color: rgb(33, 33, 33);
+}
+
+#m_listWdgt_engine::item:selected
+{
+color:#3385ff;
+}
+
+#m_listWdgt_engine::item:hover
+{
+background-color:#e5e5e5;
+color:#2b2b2b;
+}
+
+#m_engineSetBtn
+{
+text-align:left;
+border:0px solid #bbbbbb;
+border-top-width:1px;
+color:#979aa4;
+background-color: rgb(33, 33, 33);
+padding-left:30px;
+}
+
+#m_engineSetBtn:hover
+{
+border:0px solid #bbbbbb;
+background-color:#e5e5e5;
+color:#2b2b2b;
+}
+
+/**浏览器承载QTabWidget整体设置---start**/
+#m_webTabWidget
+{
+background-color:#4969c7;
+border:none;
+color: #333333;
+font: 400 12px "微软雅黑";
+}
+
+#m_webTabWidget::pane
+{
+background-color:#009999;
+background-color:green;
+}
+
+#m_webTabWidget::tab-bar
+{
+background-color:#009999;
+height:24px;
+border: none;
+color: #333333;
+font: 400 12px "微软雅黑";
+}
+
+/*浏览器页面承载QTabWidget自定义Tab样式*/
+#m_webTabBar::tab
+{
+max-width: 180px;
+height:24px;
+color: black;
+margin-right: 1px;
+border: 0px solid #c1c1c1;
+border-left-width:1px;
+font: 400 12px "微软雅黑";
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #7ebef6, stop:1  #b7b0fd);
+}
+
+#m_webTabBar::tab:first
+{
+margin-left: 0px;
+border-left-width:0px;
+}
+
+#m_webTabBar::tab:last
+{
+margin-right: 0px;
+}
+
+#m_webTabBar::tab:hover
+{
+color:white;
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #a2ccf7, stop:1  #1296f6);
+}
+
+#m_webTabBar::tab:selected
+{
+color: black;
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #7ebef6, stop:1  #b7b0fd);
+}
+
+#m_webTabBar::tab:!selected
+{
+background-color: #118860;
+}
+
+/**关闭按钮**/
+#m_webTabBar::close-button
+{
+image: url(://images/icon/tab_closebtn.png);
+}
+
+/**关闭按钮--->hover**/
+#m_webTabBar::close-button:hover
+{
+image: url(://images/icon/tab_closebtn_hover.png);
+}
+
+/*浏览器承载界面--->工具栏*/
+#m_webTabBar QToolButton
+{
+background-color:transparent;
+}
+
+#m_webTabBar QToolButton::right-arrow
+{
+background-color:transparent;
+}
+
+#m_webTabBar QToolButton::left-arrow
+{
+background-color:transparent;
+}
+/**浏览器承载QTabWidget整体设置---end**/
+
+/**浏览器---右键菜单---start**/
+#browser_rmenu
+{
+background-color:white;
+font: 400 13px "微软雅黑";
+border-radius: 0px;
+}
+
+#browser_rmenu::icon
+{
+background-color:white;
+height:30px;
+}
+
+#browser_rmenu::item
+{
+background-color:white;
+height:24px;
+width: 150px;
+padding: 1px 0px 1px 15px;
+}
+
+#browser_rmenu::item:selected
+{
+color:#2ca5fc;
+background-color:#cccccc;
+}
+
+/**浏览器---右键菜单---end**/
+
+#m_addWidget
+{
+background-color: yellow;
+}
+
+/*添加网页按钮*/
+#m_webAddBtn
+{
+margin-left: 0px;
+color: #2b2b2b;
+background-color:white;
+}
+
+#m_addWebButton:hover
+{
+background-color:green;
+}
+/*浏览器----stackwidget-----end*/
+
+/*新建任务---清除历史路径*/
+#newwork_m_clearBtn
+{
+background: transparent;
+color:#cdcdcd;
+}
+
+#newwork_m_clearBtn:hover
+{
+color:#ff4b38;
+}
+
+/*新建任务--历史记录列表*/
+#newwork_m_listWdgt_path
+{
+background: white;
+border:none;
+}
+
+/*新建任务---记录列表父窗口*/
+#newwork_m_hisWdgt
+{
+background: white;
+}
+
+/*序号*/
+#dl_num
+{
+/*border-image:url(://images/function/download_video.png);*/
+}
+
+/*进度条*/
+#dl_progressbar
+{
+}
+
+/*暂停按钮*/
+#dl_stopbtn
+{
+border-image:url(://images/function/download_pause.png);
+}
+
+/*下载按钮*/
+#dl_downloadlbtn
+{
+border-image:url(://images/function/download_download.png);
+}
+
+/*删除按钮*/
+#dl_deletebtn
+{
+border-image:url(://images/function/download_delete.png);
+}
+
+/*打开按钮*/
+#dl_openbtn
+{
+border-image:url(://images/function/download_openfile.png);
+}
+
+
+/*文件对话框*/
+/*
+QFileDialog 
+{
+background-color:#f0f0f0;
+}
+*/
+/*
+QFileDialog QScrollBar::handle:vertical,QScrollBar::handle:horizontal
+{
+border-radius:0px;
+background-color:#cdcdcd;
+}
+*/
+/*
+QFileDialog QScrollBar::handle:vertical:hover,QScrollBar::handle:horizontal:hover
+{
+border-radius:0px;
+background-color:#cdcdcd;
+}
+*/
+/*
+QFileDialog QScrollBar::sub-page:vertical,QScrollBar::sub-page:horizontal
+{
+background-color:#f0f0f0;
+}
+*/
+/*
+QFileDialog QScrollBar::add-page:vertical,QScrollBar::add-page:horizontal
+{
+background-color:#f0f0f0;
+}
+*/
+
+/*主界面底部按钮*/
+#m_bottomBtn
+{
+border-radius:25px;
+background: rbga(240, 240, 240,0.3) url(://images/icon/main_bottom_hover.png) no-repeat no-repeat center center;
+}
+
+#m_bottomBtn:hover
+{
+border-radius:25px;
+background: rbga(240, 240, 240,0.3) url(://images/icon/main_bottom_hover.png) no-repeat no-repeat center center;
+}
+
+/*去白边*/
+#m_tabWdgt::pane 
+{
+border-right: 0;
+background-color: #3b3b45;
+}
+
+#m_tabWdgt::tab-bar 
+{
+left: 35px;
+}
+
+#m_homeListWidget
+{
+background-color:#2a2a31;
+border:none;
+}
+
+#m_homeListWidget::item
+{
+background-color:#2a2a31;
+border:none;
+}
+
+QListWidget QTabWidget QStackWidget QTextBrowser
+{
+outline:0;
+border:none;/*去边线*/
+}
+
+/*托盘二级菜单-----------------样式开始*/
+#m_menuTray,#m_playMode
+{
+background-color:white;
+color:#2a2a31;
+font:normal normal 13px '微软雅黑';
+}
+
+/*一级菜单tiem*/
+#m_menuTray::item
+{
+height:28px;
+padding: 2px 15px 2px 15px;/*上 右 下 左*/
+border: 1px solid transparent;
+}
+
+/*二级菜单tiem*/
+#m_playMode::item
+{
+height:28px;
+padding: 2px 5px 2px 15px;/*上 右 下 左*/
+border: 1px solid transparent;
+}
+
+/*鼠标滑过*/
+#m_menuTray::item:selected,#m_playMode::item:selected
+{
+border-radius: 5px;
+background: #90c8f6;
+}
+
+/*一级菜单--图标*/
+#m_menuTray::icon
+{
+width:28px;
+height:28px;
+margin-left:10px;
+}
+
+/*二级菜单--图标*/
+#m_playMode::icon
+{
+width:0px;
+height:0px;
+}
+
+/*指示器---菜单勾选项*/
+#m_menuTray::indicator,#m_playMode::indicator
+{
+margin:5px;
+width:20px;
+height:20px;
+}
+
+/*菜单项指示器---互斥--选中*/
+#m_playMode::indicator:exclusive:checked
+{
+image: url(://images/tray/tray_checked.png);
+}
+/*托盘二级菜单-----------------------样式结束*/
+
+/*帮助按钮菜单-----------------------样式开始*/
+#pmenu_help1,#pmenu_help2
+{
+background-color:white;
+color:#2a2a31;
+border-radius: 6px;
+font:normal normal 15px '微软雅黑';
+}
+
+#pmenu_help1::item
+{
+height:18px;
+padding: 4px 28px 4px 20px;/*上 右 下 左*/
+border: 1px solid transparent;
+}
+
+#pmenu_help2::item
+{
+height:18px;
+padding: 4px 8px 4px 12px;/*上 右 下 左*/
+border: 1px solid transparent;
+margin:0px;
+}
+
+#pmenu_help1::item:selected,#pmenu_help2::item:selected
+{
+border-radius: 6px;
+background: #00aabf;
+}
+
+#pmenu_help1::icon,#pmenu_help2::icon
+{
+width:10px;
+height:20px;
+margin-left:10px;
+}
+
+/*NOTICE设置--右键菜单*/
+#m_setMenu_notice
+{
+background-color: #223e5b;
+color:#9a9fa6;
+border-radius: 6px;
+font: 400 normal 15px '微软雅黑';
+}
+
+/*左右边距通过padding调整*/
+#m_setMenu_notice::item
+{
+height:18px;
+padding: 4px 28px 4px 20px;
+border: 1px solid transparent;
+}
+
+/*hover*/
+#m_setMenu_notice::item:selected
+{
+color: white;
+border-radius: 6px;
+background-color: #2f3134;
+}
+
+/*帮助按钮菜单-----------------------样式结束*/
+
+/*歌曲列表右键菜------------------------------开始*/
+#pmenu_right,#pmenu_songer,#pmenu_son_addto,#pmenu_son_sort,#pmenu_son_playmode,#pmenu_son_muctool,#menuSelection
+{
+background: white;
+color:#2a2a31;
+font: normal normal 15px '微软雅黑';
+}
+
+#pmenu_right::item,#pmenu_songer::item,#pmenu_son_addto::item,#pmenu_son_sort::item,#pmenu_son_playmode::item,#pmenu_son_muctool::item,#menuSelection::item
+{
+height:18px;
+padding: 4px 28px 4px 20px;/*上 右 下 左*/
+border: 1px solid transparent;
+}
+
+#pmenu_right::item:selected,#pmenu_songer::item:selected,#pmenu_son_addto::item:selected,#pmenu_son_sort::item:selected,#pmenu_son_playmode::item:selected,#pmenu_son_muctool::item:selected,#menuSelection::item:selected
+{
+background: #00aabf;
+}
+
+#pmenu_right::icon,#pmenu_songer::icon,#pmenu_son_addto::icon,#pmenu_son_sort::icon,#pmenu_son_playmode::icon,#pmenu_son_muctool::icon,#menuSelection::icon
+{
+width:20px;
+height:18px;
+margin-left:10px;
+}
+
+/*指示器---菜单勾选项*/
+#menuSelection::indicator
+{
+margin:5px;
+width:20px;
+height:20px;
+}
+
+/*菜单项指示器---互斥--选中*/
+#menuSelection::indicator:exclusive:checked
+{
+image: url(://images/tray/tray_checked.png);
+}
+
+/*歌曲列表右键菜单-----------------------------结束*/
+
+/*播放列表，收藏列表，历史列表右键菜单---开始*/
+#playlist_playMenu,#playlist_collectMenu,#playlist_historytMenu
+{
+background-color:white;
+width:120px;
+font: 400 14px "微软雅黑";
+border-radius:20px;
+}
+
+#playlist_playMenu::item,#playlist_collectMenu::item,#playlist_historytMenu::item
+{
+background-color:white;
+height:28px;
+/*padding可修改item高度*/
+}
+
+#playlist_playMenu::icon,#playlist_collectMenu::icon,#playlist_historytMenu::icon
+{
+background-color:white;
+height:28px;
+}
+
+#playlist_playMenu::item:selected,#playlist_collectMenu::item:selected,#playlist_historytMenu::item:selected
+{
+color:#2ca5fc;
+background-color:#cccccc;
+}
+
+/*播放列表，收藏列表，历史列表右键菜单---结束*/
+
+QDockWidget#m_dockWidget::title
+{
+text-align: center; 
+background-color:rgb(101,210,105);
+padding-left: 5px;
+}
+
+/*
+QToolTip
+{
+border: 1px solid black;
+background-color: #D1DBCB;
+padding: 1px;
+border-radius: 3px;
+opacity: 50;
+}
+*/
+
+#lcdNumber
+{
+border:none;
+/*font:bold italic 18px "微软雅黑";*/
+}
+
+/********节目列表tabwidget----开始**********/
+#m_tabWidget1
+{
+background-color: transparent;
+outline:none;
+color:black;
+font: 75 13px "微软雅黑";
+}
+
+#m_tabWidget1::tab-bar
+{
+left: 0px;
+}
+
+#m_tabWidget1 QTabBar::tab
+{
+width:140px;
+height:35px;
+color: white;
+background-color:#3f3f48;
+}
+
+#m_tabWidget1 QTabBar::tab:first
+{
+/*border-right:1px solid #ff5c38;*/
+}
+
+#m_tabWidget1 QTabBar::tab:!selected
+{
+margin-top: 0px;
+color:  #8a8a8a;
+}
+
+#m_tabWidget1 QTabBar::tab:selected
+{
+/*color:#ff5c38;*/
+font-size:14px;
+font-weight:bold;
+color: rgb(255, 211, 134);
+border-bottom:2px solid #ff5c38;
+}
+
+/*通过icon-size来撑大item的高度*/
+#m_toolBox_list
+{
+border-right:2px;
+background-color:#3d3d3d;
+ icon-size: 25px; 
+}
+
+/*抽屉控件,有效*/
+#m_toolBox_list::tab
+{
+border-bottom: 2px groove blue; 
+border-radius: 2px;
+background-color: #3d3d3d;
+color: yellow;
+text-align: center; 
+}
+
+/*tab样式-hover*/
+#m_toolBox_list::tab:hover
+{
+background-color:rgb(101,210,105);
+color: white;
+}
+
+/*tab样式-selected*/
+#m_toolBox_list::tab:selected
+{
+background-color: #36a5c1;
+color: white;
+font-weight: bold;
+}
+
+/*右侧整个播放列表父亲m_widget1*/
+#m_widget1
+{
+background-color: #072957;
+border:1px solid transapent;
+border-left-color: #3f4042;
+}
+
+/*toolbox承载区域控件*/
+
+
+/*搜索框(事件监视器控制)*/
+#m_lineEdit_player
+{
+color:#cccccc;
+font-family:"微软雅黑";
+font-size:14px;
+background-color: #162a33;
+selection-background-color: #eaeaea;
+padding-left:15px;
+border:none;
+}
+
+/*搜索按钮(事件监视器控制)*/
+#m_searchBtn_player
+{
+border: none;
+background-color: #162a33;
+image: url(:/images/icon/file_open.png);
+padding:5px;
+}
+
+/*搜索按钮-按下*/
+#m_searchBtn_player:pressed
+{
+border-style: inset;
+background-color: #162a33;
+}
+
+/*搜索按钮-鼠标滑过*/
+#m_searchBtn_player:hover
+{
+padding:5px;
+image: url(:/images/icon/file_open_hover.png);
+background-color: #162a33;
+}
+
+/**************************播放器右侧列表设置---开始****************************/
+/*QListWidget播放列表（四个表统一的样式）*/
+QToolBox QWidget  QListWidget
+{
+font-family:"Mircrosoft YaHei";
+border:none;
+background-color: #333333;
+}
+
+QToolBox QWidget  QListWidget::item
+{
+color: transparent;
+min-height:30px;
+font-size:15px;
+background-color: #333333;
+}
+
+QToolBox QWidget  QListWidget::item:hover
+{
+show-decoration-selected:5;
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #5104e4, stop:1  #8e2ce1);
+border-style:outset;	
+color: transparent;
+}
+
+
+QToolBox QWidget  QListWidget::item:selected
+{
+color: transparent;
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #5104e4, stop:1  #8e2ce1);
+}
+
+/*上次选择后保留的状态，鼠标离开后显示,会影响selected*/
+QToolBox QWidget  QListWidget::item:selected:!active
+{
+color: transparent;
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #c11432, stop:1  #730f33);
+}
+
+/**************************播放器右侧列表设置---完毕****************************/
+
+/*四个列表的滚动条---单独的统一放在通用样式之前设置*/
+#list1_vertical_scrollBar::handle:vertical,#list2_vertical_scrollBar::handle:vertical,#list3_vertical_scrollBar::handle:vertical,#list4_vertical_scrollBar::handle:vertical
+{
+background-color:#65d269;
+border-radius:4px;
+}
+
+/*鼠标放到滑块上面样式*/
+#list1_vertical_scrollBar::handle:vertical:hover,#list2_vertical_scrollBar::handle:vertical:hover,#list3_vertical_scrollBar::handle:vertical:hover,#list4_vertical_scrollBar::handle:vertical:hover
+{
+background-color:#c0ff02;
+border-radius:4px;
+}
+
+/*滚动条滚过部分样式*/
+#list1_vertical_scrollBar::sub-page:vertical,#list2_vertical_scrollBar::sub-page:vertical,#list3_vertical_scrollBar::sub-page:vertical,#list4_vertical_scrollBar::sub-page:vertical
+{
+background-color:#038387;
+}
+
+/*滚动条未滚过部分样式*/
+#list1_vertical_scrollBar::add-page:vertical,#list2_vertical_scrollBar::add-page:vertical,#list3_vertical_scrollBar::add-page:vertical,#list4_vertical_scrollBar::add-page:vertical
+{
+background-color:#038387;
+}
+
+/*滚动条整体样式，需要单独设置的，在下面按照层次顺序指明，或者按照对象名设置 --start*/
+/*垂直滚动条整体样式*/
+QScrollBar:vertical
+{
+border: 0px;
+background-color: #202020;/*背景颜色*/
+width:10px;/*整体宽度*/
+}
+
+/*水平滚动条整体样式*/
+QScrollBar:horizontal
+{
+background-color:#3f3f48;/*背景颜色*/
+height:10px;/*整体高度*/
+}
+
+/*垂直滚动条内滑块样式*/
+QScrollBar::handle:vertical
+{
+border: 0px;
+min-width:8px;/*滑块宽度*/
+border-radius:4px;/*滑块角度弯曲*/
+background-color: rgba(70,70,70,85%);
+}
+
+/*水平滚动条内滑块样式*/
+QScrollBar::handle:horizontal
+{
+min-height:8px;/*滑块高度*/
+border-radius:4px;/*滑块角度弯曲*/
+background-color: rgba(70,70,70,85%);
+}
+
+/*垂直滚动条内滑块样式--hover*/
+QScrollBar::handle:vertical:hover
+{
+background-color: rgba(70,70,70,100%);
+border-radius:4px;
+}
+
+/*水平滚动条内滑块样式--hover*/
+QScrollBar::handle:horizontal:hover
+{
+background-color: rgba(70,70,70,100%);
+border-radius:4px;
+}
+
+/*垂直滚动条滑过上部分的样式*/
+QScrollBar::sub-page:vertical
+{
+background-color:#25252a;
+}
+
+/*水平滚动条滑过左部分的样式*/
+QScrollBar::sub-page:horizontal
+{
+background-color:#25252a;
+}
+
+/*垂直滚动条滑过下部分的样式*/
+QScrollBar::add-page:vertical
+{
+background-color:#25252a;
+}
+
+/*水平滚动条滑过右部分的样式*/
+QScrollBar::add-page:horizontal
+{
+background-color:#25252a;
+}
+
+/*
+/*垂直滚动条滑过上部分的底部箭头部分样式*/
+QScrollBar::sub-line:vertical
+{
+width:10px;
+height:10px;
+background-image: url(:/images/icon/arrowdown.png);
+subcontrol-position: top;
+subcontrol-origin: margin;
+}
+
+/*垂直滚动条滑过下部分的底部箭头部分样式*/
+QScrollBar::add-line:vertical
+{
+width:10px;
+height:10px;
+background-image: url(:/images/icon/arrowup.png);
+subcontrol-position: bottom;
+subcontrol-origin: margin;
+}
+
+/*水平滚动条滑过左部分的左边箭头部分样式*/
+QScrollBar::sub-line:horizontal
+{
+width:10px;
+height:10px;
+background-image: url(:/images/icon/arrowdown.png);
+subcontrol-position: left;
+subcontrol-origin: margin;
+}
+
+/*水平滚动条滑过右部分的右边箭头部分样式*/
+QScrollBar::add-line:horizontal
+{
+width:10px;
+height:10px;
+background-image: url(:/images/icon/arrowup.png);
+subcontrol-position: right;
+subcontrol-origin: margin;
+}
+*/
+/*滚动条整体样式，需要单独设置的，在下面按照层次顺序指明，或者按照对象名设置 --end*/
+
+
+

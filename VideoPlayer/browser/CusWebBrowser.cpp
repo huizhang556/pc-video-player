@@ -76,6 +76,7 @@ QString CusWebBrowser::getCurrentWebPageIconUrl()
     return this->page()->iconUrl().toString();
 }
 
+
 QWebEngineView *CusWebBrowser::createWindow(QWebEnginePage::WebWindowType type)
 {
     if(type == QWebEnginePage::WebBrowserTab)

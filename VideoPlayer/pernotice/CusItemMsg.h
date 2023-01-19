@@ -2,6 +2,8 @@
 #define CUSITEMMSG_H
 #include <QStyle>
 #include <QWidget>
+#include <QFontMetrics>
+#include <QAbstractButton>
 #include <QDebug>
 
 namespace Ui {
@@ -30,9 +32,11 @@ public:
     bool*       getArroy_ON_Mark();
 private:
     Ui::CusItemMsg *ui;
+    bool    array_on[4];//4个标志位
 
 private:
-    bool    array_on[4];//4个标志位
+    void    setMultiTextToElidedText(QAbstractButton *button, QString text,const int twidth);
+
 signals:
     void    sig_sendClicked();
     void    sig_sendLike();

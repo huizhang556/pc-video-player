@@ -42,7 +42,7 @@ void Container01::initWorkUI()
     ui->listWidget_container01->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_container01->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_container01->horizontalScrollBar()->setDisabled(true);//禁用横向滚动条
-    ui->listWidget_container01->setOffset(230,-100,5,45);
+    ui->listWidget_container01->setOffset(230,-100,5,8,45);
     ui->listWidget_container01->setButtonControl(false);
 
 
@@ -54,7 +54,7 @@ void Container01::initWorkUI()
     ui->listWidget_container02->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_container02->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_container02->horizontalScrollBar()->setDisabled(true);//禁用横向滚动条
-    ui->listWidget_container02->setOffset(230,-100,5,45);
+    ui->listWidget_container02->setOffset(230,-100,5,8,45);
     ui->listWidget_container02->setButtonControl(false);
 
 

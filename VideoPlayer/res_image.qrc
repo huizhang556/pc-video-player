@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>style/alluistyle.qss</file>
+        <file>style/alluistyle_day.qss</file>
         <file>images/icon/advance.png</file>
         <file>images/icon/advance_hover.png</file>
         <file>images/icon/allexpand.png</file>

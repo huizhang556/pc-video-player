@@ -34,7 +34,7 @@ void VideoSortType::initWorkUI()
     ui->listWidget_items->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_items->setVerticalScrollMode(QListView::ScrollPerPixel);
     ui->listWidget_items->horizontalScrollBar()->setDisabled(true);
-    ui->listWidget_items->setOffset(225,-100,0,45);
+    ui->listWidget_items->setOffset(225,-100,0,0,45);
     ui->listWidget_items->setButtonControl(false);
 
     for(int i = 0; i < 17; i++)
@@ -55,15 +55,29 @@ void VideoSortType::handleSignalsAndSlots()
     //换一换 document length = maximum() - minimum() + pageStep().
     connect(ui->pushButton_flush,&QPushButton::clicked,[=](){
         int step = ui->listWidget_items->horizontalScrollBar()->value();
-//        qDebug() << QString(u8"当前step:") << step << QString(u8"滚动条总长度：")<<ui->listWidget_items->horizontalScrollBar()->maximum();
         if(step == ui->listWidget_items->horizontalScrollBar()->maximum())
         {
-            ui->listWidget_items->horizontalScrollBar()->setValue(ui->listWidget_items->horizontalScrollBar()->minimum());
-//            ui->listWidget_items->scrollToBottom();
+//            ui->listWidget_items->horizontalScrollBar()->setValue(ui->listWidget_items->horizontalScrollBar()->minimum());//重头播放
+            QPropertyAnimation *pAnimation = new QPropertyAnimation(ui->listWidget_items->horizontalScrollBar(),"value",this);
+            pAnimation->setDuration(800);
+            pAnimation->setStartValue(step);
+            pAnimation->setEndValue(ui->listWidget_items->horizontalScrollBar()->minimum());
+            pAnimation->start();
+            connect(pAnimation,&QPropertyAnimation::finished,[=](){
+            pAnimation->deleteLater();
+            });
         }
         else
         {
-            ui->listWidget_items->horizontalScrollBar()->setValue(ui->listWidget_items->item(0)->sizeHint().width()*7 + step);
+//            ui->listWidget_items->horizontalScrollBar()->setValue(ui->listWidget_items->item(0)->sizeHint().width()*7 + step);
+            QPropertyAnimation *pAnimation = new QPropertyAnimation(ui->listWidget_items->horizontalScrollBar(),"value",this);
+            pAnimation->setDuration(800);
+            pAnimation->setStartValue(step);
+            pAnimation->setEndValue(ui->listWidget_items->item(0)->sizeHint().width()*7 + step);
+            pAnimation->start();
+            connect(pAnimation,&QPropertyAnimation::finished,[=](){
+            pAnimation->deleteLater();
+            });
         }
     });
 }

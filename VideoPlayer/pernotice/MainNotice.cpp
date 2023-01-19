@@ -11,7 +11,7 @@ MainNotice::MainNotice(QWidget *parent) :
     ui->setupUi(this);
     setFixedSize(400,1000);
     setAttribute(Qt::WA_NoMouseReplay);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool |Qt::WindowStaysOnTopHint | Qt::Popup);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool |Qt::WindowStaysOnTopHint | Qt::SubWindow);
     initWorkUI();
     handleSignalsAndSlots();
 }
@@ -26,7 +26,7 @@ MainNotice::~MainNotice()
 
 void MainNotice::initWorkUI()
 {
-//    qRegisterMetaType<QVariant>("QVariant");
+//    qRegisterMetaType<QVariant>("QVariant");    
     ui->lineEdit_send->setPlaceholderText(QString(u8"按回车键(enter)发送消息~~~"));
     ui->pushButton_menu->setFixedSize(36,36);
     m_buttonGroup1 = new QButtonGroup(this);
@@ -96,6 +96,8 @@ void MainNotice::handleSignalsAndSlots()
         ui->lineEdit_send->clear();
     });
 
+
+
     connect(ui->pushButton_send_emoj,&QPushButton::clicked,[=](){
         const int x = ui->pushButton_send_emoj->parentWidget()->mapToGlobal(ui->pushButton_send_emoj->pos()).x();
         const int y = ui->pushButton_send_emoj->parentWidget()->mapToGlobal(ui->pushButton_send_emoj->pos()).y();
@@ -161,7 +163,6 @@ void MainNotice::slot_addAboutUserMessages(MSGTYPE type)
             connect(itemWidget,&CusItemMsg::sig_sendClicked,[=](){
                 switchToDetailMessageList(NOTICETYPE::NOTICE_SYS,item->data(Qt::UserRole).toString());
             });
-
         }
     }
         break;
@@ -357,6 +358,11 @@ void MainNotice::createSettingRmenu()
     QVariant var = ui->listWidget_chat->currentItem()->data(Qt::UserRole);
     MSGBODY body = var.value<MSGBODY>();
     QMenu m_settingMenu;//加this和不加this位置有区别
+    m_settingMenu.setWindowFlag(Qt::FramelessWindowHint);
+    m_settingMenu.setAttribute(Qt::WA_TranslucentBackground);
+    //在windows下，自带的阴影效果仍然是直角，还需设置去除阴影效果
+    m_settingMenu.setWindowFlag(Qt::NoDropShadowWindowHint);
+
     m_settingMenu.setObjectName(QString::fromUtf8("m_setMenu_notice"));
     if(body.isTop == false)
         m_settingMenu.addAction(QString(u8"置顶"),this,SLOT(slot_message_setTop()));

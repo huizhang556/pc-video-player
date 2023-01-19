@@ -36,7 +36,7 @@ public:
 
 public slots:
     void    slot_addSelectTypeItemsToFrame(VSItemType itemType, const QStringList& list);
-
+    void    slot_setSortHidden(bool hide);
 signals:
     void    sig_selectResult(QString);
 

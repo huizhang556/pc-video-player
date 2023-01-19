@@ -30,6 +30,7 @@ void BaseWidget::setTitleBarMoveArea(QWidget *titleBar = nullptr, const int marg
 
 void BaseWidget::mouseMoveEvent(QMouseEvent *event)
 {
+    if(this->isMaximized() || this->isFullScreen()) return;
     //根据位置设置鼠标样式
     SetMouseCursor(event->pos().x(), event->pos().y());
 

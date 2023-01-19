@@ -52,6 +52,7 @@ include($$PWD/slidebar/slidebar.pri)
 include($$PWD/titlebar/titlebar.pri)
 include($$PWD/customer/customer.pri)
 include($$PWD/creator/creator.pri)
+include($$PWD/pixviewer/pixviewer.pri)
 #include($$PWD/facebread/facebread.pri)
 include($$PWD/pernotice/pernotice.pri)
 include($$PWD/desktoplyric/desktop.pri)
@@ -70,8 +71,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES += \
-    titleBar
+
 
 RESOURCES += \
     res_audio.qrc \

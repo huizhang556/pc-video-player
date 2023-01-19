@@ -411,27 +411,6 @@ DownloadType *DownloadType::getInstance()
 }
 
 
-void DownloadType::mousePressEvent(QMouseEvent *event)
-{
-//    if(ReleaseCapture())
-//    {
-//        QWidget* pWindow = this->window();
-//        if(pWindow->isTopLevel())
-//        {
-//            SendMessage(HWND(pWindow->winId()),WM_SYSCOMMAND,SC_MOVE + HTCAPTION,0);
-//        }
-//    }
-    //    event->ignore();
-    Q_UNUSED(event)
-    m_mvPos = event->globalPos() - this->pos();
-}
-
-void DownloadType::mouseMoveEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event)
-    this->move(event->globalPos() - m_mvPos);
-}
-
 bool DownloadType::eventFilter(QObject *watched, QEvent *event)
 {
 

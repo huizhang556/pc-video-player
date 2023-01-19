@@ -83,16 +83,12 @@ void SelectVideoType::handleSignalsAndSlots()
 
     //展开按钮
     connect(ui->pushButton_expand,&QPushButton::clicked,[=](){
-        ui->widget_sort->show();
-        ui->frame_top->hide();
-        ui->pushButton_expand->hide();
+        slot_setSortHidden(true);
     });
 
     //收起按钮
     connect(ui->pushButton_hiden,&QPushButton::clicked,[=](){
-        ui->widget_sort->hide();
-        ui->frame_top->show();
-        ui->pushButton_expand->show();
+        slot_setSortHidden(false);
     });
 }
 
@@ -284,5 +280,21 @@ void SelectVideoType::slot_addSelectTypeItemsToFrame(VSItemType itemType, const 
 
     default:
         break;
+    }
+}
+
+void SelectVideoType::slot_setSortHidden(bool hide)
+{
+    if(hide)//展开
+    {
+        ui->widget_sort->show();
+        ui->frame_top->hide();
+        ui->pushButton_expand->hide();
+    }
+    else//隐藏
+    {
+        ui->widget_sort->hide();
+        ui->frame_top->show();
+        ui->pushButton_expand->show();
     }
 }
