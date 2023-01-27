@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QCheckBox>
-#include <QPushbutton>
+#include <QPushButton>
 
 namespace Ui {
 class SongItemForm;

@@ -21,6 +21,8 @@ QString  dataBase::m_webDef_savePath = "";
 QString  dataBase::m_skin_theme = "";
 bool     dataBase::m_skin_switch = true;
 QString  dataBase::m_skin_splash = "";
+int      dataBase::m_splash_width = 900;//默认宽度
+int      dataBase::m_splash_height = 500;//默认高度
 dataBase* dataBase::m_pInstance = nullptr;
 
 dataBase::dataBase():
@@ -357,6 +359,8 @@ void dataBase::readXML(const QString &path)
                                 m_skin_switch = false;
                         }
                         if(node.nodeName() == QString("defaultSplash"))    m_skin_splash = node.toElement().text();
+                        if(node.nodeName() == QString("splashwidth"))      m_splash_width = node.toElement().text().toInt();
+                        if(node.nodeName() == QString("splashheight"))     m_splash_height = node.toElement().text().toInt();
                     }
                 }
             }
@@ -567,6 +571,11 @@ bool dataBase::getSkin_switch()
 QString dataBase::getSkin_splash()
 {
     return m_skin_splash;
+}
+
+QSize dataBase::getSize_splash()
+{
+    return QSize(m_splash_width,m_splash_height);
 }
 
 //查询某表记录总数

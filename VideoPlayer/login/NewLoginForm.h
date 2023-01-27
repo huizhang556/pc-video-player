@@ -9,6 +9,7 @@
 #include <QColor>
 #include <QToolTip>
 #include <QPropertyAnimation>
+#include <QParallelAnimationGroup>
 #include <QGraphicsDropShadowEffect>
 #include <QDebug>
 
@@ -61,6 +62,8 @@ private slots:
 
     void        slot_clearTempInputText();
 
+private:
+    void        initAnimations();
 
 private:
     explicit NewLoginForm(QWidget *parent = nullptr);
@@ -68,6 +71,11 @@ private:
 //    QPoint  m_mvPos;
     QAction *m_actionShowPwd;//查看密码
     static  NewLoginForm* m_pInstance;
+    QPropertyAnimation *ani_show = nullptr;
+    QPropertyAnimation *ani_opacity = nullptr;
+    QPropertyAnimation *ani_top_hide   = nullptr;
+    QPropertyAnimation *ani_bom_hide   = nullptr;
+    QParallelAnimationGroup *aniGroup = nullptr;
 
 signals:
     void    sig_sendClearTempRecords();

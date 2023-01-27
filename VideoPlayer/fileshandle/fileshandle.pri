@@ -10,7 +10,8 @@ SOURCES += \
     $$PWD/MyDocFile.cpp \
     $$PWD/MyPicFile.cpp \
     $$PWD/MyAllFile.cpp \
-    $$PWD/MyLastFile.cpp
+    $$PWD/MyLastFile.cpp \
+    $$PWD/CComboBox.cpp
 
 
 HEADERS += \
@@ -25,7 +26,8 @@ HEADERS += \
     $$PWD/MyDocFile.h \
     $$PWD/MyPicFile.h \
     $$PWD/MyAllFile.h \
-    $$PWD/MyLastFile.h
+    $$PWD/MyLastFile.h \
+    $$PWD/CComboBox.h
 
 
 FORMS += \

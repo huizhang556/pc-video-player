@@ -59,11 +59,11 @@ void MainWidget::initOtherWidgetUi()
     m_leftButton->setFixedSize(20,60);
     m_leftButton->hide();
     //首页推荐
-    m_homeWidget = new HomeWidget(m_stackWidget_center);
-    m_homeWidget->setObjectName(QString::fromLocal8Bit("m_homeWidget"));
+//    m_homeWidget = new HomeWidget(m_stackWidget_center);
+//    m_homeWidget->setObjectName(QString::fromLocal8Bit("m_homeWidget"));
 
-    m_mainVideoMv = new VideoMv(m_stackWidget_center);
-    m_mainVideoMv->setObjectName(QString::fromLocal8Bit("m_mainVideoMv"));
+//    m_mainVideoMv = new VideoMv(m_stackWidget_center);
+//    m_mainVideoMv->setObjectName(QString::fromLocal8Bit("m_mainVideoMv"));
 
     m_videoMember = new MainMembForm(m_stackWidget_center);
     m_videoMember->setObjectName(QString::fromLocal8Bit("m_videoMember"));
@@ -76,8 +76,8 @@ void MainWidget::initOtherWidgetUi()
     m_shortVideo = new ShortVideo(m_stackWidget_center);
     m_shortVideo->setObjectName(QString::fromLatin1("m_shortVideo"));
 
-    m_tabWidget = new CusTabWidget(m_stackWidget_center);
-    m_tabWidget->setObjectName(QString::fromLatin1("m_tabWidget"));
+//    m_tabWidget = new CusTabWidget(m_stackWidget_center);
+//    m_tabWidget->setObjectName(QString::fromLatin1("m_tabWidget"));
 
     m_videoBlank = new VideoBlank();
     m_videoBlank->setHideOpenButton(false);//隐藏打开文件按钮
@@ -190,28 +190,28 @@ void MainWidget::initOtherWidgetUi()
     m_systemSetting->setObjectName(QString::fromLocal8Bit("m_systemSetting"));
 
     //歌手排行
-    m_songerSort = new SongerSort(m_stackWidget_center);
-    m_songerSort->setObjectName(QString::fromLocal8Bit("m_songerSort"));
+//    m_songerSort = new SongerSort(m_stackWidget_center);
+//    m_songerSort->setObjectName(QString::fromLocal8Bit("m_songerSort"));
 
     //排行榜
-    m_rankList = new RankingList(m_stackWidget_center);
-    m_rankList->setObjectName(QString::fromLocal8Bit("m_rankList"));
+//    m_rankList = new RankingList(m_stackWidget_center);
+//    m_rankList->setObjectName(QString::fromLocal8Bit("m_rankList"));
 
     //歌单分类
     m_songlistSort = new SonglistSort(m_stackWidget_center);
     m_songlistSort->setObjectName(QString::fromLocal8Bit("m_songlistSort"));
 
     //主播电台
-    m_radioHost = new RadioHost(m_stackWidget_center);
-    m_radioHost->setObjectName(QString::fromLocal8Bit("m_radioHost"));
+//    m_radioHost = new RadioHost(m_stackWidget_center);
+//    m_radioHost->setObjectName(QString::fromLocal8Bit("m_radioHost"));
 
     //音乐现场
-    m_musicScene = new MusicScene(m_stackWidget_center);
-    m_musicScene->setObjectName(QString::fromLocal8Bit("m_musicScene"));
+//    m_musicScene = new MusicScene(m_stackWidget_center);
+//    m_musicScene->setObjectName(QString::fromLocal8Bit("m_musicScene"));
 
     //会员专区
-    m_vipMember = new VipMember(m_stackWidget_center);
-    m_vipMember->setObjectName(QString::fromLocal8Bit("m_vipMember"));
+//    m_vipMember = new VipMember(m_stackWidget_center);
+//    m_vipMember->setObjectName(QString::fromLocal8Bit("m_vipMember"));
 
     //视频盒子1
     m_cusVideoBox = new CusVideosBox(m_stackWidget_center);
@@ -284,36 +284,36 @@ void MainWidget::initOtherWidgetUi()
 //设置StackedWidget布局每个page界面
 void MainWidget::setStackedWidgetPage()
 {
-    m_stackWidget_center->addWidget(m_cusVideoBox);
+    m_stackWidget_center->addWidget(m_cusVideoBox);//精选推荐
     connectToTopWidget(m_cusVideoBox);//建立关联
-    m_stackWidget_center->addWidget(m_cusVideoBox2);
+    m_stackWidget_center->addWidget(m_cusVideoBox2);//独家影院
     connectToTopWidget(m_cusVideoBox2);//建立关联
-    m_stackWidget_center->addWidget(m_cusVideoBox3);
+    m_stackWidget_center->addWidget(m_cusVideoBox3);//少儿动画
     connectToTopWidget(m_cusVideoBox3);//建立关联
-    m_stackWidget_center->addWidget(m_cusVideoBox4);
+    m_stackWidget_center->addWidget(m_cusVideoBox4);//热播电影
     connectToTopWidget(m_cusVideoBox4);//建立关联
-    m_stackWidget_center->addWidget(m_cusVideoBox5);
+    m_stackWidget_center->addWidget(m_cusVideoBox5);//独家播放
     connectToTopWidget(m_cusVideoBox5);//建立关联
-    m_stackWidget_center->addWidget(videoFindResult);//视频筛选结果
+    m_stackWidget_center->addWidget(videoFindResult);//视频分类查询
     m_stackWidget_center->addWidget(m_videoMember);//会员视频
     connectToTopWidget(m_videoMember);//建立关联
     m_stackWidget_center->addWidget(m_webStackWgt);//浏览器
-    m_stackWidget_center->addWidget(m_mainVideoMv);//视频mv
-    m_stackWidget_center->addWidget(m_hotSearch);//热搜
-    m_stackWidget_center->addWidget(m_homeWidget);//推荐
-    m_stackWidget_center->addWidget(m_songerSort);//歌手排序
-    m_stackWidget_center->addWidget(m_rankList);//音乐排序
+//    m_stackWidget_center->addWidget(m_mainVideoMv);//视频mv
+    m_stackWidget_center->addWidget(m_hotSearch);//热门搜索
+//    m_stackWidget_center->addWidget(m_homeWidget);//个性推荐
+//    m_stackWidget_center->addWidget(m_songerSort);//歌手分类
+//    m_stackWidget_center->addWidget(m_rankList);//热门飙升
     m_stackWidget_center->addWidget(m_songlistSort);//歌手筛选
-    m_stackWidget_center->addWidget(m_radioHost);//电台
-    m_stackWidget_center->addWidget(m_musicScene);//音乐场景
-    m_stackWidget_center->addWidget(m_vipMember);//vip会员
+//    m_stackWidget_center->addWidget(m_radioHost);//电台
+//    m_stackWidget_center->addWidget(m_musicScene);//音乐场景
+//    m_stackWidget_center->addWidget(m_vipMember);//vip会员
     m_stackWidget_center->addWidget(m_shortVideo);//资讯速览
     m_stackWidget_center->addWidget(m_musicList);//歌曲列表
     m_stackWidget_center->addWidget(m_personForm);//个人管理
     m_stackWidget_center->addWidget(m_fileTrans);//文件传输
     m_stackWidget_center->addWidget(m_cusVideoBox6);
     connectToTopWidget(m_cusVideoBox6);//建立关联
-    m_stackWidget_center->addWidget(m_tabWidget);//原始table界面
+//    m_stackWidget_center->addWidget(m_tabWidget);//原始table界面
     m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
 }
 

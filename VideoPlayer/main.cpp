@@ -9,7 +9,9 @@
 #include "mainwidget/cusvideosbox/CusVideoBox6.h"
 #include "miniplayer/MiniPlayer.h"
 #include "pernotice/MainNotice.h"
+#include "fileshandle/DownloadType.h"
 //#include "facebread/myemotionwindow.h"
+
 
 #include <QTranslator>
 #include <QThread>
@@ -53,6 +55,7 @@ int main(int argc, char *argv[])
 
     //04--->开机启动屏幕
     QPixmap pixmap(Global::appDirPath + dataBase::getSkin_splash());
+    pixmap = pixmap.scaled(dataBase::getSize_splash(),Qt::KeepAspectRatio,Qt::SmoothTransformation);
     CSplashScreen splashscream(pixmap);
     if(dataBase::getSkin_switch())
     {
@@ -94,6 +97,7 @@ int main(int argc, char *argv[])
 
 //    MyEmotionWindow w1;
 //    w1.showNormalEmotion(QPoint(500 , 500));
+//    DownloadType::getInstance()->show();
 
     splashscream.finish(&w1);
 

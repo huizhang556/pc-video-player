@@ -18,5 +18,7 @@
 <defaultSkin>blackTheme</defaultSkin>
 <splashOn>false</splashOn>
 <defaultSplash>/pictures/splashscreen/splash.png</defaultSplash>
+<splashwidth>900</splashwidth>
+<splashheight>500</splashheight>
 </skin>
 </appconfig>

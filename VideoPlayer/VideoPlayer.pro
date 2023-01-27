@@ -29,6 +29,7 @@ CONFIG      += warn_off
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+#DESTDIR  = $$PWD/bin
 
 SOURCES += \
         main.cpp \
@@ -65,6 +66,12 @@ include($$PWD/fileshandle/fileshandle.pri)
 include($$PWD/messagebox/messagebox.pri)
 include($$PWD/splashscreen/splashscreen.pri)
 
+#指定可执行程序输出目录（此配置需重编译生效）
+CONFIG(debug, debug|release){
+    DESTDIR = $$PWD/bin/debug
+}else{
+    DESTDIR = $$PWD/bin/release
+}
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

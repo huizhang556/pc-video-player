@@ -3,7 +3,7 @@
 
 #include <QFile>
 #include <QDomDocument>
-
+#include <QSize>
 #include <QVariant>
 #include <QSqlQuery>
 #include <QSqlError>
@@ -81,9 +81,10 @@ public:
     static QString          getWebDef_title();
     static QString          getWebDef_savePath();
 
-    static QString          getSkin_theme();
-    static bool             getSkin_switch();
-    static QString          getSkin_splash();
+    static QString          getSkin_theme();//主题
+    static bool             getSkin_switch();//开关
+    static QString          getSkin_splash();//路径
+    static QSize            getSize_splash();//大小
 
 public slots:
     //通用
@@ -151,6 +152,8 @@ private:
     static      QString     m_skin_theme;//默认皮肤主题
     static      bool        m_skin_switch;//开关
     static      QString     m_skin_splash;//加载缓冲界面
+    static      int         m_splash_width;//加载缓冲界面宽度
+    static      int         m_splash_height;//加载缓冲界面高度
 
 private:
     static      QString     getHostName();
