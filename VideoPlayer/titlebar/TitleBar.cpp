@@ -466,10 +466,10 @@ void TitleBar::setWebDefUrl(const QString& title)
 void TitleBar::createHelpMenu()
 {
     pmenu_help1 = new QMenu(this);
+    pmenu_help1->setObjectName(QString::fromLocal8Bit("pmenu_help1"));//样式表中设置样式必须设置对象名称才能生效
     pmenu_help1->setWindowFlag(Qt::FramelessWindowHint);
     pmenu_help1->setAttribute(Qt::WA_TranslucentBackground);
     pmenu_help1->setWindowFlag(Qt::NoDropShadowWindowHint);
-    pmenu_help1->setObjectName(QString::fromLocal8Bit("pmenu_help1"));//样式表中设置样式必须设置对象名称才能生效
     pmenu_help2 = new QMenu(QString::fromLocal8Bit("播放视频"),this);
     pmenu_help2->setWindowFlag(Qt::FramelessWindowHint);
     pmenu_help2->setAttribute(Qt::WA_TranslucentBackground);

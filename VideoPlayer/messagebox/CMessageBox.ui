@@ -30,7 +30,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QFrame" name="frame">
+    <widget class="QFrame" name="frame_global">
      <property name="styleSheet">
       <string notr="true">#frame
 {
@@ -235,7 +235,7 @@ border: 1px solid #3C80B1;
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>30</width>
+                 <width>15</width>
                  <height>20</height>
                 </size>
                </property>
@@ -273,7 +273,7 @@ border: 1px solid #3C80B1;
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>10</width>
+                 <width>20</width>
                  <height>20</height>
                 </size>
                </property>

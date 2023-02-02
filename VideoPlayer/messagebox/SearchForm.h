@@ -37,6 +37,7 @@ public:
 public slots:
     void    slot_addHotRecommendItems(const QStringList & str_list);
     void    slot_showSearchResult(const QString str);
+    void    addHistoryItem(QString his);
 
 protected:
     void leaveEvent(QEvent *event) override;
@@ -45,11 +46,10 @@ private:
     QNetworkAccessManager   *m_manger = nullptr;
 
 private slots:
-    void clearHistoryList();
+    void    clearHistoryList();
+    void    checkHisAutoHight();//自动计算历史栏高度
 
 public slots:
-    void addHistoryItem(QString his);
-
     void closeSearchForm();
 
 signals:

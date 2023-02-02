@@ -1,6 +1,6 @@
 ﻿#include "HotVideo.h"
 #include "ui_HotVideo.h"
-
+#include "global/Global.h"
 #include "mainwidget/vipmember/HotVideoItem.h"
 #include <QScrollBar>
 #include <QListWidgetItem>
@@ -29,6 +29,7 @@ HotVideo::HotVideo(QWidget *parent) :
     for(int i = 0; i < 9; i++)
     {
         HotVideoItem *itemWidget = new HotVideoItem();
+//        itemWidget->setVideoItemPicture("://images/bgpic/loading_001.gif");
         QListWidgetItem *item = new QListWidgetItem();
         item->setSizeHint(itemWidget->size());
         ui->listWidget_videoItem->addItem(item);

@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>669</width>
-    <height>360</height>
+    <height>370</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>300</width>
-    <height>360</height>
+    <height>370</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>16777215</width>
-    <height>360</height>
+    <height>370</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -47,7 +47,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget_search">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_his">
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -72,7 +72,7 @@
           <number>5</number>
          </property>
          <item>
-          <widget class="QFrame" name="frame">
+          <widget class="QFrame" name="frame_title_his">
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
            </property>
@@ -159,14 +159,14 @@ font: 11pt &quot;楷体&quot;;
                <widget class="QPushButton" name="btn_his_delete">
                 <property name="minimumSize">
                  <size>
-                  <width>25</width>
-                  <height>25</height>
+                  <width>20</width>
+                  <height>20</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>25</width>
-                  <height>25</height>
+                  <width>20</width>
+                  <height>20</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -206,14 +206,15 @@ border-image: url(:/images/icon/his_delete_hover.png);
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_5">
-           <property name="spacing">
-            <number>8</number>
-           </property>
-           <item>
-            <widget class="QListWidget" name="listWidget_his1">
-             <property name="styleSheet">
-              <string notr="true">QListWidget
+          <widget class="QFrame" name="frame_histories">
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <item>
+             <widget class="QListWidget" name="listWidget_his1">
+              <property name="styleSheet">
+               <string notr="true">QListWidget
 {
 padding-left:30px;
 border:none;
@@ -242,13 +243,13 @@ background-color: #1e1e24;
 font: 12pt &quot;楷体&quot;;
 color: #56d6df;
 }</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QListWidget" name="listWidget_his2">
-             <property name="styleSheet">
-              <string notr="true">QListWidget
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListWidget" name="listWidget_his2">
+              <property name="styleSheet">
+               <string notr="true">QListWidget
 {
 padding-left:30px;
 border:none;
@@ -277,13 +278,14 @@ background-color: #1e1e24;
 font: 12pt &quot;楷体&quot;;
 color: #56d6df;
 }</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </item>
          <item>
-          <widget class="QFrame" name="frame_2">
+          <widget class="QFrame" name="frame_title_hot">
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
            </property>
@@ -380,17 +382,15 @@ font: 11pt &quot;楷体&quot;;
                 <property name="styleSheet">
                  <string notr="true">QPushButton
 {
+background-color: #2a2a32;
 color:#ececed;
 font: 11pt &quot;楷体&quot;;
-background-color: rgb(37, 37, 42);
 /*text-decoration:underline;*/
 }
 
 QPushButton:hover
 {
-background-color: rgb(37, 37, 42);
 color: rgb(216, 30, 6);
-font: 11pt &quot;楷体&quot;;
 }
 
 </string>
@@ -422,14 +422,15 @@ font: 11pt &quot;楷体&quot;;
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_6">
-           <property name="spacing">
-            <number>8</number>
-           </property>
-           <item>
-            <widget class="QListWidget" name="listWidget_hot1">
-             <property name="styleSheet">
-              <string notr="true">QListWidget
+          <widget class="QFrame" name="frame_hots">
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <item>
+             <widget class="QListWidget" name="listWidget_hot1">
+              <property name="styleSheet">
+               <string notr="true">QListWidget
 {
 padding-left:30px;
 border:none;
@@ -458,13 +459,13 @@ background-color: #1e1e24;
 font: 12pt &quot;楷体&quot;;
 color: #56d6df;
 }</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QListWidget" name="listWidget_hot2">
-             <property name="styleSheet">
-              <string notr="true">QListWidget
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListWidget" name="listWidget_hot2">
+              <property name="styleSheet">
+               <string notr="true">QListWidget
 {
 padding-left:30px;
 border:none;
@@ -493,10 +494,11 @@ background-color: #1e1e24;
 font: 12pt &quot;楷体&quot;;
 color: #56d6df;
 }</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </item>
         </layout>
        </item>

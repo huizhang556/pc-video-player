@@ -42,9 +42,10 @@ public:
     ~NewLoginForm();
     void        initWorkUI();
     void        chandleSignalsAndSLots();
-    static      NewLoginForm* getInstance();
     void        setType(TipType type);
+
     static void showCText(TipType type, const QPoint &pos, const QString& text, QWidget *w, const QRect &rect, int msecShowTime);
+    static      NewLoginForm* getInstance();
 
 public slots:
     void        receiveLoginAppClose();
@@ -71,10 +72,10 @@ private:
 //    QPoint  m_mvPos;
     QAction *m_actionShowPwd;//查看密码
     static  NewLoginForm* m_pInstance;
-    QPropertyAnimation *ani_show = nullptr;
     QPropertyAnimation *ani_opacity = nullptr;
-    QPropertyAnimation *ani_top_hide   = nullptr;
-    QPropertyAnimation *ani_bom_hide   = nullptr;
+//    QPropertyAnimation *ani_show = nullptr;
+//    QPropertyAnimation *ani_top_hide   = nullptr;
+//    QPropertyAnimation *ani_bom_hide   = nullptr;
     QParallelAnimationGroup *aniGroup = nullptr;
 
 signals:

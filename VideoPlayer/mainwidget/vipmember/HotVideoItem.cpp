@@ -13,3 +13,9 @@ HotVideoItem::~HotVideoItem()
 {
     delete ui;
 }
+
+void HotVideoItem::setVideoItemPicture(const QString &picpath)
+{
+    ui->label_video->setPixmap(QPixmap(picpath));
+    ui->label_video->setScaledContents(true);
+}

@@ -1,4 +1,4 @@
-#ifndef HOTVIDEOITEM_H
+﻿#ifndef HOTVIDEOITEM_H
 #define HOTVIDEOITEM_H
 
 #include <QWidget>
@@ -14,6 +14,8 @@ class HotVideoItem : public QWidget
 public:
     explicit HotVideoItem(QWidget *parent = nullptr);
     ~HotVideoItem();
+
+    void    setVideoItemPicture(const QString& picpath);
 
 private:
     Ui::HotVideoItem *ui;

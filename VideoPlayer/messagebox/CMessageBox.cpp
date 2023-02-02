@@ -42,7 +42,7 @@ CMessageBox::~CMessageBox()
 
 void CMessageBox::initWorkUI()
 {
-
+    ui->label_checkText->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 }
 
 void CMessageBox::handleSignalsAndSlots()

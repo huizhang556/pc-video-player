@@ -1455,12 +1455,13 @@ image: url(://images/tray/tray_checked.png);
 }
 /*托盘二级菜单-----------------------样式结束*/
 
-/*帮助按钮菜单-----------------------样式开始*/
+
+/*标题栏菜单-----------------------样式开始*/
 #pmenu_help1,#pmenu_help2
 {
-background-color:white;
-color:#2a2a31;
-border-radius: 6px;
+background-color: #16161a;
+color: #616f71;
+border-radius: 3px;
 font:normal normal 15px '微软雅黑';
 }
 
@@ -1481,8 +1482,9 @@ margin:0px;
 
 #pmenu_help1::item:selected,#pmenu_help2::item:selected
 {
-border-radius: 6px;
-background: #00aabf;
+color: #37d5ff;
+border-radius: 3px;
+background: #3c4348;
 }
 
 #pmenu_help1::icon,#pmenu_help2::icon

@@ -72,9 +72,9 @@ int main(int argc, char *argv[])
     }
 
     //05--->显示主界面
-    MainWidget w1;
-    w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
-    w1.show();
+//    MainWidget w1;
+//    w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
+//    w1.show();
 
 //    MultipPlayer::getInstance()->show();
 
@@ -98,8 +98,9 @@ int main(int argc, char *argv[])
 //    MyEmotionWindow w1;
 //    w1.showNormalEmotion(QPoint(500 , 500));
 //    DownloadType::getInstance()->show();
+    NewLoginForm::getInstance()->show();
 
-    splashscream.finish(&w1);
+//    splashscream.finish(&w1);
 
     //06--->数据恢复初始化
     QTimer::singleShot(1500,0,[=](){

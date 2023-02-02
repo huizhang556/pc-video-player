@@ -10,6 +10,7 @@ SearchForm::SearchForm(QWidget *parent) :
     ui(new Ui::SearchForm)
 {
     ui->setupUi(this);
+    this->setFixedHeight(385);
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::Popup);//无标题栏 无任务图标 鼠标单击空白自动hide()
     initWorkUi();
     chandleSignalsAndSlot();
@@ -96,6 +97,15 @@ void SearchForm::chandleSignalsAndSlot()
        CMessageBox message(MessageType::CQuestion,QString(u8"清除提示"),QString(u8"您确定要清除吗？"),QString(u8"确定"),QString(u8"取消"));
        if(message.exec() == QDialog::Accepted)//1
         clearHistoryList();
+       checkHisAutoHight();
+    });
+
+    connect(ui->listWidget_findresult,&QListWidget::itemClicked,[=](QListWidgetItem *item){
+        if(item == nullptr)
+        {
+            return;
+        }
+    addHistoryItem(item->text());
     });
 
     //更多热搜
@@ -191,7 +201,7 @@ void SearchForm::slot_showSearchResult(const QString str)
 
 void SearchForm::leaveEvent(QEvent *event)
 {
-    Q_UNUSED(event);
+    Q_UNUSED(event)
     this->hide();
 }
 
@@ -199,6 +209,22 @@ void SearchForm::clearHistoryList()
 {
     ui->listWidget_his1->clear();
     ui->listWidget_his2->clear();
+}
+
+void SearchForm::checkHisAutoHight()
+{
+    if(ui->listWidget_his1->count() == 0 && ui->listWidget_his2->count() == 0)
+    {
+        ui->frame_title_his->hide();
+        ui->frame_histories->hide();
+        this->setFixedHeight(200);
+    }
+    else
+    {
+        ui->frame_title_his->show();
+        ui->frame_histories->show();
+        this->setFixedHeight(385);
+    }
 }
 
 void SearchForm::addHistoryItem(QString his)
@@ -221,6 +247,7 @@ void SearchForm::addHistoryItem(QString his)
 //            ui->listWidget_his1->takeItem(ui->listWidget_his1->row(item));
             ui->listWidget_his1->removeItemWidget(item);
             delete item;
+            checkHisAutoHight();
         });
 
         connect(itemWidget1,&CusListItem::sig_sendItemText,[=](QString text)
@@ -240,6 +267,7 @@ void SearchForm::addHistoryItem(QString his)
 //            ui->listWidget_his2->takeItem(ui->listWidget_his1->row(item));
             ui->listWidget_his2->removeItemWidget(item);
             delete item;
+            checkHisAutoHight();
         });
 
         connect(itemWidget2,&CusListItem::sig_sendItemText,[=](QString text)
@@ -247,6 +275,7 @@ void SearchForm::addHistoryItem(QString his)
             qDebug() << QString(u8"历史记录")<<text;
         });
     }
+    checkHisAutoHight();
 }
 
 void SearchForm::closeSearchForm()

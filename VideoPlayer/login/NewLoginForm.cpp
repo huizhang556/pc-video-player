@@ -18,7 +18,7 @@ NewLoginForm::NewLoginForm(QWidget *parent):
     ui(new Ui::NewLoginForm)
 {
     ui->setupUi(this);
-    setFixedSize(700,455);
+    setFixedSize(720,465);
     setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowMinMaxButtonsHint | Qt::WindowStaysOnTopHint);
     setAttribute(Qt::WA_TranslucentBackground,true);
     initWorkUI();
@@ -29,23 +29,23 @@ NewLoginForm::NewLoginForm(QWidget *parent):
 NewLoginForm::~NewLoginForm()
 {
     delete ui;
-    if(ani_show != nullptr)
-    {
-        delete ani_show;
-        ani_show = nullptr;
-    }
+//    if(ani_show != nullptr)
+//    {
+//        delete ani_show;
+//        ani_show = nullptr;
+//    }
 
-    if(ani_top_hide != nullptr)
-    {
-        delete ani_top_hide;
-        ani_top_hide = nullptr;
-    }
+//    if(ani_top_hide != nullptr)
+//    {
+//        delete ani_top_hide;
+//        ani_top_hide = nullptr;
+//    }
 
-    if(ani_bom_hide != nullptr)
-    {
-        delete ani_bom_hide;
-        ani_bom_hide = nullptr;
-    }
+//    if(ani_bom_hide != nullptr)
+//    {
+//        delete ani_bom_hide;
+//        ani_bom_hide = nullptr;
+//    }
 
     if(ani_opacity != nullptr)
     {
@@ -119,59 +119,58 @@ void NewLoginForm::initWorkUI()
 
 void NewLoginForm::initAnimations()
 {
+//    int x_global = QApplication::desktop()->width();
+//    int y_global = QApplication::desktop()->height();
+
     //显示动画
-    ani_show = new QPropertyAnimation(this, "geometry",this);
-    ani_show->setDuration(1000);
-    ani_show->setStartValue(QRect((QApplication::desktop()->width() - this->width())/2,
-                                   (QApplication::desktop()->height() - this->height())/2,
-                                   this->width(),0));
-    ani_show->setEndValue(QRect((QApplication::desktop()->width() - this->width())/2,
-                                 (QApplication::desktop()->height() - this->height())/2,
-                                 this->width(),this->height()));
+//    ani_show = new QPropertyAnimation(this, "geometry",this);
+//    ani_show->setDuration(1000);
+//    ani_show->setStartValue(QRect((x_global - this->width())/2,
+//                                   (y_global - this->height())/2,
+//                                   this->width(),0));
+//    ani_show->setEndValue(QRect((x_global - this->width())/2,
+//                                 (y_global - this->height())/2,
+//                                 this->width(),this->height()));
 //    ani_show->start(QAbstractAnimation::DeleteWhenStopped);//如果动画设置这个参数，就不要关联信号与槽
-    connect(ani_show,&QPropertyAnimation::finished,[=](){
-//        ani_show->deleteLater();
-        qDebug() << QString(u8"显示动画结束！");
-    });
+//    connect(ani_show,&QPropertyAnimation::finished,[=](){
+//        qDebug() << QString(u8"显示动画结束！");
+//    });
 
     //透明度动画
     ani_opacity = new QPropertyAnimation(this, "windowOpacity",this);
-    ani_opacity->setDuration(1000);
+    ani_opacity->setDuration(500);
     ani_opacity->setStartValue(1);
     ani_opacity->setEndValue(0);
     // ani_opacity->start(QAbstractAnimation::DeleteWhenStopped);//如果动画设置这个参数，就不要关联信号与槽
 
 
     //矩形界面消失动画(从上到中)
-    ani_top_hide = new QPropertyAnimation(this, "geometry",this);
-    ani_top_hide->setDuration(1000);
-    ani_top_hide->setStartValue(QRect((QApplication::desktop()->width() - this->width())/2,
-                                      (QApplication::desktop()->height() - this->height())/2,
-                                      this->width(),this->height()));
+//    ani_top_hide = new QPropertyAnimation(this, "geometry",this);
+//    ani_top_hide->setDuration(1000);
+//    ani_top_hide->setKeyValueAt(0,QRect((x_global - this->width())/2,
+//                                      (y_global - this->height())/2,
+//                                      this->width(),this->height()));
 
-    ani_top_hide->setEndValue(QRect((QApplication::desktop()->width() - this->width())/2,
-                                    (QApplication::desktop()->height() - this->height())/2,
-                                    this->width(),0));
+//    ani_top_hide->setKeyValueAt(1,QRect((x_global - this->width())/2,
+//                                    (y_global + this->height())/4,
+//                                    this->width(),0));
+//    ani_top_hide->setStartValue(QRect(this->geometry()));
+//    ani_top_hide->setEndValue(QRect(this->x(),this->y()+this->height()/4-2,this->width(),4));
 
     //矩形界面消失动画(从底到中)
-    ani_bom_hide = new QPropertyAnimation(this, "geometry",this);
-    ani_bom_hide->setDuration(1000);
-    ani_bom_hide->setStartValue(QRect((QApplication::desktop()->width() - this->width())/2,
-                                      (QApplication::desktop()->height() - this->height())/2,
-                                      this->width(),this->height()));
+//    ani_bom_hide = new QPropertyAnimation(this, "geometry",this);
+//    ani_bom_hide->setDuration(500);
+//    ani_bom_hide->setStartValue(QRect((x_global - this->width())/2,
+//                                      (y_global - this->height())/2,
+//                                      this->width(),this->height()));
 
-    ani_bom_hide->setEndValue(QRect((QApplication::desktop()->width())/2,
-                                    (QApplication::desktop()->height())/2,
-                                    0,0));
+//    ani_bom_hide->setEndValue(QRect((x_global - this->width())/2,
+//                                    (y_global - this->height())/2,
+//                                    0,0));
 
-    aniGroup = new QParallelAnimationGroup();
+    aniGroup = new QParallelAnimationGroup(this);
     aniGroup->addAnimation(ani_opacity);
-    aniGroup->addAnimation(ani_top_hide);
-//    aniGroup->addAnimation(ani_bom_hide);
     connect(aniGroup,&QParallelAnimationGroup::finished,[=](){
-//        ani_opacity->deleteLater();
-//        ani_hide->deleteLater();
-//        aniGroup->deleteLater();
             this->close();
         this->setWindowOpacity(1);
         qDebug() << QString(u8"消失动画结束！");
@@ -183,6 +182,7 @@ void NewLoginForm::chandleSignalsAndSLots()
     //关闭
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){
         aniGroup->start();
+        qDebug() << this->geometry();
     });
 
     //注册
@@ -337,9 +337,11 @@ void NewLoginForm::slot_switchWinType(ShowType type)
         break;
     }
 
+    if(this->windowOpacity() == 0)
+    {
+        this->setWindowOpacity(1);
+    }
     this->exec();
-
-    ani_show->start();
 }
 
 void NewLoginForm::paintEvent(QPaintEvent *event)

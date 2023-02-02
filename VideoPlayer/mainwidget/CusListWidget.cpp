@@ -22,6 +22,7 @@ void CusListWidget::initWorkUI()
 {
 
     this->setFrameShape(QFrame::NoFrame);
+    this->setAutoScroll(false);//鼠标在两端拖动不进行滚动
     m_videoButton_L = new QPushButton("<",this);
     m_videoButton_L->setObjectName(QString::fromLocal8Bit("m_videoButton_L"));
     m_videoButton_L->setFixedSize(22,30);

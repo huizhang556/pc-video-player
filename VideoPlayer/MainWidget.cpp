@@ -1305,7 +1305,10 @@ void MainWidget::updateRightScrollToTop()
 void MainWidget::connectToTopWidget(CToTopWidget *widget)
 {
     connect(widget,&CToTopWidget::sig_scroll_verticalbar,[=](bool s){slot_update_R_B_geometry(s);});
-    connect(ScrollToTop::getInstance(),&ScrollToTop::sig_sendToTop,[=](){widget->setScrollBarToTop();});
+    connect(ScrollToTop::getInstance(),&ScrollToTop::sig_sendToTop,[=](){
+        widget->raise();//提升层次
+        widget->setScrollBarToTop();
+    });
     connect(ScrollToTop::getInstance(),&ScrollToTop::sig_sendToFlush,[=](){widget->setFlushContent();});
 }
 

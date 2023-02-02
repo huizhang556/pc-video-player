@@ -535,6 +535,9 @@ border-bottom-width: 1px;
                       </property>
                       <item>
                        <layout class="QHBoxLayout" name="horizontalLayout_6">
+                        <property name="spacing">
+                         <number>0</number>
+                        </property>
                         <item>
                          <widget class="QLineEdit" name="lineEdit_checkCode">
                           <property name="minimumSize">
@@ -574,28 +577,31 @@ QLineEdit:hover
                          <widget class="QPushButton" name="pushButton_checkCode">
                           <property name="minimumSize">
                            <size>
-                            <width>0</width>
-                            <height>30</height>
+                            <width>76</width>
+                            <height>22</height>
                            </size>
                           </property>
                           <property name="maximumSize">
                            <size>
-                            <width>16777215</width>
-                            <height>30</height>
+                            <width>76</width>
+                            <height>22</height>
                            </size>
                           </property>
                           <property name="styleSheet">
                            <string notr="true">QPushButton
 {
 color: #7e7f81;
-text-align: right;
+text-align: center;
 padding-right:3px;
+padding-left:3px;
 background-color: transparent;
 }
 
 QPushButton:hover
 {
 color: #2494e4;
+border-radius: 10px;
+background-color: rgb(216, 30, 6);
 }</string>
                           </property>
                           <property name="text">
@@ -892,7 +898,7 @@ color: white;
                          <widget class="QPushButton" name="pushButton_forgotPwd">
                           <property name="minimumSize">
                            <size>
-                            <width>0</width>
+                            <width>60</width>
                             <height>25</height>
                            </size>
                           </property>
@@ -908,7 +914,7 @@ color: white;
 color: #7e7f81;
 margin-top:3px;
 margin-left: 0px;
-text-align: right;
+text-align: center;
 padding-right:3px;
 background-color: transparent;
 }
@@ -1386,7 +1392,7 @@ background-color: rgba(58, 58, 65,0.7);
         <item>
          <widget class="QStackedWidget" name="stackedWidget_right">
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="page_login">
            <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -1964,28 +1970,31 @@ QLineEdit:hover
                        <widget class="QPushButton" name="pushButton_regis_checkCode">
                         <property name="minimumSize">
                          <size>
-                          <width>0</width>
-                          <height>30</height>
+                          <width>76</width>
+                          <height>22</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>16777215</width>
-                          <height>30</height>
+                          <width>76</width>
+                          <height>22</height>
                          </size>
                         </property>
                         <property name="styleSheet">
                          <string notr="true">QPushButton
 {
 color: #7e7f81;
-text-align: right;
+text-align: center;
 padding-right:3px;
+padding-left:3px;
 background-color: transparent;
 }
 
 QPushButton:hover
 {
 color: #2494e4;
+border-radius: 10px;
+background-color: rgb(216, 30, 6);
 }</string>
                         </property>
                         <property name="text">
@@ -2607,28 +2616,31 @@ QLineEdit:hover
                          <widget class="QPushButton" name="pushButton_fpwd_checkCode">
                           <property name="minimumSize">
                            <size>
-                            <width>0</width>
-                            <height>30</height>
+                            <width>76</width>
+                            <height>22</height>
                            </size>
                           </property>
                           <property name="maximumSize">
                            <size>
-                            <width>16777215</width>
-                            <height>30</height>
+                            <width>76</width>
+                            <height>22</height>
                            </size>
                           </property>
                           <property name="styleSheet">
                            <string notr="true">QPushButton
 {
 color: #7e7f81;
-text-align: right;
+text-align: center;
 padding-right:3px;
+padding-left:3px;
 background-color: transparent;
 }
 
 QPushButton:hover
 {
 color: #2494e4;
+border-radius: 10px;
+background-color: rgb(216, 30, 6);
 }</string>
                           </property>
                           <property name="text">
