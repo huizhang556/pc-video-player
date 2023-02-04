@@ -43,7 +43,13 @@ void CToTopWidget::setScrollBarToTop()
 
 void CToTopWidget::setFlushContent()
 {
-    qDebug() <<QString(u8"收到更新内容消息");
+//    RingWait1::getInstance()->move(this->width()/2 - RingWait1::getInstance()->width()/2,this->height()/2 - RingWait1::getInstance()->height()/2);
+//    RingWait1::getInstance()->show();
+//    //3s后自动消失
+//    QTimer::singleShot(2000,0,[&](){
+//        RingWait1::getInstance()->hide();
+//    });
+//    qDebug() <<QString(u8"收到更新内容消息");
 }
 
 void CToTopWidget::addItemToWidget(QWidget *itemWidget)

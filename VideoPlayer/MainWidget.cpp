@@ -237,6 +237,11 @@ void MainWidget::initOtherWidgetUi()
     m_cusVideoBox6 = new CusVideoBox6(m_stackWidget_center);
     m_cusVideoBox6->setObjectName(QString::fromLocal8Bit("m_cusVideoBox6"));
 
+    //视频盒子7
+    m_cusVideoBox7 = new CusVideoBox7(m_stackWidget_center);
+    m_cusVideoBox7->setObjectName(QString::fromLocal8Bit("m_cusVideoBox7"));
+
+
     //视频筛选结果
     videoFindResult = new VideoTypeSelect(m_stackWidget_center);
     videoFindResult->setObjectName(QString::fromLocal8Bit("videoFindResult"));
@@ -313,6 +318,8 @@ void MainWidget::setStackedWidgetPage()
     m_stackWidget_center->addWidget(m_fileTrans);//文件传输
     m_stackWidget_center->addWidget(m_cusVideoBox6);
     connectToTopWidget(m_cusVideoBox6);//建立关联
+    m_stackWidget_center->addWidget(m_cusVideoBox7);
+    connectToTopWidget(m_cusVideoBox7);//建立关联
 //    m_stackWidget_center->addWidget(m_tabWidget);//原始table界面
     m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
 }
@@ -1296,6 +1303,7 @@ void MainWidget::updateLeftNoticeSliderBar(bool show)
 
 void MainWidget::updateRightScrollToTop()
 {
+    //可以采用设置父亲是用相对坐标来更新2023-02-05
         ScrollToTop::getInstance()->setGeometry(this->pos().x() + width() - ScrollToTop::getInstance()->width()-15,
                                                 this->pos().y() + height() - ScrollToTop::getInstance()->height()-40,
                                                 ScrollToTop::getInstance()->width(),
@@ -1304,12 +1312,32 @@ void MainWidget::updateRightScrollToTop()
 
 void MainWidget::connectToTopWidget(CToTopWidget *widget)
 {
-    connect(widget,&CToTopWidget::sig_scroll_verticalbar,[=](bool s){slot_update_R_B_geometry(s);});
-    connect(ScrollToTop::getInstance(),&ScrollToTop::sig_sendToTop,[=](){
-        widget->raise();//提升层次
-        widget->setScrollBarToTop();
+    //置顶按钮合适的出现或消失
+    connect(widget,&CToTopWidget::sig_scroll_verticalbar,[=](bool s){
+        slot_update_R_B_geometry(s);
     });
-    connect(ScrollToTop::getInstance(),&ScrollToTop::sig_sendToFlush,[=](){widget->setFlushContent();});
+    //置顶
+    connect(ScrollToTop::getInstance(),&ScrollToTop::sig_sendToTop,[=](){
+        widget->setScrollBarToTop();
+        ScrollToTop::getInstance()->raise();
+        ScrollToTop::getInstance()->show();//提升层次
+    });
+    //刷新
+    connect(ScrollToTop::getInstance(),&ScrollToTop::sig_sendToFlush,[=](){
+        RingWait1::getInstance()->setParent(this);
+        RingWait1::getInstance()->move(this->width()/2 - RingWait1::getInstance()->width()/2,
+                                       this->height()/2 - RingWait1::getInstance()->height()/2);
+        RingWait1::getInstance()->raise();
+        RingWait1::getInstance()->show();
+
+        //手动显示出来，不被隐藏
+        ScrollToTop::getInstance()->raise();
+        ScrollToTop::getInstance()->show();//提升层次
+
+        QTimer::singleShot(2000,0,[=](){
+        RingWait1::getInstance()->close();
+        });
+    });
 }
 
 void MainWidget::slot_update_R_B_geometry(bool on)
@@ -1495,52 +1523,52 @@ void MainWidget::chandleRestoreWindow()
 /*析构函数*/
 MainWidget::~MainWidget()
 {
-    if(m_webBrowser != nullptr)
-    {
-        delete m_webBrowser;
-        m_webBrowser = nullptr;
-    }
+//    if(m_webBrowser != nullptr)
+//    {
+//        delete m_webBrowser;
+//        m_webBrowser = nullptr;
+//    }
 
-    if(m_musicList != nullptr)
-    {
-        delete m_musicList;
-        m_musicList = nullptr;
-    }
+//    if(m_musicList != nullptr)
+//    {
+//        delete m_musicList;
+//        m_musicList = nullptr;
+//    }
 
-    if(m_shortVideo != nullptr)
-    {
-        delete m_shortVideo;
-        m_shortVideo = nullptr;
-    }
+//    if(m_shortVideo != nullptr)
+//    {
+//        delete m_shortVideo;
+//        m_shortVideo = nullptr;
+//    }
 
-    if(m_musicList != nullptr)
-    {
-        delete m_musicList;
-        m_musicList = nullptr;
-    }
-    if(m_tabWidget != nullptr)
-    {
-        delete m_tabWidget;
-        m_tabWidget = nullptr;
-    }
+//    if(m_musicList != nullptr)
+//    {
+//        delete m_musicList;
+//        m_musicList = nullptr;
+//    }
+//    if(m_tabWidget != nullptr)
+//    {
+//        delete m_tabWidget;
+//        m_tabWidget = nullptr;
+//    }
 
-    if(m_videoBlank != nullptr)
-    {
-        delete m_videoBlank;
-        m_videoBlank = nullptr;
-    }
+//    if(m_videoBlank != nullptr)
+//    {
+//        delete m_videoBlank;
+//        m_videoBlank = nullptr;
+//    }
 
-    if(m_cusVideoBox != nullptr)
-    {
-        delete m_cusVideoBox;
-        m_cusVideoBox = nullptr;
-    }
+//    if(m_cusVideoBox != nullptr)
+//    {
+//        delete m_cusVideoBox;
+//        m_cusVideoBox = nullptr;
+//    }
 
-    if(m_cusVideoBox2 != nullptr)
-    {
-        delete m_cusVideoBox2;
-        m_cusVideoBox2 = nullptr;
-    }
+//    if(m_cusVideoBox2 != nullptr)
+//    {
+//        delete m_cusVideoBox2;
+//        m_cusVideoBox2 = nullptr;
+//    }
 
 }
 
@@ -1608,6 +1636,7 @@ bool MainWidget::eventFilter(QObject *watched, QEvent *event)
         {
             MainNotice::getInstance()->hide();
             ScrollToTop::getInstance()->hide();
+            RingWait1::getInstance()->hide();
         }
     }
     if(watched == m_stackWidget_center)
@@ -1794,12 +1823,13 @@ void MainWidget::closeEvent(QCloseEvent *event)
 /*界面缩放调整事件*/
 void MainWidget::resizeEvent(QResizeEvent *event)
 {
-    Q_UNUSED(event);
+    Q_UNUSED(event)
     emit sig_sendWindowResize();
     ScrollToTop::getInstance()->hide();
+    RingWait1::getInstance()->hide();
     if(!MainNotice::getInstance()->isHidden())
     {
-        MainNotice::getInstance()->hide();
+        MainNotice::getInstance()->hide();//左侧弹出消息菜单
     }
 }
 

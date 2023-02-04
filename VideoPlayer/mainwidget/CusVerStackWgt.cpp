@@ -113,7 +113,6 @@ void CusVerStackWgt::slot_addToStackPictures(const QStringList &introduce, const
         label_pic->setPixmap(QPixmap(list_pic.at(i)));
         label_pic->setScaledContents(true);
         this->insertWidget(this->count(),label_pic);
-
     }
 }
 

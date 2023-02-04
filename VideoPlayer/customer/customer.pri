@@ -13,7 +13,8 @@ SOURCES += \
     $$PWD/BaseWidget.cpp \
     $$PWD/BaseMainWindow.cpp \
     $$PWD/BaseDialog.cpp \
-    $$PWD/CToTopWidget.cpp
+    $$PWD/CToTopWidget.cpp \
+    $$PWD/RingWait1.cpp
 
 HEADERS += \
     $$PWD/CusTabWidget.h \
@@ -30,7 +31,8 @@ HEADERS += \
     $$PWD/BaseWidget.h \
     $$PWD/BaseMainWindow.h \
     $$PWD/BaseDialog.h \
-    $$PWD/CToTopWidget.h
+    $$PWD/CToTopWidget.h \
+    $$PWD/RingWait1.h
 
 FORMS += \
     $$PWD/CusTabWidget.ui \

@@ -26,6 +26,7 @@ ScrollToTop::~ScrollToTop()
 void ScrollToTop::initWorkUI()
 {
     ui->pushButton_totop->hide();//默认先隐藏起来
+    setFocusPolicy(Qt::NoFocus);
 }
 
 void ScrollToTop::handleSignalsAndSlots()
@@ -52,6 +53,7 @@ void ScrollToTop::scrollToTopShow()
 {
     this->setFixedHeight(110);
     ui->pushButton_totop->show();
+    this->raise();
     this->show();
 }
 
@@ -59,5 +61,6 @@ void ScrollToTop::scrollToTopHide()
 {
     ui->pushButton_totop->hide();
     this->setFixedHeight(55);
+    this->raise();
     this->show();
 }

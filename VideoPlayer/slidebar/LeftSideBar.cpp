@@ -38,7 +38,8 @@ void LeftSideBar::setSlideBarListText(QStringList strList)
                <<QString(u8"下载记录")
                <<QString(u8"个人主页")
                <<QString(u8"传输记录")
-               <<QString(u8"最初的页");//21项目
+               <<QString(u8"视屏盒子6")
+               <<QString(u8"视屏盒子7");//21项目
     //传统方法
     for(int i = 0;i<t_strList.size();i++)
     {

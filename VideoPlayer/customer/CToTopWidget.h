@@ -1,6 +1,8 @@
 ﻿#ifndef CTOTOPWIDGET_H
 #define CTOTOPWIDGET_H
 
+#include "customer/RingWait1.h"
+#include <QTimer>
 #include <QWidget>
 #include <QScrollBar>
 #include <QLayout>
@@ -31,6 +33,7 @@ protected:
     void    removeItemFromWidget(QLayoutItem *layout);//移除
 private:
     Ui::CToTopWidget *ui;
+
 
 signals:
     void    sig_scroll_verticalbar(bool);

@@ -69,7 +69,11 @@ SOURCES += \
     $$PWD/shortvideo/ShortVideo.cpp \
     $$PWD/subunititems/HotListItem.cpp \
     $$PWD/subunititems/HotRankList.cpp \
-    $$PWD/cusvideosbox/CusVideoBox6.cpp
+    $$PWD/cusvideosbox/CusVideoBox6.cpp \
+    $$PWD/SCrollListWidget.cpp \
+    $$PWD/AniStackWidget.cpp \
+    $$PWD/cusvideosbox/CusVideoBox7.cpp \
+    $$PWD/CusLabel1.cpp
 
 HEADERS += \
     $$PWD/songersort/SongerSort.h \
@@ -142,7 +146,11 @@ HEADERS += \
     $$PWD/shortvideo/ShortVideo.h \
     $$PWD/subunititems/HotListItem.h \
     $$PWD/subunititems/HotRankList.h \
-    $$PWD/cusvideosbox/CusVideoBox6.h
+    $$PWD/cusvideosbox/CusVideoBox6.h \
+    $$PWD/SCrollListWidget.h \
+    $$PWD/AniStackWidget.h \
+    $$PWD/cusvideosbox/CusVideoBox7.h \
+    $$PWD/CusLabel1.h
 
 FORMS += \
     $$PWD/songersort/SongerSort.ui \
@@ -201,7 +209,9 @@ FORMS += \
     $$PWD/subunititems/CusListItem1.ui \
     $$PWD/VideoItemHover.ui \
     $$PWD/shortvideo/ShortVideo.ui \
-    $$PWD/subunititems/HotListItem.ui
+    $$PWD/subunititems/HotListItem.ui \
+    $$PWD/SCrollListWidget.ui \
+    $$PWD/CusLabel1.ui
 
 
 DISTFILES +=

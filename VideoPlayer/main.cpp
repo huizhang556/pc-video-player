@@ -6,11 +6,12 @@
 #include "videomodels/MultipPlayer.h"
 #include "splashscreen/CSplashScreen.h"
 #include "mainwidget/subunititems/HotRankList.h"
-#include "mainwidget/cusvideosbox/CusVideoBox6.h"
+#include "mainwidget/cusvideosbox/CusVideoBox7.h"
 #include "miniplayer/MiniPlayer.h"
 #include "pernotice/MainNotice.h"
 #include "fileshandle/DownloadType.h"
 //#include "facebread/myemotionwindow.h"
+#include "mainwidget/AniStackWidget.h"
 
 
 #include <QTranslator>
@@ -72,35 +73,43 @@ int main(int argc, char *argv[])
     }
 
     //05--->显示主界面
-//    MainWidget w1;
-//    w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
-//    w1.show();
 
-//    MultipPlayer::getInstance()->show();
+#if 0
+    //    MultipPlayer::getInstance()->show();
 
-//    TitleBar w1;
-//    w1.show();
+    //    TitleBar w1;
+    //    w1.show();
 
-//    RankList w1(QString(u8"动画热播榜"),10);
-//    w1.show();
+    //    RankList w1(QString(u8"动画热播榜"),10);
+    //    w1.show();
 
-//    ShortVideo w1;
-//    w1.show();
+    //    ShortVideo w1;
+    //    w1.show();
 
-//    CusVideoBox6 w1;
-//    w1.show();
+    CusVideoBox7 w1;
+    w1.show();
 
-//    MainNotice w1;
-//    w1.show();
+    //    MainNotice w1;
+    //    w1.show();
 
-//    CreateCenter::getInstance()->show();
+    //    CreateCenter::getInstance()->show();
 
-//    MyEmotionWindow w1;
-//    w1.showNormalEmotion(QPoint(500 , 500));
-//    DownloadType::getInstance()->show();
-    NewLoginForm::getInstance()->show();
+    //    MyEmotionWindow w1;
+    //    w1.showNormalEmotion(QPoint(500 , 500));
+    //    DownloadType::getInstance()->show();
+    //    NewLoginForm::getInstance()->show();
+    //    AniStackWidget w1;
+    //    w1.show();
 
-//    splashscream.finish(&w1);
+#else
+
+    MainWidget w1;
+    w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
+    w1.show();
+
+#endif
+
+    splashscream.finish(&w1);
 
     //06--->数据恢复初始化
     QTimer::singleShot(1500,0,[=](){
