@@ -94,6 +94,7 @@ margin:0px;
         <string notr="true">#stackedWidget_player
 {
 background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0, stop:0 #1a1a1a, stop:1  #082552);
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0, stop:0 #1a1a1a, stop:1  #141d2c);
 }</string>
        </property>
        <widget class="QWidget" name="stackedWidget_playerPage1">

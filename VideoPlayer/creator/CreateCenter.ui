@@ -20,8 +20,8 @@ border: none;
 /*qlistwidget点击去掉边线*/
 outline: 0px;
 font-family: &quot;微软雅黑&quot;;
-background-color: rgb(192, 255, 2);
-
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0, stop:0 #1a1a1a, stop:1  #141d2c);
+	background-color:#00d661;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_43">
@@ -173,7 +173,7 @@ margin: 0;
 }</string>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>3</number>
            </property>
            <widget class="QWidget" name="tab_percenter">
             <attribute name="title">
@@ -437,7 +437,7 @@ color: #65dede;
 }</string>
                       </property>
                       <property name="currentIndex">
-                       <number>0</number>
+                       <number>2</number>
                       </property>
                       <widget class="QWidget" name="page">
                        <property name="geometry">

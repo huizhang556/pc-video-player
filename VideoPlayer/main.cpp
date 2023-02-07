@@ -12,6 +12,7 @@
 #include "fileshandle/DownloadType.h"
 //#include "facebread/myemotionwindow.h"
 #include "mainwidget/AniStackWidget.h"
+#include "customer/CPolLabel.h"
 
 
 #include <QTranslator>
@@ -75,7 +76,7 @@ int main(int argc, char *argv[])
     //05--->显示主界面
 
 #if 0
-    //    MultipPlayer::getInstance()->show();
+    //        MultipPlayer::getInstance()->show();
 
     //    TitleBar w1;
     //    w1.show();
@@ -86,11 +87,14 @@ int main(int argc, char *argv[])
     //    ShortVideo w1;
     //    w1.show();
 
-    CusVideoBox7 w1;
-    w1.show();
-
-    //    MainNotice w1;
+    //    CusVideoBox7 w1;
     //    w1.show();
+
+    //    CPolLabel w1(QSize(100,100),QString(":/images/bgpic/dieji3.png"),8);
+    //    w1.show();
+
+    //        MainNotice w1;
+    //        w1.show();
 
     //    CreateCenter::getInstance()->show();
 
@@ -101,15 +105,16 @@ int main(int argc, char *argv[])
     //    AniStackWidget w1;
     //    w1.show();
 
+    //        splashscream.finish(&w1);
+
 #else
 
     MainWidget w1;
     w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
     w1.show();
-
+    splashscream.finish(&w1);
 #endif
 
-    splashscream.finish(&w1);
 
     //06--->数据恢复初始化
     QTimer::singleShot(1500,0,[=](){

@@ -82,6 +82,7 @@ void MainNotice::handleSignalsAndSlots()
 //            ui->pushButton_send_picture->setDisabled(false);
 //    });
 
+    //发送文本
     connect(ui->lineEdit_send,&QLineEdit::returnPressed,[=](){
         QString content = ui->lineEdit_send->text().trimmed();
         QString datatime = QDateTime::currentDateTime().toString("MM-dd hh:mm");
@@ -97,7 +98,7 @@ void MainNotice::handleSignalsAndSlots()
     });
 
 
-
+    //发送表情
     connect(ui->pushButton_send_emoj,&QPushButton::clicked,[=](){
         const int x = ui->pushButton_send_emoj->parentWidget()->mapToGlobal(ui->pushButton_send_emoj->pos()).x();
         const int y = ui->pushButton_send_emoj->parentWidget()->mapToGlobal(ui->pushButton_send_emoj->pos()).y();
@@ -105,6 +106,7 @@ void MainNotice::handleSignalsAndSlots()
 //            w1->showNormalEmotion(QPoint(x - w1->width() , y - w1->height()));
     });
 
+    //发送图片
     connect(ui->pushButton_send_picture,&QPushButton::clicked,[=](){
         QStringList list =  QFileDialog::getOpenFileNames(this,//不指定父窗口，设置自己的样式
                                                      QString::fromLocal8Bit("选择文件"),
@@ -114,10 +116,10 @@ void MainNotice::handleSignalsAndSlots()
 
         QString datatime = QDateTime::currentDateTime().toString("MM-dd hh:mm");
         foreach (auto var, list) {
-            switchToDetailMessage(NOTICETYPE::NOTICE_R,
-                                  QString(u8""),
-                                  datatime,
-                                  imgPathToHtml(var));
+            switchToDetailMessage(NOTICETYPE::NOTICE_R,//己方消息
+                                  QString(u8""),//头像
+                                  datatime,//时间
+                                  imgPathToHtml(var));//内容（图像）
         }
         ui->listWidget_details->scrollToBottom();//滚到最底部
         ui->lineEdit_send->clear();
@@ -530,7 +532,7 @@ void MainNotice::switchToDetailMessage(NOTICETYPE type, const QString &header, c
 
 QString& MainNotice::imgPathToHtml(QString &path)
 {
-    path = QString("<img src=\"%1\"/>").arg(path);
+    path = QString("<img width= %1 height= %2 src=\"%3\"/>").arg(260).arg(100).arg(path);
     return path;
 }
 

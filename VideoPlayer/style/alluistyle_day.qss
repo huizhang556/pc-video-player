@@ -396,7 +396,7 @@ margin: 0px 0px;
 /*播放器界面标题栏---内衬*/
 #stackedWidget_videoTitle
 {
-background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0, stop:0 #055690, stop:1  #081f4a);
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0, stop:0 #1a1a1a, stop:1  #141d2c);
 }
 
 /*------------------------左侧节目侧边栏列表----start-----------------------------*/
@@ -1394,12 +1394,13 @@ outline:0;
 border:none;/*去边线*/
 }
 
-/*托盘二级菜单-----------------样式开始*/
+/*托盘一、二级菜单-----------------样式开始*/
 #m_menuTray,#m_playMode
 {
-background-color:white;
-color:#2a2a31;
-font:normal normal 13px '微软雅黑';
+background-color: #16161a;
+color: #616f71;
+border-radius: 3px;
+font:normal normal 15px '微软雅黑';
 }
 
 /*一级菜单tiem*/
@@ -1421,8 +1422,9 @@ border: 1px solid transparent;
 /*鼠标滑过*/
 #m_menuTray::item:selected,#m_playMode::item:selected
 {
-border-radius: 5px;
-background: #90c8f6;
+color: #37d5ff;
+border-radius: 3px;
+background: #3c4348;
 }
 
 /*一级菜单--图标*/
@@ -1456,7 +1458,7 @@ image: url(://images/tray/tray_checked.png);
 /*托盘二级菜单-----------------------样式结束*/
 
 
-/*标题栏菜单-----------------------样式开始*/
+/*标题栏菜单（帮助菜单）-----------------------样式开始*/
 #pmenu_help1,#pmenu_help2
 {
 background-color: #16161a;

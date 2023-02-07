@@ -953,9 +953,15 @@ void MainWidget::updateAddWebButtonPosition()
 void MainWidget::createTrayMenu()
 {
     m_menuTray = new QMenu(this);
+    m_menuTray->setWindowFlag(Qt::FramelessWindowHint);
+    m_menuTray->setAttribute(Qt::WA_TranslucentBackground);
+    m_menuTray->setWindowFlag(Qt::NoDropShadowWindowHint);
     m_menuTray->setObjectName(QString::fromLocal8Bit("m_menuTray"));//设置样式用
     m_systemTray = new SystemTray(this);//必须new 出来，不能获取单例方式
     m_playMode = new  QMenu(QString::fromLocal8Bit("播放模式"));
+    m_playMode->setWindowFlag(Qt::FramelessWindowHint);
+    m_playMode->setAttribute(Qt::WA_TranslucentBackground);
+    m_playMode->setWindowFlag(Qt::NoDropShadowWindowHint);
     m_playMode->setObjectName(QString::fromLocal8Bit("m_playMode"));
     m_playMode->setIcon(QIcon("://images/tray/tray_playmode.png"));
     m_actionGroup = new QActionGroup(this);

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>387</width>
-    <height>98</height>
+    <width>393</width>
+    <height>109</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,7 @@ background-color: transparent;
    <item>
     <widget class="QStackedWidget" name="stackedWidget_MSG">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_systemMsg">
       <layout class="QVBoxLayout" name="verticalLayout_3">

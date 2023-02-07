@@ -19,7 +19,7 @@ CreateCenter::CreateCenter(QWidget *parent) :
     setInstallEventer();
     this->resize(1100,700);
     this->setMinimumSize(QSize(1100,700));
-    this->setTitleBarMoveArea(m_ctitleBar,2);
+    this->setTitleBarMoveArea(m_ctitleBar,1);
     this->setWindowTitle(QString::fromLocal8Bit("创作中心"));
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);
 
@@ -49,7 +49,7 @@ CreateCenter *CreateCenter::getInstance()
 
 void CreateCenter::initWorkUI()
 {
-    this->setContentsMargins(2,2,2,2);
+    this->setContentsMargins(1,1,1,1);
     m_miniPlayer = new MiniPlayer();
 
     ui->pushButton_uploadFiles->setCheckable(true);

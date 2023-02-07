@@ -396,7 +396,7 @@ margin: 0px 0px;
 /*播放器界面标题栏---内衬*/
 #stackedWidget_videoTitle
 {
-background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0, stop:0 #055690, stop:1  #081f4a);
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0, stop:0 #0c2537, stop:1  #082840);
 }
 
 /*------------------------左侧节目侧边栏列表----start-----------------------------*/
@@ -1455,11 +1455,13 @@ image: url(://images/tray/tray_checked.png);
 }
 /*托盘二级菜单-----------------------样式结束*/
 
-/*帮助按钮菜单-----------------------样式开始*/
+
+/*标题栏菜单-----------------------样式开始*/
 #pmenu_help1,#pmenu_help2
 {
-background-color:white;
-color:#2a2a31;
+background-color: #16161a;
+color: #616f71;
+border-radius: 3px;
 font:normal normal 15px '微软雅黑';
 }
 
@@ -1480,8 +1482,9 @@ margin:0px;
 
 #pmenu_help1::item:selected,#pmenu_help2::item:selected
 {
-border-radius: 5px;
-background: #00aabf;
+color: #37d5ff;
+border-radius: 3px;
+background: #3c4348;
 }
 
 #pmenu_help1::icon,#pmenu_help2::icon
@@ -1494,7 +1497,7 @@ margin-left:10px;
 /*NOTICE设置--右键菜单*/
 #m_setMenu_notice
 {
-background-color: #242628;
+background-color: #223e5b;
 color:#9a9fa6;
 border-radius: 6px;
 font: 400 normal 15px '微软雅黑';
@@ -1512,6 +1515,7 @@ border: 1px solid transparent;
 #m_setMenu_notice::item:selected
 {
 color: white;
+border-radius: 6px;
 background-color: #2f3134;
 }
 
