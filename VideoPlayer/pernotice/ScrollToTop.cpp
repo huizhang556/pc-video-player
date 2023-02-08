@@ -18,6 +18,7 @@ ScrollToTop::ScrollToTop(QWidget *parent) :
 ScrollToTop::~ScrollToTop()
 {
     delete ui;
+    //如果单例指定了父亲，父亲会负责析构
 //    if(m_pInstance != nullptr)
 //        delete m_pInstance;
 //    m_pInstance = nullptr;
