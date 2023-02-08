@@ -127,6 +127,7 @@ private:
     QLabel*         getItem_Label(QListWidgetItem *item,const QString& objname);
     QCheckBox*      getItem_CheckBox(QListWidgetItem *item,const QString& objname);
     void            setToolButtonTextAndIcon(const QAction *action);
+    void            autoResizeList_songer();
 
 signals:
     void            hoverIndexChanged(QModelIndex);

@@ -5,9 +5,9 @@
 #include <QUrl>
 #include <QFile>
 #include <QObject>
-#include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QNetworkAccessManager>
 #include <QWebEngineDownloadItem>
 
 class Worker : public QObject

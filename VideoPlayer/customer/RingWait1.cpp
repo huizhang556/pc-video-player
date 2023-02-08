@@ -32,9 +32,10 @@ RingWait1::RingWait1(const QSize &size,const QColor &color, const bool switch_on
 
 RingWait1::~RingWait1()
 {
-    if(m_pInstance != nullptr)
-        delete m_pInstance;
-    m_pInstance = nullptr;
+    //如果单例指定了父亲，父亲会负责析构
+//    if(m_pInstance != nullptr)
+//        delete m_pInstance;
+//    m_pInstance = nullptr;
 }
 
 void RingWait1::setColor(const QColor &color)

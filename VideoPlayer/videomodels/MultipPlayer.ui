@@ -1237,15 +1237,15 @@ border:none;
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
+   <class>TextMovingLabel</class>
+   <extends>QLabel</extends>
+   <header>customer/TextMovingLabel.h</header>
+  </customwidget>
+  <customwidget>
    <class>RotatePic</class>
    <extends>QWidget</extends>
    <header location="global">videomodels/RotatePic.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>TextMovingLabel</class>
-   <extends>QLabel</extends>
-   <header>customer/TextMovingLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

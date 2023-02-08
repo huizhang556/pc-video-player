@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     a.installTranslator(&translator1);
 
     //01--->加载全局样式
-    loadGlobalQss::loadAllUIQss();
+    loadGlobalQss::loadAllUIQss(STYLETYPE::STYLE_BLACK);
 //    QFont f("黑体",10);
 //    a.setFont(f);
 

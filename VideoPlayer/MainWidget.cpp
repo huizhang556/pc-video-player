@@ -284,6 +284,12 @@ void MainWidget::initOtherWidgetUi()
     this->setLayout(m_vblayout);
     this->setContentsMargins(MARWIDTH,MARWIDTH,MARWIDTH,MARWIDTH);//界面拉伸的边缘宽度
     this->layout()->setContentsMargins(0,0,0,0);//布局的边缘宽度
+
+    ScrollToTop::getInstance()->setParent(this);//设为父亲
+    ScrollToTop::getInstance()->hide();
+
+    RingWait1::getInstance()->setParent(this);
+    RingWait1::getInstance()->hide();
 }
 
 //设置StackedWidget布局每个page界面
@@ -566,13 +572,25 @@ void MainWidget::handleSignalAndSLots()
 //        m_webHistory->slot_globalResize();//历史记录界面更新
     });
 
+    //更换皮肤
+    connect(m_leftSideBar,&LeftSideBar::sig_sendSkinMode,[=](bool day){
+        if(day)
+        {
+            loadGlobalQss::loadAllUIQss(STYLETYPE::STYLE_BLACK);
+        }
+        else
+        {
+            loadGlobalQss::loadAllUIQss(STYLETYPE::STYLE_WHITE);
+        }
+    });
+
     //主界面resize
     connect(this,&MainWidget::sig_sendWindowResize,m_titleBar,&TitleBar::slot_clearAllPopupUi);
 
     //m_stackWidget_center改变
     connect(m_stackWidget_center,&QStackedWidget::currentChanged,[=](int index){
         m_leftSideBar->slot_setCurrentIndex(index);//标题栏改变
-        //判断是否显示置顶工具
+        //切换时，hide，有些界面不需要
         if(!ScrollToTop::getInstance()->isHidden())//浏览器界面不需要
         {
             ScrollToTop::getInstance()->hide();
@@ -685,7 +703,7 @@ void MainWidget::handleSignalAndSLots()
     connect(m_titleBar,&TitleBar::sig_winNormal,this,&MainWidget::chandleRestoreWindow);//根据不同状态处理窗口
     connect(m_titleBar,&TitleBar::sig_doubleClick,[=](){chandleRestoreWindow();});
     connect(m_titleBar,&TitleBar::sig_winMinimum,[=](){
-        if(!ScrollToTop::getInstance()->isHidden()) ScrollToTop::getInstance()->hide();
+//        if(!ScrollToTop::getInstance()->isHidden()) ScrollToTop::getInstance()->hide();
         if(!MainNotice::getInstance()->isHidden()) MainNotice::getInstance()->hide();
         this->showMinimized();
     });
@@ -1150,7 +1168,7 @@ void MainWidget::tray_systemSettting()
 void MainWidget::tray_onlineUpgrade()
 {
 //    QMessageBox::information(this,QString::fromLocal8Bit("更新提示"),QString::fromLocal8Bit("请前往官网下载更新！"));
-    Updater::getInstance()->exec();
+    Updater::getInstance()->exec_();
 }
 
 void MainWidget::tray_systemLogout()
@@ -1310,10 +1328,12 @@ void MainWidget::updateLeftNoticeSliderBar(bool show)
 void MainWidget::updateRightScrollToTop()
 {
     //可以采用设置父亲是用相对坐标来更新2023-02-05
-        ScrollToTop::getInstance()->setGeometry(this->pos().x() + width() - ScrollToTop::getInstance()->width()-15,
-                                                this->pos().y() + height() - ScrollToTop::getInstance()->height()-40,
-                                                ScrollToTop::getInstance()->width(),
-                                                ScrollToTop::getInstance()->height());
+//        ScrollToTop::getInstance()->setGeometry(this->pos().x() + width() - ScrollToTop::getInstance()->width()-15,
+//                                                this->pos().y() + height() - ScrollToTop::getInstance()->height()-40,
+//                                                ScrollToTop::getInstance()->width(),
+//                                                ScrollToTop::getInstance()->height());
+        ScrollToTop::getInstance()->move(this->width() - ScrollToTop::getInstance()->width() - 15,
+                                         this->height() - ScrollToTop::getInstance()->height() - 15);
 }
 
 void MainWidget::connectToTopWidget(CToTopWidget *widget)
@@ -1325,19 +1345,18 @@ void MainWidget::connectToTopWidget(CToTopWidget *widget)
     //置顶
     connect(ScrollToTop::getInstance(),&ScrollToTop::sig_sendToTop,[=](){
         widget->setScrollBarToTop();
-        ScrollToTop::getInstance()->raise();
+//        ScrollToTop::getInstance()->raise();
         ScrollToTop::getInstance()->show();//提升层次
     });
     //刷新
     connect(ScrollToTop::getInstance(),&ScrollToTop::sig_sendToFlush,[=](){
-        RingWait1::getInstance()->setParent(this);
         RingWait1::getInstance()->move(this->width()/2 - RingWait1::getInstance()->width()/2,
                                        this->height()/2 - RingWait1::getInstance()->height()/2);
         RingWait1::getInstance()->raise();
         RingWait1::getInstance()->show();
 
         //手动显示出来，不被隐藏
-        ScrollToTop::getInstance()->raise();
+//        ScrollToTop::getInstance()->raise();
         ScrollToTop::getInstance()->show();//提升层次
 
         QTimer::singleShot(2000,0,[=](){
@@ -1641,7 +1660,6 @@ bool MainWidget::eventFilter(QObject *watched, QEvent *event)
         if(event->type() == QEvent::Move)
         {
             MainNotice::getInstance()->hide();
-            ScrollToTop::getInstance()->hide();
             RingWait1::getInstance()->hide();
         }
     }
@@ -1823,7 +1841,6 @@ void MainWidget::closeEvent(QCloseEvent *event)
          event->accept();
      }
      MainNotice::getInstance()->close();
-     ScrollToTop::getInstance()->close();
 }
 
 /*界面缩放调整事件*/
@@ -1831,7 +1848,6 @@ void MainWidget::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event)
     emit sig_sendWindowResize();
-    ScrollToTop::getInstance()->hide();
     RingWait1::getInstance()->hide();
     if(!MainNotice::getInstance()->isHidden())
     {

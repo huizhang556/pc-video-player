@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>style/alluistyle_black.qss</file>
+        <file>style/alluistyle_dark.qss</file>
+        <file>style/alluistyle_pink.qss</file>
+        <file>style/alluistyle_white.qss</file>
+    </qresource>
+</RCC>

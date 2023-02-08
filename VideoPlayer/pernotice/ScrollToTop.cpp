@@ -18,9 +18,18 @@ ScrollToTop::ScrollToTop(QWidget *parent) :
 ScrollToTop::~ScrollToTop()
 {
     delete ui;
-    if(m_pInstance != nullptr)
-        delete m_pInstance;
-    m_pInstance = nullptr;
+//    if(m_pInstance != nullptr)
+//        delete m_pInstance;
+//    m_pInstance = nullptr;
+}
+
+ScrollToTop *ScrollToTop::getInstance()
+{
+    if(m_pInstance == nullptr)
+    {
+        m_pInstance = new ScrollToTop();
+    }
+    return m_pInstance;
 }
 
 void ScrollToTop::initWorkUI()
@@ -40,20 +49,12 @@ void ScrollToTop::handleSignalsAndSlots()
     });
 }
 
-ScrollToTop *ScrollToTop::getInstance()
-{
-    if(m_pInstance == nullptr)
-    {
-        m_pInstance = new ScrollToTop();
-    }
-    return m_pInstance;
-}
 
 void ScrollToTop::scrollToTopShow()
 {
     this->setFixedHeight(110);
     ui->pushButton_totop->show();
-    this->raise();
+//    this->raise();
     this->show();
 }
 
@@ -61,6 +62,6 @@ void ScrollToTop::scrollToTopHide()
 {
     ui->pushButton_totop->hide();
     this->setFixedHeight(55);
-    this->raise();
+//    this->raise();
     this->show();
 }

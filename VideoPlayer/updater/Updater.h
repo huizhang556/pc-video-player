@@ -2,6 +2,8 @@
 #define UPDATER_H
 
 #include <QDialog>
+#include <QButtonGroup>
+#include <QDebug>
 
 namespace Ui {
 class Updater;
@@ -17,12 +19,15 @@ public:
     static Updater* getInstance();
     void    initWorkUI();
     void    handleSignalsAndSlots();
+    void    exec_();
+
 
 protected:
 
 private:
     Ui::Updater *ui;
     static Updater* m_pInstance;
+    QButtonGroup *buttonGroup   =   nullptr;
 };
 
 #endif // UPDATER_H

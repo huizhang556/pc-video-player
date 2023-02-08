@@ -25,6 +25,7 @@
 #include "videomodels/PlayOrderForm.h"
 #include "videomodels/VideoTitleBar.h"
 #include "videomodels/PersonFileForm.h"
+#include "style/loadGlobalQss.h"
 #include "pernotice/MainNotice.h"
 #include "pernotice/ScrollToTop.h"
 #include "mainwidget/HomeWidget.h"

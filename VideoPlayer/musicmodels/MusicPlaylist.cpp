@@ -8,6 +8,7 @@
 #include <QCheckBox>
 #include <QHeaderView>
 #include <QMessageBox>
+#include <QScrollBar>
 #include <QListWidgetItem>
 #include <QAbstractItemModel>
 
@@ -147,8 +148,13 @@ void MusicPlaylist::handleSignalsAndSlots()
         {
             for(int i = 0; i < ui->listWidget_songer->count(); i++)
             {
+                QWidget *widget = ui->listWidget_songer->itemWidget(ui->listWidget_songer->item(i));//此时的item是删除后已经排好序的
+                QStackedWidget* stack_num = widget->findChild<QStackedWidget*>("stackedWidget_num");
+                if(stack_num != nullptr)
+                stack_num->setCurrentIndex(0);
                 getItem_CheckBox(ui->listWidget_songer->item(i),"checkBox")->setChecked(false);
             }
+            ui->stackedWidget_select->setCurrentWidget(ui->page_num);
         }
     });
 
@@ -210,7 +216,8 @@ bool MusicPlaylist::eventFilter(QObject *watched, QEvent *event)
     {
         if(event->type() == QEvent::Resize)
         {
-            ui->listWidget_songer->updateGeometry();
+            autoResizeList_songer();
+//            ui->listWidget_songer->updateGeometry();
         }
     }
     return QWidget::eventFilter(watched,event);
@@ -582,6 +589,21 @@ void MusicPlaylist::setToolButtonTextAndIcon(const QAction *action)
         ui->Btn_sort->setIcon(QIcon("://images/music/song_quality.png"));
     }
     ui->Btn_sort->setText(action->text());
+}
+
+void MusicPlaylist::autoResizeList_songer()
+{
+    if(ui->listWidget_songer->count() == 0) return;
+    if(ui->listWidget_songer->count() > 0)
+    {
+        for(int i = 0; i < ui->listWidget_songer->count(); i++)
+        {
+            ui->listWidget_songer->item(i)->setSizeHint(QSize(ui->listWidget_songer->width() - ui->listWidget_songer->verticalScrollBar()->width()-1,
+                                                              ITEMSIZE.height())
+                                                        + QSize(0,1));
+        }
+    }
+//    qDebug() << QString(u8"ui->listWidget_songer -----> item changed");
 }
 
 

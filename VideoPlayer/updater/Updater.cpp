@@ -9,7 +9,7 @@ Updater::Updater(QWidget *parent) :
     ui(new Ui::Updater)
 {
     ui->setupUi(this);
-    setFixedSize(320,200);
+    setFixedSize(320,160);
     this->setAttribute(Qt::WA_Hover);
 //    this->setAttribute(Qt::WA_TranslucentBackground,true);
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowStaysOnTopHint);
@@ -36,9 +36,18 @@ Updater *Updater::getInstance()
 
 void Updater::initWorkUI()
 {
+    ui->pushButton_accept->setCheckable(true);
+    ui->pushButton_reject->setCheckable(true);
+
+    buttonGroup = new QButtonGroup(this);
+    buttonGroup->setExclusive(true);
+    buttonGroup->addButton(ui->pushButton_accept,0);
+    buttonGroup->addButton(ui->pushButton_reject,1);
+    buttonGroup->button(0)->setChecked(true);
+
     ui->stackedWidget_select->setCurrentIndex(1);
     ui->textEdit_info->setAlignment(Qt::AlignLeft);
-    ui->textEdit_info->setText(QString(u8"Windows客户端V1.1.6版本\n\n,最新版本：客户端V1.1.7版本"));
+    ui->textEdit_info->setText(QString(u8"Windows客户端V1.1.6版本\n\n 最新版本：客户端V1.1.7版本"));
 }
 
 void Updater::handleSignalsAndSlots()
@@ -65,4 +74,14 @@ void Updater::handleSignalsAndSlots()
     connect(ui->pushButton_reject,&QPushButton::clicked,[=](){
         this->reject();
     });
+}
+
+void Updater::exec_()
+{
+    if(!ui->pushButton_accept->isChecked())
+    {
+        ui->pushButton_accept->setChecked(true);
+        ui->pushButton_reject->setChecked(false);
+    }
+    this->exec();
 }
