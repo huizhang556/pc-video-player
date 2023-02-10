@@ -24,6 +24,7 @@ public:
     ~UploadWork();
 
 public slots:
+
     void    slot_receiveData_accept(const QUrl& media_url);
 
 signals:

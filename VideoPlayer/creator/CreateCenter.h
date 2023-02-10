@@ -54,6 +54,8 @@ private slots:
     void            addMediaType(const QString& title);
 //    void            slot_receiveThreadStarted();
 //    void            slot_receiveThreadFinished();
+    void            slot_addFileToList();
+    void            slot_clearList();
 
 private:
     QList<QUrl>    getOpenFileSystem();

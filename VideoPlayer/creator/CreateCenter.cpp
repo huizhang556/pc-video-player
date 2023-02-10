@@ -155,6 +155,7 @@ void CreateCenter::initWorkUI()
     }
 
     //上传列表
+    ui->listWidget_videopolish->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->listWidget_videopolish->setViewMode(QListView::IconMode);
     ui->listWidget_videopolish->setMovement(QListView::Static);//图标不可拖动
     ui->listWidget_videopolish->setResizeMode(QListWidget::Adjust);
@@ -319,6 +320,16 @@ void CreateCenter::handleSignalsAndSlots()
 //    connect(m_signalMapper,SIGNAL(mapped(QString)),this,SLOT(addMediaType(QString)));
     connect(m_signalMapper,QOverload<const QString&>::of(&QSignalMapper::mapped),[&](const QString& type){addMediaType(type);});
 
+
+    //上传列表（右键菜单）
+    connect(ui->listWidget_videopolish,&CListWidget::customContextMenuRequested,[=](const QPoint &pos){
+        qDebug() <<QString(u8"触发右键!");
+        QMenu menu_rlist(this);
+        menu_rlist.addAction(QIcon("://images/tray/tray_setting.png"),QString::fromLocal8Bit("添加文件"),this,SLOT(slot_addFileToList()));
+        menu_rlist.addAction(QIcon("://images/tray/tray_setting.png"),QString::fromLocal8Bit("清除列表"),this,SLOT(slot_clearList()));
+        menu_rlist.exec(QCursor::pos());
+    });
+
     //媒体列表
     connect(ui->listWidget_producelist,&QListWidget::itemClicked,[=](QListWidgetItem *item){
         if(item->text() == QString(u8"电影"))
@@ -475,6 +486,17 @@ void CreateCenter::addMediaType(const QString &title)
     });
 }
 
+void CreateCenter::slot_addFileToList()
+{
+    ui->pushButton_openfile->click();//模拟按钮点击
+}
+
+void CreateCenter::slot_clearList()
+{
+    ui->listWidget_videopolish->clear();
+    checkListItemsCounts();
+}
+
 //void CreateCenter::slot_receiveThreadStarted()
 //{
 //    qDebug() << QString(u8"文件上传开始！");
@@ -499,6 +521,7 @@ void CreateCenter::checkListItemsCounts()
     }
 }
 
+//添加将要上传的作品
 void CreateCenter::addFileItemsToList(const QList<QUrl> urlLists)
 {
     foreach (QUrl fileUrl, urlLists)
@@ -577,8 +600,8 @@ void CreateCenter::file_upload_start(const QUrl media_url, const QUrl pic_url, F
         upWorker->slot_receiveData_accept(media_url);
         //信号与槽函数
         connect(workThread,&QThread::finished,upWorker,&QObject::deleteLater);//线程结束时，工作对象自动删除
-        connect(workThread,&QThread::finished,workThread,&QThread::deleteLater);//线程结束时，线程内对象自动删除
-        //下载进度
+
+        //上传进度
         connect(upWorker,SIGNAL(sig_work_uploadprogress(qint64,qint64)),fileItem,SLOT(slot_updateProgress(qint64,qint64)));
         //关联文件状态()
         connect(upWorker,SIGNAL(sig_work_uploadprogress(qint64,qint64)),fileItem,SLOT(slot_updateStatus(qint64,qint64)));
@@ -625,13 +648,14 @@ void CreateCenter::file_upload_stop()
     qDebug() << QString(u8"移除item");
 }
 
+//展示已完成作品
 void CreateCenter::file_createItemToAnotherListWgt(const fileBody &body)
 {
     qDebug() << QString(u8"新的完成的item被创建");
     QListWidgetItem *item = new QListWidgetItem();
     item->setData(Qt::UserRole,body.furl);
     qDebug()<< "new body =" << body.fname << body.fsize << body.fcover;
-    FilesItem *itemWidget = new FilesItem(FILEEDIT::CANEDIT,body.fname,body.fsize,body.fcover);
+    FilesItem *itemWidget = new FilesItem(FILEEDIT::CANEDIT,body.furl,body.fsize,body.fcover);
     itemWidget->initFileItem(body);
     item->setSizeHint(QSize(225,155));
     if(body.fmedtype == QString("movies"))

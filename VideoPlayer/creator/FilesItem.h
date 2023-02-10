@@ -4,13 +4,22 @@
 #include <QUrl>
 #include <QWidget>
 #include <QTimer>
+#include <QLabel>
 #include <QPixmap>
+#include <QFileInfo>
 #include <QLineEdit>
 #include <QComboBox>
 #include <QListView>
 #include <QStringList>
 #include <QFileDialog>
 #include <QDebug>
+
+extern "C" {
+#include <libavformat/avformat.h>
+#include <libavcodec/avcodec.h>
+#include <libswscale/swscale.h>
+#include <libswresample/swresample.h>
+}
 
 struct fileBody
 {
@@ -62,9 +71,11 @@ public slots:
     void    slot_setItemStatus(FILESTATUS status);
     void    slot_setItemStatusText();
     void    slot_setItemStart(bool start);
+    void    slot_setItemUrl(QUrl url);
     void    slot_setItemSize();
     void    slot_setItemName();
     void    slot_setItemPicture();
+    void    slot_getVideoPicure(const char * file,QLabel* label);//如果是视频，获取视频第一帧
     void    slot_updateProgress(qint64 bytesSent, qint64 bytesTotal);
     void    slot_updateProgress_header(qint64 bytesSent, qint64 bytesTotal);
     void    slot_updateStatus(qint64 bytesSent, qint64 bytesTotal);

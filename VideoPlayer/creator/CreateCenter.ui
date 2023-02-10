@@ -173,7 +173,7 @@ margin: 0;
 }</string>
            </property>
            <property name="currentIndex">
-            <number>3</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="tab_percenter">
             <attribute name="title">
@@ -444,8 +444,8 @@ color: #65dede;
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>192</width>
-                         <height>326</height>
+                         <width>83</width>
+                         <height>69</height>
                         </rect>
                        </property>
                        <attribute name="label">
@@ -501,8 +501,8 @@ color: #65dede;
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>192</width>
-                         <height>326</height>
+                         <width>83</width>
+                         <height>69</height>
                         </rect>
                        </property>
                        <attribute name="label">
@@ -599,8 +599,8 @@ color: #65dede;
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>192</width>
-                         <height>326</height>
+                         <width>83</width>
+                         <height>69</height>
                         </rect>
                        </property>
                        <attribute name="label">
@@ -2041,7 +2041,7 @@ background-color:transparent;
                          <enum>QFrame::Raised</enum>
                         </property>
                         <property name="currentIndex">
-                         <number>1</number>
+                         <number>0</number>
                         </property>
                         <widget class="QWidget" name="stacked_upload">
                          <property name="styleSheet">

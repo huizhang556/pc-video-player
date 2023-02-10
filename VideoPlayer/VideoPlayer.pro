@@ -88,3 +88,7 @@ RESOURCES += \
 
 FORMS +=
 
+
+#引入第三方库(ffmpeg)
+INCLUDEPATH += "$$PWD/thirdlib/ffmpeg/include"
+LIBS += -L$$PWD/thirdlib/ffmpeg/lib -lavutil -lavformat -lavcodec -lavfilter -lswscale -lswresample
