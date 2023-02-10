@@ -31,3 +31,5 @@ SOURCES += \
     $$PWD/MoveLabel.cpp
 
 DISTFILES +=
+
+

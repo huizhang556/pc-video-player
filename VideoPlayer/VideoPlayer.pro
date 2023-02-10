@@ -88,7 +88,15 @@ RESOURCES += \
 
 FORMS +=
 
+#说明：
+#引入头文件和库文件只是在调试的时候进行查找，打包后，程序执行时，只需要找到真正执行的动态库即可，与下面配置无关
 
-#引入第三方库(ffmpeg)
-INCLUDEPATH += "$$PWD/thirdlib/ffmpeg/include"
-LIBS += -L$$PWD/thirdlib/ffmpeg/lib -lavutil -lavformat -lavcodec -lavfilter -lswscale -lswresample
+win32{
+#引入第三方库头文件(ffmpeg)
+DEPENDPATH += $$PWD/library/ffmpeg/include
+INCLUDEPATH += $$PWD/library/ffmpeg/include
+#添加静态库
+LIBS += -L$$PWD/library/ffmpeg/lib -lavutil -lavformat -lavcodec -lavfilter -lswscale -lswresample
+#添加动态库
+LIBS += -L$$PWD/library/ffmpeg/bin -lavutil -lavformat -lavcodec -lavfilter -lswscale -lswresample
+}
