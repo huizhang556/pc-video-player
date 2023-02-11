@@ -3,7 +3,8 @@ SOURCES += \
     $$PWD/LoginPersonInfo.cpp \
     $$PWD/NewLoginForm.cpp \
     $$PWD/LoginTip.cpp \
-    $$PWD/MessageItem.cpp
+    $$PWD/MessageItem.cpp \
+    $$PWD/MaskLabel.cpp
 
 
 HEADERS += \
@@ -11,12 +12,14 @@ HEADERS += \
     $$PWD/LoginPersonInfo.h \
     $$PWD/NewLoginForm.h \
     $$PWD/LoginTip.h \
-    $$PWD/MessageItem.h
+    $$PWD/MessageItem.h \
+    $$PWD/MaskLabel.h
 
 FORMS += \
     $$PWD/Login.ui \
     $$PWD/LoginPersonInfo.ui \
     $$PWD/NewLoginForm.ui \
     $$PWD/LoginTip.ui \
-    $$PWD/MessageItem.ui
+    $$PWD/MessageItem.ui \
+    $$PWD/MaskLabel.ui
 

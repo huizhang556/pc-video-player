@@ -36,6 +36,25 @@ QTabWidget::pane
 border-right: 0;
 }
 
+/*****设置禁词*****/
+#m_forbidebtn_text
+{
+color: white;
+text-align: left;
+background-color: transparent;
+}
+
+#m_forbidebtn_text:hover
+{
+color: red;
+background-color: transparent;
+}
+
+#m_forbidebtn_remove
+{
+background-color: transparent;
+}
+
 /*弹幕---登录按钮*/
 
 /**登录状态按钮**/

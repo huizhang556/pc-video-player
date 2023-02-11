@@ -1,8 +1,11 @@
 ﻿#ifndef DANMUSETTING_H
 #define DANMUSETTING_H
 #include "videomodels/Danmu.h"
+#include "videomodels/ForbiddenItem.h"
 #include <QDialog>
 #include <QListWidget>
+#include <QListWidgetItem>
+#include <QScrollBar>
 #include <QButtonGroup>
 #include <QDebug>
 

@@ -189,15 +189,20 @@ void FilesItem::handleSignalsAndSlots()
     //自定义封面
     connect(ui->pushButton_opencover,&QPushButton::clicked,[=](){
         QString filename_cover = QFileDialog::getOpenFileName();
-        qDebug() << filename_cover;
+        qDebug() <<QString(u8"封面路径：") << filename_cover;
         if(filename_cover.isEmpty())
         {
             return;
         }
         else
         {
-            m_picpath = filename_cover;
-            slot_setItemPicture();
+//            m_picpath = filename_cover;
+//            slot_setItemPicture();
+            ui->label_pic->setPixmap(QPixmap(filename_cover));
+            ui->label_pic->setScaledContents(true);
+            ui->lineEdit_displaycover->setText(filename_cover);
+            if(ui->lineEdit_mduration->hasFocus()) ui->lineEdit_mduration->clearFocus();
+            qDebug() <<QString(u8"封面设置成功！");
         }
     });
 }
@@ -426,7 +431,7 @@ void FilesItem::slot_getVideoPicure(const char *file, QLabel *label)
         bool preview_done = false;
 
         int videoStream = 0;
-        for (int i=0; i<int(fmt_ctx_->nb_streams) && !preview_done; i++){
+        for (int i = 0; i<int(fmt_ctx_->nb_streams) && !preview_done; i++){
             //只处理视频信息
             if (fmt_ctx_->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO) {
                 //查找视频解码器

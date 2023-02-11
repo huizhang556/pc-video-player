@@ -10,15 +10,16 @@
 Installer* Installer::m_pInstance = nullptr;
 
 Installer::Installer(QWidget *parent) :
-    QDialog(parent),
+    BaseDialog(parent),
     m_curPageIndex(0),
     ui(new Ui::Installer)
 {
     ui->setupUi(this);
     setFixedSize(620,360);
+    setWindowTitle(QString(u8"安装器"));
     this->setAttribute(Qt::WA_Hover);
 //    this->setAttribute(Qt::WA_TranslucentBackground,true);
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    this->setTitleBarMoveArea(ui->frame_title,0);
     initWorkUI();
     handleSignalsAndSlots();
 }
@@ -43,13 +44,17 @@ Installer *Installer::getInstance()
 void Installer::initWorkUI()
 {
     ui->stackedWidget_page->setCurrentIndex(0);
+    ui->pushButton_back->setCheckable(true);//上一步
+    ui->pushButton_forward->setCheckable(true);//下一步
+    ui->pushButton_forward->setChecked(true);//默认选中
+    ui->pushButton_cancel->setCheckable(true);
     m_buttonGroup = new QButtonGroup(this);
     m_buttonGroup->setExclusive(true);
     m_buttonGroup->addButton(ui->pushButton_back,0);
     m_buttonGroup->addButton(ui->pushButton_forward,1);
     m_buttonGroup->addButton(ui->pushButton_cancel,2);
     ui->pushButton_install->hide();
-    ui->lineEdit_installpath->setText(QString(u8"C:/Program Files (x86)/Player"));
+    ui->lineEdit_installpath->setText(QString(u8"C:/Program Files (x86)/VideoPlayer"));
     ui->stackedWidget_customset->setCurrentIndex(0);
 
     for(int i = 0; i < 4; i++)
@@ -95,14 +100,16 @@ void Installer::handleSignalsAndSlots()
         }
     });
 
-    //完成2
+    //完成2(立即体验)
     connect(ui->pushButton_experiance,&QPushButton::clicked,[=](){
-            emit sig_sendFinished();
+            ui->pushButton_cancel->click();
     });
 
+    //下一步
     connect(ui->pushButton_forward,&QPushButton::clicked,[=](){
         m_curPageIndex++;
         ui->stackedWidget_page->setCurrentIndex(m_curPageIndex);
+        ui->pushButton_forward->setChecked(true);
         if(m_curPageIndex == ui->stackedWidget_page->count()-2)//到倒数第2页，到倒数第1页，卸载界面
         {
             ui->pushButton_forward->setEnabled(false);
@@ -111,9 +118,11 @@ void Installer::handleSignalsAndSlots()
             ui->pushButton_back->setEnabled(true);
     });
 
+    //上一步
     connect(ui->pushButton_back,&QPushButton::clicked,[=](){
         m_curPageIndex--;
         ui->stackedWidget_page->setCurrentIndex(m_curPageIndex);
+        ui->pushButton_forward->setChecked(true);
         if(m_curPageIndex == 0)//最后一页
             ui->pushButton_back->setEnabled(false);
         if(!ui->pushButton_forward->isEnabled())
@@ -132,14 +141,14 @@ void Installer::handleSignalsAndSlots()
 
     //自定义安装--立即安装
     connect(ui->pushButton_install,&QPushButton::clicked,[=](){
-
+    qDebug() <<QString(u8"自定义安装--立即安装");
     });
 
     //浏览安装目录
     connect(ui->pushButton_browserpath,&QPushButton::clicked,[=](){
         QString fpath = QFileDialog::getExistingDirectory(this,
                                                         QString::fromLocal8Bit("选择路径"),
-                                                        QString::fromLocal8Bit("C:\\Users\\24939\\Desktop"));
+                                                        QApplication::applicationDirPath());//默认打开程序所在路径
             if(!fpath.isEmpty())//不为空
             {
                 ui->lineEdit_installpath->setText(fpath);
@@ -148,14 +157,14 @@ void Installer::handleSignalsAndSlots()
 
 }
 
-void Installer::mousePressEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event)
-    m_mvPos = event->globalPos() - this->pos();
-}
+//void Installer::mousePressEvent(QMouseEvent *event)
+//{
+//    Q_UNUSED(event)
+//    m_mvPos = event->globalPos() - this->pos();
+//}
 
-void Installer::mouseMoveEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event)
-    this->move(event->globalPos() - m_mvPos);
-}
+//void Installer::mouseMoveEvent(QMouseEvent *event)
+//{
+//    Q_UNUSED(event)
+//    this->move(event->globalPos() - m_mvPos);
+//}

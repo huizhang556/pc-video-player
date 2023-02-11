@@ -41,6 +41,7 @@ HEADERS += \
 include($$PWD/skin/skin.pri)
 include($$PWD/style/style.pri)
 include($$PWD/login/login.pri)
+include($$PWD/qrcode/qrcode.pri)
 include($$PWD/global/global.pri)
 include($$PWD/updater/updater.pri)
 include($$PWD/lunbotu/lunbotu.pri)
@@ -89,7 +90,8 @@ RESOURCES += \
 FORMS +=
 
 #说明：
-#引入头文件和库文件只是在调试的时候进行查找，打包后，程序执行时，只需要找到真正执行的动态库即可，与下面配置无关
+#引入头文件和库文件只是在调试的时候进行查找调用，
+#打包后，程序执行时，只需要找到真正执行的动态库即可，与下面配置无关
 
 win32{
 #引入第三方库头文件(ffmpeg)

@@ -615,5 +615,6 @@
         <file>images/fileitem/fileitem_sendpic_hover.png</file>
         <file>images/fileitem/vbox_left.png</file>
         <file>images/fileitem/vbox_right.png</file>
+        <file>images/bgpic/update_QR.png</file>
     </qresource>
 </RCC>

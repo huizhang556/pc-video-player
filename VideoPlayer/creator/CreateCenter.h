@@ -2,12 +2,14 @@
 #ifndef CREATECENTER_H
 #define CREATECENTER_H
 #define MARWIDTH 2 //窗口边距,进过测试最小需要2px
-#include "CreTitleBar.h"
-#include "CusCalendar.h"
-#include "FilesItem.h"
-#include "UploadWork.h"
-#include "CloseButton.h"
-#include "AddMediaInfo.h"
+#define ITEMSIZE QSize(212,170)
+
+#include "creator/CreTitleBar.h"
+#include "creator/CusCalendar.h"
+#include "creator/FilesItem.h"
+#include "creator/UploadWork.h"
+#include "creator/CloseButton.h"
+#include "creator/AddMediaInfo.h"
 #include "customer/BaseWidget.h"
 #include "miniplayer/MiniPlayer.h"
 
@@ -106,6 +108,7 @@ private:
 signals:
     void    sig_file_uploadall_start();
     void    sig_file_uploadall_stop();
+    void    sig_file_uploadall_clear();
 };
 
 #endif // CREATECENTER_H

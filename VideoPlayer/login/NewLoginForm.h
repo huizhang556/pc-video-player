@@ -1,13 +1,23 @@
 ﻿#ifndef NEWLOGINFORM_H
 #define NEWLOGINFORM_H
+#define QRSIZE QSize(140,140)
+#include "database/dataBase.h"
+#include "qrcode/QrCode.hpp"
+
+#include <string>
+#include <vector>
+using namespace qrcodegen;//注意加上命名空间
 
 #include <QPoint>
+#include <QImage>
 #include <QAction>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QDialog>
 #include <QColor>
 #include <QToolTip>
+#include <QTimer>
+#include <QAbstractItemView>
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
 #include <QGraphicsDropShadowEffect>
@@ -65,6 +75,8 @@ private slots:
 
 private:
     void        initAnimations();
+    void        update_QRcode();//刷新二维码
+    void       set_QRcode(const QString& content);//根据内容生成二维码
 
 private:
     explicit NewLoginForm(QWidget *parent = nullptr);

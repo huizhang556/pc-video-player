@@ -2041,7 +2041,7 @@ background-color:transparent;
                          <enum>QFrame::Raised</enum>
                         </property>
                         <property name="currentIndex">
-                         <number>0</number>
+                         <number>1</number>
                         </property>
                         <widget class="QWidget" name="stacked_upload">
                          <property name="styleSheet">
@@ -2998,6 +2998,18 @@ font-weight: 800;
 QPushButton:hover
 {
 color: #3e3e3f;
+}
+
+QPushButton[enabled = &quot;false&quot;]
+{
+color: #cdcdcd;
+background-color: #676d6e;
+}
+
+QPushButton[enabled = &quot;true&quot;]
+{
+color: #f4de3d;
+background-color: #00c8c8;
 }</string>
                               </property>
                               <property name="text">

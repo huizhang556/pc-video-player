@@ -1,14 +1,13 @@
 ﻿#include "NewLoginForm.h"
 #include "ui_NewLoginForm.h"
-#include "database/dataBase.h"
+
 //#ifdef Q_OS_WIN
 //#include <qt_windows.h>
 //#include <Windows.h>
 //#include <windowsx.h>
 //#pragma comment (lib,"user32.lib")
 //#endif
-#include <QTimer>
-#include <QAbstractItemView>
+
 
 //类外初始化
 NewLoginForm* NewLoginForm::m_pInstance = nullptr;
@@ -115,6 +114,9 @@ void NewLoginForm::initWorkUI()
 
     ui->tabWidget_login->setCurrentIndex(0);
 
+    //二维码
+//    ui->label_QRcode->setPixmap(QPixmap("://images/user/newlogin_QRcode.png"));
+
 }
 
 void NewLoginForm::initAnimations()
@@ -177,6 +179,53 @@ void NewLoginForm::initAnimations()
     });
 }
 
+void NewLoginForm::update_QRcode()
+{
+
+    ui->label_QRcode->slot_clearMask();//先清除遮罩
+    QString content_account = ui->lineEdit_account->text();
+    QString content_passwd = ui->lineEdit_userpwd->text();
+    set_QRcode(QString(u8"%1%2").arg(content_account).arg(content_passwd));//生成二维码
+    ui->pushButton_updateQR->setProperty("updated",true);
+    ui->pushButton_updateQR->style()->polish(ui->pushButton_updateQR);
+    ui->pushButton_updateQR->setDisabled(true);
+    ui->label_QRcode->setDisabled(true);
+    QTimer::singleShot(1000*10,Qt::PreciseTimer,[=](){
+        ui->label_QRcode->slot_setMask();
+        ui->pushButton_updateQR->setProperty("updated",false);
+        ui->pushButton_updateQR->style()->polish(ui->pushButton_updateQR);
+        ui->pushButton_updateQR->setDisabled(false);
+        ui->label_QRcode->setDisabled(false);
+    });
+    qDebug() <<QString(u8"刷新二维码");
+}
+
+void NewLoginForm::set_QRcode(const QString &content)
+{
+    // Manual operation
+    std::vector<QrSegment> segs = QrSegment::makeSegments(content.toUtf8());
+    QrCode qr1 = QrCode::encodeSegments(
+        segs, QrCode::Ecc::HIGH, 5, 10, 2, false);
+    //创建二维码画布
+    QImage QrCode_Image = QImage(qr1.getSize(),qr1.getSize(),QImage::Format_RGB888);
+
+    for (int y = 0; y < qr1.getSize(); y++) {
+        for (int x = 0; x < qr1.getSize(); x++) {
+            if(qr1.getModule(x, y)==0)
+                QrCode_Image.setPixel(x,y,qRgb(255,255,255));
+            else
+                QrCode_Image.setPixel(x,y,qRgb(0,0,0));
+        }
+    }
+
+    //图像大小转换为适当的大小（根据label_QRcode显示二维码的宽高）
+    QrCode_Image = QrCode_Image.scaled(QRSIZE,Qt::KeepAspectRatio);
+    //转换为QPixmap在Label中显示
+    ui->label_QRcode->setPixmap(QPixmap::fromImage(QrCode_Image));
+//    ui->label_QRcode->setContentsMargins(5,5,5,5);//内部边距
+}
+
+
 void NewLoginForm::chandleSignalsAndSLots()
 {
     //关闭
@@ -201,7 +250,8 @@ void NewLoginForm::chandleSignalsAndSLots()
     });
     //扫码登录
     connect(ui->pushButton_scanCode,&QPushButton::clicked,[=](){
-        ui->stackedWidget_right->setCurrentIndex(0);
+        ui->stackedWidget_right->setCurrentIndex(0);//右侧变为扫码登录界面
+        ui->pushButton_updateQR->click();//模拟点击刷新
     });
     //登录遇到问题
     connect(ui->pushButton_questions,&QPushButton::clicked,[=](){
@@ -280,6 +330,16 @@ void NewLoginForm::chandleSignalsAndSLots()
     });
 
     //重置
+
+    //点击按钮刷新二维码
+    connect(ui->pushButton_updateQR,&QPushButton::clicked,[=](){
+       update_QRcode();
+    });
+
+    //点击图片刷新二维码
+    connect(ui->label_QRcode,&MaskLabel::sig_item_clicked,[=](){
+        ui->pushButton_updateQR->click();
+    });
 }
 
 NewLoginForm *NewLoginForm::getInstance()

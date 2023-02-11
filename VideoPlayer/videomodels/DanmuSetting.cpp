@@ -1,6 +1,6 @@
 ﻿#include "DanmuSetting.h"
 #include "ui_DanmuSetting.h"
-#include <QListWidgetItem>
+
 
 DanmuSetting::DanmuSetting(QWidget *parent) :
     QDialog(parent),
@@ -106,9 +106,18 @@ void DanmuSetting::handSignalsAndSlots()
         QString content = ui->lineEdit_mask->text().trimmed();
         if(!content.remove(QRegExp("\\s")).isEmpty() && !findMask(content))
         {
-            QListWidgetItem *item = new QListWidgetItem(QIcon("://images/user/vtitle_mask.png"),content);
+            QListWidgetItem *item = new QListWidgetItem(content);
+            ForbiddenItem *forbideWgt = new ForbiddenItem("://images/user/vtitle_mask.png",content);
+            item->setSizeHint(QSize(ui->listWidget_maskList->width() - ui->listWidget_maskList->verticalScrollBar()->width()-1,30));
             ui->listWidget_maskList->addItem(item);
+            ui->listWidget_maskList->setItemWidget(item,forbideWgt);
             ui->lineEdit_mask->clear();
+            //关联信号与槽
+            connect(forbideWgt,&ForbiddenItem::sig_send_remove,[=](){
+                forbideWgt->disconnect();
+                forbideWgt->deleteLater();
+                delete item;
+            });
         }
         else
         {

@@ -115,7 +115,7 @@ void LeftSideBar::initWidgetUi()
     m_moreBtn->setCheckable(true);
 
     QVBoxLayout *m_vbayout1 = new QVBoxLayout(this);
-    QVBoxLayout *m_vbayout2 = new QVBoxLayout(this);
+    QVBoxLayout *m_vbayout2 = new QVBoxLayout();
 
     m_vbayout2->addWidget(m_msgBtn);
     m_vbayout2->addWidget(m_modeBtn);

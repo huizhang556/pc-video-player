@@ -24,13 +24,14 @@ public:
     ~UploadWork();
 
 public slots:
-
-    void    slot_receiveData_accept(const QUrl& media_url);
+    void    slot_receiveData_accept(const QUrl& media_url);//建立下载请求，创建文件，并向外返回下载进度
+    void    slot_receiveData_pause();//暂停
+    void    slot_receiveData_close();//关闭
 
 signals:
 
 private:
-    QString getContentTypeHeader(const QString& suffix);
+    QString getContentTypeHeader(const QString& suffix);//获取文件类型
     void    getJson(QJsonObject &jsonObj);//解析返回json
     void    getStatusCode(QNetworkReply *reply);//解析状态值
 
@@ -38,9 +39,10 @@ private slots:
     void finshedSlot(QNetworkReply* reply);//用来接收返回的Json数据
 
 private:
-    QString                 m_fileName;
-    QFile                   *m_file;
-    QNetworkReply           *m_reply;
+    bool                    m_isStopping;//是否处于已经下载状态（防止点击按钮多次请求）
+    QString                 m_fileName;//文件名
+    QFile                   *m_file     =   nullptr;//保存文件
+    QNetworkReply           *m_reply    =   nullptr;
     QNetworkAccessManager   *m_manager  =   nullptr;
 
 signals:

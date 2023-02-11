@@ -1,6 +1,6 @@
 ﻿#ifndef INSTALLER_H
 #define INSTALLER_H
-
+#include "customer/BaseDialog.h"
 #include <QDialog>
 #include <QFileDialog>
 #include <QButtonGroup>
@@ -12,7 +12,7 @@ namespace Ui {
 class Installer;
 }
 
-class Installer : public QDialog
+class Installer : public BaseDialog
 {
     Q_OBJECT
 
@@ -24,15 +24,15 @@ public:
     void    handleSignalsAndSlots();
 
 protected:
-   void  mousePressEvent(QMouseEvent *event) override;
-   void  mouseMoveEvent(QMouseEvent *event) override;
+//   void  mousePressEvent(QMouseEvent *event) override;
+//   void  mouseMoveEvent(QMouseEvent *event) override;
 
 private:
     Ui::Installer *ui;
      static         Installer* m_pInstance;
      int            m_curPageIndex;
      QButtonGroup   *m_buttonGroup  =   nullptr;
-     QPoint          m_mvPos;
+//     QPoint          m_mvPos;
 
 signals:
      void   sig_sendFinished();

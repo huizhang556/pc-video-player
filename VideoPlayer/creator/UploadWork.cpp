@@ -2,7 +2,7 @@
 
 UploadWork::UploadWork(QObject *parent) : QObject(parent)
 {
-
+    m_isStopping = false;
 }
 
 UploadWork::~UploadWork()
@@ -94,6 +94,24 @@ void UploadWork::slot_receiveData_accept(const QUrl &media_url)
              emit sig_work_uploadprogress(bytesSent,bytesTotal);
          }
      });
+}
+
+void UploadWork::finshedSlot(QNetworkReply *reply)
+{
+    getStatusCode(reply);//获取状态码，解析json
+    reply->deleteLater();
+    reply = nullptr;
+    m_file->close();
+}
+
+void UploadWork::slot_receiveData_pause()
+{
+
+}
+
+void UploadWork::slot_receiveData_close()
+{
+
 }
 
 QString UploadWork::getContentTypeHeader(const QString &suffix)
@@ -220,9 +238,4 @@ void UploadWork::getStatusCode(QNetworkReply *reply)
     }
 }
 
-void UploadWork::finshedSlot(QNetworkReply *reply)
-{
-    getStatusCode(reply);
-    reply->deleteLater();
-    m_file->close();
-}
+

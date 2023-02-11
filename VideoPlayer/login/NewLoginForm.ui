@@ -170,6 +170,7 @@ border: 1px solid #3C80B1;
 color: white;
 text-align: center;
 font-weight: 800;
+border: none;
 font: 75 11pt &quot;Microsoft YaHei UI&quot;;
 background-color: transparent;
 }
@@ -286,7 +287,7 @@ QTabBar::tab:only-one
 }</string>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="tab">
                 <attribute name="title">
@@ -590,6 +591,7 @@ QLineEdit:hover
                           <property name="styleSheet">
                            <string notr="true">QPushButton
 {
+border: none;
 color: #7e7f81;
 text-align: center;
 padding-right:3px;
@@ -599,9 +601,9 @@ background-color: transparent;
 
 QPushButton:hover
 {
-color: #2494e4;
-border-radius: 10px;
-background-color: rgb(216, 30, 6);
+color: white;
+border-radius: 4px;
+background-color: rgba(21, 196, 52,0.7);
 }</string>
                           </property>
                           <property name="text">
@@ -863,6 +865,7 @@ QLineEdit:hover
                           <property name="styleSheet">
                            <string notr="true">QPushButton
 {
+border: none;
 color: #7e7f81;
 margin-top:3px;
 margin-left: 0px;
@@ -911,6 +914,7 @@ color: white;
                           <property name="styleSheet">
                            <string notr="true">QPushButton
 {
+border: none;
 color: #7e7f81;
 margin-top:3px;
 margin-left: 0px;
@@ -1069,6 +1073,7 @@ border-image: url(:/images/icon/checked_set.png);
                       <property name="styleSheet">
                        <string notr="true">QPushButton
 {
+border: none;
 color: #2589d1;
 margin-right:1px;
 border-bottom-style: 1px solid #5d5d5e;
@@ -1104,6 +1109,7 @@ border-bottom-width: 0px;
                       <property name="styleSheet">
                        <string notr="true">QPushButton
 {
+border: none;
 color: #2589d1;
 margin-right:5px;
 border-bottom-style: 1px solid #5d5d5e;
@@ -1392,7 +1398,7 @@ background-color: rgba(58, 58, 65,0.7);
         <item>
          <widget class="QStackedWidget" name="stackedWidget_right">
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page_login">
            <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -1497,37 +1503,167 @@ background-color: rgba(58, 58, 65,0.7);
                       </property>
                       <item>
                        <widget class="QFrame" name="frame_QR">
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>200</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true"/>
+                        </property>
                         <property name="frameShape">
                          <enum>QFrame::StyledPanel</enum>
                         </property>
                         <property name="frameShadow">
                          <enum>QFrame::Raised</enum>
                         </property>
-                        <layout class="QHBoxLayout" name="horizontalLayout_20">
+                        <layout class="QVBoxLayout" name="verticalLayout_38">
+                         <property name="leftMargin">
+                          <number>6</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>6</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>6</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>6</number>
+                         </property>
                          <item>
-                          <widget class="QLabel" name="label_QRcode">
-                           <property name="minimumSize">
-                            <size>
-                             <width>150</width>
-                             <height>150</height>
-                            </size>
-                           </property>
-                           <property name="maximumSize">
-                            <size>
-                             <width>130</width>
-                             <height>130</height>
-                            </size>
-                           </property>
-                           <property name="styleSheet">
-                            <string notr="true">#label_QRcode
+                          <layout class="QVBoxLayout" name="verticalLayout_37">
+                           <item>
+                            <layout class="QHBoxLayout" name="horizontalLayout_21">
+                             <item>
+                              <spacer name="horizontalSpacer_9">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>28</width>
+                                 <height>20</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                             <item>
+                              <widget class="MaskLabel" name="label_QRcode">
+                               <property name="minimumSize">
+                                <size>
+                                 <width>150</width>
+                                 <height>150</height>
+                                </size>
+                               </property>
+                               <property name="maximumSize">
+                                <size>
+                                 <width>16777215</width>
+                                 <height>16777215</height>
+                                </size>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">#label_QRcode
 {
-border-image: url(://images/user/newlogin_QRcode.png);
+border: 4px solid rgba(0, 255, 0,1.0);
+border-radius: 3px;
+}
+</string>
+                               </property>
+                               <property name="text">
+                                <string/>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <spacer name="horizontalSpacer_8">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>28</width>
+                                 <height>20</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                            </layout>
+                           </item>
+                           <item>
+                            <layout class="QHBoxLayout" name="horizontalLayout_20">
+                             <item>
+                              <spacer name="horizontalSpacer_6">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>40</width>
+                                 <height>20</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                             <item>
+                              <widget class="QPushButton" name="pushButton_updateQR">
+                               <property name="minimumSize">
+                                <size>
+                                 <width>100</width>
+                                 <height>25</height>
+                                </size>
+                               </property>
+                               <property name="maximumSize">
+                                <size>
+                                 <width>100</width>
+                                 <height>25</height>
+                                </size>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">QPushButton
+{
+color: #cdcdcd;
+border: none;
+font: 400 13px &quot;微软雅黑&quot;;
+background-color: transparent;
+}
+
+QPushButton:hover
+{
+color: #00beff;
+}
+
+QPushButton[updated = &quot;true&quot;]
+{
+color: #cdcdcd;
+}
+
+QPushButton[updated = &quot;false&quot;]
+{
+color: red;
 }</string>
-                           </property>
-                           <property name="text">
-                            <string/>
-                           </property>
-                          </widget>
+                               </property>
+                               <property name="text">
+                                <string>刷新二维码</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <spacer name="horizontalSpacer_7">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>40</width>
+                                 <height>20</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                            </layout>
+                           </item>
+                          </layout>
                          </item>
                         </layout>
                        </widget>
@@ -1591,6 +1727,7 @@ border-image: url(://images/user/newlogin_QRcode.png);
                               <string notr="true">QPushButton
 {
 color: white;
+border: none;
 font: 75 10pt &quot;Microsoft YaHei UI&quot;;
 background-color: transparent;
 }
@@ -1614,6 +1751,7 @@ background-color: transparent;
                               <string notr="true">QPushButton
 {
 color: white;
+border: none;
 font: 75 10pt &quot;Microsoft YaHei UI&quot;;
 background-color: transparent;
 }
@@ -1702,6 +1840,7 @@ background-color: transparent;
               <property name="styleSheet">
                <string notr="true">QPushButton
 {
+border: none;
 color: #7e7f81;
 font: 75 11pt &quot;Microsoft YaHei UI&quot;;
 background-color: transparent;
@@ -1715,7 +1854,7 @@ background-color: transparent;
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_28">
               <property name="spacing">
-               <number>0</number>
+               <number>10</number>
               </property>
               <item>
                <widget class="QFrame" name="frame_regis">
@@ -1983,6 +2122,7 @@ QLineEdit:hover
                         <property name="styleSheet">
                          <string notr="true">QPushButton
 {
+border: none;
 color: #7e7f81;
 text-align: center;
 padding-right:3px;
@@ -1992,9 +2132,9 @@ background-color: transparent;
 
 QPushButton:hover
 {
-color: #2494e4;
-border-radius: 10px;
-background-color: rgb(216, 30, 6);
+color: white;
+border-radius: 4px;
+background-color: rgba(21, 196, 52,0.7);
 }</string>
                         </property>
                         <property name="text">
@@ -2145,7 +2285,7 @@ QLineEdit:hover
                  <item>
                   <layout class="QVBoxLayout" name="verticalLayout_26">
                    <property name="spacing">
-                    <number>6</number>
+                    <number>0</number>
                    </property>
                    <item>
                     <widget class="QPushButton" name="pushButton_regis">
@@ -2244,6 +2384,7 @@ border-image: url(:/images/icon/checked_set.png);
                        <property name="styleSheet">
                         <string notr="true">QPushButton
 {
+border: none;
 color: #2589d1;
 margin-right:1px;
 border-bottom-style: 1px solid #5d5d5e;
@@ -2279,6 +2420,7 @@ border-bottom-width: 0px;
                        <property name="styleSheet">
                         <string notr="true">QPushButton
 {
+border: none;
 color: #2589d1;
 margin-right:5px;
 border-bottom-style: 1px solid #5d5d5e;
@@ -2358,6 +2500,7 @@ border-bottom-width: 0px;
               <property name="styleSheet">
                <string notr="true">QPushButton
 {
+border: none;
 color: #7e7f81;
 font: 75 11pt &quot;Microsoft YaHei UI&quot;;
 background-color: transparent;
@@ -2629,6 +2772,7 @@ QLineEdit:hover
                           <property name="styleSheet">
                            <string notr="true">QPushButton
 {
+border: none;
 color: #7e7f81;
 text-align: center;
 padding-right:3px;
@@ -2638,9 +2782,9 @@ background-color: transparent;
 
 QPushButton:hover
 {
-color: #2494e4;
-border-radius: 10px;
-background-color: rgb(216, 30, 6);
+color: white;
+border-radius: 4px;
+background-color: rgba(21, 196, 52,0.7);
 }</string>
                           </property>
                           <property name="text">
@@ -2993,6 +3137,7 @@ color: #d81e06;
               <string notr="true">QPushButton
 {
 color: #7e7f81;
+border: none;
 text-align: right;
 padding-right:3px;
 background-color: transparent;
@@ -3018,6 +3163,13 @@ color: #2494e4;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MaskLabel</class>
+   <extends>QLabel</extends>
+   <header>login/MaskLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

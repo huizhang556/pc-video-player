@@ -75,8 +75,8 @@ int main(int argc, char *argv[])
 
     //05--->显示主界面
 
-#if 0
-    //        MultipPlayer::getInstance()->show();
+#if 1
+    //    MultipPlayer::getInstance()->show();
 
     //    TitleBar w1;
     //    w1.show();
@@ -93,15 +93,15 @@ int main(int argc, char *argv[])
     //    CPolLabel w1(QSize(100,100),QString(":/images/bgpic/dieji3.png"),8);
     //    w1.show();
 
-    //        MainNotice w1;
-    //        w1.show();
+    //    MainNotice w1;
+    //    w1.show();
 
-        CreateCenter::getInstance()->show();
+    //    CreateCenter::getInstance()->show();
 
     //    MyEmotionWindow w1;
     //    w1.showNormalEmotion(QPoint(500 , 500));
     //    DownloadType::getInstance()->show();
-    //    NewLoginForm::getInstance()->show();
+        NewLoginForm::getInstance()->show();
     //    AniStackWidget w1;
     //    w1.show();
 

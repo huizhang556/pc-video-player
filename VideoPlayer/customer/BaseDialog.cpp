@@ -29,6 +29,7 @@ void BaseDialog::setTitleBarMoveArea(QWidget *titleBar, const int margin)
 
 void BaseDialog::mouseMoveEvent(QMouseEvent *event)
 {
+    if(this->isMaximized() || this->isFullScreen()) return;
     //根据位置设置鼠标样式
     SetMouseCursor(event->pos().x(), event->pos().y());
 

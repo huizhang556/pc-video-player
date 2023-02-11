@@ -55,6 +55,7 @@ void CreateCenter::initWorkUI()
     ui->pushButton_uploadFiles->setCheckable(true);
     ui->pushButton_uploadFiles->setChecked(false);
     ui->pushButton_uploadFiles->setText(QString(u8"上传"));
+    ui->pushButton_uploadFiles->setProperty("enabled",false);
 
     m_buttonGroup1 = new QButtonGroup(this);
     m_buttonGroup1->setExclusive(true);
@@ -107,7 +108,7 @@ void CreateCenter::initWorkUI()
 
     m_ctitleBar = new CreTitleBar(this);
     m_ctitleBar->setObjectName(QString::fromUtf8("m_ctitleBar"));
-    ui->verticalLayout->insertWidget(0,m_ctitleBar);
+    ui->verticalLayout->insertWidget(0,m_ctitleBar);//垂直布局插入到顶端
 
     m_calendar = new CusCalendar();
     m_calendar->setObjectName(QString::fromUtf8("m_calendar"));
@@ -276,6 +277,7 @@ void CreateCenter::handleSignalsAndSlots()
         {
             addFileItemsToList(fileList);//添加item
             ui->stackedWidget_upload->setCurrentWidget(ui->stacked_upload);
+            checkListItemsCounts();//核对数量
         }
     });
 
@@ -363,6 +365,7 @@ void CreateCenter::setInstallEventer()
 {
     ui->dateEdit_start->installEventFilter(this);
     ui->dateEdit_end->installEventFilter(this);
+    m_ctitleBar->installEventFilter(this);
 }
 
 //void CreateCenter::mousePressEvent(QMouseEvent *event)
@@ -402,6 +405,13 @@ bool CreateCenter::eventFilter(QObject *watched, QEvent *event)
 //        if(event->type() == QEvent::Leave)
 //            m_menuDataTime->hide();
 //    }
+    if(watched == m_ctitleBar)
+    {
+        if(event->type() == QEvent::Enter)
+        {
+            this->setCursor(Qt::ArrowCursor);
+        }
+    }
     return QWidget::eventFilter(watched,event);
 }
 
@@ -493,7 +503,9 @@ void CreateCenter::slot_addFileToList()
 
 void CreateCenter::slot_clearList()
 {
+//    emit sig_file_uploadall_clear();//（让自己清除，解除信号与槽函数关联）
     ui->listWidget_videopolish->clear();
+    //问题，全部清空是真的清空吗？
     checkListItemsCounts();
 }
 
@@ -518,6 +530,17 @@ void CreateCenter::checkListItemsCounts()
     if(ui->listWidget_videopolish->count() == 0)
     {
         ui->stackedWidget_upload->setCurrentWidget(ui->stacked_blank);
+        ui->pushButton_uploadFiles->setEnabled(false);
+        ui->pushButton_uploadFiles->setProperty("enabled",false);
+        ui->pushButton_uploadFiles->style()->polish(ui->pushButton_uploadFiles);
+        qDebug() << QString(u8"列表为空，上传按钮不能用！");
+    }
+    else
+    {
+            ui->pushButton_uploadFiles->setEnabled(true);
+            ui->pushButton_uploadFiles->setProperty("enabled",true);
+            ui->pushButton_uploadFiles->style()->polish(ui->pushButton_uploadFiles);
+            qDebug() << QString(u8"列表不为空，上传按钮可用！");
     }
 }
 
@@ -535,7 +558,7 @@ void CreateCenter::addFileItemsToList(const QList<QUrl> urlLists)
         FilesItem *itemWidget = new FilesItem(FILEEDIT::CANWRITE,fileUrl,file.size(),suffixpic);//文件名 大小 图标
         QListWidgetItem *item = new QListWidgetItem();
         item->setData(Qt::UserRole,fileUrl);
-        item->setSizeHint(QSize(225,155));
+        item->setSizeHint(ITEMSIZE);
         item->setTextAlignment(Qt::AlignRight | Qt::AlignCenter);
 //        item->setToolTip(fileUrl.fileName());
         ui->listWidget_videopolish->addItem(item);
@@ -543,10 +566,20 @@ void CreateCenter::addFileItemsToList(const QList<QUrl> urlLists)
         //关联信号槽
         //移除item(1.未上传时移除2.上传进度100%时，模拟按钮点击移除)
         connect(itemWidget,&FilesItem::sig_sendItem_remove,[=](){
+            itemWidget->disconnect();//断开与itemWidget关联的所有信号槽（否则移除之后，如果在没有delete的情况下，还是会触发信号槽）
             itemWidget->deleteLater();
             item->listWidget()->takeItem(item->listWidget()->row(item));
             delete item;
             checkListItemsCounts();
+        });
+
+        //全部清除
+        connect(this,&CreateCenter::sig_file_uploadall_clear,[=](){
+            itemWidget->disconnect();
+            itemWidget->deleteLater();
+            item->listWidget()->takeItem(item->listWidget()->row(item));
+            delete item;
+            qDebug() <<QString(u8"接收到清除全部的信号！");
         });
 
         //完成添加进入另一个list（url回传回来的时候body齐全，发出finished）
@@ -575,7 +608,7 @@ void CreateCenter::addFileItemsToList(const QList<QUrl> urlLists)
             }
             else
             {
-//                file_upload_pause();
+                file_upload_pause();
                 qDebug() << QString(u8"暂停上传");
             }
         });
@@ -600,7 +633,7 @@ void CreateCenter::file_upload_start(const QUrl media_url, const QUrl pic_url, F
         upWorker->slot_receiveData_accept(media_url);
         //信号与槽函数
         connect(workThread,&QThread::finished,upWorker,&QObject::deleteLater);//线程结束时，工作对象自动删除
-
+        connect(workThread,&QThread::finished,workThread,&QThread::deleteLater);//线程结束时，线程内对象自动删除
         //上传进度
         connect(upWorker,SIGNAL(sig_work_uploadprogress(qint64,qint64)),fileItem,SLOT(slot_updateProgress(qint64,qint64)));
         //关联文件状态()
@@ -657,7 +690,7 @@ void CreateCenter::file_createItemToAnotherListWgt(const fileBody &body)
     qDebug()<< "new body =" << body.fname << body.fsize << body.fcover;
     FilesItem *itemWidget = new FilesItem(FILEEDIT::CANEDIT,body.furl,body.fsize,body.fcover);
     itemWidget->initFileItem(body);
-    item->setSizeHint(QSize(225,155));
+    item->setSizeHint(ITEMSIZE);
     if(body.fmedtype == QString("movies"))
     {
         ui->listWidget_prod_movies->addItem(item);
@@ -692,6 +725,7 @@ void CreateCenter::file_createItemToAnotherListWgt(const fileBody &body)
     //信号与槽函数
     //移除
     connect(itemWidget,&FilesItem::sig_sendItem_remove,[=](){
+        itemWidget->disconnect();
         itemWidget->deleteLater();
         item->listWidget()->takeItem(item->listWidget()->row(item));
         delete item;

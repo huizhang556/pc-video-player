@@ -18,7 +18,8 @@ SOURCES += \
     $$PWD/VideoClarity.cpp \
     $$PWD/Danmu.cpp \
     $$PWD/DanmuSetting.cpp \
-    $$PWD/MediaItem.cpp
+    $$PWD/MediaItem.cpp \
+    $$PWD/ForbiddenItem.cpp
 
 
 HEADERS += \
@@ -41,7 +42,8 @@ HEADERS += \
     $$PWD/VideoClarity.h \
     $$PWD/Danmu.h \
     $$PWD/DanmuSetting.h \
-    $$PWD/MediaItem.h
+    $$PWD/MediaItem.h \
+    $$PWD/ForbiddenItem.h
 
 
 FORMS += \
