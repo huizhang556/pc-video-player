@@ -114,8 +114,8 @@ void NewLoginForm::initWorkUI()
 
     ui->tabWidget_login->setCurrentIndex(0);
 
-    //二维码
-//    ui->label_QRcode->setPixmap(QPixmap("://images/user/newlogin_QRcode.png"));
+    //二维码(初始化更新)
+    update_QRcode();
 
 }
 

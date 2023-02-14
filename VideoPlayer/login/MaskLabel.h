@@ -3,6 +3,7 @@
 
 #include <QLabel>
 #include <QPen>
+#include <QStyle>
 #include <QBrush>
 #include <QPainter>
 #include <QPainterPath>

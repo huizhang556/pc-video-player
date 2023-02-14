@@ -27,12 +27,19 @@
 int main(int argc, char *argv[])
 {
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);//高分辨率支持
-//    QApplication::setAttribute(Qt::AA_UseOpenGLES);
     QApplication a(argc, argv);
-    //00--->加载翻译文件
+
+    //00--->加载翻译文件，插件
+    QApplication::setAttribute(Qt::AA_UseOpenGLES);
+//    QApplication::setLibraryPaths(QStringList(Global::appDirPath+"/plugins"));
+//    QApplication::addLibraryPath(Global::appDirPath +"/plugins");
+    qDebug() << QApplication::libraryPaths();
+
     QTranslator translator1;
     translator1.load(":/font/qt_zh_CN.qm");//翻译为中文
     a.installTranslator(&translator1);
+
+
 
     //01--->加载全局样式
     loadGlobalQss::loadAllUIQss(STYLETYPE::STYLE_BLACK);
@@ -75,8 +82,8 @@ int main(int argc, char *argv[])
 
     //05--->显示主界面
 
-#if 1
-    //    MultipPlayer::getInstance()->show();
+#if 0
+//        MultipPlayer::getInstance()->show();
 
     //    TitleBar w1;
     //    w1.show();
@@ -96,12 +103,12 @@ int main(int argc, char *argv[])
     //    MainNotice w1;
     //    w1.show();
 
-    //    CreateCenter::getInstance()->show();
+//        CreateCenter::getInstance()->show();
 
     //    MyEmotionWindow w1;
     //    w1.showNormalEmotion(QPoint(500 , 500));
     //    DownloadType::getInstance()->show();
-        NewLoginForm::getInstance()->show();
+//        NewLoginForm::getInstance()->show();
     //    AniStackWidget w1;
     //    w1.show();
 

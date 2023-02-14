@@ -17,11 +17,25 @@ MyVideoWidget::MyVideoWidget(QWidget *parent) :
 //    connect(this,&MyVideoWidget::customContextMenuRequested,[=](){
 //        createRightMenu();
 //    });
+    installEventFilter(this);
 }
 
 MyVideoWidget::~MyVideoWidget()
 {
 
+}
+
+bool MyVideoWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == this)
+    {
+        if(event->type() == QEvent::MouseButtonPress)
+        {
+            emit sig_video_clicked();
+            qDebug() <<QString(u8"视频界面点击了！");
+        }
+    }
+    return QVideoWidget::eventFilter(watched,event);
 }
 
 void MyVideoWidget::enterEvent(QEvent *e)
@@ -40,18 +54,7 @@ void MyVideoWidget::leaveEvent(QEvent *e)
     //    qDebug() << "the mouse leave video";
 }
 
-void MyVideoWidget::mouseDoubleClickEvent(QMouseEvent *event)
-{
-//    if(isFullScreen())
-//    {
-//        updatePlayAdustForm();
-//    }
-//    else
-//    {
-//        return;
-//    }
 
-}
 
 void MyVideoWidget::createRightMenu()
 {

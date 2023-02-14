@@ -199,18 +199,22 @@ bool dataBase::creatMysqlConnection()
     }
 }
 
+//移出连接
 bool dataBase::removeMysqlConnection()
 {
     if(getSqlDataBase().isOpen())
     {
         getSqlDataBase().close();
-        getSqlDataBase().removeDatabase("connect_mysql");
+        //这里有个问题：QSqlDatabasePrivate::removeDatabase: connection 'connect_mysql' is still in use, all queries will cease to work.
+        //在你关闭它之后，m_db仍然持有你在connect()中配置的数据库的引用,你可以通过分配一个默认构造的QSqlDatabase来重置m_db
+        getSqlDataBase() = QSqlDatabase();//构造一个空的，解除占用
+        QSqlDatabase::removeDatabase("connect_mysql");
         qDebug() << QString::fromLocal8Bit("mysql数据库已关闭，连接已移除！");
     }
     return true;
 }
 
-/*连接数据库*/
+/*连接QSQLITE数据库*/
 bool dataBase::creatSqliteConnection()
 {
     qDebug() << QString::fromLocal8Bit("Qt现在支持的驱动：")<<QSqlDatabase::drivers();
@@ -246,7 +250,9 @@ bool dataBase::removeSqliteConnection()
     if(getSqlDataBase().isOpen())
     {
         getSqlDataBase().close();
-        getSqlDataBase().removeDatabase("connect_sqlite");
+        getSqlDataBase() = QSqlDatabase();//构造一个空的，解除占用
+        QSqlDatabase::removeDatabase("connect_sqlite");
+        qDebug() <<QString(u8"sqlite移出");
     }
     return true;
 }
@@ -597,7 +603,6 @@ int dataBase::getTableRecordsCounts(const QString &tablename)
         qDebug()<< QString::fromLocal8Bit("查找表'%1'总数错误：").arg(tablename) << query.lastError();
         return false;
     }
-
 }
 
 //查询用户是否存在
@@ -619,7 +624,6 @@ bool dataBase::getUserExists(const QString &tablename, const QString &username)
         qDebug()<< QString::fromLocal8Bit("查找表'%1'总数错误：").arg(tablename) << query.lastError();
         return false;//没有找到用户
     }
-
 }
 
 //注册个人信息
@@ -651,6 +655,7 @@ bool dataBase::register_userInfo(const QString &name, const QString &pwd, const 
     {
         return false;
     }
+
 }
 
 //核查名称以及密码
@@ -692,6 +697,7 @@ bool dataBase::login_checked_usernameAndPasswd(const QString &name, const QStrin
             qDebug()<< QString::fromLocal8Bit("查找表'%1'总数错误：").arg("userinfo") << query.lastError();
             return false;
         }
+
     }
 }
 
@@ -748,6 +754,7 @@ bool dataBase::login_verification(const QString &name, const QString &pwd)
         qDebug()<< QString::fromLocal8Bit("查找用户个人所有错误：") << query.lastError();
         return false;
     }
+
 }
 
 //设置在线状态
@@ -769,6 +776,7 @@ bool dataBase::login_setLoginStatus(bool status)
             qDebug()<< QString::fromLocal8Bit("更新在线状态失败：") << query.lastError();
             return false;
         }
+
     }
     else//离线
     {
@@ -790,6 +798,7 @@ bool dataBase::login_setLoginStatus(bool status)
             qDebug()<< QString::fromLocal8Bit("更新离线状态失败：") << query.lastError();
             return false;
         }
+
     }
 }
 
@@ -808,6 +817,7 @@ bool dataBase::login_setUserGrade(int grade)
         qDebug()<< QString::fromLocal8Bit("更新用户等级失败：") << query.lastError();
         return false;
     }
+
 }
 
 //找回个人密码
@@ -841,6 +851,7 @@ void dataBase::browser_loadAllRecordsToList()
     {
         qDebug()<< QString::fromLocal8Bit("查找所有收藏记录错误：") << query.lastError();
     }
+
 }
 
 //往数据库添加一条收藏记录
@@ -861,6 +872,7 @@ void dataBase::browser_addRecordToList(const QString &urlnick, const QString &ur
     {
         qDebug()<< QString::fromLocal8Bit("插入记录错误：") << query.lastError();
     }
+
 }
 
 //往数据库删除一条收藏记录
@@ -881,6 +893,7 @@ void dataBase::browser_deleteRecordToList(const QString &url)
     {
         qDebug()<< QString::fromLocal8Bit("删除记录错误：") << query.lastError();
     }
+
 }
 
 //往数据库更新一条收藏记录
@@ -901,6 +914,7 @@ void dataBase::browser_updateRecordToList(const QString &url, const QString &url
     {
         qDebug()<< QString::fromLocal8Bit("更新记录错误：") << query.lastError();
     }
+
 }
 
 //获取数据库全部历史记录
@@ -927,6 +941,7 @@ void dataBase::browser_loadAllHisRecordsToList()
     {
         qDebug()<< QString::fromLocal8Bit("查找所有历史记录错误：") << query.lastError();
     }
+
 }
 
 //往数据库添加一条历史记录
@@ -947,6 +962,7 @@ void dataBase::browser_addHisRecordToList(const QString &url)
     {
         qDebug()<< QString::fromLocal8Bit("插入记录错误：") << query.lastError();
     }
+
 }
 
 //往数据库删除一条历史记录
@@ -967,6 +983,7 @@ void dataBase::browser_deleteHisRecordToList(const QString &url)
     {
         qDebug()<< QString::fromLocal8Bit("删除记录错误：") << query.lastError();
     }
+
 }
 
 //往数据库删除所有历史记录
@@ -989,6 +1006,7 @@ void dataBase::browser_deleteAllHisRecordToList()
     {
         qDebug()<< QString::fromLocal8Bit("删除所有历史记录错误：") << query.lastError();
     }
+
 }
 
 //推荐列表插入视频
@@ -1006,6 +1024,7 @@ void dataBase::video_insertRecDramaListDB(const QStringList &parma)
     {
         qDebug()<< QString::fromLocal8Bit("插入剧集信息错误：") << query.lastError();
     }
+
 }
 
 //查询推荐列表
@@ -1043,6 +1062,7 @@ bool dataBase::video_recDramaInfo()
         qDebug()<< QString::fromLocal8Bit("查找所有剧集信息记录错误：") << query.lastError();
         return false;
     }
+
 }
 
 

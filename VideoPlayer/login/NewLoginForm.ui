@@ -1558,8 +1558,8 @@ background-color: rgba(58, 58, 65,0.7);
                                </property>
                                <property name="maximumSize">
                                 <size>
-                                 <width>16777215</width>
-                                 <height>16777215</height>
+                                 <width>150</width>
+                                 <height>150</height>
                                 </size>
                                </property>
                                <property name="styleSheet">
@@ -1567,6 +1567,30 @@ background-color: rgba(58, 58, 65,0.7);
 {
 border: 4px solid rgba(0, 255, 0,1.0);
 border-radius: 3px;
+}
+
+#label_QRcode[ismask = &quot;true&quot;]
+{
+border: 4px solid rgba(0, 255, 0,1.0);
+border-radius: 3px;
+}
+
+#label_QRcode[ismask = &quot;false&quot;]
+{
+border: 4px solid rgba(54, 175, 251,0.5);
+border-radius: 3px;
+}
+
+
+#widget_mask[ismask = &quot;true&quot;]
+{
+border-image: url(:/images/bgpic/update_QR.png);
+background-color: rgba(113, 200, 15,0.8);
+}
+
+#widget_mask[ismask = &quot;false&quot;]
+{
+background-color: rgba(113, 200, 15,0.0);
 }
 </string>
                                </property>

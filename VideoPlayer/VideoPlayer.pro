@@ -85,7 +85,8 @@ RESOURCES += \
     res_audio.qrc \
     res_image.qrc \
     res_font.qrc \
-    res_style.qrc
+    res_style.qrc \
+    res_config.qrc
 
 FORMS +=
 

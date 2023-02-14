@@ -3066,6 +3066,10 @@ bool MultipPlayer::eventFilter(QObject *watched, QEvent *event)
     slot_showDanmuSettingForm(watched,mousevent);//弹幕设置
 //    videoDouleExit(watched,mousevent);
     stackWidget_player_enter(watched,mousevent);
+    if(watched == videoWidget &&event->type() == QEvent::MouseButtonPress)
+    {
+        on_pushButton_pauseStart_clicked();//模拟暂停按钮点击
+    }
     return QWidget::eventFilter(watched,event);
 }
 

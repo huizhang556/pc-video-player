@@ -22,12 +22,11 @@ public:
     ~MyVideoWidget();
 
 protected:
+    bool    eventFilter(QObject *watched, QEvent *event)override;
+
     void    enterEvent(QEvent *e) override;
 
     void    leaveEvent(QEvent *e) override;
-
-    void    mouseDoubleClickEvent(QMouseEvent *event) override;
-
 
 
 public slots:
@@ -46,6 +45,7 @@ private slots:
     void    slot_menu_setting();
 
 signals:
+    void    sig_video_clicked();
     void    mouseEnterToVideoUI();
     void    mouseLeaveFromVideoUI();
 
