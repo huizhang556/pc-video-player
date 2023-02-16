@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>200</width>
-    <height>93</height>
+    <height>95</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -170,10 +170,13 @@ border-image: url(:/images/tray/tray_next.png);
 {
 border-image: url(:/images/tray/tray_sound.png);
 }
+
+/*
 QPushButton:hover
 {
 border-image: url(:/images/tray/tray_muted.png);
-}</string>
+}
+*/</string>
             </property>
             <property name="text">
              <string/>
@@ -184,7 +187,13 @@ border-image: url(:/images/tray/tray_muted.png);
            <widget class="QSlider" name="horizontalSlider_sound">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>130</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>130</width>
               <height>25</height>
              </size>
             </property>
@@ -250,13 +259,13 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba
            <widget class="QLabel" name="label_percentage">
             <property name="minimumSize">
              <size>
-              <width>28</width>
+              <width>36</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>28</width>
+              <width>36</width>
               <height>16777215</height>
              </size>
             </property>

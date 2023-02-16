@@ -434,6 +434,7 @@ void MainNotice::switchToDetailMessageList(NOTICETYPE type, const QString &autho
         ui->frame_send->hide();
             for(int i = 0; i < 10; i++)
             {
+                //内容了可以是html
                 switchToDetailMessage(QString(u8"国庆双旦，欢乐来袭！双重大奖等你来领~~"),
                                       QString(u8"12月12日"),
                                       QString(u8"庆双旦，欢乐来袭！好礼送不停！快来抢购吧！庆双旦，欢乐来袭！好礼送不停！快来抢购吧！庆双旦，欢乐来袭！好礼送不停！快来抢购吧！庆双旦，欢乐来袭！好礼送不停！快来抢购吧！庆双旦，欢乐来袭！好礼送不停！快来抢购吧！"));

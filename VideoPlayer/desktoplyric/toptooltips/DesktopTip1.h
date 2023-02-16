@@ -32,11 +32,17 @@ public:
         AllAnimation = 0xFF
     };
 
-    //显示弹框-已显示动画重新开始,timeout<=0不会定时消失
+    //重载1：显示弹框-已显示动画重新开始,timeout<=0不会定时消失
     static void showTip(const QStringList &texts,int timeout=0);
 
-    //显示弹框-已显示不重复动画
+    //重载2：显示弹框-已显示动画重新开始,timeout<=0不会定时消失
+    static void showTip(const QStringList &texts,const QStringList &urls,int timeout=0);
+
+    //重载1：显示弹框-已显示不重复动画
     static void keepTip(const QStringList &texts);
+
+    //重载2：显示弹框-已显示不重复动画
+    static void keepTip(const QStringList &texts,const QStringList &urls);
 
     //隐藏弹框
     static void hideTip();
@@ -66,8 +72,10 @@ private:
     //启动隐藏动画
     void hideAnimation();
 
-    //显示的文本
+    //显示的文本(纯文本)
     void setTextList(const QStringList &texts);
+    //显示的文本(纯文本+链接)
+    void setTextList(const QStringList &texts, const QStringList &urls);
 
 private:
     Ui::DesktopTip1 *ui;

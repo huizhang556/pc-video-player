@@ -8,7 +8,6 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QStringList>
-#include <QStringList>
 #include <QSqlDatabase>
 #include <QDesktopWidget>
 #include <QDebug>

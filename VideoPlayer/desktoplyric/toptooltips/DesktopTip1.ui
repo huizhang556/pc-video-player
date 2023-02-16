@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>260</width>
+    <height>199</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,15 +19,18 @@ color:white;
 font:15px &quot;宋体&quot;;
 }
 #titleArea{
-background-color: rgba(0, 85, 127, 230);
 border:1px solid black;
 border-bottom:0;
+background-color: rgba(0, 85, 127, 230);
+background-color: rgba(38, 40, 41,1.0);
 }
 #contentLabel{
 border:1px solid black;
 border-top:0;
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 117, 172, 230), stop:1 rgba(0, 85, 127, 230));
 padding: 6px 20px;
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 117, 172, 230), stop:1 rgba(0, 85, 127, 230));
+background-color: rgba(78, 83, 82,0.9);
+
 }
 #btnClose{
 background-color:transparent;

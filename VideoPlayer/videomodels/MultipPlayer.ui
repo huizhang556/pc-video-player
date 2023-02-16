@@ -418,7 +418,7 @@ border: 0px solid white;
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_4">
                   <item>
-                   <widget class="TextMovingLabel" name="label_media_name">
+                   <widget class="QLabel" name="label_media_name">
                     <property name="minimumSize">
                      <size>
                       <width>220</width>
@@ -434,6 +434,7 @@ border: 0px solid white;
                     <property name="styleSheet">
                      <string notr="true">QLabel
 {
+color: #61f6ff;
 margin-top:3px;
 }
 </string>
@@ -1236,11 +1237,6 @@ border:none;
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
-  <customwidget>
-   <class>TextMovingLabel</class>
-   <extends>QLabel</extends>
-   <header>customer/TextMovingLabel.h</header>
-  </customwidget>
   <customwidget>
    <class>RotatePic</class>
    <extends>QWidget</extends>

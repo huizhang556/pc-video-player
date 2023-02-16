@@ -155,9 +155,14 @@ void DesktopLyric::handleSignalsAndSlots()
 
     //卡拉ok
     connect(ui->pushButton_kala,&QPushButton::clicked,[=](){
-        QStringList list = {QString(u8"keepTip,NoAnimation!")};
+        QStringList list_text = {
+            QString(u8"检测到软件有最新版本，点击链接进行下载1！"),
+            QString(u8"检测到软件有最新版本，点击链接进行下载2！")};
+        QStringList list_url = {
+            QString(u8"www.bing.com"),
+            QString(u8"www.hao123.com")};
         DesktopTip1::setMode(DesktopTip1::NoAnimation);//位置动画
-        DesktopTip1::keepTip(list);
+        DesktopTip1::keepTip(list_text,list_url);
     });
 
     //调色盘

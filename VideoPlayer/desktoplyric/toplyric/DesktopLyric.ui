@@ -52,7 +52,7 @@ background-color: white;
 
 QLabel#label_lyric
 {
-border: none;
+border: 2px dashed rgba(85, 222, 131,1.0);
 /*font: 800 30px &quot;微软雅黑&quot;;*/
 color: rgb(70, 160, 239);
 background-color: rgba(64, 66, 68,0.6);

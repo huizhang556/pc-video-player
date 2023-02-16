@@ -1,3 +1,5 @@
+#二维码生成
+
 HEADERS += \
     $$PWD/BitBuffer.hpp \
     $$PWD/QrCode.hpp \

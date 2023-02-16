@@ -76,6 +76,13 @@ void CusItemMsg::initWorkUI()
     ui->pushButton_reply->setIcon(QIcon("://images/fileitem/fileitem_reply.png"));
     ui->pushButton_like->setIcon(QIcon("://images/fileitem/fileitem_like.png"));
     ui->pushButton_delete->setIcon(QIcon("://images/fileitem/fileitem_delete.png"));
+    //开启点击链接
+    ui->textBrowser_aboutContent->setOpenLinks(true);
+    ui->textBrowser_aboutContent->setOpenExternalLinks(true);
+    ui->textBrowser_likeContent->setOpenLinks(true);
+    ui->textBrowser_likeContent->setOpenExternalLinks(true);
+    ui->textBrowser_replyContent->setOpenLinks(true);
+    ui->textBrowser_replyContent->setOpenExternalLinks(true);
 }
 
 void CusItemMsg::handleSignalsAndSlots()

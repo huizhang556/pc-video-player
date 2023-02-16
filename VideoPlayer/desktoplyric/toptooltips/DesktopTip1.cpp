@@ -2,6 +2,7 @@
 #include "ui_DesktopTip1.h"
 #include <QSoundEffect>
 #include <QApplication>
+#include <QDesktopServices>
 #include <QScreen>
 #include <QDebug>
 
@@ -20,7 +21,15 @@ DesktopTip1::DesktopTip1() :
     //setWindowModality(Qt::WindowModal);
 
     //resize会被label撑开
-    setFixedSize(310,210);
+//    setFixedSize(310,210);
+    setFixedSize(260,200);
+    //设置可以自动打开链接，也可以链接信号与槽函数
+    ui->contentLabel->setOpenExternalLinks(true);
+    ui->contentLabel->setWordWrap(true);
+    //响应打开链接信号
+//    connect(ui->contentLabel,&QLabel::linkActivated,[=](const QString& link){
+//        QDesktopServices::openUrl(QUrl(link));
+//    });
 
     //关闭
     connect(ui->btnClose,&QPushButton::clicked,this,&DesktopTip1::hideTip);
@@ -62,6 +71,31 @@ void DesktopTip1::showTip(const QStringList &texts, int timeout)
     });
 }
 
+void DesktopTip1::showTip(const QStringList &texts, const QStringList &urls, int timeout)
+{
+    QSoundEffect    *effect = new QSoundEffect();
+    effect->setSource(QUrl::fromLocalFile(":/audio/player/tooltips.wav"));
+    effect->setLoopCount(1);  //循环次数
+    effect->setVolume(0.30f); //音量  0~1之间
+    effect->play();
+
+    if(!instance)
+    {
+        //仅在ui线程
+        instance = new DesktopTip1;
+    }
+    instance->readyTimer(timeout);
+    //模态框
+    instance->setWindowModality(Qt::WindowModal);
+    instance->setTextList(texts,urls);
+    instance->showAnimation();
+    //延迟删除
+    QTimer::singleShot(1000,0,[=](){
+        qDebug() << QString(u8"showTip delete effect");
+        delete effect;
+    });
+}
+
 void DesktopTip1::keepTip(const QStringList &texts)
 {
     QSoundEffect    *effect = new QSoundEffect();
@@ -79,6 +113,31 @@ void DesktopTip1::keepTip(const QStringList &texts)
     //模态框
     instance->setWindowModality(Qt::WindowModal);
     instance->setTextList(texts);
+    instance->keepAnimation();
+    //延迟删除
+    QTimer::singleShot(1000,0,[=](){
+        delete effect;
+        qDebug() << QString(u8"Keeptip delete effect");
+    });
+}
+
+void DesktopTip1::keepTip(const QStringList &texts, const QStringList &urls)
+{
+    QSoundEffect    *effect = new QSoundEffect();
+    effect->setSource(QUrl::fromLocalFile(":/audio/player/tooltips.wav"));
+    effect->setLoopCount(1);  //循环次数
+    effect->setVolume(0.30f); //音量  0~1之间
+    effect->play();
+
+    if(!instance)
+    {
+        //仅在ui线程
+        instance = new DesktopTip1;
+    }
+    instance->readyTimer(0);
+    //模态框
+    instance->setWindowModality(Qt::WindowModal);
+    instance->setTextList(texts,urls);
     instance->keepAnimation();
     //延迟删除
     QTimer::singleShot(1000,0,[=](){
@@ -251,5 +310,29 @@ void DesktopTip1::setTextList(const QStringList &texts)
         tip_text += text + "<br>";
     }
     tip_text += "</p>";
+    ui->contentLabel->setText(tip_text);
+}
+
+void DesktopTip1::setTextList(const QStringList &texts, const QStringList &urls)
+{
+    QString tip_text("<p style='line-height:120%'>");
+    //普通文字显示
+    for (const QString &text : texts)
+    {
+        if (text.isEmpty())
+            continue;
+        QString t_text = QString(u8"<span style = 'font-size: 13px; color:#38e054;'>%1</span>").arg(text);
+        tip_text += t_text + "<br>";//换行
+    }
+
+    //链接显示
+    for(const QString &url : urls)
+    {
+        if(url.isEmpty())
+            continue;
+       QString t_url = QString(u8"<a href = %1 style ='text-decoration:underline; font-size: 13px; color:#009bdb;'>%2</a>").arg(url).arg(url);
+        tip_text += t_url + "<br>";//换行
+    }
+    tip_text += "</p>";//这是一个段落
     ui->contentLabel->setText(tip_text);
 }
