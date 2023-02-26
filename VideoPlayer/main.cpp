@@ -84,8 +84,8 @@ int main(int argc, char *argv[])
     //05--->显示主界面
 
 #if 1
-    DesktopLyric::getInstance()->show();
-//        MultipPlayer::getInstance()->show();
+//    DesktopLyric::getInstance()->show();
+        MultipPlayer::getInstance()->show();
 
 //        MainNotice::getInstance()->show();
 

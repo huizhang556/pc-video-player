@@ -665,7 +665,7 @@ font-weight:bold;
 }</string>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>4</number>
        </property>
        <widget class="QWidget" name="tab_history">
         <attribute name="title">

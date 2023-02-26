@@ -50,7 +50,7 @@ border: none;
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <property name="spacing">
-      <number>0</number>
+      <number>3</number>
      </property>
      <property name="leftMargin">
       <number>3</number>
@@ -84,7 +84,7 @@ border: none;
       <widget class="QPushButton" name="pushButton_mediaName">
        <property name="minimumSize">
         <size>
-         <width>180</width>
+         <width>160</width>
          <height>30</height>
         </size>
        </property>
@@ -118,13 +118,13 @@ color: rgb(120, 120, 120);
       <widget class="QStackedWidget" name="stackedWidget_control">
        <property name="minimumSize">
         <size>
-         <width>80</width>
+         <width>90</width>
          <height>30</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>80</width>
+         <width>90</width>
          <height>16777215</height>
         </size>
        </property>
@@ -132,7 +132,7 @@ color: rgb(120, 120, 120);
         <string notr="true"/>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page1">
         <property name="minimumSize">
@@ -152,7 +152,7 @@ color: rgb(120, 120, 120);
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>3</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>

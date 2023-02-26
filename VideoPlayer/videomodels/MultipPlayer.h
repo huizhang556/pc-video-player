@@ -13,6 +13,7 @@
 #include "videomodels/VideoBlank.h"
 #include "videomodels/muteDialog.h"
 #include "videomodels/CommentTab.h"
+#include "videomodels/ListManager.h"
 #include "videomodels/FloatPlayCtl.h"
 #include "videomodels/VideoClarity.h"
 #include "videomodels/AdjustBright.h"
@@ -27,7 +28,7 @@
 #include "videomodels/VideoProgressBar.h"
 #include "fileshandle/DownloadType.h"
 #include "mainwidget/vipmember/BuyVip.h"
-#include "desktoplyric/toplyric/DesktopLyric.h"
+
 
 #include <QMap>
 #include <QMenu>
@@ -375,6 +376,7 @@ private:
     CommentTab                  *m_commentTab       = nullptr;
     CustomFileDialog            *m_cusDialog        = nullptr;//自定义选择框界面
     QListWidget                 *m_listWisget1      = nullptr;//我的歌单
+    ListManager                 *m_listManager      = nullptr;//列表管理器
     QListWidget                 *m_listWisget2      = nullptr;
     QListWidget                 *m_listWisget3      = nullptr;
     QListWidget                 *m_listWisget4      = nullptr;

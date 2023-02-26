@@ -616,5 +616,20 @@
         <file>images/fileitem/vbox_left.png</file>
         <file>images/fileitem/vbox_right.png</file>
         <file>images/bgpic/update_QR.png</file>
+        <file>images/player/player_itemlist_add.png</file>
+        <file>images/player/player_itemlist_add_dir.png</file>
+        <file>images/player/player_itemlist_add_music.png</file>
+        <file>images/player/player_itemlist_bottom.png</file>
+        <file>images/player/player_itemlist_close.png</file>
+        <file>images/player/player_itemlist_collected.png</file>
+        <file>images/player/player_itemlist_delete.png</file>
+        <file>images/player/player_itemlist_details.png</file>
+        <file>images/player/player_itemlist_download.png</file>
+        <file>images/player/player_itemlist_like.png</file>
+        <file>images/player/player_itemlist_locate.png</file>
+        <file>images/player/player_itemlist_right.png</file>
+        <file>images/player/player_itemlist_rmenu.png</file>
+        <file>images/player/player_itemlist_search.png</file>
+        <file>images/player/player_itemlist_video.png</file>
     </qresource>
 </RCC>

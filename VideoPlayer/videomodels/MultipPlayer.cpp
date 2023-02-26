@@ -172,6 +172,13 @@ void MultipPlayer::initMainWindow()
     m_listWisget2->horizontalScrollBar()->setHidden(true);
     m_listWisget2->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     m_listWisget2->clear();
+
+    //列表管理器
+    m_listManager = new ListManager();
+    m_listManager->setObjectName(QString::fromUtf8("m_listManager"));
+    m_listManager->setMinimumWidth(LISTWIDTH_R);
+    m_listManager->setFocusPolicy(Qt::NoFocus);//作用是点击item去掉虚线边框
+
     //我的收藏
     m_listWisget3 = new QListWidget();
     m_listWisget3->setObjectName(QString::fromLocal8Bit("m_listWisget3"));
@@ -203,13 +210,13 @@ void MultipPlayer::initMainWindow()
     m_searchBtn = new QPushButton();//曲库列表搜索按钮
     m_searchBtn->setObjectName(QString::fromLocal8Bit("m_searchBtn_player"));
     m_searchBtn->setFixedSize(33,30);
-
+    //搜做框+搜索按钮
     m_hLayout = new QHBoxLayout();
     m_hLayout->insertWidget(0,m_lineEdit);
     m_hLayout->insertWidget(1,m_searchBtn);
     m_hLayout->setSpacing(0);
     m_hLayout->setStretch(0,4);
-
+    //我的歌单整体
     m_vHlayout = new QVBoxLayout();
     m_vHlayout->insertLayout(0,m_hLayout);
     m_vHlayout->insertWidget(1,m_listWisget2);
@@ -224,7 +231,7 @@ void MultipPlayer::initMainWindow()
     m_toolBox->setFixedWidth(LISTWIDTH_R);
     m_toolBox->setObjectName(QString::fromLocal8Bit("m_toolBox_list"));
     m_toolBox->addItem(m_widget2,QIcon(":/images/icon/playerlist.png"),QString::fromLocal8Bit("播放列表"));
-    m_toolBox->addItem(m_listWisget1,QIcon(":/images/icon/musiclist.png"),QString::fromLocal8Bit("我的歌单"));
+    m_toolBox->addItem(m_listManager,QIcon(":/images/icon/musiclist.png"),QString::fromLocal8Bit("我的歌单"));
     m_toolBox->addItem(m_listWisget3,QIcon(":/images/icon/play_collect_checked.png"),QString::fromLocal8Bit("我的收藏"));
     m_toolBox->addItem(m_listWisget4,QIcon(":/images/icon/playerinternet.png"),QString::fromLocal8Bit("播放记录"));
     m_toolBox->layout()->setSpacing(3);//item之间的间距
@@ -311,7 +318,8 @@ void MultipPlayer::initMainWindow()
     m_foldBtn = new QPushButton(ui->stackedWidget);//父亲必须指定，要不然显示不出来
     m_foldBtn->setObjectName(QString::fromLocal8Bit("m_foldBtn"));
     m_foldBtn->setFixedSize(25,60);
-//    m_foldBtn->setAttribute(Qt::WA_TranslucentBackground,true);//没效果，得定制
+//    m_foldBtn->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+    m_foldBtn->setAttribute(Qt::WA_TranslucentBackground,true);//没效果，得定制
     m_foldBtn->setHidden(true);//初始化隐藏按钮
 
     m_actionBullet  = new QAction(QIcon("://images/icon/bullet_login_hover.png"),"");
@@ -2954,12 +2962,12 @@ void MultipPlayer::slot_setFoldButtonStyle()
     if(!m_isHide)
     {
         //需要隐藏
-        m_foldBtn->setStyleSheet("QPushButton{background:rgba(81,81,81,0.3) url(:/images/icon/arrow_right.png) no-repeat center center;border:none;}");
+        m_foldBtn->setStyleSheet("QPushButton#m_foldBtn{background:rgba(81,81,81,0.3) url(:/images/icon/arrow_right.png) no-repeat center center;border:none;}");
     }
     else
     {
         //需要显示
-        m_foldBtn->setStyleSheet("QPushButton{background:rgba(81,81,81,0.3) url(:/images/icon/arrow_left.png) no-repeat center center;border:none;}");
+        m_foldBtn->setStyleSheet("QPushButton#m_foldBtn{background:rgba(81,81,81,0.3) url(:/images/icon/arrow_left.png) no-repeat center center;border:none;}");
     }
 }
 

@@ -307,7 +307,8 @@ void DesktopTip1::setTextList(const QStringList &texts)
     {
         if (text.isEmpty())
             continue;
-        tip_text += text + "<br>";
+        QString t_text = QString(u8"<span style = 'font-size: 13px; color:#38e054;'>%1</span>").arg(text);
+        tip_text += t_text + "<br>";
     }
     tip_text += "</p>";
     ui->contentLabel->setText(tip_text);
