@@ -37,6 +37,9 @@ void CComboBox::setDiskSpace(const QString &space)
 
 void CComboBox::setCurrentText_(const QString &text)
 {
+//    QFontMetrics fontMetric(this->font());
+//    QString text_ = fontMetric.elidedText(text,Qt::ElideRight,100);
+
     this->setCurrentText(text);
     this->setToolTip(text);
 }
@@ -44,6 +47,12 @@ void CComboBox::setCurrentText_(const QString &text)
 void CComboBox::insertItem_(int index, const QString &text)
 {
     this->insertItem(index,text);
+    this->setToolTip(text);
+}
+
+void CComboBox::insertItem_(int index, const QIcon &icon, const QString &text)
+{
+    this->insertItem(index,icon,text);
     this->setToolTip(text);
 }
 

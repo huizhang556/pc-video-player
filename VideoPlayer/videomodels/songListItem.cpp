@@ -83,7 +83,10 @@ void songListItem::setItemName()
     QString fileIcon;
     QFileInfo fileInfo(m_name);
     QString fileSuffix = fileInfo.suffix();//文件后缀
-    ui->pushButton_sname->setText(fileInfo.fileName());
+    QFontMetrics fontMetrisc(ui->pushButton_sname->font());
+    QString text = fontMetrisc.elidedText(fileInfo.fileName(),Qt::ElideRight,110,0);
+    ui->pushButton_sname->setText(text);
+    ui->pushButton_sname->setToolTip(fileInfo.fileName());
 
     //判断一下文件类型，加载不同图标
     if(fileSuffix == "mp4")//返回的是mp4,而非 .mp4

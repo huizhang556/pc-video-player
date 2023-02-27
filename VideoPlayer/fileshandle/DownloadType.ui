@@ -576,7 +576,7 @@ background-color: #f0f0f0;								/*下拉列表背景色*/
 QListView::item
 {
 min-height:26px;
-padding:0px 8px;
+padding:0px 0px;
 background:0000ff;
 color:#404040;
 }  
@@ -585,7 +585,7 @@ color:#404040;
 QListView::item:selected
 { 
 color:#2ca5f9;
-border-radius: 4px;
+border-radius: 2px;
 background-color: #d3d3d3; 
 }   
 
@@ -593,7 +593,7 @@ background-color: #d3d3d3;
 QListView::item:hover
 { 
 color:#2ca5f9;
-border-radius: 4px;
+border-radius: 2px;
 background-color: #d3d3d3; 
 }
 

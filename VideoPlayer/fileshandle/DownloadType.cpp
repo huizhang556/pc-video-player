@@ -43,7 +43,7 @@ void DownloadType::initWorkUI()
     m_buttonGroup->setExclusive(true);
 
     ui->comboBox_savePath->setView(new QListView());//保证样式生效
-    ui->comboBox_savePath->insertItem_(0,Global::appDirPath + "/download");
+    ui->comboBox_savePath->insertItem_(0,QIcon(":/images/function/new_disc.png"),Global::appDirPath + "/download");
     m_curOpenPath = ui->comboBox_savePath->currentText();
     ui->lineEdit_downloadUrl->setText("https://82.156.175.81/study/index.html");
     ui->pushButton_ok->setCheckable(true);
@@ -171,7 +171,7 @@ void DownloadType::handleSignalsAndSlots()
         if(path.isEmpty()) return;
         if(!judgePathExist(path))
         {
-            ui->comboBox_savePath->insertItem(ui->comboBox_savePath->count(),path);
+            ui->comboBox_savePath->insertItem_(ui->comboBox_savePath->count(),QIcon(":/images/function/new_disc.png"),path);
         }
             ui->comboBox_savePath->setCurrentText_(path);
             m_curOpenPath = path;

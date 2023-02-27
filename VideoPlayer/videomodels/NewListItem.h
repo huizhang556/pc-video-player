@@ -77,6 +77,7 @@ signals:
     void    sig_item_rename();
     void    sig_item_scrollbar(int);
     void    sig_item_addtolist();
+    void    sig_item_addeditems();
 };
 
 #endif // NEWLISTITEM_H

@@ -11,6 +11,7 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QLine>
+#include <QFontMetrics>
 #include <QLayout>
 #include <QStorageInfo>
 #include <QDebug>
@@ -25,6 +26,7 @@ public:
     void    setDiskSpace(const QString& space);
     void    setCurrentText_(const QString& text);
     void    insertItem_(int index,const QString& text);
+    void    insertItem_(int index, const QIcon &icon, const QString &text);
 
 private:
     QString checkDiskStorageSpace(const QString& path);//获取磁盘剩余大小

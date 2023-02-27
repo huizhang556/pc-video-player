@@ -2,6 +2,7 @@
 #define SONGLISTITEM_H
 
 #include <QWidget>
+#include <QFontMetrics>
 #include <QFileInfo>
 #include <QDebug>
 

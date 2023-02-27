@@ -19,38 +19,42 @@ ListManager::~ListManager()
 
 void ListManager::initWorkUI()
 {
-    ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->scrollArea->setContextMenuPolicy(Qt::NoContextMenu);
 
-    m_verScrollbar  = new QScrollBar(Qt::Vertical,ui->scrollArea);
-    m_verScrollbar->setObjectName(QString::fromUtf8("m_verScrollbar"));
-    m_verScrollbar->setFixedSize(8,ui->scrollArea->height());
-    m_verScrollbar->setMinimum(ui->scrollArea->verticalScrollBar()->minimum());
-    m_verScrollbar->setMaximum(ui->scrollArea->verticalScrollBar()->maximum());
-//    m_verScrollbar->setValue(ui->scrollArea->verticalScrollBar()->value());
-    m_verScrollbar->setStyleSheet("QScrollBar#m_verScrollbar{"
-                                  "background-color: rgba(64, 66, 68,0.0);"
-                                  "}"
-                                  "QScrollBar#m_verScrollbar::add-page:vertical{"
-                                  "background-color: transparent;"
-                                  "}"
-                                  "QScrollBar#m_verScrollbar::sub-page:vertical{"
-                                  "background-color: transparent;"
-                                  "}"
-                                  "QScrollBar#m_verScrollbar::handle:vertical{"
-                                  "border: 0px;"
-                                  "min-width:6px;"
-                                  "min-height:200px;"
-                                  "border-radius:4px;"
-                                  "background-color: rgba(70,70,70,50%);"
-                                  "}");
+//    m_verScrollbar  = new QScrollBar(Qt::Vertical,ui->scrollArea);
+//    m_verScrollbar->setObjectName(QString::fromUtf8("m_verScrollbar"));
+//    m_verScrollbar->setFixedSize(8,ui->scrollArea->height());
+//    m_verScrollbar->setMinimum(ui->scrollArea->verticalScrollBar()->minimum());
+//    m_verScrollbar->setMaximum(ui->scrollArea->verticalScrollBar()->maximum());
+////    m_verScrollbar->setValue(ui->scrollArea->verticalScrollBar()->value());
+//    m_verScrollbar->setStyleSheet("QScrollBar#m_verScrollbar{"
+//                                  "background-color: rgba(64, 66, 68,0.0);"
+//                                  "}"
+//                                  "QScrollBar#m_verScrollbar::add-page:vertical{"
+//                                  "background-color: transparent;"
+//                                  "}"
+//                                  "QScrollBar#m_verScrollbar::sub-page:vertical{"
+//                                  "background-color: transparent;"
+//                                  "}"
+//                                  "QScrollBar#m_verScrollbar::handle:vertical{"
+//                                  "border: 0px;"
+//                                  "min-width:6px;"
+//                                  "min-height:200px;"
+//                                  "border-radius:4px;"
+//                                  "background-color: rgba(70,70,70,50%);"
+//                                  "}");
 
     m_findFrame = new QFrame(ui->scrollArea);
     m_findFrame->setFixedSize(ui->scrollArea->width(),30);
     m_findFrame->setObjectName(QString::fromUtf8("m_findFrame"));
     m_findFrame->setStyleSheet("#m_findFrame{"
-                              "background-color: rgb(231, 231, 231);"
-                              "}");
+                              "background-color: rgba(223, 223, 223,0.5);"
+                              "}"
+                               "#m_findFrame:hover{"
+                               "background-color: rgba(231, 231, 231,0.7);"
+                               "}");
     m_findFrame->hide();
 
 
@@ -81,35 +85,37 @@ void ListManager::initWorkUI()
 
 
     m_posFrame = new QFrame(ui->scrollArea);
-    m_posFrame->setFixedSize(40,80);
+    m_posFrame->setFixedSize(34,76);
     m_posFrame->setObjectName(QString::fromUtf8("m_posFrame"));
     m_posFrame->setStyleSheet("#m_posFrame{"
-                              "background-color: transparent;"
+                              "background-color: rgba(132, 37, 225,0.2);"
+                              "border-radius: 15px;"
+                              "border: 2px solid rgb(157, 235, 29);"
                               "}");
 
     m_findButton = new QPushButton(m_posFrame);
-    m_findButton->setFixedSize(36,36);
+    m_findButton->setFixedSize(26,26);
 //    m_findButton->setText(QString(u8"查找"));
     m_findButton->setObjectName(QString::fromUtf8("m_findButton"));
     m_findButton->setStyleSheet("#m_findButton{"
-                                "border-radius: 18px;"
+                                "border-radius: 13px;"
                                 "background-color: transparent;"
                                 "image: url(:/images/player/player_itemlist_search.png);"
                                 "}");
 
     m_locateButton = new QPushButton(m_posFrame);
-    m_locateButton->setFixedSize(36,36);
+    m_locateButton->setFixedSize(26,26);
 //    m_locateButton->setText(QString(u8"定位"));
     m_locateButton->setObjectName(QString::fromUtf8("m_locateButton"));
     m_locateButton->setStyleSheet("#m_locateButton{"
-                                  "border-radius: 18px;"
+                                  "border-radius: 13px;"
                                   "background-color: transparent;"
                                   "image: url(:/images/player/player_itemlist_locate.png);"
                                   "}");
 
     m_vblayout = new QVBoxLayout(m_posFrame);
     m_vblayout->setSpacing(5);
-    m_vblayout->setContentsMargins(0,0,0,0);
+    m_vblayout->setContentsMargins(2,0,0,0);
     m_vblayout->addWidget(m_findButton);
     m_vblayout->addWidget(m_locateButton);
 
@@ -119,12 +125,13 @@ void ListManager::initWorkUI()
 void ListManager::handleSignalsAndSlots()
 {
     connect(ui->scrollArea->verticalScrollBar(),&QScrollBar::valueChanged,[=](int value){
-        m_verScrollbar->setValue(value);
+//        m_verScrollbar->setValue(value);
+        qDebug() <<QString(u8"当前值滚动条：") << value;
     });
 
-    connect(m_verScrollbar,&QScrollBar::valueChanged,[=](int value){
+//    connect(m_verScrollbar,&QScrollBar::valueChanged,[=](int value){
 
-        ui->scrollArea->verticalScrollBar()->setValue(value);
+//        ui->scrollArea->verticalScrollBar()->setValue(value);
 
 //        int spaceHeight;
 //        if(m_curListItem != nullptr)
@@ -141,7 +148,7 @@ void ListManager::handleSignalsAndSlots()
 //        {
 //            ui->scrollArea->verticalScrollBar()->setValue(value);
 //        }
-    });
+//    });
 
 
     //查找
@@ -167,9 +174,11 @@ void ListManager::handleSignalsAndSlots()
 
     //定位
     connect(m_locateButton,&QPushButton::clicked,[=](){
-    if(m_curListItem != nullptr)
+    if(m_curListItem != nullptr && m_curListItem->getCurListWidget()->currentItem() != nullptr)
     {
-        m_curListItem->getCurListWidget()->scrollTo(m_curListItem->getCurListWidget()->currentIndex(),QAbstractItemView::PositionAtCenter);//中间显示
+        qDebug() <<QString(u8"定位触发！，item的ID：") << m_curListItem->getItemId();
+        //不能自动定位？？？？
+        m_curListItem->getCurListWidget()->scrollToItem(m_curListItem->getCurListWidget()->currentItem(),QAbstractItemView::PositionAtCenter);//中间显示
     }
 
     });
@@ -183,17 +192,17 @@ void ListManager::setInstallEventFilter()
 
 bool ListManager::eventFilter(QObject *watched, QEvent *event)
 {
-    if(watched == ui->scrollArea && event->type() == QEvent::Enter)
-    {
-        qDebug() << QString(u8"滚动条进入");
-        m_verScrollbar->show();
+//    if(watched == ui->scrollArea && event->type() == QEvent::Enter)
+//    {
+//        qDebug() << QString(u8"滚动条进入");
+//        m_verScrollbar->show();
 
-    }
-    if(watched == ui->scrollArea && event->type() == QEvent::Leave)
-    {
-        qDebug() << QString(u8"滚动条移出");
-        m_verScrollbar->hide();
-    }
+//    }
+//    if(watched == ui->scrollArea && event->type() == QEvent::Leave)
+//    {
+//        qDebug() << QString(u8"滚动条移出");
+//        m_verScrollbar->hide();
+//    }
     if(watched == ui->scrollArea && event->type() == QEvent::Resize)
     {
         autoResizeGeometry();
@@ -220,9 +229,14 @@ void ListManager::createNewSongList(FINSTATUS status, QString sname)
     NewListItem *itemWidget = new NewListItem(status,m_counts,sname);
     ui->m_itemVLayout->insertWidget(0,itemWidget);
     setItemWidgetCloseStatus(itemWidget);//其他没有关闭的先关闭
-    m_posFrame->show();
+    m_curListItem = itemWidget;//新建的item 默认被选中
     m_listItems.insert(m_counts,itemWidget);
     m_counts++;
+
+    connect(itemWidget,&NewListItem::sig_item_addeditems,[=](){
+       m_posFrame->show();
+    });
+
     connect(this,&ListManager::sig_send_height,[=](int height){
         itemWidget->slot_setNodeCounts(height);
         qDebug() << QString(u8"视图显示区域高度：%1").arg(height);
@@ -242,7 +256,7 @@ void ListManager::createNewSongList(FINSTATUS status, QString sname)
         }
         else
         {
-            m_posFrame->show();
+             if(m_curListItem->getCurListWidget()->count() != 0) m_posFrame->show();
         }
         qDebug() << QString(u8"变化后的item id=")<< itemWidget->getItemId();
     });
@@ -299,7 +313,7 @@ void ListManager::findContentTextItems(QString name)
                 for(int j = 0; j < m_curListItem->getCurListWidget()->model()->columnCount(); j++)
                 {
                     index = model->index(i,j);
-                    curname += model->data(index).toString();
+                    curname += model->data(index,Qt::UserRole).toString();//默认是DisplayRole
                 }
                 curname.remove(QRegExp("\\s"));
                 if(curname.contains(name,Qt::CaseInsensitive)) //CaseSensitive:敏感
@@ -327,7 +341,7 @@ void ListManager::setItemWidgetCloseStatus(NewListItem *myself)
 }
 
 void ListManager::updateScrollbarGeomotry()
-{
+{/*
     m_verScrollbar->move(ui->scrollArea->x()+ui->scrollArea->width()-m_verScrollbar->width()-1,
                          0);
 
@@ -338,7 +352,7 @@ void ListManager::updateScrollbarGeomotry()
     m_verScrollbar->setValue(ui->scrollArea->verticalScrollBar()->value());
 //    m_verScrollbar->setMinimumHeight(10);
     m_verScrollbar->raise();
-    //    m_verScrollbar->show();
+    //    m_verScrollbar->show();*/
 }
 
 void ListManager::autoResizeGeometry()

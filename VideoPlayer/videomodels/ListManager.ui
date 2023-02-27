@@ -54,7 +54,7 @@ background-color: rgba(51, 51, 51,1.0);
       </property>
       <layout class="QVBoxLayout" name="m_itemVLayout">
        <property name="spacing">
-        <number>1</number>
+        <number>0</number>
        </property>
        <property name="leftMargin">
         <number>0</number>

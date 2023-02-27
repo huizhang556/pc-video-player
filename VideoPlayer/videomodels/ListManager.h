@@ -38,15 +38,15 @@ private:
     bool                m_expand;//是否为展开状态
     int                 m_counts = 0;
     QList<NewListItem*> m_listItems;
-    QScrollBar          *m_verScrollbar     =   nullptr;
+//    QScrollBar          *m_verScrollbar     =   nullptr;
     NewListItem         *m_curListItem      =   nullptr;
 
-    QFrame              *m_findFrame        =   nullptr;
+    QFrame              *m_findFrame        =   nullptr;//find and close
     QLineEdit           *m_searchEdit       =   nullptr;
     QPushButton         *m_hideButton       =   nullptr;
     QHBoxLayout         *m_hblayout         =   nullptr;
 
-    QFrame              *m_posFrame         =   nullptr;
+    QFrame              *m_posFrame         =   nullptr;//find and location
     QPushButton         *m_findButton       =   nullptr;
     QPushButton         *m_locateButton     =   nullptr;
     QVBoxLayout         *m_vblayout         =   nullptr;

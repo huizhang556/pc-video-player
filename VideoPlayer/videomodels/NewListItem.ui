@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>219</width>
+    <width>224</width>
     <height>309</height>
    </rect>
   </property>
@@ -18,7 +18,9 @@
 {
 font: 400 13px &quot;微软雅黑&quot;;
 background-color: transparent;
-}</string>
+}
+
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -28,13 +30,13 @@ background-color: transparent;
     <number>0</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="rightMargin">
     <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <item>
     <widget class="QFrame" name="frame_ltitle">

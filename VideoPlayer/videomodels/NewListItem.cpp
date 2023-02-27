@@ -95,16 +95,21 @@ void NewListItem::handleSignalsAndSlots()
                                                                         QString::fromLocal8Bit("/"),
                                                                         QString::fromLocal8Bit("Videos(*avi *mp4 *flv *mp3 *wmv)"),
                                                                         0);//QFileDialog::DontUseNativeDialog
+        if(list.isEmpty()) return;
         foreach (QString fpath, list)
         {
             songListItem *itemWidget = new songListItem(fpath);
-            QListWidgetItem *item = new QListWidgetItem(fpath);
+            QListWidgetItem *item = new QListWidgetItem();
+            item->setData(Qt::UserRole,fpath);
             item->setSizeHint(itemWidget->size());
             ui->listWidget_songerlist->addItem(item);
             ui->listWidget_songerlist->setItemWidget(item,itemWidget);
+
+
             //信号与槽函数
             connect(itemWidget,&songListItem::sig_item_selected,[=](QString sname){
                 ui->listWidget_songerlist->setCurrentItem(item);
+                qDebug() <<QString(u8"当前item已被设定！");
             });
 
             //添加信号（中继）
@@ -123,6 +128,7 @@ void NewListItem::handleSignalsAndSlots()
         {
             ui->stackedWidget_content->setCurrentWidget(ui->page_content);
             checkListCounts();
+            emit sig_item_addeditems();
         }
     });
 

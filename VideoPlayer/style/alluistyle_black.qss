@@ -36,6 +36,14 @@ QTabWidget::pane
 border-right: 0;
 }
 
+/*列表管理---item*/
+NewListItem
+{
+border: 1px solid rgb(113, 113, 113);
+border-left-width: 0px;
+border-right-width: 0px;
+}
+
 /*****设置禁词*****/
 #m_forbidebtn_text
 {

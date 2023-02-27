@@ -161,7 +161,7 @@ background-color: transparent;
       <widget class="QPushButton" name="pushButton_sname">
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>130</width>
          <height>26</height>
         </size>
        </property>
@@ -175,7 +175,7 @@ background-color: transparent;
         <string notr="true">QPushButton
 {
 border: none;
-color: black;
+color: rgb(187, 190, 191);
 text-align: left;
 background-color: transparent;
 }
@@ -194,13 +194,13 @@ color: rgb(34, 131, 220);
       <widget class="QStackedWidget" name="stackedWidget_ctrl">
        <property name="minimumSize">
         <size>
-         <width>100</width>
+         <width>120</width>
          <height>26</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>100</width>
+         <width>120</width>
          <height>26</height>
         </size>
        </property>
@@ -210,7 +210,7 @@ color: rgb(34, 131, 220);
        <widget class="QWidget" name="stack_page1">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="spacing">
-          <number>3</number>
+          <number>0</number>
          </property>
          <property name="leftMargin">
           <number>3</number>
@@ -219,7 +219,7 @@ color: rgb(34, 131, 220);
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>9</number>
+          <number>10</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -405,7 +405,7 @@ background-color: transparent;
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="pushButton_ftime">
            <property name="minimumSize">
             <size>
              <width>60</width>
@@ -421,7 +421,7 @@ background-color: transparent;
            <property name="styleSheet">
             <string notr="true">QPushButton
 {
-color: black;
+color: rgb(187, 190, 191);
 border: none;
 background-color: transparent;
 }</string>
