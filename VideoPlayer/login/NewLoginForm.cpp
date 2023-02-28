@@ -66,12 +66,12 @@ NewLoginForm::~NewLoginForm()
 
 void NewLoginForm::initWorkUI()
 {
-    this->setContentsMargins(15,15,15,15);//为阴影留出空间
-    QGraphicsDropShadowEffect *shadow_effect = new QGraphicsDropShadowEffect(this);
-    shadow_effect->setOffset(0,0);//阴影往边外（下和右）移出的距离
-    shadow_effect->setColor(QColor(93, 95, 96));
-    shadow_effect->setBlurRadius(15);//阴影也是个矩形，需要圆角
-    this->setGraphicsEffect(shadow_effect);
+//    this->setContentsMargins(15,15,15,15);//为阴影留出空间
+//    QGraphicsDropShadowEffect *shadow_effect = new QGraphicsDropShadowEffect(this);
+//    shadow_effect->setOffset(0,0);//阴影往边外（下和右）移出的距离
+//    shadow_effect->setColor(QColor(93, 95, 96));
+//    shadow_effect->setBlurRadius(15);//阴影也是个矩形，需要圆角
+//    this->setGraphicsEffect(shadow_effect);
 
     //登录部分
     m_actionShowPwd = new QAction(QIcon(":/images/icon/passwd_hide.png"),"");
@@ -222,7 +222,7 @@ void NewLoginForm::set_QRcode(const QString &content)
     QrCode_Image = QrCode_Image.scaled(QRSIZE,Qt::KeepAspectRatio);
     //转换为QPixmap在Label中显示
     ui->label_QRcode->setPixmap(QPixmap::fromImage(QrCode_Image));
-//    ui->label_QRcode->setContentsMargins(5,5,5,5);//内部边距
+    ui->label_QRcode->setContentsMargins(5,5,5,5);//内部边距
 }
 
 
@@ -306,6 +306,7 @@ void NewLoginForm::chandleSignalsAndSLots()
             setUser_login();
         }
     });
+
     //注册
     connect(ui->pushButton_regis,&QPushButton::clicked,[=](){
         if(ui->stackedWidget_right->currentIndex() == 1)//账号注册
@@ -353,7 +354,7 @@ NewLoginForm *NewLoginForm::getInstance()
 
 void NewLoginForm::receiveLoginAppClose()
 {
-    this->close();
+    aniGroup->start();
 }
 
 void NewLoginForm::slot_switchWinType(ShowType type)

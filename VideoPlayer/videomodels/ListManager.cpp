@@ -19,7 +19,7 @@ ListManager::~ListManager()
 
 void ListManager::initWorkUI()
 {
-    ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->scrollArea->setContextMenuPolicy(Qt::NoContextMenu);
 
