@@ -34,6 +34,10 @@ private:
     QAction             *m_publishAction=   nullptr;
     QButtonGroup        *m_btnGroup     =   nullptr;
 
+private:
+    void checkCommentsCounts();
+
+
 };
 
 #endif // COMMENTTAB_H

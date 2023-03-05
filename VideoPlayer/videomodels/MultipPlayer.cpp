@@ -240,6 +240,7 @@ void MultipPlayer::initMainWindow()
     //剧集列表
     m_dramaList = new DramaListForm;//系列推荐
     m_dramaList->setObjectName(QString::fromLocal8Bit("m_dramaList"));
+    m_dramaList->setFixedWidth(LISTWIDTH_R);
 
     //推荐
     m_recomTab = new RecomVideoTab;
@@ -396,7 +397,7 @@ void MultipPlayer::handleSignalAndSLots()
         m_tabWidget1->setCurrentWidget(m_commentTab);
     });
 
-    //弹幕部分（默认开关打开）
+    //弹幕开关部分（默认开关打开）
     connect(ui->pushButton_bulletOn,&QPushButton::clicked,[=](){
         slot_setDanmuOpenClose(ui->pushButton_bulletOn->isChecked());
         emit sig_videoDanmuStatus(ui->pushButton_bulletOn->isChecked());
@@ -556,6 +557,31 @@ void MultipPlayer::handleSignalAndSLots()
 
     connect(ui->Btn_adjust,&QPushButton::clicked,[=](){set_adjustBright();});
 
+    //视频播放，停止时，弹幕控制
+    connect(m_player,&QMediaPlayer::stateChanged,[=](QMediaPlayer::State newState){
+        if(ui->pushButton_bulletOn->isChecked())//弹幕开关开启的清空下
+        {
+            switch (newState) {
+            case QMediaPlayer::StoppedState:
+            {
+                emit sig_videoDanmuAnim(true);
+            }
+                break;
+            case QMediaPlayer::PlayingState:
+            {
+                emit sig_videoDanmuAnim(false);
+            }
+                break;
+            case QMediaPlayer::PausedState:
+            {
+                emit sig_videoDanmuAnim(true);
+            }
+                break;
+            default:
+                break;
+            }
+        }
+    });
 
     /*正式列表：上一首，下一首按钮，对应m_listwidget项的变化*/
     connect(playlist,&QMediaPlaylist::currentIndexChanged,[=](int index)
@@ -575,7 +601,7 @@ void MultipPlayer::handleSignalAndSLots()
             m_videoTitleBar->clearTitleText();
             ui->label_media_name->clear();
         }
-
+    emit sig_winResize();
     });
 
     /*临时列表：上一首，下一首按钮，对应m_listwidget项的变化*/
@@ -596,7 +622,7 @@ void MultipPlayer::handleSignalAndSLots()
             m_videoTitleBar->clearTitleText();
             ui->label_media_name->clear();
         }
-
+    emit sig_winResize();
     });
 
     //临时列表item变化
@@ -1901,6 +1927,7 @@ void MultipPlayer::floatPlayCtrlEnterLeave(QObject *watched, QMouseEvent *mousev
 
 void MultipPlayer::slot_showDanmuSettingForm(QObject *watched, QMouseEvent *mousevent)
 {
+    if(!ui->pushButton_bulletOn->isChecked()) return;//选中即为开启弹幕
     int x = ui->pushButton_bulletSet->parentWidget()->mapToGlobal(ui->pushButton_bulletSet->pos()).x();
     int y = ui->pushButton_bulletSet->parentWidget()->mapToGlobal(ui->pushButton_bulletSet->pos()).y();
     if(watched == ui->pushButton_bulletSet)
@@ -2766,50 +2793,54 @@ void MultipPlayer::slot_selectAllListItem(QListWidget *obj)
 
 void MultipPlayer::slot_sendDanmuTextToScreen(QString danmuText)
 {
+    if(ui->stackedWidget->currentWidget() != videoWidget) return;
     if(ui->pushButton_bulletOn->isChecked() && ui->lineEdit_bullet->isEnabled())
     {
         if(m_danmuSetting->findMask(danmuText)) return;//禁用词语禁止发送
-        Danmu *danmu = new Danmu(nullptr,danmuText,
+        Danmu *danmu = new Danmu(ui->stackedWidget,danmuText,
                                  m_danmuSetting->getColor(),1,
-                                 calUpdateDanmuGeometry(),
+//                                 calUpdateDanmuGeometry(),//使用的是全局坐标
+                                 ui->stackedWidget->rect(),
                                  QFont("Microsoft YaHei",m_danmuSetting->getFontSize(),
                                  m_danmuSetting->getFontWeight()),
                                  m_danmuSetting->getTransNumber());//动画完成以后自动调用析构函数
         ui->lineEdit_bullet->clear();
         ui->lineEdit_bullet->setFocus();
-        connect(m_videoTitleBar,&VideoTitleBar::sig_winVClose,danmu,&Danmu::release);
-        connect(m_videoTitleBar,&VideoTitleBar::sig_winVMinimum,danmu,&Danmu::release);
-        connect(m_videoTitleBar,&VideoTitleBar::sig_winVRestore,danmu,&Danmu::release);
-        connect(m_videoTitleBar,&VideoTitleBar::sig_doubleClick,danmu,&Danmu::release);
+//        connect(m_videoTitleBar,&VideoTitleBar::sig_winVClose,danmu,&Danmu::release);
+//        connect(m_videoTitleBar,&VideoTitleBar::sig_winVMinimum,danmu,&Danmu::release);
+//        connect(m_videoTitleBar,&VideoTitleBar::sig_winVRestore,danmu,&Danmu::release);
+//        connect(m_videoTitleBar,&VideoTitleBar::sig_doubleClick,danmu,&Danmu::release);
+        connect(danmu,&Danmu::destroyed,[=](){danmu->disconnect();});
         connect(this,&MultipPlayer::sig_winResize,danmu,&Danmu::release);//界面resize时，弹幕消失
-        connect(this,SIGNAL(sig_videoDanmuStatus(bool)),danmu,SLOT(remove(bool)));
+        connect(this,SIGNAL(sig_videoDanmuStatus(bool)),danmu,SLOT(remove(bool)));//弹幕开关控制
+        connect(this,SIGNAL(sig_videoDanmuAnim(bool)),danmu,SLOT(anim_ctl(bool)));//弹幕动画控制
     }
 }
 
 //计算不同情况下弹幕的绝对位置
 QRect MultipPlayer::calUpdateDanmuGeometry()
 {
-    QRect screenPoint;
+    QRect screenPoint;//根据需要计算出弹幕要显示的位置
     ui->stackedWidget->updateGeometry();
-    QRect tempRect  = ui->stackedWidget->parentWidget()->geometry();
-    if(!this->isMaximized())
+    QRect tempRect = ui->stackedWidget->parentWidget()->geometry();
+    if(!this->isMaximized())//没有最大化时
     {
-        if(m_widget1->isHidden())
+        if(m_widget1->isHidden())//非最大化+右侧隐藏
         {
             screenPoint = QRect(tempRect.x(),tempRect.y()+60,tempRect.width(),tempRect.height()- 70);
         }
-        else
+        else//非最大化+右侧不隐藏
         {
             screenPoint = QRect(tempRect.x(),tempRect.y()+60,tempRect.width()- m_widget1->width(),tempRect.height() - 70);
         }
     }
-    else
+    else//发生最大化时
     {
-        if(m_widget1->isHidden())
+        if(m_widget1->isHidden())//最大化+右侧隐藏
         {
             screenPoint = QRect(tempRect.x(),tempRect.y()+60,tempRect.width(),tempRect.height()-70);
         }
-        else
+        else//最大化+右侧不隐藏
         {
             screenPoint = QRect(tempRect.x(),tempRect.y()+60,tempRect.width() - m_widget1->width(),tempRect.height()-70);
         }

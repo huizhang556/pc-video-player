@@ -1,19 +1,23 @@
 ﻿#include "Danmu.h"
 
-Danmu::Danmu(QWidget * parent,QString text,ColorType color,int type,QRect rect,QFont danmuFont,double Transparency,int runTime):QLabel(parent)
+Danmu::Danmu(QWidget * parent,QString text,ColorType color,int type,QRect rect,QFont danmuFont,double Transparency,int runTime):
+    QLabel(parent)//制定了父亲，就需要用相对坐标；没有父亲时，父亲传nullptr,rect传全局坐标
 {
+    //设置弹幕为无窗口无工具栏且呆在窗口顶端,但是会导致坐标错乱，尤其是丢掉了标题栏
+//    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
+//    setAttribute(Qt::WA_TranslucentBackground);
+   setStyleSheet("QLabel{background-color: transparent;}");
     DText = text;
-    //this->setText(text);        //设置内容
-//    this->setColor(color);      //设置内容
     this->setType(type);        //设置类型
     this->setQFont(danmuFont);      //弹幕字体
     this->setTransparency(Transparency);        //弹幕透明度
     this->setRunTime(runTime);
-    this->setScreenRect(rect);
+    this->setScreenRect(rect);//这里设置只是为了获取矩形用，无实质作用
     QFontMetrics metrics(this->getQFont());
-    QPalette palll = QPalette();
-//    QString DColor = this->getColor();
+    QPalette palll = this->palette();
+
     anim2 = NULL;
+
     //颜色字符串转化为特定的颜色
     switch (color)
     {
@@ -78,13 +82,13 @@ Danmu::Danmu(QWidget * parent,QString text,ColorType color,int type,QRect rect,Q
     }
         break;
     }
-
-    this->setPalette(palll);        //设置调色盘
+//    palll.setColor(QPalette::Background, QColor(205, 205, 205,255));//测试，无用，不知为何？
+    this->setPalette(palll);//设置调色盘（主要设置WindowText字体颜色）
     //弹幕的屏幕坐标全部都是绝对坐标（相对于桌面坐标而言），传进来的rect变量就是绝对坐标
     this->setFixedHeight(metrics.height()+5);
     this->setFixedWidth(metrics.width(DText)+4);
-    int yy = qrand()%(rect.height());
-    qDebug() << QString(u8"随机的起始高度+60：") << yy;
+    int yy = qrand()%(rect.height());//在这里使用了矩形这个变量的范围
+    qDebug() << QString(u8"随机的起始高度+60：") << yy;//外部传进来的矩形已经处理过高度（这个高度是加上标题栏的高度）
     int y = yy<(rect.height()-metrics.height()-5)?(yy):(rect.height()-metrics.height()-5);//随机值小于窗口高度-字体像素高度则真
     if(y < rect.y())
     {
@@ -97,33 +101,34 @@ Danmu::Danmu(QWidget * parent,QString text,ColorType color,int type,QRect rect,Q
 
     qDebug() << QString(u8"显示的屏幕高度：") << rect.height() << QString(u8"计算后确定的起始高度：") << y;
 //    int xx = rect.width()+qrand()%500;
-    int xx = rect.width()+rect.x()-metrics.width(DText);
+//    int xx = rect.x() + rect.width() - metrics.width(DText);//实际上不应留出文字的长度，直接所有的文字都是从最右侧边缘出现
+    int xx = rect.x() + rect.width();
     qDebug() << QString(u8"计算后确定的起始横坐标：") << xx;
     this->move(xx,y);
-    this->setPosX(xx);//设置弹幕水平的位置
-    this->setPosY(y);//设置弹幕垂直位置
+    this->setPosX(xx);//设置弹幕水平的位置（动画用）
+    this->setPosY(y);//设置弹幕垂直位置（动画用）
 
-    this->setWindowFlags(Qt::FramelessWindowHint|Qt::Tool|Qt::WindowStaysOnTopHint);    //设置弹幕为无窗口无工具栏且呆在窗口顶端
     this->installEventFilter(this);
     this->setMouseTracking(true);
-    this->setAttribute(Qt::WA_TranslucentBackground, true);
     this->setFocusPolicy(Qt::NoFocus);
     this->hide();
-    anim2=new QPropertyAnimation(this, "pos");
+    anim2 = new QPropertyAnimation(this, "pos");
     anim2->setDuration(this->getRunTime());
+    //每个弹幕的开始位置都是随机的（主要是高度不一致，x都是一致的）
+    //依赖动画，使x值变小（动画往最左侧移动），y值不变
     anim2->setStartValue(QPoint(this->getPosX(),this->getPosY()));
     anim2->setEndValue(QPoint(rect.x(), this->getPosY()));
     qDebug() <<QString(u8"传进来的rect")<< rect<< QString(u8"结束位置：")<< rect.x()<<","<<getPosY();
-    anim2->setEasingCurve(QEasingCurve::Linear);
+    anim2->setEasingCurve(QEasingCurve::Linear);//线型变化
     this->setWindowOpacity(this->getTransparency());
     this->show();
-    this->repaint();
+    this->repaint();//绘制一次，绘制出文字
     anim2->start();
-        connect(anim2,SIGNAL(finished()),this,SLOT(deleteLater()));
+        connect(anim2,SIGNAL(finished()),this,SLOT(deleteLater()));//动画结束，this本身自动析构
 }
 
 void Danmu::paintEvent(QPaintEvent *)
-{  //弹幕绘制函数
+{  //弹幕字体绘制函数
         QPainter painter(this);     //以弹幕窗口为画布
         painter.save();
         QFontMetrics metrics(this->getQFont());     //获取弹幕字体
@@ -145,7 +150,7 @@ void Danmu::paintEvent(QPaintEvent *)
             py = -py;
         }
         path.addText(px+2,py+2,this->getQFont(),DText);     //画字体轮廓
-        painter.strokePath(path, pen);
+        painter.strokePath(path, pen);//描边
         painter.drawPath(path);
         painter.fillPath(path, QBrush(this->getQColor()));      //用画刷填充
         painter.restore();
@@ -153,7 +158,7 @@ void Danmu::paintEvent(QPaintEvent *)
 
 bool Danmu::eventFilter(QObject *watched, QEvent *event)
 {
-    if(watched == this)
+    if(watched == this && checkOpen == false)
         if(event->type() == QEvent::Enter)
         {
             anim2->pause();
@@ -271,16 +276,29 @@ void Danmu::release()
     this->close();
 }
 
+void Danmu::anim_ctl(bool open)
+{
+    if(!open)
+    {
+        anim2->resume();
+        checkOpen = false;
+    }
+    else
+    {
+        anim2->pause();
+        checkOpen = true;
+    }
+
+}
+
 void Danmu::remove(bool open)
 {
     if(open)
     {
-//        anim2->resume();
         this->show();
     }
     else
     {
-//        anim2->pause();
         this->hide();
     }
 }

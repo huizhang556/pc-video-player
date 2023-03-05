@@ -287,7 +287,7 @@ QTabBar::tab:only-one
 }</string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="tab">
                 <attribute name="title">
@@ -592,11 +592,12 @@ QLineEdit:hover
                            <string notr="true">QPushButton
 {
 border: none;
-color: #7e7f81;
+color: #dfdfe0;
 text-align: center;
 padding-right:3px;
 padding-left:3px;
-background-color: transparent;
+border-radius: 4px;
+background-color: rgba(21, 196, 52,0.7);
 }
 
 QPushButton:hover
@@ -1633,13 +1634,13 @@ background-color: rgba(113, 200, 15,0.0);
                               <widget class="QPushButton" name="pushButton_updateQR">
                                <property name="minimumSize">
                                 <size>
-                                 <width>100</width>
+                                 <width>150</width>
                                  <height>25</height>
                                 </size>
                                </property>
                                <property name="maximumSize">
                                 <size>
-                                 <width>100</width>
+                                 <width>150</width>
                                  <height>25</height>
                                 </size>
                                </property>
@@ -2147,11 +2148,12 @@ QLineEdit:hover
                          <string notr="true">QPushButton
 {
 border: none;
-color: #7e7f81;
+color: #dfdfe0;
 text-align: center;
 padding-right:3px;
 padding-left:3px;
-background-color: transparent;
+border-radius: 4px;
+background-color: rgba(21, 196, 52,0.7);
 }
 
 QPushButton:hover
@@ -2309,7 +2311,7 @@ QLineEdit:hover
                  <item>
                   <layout class="QVBoxLayout" name="verticalLayout_26">
                    <property name="spacing">
-                    <number>0</number>
+                    <number>10</number>
                    </property>
                    <item>
                     <widget class="QPushButton" name="pushButton_regis">
@@ -2797,11 +2799,12 @@ QLineEdit:hover
                            <string notr="true">QPushButton
 {
 border: none;
-color: #7e7f81;
+color: #dfdfe0;
 text-align: center;
 padding-right:3px;
 padding-left:3px;
-background-color: transparent;
+border-radius: 4px;
+background-color: rgba(21, 196, 52,0.7);
 }
 
 QPushButton:hover

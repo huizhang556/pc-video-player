@@ -220,10 +220,10 @@ private:
     QPixmap         m_headPixmap;
     bool            m_signStatus;//登录状态，默认未未登录
     bool            m_netStatus[2] = {false,false};//（前一刻）网络状态
-    QNetworkAccessManager   *manager;
+    QNetworkAccessManager           *manager;
     QNetworkConfigurationManager    *m_ncmgr = nullptr;
-    QNetworkReply           *reply;
-    Ui::TitleBar    *ui;
+    QNetworkReply                   *reply;
+    Ui::TitleBar                    *ui;
 };
 
 #endif // TITLEBAR_H

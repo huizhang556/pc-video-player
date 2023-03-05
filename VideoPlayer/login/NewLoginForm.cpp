@@ -114,6 +114,8 @@ void NewLoginForm::initWorkUI()
 
     ui->tabWidget_login->setCurrentIndex(0);
 
+    ui->pushButton_updateQR->setText(QString(u8"刷新二维码"));
+
     //二维码(初始化更新)
     update_QRcode();
 
@@ -188,14 +190,16 @@ void NewLoginForm::update_QRcode()
     set_QRcode(QString(u8"%1%2").arg(content_account).arg(content_passwd));//生成二维码
     ui->pushButton_updateQR->setProperty("updated",true);
     ui->pushButton_updateQR->style()->polish(ui->pushButton_updateQR);
-    ui->pushButton_updateQR->setDisabled(true);
+//    ui->pushButton_updateQR->setDisabled(true);
+    m_isEnabled = false;
     ui->label_QRcode->setDisabled(true);
     QTimer::singleShot(1000*10,Qt::PreciseTimer,[=](){
         ui->label_QRcode->slot_setMask();
         ui->pushButton_updateQR->setProperty("updated",false);
         ui->pushButton_updateQR->style()->polish(ui->pushButton_updateQR);
-        ui->pushButton_updateQR->setDisabled(false);
-        ui->label_QRcode->setDisabled(false);
+//        ui->pushButton_updateQR->setDisabled(false);//刷新按钮在区间内不可调用
+        m_isEnabled = true;
+        ui->label_QRcode->setDisabled(false);//不能设置图片
     });
     qDebug() <<QString(u8"刷新二维码");
 }
@@ -334,7 +338,17 @@ void NewLoginForm::chandleSignalsAndSLots()
 
     //点击按钮刷新二维码
     connect(ui->pushButton_updateQR,&QPushButton::clicked,[=](){
-       update_QRcode();
+        if(!m_isEnabled)
+        {
+            ui->pushButton_updateQR->setText(QString(u8"请勿频繁刷新二维码！"));
+            QTimer::singleShot(2*1000,0,[=](){
+                ui->pushButton_updateQR->setText(QString(u8"刷新二维码"));
+            });
+        }
+        else
+        {
+            update_QRcode();
+        }
     });
 
     //点击图片刷新二维码

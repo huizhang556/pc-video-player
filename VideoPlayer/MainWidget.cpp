@@ -1151,7 +1151,8 @@ void MainWidget::slot_showLinkOnStatusBar(const QString &text)
 /*私有槽函数：显示主界面*/
 void MainWidget::tray_showMainWidget()
 {
-        this->showNormal();
+    this->raise();
+//        this->showNormal();
     qDebug() << "this is show";
 }
 

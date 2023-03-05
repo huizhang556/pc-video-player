@@ -60,10 +60,11 @@ void DanmuSetting::initWorkUI()
     ui->horizontalSlider_speed->setRange(0,100);
     ui->horizontalSlider_speed->setValue(50);
     ui->label_speed->setText(QString(u8"50%"));
-//    ui->horizontalSlider_speed->setTickPosition(QSlider::TicksBelow);//下方出现刻度
-//    ui->horizontalSlider_speed->setSingleStep(50);//步长（焦点存在，左右键控制时候）
-//    ui->horizontalSlider_speed->setTickInterval(50);//设置刻度间隔
-//    ui->horizontalSlider_speed->setPageStep(50);
+
+//    ui->horizontalSlider_trans->setTickPosition(QSlider::TicksBothSides);//下方出现刻度
+//    ui->horizontalSlider_trans->setSingleStep(10);//步长（焦点存在，左右键控制时候）
+//    ui->horizontalSlider_trans->setTickInterval(10);//设置刻度间隔
+//    ui->horizontalSlider_trans->setPageStep(10);
 
     //屏蔽词界面
     ui->lineEdit_mask->setPlaceholderText(QString(u8"输入屏蔽词，按回车键添加"));
@@ -75,7 +76,7 @@ void DanmuSetting::handSignalsAndSlots()
 {
     //样式设置界面
     connect(m_buttonGroup,QOverload<QAbstractButton*>::of(&QButtonGroup::buttonClicked),this,[&](QAbstractButton* button){
-        setColor(button->text());
+        setColor(button->text());//单个安妮选中样式单个设置
     });
     //观看设置界面
     //透明度

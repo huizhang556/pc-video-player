@@ -78,7 +78,7 @@ class Danmu : public QLabel{
 public slots:
 
       void  release();
-
+      void  anim_ctl(bool open);
       void  remove(bool open);
 
   protected:
@@ -98,6 +98,7 @@ public slots:
       QRect     screenrect;
       QPropertyAnimation *anim2;
       int       runTime;
+      bool      checkOpen = true;//弹幕开关
 };
 
 #endif // DANMU_H

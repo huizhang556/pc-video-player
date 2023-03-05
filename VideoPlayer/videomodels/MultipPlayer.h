@@ -357,6 +357,8 @@ signals:
 
     void    sig_videoDanmuStatus(bool);
 
+    void    sig_videoDanmuAnim(bool);//弹幕动画
+
     void    sig_winResize();
 
 

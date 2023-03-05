@@ -28,6 +28,8 @@ void CommentTab::initWorkUI()
     ui->pushButton_newcomment->setFlat(true);
     ui->pushButton_newcomment->setCheckable(true);
 
+
+
     m_btnGroup = new QButtonGroup(this);
     m_btnGroup->setObjectName(QString::fromLocal8Bit("m_btnGroup"));
     m_btnGroup->setExclusive(true);//互斥
@@ -49,6 +51,7 @@ void CommentTab::initWorkUI()
 //        ui->listWidget_comlist->setItemWidget(item,commentForm);
 //    }
 //    setLabelCommentCounts(ui->listWidget_comlist->count());
+    checkCommentsCounts();
 }
 
 void CommentTab::chandleSignalsAndSLots()
@@ -133,12 +136,25 @@ void CommentTab::slot_insertNewCommentForm(QPixmap &pic, QString &nick, QString 
     ui->listWidget_comlist->insertItem(0,item);
     ui->listWidget_comlist->setItemWidget(item,commentForm);
     setLabelCommentCounts(ui->listWidget_comlist->count());//总评论数更新
+    checkCommentsCounts();
 }
 
 bool CommentTab::eventFilter(QObject *watched, QEvent *event)
 {
 
     return QWidget::eventFilter(watched,event);
+}
+
+void CommentTab::checkCommentsCounts()
+{
+    if(ui->listWidget_comlist->count() > 0)
+    {
+        ui->stackedWidget_comments->setCurrentWidget(ui->page_comments);
+    }
+    else
+    {
+        ui->stackedWidget_comments->setCurrentWidget(ui->page_blanks);
+    }
 }
 
 
