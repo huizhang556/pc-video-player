@@ -2804,6 +2804,7 @@ void MultipPlayer::slot_sendDanmuTextToScreen(QString danmuText)
                                  QFont("Microsoft YaHei",m_danmuSetting->getFontSize(),
                                  m_danmuSetting->getFontWeight()),
                                  m_danmuSetting->getTransNumber());//动画完成以后自动调用析构函数
+
         ui->lineEdit_bullet->clear();
         ui->lineEdit_bullet->setFocus();
 //        connect(m_videoTitleBar,&VideoTitleBar::sig_winVClose,danmu,&Danmu::release);

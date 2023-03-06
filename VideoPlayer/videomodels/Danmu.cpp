@@ -5,8 +5,9 @@ Danmu::Danmu(QWidget * parent,QString text,ColorType color,int type,QRect rect,Q
 {
     //设置弹幕为无窗口无工具栏且呆在窗口顶端,但是会导致坐标错乱，尤其是丢掉了标题栏
 //    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
-//    setAttribute(Qt::WA_TranslucentBackground);
-   setStyleSheet("QLabel{background-color: transparent;}");
+//    setAttribute(Qt::WA_TranslucentBackground,true);
+//   setStyleSheet("QLabel{background-color: transparent;}");
+//    setAttribute(Qt::WA_StyledBackground,true);
     DText = text;
     this->setType(type);        //设置类型
     this->setQFont(danmuFont);      //弹幕字体
@@ -82,11 +83,14 @@ Danmu::Danmu(QWidget * parent,QString text,ColorType color,int type,QRect rect,Q
     }
         break;
     }
-//    palll.setColor(QPalette::Background, QColor(205, 205, 205,255));//测试，无用，不知为何？
-    this->setPalette(palll);//设置调色盘（主要设置WindowText字体颜色）
+
     //弹幕的屏幕坐标全部都是绝对坐标（相对于桌面坐标而言），传进来的rect变量就是绝对坐标
     this->setFixedHeight(metrics.height()+5);
     this->setFixedWidth(metrics.width(DText)+4);
+
+
+    this->setPalette(palll);//设置调色盘（主要设置WindowText字体颜色）
+
     int yy = qrand()%(rect.height());//在这里使用了矩形这个变量的范围
     qDebug() << QString(u8"随机的起始高度+60：") << yy;//外部传进来的矩形已经处理过高度（这个高度是加上标题栏的高度）
     int y = yy<(rect.height()-metrics.height()-5)?(yy):(rect.height()-metrics.height()-5);//随机值小于窗口高度-字体像素高度则真
@@ -154,6 +158,9 @@ void Danmu::paintEvent(QPaintEvent *)
         painter.drawPath(path);
         painter.fillPath(path, QBrush(this->getQColor()));      //用画刷填充
         painter.restore();
+//        QRect rect = QRect(0,0,this->rect().width()+0,this->rect().height()+0);
+//        painter.drawRoundedRect(rect,5,5);
+//        painter.fillRect(rect,Qt::transparent);
 }
 
 bool Danmu::eventFilter(QObject *watched, QEvent *event)

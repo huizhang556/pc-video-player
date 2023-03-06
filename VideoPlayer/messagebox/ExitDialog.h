@@ -1,5 +1,6 @@
 ﻿#ifndef EXITDIALOG_H
 #define EXITDIALOG_H
+#define FIXSIZE QSize(320,260)
 #include "global/Global.h"
 #include <QDialog>
 #include <QPoint>

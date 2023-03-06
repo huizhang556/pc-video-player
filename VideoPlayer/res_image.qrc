@@ -631,5 +631,11 @@
         <file>images/player/player_itemlist_rmenu.png</file>
         <file>images/player/player_itemlist_search.png</file>
         <file>images/player/player_itemlist_video.png</file>
+        <file>images/icon/radio-checked.png</file>
+        <file>images/icon/radio-nor_checked.png</file>
+        <file>images/icon/checkbox-checked.png</file>
+        <file>images/icon/checkbox-unchecked.png</file>
+        <file>images/icon/player_slider_hover.png</file>
+        <file>images/icon/player_slider_normal.png</file>
     </qresource>
 </RCC>

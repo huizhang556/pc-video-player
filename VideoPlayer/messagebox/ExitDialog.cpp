@@ -15,17 +15,18 @@ ExitDialog::ExitDialog(QWidget *parent) :
     ui->setupUi(this);
     //去掉边框
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
-    this->setFixedSize(404,152);
+    this->setAttribute(Qt::WA_TranslucentBackground);
+    this->setFixedSize(FIXSIZE);
 
 //    QPixmap pixmap(":/images/icon/cursor.png");
 //    QSize size(5,5);
 //    pixmap.scaled(5,5,Qt::KeepAspectRatio);
 //    QCursor *myCursor = new QCursor(pixmap,0,0);    //-1,-1表示热点位于图片中心
 //    this->setCursor(*myCursor);
-
+    ui->radioButton_miniSysTron->setChecked(true);
     ui->pushButton_ok->setFocus();//显示选中状态
-    ui->pushButton_ok->setDefault(1);//按回车会关闭窗口
-    ui->pushButton_ok->setStyleSheet("border:2px solid #9e9e9e;background-color:rgb(101,210,105);font-size:14px;");
+    ui->pushButton_ok->setDefault(true);//按回车会关闭窗口
+    ui->pushButton_ok->setStyleSheet("border:2px solid #9e9e9e; border-radius:5px; background-color:#d44e7d; color: white; font-size:14px;");
     m_iniPath = Global::appDirPath + "/config/config.ini";
     qDebug() << "config file path = " << m_iniPath;
     //此处有bug,只要点击，不管沟上还是没有勾上，都是设置为 1
@@ -70,11 +71,13 @@ ExitDialog::ExitDialog(QString title, QString warn, QWidget *parent) :
 {
     ui->setupUi(this);
     //去掉边框
-    this->setWindowFlag(Qt::FramelessWindowHint);
-    this->setFixedSize(225,135);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
+    this->setAttribute(Qt::WA_TranslucentBackground);
+    this->setFixedSize(FIXSIZE);
+    ui->radioButton_miniSysTron->setChecked(true);
     ui->pushButton_ok->setFocus();//显示选中状态
-    ui->pushButton_ok->setDefault(1);//按回车会关闭窗口
-    ui->pushButton_ok->setStyleSheet("border:2px solid #9e9e9e;background-color:rgb(101,210,105);font-size:14px;");
+    ui->pushButton_ok->setDefault(true);//按回车会关闭窗口
+    ui->pushButton_ok->setStyleSheet("border:2px solid #9e9e9e; border-radius:5px; background-color:#d44e7d; color: white; font-size:14px;");
     m_iniPath = Global::appDirPath + "/config/config.ini";
     ui->label->setText(title);
     ui->label_warning->setText(warn);
@@ -93,7 +96,7 @@ ExitDialog::ExitDialog(QString title, QString warn, QWidget *parent) :
     //close
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){
         emit sig_SendNotcloseMain();
-        close();
+        this->close();
     });
 }
 

@@ -6,12 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>405</width>
-    <height>152</height>
+    <width>320</width>
+    <height>260</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>320</width>
+    <height>260</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>320</width>
+    <height>260</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -30,48 +45,45 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QWidget" name="widget" native="true">
+    <widget class="QWidget" name="widget_mask" native="true">
      <property name="styleSheet">
-      <string notr="true">QWidget#widget
+      <string notr="true">#widget_mask
 {
-background-color:#cccccc;
-border:2px solid rgb(64, 66, 68);
+background-color:#242628;
+border:0px solid #5f6367;
+border-radius: 8px;
 }</string>
      </property>
-     <widget class="QLabel" name="label_2">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>30</y>
-        <width>51</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border-image: url(:/images/icon/tips.png);</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
      <widget class="QLabel" name="label_warning">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>40</y>
-        <width>301</width>
+        <x>0</x>
+        <y>30</y>
+        <width>320</width>
         <height>30</height>
        </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>320</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>320</width>
+        <height>16777215</height>
+       </size>
       </property>
       <property name="styleSheet">
        <string notr="true">QLabel
 {
-font:11pt &quot;微软雅黑&quot;;
-color: rgb(0, 0, 0);
+font:12pt &quot;微软雅黑&quot;;
+color: #e7e9eb;
 }</string>
       </property>
       <property name="text">
-       <string>您确定要退出软件？</string>
+       <string>点击关闭按钮以后：</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -80,23 +92,38 @@ color: rgb(0, 0, 0);
      <widget class="QCheckBox" name="checkBox">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>90</y>
-        <width>151</width>
-        <height>16</height>
+        <x>90</x>
+        <y>150</y>
+        <width>150</width>
+        <height>30</height>
        </rect>
       </property>
+      <property name="minimumSize">
+       <size>
+        <width>150</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>150</width>
+        <height>30</height>
+       </size>
+      </property>
       <property name="styleSheet">
-       <string notr="true">QCheckBox::indicator 
+       <string notr="true">QCheckBox
 {
-width: 15px;
-height: 15px;
+font:400 15px &quot;微软雅黑&quot;;
+color: #a2a7ae;
 }
 
-QCheckBox
+QCheckBox::indicator 
 {
-font:11pt &quot;微软雅黑&quot;;
-color: rgb(0, 0, 0);
+width: 17px;
+height: 17px;
+color: #a2a7ae;
+border-image: url(:/images/icon/checkbox-unchecked.png);
+background-color: transparent;
 }
 
 /*	
@@ -109,18 +136,24 @@ color: rgb(85, 255, 0);
 /*未选中的样式*/
 QCheckBox::indicator:unchecked
 {
-image: url(:/images/icon/checkhover.png);
+width: 17px;
+height: 17px;
+border-image: url(:/images/icon/checkbox-unchecked.png);
+background-color: transparent;
 }
 
 QCheckBox::indicator:unchecked:hover
 {
-image: url(:/images/icon/unchecked.png);
+/*image: url(:/images/icon/unchecked.png);*/
 }
 
 /*选中时的样式*/
 QCheckBox::indicator:checked
 {
-image: url(:/images/icon/checked.png);
+width: 17px;
+height: 17px;
+border-image: url(:/images/icon/checkbox-checked.png);
+background-color: transparent;
 }
 </string>
       </property>
@@ -131,24 +164,39 @@ image: url(:/images/icon/checked.png);
      <widget class="QPushButton" name="pushButton_ok">
       <property name="geometry">
        <rect>
-        <x>210</x>
-        <y>90</y>
-        <width>75</width>
-        <height>31</height>
+        <x>180</x>
+        <y>200</y>
+        <width>100</width>
+        <height>34</height>
        </rect>
       </property>
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>34</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>100</width>
+        <height>34</height>
+       </size>
+      </property>
       <property name="styleSheet">
-       <string notr="true">QPushButton#pushButton_ok
+       <string notr="true">QPushButton
 {
 background-color:rgb(101,210,105);
 font-size:11px;
 font:11pt &quot;微软雅黑&quot;;
 color:black;
+border-radius: 5px;
 }
 
 QPushButton:hover
 {
 border:2px solid #9e9e9e;
+background-color: #d44e7d;
+color: white;
 }</string>
       </property>
       <property name="text">
@@ -158,11 +206,23 @@ border:2px solid #9e9e9e;
      <widget class="QPushButton" name="pushButton_cancel">
       <property name="geometry">
        <rect>
-        <x>300</x>
-        <y>90</y>
-        <width>75</width>
-        <height>31</height>
+        <x>40</x>
+        <y>200</y>
+        <width>100</width>
+        <height>34</height>
        </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>34</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>100</width>
+        <height>34</height>
+       </size>
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton
@@ -171,28 +231,48 @@ background-color:rgb(101,210,105);
 font-size:11px;
 font:11pt &quot;微软雅黑&quot;;
 color:black;
+border-radius: 5px;
 }
 
 QPushButton:hover
 {
 border:2px solid #9e9e9e;
+background-color: #d44e7d;
+color: white;
 }</string>
       </property>
       <property name="text">
        <string>取消</string>
       </property>
      </widget>
-     <widget class="QFrame" name="frame">
+     <widget class="QFrame" name="frame_title">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>403</width>
-        <height>25</height>
+        <width>321</width>
+        <height>30</height>
        </rect>
       </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>30</height>
+       </size>
+      </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(64, 66, 68);</string>
+       <string notr="true">#frame_title
+{
+border-top-left-radius: 8px;
+border-top-right-radius: 8px;
+background-color:#242628;
+}</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -200,48 +280,254 @@ border:2px solid #9e9e9e;
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QPushButton" name="pushButton_close">
-       <property name="geometry">
-        <rect>
-         <x>380</x>
-         <y>0</y>
-         <width>23</width>
-         <height>25</height>
-        </rect>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>0</number>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton
+       <property name="leftMargin">
+        <number>3</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>3</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">#label
+{
+color: #e7e9eb;
+font: 400 14px &quot;微软雅黑&quot;; 
+background-color: transparent;
+}
+ 
+</string>
+         </property>
+         <property name="text">
+          <string>  Qt-简易播放器</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>138</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_close">
+         <property name="minimumSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton
 {
 border-image: url(:/images/icon/close3.png);
-background-color: rgb(64, 66, 68);
+background-color: transparent;
 }
 
 QPushButton:hover
 {
 border-image: url(:/images/icon/closehover.png);
 }</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>100</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(64, 66, 68);
-color:#29abe2;</string>
-       </property>
-       <property name="text">
-        <string>  Qt-简易播放器</string>
-       </property>
-      </widget>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_miniSysTron">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>70</y>
+        <width>150</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>150</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>150</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QRadioButton
+{
+font: 400 15px &quot;微软雅黑&quot;; 
+color: #a2a7ae;
+}
+
+QRadioButton::indicator
+{
+width: 19px;
+height: 19px;
+background-color: transparent;
+border-image: url(:/images/icon/radio-nor_checked.png);
+
+}
+
+QRadioButton::indicator::checked 
+{ 
+background-color: transparent;
+border-image: url(:/images/icon/radio-checked.png);
+}
+
+QRadioButton::indicator::unchecked 
+{
+background-color: transparent;
+border-image: url(:/images/icon/radio-nor_checked.png);
+}
+
+QRadioButton::indicator:unchecked:hover 
+{
+    
+
+}
+
+QRadioButton::indicator:unchecked:pressed 
+{
+    
+
+}
+
+
+
+QRadioButton::indicator:checked:hover 
+{
+
+
+}
+
+QRadioButton::indicator:checked:pressed 
+{
+    
+
+}</string>
+      </property>
+      <property name="text">
+       <string>最小化到系统托盘</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_exitApp">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>110</y>
+        <width>150</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>150</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>150</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QRadioButton
+{
+font: 400 15px &quot;微软雅黑&quot;; 
+color: #a2a7ae;
+}
+
+QRadioButton::indicator
+{
+width: 19px;
+height: 19px;
+background-color: transparent;
+border-image: url(:/images/icon/radio-nor_checked.png);
+
+}
+
+QRadioButton::indicator::checked 
+{ 
+background-color: transparent;
+border-image: url(:/images/icon/radio-checked.png);
+}
+
+QRadioButton::indicator::unchecked 
+{
+background-color: transparent;
+border-image: url(:/images/icon/radio-nor_checked.png);
+}
+
+QRadioButton::indicator:unchecked:hover 
+{
+    
+
+}
+
+QRadioButton::indicator:unchecked:pressed 
+{
+    
+
+}
+
+
+
+QRadioButton::indicator:checked:hover 
+{
+
+
+}
+
+QRadioButton::indicator:checked:pressed 
+{
+    
+
+}</string>
+      </property>
+      <property name="text">
+       <string>退出程序</string>
+      </property>
      </widget>
     </widget>
    </item>

@@ -13,6 +13,7 @@
 //#include "facebread/myemotionwindow.h"
 #include "mainwidget/AniStackWidget.h"
 #include "customer/CPolLabel.h"
+#include "messagebox/ExitDialog.h"
 #include "desktoplyric/toplyric/DesktopLyric.h"
 
 
@@ -83,11 +84,13 @@ int main(int argc, char *argv[])
 
     //05--->显示主界面
 
-#if 1
+#if 0
 //    DesktopLyric::getInstance()->show();
         MultipPlayer::getInstance()->show();
 
 //        MainNotice::getInstance()->show();
+
+//        ExitDialog w; w.show();
 
     //    TitleBar w1;
     //    w1.show();

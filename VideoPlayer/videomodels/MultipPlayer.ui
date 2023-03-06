@@ -449,6 +449,22 @@ border: 0px solid white;
                    <item>
                     <layout class="QHBoxLayout" name="horizontalLayout_4">
                      <item>
+                      <spacer name="horizontalSpacer_9">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="sizeType">
+                        <enum>QSizePolicy::Fixed</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>13</width>
+                         <height>20</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                     <item>
                       <widget class="QLabel" name="label_media_name">
                        <property name="minimumSize">
                         <size>
@@ -496,28 +512,28 @@ margin-top:3px;
                        <property name="minimumSize">
                         <size>
                          <width>50</width>
-                         <height>22</height>
+                         <height>20</height>
                         </size>
                        </property>
                        <property name="maximumSize">
                         <size>
                          <width>50</width>
-                         <height>22</height>
+                         <height>20</height>
                         </size>
                        </property>
                        <property name="styleSheet">
                         <string notr="true">#pushButton_clarity
 {
 background-color: #393939;
-border-radius: 10px;
+border-radius: 9px;
 color: white;
-margin:1px 0px;
+margin:2px 0px 0px 0px;
 }
 
 #pushButton_clarity:hover
 {
 background-color: #ff4f4a;
-border-radius: 8px;
+border-radius: 9px;
 color: white;
 }</string>
                        </property>
@@ -557,6 +573,22 @@ margin-left:10px;
                        </property>
                       </widget>
                      </item>
+                     <item>
+                      <spacer name="horizontalSpacer_10">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="sizeType">
+                        <enum>QSizePolicy::Fixed</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>10</width>
+                         <height>20</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
                     </layout>
                    </item>
                    <item>
@@ -564,17 +596,22 @@ margin-left:10px;
                      <property name="minimumSize">
                       <size>
                        <width>330</width>
-                       <height>12</height>
+                       <height>16</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>12</height>
+                       <height>16</height>
                       </size>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">/*整个进度条*/
+                      <string notr="true">QSlider:horizontal
+{
+margin: 0px 11px 0px 13px;
+}
+
+/*整个进度条*/
 QSlider::groove:horizontal 
 {
 background-color: rgba(255,255,255,0.1);
@@ -596,23 +633,22 @@ border-radius:1px;
 QSlider::handle:horizontal 
 {
 background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 rgba(0, 205, 76,1.0), stop:1  rgba(24, 247, 51,1.0));
-height:8px;
-width:8px;
-margin-top: -4px;
-margin-bottom: -4px;
-border-radius:4px;
-padding-right:1px;
+height:14px;
+width:14px;
+margin-top: -7px;
+margin-bottom: -7px;
+margin-left: -3px;
+margin-right: -3px;
+border-radius:7px;
+border-image: url(:/images/icon/player_slider_normal.png);
+background-color: transparent;
 }
 
 /*J拖动按钮-hover,只跟groove的hover时高度影响*/
 QSlider::handle:horizontal:hover 
 {
-background-color: red;
-height:8px;
-width:10px;
-margin-top: -4px;
-margin-bottom: -4px;
-border-radius:5px;
+border-image: url(:/images/icon/player_slider_hover.png);
+background-color: transparent;
 }
 
 /*未划过的区域，右边界线*/
@@ -1240,6 +1276,22 @@ border:none;
                                 <string/>
                                </property>
                               </widget>
+                             </item>
+                             <item>
+                              <spacer name="horizontalSpacer_8">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeType">
+                                <enum>QSizePolicy::Fixed</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>10</width>
+                                 <height>20</height>
+                                </size>
+                               </property>
+                              </spacer>
                              </item>
                             </layout>
                            </widget>
