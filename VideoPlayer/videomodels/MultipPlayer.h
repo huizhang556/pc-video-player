@@ -58,6 +58,7 @@
 #include <QMediaPlaylist>
 #include <QSystemTrayIcon>
 #include <QDesktopServices>
+#include <QPropertyAnimation>
 
 /**唯一的播放器对象--单例**/
 
@@ -364,6 +365,7 @@ signals:
 
 private:
     Ui::MultipPlayer *ui;
+//    QRect                       m_oldScreen;
     QAction                     *m_actionBullet     = nullptr;//弹幕登录开关
     QTimer                      *m_pTimer           = nullptr; //进度滚动条更新
     QTimer                      *m_pTimer2          = nullptr; //延迟ui界面

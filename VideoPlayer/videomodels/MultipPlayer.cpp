@@ -318,10 +318,11 @@ void MultipPlayer::initMainWindow()
 
     m_foldBtn = new QPushButton(ui->stackedWidget);//父亲必须指定，要不然显示不出来
     m_foldBtn->setObjectName(QString::fromLocal8Bit("m_foldBtn"));
-    m_foldBtn->setFixedSize(25,60);
-//    m_foldBtn->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+    m_foldBtn->setFixedSize(18,70);
+//    m_foldBtn->setWindowFlags(Qt::FramelessWindowHint);//坐标错乱
     m_foldBtn->setAttribute(Qt::WA_TranslucentBackground,true);//没效果，得定制
     m_foldBtn->setHidden(true);//初始化隐藏按钮
+//    m_foldBtn->setWindowOpacity(0);
 
     m_actionBullet  = new QAction(QIcon("://images/icon/bullet_login_hover.png"),"");
     m_actionBullet->setObjectName(QString::fromUtf8("m_actionBullet"));
@@ -2895,7 +2896,7 @@ void MultipPlayer::slot_closeCurrentWindow()
         emit sig_mainPlayerClose();//主界面处理内存删除  
 }
 
-//全屏退出统一操作
+//全屏退出统一操作（两处调用）
 void MultipPlayer::slot_showNormalWindows()
 {
     showNormal();//主界面正常显示
@@ -2960,7 +2961,7 @@ void MultipPlayer::slot_clearUserInputSearchInfo()
 /*更新箭头的坐标*/
 void MultipPlayer::slot_updateFoldButtonGeometry()
 {
-        m_foldBtn->setGeometry(ui->stackedWidget->width()-m_foldBtn->width()+2,ui->stackedWidget->height()/2-m_foldBtn->height()/2,25,60);//固定的大小
+        m_foldBtn->setGeometry(ui->stackedWidget->width()- m_foldBtn->width()+3,ui->stackedWidget->height()/2-m_foldBtn->height()/2,18,70);//固定的大小
         m_foldBtn->raise();
 }
 
@@ -2994,12 +2995,28 @@ void MultipPlayer::slot_setFoldButtonStyle()
     if(!m_isHide)
     {
         //需要隐藏
-        m_foldBtn->setStyleSheet("QPushButton#m_foldBtn{background:rgba(81,81,81,0.3) url(:/images/icon/arrow_right.png) no-repeat center center;border:none;}");
+//        m_foldBtn->setStyleSheet("QPushButton#m_foldBtn{"
+//                                    "border-image: url(:/images/icon/arrow_right.png);"
+//                                    "background-color:transparent;"
+//                                    "border: none;"
+//                                    "}");
+        QPixmap maskUp(":/images/icon/arrow_right.png");
+        m_foldBtn->setIconSize(m_foldBtn->size());
+        m_foldBtn->setIcon(QIcon(":/images/icon/arrow_right.png"));
+        m_foldBtn->setMask(maskUp.mask());//以图片创建一个遮罩
     }
     else
     {
         //需要显示
-        m_foldBtn->setStyleSheet("QPushButton#m_foldBtn{background:rgba(81,81,81,0.3) url(:/images/icon/arrow_left.png) no-repeat center center;border:none;}");
+//        m_foldBtn->setStyleSheet("QPushButton#m_foldBtn{"
+//                                    "border-image: url(:/images/icon/arrow_left.png);"
+//                                    "background-color:transparent;"
+//                                    "border: none;"
+//                                    "}");
+        QPixmap maskUp(":/images/icon/arrow_left.png");
+        m_foldBtn->setIconSize(m_foldBtn->size());
+        m_foldBtn->setIcon(QIcon(":/images/icon/arrow_left.png"));
+        m_foldBtn->setMask(maskUp.mask());//以图片创建一个遮罩
     }
 }
 
@@ -3007,8 +3024,17 @@ void MultipPlayer::slot_setFoldButtonStyle()
 void MultipPlayer::slot_judgeFoldBtnOfRightDockList()
 {
     if(!FloatPlayCtl::getInstance()->isHidden()) return;
+//    const int slider_x = m_widget1->parentWidget()->mapToGlobal(m_widget1->pos()).x();
+//    const int slider_y = m_widget1->parentWidget()->mapToGlobal(m_widget1->pos()).y();
     if(m_isHide)//点击按钮发现，界面处于隐藏状态
     {
+        //要想使用动画效果，就必须单独作为窗口，不要再布局里面
+//        QPropertyAnimation *animation = new QPropertyAnimation(m_widget1,"geometry",this);
+//        animation->setDuration(1000);
+//        animation->setStartValue(QRect(slider_x + LISTWIDTH_R,slider_y,0,m_widget1->geometry().height()));
+//        animation->setEndValue(QRect(slider_x + LISTWIDTH_R,slider_y,LISTWIDTH_R,m_widget1->geometry().height()));
+//        animation->setEasingCurve(QEasingCurve::InOutCubic);
+//        animation->start(QAbstractAnimation::DeleteWhenStopped);
         m_widget1->show();//点击后则显示右侧界面
         slot_updateFoldButtonGeometry();
         slot_setFoldButtonStyle();
@@ -3016,6 +3042,12 @@ void MultipPlayer::slot_judgeFoldBtnOfRightDockList()
     }
     else//点击按钮发现，界面处于显示状态
     {
+//        QPropertyAnimation *animation = new QPropertyAnimation(m_widget1,"geometry",this);
+//        animation->setDuration(1000);
+//        animation->setStartValue(QRect(slider_x + LISTWIDTH_R,slider_y,LISTWIDTH_R,m_widget1->geometry().height()));
+//        animation->setEndValue(QRect(slider_x + LISTWIDTH_R,slider_y,0,m_widget1->geometry().height()));
+//        animation->setEasingCurve(QEasingCurve::InOutCubic);
+//        animation->start(QAbstractAnimation::DeleteWhenStopped);
         m_widget1->hide();//点击后则隐藏界面
         slot_updateFoldButtonGeometry();
         slot_setFoldButtonStyle();
