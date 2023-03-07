@@ -51,8 +51,6 @@ void CusLineEdit::handleSignalsAndSLots()
     });
 }
 
-
-
 void CusLineEdit::leaveEvent(QEvent *event)
 {
     Q_UNUSED(event)
@@ -67,5 +65,6 @@ void CusLineEdit::enterEvent(QEvent *event)
     m_pBtn->setFixedWidth(95);
     m_pBtn->enterStyle();
     this->setTextMargins(10, 0, 95,0);
+    setCursor(Qt::ArrowCursor);
 }
 

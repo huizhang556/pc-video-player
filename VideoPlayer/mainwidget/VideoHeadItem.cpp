@@ -10,7 +10,7 @@ VideoHeadItem::VideoHeadItem(QWidget *parent) :
     ui(new Ui::VideoHeadItem)
 {
     ui->setupUi(this);
-    resize(200,270);
+    resize(100,200);
     initWorkUI();
     handleSignalsAndSlots();
     setEventFilter();

@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>230</width>
-    <height>200</height>
+    <width>185</width>
+    <height>106</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>230</width>
-    <height>200</height>
+    <width>130</width>
+    <height>100</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -36,7 +36,7 @@
     <number>6</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_3">
+    <layout class="QVBoxLayout" name="verticalLayout_3" stretch="3,0">
      <property name="spacing">
       <number>6</number>
      </property>
@@ -44,14 +44,14 @@
       <widget class="SubUnitItem" name="label_header">
        <property name="minimumSize">
         <size>
-         <width>210</width>
-         <height>120</height>
+         <width>60</width>
+         <height>50</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
          <width>16777215</width>
-         <height>120</height>
+         <height>16777215</height>
         </size>
        </property>
        <property name="styleSheet">

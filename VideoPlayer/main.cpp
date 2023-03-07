@@ -14,6 +14,7 @@
 #include "mainwidget/AniStackWidget.h"
 #include "customer/CPolLabel.h"
 #include "messagebox/ExitDialog.h"
+#include "mainwidget/resultlist/ResultLists.h"
 #include "desktoplyric/toplyric/DesktopLyric.h"
 
 
@@ -86,7 +87,9 @@ int main(int argc, char *argv[])
 
 #if 0
 //    DesktopLyric::getInstance()->show();
-        MultipPlayer::getInstance()->show();
+//        MultipPlayer::getInstance()->show();
+
+        ResultLists w; w.show();
 
 //        MainNotice::getInstance()->show();
 

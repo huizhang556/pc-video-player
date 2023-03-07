@@ -7,7 +7,7 @@ SubModules::SubModules(QWidget *parent) :
 {
     ui->setupUi(this);
     installEventFilter(this);
-    setMinimumSize(230,200);
+    setMinimumSize(130,100);
 }
 
 SubModules::SubModules(const QString &picpath, const QString &info1, const QString &info2, QWidget *parent):
@@ -19,7 +19,7 @@ SubModules::SubModules(const QString &picpath, const QString &info1, const QStri
 {
      ui->setupUi(this);
      installEventFilter(this);
-     setMinimumSize(230,200);
+     setMinimumSize(130,100);
      setPicture();
      setInfo1();
      setInfo2();

@@ -210,7 +210,7 @@ void MultipPlayer::initMainWindow()
     m_searchBtn = new QPushButton();//曲库列表搜索按钮
     m_searchBtn->setObjectName(QString::fromLocal8Bit("m_searchBtn_player"));
     m_searchBtn->setFixedSize(33,30);
-    //搜做框+搜索按钮
+    //搜索框+搜索按钮
     m_hLayout = new QHBoxLayout();
     m_hLayout->insertWidget(0,m_lineEdit);
     m_hLayout->insertWidget(1,m_searchBtn);

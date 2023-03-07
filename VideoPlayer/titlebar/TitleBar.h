@@ -195,6 +195,9 @@ signals:
     //下拉搜索界面
     void    sig_SendToMoreHots();//更多热搜
 
+    //全局搜索
+    void    sig_global_search(QString);
+
 
 private:
     //视频内容搜索

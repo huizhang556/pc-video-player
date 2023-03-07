@@ -246,6 +246,10 @@ void MainWidget::initOtherWidgetUi()
     videoFindResult = new VideoTypeSelect(m_stackWidget_center);
     videoFindResult->setObjectName(QString::fromLocal8Bit("videoFindResult"));
 
+    //全局查找结果
+    globalFindRlt = new ResultLists(m_stackWidget_center);
+    globalFindRlt->setObjectName(QString::fromLocal8Bit("globalFindRlt"));
+
     //托盘
     QIcon icno(":/images/icon/tray.png");
     m_tray = new QSystemTrayIcon(icno,this);
@@ -326,6 +330,8 @@ void MainWidget::setStackedWidgetPage()
     connectToTopWidget(m_cusVideoBox6);//建立关联
     m_stackWidget_center->addWidget(m_cusVideoBox7);
     connectToTopWidget(m_cusVideoBox7);//建立关联
+    m_stackWidget_center->addWidget(globalFindRlt);//全局查找结果
+
 //    m_stackWidget_center->addWidget(m_tabWidget);//原始table界面
     m_stackWidget_center->setCurrentIndex(0);//默认显示第一个page页
 }
@@ -572,6 +578,7 @@ void MainWidget::handleSignalAndSLots()
 //        m_webHistory->slot_globalResize();//历史记录界面更新
     });
 
+
     //更换皮肤
     connect(m_leftSideBar,&LeftSideBar::sig_sendSkinMode,[=](bool day){
         if(day)
@@ -673,6 +680,16 @@ void MainWidget::handleSignalAndSLots()
     //文件下载配置
     connect(DownloadType::getInstance(),&DownloadType::sig_sendToconfig,[=](){
         help_stemAboutSetting();
+    });
+
+    //标题栏---全局搜索
+    connect(m_titleBar,&TitleBar::sig_global_search,[=](QString text){
+        m_stackWidget_center->setCurrentWidget(globalFindRlt);
+    });
+
+    //全局搜索界面---返回主页
+    connect(globalFindRlt,&ResultLists::sig_return_home,[=](){
+        m_stackWidget_center->setCurrentWidget(m_cusVideoBox);
     });
 
     /**********************************标题栏---热词搜索**************************************/

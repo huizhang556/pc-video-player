@@ -1693,7 +1693,8 @@ border-bottom:2px solid #ff5c38;
 #m_toolBox_list
 {
 border-right:2px;
-background-color:#3d3d3d;
+background-color: #3d3d3d;
+background-color: #171c24;
  icon-size: 25px; 
 }
 
@@ -1703,6 +1704,7 @@ background-color:#3d3d3d;
 border-bottom: 2px groove blue; 
 border-radius: 2px;
 background-color: #3d3d3d;
+background-color: #171c24;
 color: yellow;
 text-align: center; 
 }

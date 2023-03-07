@@ -637,5 +637,7 @@
         <file>images/icon/checkbox-unchecked.png</file>
         <file>images/icon/player_slider_hover.png</file>
         <file>images/icon/player_slider_normal.png</file>
+        <file>images/icon/filter_down.png</file>
+        <file>images/icon/filter_up.png</file>
     </qresource>
 </RCC>

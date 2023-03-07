@@ -47,6 +47,7 @@
 #include "mainwidget/cusvideosbox/CusVideoBox6.h"
 #include "mainwidget/cusvideosbox/CusVideoBox7.h"
 #include "mainwidget/hotsearch/HotSearchForm.h"
+#include "mainwidget/resultlist/ResultLists.h"
 #include "customer/RingWait1.h"
 #include "mainwidget/videotypeselect/VideoTypeSelect.h"
 
@@ -259,6 +260,7 @@ private:
     CusVideoBox6        *m_cusVideoBox6            = nullptr;//视频盒子
     CusVideoBox7        *m_cusVideoBox7            = nullptr;//视频盒子
     VideoTypeSelect     *videoFindResult           = nullptr;//视频筛选结果
+    ResultLists         *globalFindRlt             = nullptr;//全局查找
     PersonFileForm      *m_personForm              = nullptr;
     LeftSideBar         *m_leftSideBar             = nullptr;
     MusicPlaylist       *m_musicList               = nullptr;

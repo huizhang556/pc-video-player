@@ -73,7 +73,11 @@ SOURCES += \
     $$PWD/SCrollListWidget.cpp \
     $$PWD/AniStackWidget.cpp \
     $$PWD/cusvideosbox/CusVideoBox7.cpp \
-    $$PWD/CusLabel1.cpp
+    $$PWD/CusLabel1.cpp \
+    $$PWD/resultlist/ResultLists.cpp \
+    $$PWD/resultlist/SynopsisForm.cpp \
+    $$PWD/resultlist/FUserForm.cpp \
+    $$PWD/resultlist/FAboutForm.cpp
 
 HEADERS += \
     $$PWD/songersort/SongerSort.h \
@@ -150,7 +154,11 @@ HEADERS += \
     $$PWD/SCrollListWidget.h \
     $$PWD/AniStackWidget.h \
     $$PWD/cusvideosbox/CusVideoBox7.h \
-    $$PWD/CusLabel1.h
+    $$PWD/CusLabel1.h \
+    $$PWD/resultlist/ResultLists.h \
+    $$PWD/resultlist/SynopsisForm.h \
+    $$PWD/resultlist/FUserForm.h \
+    $$PWD/resultlist/FAboutForm.h
 
 FORMS += \
     $$PWD/songersort/SongerSort.ui \
@@ -211,7 +219,11 @@ FORMS += \
     $$PWD/shortvideo/ShortVideo.ui \
     $$PWD/subunititems/HotListItem.ui \
     $$PWD/SCrollListWidget.ui \
-    $$PWD/CusLabel1.ui
+    $$PWD/CusLabel1.ui \
+    $$PWD/resultlist/ResultLists.ui \
+    $$PWD/resultlist/SynopsisForm.ui \
+    $$PWD/resultlist/FUserForm.ui \
+    $$PWD/resultlist/FAboutForm.ui
 
 
 DISTFILES +=

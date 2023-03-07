@@ -118,6 +118,11 @@ void CusListWidget::setOffset(int itemwidth,int width_offset,int adjust_lw,int a
     m_adjust_h = adjust_h;
 }
 
+void CusListWidget::setZoomScale(double scale)
+{
+    m_scale = scale;
+}
+
 bool CusListWidget::eventFilter(QObject *object, QEvent *event)
 {
     if(object == this && event->type() == QEvent::Resize)
@@ -141,9 +146,9 @@ void CusListWidget::autoResizeListItemsSize()
         {
             avgWidth = m_itemWidth;
         }
-        if(avgWidth > (int)(m_itemWidth*1.5))
+        if(avgWidth > (int)(m_itemWidth*m_scale))
         {
-            avgWidth = (int)(m_itemWidth*1.5);
+            avgWidth = (int)(m_itemWidth*m_scale);
         }
 //        qDebug() << QString(u8"第一个ITEM默认高度：%1").arg(sizeHint_h);
 //        qDebug() << QString(u8"第一个ITEM求得宽度：%1").arg(avgWidth);

@@ -22,11 +22,13 @@ public:
     void        setInstallEventFilter();
     void        setButtonControl(bool enabled);//是否需要显示左右调节按钮
     void        setOffset(int itemwidth,int width_offset,int adjust_lw,int adjust_rw,int adjust_h);
+    void        setZoomScale(double scale);
 
 protected:
     bool        eventFilter(QObject *object, QEvent *event)override;
 
 private:
+    double      m_scale = 1.3;
     int         m_adjust_lw;
     int         m_adjust_rw;
     int         m_adjust_h;

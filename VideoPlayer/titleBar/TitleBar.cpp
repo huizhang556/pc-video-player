@@ -394,10 +394,14 @@ void TitleBar::handleSignalAndSLots()
         //鼠标进入样式改变
     });
 
-    //搜索框---搜索按钮
+    //搜索框---搜索全局
     connect(ui->lineEditSearch,&CusLineEdit::sig_Search,[=](QString text){
-        m_searchForm->addHistoryItem(text.trimmed());
-        qDebug() << QString(u8"手动点击按钮搜索");
+        if(!text.isEmpty())
+        {
+            m_searchForm->addHistoryItem(text.trimmed());
+        }
+        emit sig_global_search(text);
+        qDebug() << QString(u8"全局搜索");
     });
 
     //网址收藏----单击收藏，双击显示列表
