@@ -63,6 +63,12 @@ QString dataBase::getDataName()
     return m_dataName;
 }
 
+void dataBase::showResult(const QSqlQuery &query)
+{
+    QSqlRecord rec = query.record();
+    qDebug() << QString(u8"查询结果集展示：结果条数：%1 每条列数：%2").arg(query.size()).arg(rec.count());
+}
+
 
 dataBase::~dataBase()
 {
@@ -609,14 +615,18 @@ int dataBase::getTableRecordsCounts(const QString &tablename)
 bool dataBase::getUserExists(const QString &tablename, const QString &username)
 {
     QSqlQuery query(getSqlDataBase());
-    bool isOK = query.exec(QString("select count(*) from %1 where name = '%2';").arg(tablename).arg(username));
+    bool isOK = query.exec(QString("select count(name) from %1 where name = '%2';").arg(tablename).arg(username));//count 最好某个字段，效率高
     if(isOK)
     {
+        showResult(query);
         if (query.next())
         {
             int counts = query.value(0).toInt();
-            qDebug() << "user counts = " << counts;
-            return true;//找到用户
+            qDebug() << "[FIND_DB] user counts = " << counts;
+            if(counts > 0)
+                return true;//找到用户
+            else
+                return  false;
         }
     }
     else
@@ -662,34 +672,30 @@ bool dataBase::register_userInfo(const QString &name, const QString &pwd, const 
 bool dataBase::login_checked_usernameAndPasswd(const QString &name, const QString &pwd)
 {
     bool isvaliable = getUserExists("userinfo",name);//1 找到用户 0 没有找到用户
-    if(!isvaliable)//没有指导找到用户信息
+    if(!isvaliable)//没有找到登录用户信息（查无此账号）
     {
-        qDebug() << "user name is not finded!";
+        qDebug() << "user account is not finded!";
         return false;
     }
     else//用户找到了
     {
-        qDebug() << "user name is finded!";
         QSqlQuery query(getSqlDataBase());
+        //此举保证肯定有一条用户数据
         bool isOK = query.exec(QString("select passwd from %1 where name = '%2';").arg("userinfo").arg(name));//同一行语句，第一个之后都要使用''
         if(isOK)
         {
-            if (query.next())
+            query.first();//QSqlQuery返回的数据集，record是停在第一条记录之前的。所以，在获得数据集后，必须执行next()或first()到第一条记录，这时候record才是有效的。
+            QString user_pwd = query.value(0).toString();
+            qDebug() << "[FIND_DB] user passwd = " << user_pwd;
+            if(user_pwd == pwd)
             {
-//                if(query.isActive())
-                QString user_pwd = query.value(0).toString();
-                qDebug() << "user passwd = " << user_pwd;
-                if(user_pwd == pwd)
-                {
-                    qDebug() << "user info passwd is correct!";
-                    return true;
-                }
-                else
-                {
-                    qDebug() << "user passwd is incorrect!";
-                    return false;
-                }
-
+                qDebug() << "[INPUT] user info passwd is right!";
+                return true;
+            }
+            else
+            {
+                qDebug() << "[INPUT] user passwd is unright!";
+                return false;
             }
         }
         else
@@ -697,7 +703,6 @@ bool dataBase::login_checked_usernameAndPasswd(const QString &name, const QStrin
             qDebug()<< QString::fromLocal8Bit("查找表'%1'总数错误：").arg("userinfo") << query.lastError();
             return false;
         }
-
     }
 }
 

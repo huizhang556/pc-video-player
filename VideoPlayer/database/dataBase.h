@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QDomDocument>
 #include <QSize>
+#include <QSqlRecord>
 #include <QVariant>
 #include <QSqlQuery>
 #include <QSqlError>
@@ -161,6 +162,7 @@ private:
     static      QString     getUserPawd();
     static      QString     getDataName();
 
+    void        showResult(const QSqlQuery& query);//展示查询结果
 signals:
     void        sig_loginStatusChanged(bool);//0下线 1登录
     void        sig_sendVideoDramaInfo(QVariant);

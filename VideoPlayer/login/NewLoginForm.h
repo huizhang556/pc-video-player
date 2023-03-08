@@ -1,6 +1,7 @@
 ﻿#ifndef NEWLOGINFORM_H
 #define NEWLOGINFORM_H
 #define QRSIZE QSize(140,140)
+
 #include "database/dataBase.h"
 #include "qrcode/QrCode.hpp"
 
@@ -74,6 +75,7 @@ private slots:
     void        slot_clearTempInputText();
 
 private:
+    void        showTipContentLenRule(const QString& ruleText);//显示账号规则
     void        initAnimations();
     void        update_QRcode();//刷新二维码
     void       set_QRcode(const QString& content);//根据内容生成二维码

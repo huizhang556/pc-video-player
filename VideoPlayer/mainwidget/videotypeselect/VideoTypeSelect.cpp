@@ -22,15 +22,15 @@ VideoTypeSelect::VideoTypeSelect(QWidget *parent) :
     m_listWgt_sortResult->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_listWgt_sortResult->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_listWgt_sortResult->setVerticalScrollMode(QListView::ScrollPerPixel);
-
     m_listWgt_sortResult->setObjectName(QString::fromLocal8Bit("m_listWgt_sortResult"));
+
     for(int i = 0; i < 50; i++)
     {
         //视频分类搜索结果
         QString path2 = Global::appDirPath + QString("/pictures/mylike/videos_list2/list_intro%1.jpg").arg(i);
         MemberVideoItem *itemWidget = new MemberVideoItem(path2,QString(u8"搜索分类视频%1").arg(i),QString(u8"搜索分类结果"),QColor(43, 44, 53));
         QListWidgetItem *item = new QListWidgetItem();
-        item->setSizeHint(itemWidget->size());
+        item->setSizeHint(QSize(225,360));
         m_listWgt_sortResult->addItem(item);
         m_listWgt_sortResult->setItemWidget(item,itemWidget);
     }

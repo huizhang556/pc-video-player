@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
 //    DesktopLyric::getInstance()->show();
 //        MultipPlayer::getInstance()->show();
 
-        ResultLists w; w.show();
+//        ResultLists w; w.show();
 
 //        MainNotice::getInstance()->show();
 
@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
     //    MyEmotionWindow w1;
     //    w1.showNormalEmotion(QPoint(500 , 500));
 //        DownloadType::getInstance()->show();
-//        NewLoginForm::getInstance()->show();
+        NewLoginForm::getInstance()->show();
     //    AniStackWidget w1;
     //    w1.show();
 

@@ -84,7 +84,11 @@ void NewLoginForm::initWorkUI()
     ui->lineEdit_userpwd->setPlaceholderText(QString(u8"登陆密码"));
     ui->lineEdit_userpwd->setEchoMode(QLineEdit::Password);
     ui->lineEdit_userpwd->addAction(m_actionShowPwd,QLineEdit::TrailingPosition);
+
     //注册部分
+    ui->lineEdit_regis_telNumber->setMaxLength(20);
+    ui->lineEdit_regis_checkCode->setMaxLength(15);
+    ui->lineEdit_regis_email->setMaxLength(26);
     ui->lineEdit_regis_telNumber->setPlaceholderText(QString(u8"请输入注册手机号码"));
     ui->lineEdit_regis_checkCode->setPlaceholderText(QString(u8"请输入验证码"));
     ui->lineEdit_regis_checkCode->setEchoMode(QLineEdit::Password);
@@ -181,6 +185,160 @@ void NewLoginForm::initAnimations()
     });
 }
 
+NewLoginForm *NewLoginForm::getInstance()
+{
+    if(m_pInstance == nullptr)
+    {
+        m_pInstance = new NewLoginForm();
+    }
+    return m_pInstance;
+}
+
+void NewLoginForm::chandleSignalsAndSLots()
+{
+    //关闭
+    connect(ui->pushButton_close,&QPushButton::clicked,[=](){
+        aniGroup->start();
+        qDebug() << this->geometry();
+    });
+
+    //跳转到注册
+    connect(ui->pushButton_register,&QPushButton::clicked,[=](){
+        ui->stackedWidget_right->setCurrentIndex(1);
+        qDebug() << QString(u8"注册按钮");
+    });
+    //获取验证码
+    connect(ui->pushButton_checkCode,&QPushButton::clicked,[=](){
+        qDebug() << QString(u8"获取验证码");
+    });
+    //忘记密码
+    connect(ui->pushButton_forgotPwd,&QPushButton::clicked,[=](){
+        ui->stackedWidget_right->setCurrentIndex(2);
+        qDebug() << QString(u8"忘记密码");
+    });
+    //扫码登录
+    connect(ui->pushButton_scanCode,&QPushButton::clicked,[=](){
+        ui->stackedWidget_right->setCurrentIndex(0);//右侧变为扫码登录界面
+        ui->pushButton_updateQR->click();//模拟点击刷新
+    });
+    //登录遇到问题
+    connect(ui->pushButton_questions,&QPushButton::clicked,[=](){
+        qDebug() << QString(u8"遇到问题");
+    });
+
+    //查看密码
+    connect(m_actionShowPwd,&QAction::triggered,[=](bool checked)
+    {
+        if(checked)
+        {
+            m_actionShowPwd->setIcon(QIcon(":/images/icon/passwd_show.png"));
+            ui->lineEdit_userpwd->setEchoMode(QLineEdit::Normal);
+            m_actionShowPwd->setChecked(true);
+        }
+        else
+        {
+            m_actionShowPwd->setIcon(QIcon(":/images/icon/passwd_hide.png"));
+            ui->lineEdit_userpwd->setEchoMode(QLineEdit::Password);
+            m_actionShowPwd->setChecked(false);
+        }
+    });
+
+    //回车键---登录(模拟登陆按钮)
+    connect(ui->lineEdit_userpwd,&QLineEdit::returnPressed,[=](){ui->pushButton_login->clicked();});
+
+    //用户登录
+    connect(ui->pushButton_login,&QPushButton::clicked,[=](){
+        if(ui->tabWidget_login->currentIndex() == 0)//短信登录
+        {
+            if(ui->lineEdit_telNumber->text().isEmpty())
+            {
+                setType(TipType::Error);
+                showCText(TipType::Correct,ui->pushButton_login->mapToGlobal(ui->pushButton_login->pos())- QPoint(-230,70),QString(u8"手机号不能为空"),ui->pushButton_login,ui->lineEdit_telNumber->rect(),2000);
+            }
+            else if(ui->lineEdit_checkCode->text().isEmpty())
+            {
+                setType(TipType::Error);
+                showCText(TipType::Normal,ui->pushButton_login->mapToGlobal(ui->pushButton_login->pos())- QPoint(-230,70),QString(u8"验证码不能为空"),ui->pushButton_login,ui->lineEdit_telNumber->rect(),2000);
+            }
+            else
+            {
+                setUser_login();
+            }
+        }
+        else if(ui->tabWidget_login->currentIndex() == 1)//账号登录
+        {
+            if(ui->lineEdit_account->text().isEmpty())
+            {
+                setType(TipType::Error);
+                showCText(TipType::Correct,ui->pushButton_login->mapToGlobal(ui->pushButton_login->pos())- QPoint(-230,70),QString(u8"登录账号不能为空"),ui->pushButton_login,ui->lineEdit_account->rect(),2000);
+            }
+            else if(ui->lineEdit_userpwd->text().isEmpty())
+            {
+                setType(TipType::Error);
+                showCText(TipType::Normal,ui->pushButton_login->mapToGlobal(ui->pushButton_login->pos())- QPoint(-230,70),QString(u8"登录密码不能为空"),ui->pushButton_login,ui->lineEdit_userpwd->rect(),2000);
+            }
+            else
+            {
+                setUser_login();
+            }
+        }
+    });
+
+    //回车键---登录(模拟登陆按钮)
+    connect(ui->lineEdit_regis_email,&QLineEdit::returnPressed,[=](){ui->pushButton_regis->clicked();});
+
+    //用户注册
+    connect(ui->pushButton_regis,&QPushButton::clicked,[=](){
+        if(ui->stackedWidget_right->currentIndex() == 1)//账号注册
+        {
+            if(ui->lineEdit_regis_telNumber->text().length() < 6)
+            {
+                setType(TipType::Error);
+                showCText(TipType::Normal,ui->pushButton_regis->mapToGlobal(ui->pushButton_regis->pos())- QPoint(-230,70),QString(u8"设置账户长度过短"),ui->pushButton_regis,ui->lineEdit_regis_telNumber->rect(),2000);
+            }
+            else if(ui->lineEdit_regis_checkCode->text().length() < 6)
+            {
+                setType(TipType::Error);
+                showCText(TipType::Normal,ui->pushButton_regis->mapToGlobal(ui->pushButton_regis->pos())- QPoint(-230,70),QString(u8"设置密码长度过短"),ui->pushButton_regis,ui->lineEdit_regis_telNumber->rect(),2000);
+            }
+            else if(ui->lineEdit_regis_email->text().isEmpty())
+            {
+                setType(TipType::Error);
+                showCText(TipType::Normal,ui->pushButton_regis->mapToGlobal(ui->pushButton_regis->pos())- QPoint(-230,70),QString(u8"注册邮箱不能为空"),ui->pushButton_regis,ui->lineEdit_regis_telNumber->rect(),2000);
+            }
+            else
+            {
+                setUser_register();
+            }
+        }
+    });
+
+    //用户重置密码
+    connect(ui->pushButton_resetPwd,&QPushButton::clicked,[=](){
+        qDebug() <<QString(u8"重置密码！~~~");
+    });
+
+    //点击按钮刷新二维码
+    connect(ui->pushButton_updateQR,&QPushButton::clicked,[=](){
+        if(!m_isEnabled)
+        {
+            ui->pushButton_updateQR->setText(QString(u8"请勿频繁刷新二维码！"));
+            QTimer::singleShot(2*1000,0,[=](){
+                ui->pushButton_updateQR->setText(QString(u8"刷新二维码"));
+            });
+        }
+        else
+        {
+            update_QRcode();
+        }
+    });
+
+    //点击图片刷新二维码
+    connect(ui->label_QRcode,&MaskLabel::sig_item_clicked,[=](){
+        ui->pushButton_updateQR->click();
+    });
+}
+
 void NewLoginForm::update_QRcode()
 {
 
@@ -227,143 +385,6 @@ void NewLoginForm::set_QRcode(const QString &content)
     //转换为QPixmap在Label中显示
     ui->label_QRcode->setPixmap(QPixmap::fromImage(QrCode_Image));
     ui->label_QRcode->setContentsMargins(5,5,5,5);//内部边距
-}
-
-
-void NewLoginForm::chandleSignalsAndSLots()
-{
-    //关闭
-    connect(ui->pushButton_close,&QPushButton::clicked,[=](){
-        aniGroup->start();
-        qDebug() << this->geometry();
-    });
-
-    //注册
-    connect(ui->pushButton_register,&QPushButton::clicked,[=](){
-        ui->stackedWidget_right->setCurrentIndex(1);
-        qDebug() << QString(u8"注册按钮");
-    });
-    //获取验证码
-    connect(ui->pushButton_checkCode,&QPushButton::clicked,[=](){
-        qDebug() << QString(u8"获取验证码");
-    });
-    //忘记密码
-    connect(ui->pushButton_forgotPwd,&QPushButton::clicked,[=](){
-        ui->stackedWidget_right->setCurrentIndex(2);
-        qDebug() << QString(u8"忘记密码");
-    });
-    //扫码登录
-    connect(ui->pushButton_scanCode,&QPushButton::clicked,[=](){
-        ui->stackedWidget_right->setCurrentIndex(0);//右侧变为扫码登录界面
-        ui->pushButton_updateQR->click();//模拟点击刷新
-    });
-    //登录遇到问题
-    connect(ui->pushButton_questions,&QPushButton::clicked,[=](){
-        qDebug() << QString(u8"遇到问题");
-    });
-    //查看密码
-    connect(m_actionShowPwd,&QAction::triggered,[=](bool checked)
-    {
-        if(checked)
-        {
-            m_actionShowPwd->setIcon(QIcon(":/images/icon/passwd_show.png"));
-            ui->lineEdit_userpwd->setEchoMode(QLineEdit::Normal);
-            m_actionShowPwd->setChecked(true);
-        }
-        else
-        {
-            m_actionShowPwd->setIcon(QIcon(":/images/icon/passwd_hide.png"));
-            ui->lineEdit_userpwd->setEchoMode(QLineEdit::Password);
-            m_actionShowPwd->setChecked(false);
-        }
-    });
-
-
-    //登录
-    connect(ui->pushButton_login,&QPushButton::clicked,[=](){
-        if(ui->tabWidget_login->currentIndex() == 0)//短信登录
-        {
-            if(ui->lineEdit_telNumber->text().isEmpty())
-            {
-                setType(TipType::Error);
-                showCText(TipType::Correct,ui->pushButton_login->mapToGlobal(ui->pushButton_login->pos())- QPoint(-230,70),QString(u8"手机号不能为空"),ui->pushButton_login,ui->lineEdit_telNumber->rect(),2000);
-            }
-            else if(ui->lineEdit_checkCode->text().isEmpty())
-            {
-                setType(TipType::Error);
-                showCText(TipType::Normal,ui->pushButton_login->mapToGlobal(ui->pushButton_login->pos())- QPoint(-230,70),QString(u8"验证码不能为空"),ui->pushButton_login,ui->lineEdit_telNumber->rect(),2000);
-            }
-        setUser_login();
-        }
-        else if(ui->tabWidget_login->currentIndex() == 1)//账号登录
-        {
-            if(ui->lineEdit_account->text().isEmpty())
-            {
-                setType(TipType::Error);
-                showCText(TipType::Correct,ui->pushButton_login->mapToGlobal(ui->pushButton_login->pos())- QPoint(-230,70),QString(u8"登录账号不能为空"),ui->pushButton_login,ui->lineEdit_account->rect(),2000);
-            }
-            else if(ui->lineEdit_userpwd->text().isEmpty())
-            {
-                setType(TipType::Error);
-                showCText(TipType::Normal,ui->pushButton_login->mapToGlobal(ui->pushButton_login->pos())- QPoint(-230,70),QString(u8"登录密码不能为空"),ui->pushButton_login,ui->lineEdit_userpwd->rect(),2000);
-            }
-            setUser_login();
-        }
-    });
-
-    //注册
-    connect(ui->pushButton_regis,&QPushButton::clicked,[=](){
-        if(ui->stackedWidget_right->currentIndex() == 1)//账号注册
-        {
-            if(ui->lineEdit_regis_telNumber->text().isEmpty())
-            {
-                setType(TipType::Error);
-                showCText(TipType::Correct,ui->pushButton_regis->mapToGlobal(ui->pushButton_regis->pos())- QPoint(-230,70),QString(u8"注册账号不能为空"),ui->pushButton_regis,ui->lineEdit_regis_telNumber->rect(),2000);
-            }
-            else if(ui->lineEdit_regis_checkCode->text().isEmpty())
-            {
-                setType(TipType::Error);
-                showCText(TipType::Normal,ui->pushButton_regis->mapToGlobal(ui->pushButton_regis->pos())- QPoint(-230,70),QString(u8"验证码不能为空"),ui->pushButton_regis,ui->lineEdit_regis_checkCode->rect(),2000);
-            }
-            else if(ui->lineEdit_regis_email->text().isEmpty())
-            {
-                setType(TipType::Error);
-                showCText(TipType::Normal,ui->pushButton_regis->mapToGlobal(ui->pushButton_regis->pos())- QPoint(-230,70),QString(u8"注册邮箱不能为空"),ui->pushButton_regis,ui->lineEdit_regis_email->rect(),2000);
-            }
-            setUser_register();
-        }
-    });
-
-    //重置
-
-    //点击按钮刷新二维码
-    connect(ui->pushButton_updateQR,&QPushButton::clicked,[=](){
-        if(!m_isEnabled)
-        {
-            ui->pushButton_updateQR->setText(QString(u8"请勿频繁刷新二维码！"));
-            QTimer::singleShot(2*1000,0,[=](){
-                ui->pushButton_updateQR->setText(QString(u8"刷新二维码"));
-            });
-        }
-        else
-        {
-            update_QRcode();
-        }
-    });
-
-    //点击图片刷新二维码
-    connect(ui->label_QRcode,&MaskLabel::sig_item_clicked,[=](){
-        ui->pushButton_updateQR->click();
-    });
-}
-
-NewLoginForm *NewLoginForm::getInstance()
-{
-    if(m_pInstance == nullptr)
-    {
-        m_pInstance = new NewLoginForm();
-    }
-    return m_pInstance;
 }
 
 void NewLoginForm::receiveLoginAppClose()
@@ -437,17 +458,14 @@ void NewLoginForm::paintEvent(QPaintEvent *event)
 
 bool NewLoginForm::eventFilter(QObject *obj, QEvent *ev)
 {
-    if(obj == ui->comboBox_area)
-    {
-
-    }
     return QWidget::eventFilter(obj,ev);
 }
 
+//用户登陆校验
 void NewLoginForm::setUser_login()
 {
-    QString account;
-    QString passwd ;
+    QString account = "";
+    QString passwd = "";
     if(ui->tabWidget_login->currentIndex() == 0)//短信登录
     {
         account = ui->lineEdit_telNumber->text().trimmed();
@@ -458,53 +476,68 @@ void NewLoginForm::setUser_login()
         account = ui->lineEdit_account->text().trimmed();
         passwd  = ui->lineEdit_userpwd->text().trimmed();
     }
-
+    //查询数据库
     bool valiable = dataBase::getInstance()->login_checked_usernameAndPasswd(account,passwd);//核对账号是否存在
     if(valiable)//信息核对成功！
     {
+        qDebug() <<QString(u8"查有此人！");
         //发送名称，头像连接, 等级
         emit sig_sendClearTempRecords();//清除临时记录（如果用户不登录，则切换用户时会用到）
         dataBase::getInstance()->login_verification(account,passwd);//将用户所有信息查询出来，并初始化
         QString nickname =  dataBase::getInstance()->getCurrentUserName();
         QString head     =  dataBase::getInstance()->getCurrentUserHead();
         int     grade    =  dataBase::getInstance()->getCurrentUserGrade();
-        emit sig_sendLoginOK(nickname,head,grade);
+        emit sig_sendLoginOK(nickname,head,grade);//向外界发送用户信息
 //        slot_addLoginHisUsers(account);
-        slot_clearTempInputText();
+        slot_clearTempInputText();//清除输入信息
         this->close();
     }
     else//信息核对失败！
     {
+        qDebug() <<QString(u8"查无此人！");
         setType(TipType::Error);
-        showCText(TipType::Normal,ui->pushButton_login->mapToGlobal(ui->pushButton_login->pos())- QPoint(-230,70),QString(u8"验证码不能为空"),ui->pushButton_login,ui->lineEdit_telNumber->rect(),2000);
+        showCText(TipType::Normal,ui->pushButton_login->mapToGlobal(ui->pushButton_login->pos())- QPoint(-230,70),QString(u8"用户信息不正确！"),ui->pushButton_login,ui->lineEdit_telNumber->rect(),2000);
         return;
     }
 }
 
+//用户注册
 void NewLoginForm::setUser_register()
 {
-    QString name;
-    QString pwd ;
-    QString email;
+    QString name = "";
+    QString pwd = "";
+    QString email = "";
     if(ui->stackedWidget_right->currentIndex() == 1)//注册界面
     {
        name    = ui->lineEdit_regis_telNumber->text().trimmed();
        pwd     = ui->lineEdit_regis_checkCode->text().trimmed();
        email   = ui->lineEdit_regis_email->text().trimmed();
     }
-
-    bool isOK = dataBase::getInstance()->register_userInfo(name,pwd,email);
+    //插入之前先判断是否有重名用户
+    bool valiable = dataBase::getInstance()->getUserExists("userinfo",name);
+    if(valiable)//找到了重名用户
+    {
+        setType(TipType::Error);
+        showCText(TipType::Normal,ui->pushButton_regis->mapToGlobal(ui->pushButton_regis->pos())- QPoint(-230,70),QString(u8"该账号已注册！"),ui->pushButton_regis,ui->lineEdit_regis_telNumber->rect(),2000);
+        slot_clearTempInputText();
+        return;//直接返回
+    }
+    bool isOK = dataBase::getInstance()->register_userInfo(name,pwd,email);//数据库插入用户信息
     if(isOK)//插入成功
     {
         QTimer::singleShot(0,0,[=](){
             slot_clearTempInputText();
-//            showLoginWindow(0);
+            //showLoginWindow(0);
+            setType(TipType::Correct);
+            showCText(TipType::Normal,ui->pushButton_regis->mapToGlobal(ui->pushButton_regis->pos())- QPoint(-230,70),QString(u8"恭喜您，注册成功！"),ui->pushButton_regis,ui->lineEdit_regis_telNumber->rect(),2000);
+            ui->stackedWidget_right->setCurrentIndex(0);//右侧变为扫码登录界面
+            ui->pushButton_updateQR->click();//模拟点击刷新二维码
         });//转到登录界面
     }
     else//插入失败
     {
         setType(TipType::Error);
-        showCText(TipType::Normal,ui->pushButton_regis->mapToGlobal(ui->pushButton_regis->pos())- QPoint(-230,70),QString(u8"注册失败，请重新注册！"),ui->pushButton_regis,ui->lineEdit_telNumber->rect(),2000);
+        showCText(TipType::Normal,ui->pushButton_regis->mapToGlobal(ui->pushButton_regis->pos())- QPoint(-230,70),QString(u8"注册失败，请重新注册！"),ui->pushButton_regis,ui->lineEdit_regis_telNumber->rect(),2000);
     }
 }
 
@@ -533,6 +566,12 @@ void NewLoginForm::slot_clearTempInputText()
     ui->lineEdit_secondpwd->clear();
 }
 
+void NewLoginForm::showTipContentLenRule(const QString &ruleText)
+{
+    setType(TipType::Error);
+    showCText(TipType::Correct,ui->pushButton_regis->mapToGlobal(ui->pushButton_regis->pos())- QPoint(-230,70),ruleText,ui->pushButton_regis,ui->lineEdit_regis_telNumber->rect(),2000);
+}
+
 
 void NewLoginForm::showCText(TipType type, const QPoint &pos, const QString &text, QWidget *w, const QRect &rect, int msecShowTime)
 {
@@ -543,31 +582,31 @@ void NewLoginForm::setType(TipType type)
 {
     switch (type)
     {
-    case TipType::Normal:
+    case TipType::Normal://正常提示
     {
 //        QString st = "<b style=\"background:rgb(230, 92, 54);color:red;\">%1</b>";
 //        return st;
 //        QToolTip::setPalette(QPalette(QColor(Qt::red),QColor(Qt::blue)));
         setStyleSheet("QWidget{background-color: #2c2d36;}"
-                      "QToolTip{background-color: rgb(112, 113, 116);color: black;}");
+                      "QToolTip{min-height: 20px; background-color: #ffffbf; color: black;}");
     }
         break;
-    case TipType::Error:
+    case TipType::Error://错误提示
     {
 //        QString st = "<b style=\"background:rgb(230, 92, 54);color:red;\">%1</b>";
 //        return st;
 //        QToolTip::setPalette(QPalette(QColor(Qt::red),QColor(Qt::blue)));
         setStyleSheet("QWidget{background-color: #2c2d36;}"
-                      "QToolTip{background-color: #2c2d36;  color: black;}");
+                      "QToolTip{min-height: 20px; background-color: #ffffbf; color: #00beff;}");
     }
         break;
-    case TipType::Correct:
+    case TipType::Correct://成功提示
     {
 //        QString st = "<b style=\"background:rgb(246, 188, 63);color:green;\">%1</b>";
 //        return st;
 //        QToolTip::setPalette(QPalette(QColor(Qt::red),QColor(Qt::blue)));
         setStyleSheet("QWidget{background-color: #2c2d36;}"
-                      "QToolTip{background-color: rgb(112, 113, 116);color: rgb(65, 205, 82);}");
+                      "QToolTip{min-height: 20px; background-color: #ffffbf; color: #1c9734;}");
     }
         break;
     default:
@@ -576,7 +615,7 @@ void NewLoginForm::setType(TipType type)
 //        return st;
 //        QToolTip::setPalette(QPalette(QColor(Qt::red),QColor(Qt::blue)));
         setStyleSheet("QWidget{background-color: #2c2d36;}"
-                      "QToolTip{background-color: rgb(112, 113, 116);color: black;}");
+                      "QToolTip{min-height: 20px; background-color: #ffffbf; color: black;}");
     }
         break;
     }

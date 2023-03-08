@@ -35,7 +35,7 @@ void FAboutForm::initWorkUI()
         //精选视频列表
 //        QString path1 = Global::appDirPath + QString("/pictures/mylike/videos_list2/list_intro%1.png").arg(i);
         QString path2 = Global::appDirPath + QString("/pictures/mylike/videos_list2/list_intro%1.jpg").arg(i);
-        MemberVideoItem *itemWidget = new MemberVideoItem(path2,QString(u8"神探狄仁杰之%1").arg(i),QString(u8"狄仁杰再探武朝迷案"),QColor(37, 37, 43));
+        MemberVideoItem *itemWidget = new MemberVideoItem(path2,QString(u8"神探狄仁杰之%1").arg(i),QString(u8"再探武朝迷案"),QColor(37, 37, 43));
         QListWidgetItem *item = new QListWidgetItem();
         item->setSizeHint(QSize(175,320));
         ui->listWidget_fvitems->addItem(item);

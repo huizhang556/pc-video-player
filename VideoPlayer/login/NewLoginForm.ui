@@ -287,7 +287,7 @@ QTabBar::tab:only-one
 }</string>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="tab">
                 <attribute name="title">
@@ -1166,7 +1166,7 @@ border-bottom-width: 0px;
     subcontrol-position: top center; /* position at the top center */
     padding: 0 3px;
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #ffoece, stop: 1 #ffffff);
+                                      stop: 0 #2c2d36, stop: 1 #2c2d36);
 }
 
 #groupBox_otherLogin::indicator 
@@ -1399,7 +1399,7 @@ background-color: rgba(58, 58, 65,0.7);
         <item>
          <widget class="QStackedWidget" name="stackedWidget_right">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page_login">
            <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -3044,7 +3044,7 @@ QLineEdit:hover
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_fpwd">
+               <widget class="QPushButton" name="pushButton_resetPwd">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
