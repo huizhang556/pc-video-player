@@ -1,11 +1,5 @@
 ﻿#include "ExitDialog.h"
 #include "ui_ExitDialog.h"
-#include <QDir>
-#include <QDebug>
-#include <QPixmap>
-#include <QCursor>
-#include <QSettings>
-#include <QMouseEvent>
 
 //构造函数1
 ExitDialog::ExitDialog(QWidget *parent) :
@@ -14,9 +8,16 @@ ExitDialog::ExitDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     //去掉边框
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::Window);
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setFixedSize(FIXSIZE);
+
+    QGraphicsDropShadowEffect *shadow_effect = new QGraphicsDropShadowEffect(this);
+    shadow_effect->setOffset(0,0);//阴影往边外（下和右）移出的距离
+    shadow_effect->setColor(QColor(93, 95, 96));
+    shadow_effect->setBlurRadius(8);//设置阴影圆角
+    this->setGraphicsEffect(shadow_effect);
+    this->setContentsMargins(3,3,3,3);//设置为0时，就看不到边框的阴影
 
 //    QPixmap pixmap(":/images/icon/cursor.png");
 //    QSize size(5,5);
@@ -48,6 +49,7 @@ ExitDialog::ExitDialog(QWidget *parent) :
     //确定关闭
     connect(ui->pushButton_ok,&QPushButton::clicked,[=](){
         /*可以做一些类似数据保存的其他操作*/
+
         emit sig_SendcloseMain();//给主窗口发送关闭窗口信号
         this->close();
     });
@@ -71,9 +73,17 @@ ExitDialog::ExitDialog(QString title, QString warn, QWidget *parent) :
 {
     ui->setupUi(this);
     //去掉边框
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::Window);
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setFixedSize(FIXSIZE);
+
+    QGraphicsDropShadowEffect *shadow_effect = new QGraphicsDropShadowEffect(this);
+    shadow_effect->setOffset(0,0);//阴影往边外（下和右）移出的距离
+    shadow_effect->setColor(QColor(93, 95, 96));
+    shadow_effect->setBlurRadius(8);//设置阴影圆角
+    this->setGraphicsEffect(shadow_effect);
+    this->setContentsMargins(3,3,3,3);//设置为0时，就看不到边框的阴影
+
     ui->radioButton_miniSysTron->setChecked(true);
     ui->pushButton_ok->setFocus();//显示选中状态
     ui->pushButton_ok->setDefault(true);//按回车会关闭窗口

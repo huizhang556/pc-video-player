@@ -19,7 +19,7 @@ public:
     ~AdjustBright();
 
 protected:
-    void paintEvent(QPaintEvent *event) override;
+//    void paintEvent(QPaintEvent *event) override;
 
     void leaveEvent(QEvent *event) override;
 

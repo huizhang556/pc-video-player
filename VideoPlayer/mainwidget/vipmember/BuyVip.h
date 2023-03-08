@@ -1,8 +1,12 @@
 ﻿#ifndef BUYVIP_H
 #define BUYVIP_H
-
+#define  QRSIZE QSize(100-10,100-10)
 #include "mainwidget/vipmember/BuyVipItem.h"
+#include "qrcode/QrCode.hpp"
 
+#include <string>
+#include <vector>
+using namespace qrcodegen;//注意加上命名空间
 #include <QDialog>
 #include <QStringList>
 
@@ -23,6 +27,7 @@ public:
 protected:
    void  mousePressEvent(QMouseEvent *event) override;
    void  mouseMoveEvent(QMouseEvent *event) override;
+   void  setPrice_QRcode(const QString &content);
 
 private:
     explicit BuyVip(QWidget *parent = nullptr);

@@ -4,6 +4,13 @@
 #include "global/Global.h"
 #include <QDialog>
 #include <QPoint>
+#include <QDir>
+#include <QPixmap>
+#include <QCursor>
+#include <QSettings>
+#include <QMouseEvent>
+#include <QGraphicsDropShadowEffect>
+#include <QDebug>
 
 namespace Ui {
 class ExitDialog;
@@ -15,7 +22,7 @@ class ExitDialog : public QDialog
 
 public:
     explicit ExitDialog(QWidget *parent = nullptr);
-    explicit ExitDialog(QString title,QString warn,QWidget *parent = nullptr);
+    explicit ExitDialog(const QString title,const QString warn,QWidget *parent = nullptr);
 
     ~ExitDialog();
 

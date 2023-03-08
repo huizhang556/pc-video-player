@@ -138,6 +138,8 @@ private:
     void        connectToTopWidget(CToTopWidget* widget);//与置顶小部件建立关联
 
 private slots:
+    void        slot_activeTray(QSystemTrayIcon::ActivationReason reason);//接收托盘信号
+
     void        slot_update_R_B_geometry(bool on);//更显显示右下角置顶小部件
 
     void        slot_setWebProgreeBarValue(int value);//网页进度

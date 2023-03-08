@@ -18,6 +18,8 @@ using namespace qrcodegen;//注意加上命名空间
 #include <QColor>
 #include <QToolTip>
 #include <QTimer>
+#include <QRegExp>
+#include <QRegExpValidator>
 #include <QAbstractItemView>
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
@@ -86,6 +88,7 @@ private:
 //    QPoint  m_mvPos;
     bool    m_isEnabled = true;//刷新按钮状态(默认可以刷新)
     QAction *m_actionShowPwd;//查看密码
+    QAction *m_act_pwd;//查看密码
     static  NewLoginForm* m_pInstance;
     QPropertyAnimation *ani_opacity = nullptr;
 //    QPropertyAnimation *ani_show = nullptr;

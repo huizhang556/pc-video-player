@@ -78,6 +78,7 @@ void BuyVip::initWorkUI()
 //            qDebug() << QString(u8"设置item");
             ui->listWidget_musicvip->setCurrentItem(item);
             ui->label_payprice->setText(QString(u8"实付： ")+m_strList.at(i).at(2));
+            setPrice_QRcode(ui->label_payprice->text());
         });
     }
     ui->listWidget_musicvip->setCurrentRow(0);
@@ -93,6 +94,7 @@ void BuyVip::initWorkUI()
 //            qDebug() << QString(u8"设置item");
             ui->listWidget_rightmusic->setCurrentItem(item);
             ui->label_payprice->setText(QString(u8"实付： ")+m_strList.at(i).at(2));
+            setPrice_QRcode(ui->label_payprice->text());
         });
     }
     ui->listWidget_rightmusic->setCurrentRow(0);
@@ -109,6 +111,7 @@ void BuyVip::initWorkUI()
 //            qDebug() << QString(u8"设置item");
             ui->listWidget_videovip->setCurrentItem(item);
             ui->label_payprice->setText(QString(u8"实付： ")+m_strList.at(i).at(2));
+            setPrice_QRcode(ui->label_payprice->text());
         });
     }
     ui->listWidget_videovip->setCurrentRow(0);
@@ -151,5 +154,30 @@ void BuyVip::mouseMoveEvent(QMouseEvent *event)
 {
     Q_UNUSED(event)
     this->move(event->globalPos() - m_mvPos);
+}
+
+void BuyVip::setPrice_QRcode(const QString &content)
+{
+    // Manual operation
+    std::vector<QrSegment> segs = QrSegment::makeSegments(content.toUtf8());
+    QrCode qr1 = QrCode::encodeSegments(
+        segs, QrCode::Ecc::HIGH, 5, 10, 2, false);
+    //创建二维码画布
+    QImage QrCode_Image = QImage(qr1.getSize(),qr1.getSize(),QImage::Format_RGB888);
+
+    for (int y = 0; y < qr1.getSize(); y++) {
+        for (int x = 0; x < qr1.getSize(); x++) {
+            if(qr1.getModule(x, y)==0)
+                QrCode_Image.setPixel(x,y,qRgb(255,255,255));
+            else
+                QrCode_Image.setPixel(x,y,qRgb(0,0,0));
+        }
+    }
+
+    //图像大小转换为适当的大小（根据label_QRcode显示二维码的宽高）
+    QrCode_Image = QrCode_Image.scaled(QRSIZE,Qt::KeepAspectRatio);
+    //转换为QPixmap在Label中显示
+    ui->label_paycode->setPixmap(QPixmap::fromImage(QrCode_Image));
+    ui->label_paycode->setContentsMargins(5,3,0,0);//左边间隔5px 默认以左 上对齐
 }
 

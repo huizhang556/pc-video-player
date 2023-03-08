@@ -1704,7 +1704,6 @@ background-color: #171c24;
 border-bottom: 2px groove blue; 
 border-radius: 2px;
 background-color: #3d3d3d;
-background-color: #171c24;
 color: yellow;
 text-align: center; 
 }

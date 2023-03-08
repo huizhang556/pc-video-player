@@ -86,12 +86,29 @@ void NewLoginForm::initWorkUI()
     ui->lineEdit_userpwd->addAction(m_actionShowPwd,QLineEdit::TrailingPosition);
 
     //注册部分
+    m_act_pwd = new QAction(QIcon(":/images/icon/passwd_hide.png"),"");
+    m_act_pwd->setObjectName(QString("m_act_pwd"));
+    m_act_pwd->setCheckable(true);
+    m_act_pwd->setChecked(false);
     ui->lineEdit_regis_telNumber->setMaxLength(20);
-    ui->lineEdit_regis_checkCode->setMaxLength(15);
+    ui->lineEdit_regis_checkCode->setMaxLength(18);
     ui->lineEdit_regis_email->setMaxLength(26);
-    ui->lineEdit_regis_telNumber->setPlaceholderText(QString(u8"请输入注册手机号码"));
-    ui->lineEdit_regis_checkCode->setPlaceholderText(QString(u8"请输入验证码"));
+    ui->lineEdit_regis_telNumber->setPlaceholderText(QString(u8"请输入注册手机号码或账号"));
+    ui->lineEdit_regis_checkCode->setPlaceholderText(QString(u8"请输入验证码或密码"));
     ui->lineEdit_regis_checkCode->setEchoMode(QLineEdit::Password);
+    ui->lineEdit_regis_checkCode->addAction(m_act_pwd,QLineEdit::TrailingPosition);
+
+    //正则限制输入内容
+    QRegExp regExp_account(QString(u8"[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]+"));//汉字+字母+数字，不限制长度
+    ui->lineEdit_regis_telNumber->setValidator(new QRegExpValidator(regExp_account, this));
+
+    QRegExp regExp_pwd(QString(u8"^([A-Z]|[a-z]|[0-9]|[,.@]){6,18}$"));//大小写字母+数字+特殊符号（,.@）
+    ui->lineEdit_regis_checkCode->setValidator(new QRegExpValidator(regExp_pwd, this));
+
+    QRegExp regExp_email(QString(u8"[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?"));
+    ui->lineEdit_regis_email->setValidator(new QRegExpValidator(regExp_email, this));
+
+
     //重置部分
     ui->lineEdit_fpwd_account->setPlaceholderText(QString(u8"请输入账号"));
     ui->lineEdit_fpwd_checkCode->setPlaceholderText(QString(u8"请输入验证码"));
@@ -226,7 +243,7 @@ void NewLoginForm::chandleSignalsAndSLots()
         qDebug() << QString(u8"遇到问题");
     });
 
-    //查看密码
+    //查看密码（登录账户）
     connect(m_actionShowPwd,&QAction::triggered,[=](bool checked)
     {
         if(checked)
@@ -240,6 +257,23 @@ void NewLoginForm::chandleSignalsAndSLots()
             m_actionShowPwd->setIcon(QIcon(":/images/icon/passwd_hide.png"));
             ui->lineEdit_userpwd->setEchoMode(QLineEdit::Password);
             m_actionShowPwd->setChecked(false);
+        }
+    });
+
+    //查看密码（注册账户）
+    connect(m_act_pwd,&QAction::triggered,[=](bool checked)
+    {
+        if(checked)
+        {
+            m_act_pwd->setIcon(QIcon(":/images/icon/passwd_show.png"));
+            ui->lineEdit_regis_checkCode->setEchoMode(QLineEdit::Normal);
+            m_act_pwd->setChecked(true);
+        }
+        else
+        {
+            m_act_pwd->setIcon(QIcon(":/images/icon/passwd_hide.png"));
+            ui->lineEdit_regis_checkCode->setEchoMode(QLineEdit::Password);
+            m_act_pwd->setChecked(false);
         }
     });
 

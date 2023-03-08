@@ -251,8 +251,7 @@ void MainWidget::initOtherWidgetUi()
     globalFindRlt->setObjectName(QString::fromLocal8Bit("globalFindRlt"));
 
     //托盘
-    QIcon icno(":/images/icon/tray.png");
-    m_tray = new QSystemTrayIcon(icno,this);
+    m_tray = new QSystemTrayIcon(QIcon(":/images/icon/tray.png"),this);
 //    m_tray->installEventFilter(this);
     m_tray->setToolTip(QString(u8"音视频播放器"));
     m_tray->show();
@@ -579,6 +578,10 @@ void MainWidget::handleSignalAndSLots()
     });
 
 
+    //点击托盘的信号
+//    connect(m_tray,&QSystemTrayIcon::activated,[=](QSystemTrayIcon::ActivationReason reason){slot_activeTray(reason);});
+
+
     //更换皮肤
     connect(m_leftSideBar,&LeftSideBar::sig_sendSkinMode,[=](bool day){
         if(day)
@@ -859,9 +862,9 @@ void MainWidget::handleSignalAndSLots()
 
     /************************************主窗口关闭关联窗口动作************************************/
     //收到主窗口关闭信号
-    connect(m_pExitDlg,&ExitDialog::sig_SendcloseMain,[=](){m_isClose = true;});
+    connect(m_pExitDlg,&ExitDialog::sig_SendcloseMain,[=](){m_isClose = true;});//确定关闭，需要做一些数据保存
     //没收到主窗口关闭信号
-    connect(m_pExitDlg,&ExitDialog::sig_SendNotcloseMain,[=](){m_isClose = false;});
+    connect(m_pExitDlg,&ExitDialog::sig_SendNotcloseMain,[=](){m_isClose = false;});//不关闭，数据暂时就不保存
 
     //关闭主窗口，先通知标题栏，再转发登录窗口关闭
     connect(this,&MainWidget::sig_startCloseAppliction,m_titleBar,&TitleBar::receiveMainFormClose);
@@ -1045,7 +1048,7 @@ void MainWidget::createTrayMenu()
     m_menuTray->addAction(QIcon("://images/tray/tray_logout.png"),QString::fromLocal8Bit("登录账号"),this,SLOT(tray_systemLogout()));
     m_menuTray->addSeparator();
     m_menuTray->addAction(QIcon("://images/tray/tray_exit.png"),QString::fromLocal8Bit("退出软件"),this,SLOT(tray_systemExitSoftware()));
-    m_tray->setContextMenu(m_menuTray);
+    m_tray->setContextMenu(m_menuTray);//这样写自动显示在m_tray鼠标点击的地方
 }
 
 /*处理设置按钮菜单发过来的信号*/
@@ -1168,8 +1171,7 @@ void MainWidget::slot_showLinkOnStatusBar(const QString &text)
 /*私有槽函数：显示主界面*/
 void MainWidget::tray_showMainWidget()
 {
-    this->raise();
-//        this->showNormal();
+    this->showNormal();
     qDebug() << "this is show";
 }
 
@@ -1381,6 +1383,30 @@ void MainWidget::connectToTopWidget(CToTopWidget *widget)
         RingWait1::getInstance()->close();
         });
     });
+}
+
+void MainWidget::slot_activeTray(QSystemTrayIcon::ActivationReason reason)
+{
+    switch (reason)
+    {
+    case QSystemTrayIcon::DoubleClick://单击
+    {
+        m_tray->showMessage("Information",//消息窗口标题
+                            "There is a new message!",//消息内容
+                            QSystemTrayIcon::MessageIcon::Information,//消息窗口图标
+                            5000);//消息窗口显示时长
+    }
+        break;
+    case QSystemTrayIcon::Trigger://双击
+    {
+        if(this->isHidden())
+        this->showNormal();
+    }
+        break;
+    case QSystemTrayIcon::Context:
+        m_menuTray->show();
+        break;
+    }
 }
 
 void MainWidget::slot_update_R_B_geometry(bool on)
@@ -1819,7 +1845,7 @@ void MainWidget::showEvent(QShowEvent *event)
 void MainWidget::closeEvent(QCloseEvent *event)
 {
     //重写关闭事件，就不需要关闭按钮的操作
-    if(m_pExitDlg->isShow)
+    if(m_pExitDlg->isShow)//如果为isShow就是弹出提示界面
     {
         if(WebDownLoadList::getInstance()->getWorkCounts()>0)
         {
@@ -1831,7 +1857,7 @@ void MainWidget::closeEvent(QCloseEvent *event)
         }
         m_pExitDlg->exec();
     }
-    else
+    else//如果为非isShow就是不弹出提示界面，但是依旧要保存一些数据
     {
         //没有退出界面提示，什么也不保存
         m_isClose = true;//模拟点击确定按钮事件

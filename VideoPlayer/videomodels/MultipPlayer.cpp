@@ -2045,7 +2045,7 @@ void MultipPlayer::set_adjustBright()
             int y = ui->Btn_adjust->parentWidget()->mapToGlobal(ui->Btn_adjust->pos()).y();
             int w = m_adjustBright->width();
             int h = m_adjustBright->height();
-            m_adjustBright->setGeometry(x-w/2-50,y-h-9,m_adjustBright->width(),m_adjustBright->height());
+            m_adjustBright->setGeometry(x-w/2-33,y-h-15,m_adjustBright->width(),m_adjustBright->height());
             m_adjustBright->raise();
             m_adjustBright->show();
         }
@@ -2057,7 +2057,7 @@ void MultipPlayer::set_adjustBright()
         int y = ui->Btn_adjust->parentWidget()->mapToGlobal(ui->Btn_adjust->pos()).y();
         int w = m_adjustBright->width();
         int h = m_adjustBright->height();
-        m_adjustBright->setGeometry(x-w/2-50,y-h-9,m_adjustBright->width(),m_adjustBright->height());
+        m_adjustBright->setGeometry(x-w/2-33,y-h-15,m_adjustBright->width(),m_adjustBright->height());
         m_adjustBright->raise();
         m_adjustBright->show();
     }

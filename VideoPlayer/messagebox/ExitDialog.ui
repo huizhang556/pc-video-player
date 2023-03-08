@@ -78,8 +78,8 @@ border-radius: 8px;
       <property name="styleSheet">
        <string notr="true">QLabel
 {
-font:12pt &quot;微软雅黑&quot;;
-color: #e7e9eb;
+font:400 15px &quot;微软雅黑&quot;;
+color: #d44e7d;
 }</string>
       </property>
       <property name="text">
@@ -113,7 +113,7 @@ color: #e7e9eb;
       <property name="styleSheet">
        <string notr="true">QCheckBox
 {
-font:400 15px &quot;微软雅黑&quot;;
+font:400 14px &quot;微软雅黑&quot;;
 color: #a2a7ae;
 }
 
@@ -250,19 +250,19 @@ color: white;
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>321</width>
+        <width>310</width>
         <height>30</height>
        </rect>
       </property>
       <property name="minimumSize">
        <size>
-        <width>0</width>
+        <width>310</width>
         <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>16777215</width>
+        <width>310</width>
         <height>30</height>
        </size>
       </property>
@@ -288,7 +288,7 @@ background-color:#242628;
         <number>3</number>
        </property>
        <property name="topMargin">
-        <number>0</number>
+        <number>3</number>
        </property>
        <property name="rightMargin">
         <number>3</number>
@@ -313,7 +313,7 @@ background-color:#242628;
          <property name="styleSheet">
           <string notr="true">#label
 {
-color: #e7e9eb;
+color: #f3531e;
 font: 400 14px &quot;微软雅黑&quot;; 
 background-color: transparent;
 }
@@ -342,14 +342,14 @@ background-color: transparent;
         <widget class="QPushButton" name="pushButton_close">
          <property name="minimumSize">
           <size>
-           <width>24</width>
-           <height>24</height>
+           <width>20</width>
+           <height>20</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>24</width>
-           <height>24</height>
+           <width>20</width>
+           <height>20</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -395,7 +395,7 @@ border-image: url(:/images/icon/closehover.png);
       <property name="styleSheet">
        <string notr="true">QRadioButton
 {
-font: 400 15px &quot;微软雅黑&quot;; 
+font: 400 14px &quot;微软雅黑&quot;; 
 color: #a2a7ae;
 }
 
@@ -474,7 +474,7 @@ QRadioButton::indicator:checked:pressed
       <property name="styleSheet">
        <string notr="true">QRadioButton
 {
-font: 400 15px &quot;微软雅黑&quot;; 
+font: 400 14px &quot;微软雅黑&quot;; 
 color: #a2a7ae;
 }
 
