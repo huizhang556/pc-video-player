@@ -1,6 +1,6 @@
 ﻿#ifndef SONGLISTITEM_H
 #define SONGLISTITEM_H
-
+#include <QTimer>
 #include <QWidget>
 #include <QFontMetrics>
 #include <QFileInfo>

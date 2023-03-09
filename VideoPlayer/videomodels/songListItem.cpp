@@ -43,6 +43,10 @@ void songListItem::handleSignalsAndSlots()
 {
     connect(ui->pushButton_sname,&QPushButton::clicked,[=](){
         emit sig_item_selected(ui->pushButton_sname->text());
+        ui->pushButton_sname->setEnabled(false);
+        QTimer::singleShot(1000,this,[=]{
+        ui->pushButton_sname->setEnabled(true);
+        });
     });
 
     connect(ui->pushButton_like,&QPushButton::clicked,[=](bool checked){

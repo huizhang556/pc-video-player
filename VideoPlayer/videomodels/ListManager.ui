@@ -52,6 +52,9 @@ background-color: rgba(51, 51, 51,1.0);
         <height>198</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <layout class="QVBoxLayout" name="m_itemVLayout">
        <property name="spacing">
         <number>0</number>

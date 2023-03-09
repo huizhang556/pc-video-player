@@ -55,12 +55,15 @@ private:
     int     calSpaceExpandHeight();//计算剩余高度
     void    createNewSongList(FINSTATUS status, QString sname);
     void    findContentTextItems(QString name);
+    void    hideAllItemWidgets(NewListItem* myself);
+    void    showAllItemWidgets(NewListItem* myself);
     void    setItemWidgetCloseStatus(NewListItem* myself);
     void    updateScrollbarGeomotry();
      void   autoResizeGeometry();
 
 signals:
     void    sig_send_height(int);
+    void    sig_play_newPlayist(int,QStringList,QString);
 };
 
 #endif // LISTMANAGER_H

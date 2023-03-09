@@ -722,6 +722,9 @@ void MultipPlayer::handleSignalAndSLots()
         slot_addPlayTempMedia(url);
     });
 
+    //其他列表发送过的播放请求
+    connect(m_listManager,&ListManager::sig_play_newPlayist,this,&MultipPlayer::slot_addTempPlaylist);
+
     //收藏按钮
     connect(ui->pushButton_collect,&QPushButton::clicked,[=](){
         qDebug() << "pushButton_collect clicled!";
@@ -3121,6 +3124,39 @@ void MultipPlayer::slot_setPlayOrderButtonStyleSheet(int index)
 void MultipPlayer::slot_setVideTitleBar(int index)
 {
     m_videoTitleBar->setTitleStackWidgetPage(index);
+}
+
+//播放临时列表
+void MultipPlayer::slot_addTempPlaylist(const int id, const QStringList &list, const QString &curMedia)
+{
+    qDebug() << QString(u8"接收到临时列表播放请求：URL = %1 列表ID: %2").arg(curMedia).arg(id);
+    m_player->pause();
+    if(m_playlist_id != id)
+    {
+        qDebug() << QString(u8"列表id不一致");
+        m_playlist_id = id;//当前列表id
+        m_t_MapList.clear();
+        playlist_t->clear();
+        for(int i = 0; i < list.count(); i++)
+        {
+            m_t_MapList.insert(i,list.at(i));
+            addToPlaylist(playlist_t,list.at(i));
+        }
+    }
+    qDebug() << QString(u8"列表id一致");
+    slot_switchPlayerList(playlist_t);
+    ui->horizontalSlider->setEnabled(true);
+    playlist_t->setCurrentIndex(getMapKeyFromValue(curMedia)-1);
+    slot_setMainCurrentIndex(1);
+    m_player->play();
+
+    //测试用
+//    m_player->pause();
+//    playlist_t->clear();
+//    playlist_t->addMedia(QUrl(curMedia));
+//    m_player->setPlaylist(playlist_t);
+//    slot_setMainCurrentIndex(1);
+//    m_player->play();
 }
 
 /*监听事件*/

@@ -50,7 +50,7 @@ void ListManager::initWorkUI()
     m_findFrame->setFixedSize(ui->scrollArea->width(),30);
     m_findFrame->setObjectName(QString::fromUtf8("m_findFrame"));
     m_findFrame->setStyleSheet("#m_findFrame{"
-                              "background-color: rgba(223, 223, 223,0.5);"
+                              "background-color: rgba(223, 223, 223,0.9);"
                               "}"
                                "#m_findFrame:hover{"
                                "background-color: rgba(231, 231, 231,0.7);"
@@ -124,10 +124,10 @@ void ListManager::initWorkUI()
 
 void ListManager::handleSignalsAndSlots()
 {
-    connect(ui->scrollArea->verticalScrollBar(),&QScrollBar::valueChanged,[=](int value){
+//    connect(ui->scrollArea->verticalScrollBar(),&QScrollBar::valueChanged,[=](int value){
 //        m_verScrollbar->setValue(value);
-        qDebug() <<QString(u8"当前值滚动条：") << value;
-    });
+//        qDebug() <<QString(u8"当前值滚动条：") << value;
+//    });
 
 //    connect(m_verScrollbar,&QScrollBar::valueChanged,[=](int value){
 
@@ -174,13 +174,10 @@ void ListManager::handleSignalsAndSlots()
 
     //定位
     connect(m_locateButton,&QPushButton::clicked,[=](){
-    if(m_curListItem != nullptr && m_curListItem->getCurListWidget()->currentItem() != nullptr)
-    {
-        qDebug() <<QString(u8"定位触发！，item的ID：") << m_curListItem->getItemId();
-        //不能自动定位？？？？
-        m_curListItem->getCurListWidget()->scrollToItem(m_curListItem->getCurListWidget()->currentItem(),QAbstractItemView::PositionAtCenter);//中间显示
-    }
-
+        qDebug() <<QString(u8"定位触发！，列表的ID：%1， 列表选中的item的ROW: %2").arg( m_curListItem->getItemId()).arg(m_curListItem->getCurListWidget().currentRow());
+        ui->scrollArea->verticalScrollBar()->setValue(0);
+//        ui->scrollArea->verticalScrollBar()->setValue(36+(m_curListItem->getCurListWidget().currentRow()+1)*36+ui->scrollArea->verticalScrollBar()->minimum());//所有的位置统一由外部scrollArea设置，内部的listwidget没用
+//        m_curListItem->scrollItemToPosition();//滚动到当前列表可视区域中央位置
     });
 }
 
@@ -234,6 +231,7 @@ void ListManager::createNewSongList(FINSTATUS status, QString sname)
     m_counts++;
 
     connect(itemWidget,&NewListItem::sig_item_addeditems,[=](){
+        hideAllItemWidgets(itemWidget);
        m_posFrame->show();
     });
 
@@ -249,14 +247,16 @@ void ListManager::createNewSongList(FINSTATUS status, QString sname)
         qDebug() <<QString(u8"received sig_item_expand") << on;
         m_expand = on;
         m_curListItem = itemWidget;
-        setItemWidgetCloseStatus(itemWidget);
-        if(!m_expand)
+//        setItemWidgetCloseStatus(itemWidget);//关闭其他item
+        if(!m_expand)//没有展开
         {
+            showAllItemWidgets(itemWidget);
             m_posFrame->hide();
         }
-        else
+        else//展开
         {
-             if(m_curListItem->getCurListWidget()->count() != 0) m_posFrame->show();
+            hideAllItemWidgets(itemWidget);
+            if(m_curListItem->getCurListWidget().count() != 0) m_posFrame->show();
         }
         qDebug() << QString(u8"变化后的item id=")<< itemWidget->getItemId();
     });
@@ -280,9 +280,12 @@ void ListManager::createNewSongList(FINSTATUS status, QString sname)
         {
            m_listItems.at(i)->setItemId(i);
         }
-
     });
 
+    //item被点击，播放器播放媒体
+    connect(itemWidget,&NewListItem::sig_item_newPlaylist,[=](int id,QStringList list,QString url){
+        emit sig_play_newPlayist(id,list,url);
+    });
 
     //联动滚动条
     connect(itemWidget,&NewListItem::sig_item_scrollbar,[=](int value){
@@ -298,27 +301,61 @@ void ListManager::findContentTextItems(QString name)
         name.remove(QRegExp("\\s"));
         if(name.isEmpty())
         {
-            for(int i = 0; i < m_curListItem->getCurListWidget()->model()->rowCount(); i++)
-                m_curListItem->getCurListWidget()->setRowHidden(i,false);
+            for(int i = 0; i < m_curListItem->getCurListWidget().model()->rowCount(); i++)
+                m_curListItem->getCurListWidget().setRowHidden(i,false);
 
         }
         else
         {
-            for(int i = 0; i <m_curListItem->getCurListWidget()->model()->rowCount(); i++)
+            for(int i = 0; i <m_curListItem->getCurListWidget().model()->rowCount(); i++)
             {
-                m_curListItem->getCurListWidget()->setRowHidden(i,true);
+                m_curListItem->getCurListWidget().setRowHidden(i,true);
                 QString curname = "";
-                QAbstractItemModel *model = m_curListItem->getCurListWidget()->model();
+                QAbstractItemModel *model = m_curListItem->getCurListWidget().model();
                 QModelIndex index;
-                for(int j = 0; j < m_curListItem->getCurListWidget()->model()->columnCount(); j++)
+                for(int j = 0; j < m_curListItem->getCurListWidget().model()->columnCount(); j++)
                 {
                     index = model->index(i,j);
                     curname += model->data(index,Qt::UserRole).toString();//默认是DisplayRole
                 }
                 curname.remove(QRegExp("\\s"));
                 if(curname.contains(name,Qt::CaseInsensitive)) //CaseSensitive:敏感
-                   m_curListItem->getCurListWidget()->setRowHidden(i,false);
+                   m_curListItem->getCurListWidget().setRowHidden(i,false);
             }
+        }
+    }
+}
+
+void ListManager::hideAllItemWidgets(NewListItem *myself)
+{
+    for(int i = 0; i < ui->m_itemVLayout->count(); i++)
+    {
+        QWidget* itemWgt = ui->m_itemVLayout->itemAt(i)->widget();
+        if(itemWgt != nullptr && itemWgt != myself)//除了自己以外的全部折叠
+        {
+            qDebug() <<QString(u8"找到itemWgt") << itemWgt;
+            NewListItem *newListItem = static_cast<NewListItem*>(itemWgt);
+            newListItem->slot_finishedRename();
+            newListItem->setListFold();
+            newListItem->hide();
+                qDebug() <<QString(u8"找到了");
+        }
+    }
+}
+
+void ListManager::showAllItemWidgets(NewListItem *myself)
+{
+    for(int i = 0; i < ui->m_itemVLayout->count(); i++)
+    {
+        QWidget* itemWgt = ui->m_itemVLayout->itemAt(i)->widget();
+        if(itemWgt != nullptr && itemWgt != myself)//除了自己以外的全部折叠
+        {
+            qDebug() <<QString(u8"找到itemWgt") << itemWgt;
+            NewListItem *newListItem = static_cast<NewListItem*>(itemWgt);
+            newListItem->slot_finishedRename();
+            newListItem->setListFold();//先折叠
+            newListItem->show();//再显示
+                qDebug() <<QString(u8"找到了");
         }
     }
 }

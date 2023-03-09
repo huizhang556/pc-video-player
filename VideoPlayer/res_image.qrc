@@ -639,5 +639,7 @@
         <file>images/icon/player_slider_normal.png</file>
         <file>images/icon/filter_down.png</file>
         <file>images/icon/filter_up.png</file>
+        <file>images/player/player_itemlist_pause.png</file>
+        <file>images/player/player_itemlist_play.png</file>
     </qresource>
 </RCC>

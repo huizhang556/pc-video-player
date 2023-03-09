@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QEvent>
 #include <QMenu>
+#include <QList>
 #include <QAction>
 #include <QScrollBar>
 #include <QListWidget>
@@ -36,7 +37,9 @@ public:
     int             getItemId()const;
     void            setItemId(int id);
     QString         getItemName()const;
-    QListWidget*    getCurListWidget();
+    QListWidget&    getCurListWidget();
+    void            scrollItemToPosition();
+    QList<QString>  getPlaylist();
 
 public  slots:
     void    setListFold();//接收外部展开/折叠控制信号
@@ -54,7 +57,7 @@ private:
     QString     m_name;//item 列表名称
     bool        m_switch        =   true;//default switch is open.
     QMenu       *m_rMenu        =   nullptr;//右键菜单
-
+    QList<QString>  m_playlist;
 private:
     void    createRightMenu();
     void    setFinishedStatus();//设置完成状态
@@ -78,6 +81,7 @@ signals:
     void    sig_item_scrollbar(int);
     void    sig_item_addtolist();
     void    sig_item_addeditems();
+    void    sig_item_newPlaylist(int,QStringList,QString);
 };
 
 #endif // NEWLISTITEM_H

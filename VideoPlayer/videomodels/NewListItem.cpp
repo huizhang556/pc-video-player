@@ -95,12 +95,13 @@ void NewListItem::handleSignalsAndSlots()
                                                                         QString::fromLocal8Bit("/"),
                                                                         QString::fromLocal8Bit("Videos(*avi *mp4 *flv *mp3 *wmv)"),
                                                                         0);//QFileDialog::DontUseNativeDialog
+        m_playlist  = list;//添加进列表
         if(list.isEmpty()) return;
         foreach (QString fpath, list)
         {
             songListItem *itemWidget = new songListItem(fpath);
             QListWidgetItem *item = new QListWidgetItem();
-            item->setData(Qt::UserRole,fpath);
+            item->setData(Qt::UserRole+1,fpath);
             item->setSizeHint(itemWidget->size());
             ui->listWidget_songerlist->addItem(item);
             ui->listWidget_songerlist->setItemWidget(item,itemWidget);
@@ -109,7 +110,8 @@ void NewListItem::handleSignalsAndSlots()
             //信号与槽函数
             connect(itemWidget,&songListItem::sig_item_selected,[=](QString sname){
                 ui->listWidget_songerlist->setCurrentItem(item);
-                qDebug() <<QString(u8"当前item已被设定！");
+                emit sig_item_newPlaylist(m_id,m_playlist,item->data(Qt::UserRole+1).toString());
+                qDebug() <<QString(u8"当前item已被设定！点击的item名称：%1,真实路径：%2").arg(sname).arg(item->data(Qt::UserRole+1).toString());
             });
 
             //添加信号（中继）
@@ -188,9 +190,20 @@ QString NewListItem::getItemName() const
     return m_name;
 }
 
-QListWidget *NewListItem::getCurListWidget()
+QListWidget& NewListItem::getCurListWidget()
 {
-    return ui->listWidget_songerlist;
+    return *ui->listWidget_songerlist;
+}
+
+void NewListItem::scrollItemToPosition()
+{
+    if(ui->listWidget_songerlist->currentItem() != nullptr)
+        ui->listWidget_songerlist->scrollToItem(ui->listWidget_songerlist->currentItem(),QAbstractItemView::PositionAtCenter);
+}
+
+QList<QString> NewListItem::getPlaylist()
+{
+    return m_playlist;
 }
 
 void NewListItem::setListFold()

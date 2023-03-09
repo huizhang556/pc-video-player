@@ -363,7 +363,14 @@ background-color: transparent;
             <string notr="true">QPushButton
 {
 margin:5px;
-border-image: url(:/images/player/player_itemlist_details.png);
+border-image: url(:/images/player/player_itemlist_play.png);
+
+background-color: transparent;
+}
+
+QPushButton:checked
+{
+border-image: url(:/images/player/player_itemlist_pause.png);
 background-color: transparent;
 }</string>
            </property>

@@ -191,6 +191,8 @@ public slots:
 
     void    slot_setVideTitleBar(int index);
 
+    void    slot_addTempPlaylist(const int id,const QStringList& list, const QString& curMedia);//切换播放列表
+
     void    on_pushButton_pauseStart_clicked();//暂停、播放
 
     void    slot_updateRateTypeUiLayout();
@@ -424,6 +426,7 @@ private:
     QStringList                 m_tempList;                    //临时播放列表
     QStringList                 list_temp;
 
+    int                         m_playlist_id = -1;
     QMap<int,QString>           m_mapList;                      //存储歌名路径
     QMap<int,QString>           m_mapList2;                     //存储歌名带后缀
     QMap<int,QString>           m_t_MapList;                     //临时存储歌名带后缀
