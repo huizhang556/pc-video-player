@@ -641,5 +641,6 @@
         <file>images/icon/filter_up.png</file>
         <file>images/player/player_itemlist_pause.png</file>
         <file>images/player/player_itemlist_play.png</file>
+        <file>images/icon/arrow_seek.png</file>
     </qresource>
 </RCC>

@@ -1,6 +1,6 @@
 ﻿#ifndef RECOMVIDEOTAB_H
 #define RECOMVIDEOTAB_H
-
+#include <QList>
 #include <QWidget>
 #include <QVariant>
 #include <QListWidget>
@@ -52,12 +52,14 @@ private:
 
     QStringList             m_tempVideoList;//临时视频播放列表
     QStringList             m_tempInfoList;//临时视频信息列表
+    QList<QString>          m_recplayList;//推荐播放列表
 
 private:
     QPushButton*    getListWidgetItemButton(QListWidgetItem* item, QString objname);//在item中查找指定按钮
 
 signals:
     void    sig_sendVideoUrl(QString);
+    void    sig_recom_playlist(int,QStringList,QString);
 };
 
 #endif // RECOMVIDEOTAB_H

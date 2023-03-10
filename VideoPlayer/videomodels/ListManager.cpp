@@ -170,6 +170,7 @@ void ListManager::handleSignalsAndSlots()
     //查找内容
     connect(m_searchEdit,&QLineEdit::textChanged,[=](const QString &text){
         findContentTextItems(text);
+        ui->scrollArea->verticalScrollBar()->setValue(0);
     });
 
     //定位
@@ -185,6 +186,11 @@ void ListManager::setInstallEventFilter()
 {
     this->installEventFilter(this);
     ui->scrollArea->installEventFilter(this);
+}
+
+void ListManager::slot_setCurPlayListSelectedRow(int row)
+{
+    m_playListItem->getCurListWidget().setCurrentRow(row);
 }
 
 bool ListManager::eventFilter(QObject *watched, QEvent *event)
@@ -252,6 +258,8 @@ void ListManager::createNewSongList(FINSTATUS status, QString sname)
         {
             showAllItemWidgets(itemWidget);
             m_posFrame->hide();
+            m_findFrame->hide();
+            m_searchEdit->clear();
         }
         else//展开
         {
@@ -284,6 +292,7 @@ void ListManager::createNewSongList(FINSTATUS status, QString sname)
 
     //item被点击，播放器播放媒体
     connect(itemWidget,&NewListItem::sig_item_newPlaylist,[=](int id,QStringList list,QString url){
+        m_playListItem = itemWidget;
         emit sig_play_newPlayist(id,list,url);
     });
 

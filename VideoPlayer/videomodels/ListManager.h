@@ -30,6 +30,9 @@ public:
     void    handleSignalsAndSlots();
     void    setInstallEventFilter();
 
+public slots:
+    void    slot_setCurPlayListSelectedRow(int row);
+
 protected:
     bool    eventFilter(QObject *watched, QEvent *event)override;
 
@@ -39,8 +42,8 @@ private:
     int                 m_counts = 0;
     QList<NewListItem*> m_listItems;
 //    QScrollBar          *m_verScrollbar     =   nullptr;
-    NewListItem         *m_curListItem      =   nullptr;
-
+    NewListItem         *m_curListItem      =   nullptr;//点击选中的列表，但不一定是播放列表
+    NewListItem         *m_playListItem     =   nullptr;//正在播放的列表
     QFrame              *m_findFrame        =   nullptr;//find and close
     QLineEdit           *m_searchEdit       =   nullptr;
     QPushButton         *m_hideButton       =   nullptr;
@@ -59,7 +62,7 @@ private:
     void    showAllItemWidgets(NewListItem* myself);
     void    setItemWidgetCloseStatus(NewListItem* myself);
     void    updateScrollbarGeomotry();
-     void   autoResizeGeometry();
+    void    autoResizeGeometry();
 
 signals:
     void    sig_send_height(int);

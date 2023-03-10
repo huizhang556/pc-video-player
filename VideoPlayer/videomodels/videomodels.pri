@@ -22,7 +22,8 @@ SOURCES += \
     $$PWD/ForbiddenItem.cpp \
     $$PWD/ListManager.cpp \
     $$PWD/NewListItem.cpp \
-    $$PWD/songListItem.cpp
+    $$PWD/songListItem.cpp \
+    $$PWD/VideoSurface.cpp
 
 
 HEADERS += \
@@ -49,7 +50,8 @@ HEADERS += \
     $$PWD/ForbiddenItem.h \
     $$PWD/ListManager.h \
     $$PWD/NewListItem.h \
-    $$PWD/songListItem.h
+    $$PWD/songListItem.h \
+    $$PWD/VideoSurface.h
 
 
 FORMS += \

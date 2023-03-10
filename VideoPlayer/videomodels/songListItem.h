@@ -3,6 +3,7 @@
 #include <QTimer>
 #include <QWidget>
 #include <QFontMetrics>
+#include <QFontMetricsF>
 #include <QFileInfo>
 #include <QDebug>
 

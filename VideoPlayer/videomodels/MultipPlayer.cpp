@@ -84,6 +84,7 @@ MultipPlayer::~MultipPlayer()
     delete m_adjustBright;
     delete m_videoTitleBar;
     delete m_hboxlayout_rlist;
+    delete m_videoSurface;
     if(m_pInstance != nullptr)
         delete m_pInstance;
     m_pInstance = nullptr;
@@ -120,9 +121,13 @@ void MultipPlayer::initMainWindow()
     playlist_t  = new QMediaPlaylist(this);
     m_player->setVolume(10);
 
+    //重写了QSlider,为了获取任意帧
+    ui->horizontalSlider->setFixedHeight(26);
     ui->horizontalSlider->setValue(0);
     ui->horizontalSlider->setPageStep(5);
     ui->horizontalSlider->setEnabled(false);
+    ui->horizontalSlider->setSpacing(22);
+    ui->horizontalSlider->setOpenTipImage(true);
 
     playlist->setPlaybackMode(QMediaPlaylist::Loop);//设置默认播放模式
     m_player->setPlaylist(playlist);
@@ -130,6 +135,12 @@ void MultipPlayer::initMainWindow()
     videoWidget = new MyVideoWidget(ui->stackedWidget);
     videoWidget->setMouseTracking(true);
     m_player->setVideoOutput(videoWidget);
+
+    //以下是获取任意帧使用
+    m_videoSurface = new VideoSurface();
+    m_player2 = new QMediaPlayer(this);
+    m_player2->setMuted(true);//静音
+    m_player2->setVideoOutput(m_videoSurface);
 
     m_widget2 = new QWidget;//listwidget显示（暂时不用）
     m_widget2->setObjectName(QString::fromLocal8Bit("m_widget2"));
@@ -370,12 +381,13 @@ void MultipPlayer::handleSignalAndSLots()
 
     //同类型视频推荐（添加item）
     connect(dataBase::getInstance(),SIGNAL(sig_sendVideoDramaInfo(QVariant)),m_recomTab,SLOT(slot_addRecVideoItem(QVariant)));
-    //同类型视频列表
+    //播放器右侧推荐视频---同类型视频列表
     connect(dataBase::getInstance(),&dataBase::sig_sendVideoDramaUrl,[=](int id,QString url){
         m_tempList.append(url);//临时列表添加
         m_t_MapList.insert(id,url);
         addToPlaylist(playlist_t,url);
     });
+
     //推荐视频
     connect(ui->pushButton_comments,&QPushButton::clicked,[=](){
         removeTabwidgetTabBar(m_tabWidget1);
@@ -453,6 +465,95 @@ void MultipPlayer::handleSignalAndSLots()
         }
     });
 
+    //进度条被定为特殊位置
+    connect(ui->horizontalSlider,&CusHSlider::sig_valueToPosition,[=](int pos){
+        m_player->setPosition(pos*1000);
+    });
+
+    //当前播放媒体改变，设置求取任意帧的player2的媒体路径
+    connect(m_player,&QMediaPlayer::currentMediaChanged,[=](const QMediaContent &media){
+        qDebug() << QString(u8"当前媒体url:") <<  media.canonicalResource().url();
+        setAnyFrameMediaUrl(media.canonicalResource().url());
+    });
+
+    connect(m_player2,&QMediaPlayer::bufferStatusChanged,[=](int percentFilled){
+        qDebug() <<QString(u8"播放器2缓冲进度: %1").arg(percentFilled);
+    });
+
+    connect(m_player,&QMediaPlayer::bufferStatusChanged,[=](int percentFilled){
+        qDebug() <<QString(u8"播放器1缓冲进度: %1").arg(percentFilled);
+    });
+
+    //player2加载网络视频缓冲比较慢的时候，需要提示加载中
+    connect(m_player2,&QMediaPlayer::mediaStatusChanged,[=](QMediaPlayer::MediaStatus status){
+        if(m_player2->media().isNull()) return;
+
+        if(status == QMediaPlayer::UnknownMediaStatus)//未知媒体状态
+        {
+            qDebug() << QString::fromLocal8Bit("QMediaPlayer::UnknownMediaStatus");
+            ui->horizontalSlider->setLoadingStatus(QString(u8"UnknownMediaStatus"));
+        }
+        else if(status == QMediaPlayer::NoMedia)//无媒体状态
+        {
+            qDebug() << QString::fromLocal8Bit("QMediaPlayer::NoMedia");
+            ui->horizontalSlider->setLoadingStatus(QString(u8"NoMedia"));
+        }
+        else if(status == QMediaPlayer::LoadingMedia)//加载媒体中
+        {
+            qDebug() << QString::fromLocal8Bit("QMediaPlayer::LoadingMedia");
+            ui->horizontalSlider->setLoadingStatus(QString(u8"LoadingMedia"));
+        }
+        else if(status == QMediaPlayer::LoadedMedia)//媒体加载完毕
+        {
+            qDebug() << QString::fromLocal8Bit("QMediaPlayer::LoadedMedia");
+            ui->horizontalSlider->setLoadingStatus(QString(u8"LoadedMedia"));
+        }
+        else if(status == QMediaPlayer::StalledMedia)//媒体停顿
+        {
+            qDebug() << QString::fromLocal8Bit("QMediaPlayer::StalledMedia");
+            ui->horizontalSlider->setLoadingStatus(QString(u8"StalledMedia"));
+        }
+        else if(status == QMediaPlayer::BufferingMedia)//媒体正在缓冲
+        {
+            qDebug() << QString::fromLocal8Bit("QMediaPlayer::BufferingMedia");
+            ui->horizontalSlider->setLoadingStatus(QString(u8"BufferingMedia"));
+        }
+        else if(status == QMediaPlayer::BufferedMedia)//媒体缓冲完毕
+        {
+            qDebug() << QString::fromLocal8Bit("QMediaPlayer::BufferedMedia");
+            ui->horizontalSlider->setLoadingStatus(QString(u8"BufferedMedia"));
+        }
+        else if(status == QMediaPlayer::EndOfMedia)//媒体结束
+        {
+            qDebug() << QString::fromLocal8Bit("QMediaPlayer::EndOfMedia");
+            ui->horizontalSlider->setLoadingStatus(QString(u8"EndOfMedia"));
+            m_player2->pause();
+        }
+        else if(status == QMediaPlayer::InvalidMedia)//媒体无效
+        {
+            qDebug() << QString::fromLocal8Bit("QMediaPlayer::InvalidMedia");
+            ui->horizontalSlider->setLoadingStatus(QString(u8"InvalidMedia"));
+        }
+        else
+        {
+            qDebug() << QString::fromLocal8Bit("other unknow problem!");
+            ui->horizontalSlider->setLoadingStatus(QString(u8"unknow problem!"));
+        }
+    });
+
+    //鼠标MoveHover获取任意一帧图像
+    connect(ui->horizontalSlider,&CusHSlider::sig_anyValuePosition,[=](int pos){
+        m_player2->setPosition(pos*1000);
+    });
+
+    //接收回传的任意帧图像
+    connect(m_videoSurface,&VideoSurface::frameAvailable,[=](QVideoFrame& frame){
+        frame.map(QAbstractVideoBuffer::ReadOnly);
+        QImage recvImage(frame.bits(), frame.width(), frame.height(), QVideoFrame::imageFormatFromPixelFormat(frame.pixelFormat()));
+        ui->horizontalSlider->updateValueToImage(recvImage);
+        frame.unmap();
+    });
+
     /*浮动窗口---调节进度条*/
     connect(FloatPlayCtl::getInstance(),&FloatPlayCtl::sig_sendProgress_player,[=](int pos){
         m_player->setPosition(pos*1000);
@@ -524,12 +625,15 @@ void MultipPlayer::handleSignalAndSLots()
         }
         else if(m_player->playlist() == playlist_t)
         {
-            m_videoTitleBar->clearTitleText();
+            m_videoTitleBar->setTitleText(nameUrl);
+//            m_videoTitleBar->clearTitleText();
             qDebug() << QString::fromLocal8Bit("临时列表，清空了标题栏名称~");
         }
     });
+
     //进度条上方显示当前播放媒体歌名
     connect(this,SIGNAL(sig_sendSwitchToMusicPage(QString)),this,SLOT(slot_setCurrentMediaName(QString)));
+
     //旋转时钟改变
     connect(this,&MultipPlayer::sig_sendSwitchToMusicPage,[this](){
         ui->widget_media_pic->resetRoate(0);
@@ -626,8 +730,6 @@ void MultipPlayer::handleSignalAndSLots()
     emit sig_winResize();
     });
 
-    //临时列表item变化
-    connect(this,&MultipPlayer::sig_playlistCurrentIndex,m_recomTab,&RecomVideoTab::slot_setListWidgetCurrentIndex);
 
     /*右侧窗口-曲库歌曲搜索*/
     connect(m_lineEdit,&QLineEdit::textChanged,[=](QString str){slot_findFileFromLineEdit(str);});
@@ -722,8 +824,24 @@ void MultipPlayer::handleSignalAndSLots()
         slot_addPlayTempMedia(url);
     });
 
+    connect(m_recomTab,&RecomVideoTab::sig_recom_playlist,this,&MultipPlayer::slot_addTempPlaylist);
+
+    //临时列表item变化
+    connect(this,&MultipPlayer::sig_playlistCurrentIndex,[=](int index){
+        if(m_playlist_id == 666)//指定为编号666
+        m_recomTab->slot_setListWidgetCurrentIndex(index);
+    });
+
+//    connect(m_recomTab,&RecomVideoTab::sig_sendVideoUrl,this,&MultipPlayer::slot_addTempPlaylist);
+
     //其他列表发送过的播放请求
     connect(m_listManager,&ListManager::sig_play_newPlayist,this,&MultipPlayer::slot_addTempPlaylist);
+
+    //临时playlist发出的index
+    connect(playlist_t,&QMediaPlaylist::currentIndexChanged,[=](int index){
+        emit sig_mediaListIndex(index);
+        m_listManager->slot_setCurPlayListSelectedRow(index);
+    });
 
     //收藏按钮
     connect(ui->pushButton_collect,&QPushButton::clicked,[=](){
@@ -1006,9 +1124,10 @@ int MultipPlayer::getMapKeyFromValue(const QString &value)
 {
         for(QMap<int,QString>::iterator it = m_t_MapList.begin(); it != m_t_MapList.end(); it++)
         {
-            qDebug()<<"key = "<<it.key()<<"value = "<<it.value();
+//            qDebug()<<"key = "<<it.key()<<"value = "<<it.value();
             if(it.value() == value)
             {
+                qDebug() << QString(u8"找到的key:") << it.key();
                 return   it.key();
             }
         }
@@ -2795,6 +2914,33 @@ void MultipPlayer::slot_selectAllListItem(QListWidget *obj)
     }
 }
 
+//设置任意帧当前视频路径
+void MultipPlayer::setAnyFrameMediaUrl(const QUrl &url)
+{
+    bool mp3 = getCurrentFileType(url.toString());
+    if(mp3)
+    {
+        qDebug() <<QString(u8"媒体为视频资源！");
+        if(m_anyFrameMediaUrl != url)//与当前资源路径不一样，则认为不是同一个资源
+        {
+            m_player2->stop();
+            m_anyFrameMediaUrl = url;
+            m_player2->setMedia(url);
+            m_player2->play();//直接打开不关闭（主要是网络视频容易加载不出来）
+//            QTimer::singleShot(1000,0,[=](){
+//                m_player2->pause();
+//            });
+        }
+        ui->horizontalSlider->setOpenTipImage(true);
+    }
+    else
+    {
+        qDebug() <<QString(u8"媒体不为视频资源！");
+        ui->horizontalSlider->setOpenTipImage(false);
+    }
+}
+
+
 void MultipPlayer::slot_sendDanmuTextToScreen(QString danmuText)
 {
     if(ui->stackedWidget->currentWidget() != videoWidget) return;
@@ -2982,6 +3128,10 @@ void MultipPlayer::slot_setCurrentMediaName(QString name)
     else if(m_player->playlist() == playlist_t)
     {
         ui->label_media_name->clear();
+        int pos  = name.indexOf(".");
+        QString filename = name.left(pos);//从pos位置向左侧截取
+        ui->label_media_name->setText(filename);
+        FloatPlayCtl::getInstance()->slot_setMediaPlayName(filename);
         qDebug() << QString::fromLocal8Bit("临时列表，清空了控制栏和浮动控制名称~");
     }
 }
@@ -3143,12 +3293,15 @@ void MultipPlayer::slot_addTempPlaylist(const int id, const QStringList &list, c
             addToPlaylist(playlist_t,list.at(i));
         }
     }
-    qDebug() << QString(u8"列表id一致");
     slot_switchPlayerList(playlist_t);
     ui->horizontalSlider->setEnabled(true);
-    playlist_t->setCurrentIndex(getMapKeyFromValue(curMedia)-1);
+    playlist_t->setCurrentIndex(getMapKeyFromValue(curMedia));
     slot_setMainCurrentIndex(1);
     m_player->play();
+
+    fileType(QFileInfo(curMedia).fileName());//判断视频还是歌曲，显示对应的界面
+    setCollectBtnShowStatus();//处理所有的item改变时的操作
+    slot_updateRateTypeUiLayout();//速率恢复正常
 
     //测试用
 //    m_player->pause();

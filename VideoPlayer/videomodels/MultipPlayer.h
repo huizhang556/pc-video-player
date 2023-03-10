@@ -13,6 +13,7 @@
 #include "videomodels/VideoBlank.h"
 #include "videomodels/muteDialog.h"
 #include "videomodels/CommentTab.h"
+#include "videomodels/VideoSurface.h"
 #include "videomodels/ListManager.h"
 #include "videomodels/FloatPlayCtl.h"
 #include "videomodels/VideoClarity.h"
@@ -329,8 +330,12 @@ private slots:
     void    slot_selectAllListItem(QListWidget *obj);//全选
 
 private:
+
+    void    setAnyFrameMediaUrl(const QUrl& url);//设置求取任意帧的资源路径
+
     //弹幕位置
     QRect    calUpdateDanmuGeometry();//计算更新弹幕显示位置
+
     void     setDanmuInfo(Danmu* danmu, const QString &color, const QFont &danmuFont, double transDepth);//设置弹幕颜色，字体宽度，透明度
 
 signals:
@@ -364,6 +369,8 @@ signals:
 
     void    sig_winResize();
 
+    void    sig_mediaListIndex(int);
+
 
 private:
     Ui::MultipPlayer *ui;
@@ -381,9 +388,9 @@ private:
     QTabWidget                  *m_tabWidget1       = nullptr; //节目列表选项
     CommentTab                  *m_commentTab       = nullptr;
     CustomFileDialog            *m_cusDialog        = nullptr;//自定义选择框界面
-    QListWidget                 *m_listWisget1      = nullptr;//我的歌单
     ListManager                 *m_listManager      = nullptr;//列表管理器
-    QListWidget                 *m_listWisget2      = nullptr;
+    QListWidget                 *m_listWisget1      = nullptr;
+    QListWidget                 *m_listWisget2      = nullptr;//我的歌单
     QListWidget                 *m_listWisget3      = nullptr;
     QListWidget                 *m_listWisget4      = nullptr;
     QHBoxLayout                 *m_hLayout          = nullptr; //搜索按钮和搜索框布局
@@ -393,7 +400,6 @@ private:
     QVBoxLayout                 *m_vHlayout_jieshao = nullptr; //视频介绍布局
     QPushButton                 *m_searchBtn        = nullptr;
     QPushButton                 *m_foldBtn          = nullptr;
-    QMediaPlayer                *m_player           = nullptr;
     AdjustBright                *m_adjustBright     = nullptr;//参数调整界面
     VideoClarity                *m_videoClarity     = nullptr;//清晰度调整界面
     MusicPlayShow               *m_musicUi          = nullptr;
@@ -401,9 +407,12 @@ private:
     DanmuSetting                *m_danmuSetting     = nullptr;//弹幕设置
     DramaListForm               *m_dramaList        = nullptr;//系列推荐
     RecomVideoTab               *m_recomTab         = nullptr;
+    QMediaPlayer                *m_player           = nullptr;
+    QMediaPlayer                *m_player2          = nullptr;
     MyVideoWidget               *videoWidget        = nullptr;//视频播放界面
     QMediaPlaylist              *playlist           = nullptr;//播放列表1 正式
     QMediaPlaylist              *playlist_t         = nullptr;//播放列表2 临时
+    VideoSurface                *m_videoSurface     = nullptr;//获取视频任意帧
 
     int                         m_voice;                        //静音之前的值
     bool                        m_winMax;                       //默认非最大化
@@ -426,7 +435,7 @@ private:
     QStringList                 m_tempList;                    //临时播放列表
     QStringList                 list_temp;
 
-    int                         m_playlist_id = -1;
+    int                         m_playlist_id = -1;//默认-1
     QMap<int,QString>           m_mapList;                      //存储歌名路径
     QMap<int,QString>           m_mapList2;                     //存储歌名带后缀
     QMap<int,QString>           m_t_MapList;                     //临时存储歌名带后缀
@@ -435,6 +444,7 @@ private:
     QMediaPlayer::State         m_playerState;
     QString                     m_curMediaName;
     mediaBody                   m_curMediaBody;
+    QUrl                        m_anyFrameMediaUrl;
 
 /*以下为界面拉伸所用*/
     bool                        _isleftpressed      = false;    //判断是否是左键点击

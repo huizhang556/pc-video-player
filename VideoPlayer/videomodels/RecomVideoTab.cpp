@@ -125,10 +125,12 @@ bool RecomVideoTab::slot_addRecVideoItem(QVariant musicVariant)
     ui->listWidget_recommend->setItemWidget(item,videoItem);
     m_tempVideoList.append(data.url);
     m_tempInfoList.append(data.alias);
+    m_recplayList.append(data.url);
 
     //信号与槽函数
     connect(videoItem,&RecVideoItem::sig_sendVideoUrl,[=](){
-        emit sig_sendVideoUrl(item->text());
+//        emit sig_sendVideoUrl(item->text());
+        emit sig_recom_playlist(666,m_recplayList,item->text());
         ui->listWidget_recommend->setCurrentItem(item);//实现选种样式
         qDebug() <<QString::fromLocal8Bit("已发送临时播放连接url:")<<item->text();
     });
@@ -144,10 +146,12 @@ bool RecomVideoTab::slot_addRecVideoItem(QString url, QString path, QString time
     ui->listWidget_recommend->setItemWidget(item,videoItem);
     m_tempVideoList.append(url);
     m_tempInfoList.append(info);
+    m_recplayList.append(url);
 
     //信号与槽函数
     connect(videoItem,&RecVideoItem::sig_sendVideoUrl,[=](){
-        emit sig_sendVideoUrl(item->text());
+//        emit sig_sendVideoUrl(item->text());
+        emit sig_recom_playlist(666,m_recplayList,item->text());
         ui->listWidget_recommend->setCurrentItem(item);//实现选种样式
         qDebug() <<QString::fromLocal8Bit("已发送临时播放连接url:")<<item->text();
     });

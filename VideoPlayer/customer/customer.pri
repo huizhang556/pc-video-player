@@ -14,7 +14,9 @@ SOURCES += \
     $$PWD/BaseDialog.cpp \
     $$PWD/CToTopWidget.cpp \
     $$PWD/RingWait1.cpp \
-    $$PWD/CPolLabel.cpp
+    $$PWD/CPolLabel.cpp \
+    $$PWD/CusHSlider.cpp \
+    $$PWD/ValueToImage.cpp
 
 HEADERS += \
     $$PWD/CusTabWidget.h \
@@ -32,7 +34,9 @@ HEADERS += \
     $$PWD/BaseDialog.h \
     $$PWD/CToTopWidget.h \
     $$PWD/RingWait1.h \
-    $$PWD/CPolLabel.h
+    $$PWD/CPolLabel.h \
+    $$PWD/CusHSlider.h \
+    $$PWD/ValueToImage.h
 
 FORMS += \
     $$PWD/CusTabWidget.ui \
@@ -40,7 +44,8 @@ FORMS += \
     $$PWD/CusFileDialog.ui \
     $$PWD/CustomFileDialog.ui \
     $$PWD/BaseDialog.ui \
-    $$PWD/CToTopWidget.ui
+    $$PWD/CToTopWidget.ui \
+    $$PWD/ValueToImage.ui
 
 SUBDIRS +=
 

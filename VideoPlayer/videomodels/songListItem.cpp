@@ -37,6 +37,7 @@ void songListItem::initWorkUI()
     ui->pushButton_like->setChecked(false);
     ui->stackedWidget_add->setCurrentWidget(ui->pageadd2);
     ui->stackedWidget_ctrl->setCurrentWidget(ui->stack_page2);//默认显示2
+//    ui->pushButton_sname->setAttribute(Qt::WA_TransparentForMouseEvents,true);
 }
 
 void songListItem::handleSignalsAndSlots()
@@ -87,9 +88,24 @@ void songListItem::setItemName()
     QString fileIcon;
     QFileInfo fileInfo(m_name);
     QString fileSuffix = fileInfo.suffix();//文件后缀
-    QFontMetrics fontMetrisc(ui->pushButton_sname->font());
-    QString text = fontMetrisc.elidedText(fileInfo.fileName(),Qt::ElideRight,110,0);
-    ui->pushButton_sname->setText(text);
+//    QFontMetricsF fontMetrisc(ui->pushButton_sname->font());
+//    QString text = fontMetrisc.elidedText(fileInfo.fileName(),Qt::ElideRight,110,Qt::TextExpandTabs);
+//    ui->pushButton_sname->setText(text);
+
+    QFont font = ui->pushButton_sname->font();
+    font.setPixelSize(18);
+    ui->pushButton_sname->setFont(font);
+    QFontMetrics fontMetric(font);
+    int pxWidth = fontMetric.width(fileInfo.fileName());
+    if(pxWidth > ui->pushButton_sname->width())//字符总宽度大于按钮的宽度
+    {
+        QString subStr = fontMetric.elidedText(fileInfo.fileName(), Qt::ElideRight, ui->pushButton_sname->width()+40);
+        ui->pushButton_sname->setText(subStr);
+    }
+    else
+    {
+    ui->pushButton_sname->setText(fileInfo.fileName());
+    }
     ui->pushButton_sname->setToolTip(fileInfo.fileName());
 
     //判断一下文件类型，加载不同图标
@@ -116,3 +132,4 @@ void songListItem::setItemName()
     ui->label_type->setPixmap(QPixmap(fileIcon));
     ui->label_type->setScaledContents(true);
 }
+

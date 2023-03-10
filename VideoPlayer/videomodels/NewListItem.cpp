@@ -99,8 +99,10 @@ void NewListItem::handleSignalsAndSlots()
         if(list.isEmpty()) return;
         foreach (QString fpath, list)
         {
+            QFileInfo fileInfo(fpath);
             songListItem *itemWidget = new songListItem(fpath);
             QListWidgetItem *item = new QListWidgetItem();
+            item->setData(Qt::UserRole,fileInfo.fileName());
             item->setData(Qt::UserRole+1,fpath);
             item->setSizeHint(itemWidget->size());
             ui->listWidget_songerlist->addItem(item);
@@ -108,6 +110,7 @@ void NewListItem::handleSignalsAndSlots()
 
 
             //信号与槽函数
+            //单击播放（改为button鼠标穿透，listwidget响应）
             connect(itemWidget,&songListItem::sig_item_selected,[=](QString sname){
                 ui->listWidget_songerlist->setCurrentItem(item);
                 emit sig_item_newPlaylist(m_id,m_playlist,item->data(Qt::UserRole+1).toString());
@@ -168,6 +171,12 @@ void NewListItem::handleSignalsAndSlots()
     connect(ui->listWidget_songerlist->verticalScrollBar(),&QScrollBar::valueChanged,[=](int value){
         emit sig_item_scrollbar(value);
     });
+
+    //双击播放
+//    connect(ui->listWidget_songerlist,&QListWidget::itemDoubleClicked,[=](QListWidgetItem *item){
+//        emit sig_item_newPlaylist(m_id,m_playlist,item->data(Qt::UserRole+1).toString());
+//        qDebug() <<QString(u8"当前item已被设定！点击的item名称：%1,真实路径：%2").arg(QFileInfo(item->data(Qt::UserRole+1).toString()).fileName()).arg(item->data(Qt::UserRole+1).toString());
+//    });
 }
 
 void NewListItem::setInstallEventFilter()
