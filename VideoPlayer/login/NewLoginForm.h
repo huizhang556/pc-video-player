@@ -1,7 +1,7 @@
 ﻿#ifndef NEWLOGINFORM_H
 #define NEWLOGINFORM_H
 #define QRSIZE QSize(140,140)
-
+#include "login/FAQitem.h"
 #include "database/dataBase.h"
 #include "qrcode/QrCode.hpp"
 
@@ -19,6 +19,10 @@ using namespace qrcodegen;//注意加上命名空间
 #include <QToolTip>
 #include <QTimer>
 #include <QRegExp>
+#include <QHeaderView>
+#include <QScrollBar>
+#include <QPlainTextEdit>
+#include <QTreeWidgetItem>
 #include <QRegExpValidator>
 #include <QAbstractItemView>
 #include <QPropertyAnimation>
@@ -81,6 +85,8 @@ private:
     void        initAnimations();
     void        update_QRcode();//刷新二维码
     void       set_QRcode(const QString& content);//根据内容生成二维码
+    void       addProtocol();//添加协议
+    void       addUserQuestions(FAQitem *item);//添加问题
 
 private:
     explicit NewLoginForm(QWidget *parent = nullptr);

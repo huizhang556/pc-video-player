@@ -75,7 +75,7 @@ void MusicPlayShow::loadPictures(QString &path) const
 
 void MusicPlayShow::changeTimeCout()
 {
-    if(++i > 9)
+    if(++i > 20)
         i = 1;
 }
 
@@ -121,7 +121,6 @@ const QString MusicPlayShow::switchSkin(const QString &text)
     }
     else if(text == QString(u8"本地图片"))
     {
-
         path_t = QString("/pictures/musicwall/%1.png");
         ui->stackedWidget->setCurrentIndex(0);
     }

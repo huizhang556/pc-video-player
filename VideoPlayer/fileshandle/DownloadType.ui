@@ -305,6 +305,28 @@ QRadioButton:checked
 color: #a9dfe3;
 }
 
+
+QRadioButton::indicator
+{
+width: 19px;
+height: 19px;
+background-color: transparent;
+border-image: url(:/images/icon/radio-nor_checked.png);
+
+}
+
+QRadioButton::indicator::checked 
+{ 
+background-color: transparent;
+border-image: url(:/images/icon/radio-checked.png);
+}
+
+QRadioButton::indicator::unchecked 
+{
+background-color: transparent;
+border-image: url(:/images/icon/radio-nor_checked.png);
+}
+
 QComboBox
 {
 border: 0px solid #d6d6d6;

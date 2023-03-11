@@ -1,22 +1,21 @@
 ﻿#include "MainWidget.h"
 #include <QApplication>
 #include "titlebar/TitleBar.h"
-#include "style/loadGlobalQss.h"
-#include "creator/CreateCenter.h"
-#include "videomodels/MultipPlayer.h"
-#include "splashscreen/CSplashScreen.h"
-#include "mainwidget/subunititems/HotRankList.h"
-#include "mainwidget/cusvideosbox/CusVideoBox7.h"
-#include "miniplayer/MiniPlayer.h"
-#include "pernotice/MainNotice.h"
-#include "fileshandle/DownloadType.h"
-//#include "facebread/myemotionwindow.h"
-#include "mainwidget/AniStackWidget.h"
 #include "customer/CPolLabel.h"
+#include "style/loadGlobalQss.h"
+#include "pernotice/MainNotice.h"
+#include "creator/CreateCenter.h"
+#include "miniplayer/MiniPlayer.h"
 #include "messagebox/ExitDialog.h"
+#include "fileshandle/DownloadType.h"
+#include "videomodels/MultipPlayer.h"
+#include "mainwidget/AniStackWidget.h"
+#include "splashscreen/CSplashScreen.h"
+//#include "facebread/myemotionwindow.h"
 #include "mainwidget/resultlist/ResultLists.h"
 #include "desktoplyric/toplyric/DesktopLyric.h"
-
+#include "mainwidget/subunititems/HotRankList.h"
+#include "mainwidget/cusvideosbox/CusVideoBox7.h"
 
 #include <QTranslator>
 #include <QThread>
@@ -86,14 +85,15 @@ int main(int argc, char *argv[])
     //05--->显示主界面
 
 #if 0
-//    DesktopLyric::getInstance()->show();
-        MultipPlayer::getInstance()->show();
+    //    DesktopLyric::getInstance()->show();
 
-//        ResultLists w; w.show();
+    //    MultipPlayer::getInstance()->show();
 
-//        MainNotice::getInstance()->show();
+    //    ResultLists w; w.show();
 
-//        ExitDialog w; w.show();
+    //    MainNotice::getInstance()->show();
+
+    //    ExitDialog w; w.show();
 
     //    TitleBar w1;
     //    w1.show();
@@ -113,16 +113,16 @@ int main(int argc, char *argv[])
     //    MainNotice w1;
     //    w1.show();
 
-//        CreateCenter::getInstance()->show();
+    //    CreateCenter::getInstance()->show();
 
     //    MyEmotionWindow w1;
     //    w1.showNormalEmotion(QPoint(500 , 500));
-//        DownloadType::getInstance()->show();
-//        NewLoginForm::getInstance()->show();
+//          DownloadType::getInstance()->show();
+        NewLoginForm::getInstance()->show();
     //    AniStackWidget w1;
     //    w1.show();
 
-    //        splashscream.finish(&w1);
+    //    splashscream.finish(&w1);
 
 #else
 

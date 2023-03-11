@@ -20,6 +20,7 @@ NewLoginForm::NewLoginForm(QWidget *parent):
     setFixedSize(720,465);
     setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowMinMaxButtonsHint | Qt::WindowStaysOnTopHint);
     setAttribute(Qt::WA_TranslucentBackground,true);
+//    setAttribute(Qt::WA_DeleteOnClose);
     initWorkUI();
     initAnimations();
     chandleSignalsAndSLots();
@@ -137,6 +138,76 @@ void NewLoginForm::initWorkUI()
 
     ui->pushButton_updateQR->setText(QString(u8"刷新二维码"));
 
+    ui->pushButton_questions->setIconSize(QSize(14,14));
+    ui->pushButton_questions->setIcon(QIcon("://images/user/login_question_hover.png"));
+
+    ui->scrollArea_questions->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->scrollArea_questions->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    //问题解决
+//    ui->treeWidget_questions->setHeaderLabel(QString(u8"常见问题"));//居中使用样式
+//    QHeaderView *headView = new QHeaderView(Qt::Horizontal);
+//    headView->setDefaultAlignment(Qt::AlignCenter);
+//    ui->treeWidget_questions->setHeader(headView);
+//    QTreeWidgetItem *treeItem0 = new QTreeWidgetItem(ui->treeWidget_questions,QStringList{QString(u8"常见问题")});
+//    treeItem0->setTextAlignment(0,Qt::AlignCenter);
+//    ui->treeWidget_questions->setHeaderItem(treeItem0);
+//    ui->treeWidget_questions->setHeaderHidden(true);
+
+//    QTreeWidgetItem *treeItem1 = new QTreeWidgetItem(ui->treeWidget_questions,QStringList{QString(u8"1.如何注册账户？")});
+//    treeItem1->setFirstColumnSpanned(true);
+//    QTreeWidgetItem *treeItem1_1 = new QTreeWidgetItem();
+//    treeItem1->addChild(treeItem1_1);
+//    QPlainTextEdit *plainEdit1 = new QPlainTextEdit(QString(u8"如何注册账户？"));
+//    plainEdit1->setFixedHeight(100);
+//    ui->treeWidget_questions->setItemWidget(treeItem1_1,0,plainEdit1);
+
+//    QTreeWidgetItem *treeItem2 = new QTreeWidgetItem(ui->treeWidget_questions,QStringList{QString(u8"2.注册用户名、密码设置规则")});
+//    QTreeWidgetItem *treeItem2_1 = new QTreeWidgetItem();
+//    treeItem2->addChild(treeItem2_1);
+//    QPlainTextEdit *plainEdit2 = new QPlainTextEdit(QString(u8"注册用户名、密码设置规则"));
+//    plainEdit2->setFixedHeight(100);
+//    ui->treeWidget_questions->setItemWidget(treeItem2_1,0,plainEdit2);
+
+//    QTreeWidgetItem *treeItem3 = new QTreeWidgetItem(ui->treeWidget_questions,QStringList{QString(u8"3.用户隐私协议")});
+//    QTreeWidgetItem *treeItem3_1 = new QTreeWidgetItem();
+//    treeItem3->addChild(treeItem3_1);
+//    QPlainTextEdit *plainEdit3 = new QPlainTextEdit(QString(u8"如何注册账户？"));
+//    plainEdit3->setFixedHeight(100);
+//    ui->treeWidget_questions->setItemWidget(treeItem3,0,plainEdit3);
+
+//    QTreeWidgetItem *treeItem4 = new QTreeWidgetItem(ui->treeWidget_questions,QStringList{QString(u8"4.软件功能以及使用")});
+//    QTreeWidgetItem *treeItem5 = new QTreeWidgetItem(ui->treeWidget_questions,QStringList{QString(u8"5.关于会员续费以及特权说明")});
+//    QTreeWidgetItem *treeItem6 = new QTreeWidgetItem(ui->treeWidget_questions,QStringList{QString(u8"6.用户如何上传自己的作品？")});
+//    QTreeWidgetItem *treeItem7 = new QTreeWidgetItem(ui->treeWidget_questions,QStringList{QString(u8"7.用户收益如何计算？")});
+//    QTreeWidgetItem *treeItem8 = new QTreeWidgetItem(ui->treeWidget_questions,QStringList{QString(u8"8.常见使用问题集合")});
+//    QTreeWidgetItem *treeItem9 = new QTreeWidgetItem(ui->treeWidget_questions,QStringList{QString(u8"9.多设备同一账号登录")});
+//    QTreeWidgetItem *treeItem10 = new QTreeWidgetItem(ui->treeWidget_questions,QStringList{QString(u8"10.如何注销账户？")});
+//    treeItem->setText(0,QString(u8"1.如何注册账户？"));
+//    ui->treeWidget_questions->addTopLevelItem(treeItem);
+
+
+    FAQitem *FAQ1  = new FAQitem(QString(u8"1.如何注册账户？"),QString(u8"1.如何注册账户？"));
+    addUserQuestions(FAQ1);
+    FAQitem *FAQ2  = new FAQitem(QString(u8"2.注册用户名、密码设置规则"),QString(u8"2.注册用户名、密码设置规则"));
+    addUserQuestions(FAQ2);
+    FAQitem *FAQ3  = new FAQitem(QString(u8"3.用户隐私协议"),QString(u8"3.用户隐私协议"));
+    addUserQuestions(FAQ3);
+    FAQitem *FAQ4  = new FAQitem(QString(u8"4.软件功能以及使用"),QString(u8"4.软件功能以及使用"));
+    addUserQuestions(FAQ4);
+    FAQitem *FAQ5  = new FAQitem(QString(u8"5.关于会员续费以及特权说明"),QString(u8"5.关于会员续费以及特权说明"));
+    addUserQuestions(FAQ5);
+    FAQitem *FAQ6  = new FAQitem(QString(u8"6.用户如何上传自己的作品？"),QString(u8"6.用户如何上传自己的作品？"));
+    addUserQuestions(FAQ6);
+    FAQitem *FAQ7  = new FAQitem(QString(u8"7.用户收益如何计算？"),QString(u8"7.用户收益如何计算？"));
+    addUserQuestions(FAQ7);
+    FAQitem *FAQ8  = new FAQitem(QString(u8"8.第三方授权登录说明"),QString(u8"8.第三方授权登录说明"));
+    addUserQuestions(FAQ8);
+    FAQitem *FAQ9  = new FAQitem(QString(u8"9.多设备同一账号登录"),QString(u8"9.多设备同一账号登录"));
+    addUserQuestions(FAQ9);
+    FAQitem *FAQ10 = new FAQitem(QString(u8"10.如何注销账户？"),QString(u8"10.如何注销账户？"));
+    addUserQuestions(FAQ10);
+
     //二维码(初始化更新)
     update_QRcode();
 
@@ -222,6 +293,7 @@ void NewLoginForm::chandleSignalsAndSLots()
     //跳转到注册
     connect(ui->pushButton_register,&QPushButton::clicked,[=](){
         ui->stackedWidget_right->setCurrentIndex(1);
+        ui->pushButton_register->setText(QString(u8"注册"));
         qDebug() << QString(u8"注册按钮");
     });
     //获取验证码
@@ -237,10 +309,6 @@ void NewLoginForm::chandleSignalsAndSLots()
     connect(ui->pushButton_scanCode,&QPushButton::clicked,[=](){
         ui->stackedWidget_right->setCurrentIndex(0);//右侧变为扫码登录界面
         ui->pushButton_updateQR->click();//模拟点击刷新
-    });
-    //登录遇到问题
-    connect(ui->pushButton_questions,&QPushButton::clicked,[=](){
-        qDebug() << QString(u8"遇到问题");
     });
 
     //查看密码（登录账户）
@@ -371,6 +439,33 @@ void NewLoginForm::chandleSignalsAndSLots()
     connect(ui->label_QRcode,&MaskLabel::sig_item_clicked,[=](){
         ui->pushButton_updateQR->click();
     });
+
+    //用户协议(登录)
+    connect(ui->pushButton_login_argeement1,&QPushButton::clicked,[=](){
+        ui->stackedWidget_right->setCurrentWidget(ui->page_aboutUser);
+        ui->stackedWidget_protocol->setCurrentWidget(ui->page_protocol);
+        ui->pushButton_register->setText(QString(u8"返回"));
+    });
+    //隐私政策（登录）
+    connect(ui->pushButton_login_argeement2,&QPushButton::clicked,[=](){
+        ui->stackedWidget_right->setCurrentWidget(ui->page_aboutUser);
+        ui->stackedWidget_protocol->setCurrentWidget(ui->page_privacy);
+        ui->pushButton_register->setText(QString(u8"返回"));
+    });
+
+    connect(ui->pushButton_regis_argeement1,&QPushButton::clicked,[=](){
+        ui->pushButton_login_argeement1->clicked();
+    });
+    connect(ui->pushButton_regis_argeement2,&QPushButton::clicked,[=](){
+        ui->pushButton_login_argeement2->clicked();
+    });
+
+
+    //问题集合
+    connect(ui->pushButton_questions,&QPushButton::clicked,[=](){
+        ui->stackedWidget_right->setCurrentWidget(ui->page_questions);
+        ui->pushButton_register->setText(QString(u8"返回"));
+    });
 }
 
 void NewLoginForm::update_QRcode()
@@ -419,6 +514,50 @@ void NewLoginForm::set_QRcode(const QString &content)
     //转换为QPixmap在Label中显示
     ui->label_QRcode->setPixmap(QPixmap::fromImage(QrCode_Image));
     ui->label_QRcode->setContentsMargins(5,5,5,5);//内部边距
+}
+
+void NewLoginForm::addProtocol()
+{
+
+}
+
+void NewLoginForm::addUserQuestions(FAQitem* item)
+{
+
+    ui->addVerLayout->insertWidget(ui->addVerLayout->count()-1,item);
+
+    connect(item,&FAQitem::sig_item_expand,[=](bool checked){
+        if(checked)
+        {
+            for(int i = 0; i < ui->addVerLayout->count()-1; i++)
+            {
+                QWidget* itemWgt = ui->addVerLayout->itemAt(i)->widget();
+                if(itemWgt != nullptr && itemWgt != item)//除了自己以外的全部折叠
+                {
+//                    qDebug() <<QString(u8"找到itemWgt") << itemWgt;
+                    FAQitem *newListItem = static_cast<FAQitem*>(itemWgt);
+//                    newListItem->setFoldItem();
+                    newListItem->hide();
+//                    qDebug() <<QString(u8"找到了");
+                }
+            }
+        }
+        else
+        {
+            for(int i = 0; i < ui->addVerLayout->count()-1; i++)
+            {
+                QWidget* itemWgt = ui->addVerLayout->itemAt(i)->widget();
+                if(itemWgt != nullptr && itemWgt != item)//除了自己以外的全部折叠
+                {
+//                    qDebug() <<QString(u8"找到itemWgt") << itemWgt;
+                    FAQitem *newListItem = static_cast<FAQitem*>(itemWgt);
+//                    newListItem->setShowItem();
+                    newListItem->show();
+//                    qDebug() <<QString(u8"找到了");
+                }
+            }
+        }
+    });
 }
 
 void NewLoginForm::receiveLoginAppClose()

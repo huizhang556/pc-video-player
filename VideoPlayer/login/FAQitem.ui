@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FAQitem</class>
+ <widget class="QWidget" name="FAQitem">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>276</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QFrame" name="frame_all">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QFrame" name="frame_title">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>36</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>36</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#frame_title
+{
+background-color: transparent;
+}</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="pushButton_title">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>34</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>34</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+color: #2da5f9;
+border: none;
+text-align: left;
+font: 400 14px &quot;微软雅黑&quot;;
+background-color: transparent;
+}
+
+QPushButton:hover
+{
+color: #ff3d33;
+text-decoration: underline;
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_indicator">
+           <property name="minimumSize">
+            <size>
+             <width>34</width>
+             <height>34</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>34</width>
+             <height>34</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+border: none;
+margin:10px;
+border-image: url(:/images/player/player_itemlist_right_white.png);
+background-color: transparent;
+}
+
+QPushButton:checked
+{
+border-image: url(:/images/player/player_itemlist_bottom_white.png);
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPlainTextEdit" name="plainTextEdit">
+        <property name="styleSheet">
+         <string notr="true">QPlainTextEdit
+{
+color: white;
+}</string>
+        </property>
+        <property name="plainText">
+         <string>优酷隐私政策
+
+ 
+
+生效日期：2022年11月15日
+
+2022V2.0
+
+ 
+
+【引言】
+
+ 
+
+欢迎您使用我们的产品及/或服务！我们深知个人信息对您的重要性，您的信赖对我们非常重要，我们将严格遵守法律法规要求采取相应的安全保护措施，致力于保护您的个人信息安全可控。基于此，优酷服务提供者（或简称“我们”）制定本《优酷隐私政策》（下称“本政策”或“本隐私政策”），帮助您充分了解在您使用我们产品及/或服务的过程中，我们会如何收集、使用、共享、存储和保护您的个人信息以及您可以如何管理您的个人信息，以便您更好地作出适当的选择。
+
+在您开始使用我们的产品及/或服务前，请您务必先仔细阅读和理解本政策，特别应重点阅读我们以粗体/粗体下划线标识的条款，确保您充分理解和同意之后再开始使用。除本政策外，在特定场景下，我们还会通过即时告知（含弹窗、页面提示等）、功能更新说明等方式，向您说明对应的信息收集目的、范围及使用方式，这些即时告知及功能更新说明等构成本政策的一部分，并与本政策具有同等效力。本政策中涉及的专业词汇，我们尽量以简明通俗的表述向您解释，以便于您理解。如对本政策内容有任何疑问、意见或建议，您可通过本政策文末的联系方式与我们联系。
+
+您同意隐私政策表示您已了解应用提供的功能，以及功能运行所需的必要个人信息，并给予相应的收集使用授权，但并不代表您已单独同意开启附加功能、处理非必要个人信息，相关附加功能的开启、处理非必要个人信息以及处理敏感个人信息，我们会根据您的实际使用情况单独征求您的同意。
+
+
+
+（一）账号注册/登录与身份验证
+
+（1）账号注册/登录
+
+【账号注册】当您注册我们的产品与/或服务时，为了帮助您完成注册流程，您需要向我们提供您的手机号码并进行验证，以及创建用户名和密码。收集此类信息是为了满足相关法律法规的网络实名制要求，此类信息属于该功能的必要信息，若你不提供这类信息，将导致注册失败，但不影响您使用视频的浏览、搜索、播放功能。此外，你还可以根据自身需求选择填写姓名、地区等信息。
+
+【账户登录】当您登录我们的产品与/或服务时，您需要向我们提供您的手机号码/邮箱及密码，或进行验证；基于我们与通信运营商的合作，当您使用 “一键登录”功能时，经过您的明示同意，我们会通过运营商获取您的手机号码，便于我们为您提供快捷的登录服务；当您使用“扫码登录”功能时，我们会请求您授权相机权限，以顺利完成二维码扫码；您使用第三方平台（例如：淘宝/支付宝/微信/微博/QQ账号等）的账号登录时，您授权我们获取您登录的该第三方账号下的相关信息（包括：昵称、头像，具体以您的授权内容为准），用于与优酷账号绑定，使您可以直接登录并使用相关产品与/或服务。为了满足相关法律法规的网络实名制要求，您使用第三方平台账号授权登录我们的产品与/或服务时，首次授权需要绑定您的手机号码。此类信息属于该功能的必要信息，若您不提供这类信息，您可能无法正常登录。若你不提供这类信息，将导致登录失败，但不影响您使用视频的浏览、搜索、播放功能。
+
+【基本信息维护】您在使用优酷时，为维护您的基本资料，改善您的服务体验，您可自主选择填写您的性别、头像、昵称、生日、个人简介等。此类信息属于该功能的非必要信息，如您不提供这些信息，并不影响您使用我们的产品与/或服务的基本功能。您在上传/更换头像时，我们会请求您的相机、相册权限，并收集您上传/更换的图片信息。
+
+（2）身份验证
+
+当您使用信息发布（如直播）、“优酷号”、网络游戏用户实名注册和交易、购买营业性演出门票、使用“比心”功能、购买相关金融产品或服务、企业履行代扣代缴个人所得税的义务时，或为满足相关法律规定及监管要求、对未成年人进行保护、确保用户身份真实性、实现反欺诈等风险控制、或保障系统和服务安全之需要，您在使用特定功能与/或服务前，可能需要进行身份认证。我们将需要收集您的身份认证信息（可能包括姓名、身份证相关信息、面部特征信息、手机号码)以完成实名认证。
+
+   在青少年模式下，如果您需要退出，且忘记密码的情况下，为满足相关法律法规的规定，需要对您的身份进行认证。您可以选择联系我们的客服重置密码，也可以在线进行认证退出青少年模式。如您选择在线认证，我们将需要收集您的身份认证信息(包括姓名、身份证相关信息、面部特征信息)以完成认证。
+
+（二）浏览/搜索/播放/下载
+
+当您使用我们视频、音频、直播、电子读物等服务内容的浏览、播放功能时，为向您提供一致化的服务，我们需要收集您的设备信息、日志信息。前述日志信息包括：您的操作、行为日志信息，包括您的浏览记录、点赞/分享/评论/互动记录、收藏/关注/预约记录/+追记录、播放记录、播放时长、访问日期和时间。此类信息属于该功能的必要信息，若您不提供这类信息，您可能无法正常使用上述功能。
+
+当您使用搜索功能时，我们会自动收集您的一些信息，包括如下个人信息：搜索的内容（包括文字、使用语音搜索时的语音信息）、浏览记录和时间、搜索的时间以及与它们互动的次数。为了提供高效的搜索服务，部分前述信息会暂时存储在您的本地设备端，并可向您展示搜索历史记录。此类信息属于该功能的必要信息，若您不提供这类信息，您可能无法正常使用上述功能。
+
+我们为您提供了语音搜索。您使用语音搜索功能时，我们会请求您授权麦克风权限，并收集您的语音信息；您使用下载功能时，我们会请求您授权存储权限, 以便在您设备外置存储空间内写入音视频文件的相关信息。
+
+当您在观看我们的视频时，我们为您提供了手势控制功能，以帮助在视频播放场景中通过特定手势进行操作控制。在您使用手势控制功能时，我们会请求您授权摄像头权限，以便优酷识别您的手势并根据您的手势指令进行相应的控制操作。我们仅在视频播放场景启动期间且设备处于唤醒状态时才开启摄像头获取手势相关信息并对手势相关信息进行分析处理以便识别用户的手势指令；我们不会存储或与第三方共享您的该信息。您可以在我的-设置-隔空手势关闭随时关闭本功能。
+
+当您使用首页摇一摇跳转剧集功能时，我们会调用设备的陀螺仪、加速度、重力传感器以识别判断您的设备状态。
+
+在您观看视频时，为给您提供良好的观看体验，我们会调用您的加速度、磁力、方向传感器，通过您的传感器信息检测设备屏幕方向变化，进行视频播放中的横竖屏切换。
+
+在您观看VR视频时，我们会调用您的陀螺仪、加速度、方向传感器，通过您的传感器信息检测设备屏幕方向变化，调整VR视频画面角度。
+
+在您观看互动剧时，我们会调用您的陀螺仪、加速度、磁力传感器，通过您的传感器信息实现互动指令。
+
+在您使用护眼模式时，我们会调用您的光线传感器检测光线，以调整屏幕亮度。
+
+在您参加互动类活动时，我们会调用您的陀螺仪、加速度、方向传感器，通过您的传感器信息实现互动指令。
+
+请您理解，单独的设备传感器数据不涉及任何个人位置信息且无法与其他信息结合用于识别特定自然人的身份。
+
+       您在观看我们的视频时，我们为您提供了护眼模式，以帮助您保护眼睛。护眼模式需要请求您的相机权限。当您授权使用护眼模式时：对于iOS系统用户，我们会使用TrueDepth APIs，按一定频率获取您面部和设备屏幕之间的距离信息。基于TrueDepth APIs通过相机/摄像头权限，用于实时计算眼睛所注视设备屏幕的位置信息并应用于互动反馈，我们不会存储或与第三方共享您的该信息，且仅用于前述互动反馈。另外，您可以随时关闭此功能，功能关闭后会立即关闭对TrueDepth APIs接口的调用并停止数据收集。对于安卓系统用户，我们会通过相机/摄像头权限，按一定频率识别您的人脸信息，用于实时计算眼睛所注视设备屏幕的位置信息并应用于互动反馈，我们不会存储或与第三方共享您的该信息，且仅用于前述互动反馈。另外，您可以随时关闭此功能，功能关闭后会立即停止数据收集。
+
+
+
+（三）信息上传或发布、交流互动
+
+如果您使用上传视频或照片、弹幕、评论或在社区留言、发帖的服务，您可能会主动提供相关图文/音视频内容。我们会自动收集您的上述信息，并展示您的昵称、头像、发布的信息内容。请您知悉，您发布的信息中可能包含他人的个人信息，请您务必取得他人的合法授权，避免非法泄露他人的个人信息。当您进行交流互动时，我们会收集您的互动信息（包括不限于评论、弹幕、收藏/关注/预约/+追记录、点赞/评论/分享/交流互动信息）。就前述部分信息上传或发布，在您使用时，我们会请求您授权相机、相册、麦克风权限。</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

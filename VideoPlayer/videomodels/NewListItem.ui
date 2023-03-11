@@ -257,7 +257,7 @@ background: url(:/images/player/player_itemlist_rmenu.png) no-repeat no-repeat c
    <item>
     <widget class="QStackedWidget" name="stackedWidget_content">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_black">
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -356,7 +356,7 @@ text-decoration: underline;
 }</string>
                 </property>
                 <property name="text">
-                 <string>添加本地歌曲</string>
+                 <string>添加本地媒体</string>
                 </property>
                </widget>
               </item>
@@ -383,7 +383,7 @@ text-decoration: underline;
 }</string>
                 </property>
                 <property name="text">
-                 <string>添加本地歌曲文件夹</string>
+                 <string>添加本地媒体文件夹</string>
                 </property>
                </widget>
               </item>
