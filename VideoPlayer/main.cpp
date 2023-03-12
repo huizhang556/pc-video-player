@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
 #if 0
     //    DesktopLyric::getInstance()->show();
 
-    //    MultipPlayer::getInstance()->show();
+//        MultipPlayer::getInstance()->show();
 
     //    ResultLists w; w.show();
 

@@ -82,7 +82,7 @@ public slots:
       void  remove(bool open);
 
   protected:
-      void  paintEvent(QPaintEvent *);       //重点，弹幕的绘制函数
+      void  paintEvent(QPaintEvent *ev);       //重点，弹幕的绘制函数
       bool  eventFilter(QObject *watched, QEvent *event) override;
 
   private:

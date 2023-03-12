@@ -2,6 +2,7 @@
 #define NEWLOGINFORM_H
 #define QRSIZE QSize(140,140)
 #include "login/FAQitem.h"
+#include "login/UserList.h"
 #include "database/dataBase.h"
 #include "qrcode/QrCode.hpp"
 
@@ -59,6 +60,7 @@ public:
     ~NewLoginForm();
     void        initWorkUI();
     void        chandleSignalsAndSLots();
+    void        setInstallEventFilter();
     void        setType(TipType type);
 
     static void showCText(TipType type, const QPoint &pos, const QString& text, QWidget *w, const QRect &rect, int msecShowTime);
@@ -87,11 +89,15 @@ private:
     void       set_QRcode(const QString& content);//根据内容生成二维码
     void       addProtocol();//添加协议
     void       addUserQuestions(FAQitem *item);//添加问题
+    void       addUserToLoginLists(int id_index);
+    void       removeUserToLoginLists(int id_index);
+    void       updateUserListGeomotry();
 
 private:
     explicit NewLoginForm(QWidget *parent = nullptr);
     Ui::NewLoginForm *ui;
 //    QPoint  m_mvPos;
+
     bool    m_isEnabled = true;//刷新按钮状态(默认可以刷新)
     QAction *m_actionShowPwd;//查看密码
     QAction *m_act_pwd;//查看密码
@@ -101,6 +107,7 @@ private:
 //    QPropertyAnimation *ani_top_hide   = nullptr;
 //    QPropertyAnimation *ani_bom_hide   = nullptr;
     QParallelAnimationGroup *aniGroup = nullptr;
+    UserList    *m_userLists    =   nullptr;
 
 signals:
     void    sig_sendClearTempRecords();

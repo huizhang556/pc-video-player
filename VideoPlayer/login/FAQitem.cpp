@@ -18,8 +18,8 @@ FAQitem::FAQitem(const QString &title, const QString &content, QWidget *parent):
     initWorkUI();
     handleSignalsAndSlots();
     ui->pushButton_title->setText(title);
-    ui->plainTextEdit->appendPlainText(content);
-
+//    ui->plainTextEdit->appendHtml(Global::appDirPath + "/html/study/index.html");
+   ui->plainTextEdit->appendPlainText(content);
 }
 
 FAQitem::~FAQitem()

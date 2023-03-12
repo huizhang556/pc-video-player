@@ -5,7 +5,9 @@ SOURCES += \
     $$PWD/LoginTip.cpp \
     $$PWD/MessageItem.cpp \
     $$PWD/MaskLabel.cpp \
-    $$PWD/FAQitem.cpp
+    $$PWD/FAQitem.cpp \
+    $$PWD/UserList.cpp \
+    $$PWD/UserItem.cpp
 
 
 HEADERS += \
@@ -15,7 +17,9 @@ HEADERS += \
     $$PWD/LoginTip.h \
     $$PWD/MessageItem.h \
     $$PWD/MaskLabel.h \
-    $$PWD/FAQitem.h
+    $$PWD/FAQitem.h \
+    $$PWD/UserList.h \
+    $$PWD/UserItem.h
 
 FORMS += \
     $$PWD/Login.ui \
@@ -24,5 +28,7 @@ FORMS += \
     $$PWD/LoginTip.ui \
     $$PWD/MessageItem.ui \
     $$PWD/MaskLabel.ui \
-    $$PWD/FAQitem.ui
+    $$PWD/FAQitem.ui \
+    $$PWD/UserList.ui \
+    $$PWD/UserItem.ui
 

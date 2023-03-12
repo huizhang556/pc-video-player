@@ -5,9 +5,8 @@ Danmu::Danmu(QWidget * parent,QString text,ColorType color,int type,QRect rect,Q
 {
     //设置弹幕为无窗口无工具栏且呆在窗口顶端,但是会导致坐标错乱，尤其是丢掉了标题栏
 //    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
-//    setAttribute(Qt::WA_TranslucentBackground,true);
-//   setStyleSheet("QLabel{background-color: transparent;}");
-//    setAttribute(Qt::WA_StyledBackground,true);
+//    setAttribute(Qt::WA_TranslucentBackground);
+//    setAttribute(Qt::WA_Hover);//不继承父样式
     DText = text;
     this->setType(type);        //设置类型
     this->setQFont(danmuFont);      //弹幕字体
@@ -16,7 +15,6 @@ Danmu::Danmu(QWidget * parent,QString text,ColorType color,int type,QRect rect,Q
     this->setScreenRect(rect);//这里设置只是为了获取矩形用，无实质作用
     QFontMetrics metrics(this->getQFont());
     QPalette palll = this->palette();
-
     anim2 = NULL;
 
     //颜色字符串转化为特定的颜色
@@ -88,7 +86,6 @@ Danmu::Danmu(QWidget * parent,QString text,ColorType color,int type,QRect rect,Q
     this->setFixedHeight(metrics.height()+5);
     this->setFixedWidth(metrics.width(DText)+4);
 
-
     this->setPalette(palll);//设置调色盘（主要设置WindowText字体颜色）
 
     int yy = qrand()%(rect.height());//在这里使用了矩形这个变量的范围
@@ -123,15 +120,16 @@ Danmu::Danmu(QWidget * parent,QString text,ColorType color,int type,QRect rect,Q
     anim2->setStartValue(QPoint(this->getPosX(),this->getPosY()));
     anim2->setEndValue(QPoint(rect.x(), this->getPosY()));
     qDebug() <<QString(u8"传进来的rect")<< rect<< QString(u8"结束位置：")<< rect.x()<<","<<getPosY();
-    anim2->setEasingCurve(QEasingCurve::Linear);//线型变化
+    anim2->setEasingCurve(QEasingCurve::Linear);//线性变化
     this->setWindowOpacity(this->getTransparency());
     this->show();
     this->repaint();//绘制一次，绘制出文字
+
     anim2->start();
         connect(anim2,SIGNAL(finished()),this,SLOT(deleteLater()));//动画结束，this本身自动析构
 }
 
-void Danmu::paintEvent(QPaintEvent *)
+void Danmu::paintEvent(QPaintEvent *ev)
 {  //弹幕字体绘制函数
         QPainter painter(this);     //以弹幕窗口为画布
         painter.save();
@@ -158,9 +156,7 @@ void Danmu::paintEvent(QPaintEvent *)
         painter.drawPath(path);
         painter.fillPath(path, QBrush(this->getQColor()));      //用画刷填充
         painter.restore();
-//        QRect rect = QRect(0,0,this->rect().width()+0,this->rect().height()+0);
-//        painter.drawRoundedRect(rect,5,5);
-//        painter.fillRect(rect,Qt::transparent);
+        QLabel::paintEvent(ev);
 }
 
 bool Danmu::eventFilter(QObject *watched, QEvent *event)

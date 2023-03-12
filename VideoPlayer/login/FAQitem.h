@@ -1,6 +1,6 @@
 ﻿#ifndef FAQITEM_H
 #define FAQITEM_H
-
+#include "global/Global.h"
 #include <QWidget>
 
 namespace Ui {

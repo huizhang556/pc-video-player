@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1124</width>
-    <height>432</height>
+    <height>439</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -89,16 +89,11 @@ background-color: #2a2a31;
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">QStackedWidget
+           <string notr="true">#stackedWidget
 {
 border:none;
 margin:0px;
-/*background-color:#2a2a31;*/
-}
-
-QStackedWidget::tab
-{
-margin:0px;
+background-color:transparent;
 }
 </string>
           </property>

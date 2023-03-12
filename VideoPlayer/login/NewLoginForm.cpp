@@ -24,6 +24,7 @@ NewLoginForm::NewLoginForm(QWidget *parent):
     initWorkUI();
     initAnimations();
     chandleSignalsAndSLots();
+    setInstallEventFilter();
 }
 
 NewLoginForm::~NewLoginForm()
@@ -46,6 +47,8 @@ NewLoginForm::~NewLoginForm()
 //        delete ani_bom_hide;
 //        ani_bom_hide = nullptr;
 //    }
+
+    delete m_userLists;
 
     if(ani_opacity != nullptr)
     {
@@ -85,6 +88,11 @@ void NewLoginForm::initWorkUI()
     ui->lineEdit_userpwd->setPlaceholderText(QString(u8"登陆密码"));
     ui->lineEdit_userpwd->setEchoMode(QLineEdit::Password);
     ui->lineEdit_userpwd->addAction(m_actionShowPwd,QLineEdit::TrailingPosition);
+
+    m_userLists = new UserList();
+    m_userLists->setFixedWidth(316);//等宽度
+    m_userLists->setFixedHeight(156);//3个user的高度
+    m_userLists->setHidden(true);
 
     //注册部分
     m_act_pwd = new QAction(QIcon(":/images/icon/passwd_hide.png"),"");
@@ -144,6 +152,9 @@ void NewLoginForm::initWorkUI()
     ui->scrollArea_questions->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->scrollArea_questions->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+    ui->textBrowser_protocol->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->textBrowser_privacy->setContextMenuPolicy(Qt::NoContextMenu);
+
     //问题解决
 //    ui->treeWidget_questions->setHeaderLabel(QString(u8"常见问题"));//居中使用样式
 //    QHeaderView *headView = new QHeaderView(Qt::Horizontal);
@@ -187,25 +198,34 @@ void NewLoginForm::initWorkUI()
 //    ui->treeWidget_questions->addTopLevelItem(treeItem);
 
 
-    FAQitem *FAQ1  = new FAQitem(QString(u8"1.如何注册账户？"),QString(u8"1.如何注册账户？"));
+    FAQitem *FAQ1  = new FAQitem(QString(u8"1.如何注册账户？"),QString(u8"点击本页面[注册]，按照提示进行注册即可；"));
     addUserQuestions(FAQ1);
-    FAQitem *FAQ2  = new FAQitem(QString(u8"2.注册用户名、密码设置规则"),QString(u8"2.注册用户名、密码设置规则"));
+
+    FAQitem *FAQ2  = new FAQitem(QString(u8"2.注册用户名、密码设置规则"),QString(u8"用户名规则：汉字+字母+数字；密码：字母+数字+特殊符号（,.@）;"));
     addUserQuestions(FAQ2);
-    FAQitem *FAQ3  = new FAQitem(QString(u8"3.用户隐私协议"),QString(u8"3.用户隐私协议"));
+
+    FAQitem *FAQ3  = new FAQitem(QString(u8"3.用户隐私协议"),QString(u8"协议详细见协议说明"));
     addUserQuestions(FAQ3);
-    FAQitem *FAQ4  = new FAQitem(QString(u8"4.软件功能以及使用"),QString(u8"4.软件功能以及使用"));
+
+    FAQitem *FAQ4  = new FAQitem(QString(u8"4.软件功能以及使用"),QString(u8"视频浏、下载览和视频上传发布。"));
     addUserQuestions(FAQ4);
-    FAQitem *FAQ5  = new FAQitem(QString(u8"5.关于会员续费以及特权说明"),QString(u8"5.关于会员续费以及特权说明"));
+
+    FAQitem *FAQ5  = new FAQitem(QString(u8"5.关于会员续费以及特权说明"),QString(u8"用户缴纳相应等级的会员费，开通会员，享受对应等级的会员权益。可任意时刻结束会员，结束之前的会员权益不受影响。"));
     addUserQuestions(FAQ5);
-    FAQitem *FAQ6  = new FAQitem(QString(u8"6.用户如何上传自己的作品？"),QString(u8"6.用户如何上传自己的作品？"));
+
+    FAQitem *FAQ6  = new FAQitem(QString(u8"6.用户如何上传自己的作品？"),QString(u8"在创作中心，点击[发布]，上传视频后一经审核通过，即可发布视频。"));
     addUserQuestions(FAQ6);
-    FAQitem *FAQ7  = new FAQitem(QString(u8"7.用户收益如何计算？"),QString(u8"7.用户收益如何计算？"));
+
+    FAQitem *FAQ7  = new FAQitem(QString(u8"7.用户收益如何计算？"),QString(u8"用户收益需严格按照计算标准产出收益，平台收取一定比例的手续费，用户可以进行现金提现。"));
     addUserQuestions(FAQ7);
-    FAQitem *FAQ8  = new FAQitem(QString(u8"8.第三方授权登录说明"),QString(u8"8.第三方授权登录说明"));
+
+    FAQitem *FAQ8  = new FAQitem(QString(u8"8.第三方授权登录说明"),QString(u8"所有第三方经过授权的应用均可使用本账号授权登录。"));
     addUserQuestions(FAQ8);
-    FAQitem *FAQ9  = new FAQitem(QString(u8"9.多设备同一账号登录"),QString(u8"9.多设备同一账号登录"));
+
+    FAQitem *FAQ9  = new FAQitem(QString(u8"9.多设备同一账号登录"),QString(u8"优酷账号无论在哪种设备上登录，同时不能超过3台设备。"));
     addUserQuestions(FAQ9);
-    FAQitem *FAQ10 = new FAQitem(QString(u8"10.如何注销账户？"),QString(u8"10.如何注销账户？"));
+
+    FAQitem *FAQ10 = new FAQitem(QString(u8"10.如何注销账户？"),QString(u8"打开优酷视频网页版，点击个人账户，点击[安全设置]-[账号注销],选择注销理由，进行注销！"));
     addUserQuestions(FAQ10);
 
     //二维码(初始化更新)
@@ -466,6 +486,16 @@ void NewLoginForm::chandleSignalsAndSLots()
         ui->stackedWidget_right->setCurrentWidget(ui->page_questions);
         ui->pushButton_register->setText(QString(u8"返回"));
     });
+
+    //用户选择
+    connect(m_userLists,&UserList::sig_list_username,[=](QString name){
+        ui->lineEdit_account->setText(name);
+    });
+}
+
+void NewLoginForm::setInstallEventFilter()
+{
+    ui->lineEdit_account->installEventFilter(this);
 }
 
 void NewLoginForm::update_QRcode()
@@ -525,7 +555,7 @@ void NewLoginForm::addUserQuestions(FAQitem* item)
 {
 
     ui->addVerLayout->insertWidget(ui->addVerLayout->count()-1,item);
-
+    //每个item关联信号与槽函数
     connect(item,&FAQitem::sig_item_expand,[=](bool checked){
         if(checked)
         {
@@ -558,6 +588,24 @@ void NewLoginForm::addUserQuestions(FAQitem* item)
             }
         }
     });
+}
+
+void NewLoginForm::addUserToLoginLists(int id_index)
+{
+
+}
+
+void NewLoginForm::removeUserToLoginLists(int id_index)
+{
+
+}
+
+void NewLoginForm::updateUserListGeomotry()
+{
+    const int g_x = ui->lineEdit_account->parentWidget()->mapToGlobal(ui->lineEdit_account->pos()).x();
+    const int g_y = ui->lineEdit_account->parentWidget()->mapToGlobal(ui->lineEdit_account->pos()).y();
+    m_userLists->setGeometry(g_x,g_y + ui->lineEdit_account->height()+8,m_userLists->width(),m_userLists->height());
+    m_userLists->show();
 }
 
 void NewLoginForm::receiveLoginAppClose()
@@ -631,6 +679,15 @@ void NewLoginForm::paintEvent(QPaintEvent *event)
 
 bool NewLoginForm::eventFilter(QObject *obj, QEvent *ev)
 {
+    if(obj == ui->lineEdit_account)
+    {
+        if(ev->type() == QEvent::MouseButtonPress)
+        {
+            updateUserListGeomotry();
+            ui->lineEdit_account->setFocus();
+        }
+
+    }
     return QWidget::eventFilter(obj,ev);
 }
 
