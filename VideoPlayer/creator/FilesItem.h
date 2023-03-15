@@ -6,15 +6,19 @@
 #include <QWidget>
 #include <QTimer>
 #include <QLabel>
+#include <QImage>
 #include <QPixmap>
 #include <QFileInfo>
 #include <QLineEdit>
 #include <QComboBox>
 #include <QListView>
+#include <QBuffer>
+#include <QByteArray>
 #include <QStringList>
 #include <QFileDialog>
 #include <QDebug>
 
+//以下ffmpeg获取视频信息使用
 extern "C" {
 #include <libavformat/avformat.h>
 #include <libavcodec/avcodec.h>
@@ -76,6 +80,7 @@ public slots:
     void    slot_setItemSize();
     void    slot_setItemName();
     void    slot_setItemPicture();
+    void    slot_setItemDuration();
     void    slot_getVideoPicure(const char * file,QLabel* label);//如果是视频，获取视频第一帧
     void    slot_updateProgress(qint64 bytesSent, qint64 bytesTotal);
     void    slot_updateProgress_header(qint64 bytesSent, qint64 bytesTotal);
@@ -84,11 +89,17 @@ public slots:
     void    slot_update_header(const QString& url_header,const QString& md5);
     void    slot_pauseButtonClick();//模拟暂停按钮点击
     void    slot_statusButtonClick();//模拟状态按钮点击
+
+protected:
+    bool    eventFilter(QObject *watched, QEvent *event)override;
+
 private:
+    QString    switchFormatTime(qint64 total);//秒转时分秒
     QString    calCurrentFileSize(qint64 bytesTotal);
     int        getCurtentComboBoxIndex(const QComboBox* combobox, const QString& itemtext);
     QString    getCurtentComboBoxText(const QComboBox* combobox, const QString& itemtext);
     void       file_insertItemDataTodb(const fileBody& body);//插入数据库媒体信息
+
 
 private:
     Ui::FilesItem *ui;
@@ -100,9 +111,12 @@ private:
     QString     m_picpath;
     qint64      m_size;
     fileBody    m_body;
+    QString     m_duration;
+    QImage      m_cover;
 
 
 signals:
+    void    sig_sendItem_upload(bool,QUrl,QByteArray&);
     void    sig_sendItem_pause(bool,QUrl,QUrl);//video_url pic_url
     void    sig_sendItem_play();//播放(播放地址)
     void    sig_sendItem_remove();

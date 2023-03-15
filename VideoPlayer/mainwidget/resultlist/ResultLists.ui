@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>942</width>
-    <height>345</height>
+    <height>512</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -946,7 +946,7 @@ background-color: transparent;
                    <x>0</x>
                    <y>0</y>
                    <width>512</width>
-                   <height>96</height>
+                   <height>263</height>
                   </rect>
                  </property>
                  <property name="styleSheet">

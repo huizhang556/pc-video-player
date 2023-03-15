@@ -18,7 +18,7 @@ NewLoginForm::NewLoginForm(QWidget *parent):
 {
     ui->setupUi(this);
     setFixedSize(720,465);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowMinMaxButtonsHint | Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowStaysOnTopHint);
     setAttribute(Qt::WA_TranslucentBackground,true);
 //    setAttribute(Qt::WA_DeleteOnClose);
     initWorkUI();
@@ -495,7 +495,7 @@ void NewLoginForm::chandleSignalsAndSLots()
 
 void NewLoginForm::setInstallEventFilter()
 {
-    ui->lineEdit_account->installEventFilter(this);
+    ui->lineEdit_account->installEventFilter(this);//移入移出
 }
 
 void NewLoginForm::update_QRcode()
@@ -606,6 +606,7 @@ void NewLoginForm::updateUserListGeomotry()
     const int g_y = ui->lineEdit_account->parentWidget()->mapToGlobal(ui->lineEdit_account->pos()).y();
     m_userLists->setGeometry(g_x,g_y + ui->lineEdit_account->height()+8,m_userLists->width(),m_userLists->height());
     m_userLists->show();
+//    m_userLists->activateWindow();
 }
 
 void NewLoginForm::receiveLoginAppClose()
@@ -684,7 +685,8 @@ bool NewLoginForm::eventFilter(QObject *obj, QEvent *ev)
         if(ev->type() == QEvent::MouseButtonPress)
         {
             updateUserListGeomotry();
-            ui->lineEdit_account->setFocus();
+            setAttribute(Qt::WA_NoMouseReplay);//避免重复触发窗口外的鼠标点击事件
+//            qDebug() <<QString(u8"鼠标按下！");
         }
 
     }

@@ -21,6 +21,7 @@ MultipPlayer
 {
 /*包含5px的margin*/
 background-color: #1a1a1b;
+/*border-image: url(://images/bgpic/cusvideoitem1.png);*/
 }
 
 MainWidget
@@ -61,6 +62,14 @@ background-color: transparent;
 #m_forbidebtn_remove
 {
 background-color: transparent;
+}
+
+
+/*Danmu背景*/
+Danmu
+{
+background-color: transparent;
+border-image: url(:/images/bgpic/transparent.png);
 }
 
 /*弹幕---登录按钮*/

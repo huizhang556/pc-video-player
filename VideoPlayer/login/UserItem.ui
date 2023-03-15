@@ -162,13 +162,13 @@ color: #e17f7f;
          <widget class="QPushButton" name="pushButton_close">
           <property name="minimumSize">
            <size>
-            <width>30</width>
+            <width>45</width>
             <height>45</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>30</width>
+            <width>45</width>
             <height>45</height>
            </size>
           </property>
@@ -178,17 +178,19 @@ color: #e17f7f;
 color: #a3a4a6;
 text-align: left;
 border: none;
-padding-left: 10px;
+margin: 15px;
 font: 400 14px &quot;微软雅黑&quot;;
+border-image: url(:/images/player/user_closeBtn.png);
 background-color: transparent;
 }
 QPushButton:hover
 {
 color: #e17f7f;
+border-image: url(:/images/player/user_closeBtn_hover.png);
 }</string>
           </property>
           <property name="text">
-           <string>X</string>
+           <string/>
           </property>
          </widget>
         </item>

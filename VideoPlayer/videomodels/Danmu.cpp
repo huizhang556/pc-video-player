@@ -1,12 +1,24 @@
 ﻿#include "Danmu.h"
+#include "ui_Danmu.h"
 
-Danmu::Danmu(QWidget * parent,QString text,ColorType color,int type,QRect rect,QFont danmuFont,double Transparency,int runTime):
-    QLabel(parent)//制定了父亲，就需要用相对坐标；没有父亲时，父亲传nullptr,rect传全局坐标
+Danmu::Danmu(QWidget *parent) :
+    QLabel(parent),
+    ui(new Ui::Danmu)
 {
+    ui->setupUi(this);
+}
+
+Danmu::Danmu(QWidget *parent, QString text, ColorType color, int type, QRect rect, QFont danmuFont, double Transparency, int runTime):
+    QLabel(parent),
+    ui(new Ui::Danmu)
+{
+    ui->setupUi(this);
+//    SetWindowPos(HWND(this->winId()), HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
     //设置弹幕为无窗口无工具栏且呆在窗口顶端,但是会导致坐标错乱，尤其是丢掉了标题栏
-//    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
-//    setAttribute(Qt::WA_TranslucentBackground);
-//    setAttribute(Qt::WA_Hover);//不继承父样式
+    setWindowFlags(this->windowFlags() | Qt::FramelessWindowHint | Qt::Tool);
+    setAttribute(Qt::WA_TranslucentBackground,true);//背景透明
+//    setAttribute(Qt::WA_StyledBackground,true);
+    setAutoFillBackground(true);
     DText = text;
     this->setType(type);        //设置类型
     this->setQFont(danmuFont);      //弹幕字体
@@ -15,6 +27,7 @@ Danmu::Danmu(QWidget * parent,QString text,ColorType color,int type,QRect rect,Q
     this->setScreenRect(rect);//这里设置只是为了获取矩形用，无实质作用
     QFontMetrics metrics(this->getQFont());
     QPalette palll = this->palette();
+
     anim2 = NULL;
 
     //颜色字符串转化为特定的颜色
@@ -86,6 +99,7 @@ Danmu::Danmu(QWidget * parent,QString text,ColorType color,int type,QRect rect,Q
     this->setFixedHeight(metrics.height()+5);
     this->setFixedWidth(metrics.width(DText)+4);
 
+    palll.setBrush(QPalette::Base, QBrush(QColor(255,0,0,0)));//背景透明，不起作用
     this->setPalette(palll);//设置调色盘（主要设置WindowText字体颜色）
 
     int yy = qrand()%(rect.height());//在这里使用了矩形这个变量的范围
@@ -120,16 +134,21 @@ Danmu::Danmu(QWidget * parent,QString text,ColorType color,int type,QRect rect,Q
     anim2->setStartValue(QPoint(this->getPosX(),this->getPosY()));
     anim2->setEndValue(QPoint(rect.x(), this->getPosY()));
     qDebug() <<QString(u8"传进来的rect")<< rect<< QString(u8"结束位置：")<< rect.x()<<","<<getPosY();
-    anim2->setEasingCurve(QEasingCurve::Linear);//线性变化
+    anim2->setEasingCurve(QEasingCurve::Linear);//线型变化
     this->setWindowOpacity(this->getTransparency());
     this->show();
     this->repaint();//绘制一次，绘制出文字
-
     anim2->start();
-        connect(anim2,SIGNAL(finished()),this,SLOT(deleteLater()));//动画结束，this本身自动析构
+    connect(anim2,SIGNAL(finished()),this,SLOT(deleteLater()));//动画结束，this本身自动析构
 }
 
-void Danmu::paintEvent(QPaintEvent *ev)
+Danmu::~Danmu()
+{
+    delete ui;
+    qDebug()<<QString(u8"弹幕被析构")<<endl;
+}
+
+void Danmu::paintEvent(QPaintEvent *)
 {  //弹幕字体绘制函数
         QPainter painter(this);     //以弹幕窗口为画布
         painter.save();
@@ -156,7 +175,7 @@ void Danmu::paintEvent(QPaintEvent *ev)
         painter.drawPath(path);
         painter.fillPath(path, QBrush(this->getQColor()));      //用画刷填充
         painter.restore();
-        QLabel::paintEvent(ev);
+
 }
 
 bool Danmu::eventFilter(QObject *watched, QEvent *event)
@@ -181,11 +200,6 @@ void Danmu::setScreenRect(QRect screenRect)
 QRect Danmu::getScreenRect()
 {
     return this->screenrect;
-}
-
-Danmu::~Danmu()
-{
-    qDebug()<<QString(u8"弹幕被析构")<<endl;
 }
 
 int Danmu::getPosX()

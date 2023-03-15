@@ -646,5 +646,7 @@
         <file>images/user/login_question_hover.png</file>
         <file>images/player/player_itemlist_bottom_white.png</file>
         <file>images/player/player_itemlist_right_white.png</file>
+        <file>images/player/user_closeBtn.png</file>
+        <file>images/player/user_closeBtn_hover.png</file>
     </qresource>
 </RCC>

@@ -6,9 +6,18 @@
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
 
+//以下是高并发使用
+#include <QFuture>
+#include <QThreadPool>
+#include <QtConcurrent/QtConcurrent>
+using namespace QtConcurrent;
+
+
+
 namespace Ui {
 class RecVideoItem;
 }
+
 
 class RecVideoItem : public QWidget
 {
@@ -19,8 +28,9 @@ public:
     explicit RecVideoItem(const QString& url,const QString& path, const QString time, QString info, QString count, QWidget *parent = nullptr);
     ~RecVideoItem();
     void    handleSignalsAndSlots();
-    void    setVideoPicture(const QString path);//设置图片
-    void    setItemPicture(const QString path);
+//    void    setVideoCover(const char *file);//设置视频封面
+    void    setVideoPicture(const QString path);//设置封面图片
+    void    setItemPicture(const QString path);//设置封面
     void    setVideoTime(const QString &time);//设置时长
     void    setVideoText(QString info);//视频介绍
     void    setVideoUpvoye(const QString &count);//点赞数

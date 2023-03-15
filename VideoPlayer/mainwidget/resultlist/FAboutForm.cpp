@@ -28,7 +28,7 @@ void FAboutForm::initWorkUI()
     ui->listWidget_fvitems->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_fvitems->horizontalScrollBar()->setDisabled(true);
     ui->listWidget_fvitems->setOffset(175,-100,8,5,20);
-    ui->listWidget_fvitems->setZoomScale(1.1);
+    ui->listWidget_fvitems->setZoomScale(1.3);
 
     for(int i = 0; i < 17; i++)
     {

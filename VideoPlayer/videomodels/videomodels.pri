@@ -16,14 +16,14 @@ SOURCES += \
     $$PWD/FloatPlayCtl.cpp \
     $$PWD/RecVideoItem.cpp \
     $$PWD/VideoClarity.cpp \
-    $$PWD/Danmu.cpp \
     $$PWD/DanmuSetting.cpp \
     $$PWD/MediaItem.cpp \
     $$PWD/ForbiddenItem.cpp \
     $$PWD/ListManager.cpp \
     $$PWD/NewListItem.cpp \
     $$PWD/songListItem.cpp \
-    $$PWD/VideoSurface.cpp
+    $$PWD/VideoSurface.cpp \
+    $$PWD/Danmu.cpp
 
 
 HEADERS += \
@@ -44,14 +44,14 @@ HEADERS += \
     $$PWD/FloatPlayCtl.h \
     $$PWD/RecVideoItem.h \
     $$PWD/VideoClarity.h \
-    $$PWD/Danmu.h \
     $$PWD/DanmuSetting.h \
     $$PWD/MediaItem.h \
     $$PWD/ForbiddenItem.h \
     $$PWD/ListManager.h \
     $$PWD/NewListItem.h \
     $$PWD/songListItem.h \
-    $$PWD/VideoSurface.h
+    $$PWD/VideoSurface.h \
+    $$PWD/Danmu.h
 
 
 FORMS += \
@@ -74,7 +74,8 @@ FORMS += \
     $$PWD/MediaItem.ui \
     $$PWD/ListManager.ui \
     $$PWD/NewListItem.ui \
-    $$PWD/songListItem.ui
+    $$PWD/songListItem.ui \
+    $$PWD/Danmu.ui
 
 #添加库文件
 #LIBS += -L ../lib/lib -luser32

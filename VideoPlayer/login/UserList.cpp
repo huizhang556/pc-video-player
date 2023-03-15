@@ -6,7 +6,7 @@ UserList::UserList(QWidget *parent) :
     ui(new Ui::UserList)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);//鼠标点击外部，界面自动隐藏
     setAttribute(Qt::WA_TranslucentBackground);
     setFocusPolicy(Qt::NoFocus);
     initWorkUI();

@@ -167,6 +167,7 @@ bool ShortVideo::slot_addRecVideoItem(QVariant musicVariant)
     ui->listWidget_medialist->addItem(item);
     ui->listWidget_medialist->setItemWidget(item,videoItem);
 
+
     //信号与槽函数
     connect(videoItem,&RecVideoItem::sig_sendVideoUrl,[=](){
         ui->listWidget_medialist->setCurrentItem(item);//实现选中样式

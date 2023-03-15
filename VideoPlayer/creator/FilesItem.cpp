@@ -26,13 +26,14 @@ FilesItem::FilesItem(const FILEEDIT edit, const QUrl &url, const qint64 size, co
     initWorkUI();
     handleSignalsAndSlots();
     setInstallEventFilter();
-    slot_setItemUrl(url);
+    slot_setItemUrl(url);//本地url和网络url作以区别
     slot_setItemName();
     slot_setItemPicture();
     slot_setItemSize();
     slot_setItemStart(true);//默认显示"开始"
     slot_setItemStatus(m_status);
     slot_setItemStatusText();
+    slot_setItemDuration();
     slot_setItemEdit(m_canedit);//设置状态
 }
 
@@ -76,8 +77,9 @@ void FilesItem::initWorkUI()
     ui->comboBox_mtheme->addItem(QString(u8"科技"),QString(u8"科技"));
     ui->comboBox_mtheme->addItem(QString(u8"艺术"),QString(u8"艺术"));
     ui->comboBox_mtheme->addItem(QString(u8"体育"),QString(u8"体育"));
+    ui->comboBox_mtheme->addItem(QString(u8"古装"),QString(u8"古装"));
     ui->comboBox_mtheme->addItem(QString(u8"脱口秀"),QString(u8"脱口秀"));
-
+    ui->lineEdit_displaycover->setPlaceholderText(QString(u8"选择自定义封面"));
     ui->lineEdit_displaycover->setReadOnly(true);//只读
 
     ui->stackedWidget_info->setCurrentIndex(0);
@@ -92,6 +94,7 @@ void FilesItem::handleSignalsAndSlots()
     connect(ui->pushButton_pause,&QPushButton::clicked,[=](bool checked){
         if(m_canedit == FILEEDIT::CANWRITE)
         {
+            //可修改状态下
             if(!checked)
             {
                 ui->pushButton_pause->setText(QString(u8"暂停"));
@@ -101,10 +104,17 @@ void FilesItem::handleSignalsAndSlots()
                 ui->pushButton_pause->setText(QString(u8"开始"));
             }
             qDebug() <<QString(u8"发送下载的URL：%1").arg(m_furl);
-            emit sig_sendItem_pause(checked,QUrl(m_furl),QUrl(m_picpath));
+            // emit sig_sendItem_pause(checked,QUrl(m_furl),QUrl(m_picpath));
+            QByteArray imageArray;
+            QBuffer buffer;
+            buffer.open(QIODevice::WriteOnly);
+            m_cover.save(&buffer,"png");//QImage存进buffer转为QByteArray
+            imageArray.append(buffer.data());
+            emit sig_sendItem_upload(checked,QUrl(m_furl),imageArray);
         }
         else if(m_canedit == FILEEDIT::CANEDIT)
         {
+            //只读状态下
             emit sig_sendItem_play();
         }
     });
@@ -155,11 +165,33 @@ void FilesItem::handleSignalsAndSlots()
     });
 
     //自定义封面
-    connect(ui->lineEdit_displaycover,&QLineEdit::returnPressed,[=](){
-        if(!ui->lineEdit_displaycover->text().trimmed().isEmpty())
+//    connect(ui->lineEdit_displaycover,&QLineEdit::returnPressed,[=](){
+//        if(!ui->lineEdit_displaycover->text().trimmed().isEmpty())
+//        {
+//            ui->lineEdit_displaycover->setText(ui->lineEdit_displaycover->text().trimmed());
+//            if(ui->lineEdit_displaycover->hasFocus()) ui->lineEdit_displaycover->clearFocus();
+//        }
+//    });
+
+
+    //自定义封面
+    connect(ui->pushButton_opencover,&QPushButton::clicked,[=](){
+        QString filename_cover = QFileDialog::getOpenFileName();
+        qDebug() <<QString(u8"封面路径：") << filename_cover;
+        if(filename_cover.isEmpty())
         {
-            ui->lineEdit_displaycover->setText(ui->lineEdit_displaycover->text().trimmed());
-            if(ui->lineEdit_displaycover->hasFocus()) ui->lineEdit_displaycover->clearFocus();
+            return;
+        }
+        else
+        {
+//            m_picpath = filename_cover;
+//            slot_setItemPicture();
+            ui->label_pic->setPixmap(QPixmap(filename_cover));
+            ui->label_pic->setScaledContents(true);
+            m_cover = ui->label_pic->pixmap()->toImage();//选择以后需要将选择的图片转换为QImage
+            ui->lineEdit_displaycover->setText(filename_cover);
+            if(ui->lineEdit_mduration->hasFocus()) ui->lineEdit_mduration->clearFocus();
+            qDebug() <<QString(u8"封面设置成功！");
         }
     });
 
@@ -186,25 +218,7 @@ void FilesItem::handleSignalsAndSlots()
         qDebug() << QString(u8"当前项发生改变,item data：%1").arg(ui->comboBox_mtheme->currentData().toString());
     });
 
-    //自定义封面
-    connect(ui->pushButton_opencover,&QPushButton::clicked,[=](){
-        QString filename_cover = QFileDialog::getOpenFileName();
-        qDebug() <<QString(u8"封面路径：") << filename_cover;
-        if(filename_cover.isEmpty())
-        {
-            return;
-        }
-        else
-        {
-//            m_picpath = filename_cover;
-//            slot_setItemPicture();
-            ui->label_pic->setPixmap(QPixmap(filename_cover));
-            ui->label_pic->setScaledContents(true);
-            ui->lineEdit_displaycover->setText(filename_cover);
-            if(ui->lineEdit_mduration->hasFocus()) ui->lineEdit_mduration->clearFocus();
-            qDebug() <<QString(u8"封面设置成功！");
-        }
-    });
+
 }
 
 void FilesItem::setInstallEventFilter()
@@ -316,6 +330,7 @@ void FilesItem::slot_setItemStart(bool start)
         }
 }
 
+//本地url和网络url作以区别
 void FilesItem::slot_setItemUrl(QUrl url)
 {
     if(m_canedit == FILEEDIT::CANEDIT)
@@ -332,6 +347,7 @@ void FilesItem::slot_setItemSize()
 void FilesItem::slot_setItemName()
 {
     ui->lineEdit_filename->setText(m_name);
+    ui->lineEdit_displaytitle->setText(m_name.split(".").first());
 //    ui->lineEdit_filename->setCursorPosition(0);鼠标到达最左边
     ui->lineEdit_filename->setFocusPolicy(Qt::ClickFocus);
     ui->label_pic->setToolTip(m_name);
@@ -398,8 +414,14 @@ void FilesItem::slot_setItemPicture()
     ui->label_pic->setScaledContents(true);
 }
 
+void FilesItem::slot_setItemDuration()
+{
+    ui->lineEdit_mduration->setText(m_duration);
+}
+
 void FilesItem::slot_getVideoPicure(const char *file, QLabel *label)
 {
+
     AVFormatContext* fmt_ctx_ = nullptr;
 
         qDebug() << "111" << avcodec_version();
@@ -413,6 +435,8 @@ void FilesItem::slot_getVideoPicure(const char *file, QLabel *label)
         qDebug() << "222" ;
         //读取音视频流信息
         errCode = avformat_find_stream_info(fmt_ctx_, nullptr);
+        switchFormatTime(fmt_ctx_->duration/1000000);
+        qDebug() << QString(u8"视频时长：%1 ").arg(m_duration);
         if(errCode != 0){
             qDebug() << "avformat_find_stream_info fail" << errCode;
             avformat_close_input(&fmt_ctx_);
@@ -464,7 +488,8 @@ void FilesItem::slot_getVideoPicure(const char *file, QLabel *label)
                             continue;
                         }
 
-                        qDebug() << "777" << temp_frame->width << temp_frame->height;
+                        qDebug() << "777" << QString(u8"视频宽：") << temp_frame->width
+                                 <<  QString(u8"视频高：") << temp_frame->height;
                         //等比例缩放
                         int dstH = 240;
                         int dstW = qRound(dstH * (float(temp_frame->width)/float(temp_frame->height)));
@@ -516,7 +541,8 @@ void FilesItem::slot_getVideoPicure(const char *file, QLabel *label)
         av_packet_free(&pkt);
         avformat_close_input(&fmt_ctx_);
         if(preview_done){
-            label->setPixmap(QPixmap::fromImage(preview));
+            m_cover = preview;
+            label->setPixmap(QPixmap::fromImage(m_cover));
         }
 }
 
@@ -611,7 +637,40 @@ void FilesItem::slot_pauseButtonClick()
 void FilesItem::slot_statusButtonClick()
 {
     ui->pushButton_remove->click();//完成即移除
-//    slot_setItemEdit(FILEEDIT::CANEDIT);
+    //    slot_setItemEdit(FILEEDIT::CANEDIT);
+}
+
+bool FilesItem::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == this && event->type() == QEvent::Enter)
+    {
+        setCursor(Qt::ArrowCursor);
+    }
+    return QWidget::eventFilter(watched,event);
+}
+
+//秒转时分秒
+QString FilesItem::switchFormatTime(qint64 total)
+{
+    //换算公式：1s = 10^3 ms = 10^6 us
+    int hh = total / (60 * 60);
+        int mm = (total- (hh * 60 * 60)) / 60;
+        int ss = (total - (hh * 60 * 60)) - mm * 60;
+
+        QString hour = QString::number(hh, 10);
+        QString min = QString::number(mm, 10);
+        QString sec = QString::number(ss, 10);
+
+        if (hour.length() == 1)
+            hour = "0" + hour;
+        if (min.length() == 1)
+            min = "0" + min;
+        if (sec.length() == 1)
+            sec = "0" + sec;
+
+        QString strTime = hour + ":" + min + ":" + sec;
+        m_duration = strTime;
+        return strTime;
 }
 
 QString FilesItem::calCurrentFileSize(qint64 bytesTotal)

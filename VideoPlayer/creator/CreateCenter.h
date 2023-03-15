@@ -63,7 +63,7 @@ private:
     QList<QUrl>    getOpenFileSystem();
     void           checkListItemsCounts();
     void           addFileItemsToList(const QList<QUrl> urlLists);
-    void           file_upload_start(const QUrl media_url,const QUrl pic_url, FilesItem *fileItem);//上传文件到服务器
+    void           file_upload_start(const QUrl media_url, const QByteArray &pic_url, FilesItem *fileItem);//上传文件到服务器
     void           file_upload_pause();//暂停
     void           file_upload_stop();//移除
     void           file_createItemToAnotherListWgt(const fileBody& body);

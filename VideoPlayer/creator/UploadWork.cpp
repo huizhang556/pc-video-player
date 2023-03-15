@@ -3,6 +3,7 @@
 UploadWork::UploadWork(QObject *parent) : QObject(parent)
 {
     m_isStopping = false;
+    m_manager = new QNetworkAccessManager();
 }
 
 UploadWork::~UploadWork()
@@ -11,17 +12,83 @@ UploadWork::~UploadWork()
     delete m_manager;
 }
 
-void UploadWork::slot_receiveData_accept(const QUrl &media_url)
+void UploadWork::slot_receiveData_accept(const QByteArray &media_data)
 {
     //00---打开文件
-    QString filePath = QDir::toNativeSeparators(media_url.toString());//移除第一个/ 重点：MSVC编译器一定要把文件路径转换正确
+//    m_device = new QIODevice();
+//    if(m_device->open(QIODevice::WriteOnly))
+//    {
+//        m_device->write(media_data);
+//    }
+    QString fname_t = QString(QDateTime::currentDateTime().toString("yyyyMMddhhmmsszzz")+".png");
+   QString suffix  = "png";
+   qDebug() << "file suffix = "<< suffix;//flv mp3 mp4
+
+   QHttpPart namePart;
+   namePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"filename\""));
+   namePart.setBody(fname_t.toUtf8());//qstring--->qbytearray  自定义名称
+
+   QHttpPart scenePart;
+   scenePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"scene\""));
+   scenePart.setBody("default");//自定义场景
+
+   QHttpPart outputPart;
+   outputPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"output\""));
+   outputPart.setBody("json");//指定输出格式
+
+   QHttpPart pathPart;
+   pathPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"path\""));
+   pathPart.setBody(QString("header_pic").toUtf8());//自定义存储路径(如无路径，则主动创建)
+
+   //02---构造文件部分
+   QHttpPart filePart;
+   //判断文件类型
+   QString cth_suffix  = getContentTypeHeader(suffix);
+   filePart.setHeader(QNetworkRequest::ContentTypeHeader,QVariant(cth_suffix));//不同文件传输的时候，只需要修改ContentTypeHeader类型，如果不加这句，不返回文件信息
+   filePart.setHeader(QNetworkRequest::ContentDispositionHeader,QVariant(QString("form-data; name=\"file\";filename=\"%1\";").arg(fname_t)));
+   //QFile继承自QIODevice
+   filePart.setBody(media_data);//小文件上传
+
+   //03---组合成QHttpMultiPart
+   QHttpMultiPart *multipPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);//必须指定格式
+   multipPart->append(namePart);
+   multipPart->append(scenePart);
+   multipPart->append(outputPart);
+   multipPart->append(pathPart);
+   multipPart->append(filePart);
+
+
+   //04---post请求数据
+   QNetworkRequest request_post;
+   request_post.setUrl(QUrl("http://43.143.226.251:8080/group1/upload"));
+//    request_post.setHeader(QNetworkRequest::ContentTypeHeader,"multipart/form-data; boundary=------WebKitFormBoundary88asdgewtgewx");
+    m_reply = m_manager->post(request_post,multipPart);
+
+   //05---接收QNetworkReply返回数据
+    connect(m_manager,&QNetworkAccessManager::finished,this,&UploadWork::finshedSlot);
+    connect(m_reply,&QNetworkReply::uploadProgress,[=](qint64 bytesSent, qint64 bytesTotal){
+        if(bytesSent > 0)
+        {
+            emit sig_work_uploadprogress(bytesSent,bytesTotal);
+        }
+    });
+}
+
+void UploadWork::slot_receiveData_accept(const QString &media_url)
+{
+    slot_receiveData_accept(QUrl(media_url));
+}
+
+void UploadWork::slot_receiveData_accept(const QUrl &media_url)
+{
+     //00---打开文件
+    QString filePath = QDir::toNativeSeparators(media_url.toString());//重点：MSVC编译器一定要把文件路径转换正确(现在转换后为：//)
     if(filePath.isNull() || filePath.isEmpty()) return;
     m_file = new QFile(filePath);
-    QString fileNamee = m_file->fileName();
-    qDebug() << "file-->filename(loginname) = "<< fileNamee;
-    QFileInfo  info(filePath);
+    QFileInfo info(filePath);
     QString fileName = info.fileName();
-    qDebug() << "info-->filename(name) = "<< fileName;
+    qDebug() << "QFileInfo-->filename(name) = "<< fileName;
+    qDebug() << "QFile    -->filename(name) = "<< m_file->fileName();
     QString suffix  = info.suffix();
     qDebug() << "file suffix = "<< suffix;//flv mp3 mp4
     m_file->open(QIODevice::ReadOnly);
@@ -60,7 +127,7 @@ void UploadWork::slot_receiveData_accept(const QUrl &media_url)
 
     QHttpPart pathPart;
     pathPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"path\""));
-    pathPart.setBody(QString("cusmedias").toUtf8());//自定义存储路径
+    pathPart.setBody(QString("videos_drama").toUtf8());//自定义存储路径(如无路径，则主动创建)
 
     //02---构造文件部分
     QHttpPart filePart;
@@ -68,6 +135,7 @@ void UploadWork::slot_receiveData_accept(const QUrl &media_url)
     QString cth_suffix  = getContentTypeHeader(suffix);
     filePart.setHeader(QNetworkRequest::ContentTypeHeader,QVariant(cth_suffix));//不同文件传输的时候，只需要修改ContentTypeHeader类型，如果不加这句，不返回文件信息
     filePart.setHeader(QNetworkRequest::ContentDispositionHeader,QVariant(QString("form-data; name=\"file\";filename=\"%1\";").arg(fileName)));
+    //QFile继承自QIODevice
     filePart.setBodyDevice(m_file);//大文件上传
 
     //03---组合成QHttpMultiPart
@@ -80,7 +148,85 @@ void UploadWork::slot_receiveData_accept(const QUrl &media_url)
 
 
     //04---post请求数据
-    m_manager = new QNetworkAccessManager();
+    QNetworkRequest request_post;
+    request_post.setUrl(QUrl("http://43.143.226.251:8080/group1/upload"));
+//    request_post.setHeader(QNetworkRequest::ContentTypeHeader,"multipart/form-data; boundary=------WebKitFormBoundary88asdgewtgewx");
+     m_reply = m_manager->post(request_post,multipPart);
+
+    //05---接收QNetworkReply返回数据
+     connect(m_manager,&QNetworkAccessManager::finished,this,&UploadWork::finshedSlot);
+     connect(m_reply,&QNetworkReply::uploadProgress,[=](qint64 bytesSent, qint64 bytesTotal){
+         if(bytesSent > 0)
+         {
+             emit sig_work_uploadprogress(bytesSent,bytesTotal);
+         }
+     });
+}
+
+void UploadWork::slot_uploadFileData(QFile *file, const QString &suf, const QString &dirName)
+{
+    //00---打开文件
+    QString fileName = file->fileName();
+    qDebug() << "file-->filename(name) = "<< fileName;
+    QString suffix  = suf;
+    qDebug() << "file suffix = "<< suffix;//flv mp3 mp4
+    file->open(QIODevice::ReadOnly);
+
+    //01---构造json文本部分
+    //上传格式
+    //http://10.1.50.90:8080/group/upload
+    //参数：
+    //file:上传的文件
+    //scene:场景
+    //output:输出
+    //path:自定义路径
+//    QJsonObject jsonObj;
+//    jsonObj.insert("file",file);//请求键值对
+//    jsonObj.insert("scene","default");
+//    jsonObj.insert("output","json");
+//    jsonObj.insert("path","videos");
+
+//    QJsonDocument jsonDoc = QJsonDocument(jsonObj);//构造方式的一种
+//    QByteArray post_data = jsonDoc.toJson(QJsonDocument::Compact);//两种格式
+//    QHttpPart dataPart;
+//    dataPart.setHeader(QNetworkRequest::ContentDispositionHeader,QVariant());
+//    dataPart.setBody(post_data);
+
+    QHttpPart namePart;
+    namePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"filename\""));
+    namePart.setBody(fileName.toUtf8());//qstring--->qbytearray  自定义名称
+
+    QHttpPart scenePart;
+    scenePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"scene\""));
+    scenePart.setBody("default");//自定义场景
+
+    QHttpPart outputPart;
+    outputPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"output\""));
+    outputPart.setBody("json");//指定输出格式
+
+    QHttpPart pathPart;
+    pathPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"path\""));
+    pathPart.setBody(dirName.toUtf8());//自定义存储路径(如无路径，则主动创建)
+
+    //02---构造文件部分
+    QHttpPart filePart;
+    //判断文件类型
+    QString cth_suffix  = getContentTypeHeader(suffix);
+    filePart.setHeader(QNetworkRequest::ContentTypeHeader,QVariant(cth_suffix));//不同文件传输的时候，只需要修改ContentTypeHeader类型，如果不加这句，不返回文件信息
+    filePart.setHeader(QNetworkRequest::ContentDispositionHeader,QVariant(QString("form-data; name=\"file\";filename=\"%1\";").arg(fileName)));
+    //QFile继承自QIODevice
+    filePart.setBodyDevice(file);//大文件上传
+
+    //03---组合成QHttpMultiPart
+    QHttpMultiPart *multipPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);//必须指定格式
+    multipPart->append(namePart);
+    multipPart->append(scenePart);
+    multipPart->append(outputPart);
+    multipPart->append(pathPart);
+    multipPart->append(filePart);
+
+
+    //04---post请求数据
     QNetworkRequest request_post;
     request_post.setUrl(QUrl("http://43.143.226.251:8080/group1/upload"));
 //    request_post.setHeader(QNetworkRequest::ContentTypeHeader,"multipart/form-data; boundary=------WebKitFormBoundary88asdgewtgewx");
@@ -101,7 +247,10 @@ void UploadWork::finshedSlot(QNetworkReply *reply)
     getStatusCode(reply);//获取状态码，解析json
     reply->deleteLater();
     reply = nullptr;
-    m_file->close();
+    if(m_file != nullptr)
+    {
+        m_file->close();
+    }
 }
 
 void UploadWork::slot_receiveData_pause()

@@ -10,6 +10,8 @@
 #include <QPainter>
 #include <iostream>
 #include <QTime>
+#include <QFont>
+#include <QBitmap>
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
 
@@ -26,79 +28,83 @@ enum ColorType
     NVIPViolet  //紫色
 };
 
-class Danmu : public QLabel{
+namespace Ui {
+class Danmu;
+}
 
+class Danmu : public QLabel
+{
     Q_OBJECT
 
-  public:
+public:
+    explicit Danmu(QWidget *parent = nullptr);
+    explicit Danmu(QWidget * parent, QString text, ColorType color, int type, QRect rect, QFont danmuFont = QFont("SimHei",20,100), double Transparency = 1.00, int runTime=15000);
+    ~Danmu();
 
-      Danmu(QWidget * parent, QString text, ColorType color, int type, QRect rect, QFont danmuFont = QFont("SimHei",20,100), double Transparency = 1.00, int runTime=15000);       //构造函数，常用
+    //一些成员变量的Get方法与Set方法
+    int getPosX();
 
-      ~Danmu();     //析构函数
+    int getPosY();
 
-      //一些成员变量的Get方法与Set方法
-      int getPosX();
+    void setPosX(int posx);
 
-      int getPosY();
+    void setPosY(int posy);
 
-      void setPosX(int posx);
+    void setColor(QString color);
 
-      void setPosY(int posy);
+    QString getColor();
 
-      void setColor(QString color);
+    void setType(int type);
 
-      QString getColor();
+    int getType();
 
-      void setType(int type);
+    void setQColor(QColor qcolor);
 
-      int getType();
+    QColor getQColor();
 
-      void setQColor(QColor qcolor);
+    void setQFont(QFont danmuFont);
 
-      QColor getQColor();
+    QFont getQFont();
 
-      void setQFont(QFont danmuFont);
+    void setTransparency(double Transparency);
 
-      QFont getQFont();
+    double getTransparency();
 
-      void setTransparency(double Transparency);
+    void setScreenRect(QRect screenRect);
 
-      double getTransparency();
+    QRect getScreenRect();
 
-      void setScreenRect(QRect screenRect);
+    int getRunTime();
 
-      QRect getScreenRect();
+    void setRunTime(int runTime);
 
-      int getRunTime();
-
-      void setRunTime(int runTime);
-
-      QPropertyAnimation * getanimation();
+    QPropertyAnimation * getanimation();
 
 public slots:
 
-      void  release();
-      void  anim_ctl(bool open);
-      void  remove(bool open);
+    void  release();
+    void  anim_ctl(bool open);
+    void  remove(bool open);
 
-  protected:
-      void  paintEvent(QPaintEvent *ev);       //重点，弹幕的绘制函数
-      bool  eventFilter(QObject *watched, QEvent *event) override;
+protected:
+    void  paintEvent(QPaintEvent *);       //重点，弹幕的绘制函数
+    bool  eventFilter(QObject *watched, QEvent *event) override;
 
-  private:
-      int       PosX;
-      int       PosY;
-      QString   DText;
-      QString   color;
-      QColor    qcolor;
-      int       type;
-      QFont     danmuFont;
-      int       DHeight;
-      double    Transparency;
-      QRect     screenrect;
-      QPropertyAnimation *anim2;
-      int       runTime;
-      bool      checkOpen = true;//弹幕开关
+private:
+    Ui::Danmu *ui;
+    int       PosX;
+    int       PosY;
+    QString   DText;
+    QString   color;
+    QColor    qcolor;
+    int       type;
+    QFont     danmuFont;
+    int       DHeight;
+    double    Transparency;
+    QRect     screenrect;
+    QPropertyAnimation *anim2;
+    int       runTime;
+    bool      checkOpen = true;//弹幕开关
 };
 
 #endif // DANMU_H

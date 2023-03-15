@@ -39,6 +39,7 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
     ui->setupUi(this);
     this->setMinimumSize(1028,670);//1320,800
     this->resize(QSize(1240,775));
+    this->setAttribute(Qt::WA_StyledBackground);//使背景生效
     this->setAttribute(Qt::WA_Hover);//窗口拖拽用
     this->setWindowTitle(QString::fromLocal8Bit("播放器"));
     initMainWindow();//初始化界面

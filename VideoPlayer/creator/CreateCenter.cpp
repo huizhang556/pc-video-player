@@ -599,7 +599,7 @@ void CreateCenter::addFileItemsToList(const QList<QUrl> urlLists)
         });
 
         //开始上传（单个）
-        connect(itemWidget,&FilesItem::sig_sendItem_pause,[=](bool start,QUrl media_url,QUrl media_cover){
+        connect(itemWidget,&FilesItem::sig_sendItem_upload,[=](bool start,QUrl media_url,QByteArray& media_cover){
             qDebug() << start;
             if(!start)
             {
@@ -616,8 +616,9 @@ void CreateCenter::addFileItemsToList(const QList<QUrl> urlLists)
 }
 
 //开始上传
-void CreateCenter::file_upload_start(const QUrl media_url, const QUrl pic_url, FilesItem *fileItem)
+void CreateCenter::file_upload_start(const QUrl media_url, const QByteArray& pic_url, FilesItem *fileItem)
 {
+    //视频部分
     if(!media_url.toString().isEmpty() && !media_url.toString().startsWith(":/",Qt::CaseInsensitive))
     {
         qDebug() << QString(u8"video:合法路径，文件路径：-->%1").arg(media_url.toString());
@@ -630,7 +631,7 @@ void CreateCenter::file_upload_start(const QUrl media_url, const QUrl pic_url, F
         //开启线程
         workThread->start();//开启线程
         qDebug() << QString(u8"新的线程启动(thread_1)，地址：")<< workThread;
-        upWorker->slot_receiveData_accept(media_url);
+        upWorker->slot_receiveData_accept(media_url);//本地的url
         //信号与槽函数
         connect(workThread,&QThread::finished,upWorker,&QObject::deleteLater);//线程结束时，工作对象自动删除
         connect(workThread,&QThread::finished,workThread,&QThread::deleteLater);//线程结束时，线程内对象自动删除
@@ -646,9 +647,10 @@ void CreateCenter::file_upload_start(const QUrl media_url, const QUrl pic_url, F
         qDebug() << QString(u8"video:非法路径，无法获取文件-->%1").arg(media_url.toString());
     }
 
-    if(!pic_url.toString().isEmpty() && !pic_url.toString().startsWith(":/",Qt::CaseInsensitive))
+    //视频封面
+    if(!pic_url.isNull() && !pic_url.isEmpty())
     {
-        qDebug() << QString(u8"header:合法路径，文件路径：-->%1").arg(pic_url.toString());
+        qDebug() << QString(u8"header:是合法数据！");
         UploadWork* upWorker2 = new UploadWork();
         QThread *workThread2 = new QThread();
         upWorker2->moveToThread(workThread2);
@@ -662,7 +664,7 @@ void CreateCenter::file_upload_start(const QUrl media_url, const QUrl pic_url, F
     }
     else
     {
-        qDebug() << QString(u8"header:非法路径，无法获取文件-->%1").arg(pic_url.toString());
+        qDebug() << QString(u8"header:是非法数据，无法获取文件！");
     }
 
     //文件上传完成（自动移除item）

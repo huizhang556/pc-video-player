@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QFile>
 #include <QDir>
+#include <QDateTime>
+#include <QByteArray>
 #include <QFileInfo>
 #include <QJsonObject>
 #include <QJsonValue>
@@ -24,7 +26,10 @@ public:
     ~UploadWork();
 
 public slots:
+    void    slot_receiveData_accept(const QByteArray &media_data);//建立下载请求，创建文件，并向外返回下载进度
+    void    slot_receiveData_accept(const QString& media_url);//建立下载请求，创建文件，并向外返回下载进度
     void    slot_receiveData_accept(const QUrl& media_url);//建立下载请求，创建文件，并向外返回下载进度
+    void    slot_uploadFileData(QFile *file, const QString& suf, const QString& dirName);
     void    slot_receiveData_pause();//暂停
     void    slot_receiveData_close();//关闭
 

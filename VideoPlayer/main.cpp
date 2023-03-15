@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 
     //05--->显示主界面
 
-#if 0
+#if 1
     //    DesktopLyric::getInstance()->show();
 
 //        MultipPlayer::getInstance()->show();
@@ -113,19 +113,18 @@ int main(int argc, char *argv[])
     //    MainNotice w1;
     //    w1.show();
 
-    //    CreateCenter::getInstance()->show();
+        CreateCenter::getInstance()->show();
 
     //    MyEmotionWindow w1;
     //    w1.showNormalEmotion(QPoint(500 , 500));
-//          DownloadType::getInstance()->show();
-        NewLoginForm::getInstance()->show();
+//        DownloadType::getInstance()->show();
+//        NewLoginForm::getInstance()->show();
     //    AniStackWidget w1;
     //    w1.show();
 
     //    splashscream.finish(&w1);
 
 #else
-
     MainWidget w1;
     w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
     w1.show();

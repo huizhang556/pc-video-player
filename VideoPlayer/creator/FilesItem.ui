@@ -234,7 +234,7 @@ color: #ff4335;
       <item>
        <widget class="QStackedWidget" name="stackedWidget_info">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="page_display">
          <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -489,6 +489,16 @@ border: 0px solid rgb(204, 204, 204);
 background-color: transparent;
 }
 
+#lineEdit_displaycover
+{
+color: white;
+}
+
+#lineEdit_displaycover:hover
+{
+color: #2bde57;
+}
+
 #pushButton_opencover
 {
 color: gray;
@@ -623,7 +633,7 @@ background-color: #d3d3d3;
                <string notr="true"/>
               </property>
               <property name="text">
-               <string>自定义标题</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -674,7 +684,7 @@ background-color: #d3d3d3;
                <string notr="true"/>
               </property>
               <property name="text">
-               <string>自定义封面</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -822,7 +832,7 @@ background-color: #d3d3d3;
                </size>
               </property>
               <property name="text">
-               <string>00:02:00</string>
+               <string/>
               </property>
              </widget>
             </item>
