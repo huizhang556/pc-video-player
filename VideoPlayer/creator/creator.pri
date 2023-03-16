@@ -1,35 +1,49 @@
 FORMS += \
-    $$PWD/AddMediaInfo.ui \
-    $$PWD/CListWidget.ui \
-    $$PWD/CloseButton.ui \
     $$PWD/CreateCenter.ui \
     $$PWD/CreTitleBar.ui \
-    $$PWD/CusCalendar.ui \
-    $$PWD/FilesItem.ui \
-    $$PWD/MoveLabel.ui
+    $$PWD/MoveLabel.ui \
+    $$PWD/percenter/PerCenter.ui \
+    $$PWD/producer/AddMediaInfo.ui \
+    $$PWD/producer/CListWidget.ui \
+    $$PWD/producer/CloseButton.ui \
+    $$PWD/producer/FilesItem.ui \
+    $$PWD/producer/Maker.ui \
+    $$PWD/mywork/DoneWorks.ui \
+    $$PWD/income/CusCalendar.ui \
+    $$PWD/income/Income.ui
+
 
 HEADERS += \
-    $$PWD/AddMediaInfo.h \
-    $$PWD/CListWidget.h \
-    $$PWD/CloseButton.h \
     $$PWD/CreateCenter.h \
     $$PWD/CreTitleBar.h \
-    $$PWD/CusCalendar.h \
-    $$PWD/FilesItem.h \
-    $$PWD/UploadWork.h \
-    $$PWD/MoveLabel.h
+    $$PWD/MoveLabel.h \
+    $$PWD/percenter/PerCenter.h \
+    $$PWD/producer/AddMediaInfo.h \
+    $$PWD/producer/CListWidget.h \
+    $$PWD/producer/CloseButton.h \
+    $$PWD/producer/FilesItem.h \
+    $$PWD/producer/Maker.h \
+    $$PWD/producer/UploadWork.h \
+    $$PWD/mywork/DoneWorks.h \
+    $$PWD/income/CusCalendar.h \
+    $$PWD/income/Income.h
+
 
 SOURCES += \
-    $$PWD/AddMediaInfo.cpp \
-    $$PWD/CListWidget.cpp \
-    $$PWD/CloseButton.cpp \
     $$PWD/CreateCenter.cpp \
     $$PWD/CreTitleBar.cpp \
-    $$PWD/CusCalendar.cpp \
-    $$PWD/FilesItem.cpp \
-    $$PWD/UploadWork.cpp \
-    $$PWD/MoveLabel.cpp
+    $$PWD/MoveLabel.cpp \
+    $$PWD/percenter/PerCenter.cpp \
+    $$PWD/producer/AddMediaInfo.cpp \
+    $$PWD/producer/CListWidget.cpp \
+    $$PWD/producer/CloseButton.cpp \
+    $$PWD/producer/FilesItem.cpp \
+    $$PWD/producer/Maker.cpp \
+    $$PWD/producer/UploadWork.cpp \
+    $$PWD/mywork/DoneWorks.cpp \
+    $$PWD/income/CusCalendar.cpp \
+    $$PWD/income/Income.cpp
 
-DISTFILES +=
+
 
 

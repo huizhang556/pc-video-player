@@ -67,8 +67,8 @@ void ShortVideo::handleSignalsAndSLots()
         if(current != nullptr)
         {
             getListWidgetItemButton(current,"pushButton_videoInfo")->setChecked(true);
-            m_curMediaUrl = current->text();
-            m_curMediaName = current->data(Qt::UserRole).toString();
+            m_curMediaUrl = current->text();//url
+            m_curMediaName = current->data(Qt::UserRole).toString();//介绍
             ui->widget_player->slot_receivePlayMediaFile(m_curMediaUrl,m_curMediaName);
         }
     });

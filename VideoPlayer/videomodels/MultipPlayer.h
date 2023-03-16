@@ -123,6 +123,8 @@ public:
 
     QString getCurrentMediaPlayFileName();
 
+    QString getCurrentMediaPlayFileUrl();
+
     QRect   getDesktopScreenGeometry();
 
     int     getMapKeyFromValue(const QString& value);//map-->根据value找id
@@ -443,7 +445,7 @@ private:
     QMap<int,QString>           m_mapList_history;
     QMediaPlayer::State         m_playerState;
     QString                     m_curMediaName;
-    mediaBody                   m_curMediaBody;
+    QString                     m_curMediaUrl;
     QUrl                        m_anyFrameMediaUrl;
 
 /*以下为界面拉伸所用*/

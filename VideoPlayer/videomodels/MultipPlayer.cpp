@@ -352,7 +352,7 @@ void MultipPlayer::handleSignalAndSLots()
 {
     //文件下载
     connect(ui->pushButton_download,&QPushButton::clicked,[=](){
-        DownloadType::getInstance()->showDownloadForm(1,m_curMediaName);
+        DownloadType::getInstance()->showDownloadForm(1,m_curMediaName,m_curMediaUrl);
     });
 
     //清晰度选择
@@ -384,9 +384,9 @@ void MultipPlayer::handleSignalAndSLots()
     connect(dataBase::getInstance(),SIGNAL(sig_sendVideoDramaInfo(QVariant)),m_recomTab,SLOT(slot_addRecVideoItem(QVariant)));
     //播放器右侧推荐视频---同类型视频列表
     connect(dataBase::getInstance(),&dataBase::sig_sendVideoDramaUrl,[=](int id,QString url){
-        m_tempList.append(url);//临时列表添加
-        m_t_MapList.insert(id,url);
-        addToPlaylist(playlist_t,url);
+//        m_tempList.append(url);//临时列表添加
+//        m_t_MapList.insert(id,url);
+//        addToPlaylist(playlist_t,url);
     });
 
     //推荐视频
@@ -613,6 +613,7 @@ void MultipPlayer::handleSignalAndSLots()
         slot_switchPlayerList(playlist);//切换为正式列表
         int row = m_listWisget2->row(item);
         playlist->setCurrentIndex(row);
+        m_curMediaUrl = item->data(Qt::UserRole).toString();
 //        fileType(row);//不需要，列表带动playlist的item变化，从而触发fileType-->转换页面
         m_player->play();
     });
@@ -825,24 +826,27 @@ void MultipPlayer::handleSignalAndSLots()
         slot_addPlayTempMedia(url);
     });
 
+    //其他带id编号的列表发送过的播放请求(每个表有自己的id)
+    connect(m_listManager,&ListManager::sig_play_newPlayist,this,&MultipPlayer::slot_addTempPlaylist);
+    //推荐列表编号为888发过来新请求
     connect(m_recomTab,&RecomVideoTab::sig_recom_playlist,this,&MultipPlayer::slot_addTempPlaylist);
 
-    //临时列表item变化
+    //临时playlist发出的index
+    connect(playlist_t,&QMediaPlaylist::currentIndexChanged,[=](int index){
+        emit sig_mediaListIndex(index);
+        if(m_playlist_id != 888 &&m_playlist_id != 666 )//不是推荐列表（888）和展示作品列表（666）的时候才设置
+        m_listManager->slot_setCurPlayListSelectedRow(index);
+    });
+
+    //临时列表item变化（等同于上边的）
     connect(this,&MultipPlayer::sig_playlistCurrentIndex,[=](int index){
-        if(m_playlist_id == 666)//指定为编号666
+        if(m_playlist_id == 888)//指定为推荐列表编号888
         m_recomTab->slot_setListWidgetCurrentIndex(index);
     });
 
 //    connect(m_recomTab,&RecomVideoTab::sig_sendVideoUrl,this,&MultipPlayer::slot_addTempPlaylist);
 
-    //其他列表发送过的播放请求
-    connect(m_listManager,&ListManager::sig_play_newPlayist,this,&MultipPlayer::slot_addTempPlaylist);
 
-    //临时playlist发出的index
-    connect(playlist_t,&QMediaPlaylist::currentIndexChanged,[=](int index){
-        emit sig_mediaListIndex(index);
-        m_listManager->slot_setCurPlayListSelectedRow(index);
-    });
 
     //收藏按钮
     connect(ui->pushButton_collect,&QPushButton::clicked,[=](){
@@ -1116,6 +1120,11 @@ QString MultipPlayer::getCurrentMediaPlayFileName()
     return m_curMediaName;
 }
 
+QString MultipPlayer::getCurrentMediaPlayFileUrl()
+{
+    return m_curMediaUrl;
+}
+
 QRect MultipPlayer::getDesktopScreenGeometry()
 {
     return QApplication::desktop()->screenGeometry();
@@ -1154,6 +1163,7 @@ void MultipPlayer::addFileToList(const QStringList &strList)
         //判断一下文件类型，加载不同图标
         QString fileIcon = switchFileIconType(name);
         QListWidgetItem *pItem = new QListWidgetItem(name);
+        pItem->setData(Qt::UserRole,path);//设置保存url
         MediaItem *itemWidget = new MediaItem(MEDTYPE::MED_NORMAL,name,fileIcon,name,false,"11:18:36");
 
         //        pItem->setCheckState(Qt::Unchecked);//未选中
@@ -3070,6 +3080,7 @@ void MultipPlayer::slot_addPlayTempMedia(const QString url)
 //    m_listWisget3->clear();//收藏列表
 //    addFileToList(temp_list);//添加到视图播放列表
 //    fileType(m_fileNames,0);//判断文件类型（转换显示界面）
+    m_curMediaUrl = url;
     m_lineEdit->setEnabled(true);
     ui->horizontalSlider->setEnabled(true);//滚动条
     playlist_t->setCurrentIndex(getMapKeyFromValue(url)-1);//key从1开始
@@ -3294,10 +3305,23 @@ void MultipPlayer::slot_addTempPlaylist(const int id, const QStringList &list, c
             addToPlaylist(playlist_t,list.at(i));
         }
     }
+    else if(m_playlist_id == 666)//成品展示界面发过来的
+    {
+        qDebug() << QString(u8"成品展示界面发过来的~！");
+        m_playlist_id = id;//当前列表id
+        m_t_MapList.clear();
+        playlist_t->clear();
+        for(int i = 0; i < list.count(); i++)
+        {
+            m_t_MapList.insert(i,list.at(i));
+            addToPlaylist(playlist_t,list.at(i));
+        }
+    }
     slot_switchPlayerList(playlist_t);
     ui->horizontalSlider->setEnabled(true);
     playlist_t->setCurrentIndex(getMapKeyFromValue(curMedia));
     slot_setMainCurrentIndex(1);
+    m_curMediaUrl = curMedia;
     m_player->play();
 
     fileType(QFileInfo(curMedia).fileName());//判断视频还是歌曲，显示对应的界面

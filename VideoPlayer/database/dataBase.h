@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QDomDocument>
 #include <QSize>
+#include <QSqlResult>
 #include <QSqlRecord>
 #include <QVariant>
 #include <QSqlQuery>
@@ -124,6 +125,9 @@ public slots:
     void                    video_insertRecDramaListDB(const QStringList& parma);//插入视频
     bool                    video_recDramaInfo();//查询推荐列表
 
+    //查询作品
+    bool                    creator_getdoneWorks(const QString& tags);//按标签查询作品
+
 protected:
 
 
@@ -166,6 +170,7 @@ private:
 signals:
     void        sig_loginStatusChanged(bool);//0下线 1登录
     void        sig_sendVideoDramaInfo(QVariant);
+    void        sig_sendUserDoneWorks(QVariant);
     void        sig_sendVideoDramaUrl(int,QString);
     void        sig_sendRecordInfo(QString,QString,QString);//urlnick url createtiem
     void        sig_sendHisRecordInfo(QString,QString);//url createtime

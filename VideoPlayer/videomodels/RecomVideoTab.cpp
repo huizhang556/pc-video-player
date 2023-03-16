@@ -120,6 +120,7 @@ bool RecomVideoTab::slot_addRecVideoItem(QVariant musicVariant)
     MusicData data = musicVariant.value<MusicData>();// 通用类型转为专用类型
     RecVideoItem *videoItem = new RecVideoItem(data.url,data.cover,data.duration,data.alias,data.uplove);
     QListWidgetItem *item = new QListWidgetItem(data.url);
+    item->setData(Qt::UserRole,data.alias);
     item->setSizeHint(videoItem->size());//留出来1px的边框
     ui->listWidget_recommend->addItem(item);
     ui->listWidget_recommend->setItemWidget(item,videoItem);
@@ -130,7 +131,7 @@ bool RecomVideoTab::slot_addRecVideoItem(QVariant musicVariant)
     //信号与槽函数
     connect(videoItem,&RecVideoItem::sig_sendVideoUrl,[=](){
 //        emit sig_sendVideoUrl(item->text());
-        emit sig_recom_playlist(666,m_recplayList,item->text());
+        emit sig_recom_playlist(888,m_recplayList,item->text());
         ui->listWidget_recommend->setCurrentItem(item);//实现选种样式
         qDebug() <<QString::fromLocal8Bit("已发送临时播放连接url:")<<item->text();
     });
@@ -142,6 +143,7 @@ bool RecomVideoTab::slot_addRecVideoItem(QString url, QString path, QString time
     RecVideoItem *videoItem = new RecVideoItem(url,path,time,info,count);
     QListWidgetItem *item = new QListWidgetItem(url);
     item->setSizeHint(videoItem->size());//留出来1px的边框
+    item->setData(Qt::UserRole,info);
     ui->listWidget_recommend->addItem(item);
     ui->listWidget_recommend->setItemWidget(item,videoItem);
     m_tempVideoList.append(url);

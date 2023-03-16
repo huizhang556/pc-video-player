@@ -183,7 +183,7 @@ void RecVideoItem::handleSignalsAndSlots()
 
 void RecVideoItem::setVideoPicture(const QString path)
 {
-    //方法1.常规网络获取图片
+    //方法1.常规网络获取图片（上传的时候已将封面作为图片存储在服务器上，此处只需要下载即可）
     manager->get(QNetworkRequest(QUrl(path)));
     //获取网络图片(注意：使用的是manager的finished信号)
     connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(slot_replyFinished(QNetworkReply*)));

@@ -66,7 +66,7 @@ private:
 
 signals:
     void    sig_send_height(int);
-    void    sig_play_newPlayist(int,QStringList,QString);
+    void    sig_play_newPlayist(int,QStringList,QString);//表 id 表内url集合 单个url
 };
 
 #endif // LISTMANAGER_H

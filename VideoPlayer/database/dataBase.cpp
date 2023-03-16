@@ -1,6 +1,7 @@
 ﻿#include "dataBase.h"
 #include "global/Global.h"
 #include "videomodels/RecomVideoTab.h" //引入结构体
+#include "creator/producer/FilesItem.h"//引入结构体
 #include <QMetaType>
 #include <QDateTime>
 #include <QDebug>
@@ -27,7 +28,7 @@ dataBase* dataBase::m_pInstance = nullptr;
 
 dataBase::dataBase():
     m_online(false),
-    m_curUserID(""),
+    m_curUserID("0000000000"),
     m_curUserHead(""),
     m_curUserName(""),
     m_curUserGrade(1)
@@ -188,15 +189,18 @@ bool dataBase::creatMysqlConnection()
         //创建剧集列表
         QString table_drama = R"(
                               CREATE TABLE IF NOT EXISTS `dramalist`  (
-                                `id` int(20) NOT NULL AUTO_INCREMENT,
+                              `id` int(20) NOT NULL AUTO_INCREMENT,
+                                `userid` int(20) NOT NULL,
                                 `alias` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
                                 `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
                                 `duration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
                                 `cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
                                 `uplove` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-                                `partof` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                `theme` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                `size` int(20) NULL DEFAULT NULL,
                                 PRIMARY KEY (`id`) USING BTREE
-                              ) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;)";
+                              ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;)";
         if(query.exec(table_drama))
             qDebug() << "create table dramalist successfull";
         else
@@ -1018,8 +1022,8 @@ void dataBase::browser_deleteAllHisRecordToList()
 void dataBase::video_insertRecDramaListDB(const QStringList &parma)
 {
     QSqlQuery query(getSqlDataBase());
-    //自增id插入时，id为0
-    QString  insert_sql = QString("insert into dramalist values (%1, '%2', '%3', '%4', '%5', '%6', '%7');").arg(0).arg(parma.at(0)).arg(parma.at(1)).arg(parma.at(2)).arg(parma.at(3)).arg(parma.at(4)).arg(parma.at(5));
+    //自增id插入时，id为0 参数：记录id 用户id 时长 介绍 url 封面 点赞数 类型 主题
+    QString  insert_sql = QString("insert into dramalist values (%1, '%2', '%3', '%4', '%5', '%6', '%7', '%8', '%9', '%10');").arg(0).arg(m_curUserID).arg(parma.at(0)).arg(parma.at(1)).arg(parma.at(2)).arg(parma.at(3)).arg(parma.at(4)).arg(parma.at(5)).arg(parma.at(6)).arg(parma.at(7));
     bool isOK = query.exec(insert_sql);
     if(isOK)
     {
@@ -1058,7 +1062,7 @@ bool dataBase::video_recDramaInfo()
             musicdata.setValue(musicData);
 //            qDebug() << "finded drama video info = "
 //                     << id << alias <<url <<duration << cover << uplove;
-            emit sig_sendVideoDramaInfo(musicdata);//推荐视频用
+            emit sig_sendVideoDramaInfo(musicdata);//主播放器推荐视频+热点资讯推荐视频用
             emit sig_sendVideoDramaUrl(id,url);//主界面播放用
         }
     }
@@ -1068,6 +1072,39 @@ bool dataBase::video_recDramaInfo()
         return false;
     }
 
+}
+
+bool dataBase::creator_getdoneWorks(const QString &tags)
+{
+    QSqlQuery query(getSqlDataBase());
+    bool isOK = query.exec(QString("select url, alias, duration, cover, type, theme, size from dramalist where userid = %1 and type = '%2';").arg(m_curUserID).arg(tags));
+    if(isOK)
+    {
+        while (query.next())
+        {
+            fileBody    body;
+            body.furl               =   query.value(0).toString();//url
+            body.fnick              =   query.value(1).toString();//alias
+            body.fduration          =   query.value(2).toString();//duration
+            body.fcover             =   query.value(3).toString();//cover
+            body.fmedtype           =   query.value(4).toString();//type(音乐，电影等)
+            body.fmedtheme          =   query.value(5).toString();//theme(古装，科技等)
+            body.fsize              =   query.value(6).toInt();//size
+            QVariant    doneMedia;
+            doneMedia.setValue(body);
+            emit sig_sendUserDoneWorks(doneMedia);//主播放器推荐视频+热点资讯推荐视频用
+            qDebug() << QString(u8"查询到用户：%1 指定类型的视频集合,且已发出信号！").arg(m_curUserID);
+        }
+        if(!query.next())
+        {
+            qDebug() << QString(u8"根据查找条件：用户：%1 -- 类型：%2 没有找到数据！").arg(m_curUserID).arg(tags);
+        }
+    }
+    else
+    {
+        qDebug()<< QString::fromLocal8Bit("查找 %1 用户拥有剧集信息记录错误").arg(m_curUserID)<< query.lastError();
+        return false;
+    }
 }
 
 

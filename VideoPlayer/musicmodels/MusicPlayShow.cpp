@@ -75,7 +75,7 @@ void MusicPlayShow::loadPictures(QString &path) const
 
 void MusicPlayShow::changeTimeCout()
 {
-    if(++i > 20)
+    if(++i > 25)
         i = 1;
 }
 

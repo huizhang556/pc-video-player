@@ -45,7 +45,7 @@ include($$PWD/qrcode/qrcode.pri)            #二维码
 include($$PWD/global/global.pri)            #全局相关（程序路径等）
 include($$PWD/updater/updater.pri)          #程序更新器模块
 include($$PWD/lunbotu/lunbotu.pri)          #轮播图模块
-include($$PWD/network/network.pri)          #网络请求
+include($$PWD/network/network.pri)          #网络模块
 include($$PWD/browser/browser.pri)          #浏览器
 include($$PWD/mythread/mythread.pri)        #工作线程处理
 include($$PWD/database/database.pri)        #数据库

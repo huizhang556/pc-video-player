@@ -4608,12 +4608,12 @@ background-color: rgba(157, 157, 157,0.8);
   <customwidget>
    <class>CListWidget</class>
    <extends>QListWidget</extends>
-   <header>CListWidget.h</header>
+   <header>creator/producer/CListWidget.h</header>
   </customwidget>
   <customwidget>
    <class>MoveLabel</class>
    <extends>QLabel</extends>
-   <header>MoveLabel.h</header>
+   <header>creator/MoveLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
