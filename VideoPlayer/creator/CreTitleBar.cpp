@@ -32,6 +32,7 @@ void CreTitleBar::initWorkUI()
     ui->pushButton_title->setLayoutDirection(Qt::RightToLeft);
     ui->pushButton_winRestore->setCheckable(true);
     ui->pushButton_winRestore->setChecked(false);
+    ui->label_user->setFixedSize(QSize(50,50));//要使用遮罩，UI或者代码要设置大小，否则无法计算大小
     QRegion maskRegion(ui->label_user->rect(),QRegion::Ellipse);//创建圆形遮罩
     ui->label_user->setMask(maskRegion);//设置圆形遮罩
 }
@@ -54,6 +55,7 @@ void CreTitleBar::handleSignalsAndSlots()
     connect(ui->pushButton_winMin,&QPushButton::clicked,[=](){
         emit sig_win_min();
     });
+    connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(slot_replyFinished(QNetworkReply*)));
 }
 
 void CreTitleBar::setInstallEventer()
@@ -68,7 +70,7 @@ void CreTitleBar::setUserIcon(bool online, const QString &header)
     {
         ui->stackedWidget_icon->setCurrentWidget(ui->page_login);
         manager->get(QNetworkRequest(QUrl(header)));
-        connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(slot_replyFinished(QNetworkReply*)));
+
     }
     else
     {
@@ -112,12 +114,14 @@ void CreTitleBar::slot_replyFinished(QNetworkReply *reply)
         pixmap.loadFromData(reply->readAll());
         ui->label_user->setPixmap(pixmap);
         ui->label_user->setScaledContents(true);//内容自适应
+        qDebug() << QString(u8"创作中心用户头像请求成功，使用自定义头像！");
     }
     else//请求失败，加载默认图片
     {
         qDebug() <<  QString::fromLocal8Bit("请求错误：")<<reply->errorString();
-        QPixmap pixmap("://images/icon/kugou.ico");
+        QPixmap pixmap("://images/user/default_woman00.png");
         ui->label_user->setPixmap(pixmap);
         ui->label_user->setScaledContents(true);//内容自适应
+        qDebug() << QString(u8"创作中心用户头像请求失败，使用默认头像");
     }
 }

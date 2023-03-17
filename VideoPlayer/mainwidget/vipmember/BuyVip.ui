@@ -266,18 +266,20 @@ color: rgb(255, 211, 134);
               <property name="styleSheet">
                <string notr="true">QPushButton
 {
+color: #a3a4a6;
+text-align: left;
+border: none;
+margin: 1px;
+font: 400 14px &quot;微软雅黑&quot;;
+border-image: url(:/images/player/user_closeBtn.png);
 background-color: transparent;
-border-image: url(:/images/icon/close3.png);
-border-top-right-radius:8px;
 }
-
-QPushButton:hover{
-/*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
-	stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
-	border-image: url(:/images/icon/closehover.png);
-border: 1px solid #3C80B1;
-
-}</string>
+QPushButton:hover
+{
+color: #e17f7f;
+border-image: url(:/images/player/user_closeBtn_hover.png);
+}
+</string>
               </property>
               <property name="text">
                <string/>

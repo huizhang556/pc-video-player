@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 using namespace qrcodegen;//注意加上命名空间
+
 #include <QDialog>
 #include <QStringList>
 

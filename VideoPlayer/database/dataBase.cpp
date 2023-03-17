@@ -1098,17 +1098,35 @@ bool dataBase::creator_getdoneWorks(const QString &tags)
             QVariant    doneMedia;
             doneMedia.setValue(body);
             emit sig_sendUserDoneWorks(doneMedia);//主播放器推荐视频+热点资讯推荐视频用
-            qDebug() << QString(u8"查询到用户：%1 指定类型的视频集合,且已发出信号！").arg(m_curUserID);
-        }
-        if(!query.next())
-        {
-            qDebug() << QString(u8"根据查找条件：用户：%1 -- 类型：%2 没有找到数据！").arg(m_curUserID).arg(tags);
+            qDebug() << QString(u8"查询到用户：%1 指定类型： %2 的视频集合,且已发出信号！").arg(m_curUserID).arg(tags);
         }
     }
     else
     {
         qDebug()<< QString::fromLocal8Bit("查找 %1 用户拥有剧集信息记录错误").arg(m_curUserID)<< query.lastError();
         return false;
+    }
+}
+
+//查询某个用户某种类型标签下视频数量
+int dataBase::creator_getdoneWorkCounts(const QString &tags)
+{
+    QSqlQuery query(getSqlDataBase());
+    //按某个字段统计效率高
+    bool isOK = query.exec(QString("select count(url) from dramalist where userid = %1 and type = '%2';").arg(m_curUserID).arg(tags));
+    if(isOK)
+    {
+        if (query.next())
+        {
+            int counts = query.value(0).toInt();
+            qDebug() << QString(u8"用户：%1 在标签： %2 类型下，有 %3 个文件数量。").arg(m_curUserID).arg(tags).arg(counts);
+            return counts;
+        }
+    }
+    else
+    {
+        qDebug()<< QString::fromLocal8Bit("查找 %1 用户拥有 %2 类型剧集信息记录错误").arg(m_curUserID).arg(tags) << query.lastError();
+        return -1;
     }
 }
 

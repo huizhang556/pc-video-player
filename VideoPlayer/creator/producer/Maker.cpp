@@ -370,7 +370,7 @@ void Maker::addFileItemsToList(const QList<QUrl> urlLists)
 
         //完成添加进入另一个list（url回传回来的时候body齐全，发出finished）
         connect(itemWidget,&FilesItem::sig_sendItem_finished,[=](fileBody body){
-            file_createItemToAnotherListWgt(body);//上传以后的body信息
+//            file_createItemToAnotherListWgt(body);//上传以后的body信息
         });
 
         //全部上传（点击按钮）

@@ -620,7 +620,7 @@ void FilesItem::slot_update_url_md5(const QString &url, const QString &md5)
     m_body.fduration=  ui->lineEdit_mduration->text();//加载文件时候计算好的
     //插入数据
     file_insertItemDataTodb(m_body);//插入数据库用的http传回来的路径
-    emit sig_sendItem_finished(m_body);//创建新的完成的item
+    emit sig_sendItem_finished(m_body);//创建新的完成的item（暂时无用了）
 }
 
 void FilesItem::slot_update_header(const QString &url_header, const QString &md5)

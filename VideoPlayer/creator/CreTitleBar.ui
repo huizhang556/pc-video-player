@@ -86,7 +86,7 @@ background-color: transparent;
 }</string>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="page_unlogin">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -153,6 +153,18 @@ margin: 5px;
           </property>
           <item>
            <widget class="QLabel" name="label_user">
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>50</height>
+             </size>
+            </property>
             <property name="text">
              <string/>
             </property>

@@ -128,6 +128,7 @@ public slots:
 
     //查询作品
     bool                    creator_getdoneWorks(const QString& tags);//按标签查询作品
+    int                     creator_getdoneWorkCounts(const QString& tags);//查询数量
 
 protected:
 
@@ -170,8 +171,9 @@ private:
     void        showResult(const QSqlQuery& query);//展示查询结果
 signals:
     void        sig_loginStatusChanged(bool);//0下线 1登录
-    void        sig_sendVideoDramaInfo(QVariant);
-    void        sig_sendUserDoneWorks(QVariant);
+    void        sig_sendVideoDramaInfo(QVariant);//推荐剧集列表
+    void        sig_sendUserDoneWorks(QVariant&);//已完成作品列表
+    void        sig_sendUserDoneWorkCounts(int);//某种已完成作品数量
     void        sig_sendVideoDramaUrl(int,QString);
     void        sig_sendRecordInfo(QString,QString,QString);//urlnick url createtiem
     void        sig_sendHisRecordInfo(QString,QString);//url createtime

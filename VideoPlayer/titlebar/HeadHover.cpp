@@ -39,6 +39,7 @@ void HeadHover::initWorkUI()
     slots_setUserIcon(1,"visitor");
 
     //遮罩
+    ui->label_head->setFixedSize(QSize(50,50));//遮罩矩形要使用这个大小
     QRegion maskRegion(ui->label_head->rect(),QRegion::Ellipse);//创建圆形遮罩
     ui->label_head->setMask(maskRegion);//设置圆形遮罩
 }

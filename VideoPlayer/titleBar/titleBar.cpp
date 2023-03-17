@@ -49,6 +49,7 @@ void TitleBar::initWorker()
     m_ncmgr = new QNetworkConfigurationManager();//网络连接用
 
     //遮罩
+    ui->label_userHead->setFixedSize(QSize(40,40));
     QRegion maskRegion(ui->label_userHead->rect(),QRegion::Ellipse);//创建圆形遮罩
     ui->label_userHead->setMask(maskRegion);//设置圆形遮罩
     ui->label_defaultHead->setMask(maskRegion);

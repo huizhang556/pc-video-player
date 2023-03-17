@@ -5,14 +5,18 @@
 #define DITEMSIZE QSize(212,170)
 
 #include "database/dataBase.h"
+#include "creator/mywork/LabLoading.h"
+#include "creator/mywork/LeftItem.h"
 #include "creator/producer/FilesItem.h"
 #include "videomodels/MultipPlayer.h"
-
 #include <QSize>
+#include <QLabel>
 #include <QWidget>
 #include <QVariant>
 #include <QScrollBar>
+#include <QListWidget>
 #include <QListWidgetItem>
+#include <QDebug>
 
 namespace Ui {
 class DoneWorks;
@@ -30,13 +34,24 @@ public:
     void    setInstallEventer();
 
 public slots:
-    void    slot_receivedData_findTypeResult(QVariant media);
+    void    slot_receivedData_findTypeResult(QVariant &media);
+    void    slot_addItemToList(const QString text,const QVariant& data, int counts);
+    void    slot_insertItemToList(int index, QString& text,const  QVariant& data, int counts);
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event)override;
 
 private:
+    QListWidget*    getConnectListWidget(const QString& type);
+    void            checkListItemsCounts(QListWidgetItem *item, int allcounts);
+    QLabel*         getCurrentItem(QListWidgetItem *item, const QString &objname);
+    LabLoading*     getProgresslable(QListWidgetItem *item, const QString &objname);
+    void            showErrorPageMessage(QWidget* page, const QString& message);
+
+private:
     Ui::DoneWorks *ui;
+    int             m_items = 0;
+    QListWidgetItem *m_curItem  =   nullptr;//当前选中的item
 
     QStringList m_producelist =
     {
@@ -59,6 +74,9 @@ private:
     };
 
     QStringList mediaList = {};
+
+signals:
+
 };
 
 #endif // DONEWORKS_H

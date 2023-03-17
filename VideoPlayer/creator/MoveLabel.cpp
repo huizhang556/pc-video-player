@@ -13,7 +13,7 @@ MoveLabel::MoveLabel(QWidget *parent) :
     setScaledContents(true);
     m_movie->start();
     ui->pushButton_clogin->setText(QString(u8"点击登录"));
-    ui->pushButton_clogin->setEnabled(false);
+    ui->pushButton_clogin->setEnabled(true);
     connect(ui->pushButton_clogin,&QPushButton::clicked,[=](){  emit sig_sendLogin(); });
     connect(ui->pushButton_minClose,&QPushButton::clicked,[=](){  emit sig_sendClose(); });
 }
