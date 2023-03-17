@@ -67,6 +67,7 @@ public:
     QString                 getCurrentUserName() const;
     QString                 getCurrentUserHead() const;
     int                     getCurrentUserGrade() const;
+    bool                    getCurrentUserOnline() const;
 
     //读取cfg.xml信息
     static void             readXML(const QString& path);

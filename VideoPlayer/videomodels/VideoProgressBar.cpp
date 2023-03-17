@@ -12,7 +12,7 @@ VideoProgressBar::VideoProgressBar(QWidget *parent) :
     ui(new Ui::VideoProgressBar)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
     setFixedSize(80,80);
 //    this->setWindowOpacity(0.2);
     this->setAutoFillBackground(true);

@@ -15,11 +15,6 @@ UploadWork::~UploadWork()
 void UploadWork::slot_receiveData_accept(const QByteArray &media_data)
 {
     //00---打开文件
-//    m_device = new QIODevice();
-//    if(m_device->open(QIODevice::WriteOnly))
-//    {
-//        m_device->write(media_data);
-//    }
     QString fname_t = QString(QDateTime::currentDateTime().toString("yyyyMMddhhmmsszzz")+".png");
    QString suffix  = "png";
    qDebug() << "file suffix = "<< suffix;//flv mp3 mp4
@@ -76,21 +71,30 @@ void UploadWork::slot_receiveData_accept(const QByteArray &media_data)
 
 void UploadWork::slot_receiveData_accept(const QString &media_url)
 {
-    slot_receiveData_accept(QUrl(media_url));
+    slot_receiveData_accept(QUrlQuery(media_url));
 }
 
-void UploadWork::slot_receiveData_accept(const QUrl &media_url)
+void UploadWork::slot_receiveData_accept(const QUrlQuery &media_url)
 {
      //00---打开文件
-    QString filePath = QDir::toNativeSeparators(media_url.toString());//重点：MSVC编译器一定要把文件路径转换正确(现在转换后为：//)
+    QString filePath = QDir::toNativeSeparators(media_url.queryItemValue("url"));//重点：MSVC编译器一定要把文件路径转换正确(现在转换后为：//)
     if(filePath.isNull() || filePath.isEmpty()) return;
     m_file = new QFile(filePath);
     QFileInfo info(filePath);
-    QString fileName = info.fileName();
-    qDebug() << "QFileInfo-->filename(name) = "<< fileName;
+    QString fileName1 = info.fileName();
+    qDebug() << "QFileInfo-->filename(name) = "<< fileName1;
     qDebug() << "QFile    -->filename(name) = "<< m_file->fileName();
+    QString fileName;
+    if(media_url.queryItemValue("rename").isEmpty())//别名为空时，采用文件本来的名称（xxxx.flv）
+    {
+        fileName = fileName1;
+    }
+    else//别名有值，则采用别名
+    {
+        fileName = media_url.queryItemValue("rename");
+    }
     QString suffix  = info.suffix();
-    qDebug() << "file suffix = "<< suffix;//flv mp3 mp4
+    qDebug() << "new rename" << fileName << "file suffix = "<< suffix;//flv mp3 mp4
     m_file->open(QIODevice::ReadOnly);
 
     //01---构造json文本部分
@@ -354,7 +358,7 @@ void UploadWork::getJson(QJsonObject &jsonObj)
         if(!savePath.isEmpty() && !md5.isEmpty())
         {
             emit sig_work_finished(savePath,md5);
-//            qDebug() << QString(u8"回传信息已发出！");
+            qDebug() << QString(u8"服务器回传信息的信号已发出！");
         }
 }
 

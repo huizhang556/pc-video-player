@@ -3,6 +3,7 @@
 
 #include "database/dataBase.h"
 #include <QUrl>
+#include <QUrlQuery>
 #include <QWidget>
 #include <QTimer>
 #include <QLabel>
@@ -13,9 +14,14 @@
 #include <QComboBox>
 #include <QListView>
 #include <QBuffer>
+#include <QRegExp>
+#include <QRegExpValidator>
 #include <QByteArray>
 #include <QStringList>
 #include <QFileDialog>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QNetworkAccessManager>
 #include <QDebug>
 
 //以下ffmpeg获取视频信息使用
@@ -101,6 +107,8 @@ private:
     QString    getCurtentComboBoxText(const QComboBox* combobox, const QString& itemtext);
     void       file_insertItemDataTodb(const fileBody& body);//插入数据库媒体信息
 
+private slots:
+    void    slot_replyCoverFinished(QNetworkReply *reply);
 
 private:
     Ui::FilesItem *ui;
@@ -115,9 +123,12 @@ private:
     QString     m_duration;
     QImage      m_cover;
 
+    QNetworkAccessManager   *manager    =   nullptr;
+    QNetworkReply           *reply      =   nullptr;
+
 
 signals:
-    void    sig_sendItem_upload(bool,QUrl,QByteArray&);
+    void    sig_sendItem_upload(bool,QUrlQuery,QByteArray&);//上传图片数据
     void    sig_sendItem_pause(bool,QUrl,QUrl);//video_url pic_url
     void    sig_sendItem_play();//播放(播放地址)
     void    sig_sendItem_remove();

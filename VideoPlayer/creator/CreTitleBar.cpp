@@ -13,7 +13,6 @@ CreTitleBar::CreTitleBar(QWidget *parent) :
     ui(new Ui::CreTitleBar)
 {
     ui->setupUi(this);
-    this->setWindowFlags(Qt::FramelessWindowHint);
     setFixedHeight(66);
     initWorkUI();
     handleSignalsAndSlots();
@@ -27,11 +26,14 @@ CreTitleBar::~CreTitleBar()
 
 void CreTitleBar::initWorkUI()
 {
+    manager = new QNetworkAccessManager(this);
     ui->pushButton_title->setIcon(QIcon("://images/creator/returnhome.png"));
     ui->pushButton_title->setIconSize(QSize(22,22));
     ui->pushButton_title->setLayoutDirection(Qt::RightToLeft);
     ui->pushButton_winRestore->setCheckable(true);
     ui->pushButton_winRestore->setChecked(false);
+    QRegion maskRegion(ui->label_user->rect(),QRegion::Ellipse);//创建圆形遮罩
+    ui->label_user->setMask(maskRegion);//设置圆形遮罩
 }
 
 void CreTitleBar::handleSignalsAndSlots()
@@ -59,6 +61,21 @@ void CreTitleBar::setInstallEventer()
     this->installEventFilter(this);
 }
 
+void CreTitleBar::setUserIcon(bool online, const QString &header)
+{
+    qDebug() << QString(u8"创作中心获取到的头像URL:") << header;
+    if(online)
+    {
+        ui->stackedWidget_icon->setCurrentWidget(ui->page_login);
+        manager->get(QNetworkRequest(QUrl(header)));
+        connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(slot_replyFinished(QNetworkReply*)));
+    }
+    else
+    {
+        ui->stackedWidget_icon->setCurrentWidget(ui->page_unlogin);
+    }
+}
+
 //void CreTitleBar::mousePressEvent(QMouseEvent *event)
 //{
 //    Q_UNUSED(event)
@@ -84,4 +101,23 @@ bool CreTitleBar::eventFilter(QObject *watched, QEvent *event)
         }
     }
     return QWidget::eventFilter(watched,event);
+}
+
+void CreTitleBar::slot_replyFinished(QNetworkReply *reply)
+{
+    if (reply->error() == QNetworkReply::NoError)
+    {
+        //获取字节流构造 QPixmap 对象
+        QPixmap pixmap;
+        pixmap.loadFromData(reply->readAll());
+        ui->label_user->setPixmap(pixmap);
+        ui->label_user->setScaledContents(true);//内容自适应
+    }
+    else//请求失败，加载默认图片
+    {
+        qDebug() <<  QString::fromLocal8Bit("请求错误：")<<reply->errorString();
+        QPixmap pixmap("://images/icon/kugou.ico");
+        ui->label_user->setPixmap(pixmap);
+        ui->label_user->setScaledContents(true);//内容自适应
+    }
 }

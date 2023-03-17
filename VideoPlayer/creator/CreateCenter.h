@@ -3,6 +3,7 @@
 #define CREATECENTER_H
 #define MARWIDTH 2 //窗口边距,进过测试最小需要2px
 
+#include "database/dataBase.h"
 #include "creator/CreTitleBar.h"
 #include "customer/BaseWidget.h"
 #include "creator/income/Income.h"
@@ -31,9 +32,11 @@ public:
     void    handleSignalsAndSlots();
     void    setInstallEventer();
     static CreateCenter* getInstance();
+    void    exec_();
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
+
 
 private:
     Ui::CreateCenter *ui;

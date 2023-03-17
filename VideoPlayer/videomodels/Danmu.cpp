@@ -15,7 +15,7 @@ Danmu::Danmu(QWidget *parent, QString text, ColorType color, int type, QRect rec
     ui->setupUi(this);
 //    SetWindowPos(HWND(this->winId()), HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
     //设置弹幕为无窗口无工具栏且呆在窗口顶端,但是会导致坐标错乱，尤其是丢掉了标题栏
-    setWindowFlags(this->windowFlags() | Qt::FramelessWindowHint | Qt::Tool);
+//    setWindowFlags(this->windowFlags() | Qt::FramelessWindowHint | Qt::Tool);
     setAttribute(Qt::WA_TranslucentBackground,true);//背景透明
 //    setAttribute(Qt::WA_StyledBackground,true);
     setAutoFillBackground(true);

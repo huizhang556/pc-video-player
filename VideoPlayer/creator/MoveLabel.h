@@ -17,6 +17,8 @@ public:
     explicit MoveLabel(QWidget *parent = nullptr);
     ~MoveLabel();
 
+    void    setLoginTips(bool online);
+
 private:
     Ui::MoveLabel *ui;
     QString m_gifpath;

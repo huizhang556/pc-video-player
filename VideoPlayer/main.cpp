@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
     //    MainNotice w1;
     //    w1.show();
 
-        CreateCenter::getInstance()->show();
+        CreateCenter::getInstance()->exec_();
 
     //    MyEmotionWindow w1;
     //    w1.showNormalEmotion(QPoint(500 , 500));

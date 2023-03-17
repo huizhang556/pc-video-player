@@ -191,10 +191,10 @@ void Maker::file_upload_stop()
     qDebug() << QString(u8"移除item");
 }
 
-void Maker::file_upload_start(const QUrl media_url, const QByteArray &pic_url, FilesItem *fileItem)
+void Maker::file_upload_start(const QUrlQuery media_url, const QByteArray &pic_url, FilesItem *fileItem)
 {
-    //视频部分
-    if(!media_url.toString().isEmpty() && !media_url.toString().startsWith(":/",Qt::CaseInsensitive))
+    //视频部分(解析部分:url值进行判断)
+    if(!media_url.queryItemValue("url").isEmpty() && !media_url.queryItemValue("url").startsWith(":/",Qt::CaseInsensitive))
     {
         qDebug() << QString(u8"video:合法路径，文件路径：-->%1").arg(media_url.toString());
         //创建工作对象
@@ -385,12 +385,12 @@ void Maker::addFileItemsToList(const QList<QUrl> urlLists)
         });
 
         //开始上传（单个）
-        connect(itemWidget,&FilesItem::sig_sendItem_upload,[=](bool start,QUrl media_url,QByteArray& media_cover){
+        connect(itemWidget,&FilesItem::sig_sendItem_upload,[=](bool start,QUrlQuery media_url,QByteArray& media_cover){
             qDebug() << start;
             if(!start)
             {
                 file_upload_start(media_url,media_cover,itemWidget);
-                qDebug() << QString(u8"开始上传") <<media_url<< endl << media_cover ;
+                qDebug() << QString(u8"开始上传") <<media_url.queryItemValue("url") << endl << media_cover ;
             }
             else
             {

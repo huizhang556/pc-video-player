@@ -112,7 +112,7 @@ font-size:18px;
 }</string>
           </property>
           <property name="text">
-           <string>  点击登录</string>
+           <string/>
           </property>
          </widget>
          <widget class="QLabel" name="label_tips">
@@ -133,7 +133,7 @@ background-color: transparent;
 }</string>
           </property>
           <property name="text">
-           <string>您暂时未登录账号，  请先登录账号！</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>

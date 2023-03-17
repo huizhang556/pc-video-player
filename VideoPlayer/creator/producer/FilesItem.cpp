@@ -45,6 +45,7 @@ FilesItem::~FilesItem()
 void FilesItem::initWorkUI()
 {
 //    this->setFocusPolicy(Qt::NoFocus);
+    manager = new QNetworkAccessManager(this);
 
     ui->pushButton_remove->setToolTip(QString(u8"移除"));
 
@@ -55,9 +56,10 @@ void FilesItem::initWorkUI()
     ui->pushButton_editinfo->setChecked(false);
     ui->pushButton_editinfo->setText(QString(u8"编辑"));
 
+    //文件名应该加正则限制
     ui->lineEdit_filename->setAlignment(Qt::AlignLeft);
-//    ui->lineEdit_filename->setCursorPosition(0);
     ui->lineEdit_filename->setToolTip(QString(u8"自定义文件名称"));
+
 
     ui->lineEdit_displaytitle->setAlignment(Qt::AlignLeft);
     ui->lineEdit_displaytitle->setCursorPosition(0);
@@ -110,7 +112,11 @@ void FilesItem::handleSignalsAndSlots()
             buffer.open(QIODevice::WriteOnly);
             m_cover.save(&buffer,"png");//QImage存进buffer转为QByteArray
             imageArray.append(buffer.data());
-            emit sig_sendItem_upload(checked,QUrl(m_furl),imageArray);
+            QUrlQuery urlQuery;
+            urlQuery.addQueryItem(QString(u8"url"),m_furl);//url
+            //别名应该有特殊字符转换，且在输入文件的别名的时候就应该使用正则限制
+            urlQuery.addQueryItem(QString(u8"rename"),ui->lineEdit_filename->text().replace(" ","_").trimmed());//别名去空格（格式应为： xxx.flv等，加后缀）
+            emit sig_sendItem_upload(checked,urlQuery,imageArray);
         }
         else if(m_canedit == FILEEDIT::CANEDIT)
         {
@@ -344,6 +350,7 @@ void FilesItem::slot_setItemSize()
     ui->label_size->setText(QString(u8"大小：%1").arg(calCurrentFileSize(m_size)));
 }
 
+
 void FilesItem::slot_setItemName()
 {
     ui->lineEdit_filename->setText(m_name);
@@ -353,65 +360,74 @@ void FilesItem::slot_setItemName()
     ui->label_pic->setToolTip(m_name);
 }
 
+//根据不同情况加载图片（视频截取或者自定义封面）
 void FilesItem::slot_setItemPicture()
 {
-    QFileInfo info(m_furl);
-    QString suffix = info.suffix();
-    qDebug() << QString(u8"完成的item：url = %1, 后缀：%2").arg(m_furl).arg(suffix);
-    if(suffix == "mp3")
+    if(m_canedit == FILEEDIT::CANEDIT)//作品展示时，获取视频封面的方法（使用网络封面）
     {
-        ui->label_pic->setPixmap(QPixmap(":/images/creator/fileitem_music.png"));
+        manager->get(QNetworkRequest(QUrl(m_picpath)));//网络路径
+        connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(slot_replyCoverFinished(QNetworkReply*)));
     }
-    else if(suffix == "aac")
+    else if(m_canedit == FILEEDIT::CANWRITE)//上传时获取视频封面的方法
     {
-        ui->label_pic->setPixmap(QPixmap(":/images/creator/fileitem_music.png"));
-    }
-    else if(suffix == "mp4")
-    {
-        slot_getVideoPicure(m_furl.toStdString().c_str(),ui->label_pic);
-    }
-    else if(suffix == "flv")
-    {
-        slot_getVideoPicure(m_furl.toStdString().c_str(),ui->label_pic);
-    }
-    else if(suffix == "wav")
-    {
-        slot_getVideoPicure(m_furl.toStdString().c_str(),ui->label_pic);
-    }
-    else if(suffix == "3gp")
-    {
-        slot_getVideoPicure(m_furl.toStdString().c_str(),ui->label_pic);
-    }
-    else if(suffix == "avi")
-    {
-        slot_getVideoPicure(m_furl.toStdString().c_str(),ui->label_pic);
-    }
-    else if(suffix == "png")
-    {
-        ui->label_pic->setPixmap(QPixmap("://images/creator/fileitem_picture.png"));
-        if(m_canedit ==FILEEDIT::CANEDIT)
-        ui->pushButton_pause->setHidden(true);
-    }
-    else if(suffix == "gif")
-    {
-        ui->label_pic->setPixmap(QPixmap("://images/creator/fileitem_picture.png"));
-        if(m_canedit ==FILEEDIT::CANEDIT)
-        ui->pushButton_pause->setHidden(true);
-    }
-    else if(suffix == "jpg")
-    {
-        ui->label_pic->setPixmap(QPixmap("://images/creator/fileitem_picture.png"));
-        if(m_canedit ==FILEEDIT::CANEDIT)
-        ui->pushButton_pause->setHidden(true);
-    }
+        QFileInfo info(m_furl);
+        QString suffix = info.suffix();
+        qDebug() << QString(u8"完成的item：url = %1, 后缀：%2").arg(m_furl).arg(suffix);
+        if(suffix == "mp3")
+        {
+            ui->label_pic->setPixmap(QPixmap(":/images/creator/fileitem_music.png"));
+        }
+        else if(suffix == "aac")
+        {
+            ui->label_pic->setPixmap(QPixmap(":/images/creator/fileitem_music.png"));
+        }
+        else if(suffix == "mp4")
+        {
+            slot_getVideoPicure(m_furl.toStdString().c_str(),ui->label_pic);
+        }
+        else if(suffix == "flv")
+        {
+            slot_getVideoPicure(m_furl.toStdString().c_str(),ui->label_pic);
+        }
+        else if(suffix == "wav")
+        {
+            slot_getVideoPicure(m_furl.toStdString().c_str(),ui->label_pic);
+        }
+        else if(suffix == "3gp")
+        {
+            slot_getVideoPicure(m_furl.toStdString().c_str(),ui->label_pic);
+        }
+        else if(suffix == "avi")
+        {
+            slot_getVideoPicure(m_furl.toStdString().c_str(),ui->label_pic);
+        }
+        else if(suffix == "png")
+        {
+            ui->label_pic->setPixmap(QPixmap("://images/creator/fileitem_picture.png"));
+            if(m_canedit ==FILEEDIT::CANEDIT)
+                ui->pushButton_pause->setHidden(true);
+        }
+        else if(suffix == "gif")
+        {
+            ui->label_pic->setPixmap(QPixmap("://images/creator/fileitem_picture.png"));
+            if(m_canedit ==FILEEDIT::CANEDIT)
+                ui->pushButton_pause->setHidden(true);
+        }
+        else if(suffix == "jpg")
+        {
+            ui->label_pic->setPixmap(QPixmap("://images/creator/fileitem_picture.png"));
+            if(m_canedit ==FILEEDIT::CANEDIT)
+                ui->pushButton_pause->setHidden(true);
+        }
 
-    else
-    {
-        ui->label_pic->setPixmap(QPixmap(":/images/creator/fileitem_videos.png"));
-        if(m_canedit ==FILEEDIT::CANEDIT)
-        ui->pushButton_pause->setHidden(true);
+        else
+        {
+            ui->label_pic->setPixmap(QPixmap(":/images/creator/fileitem_videos.png"));
+            if(m_canedit ==FILEEDIT::CANEDIT)
+                ui->pushButton_pause->setHidden(true);
+        }
+        ui->label_pic->setScaledContents(true);
     }
-    ui->label_pic->setScaledContents(true);
 }
 
 void FilesItem::slot_setItemDuration()
@@ -589,18 +605,19 @@ void FilesItem::slot_updateStatus(qint64 bytesSent, qint64 bytesTotal)
     });
 }
 
+//回传回来的上传文件信息
 void FilesItem::slot_update_url_md5(const QString &url, const QString &md5)
 {
 //    qDebug() << QString(u8"video接收到传回的信息：")<< url << md5;
-    m_body.furl     = url;
-    m_body.fmd5     = md5;
-    m_body.fname    =  ui->lineEdit_filename->text();
+    m_body.furl     = url;//文件url
+    m_body.fmd5     = md5;//文件md5
+    m_body.fname    =  ui->lineEdit_filename->text();//重命名以后的名称
     m_body.fcover   =  ui->lineEdit_displaycover->text();//body创建新的item用的本地路径
-    m_body.fsize    =  m_size;
-    m_body.fnick    =  ui->lineEdit_displaytitle->text();
-    m_body.fmedtype =  ui->comboBox_mtype->currentData().toString();//是data数据，英文
+    m_body.fsize    =  m_size;//int，不是转换为时分秒的字符串
+    m_body.fnick    =  ui->lineEdit_displaytitle->text();//重新修改以后的介绍
+    m_body.fmedtype =  ui->comboBox_mtype->currentData().toString();//是data数据，英文（movies）
     m_body.fmedtheme=  ui->comboBox_mtheme->currentData().toString();
-    m_body.fduration=  ui->lineEdit_mduration->text();
+    m_body.fduration=  ui->lineEdit_mduration->text();//加载文件时候计算好的
     //插入数据
     file_insertItemDataTodb(m_body);//插入数据库用的http传回来的路径
     emit sig_sendItem_finished(m_body);//创建新的完成的item
@@ -625,8 +642,27 @@ void FilesItem::file_insertItemDataTodb(const fileBody &body)
     qDebug() << "type       = :" << body.fmedtype;
     qDebug() << "theme      = :" << body.fmedtheme;
     qDebug() << "size       = :" << body.fsize;
-    QStringList parma = {body.fnick,body.furl,body.fduration,m_picpath,QString(u8"8.8万"),body.fmedtype,body.fmedtheme,QString::number(body.fsize)};
+    QStringList parma = {body.fnick.toUtf8(),body.furl.toUtf8(),body.fduration,m_picpath,QString(u8"8.8万"),body.fmedtype,body.fmedtheme,QString::number(body.fsize)};
     dataBase::getInstance()->video_insertRecDramaListDB(parma);//插入数据
+}
+
+void FilesItem::slot_replyCoverFinished(QNetworkReply *reply)
+{
+    if (reply->error() == QNetworkReply::NoError)
+    {
+        //获取字节流构造 QPixmap 对象
+        QPixmap pixmap;
+        pixmap.loadFromData(reply->readAll());
+        ui->label_pic->setPixmap(pixmap);
+        ui->label_pic->setScaledContents(true);//内容自适应
+    }
+    else//请求失败，加载默认图片
+    {
+        qDebug() <<  QString::fromLocal8Bit("请求错误：")<<reply->errorString();
+        QPixmap pixmap("://images/icon/createhover.png");
+        ui->label_pic->setPixmap(pixmap);
+        ui->label_pic->setScaledContents(true);//内容自适应
+    }
 }
 
 

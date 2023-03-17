@@ -490,6 +490,11 @@ void NewLoginForm::chandleSignalsAndSLots()
     //用户选择
     connect(m_userLists,&UserList::sig_list_username,[=](QString name){
         ui->lineEdit_account->setText(name);
+        if(m_userLists->hasFocus())
+        {
+            m_userLists->clearFocus();
+        }
+        m_userLists->hide();
     });
 }
 

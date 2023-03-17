@@ -298,6 +298,11 @@ int dataBase::getCurrentUserGrade() const
     return m_curUserGrade;
 }
 
+bool dataBase::getCurrentUserOnline() const
+{
+    return m_online;
+}
+
 void dataBase::readXML(const QString &path)
 {
     QFile file(path);

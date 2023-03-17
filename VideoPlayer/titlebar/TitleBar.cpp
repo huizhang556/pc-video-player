@@ -300,9 +300,9 @@ void TitleBar::handleSignalAndSLots()
     connect(ui->BtnDownload,&QPushButton::clicked,[=](){emit sig_filesUploadDownLoad(6,4);});//上传下载
     //历史记录
     connect(ui->BtnHistory,&QPushButton::clicked,[=](){emit sig_historyDownload(5,0);});//历史记录
-    //截屏
+    //创作中心
     connect(ui->BtnCreate,&QPushButton::clicked,[=](){
-        CreateCenter::getInstance()->show();
+        CreateCenter::getInstance()->exec_();
         qDebug() <<QString(u8"创作中心");
     });//截屏
 

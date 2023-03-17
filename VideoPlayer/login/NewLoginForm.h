@@ -96,12 +96,12 @@ private:
 private:
     explicit NewLoginForm(QWidget *parent = nullptr);
     Ui::NewLoginForm *ui;
+    static  NewLoginForm* m_pInstance;
 //    QPoint  m_mvPos;
 
     bool    m_isEnabled = true;//刷新按钮状态(默认可以刷新)
     QAction *m_actionShowPwd;//查看密码
     QAction *m_act_pwd;//查看密码
-    static  NewLoginForm* m_pInstance;
     QPropertyAnimation *ani_opacity = nullptr;
 //    QPropertyAnimation *ani_show = nullptr;
 //    QPropertyAnimation *ani_top_hide   = nullptr;

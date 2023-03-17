@@ -3324,17 +3324,9 @@ void MultipPlayer::slot_addTempPlaylist(const int id, const QStringList &list, c
     m_curMediaUrl = curMedia;
     m_player->play();
 
-    fileType(QFileInfo(curMedia).fileName());//判断视频还是歌曲，显示对应的界面
+    fileType(curMedia);//判断视频还是歌曲，显示对应的界面
     setCollectBtnShowStatus();//处理所有的item改变时的操作
     slot_updateRateTypeUiLayout();//速率恢复正常
-
-    //测试用
-//    m_player->pause();
-//    playlist_t->clear();
-//    playlist_t->addMedia(QUrl(curMedia));
-//    m_player->setPlaylist(playlist_t);
-//    slot_setMainCurrentIndex(1);
-//    m_player->play();
 }
 
 /*监听事件*/

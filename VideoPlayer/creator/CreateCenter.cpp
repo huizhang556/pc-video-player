@@ -22,7 +22,7 @@ CreateCenter::CreateCenter(QWidget *parent) :
     this->setTitleBarMoveArea(m_ctitleBar,1);
     this->setWindowTitle(QString::fromLocal8Bit("创作中心"));
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);
-
+    this->setAttribute(Qt::WA_StyledBackground,true);
 }
 
 CreateCenter::~CreateCenter()
@@ -40,6 +40,23 @@ CreateCenter *CreateCenter::getInstance()
         m_pInstance = new CreateCenter();
     }
     return m_pInstance;
+}
+
+void CreateCenter::exec_()
+{
+    ui->stackedWidget_switch->setCurrentWidget(ui->page_login);
+    bool isOnline = dataBase::getInstance()->getCurrentUserOnline();
+    if(isOnline)//在线
+    {
+        ui->label_loginbg->setLoginTips(true);
+        m_ctitleBar->setUserIcon(true,dataBase::getInstance()->getCurrentUserHead());
+    }
+    else
+    {
+        ui->label_loginbg->setLoginTips(false);
+        m_ctitleBar->setUserIcon(false,"://images/icon/kugou.ico");
+    }
+    this->show();
 }
 
 void CreateCenter::initWorkUI()
@@ -62,7 +79,6 @@ void CreateCenter::initWorkUI()
     ui->tabWidget_create->addTab(m_maker,QString(u8"创作中心"));
     ui->tabWidget_create->addTab(m_doneWorks,QString(u8"我的作品"));
     ui->tabWidget_create->addTab(m_income,QString(u8"创作收益"));
-
 
     m_ctitleBar = new CreTitleBar(this);
     m_ctitleBar->setObjectName(QString::fromUtf8("m_ctitleBar"));

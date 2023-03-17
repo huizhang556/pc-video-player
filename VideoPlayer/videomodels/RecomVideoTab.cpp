@@ -118,15 +118,15 @@ void RecomVideoTab::slot_setCurrentVideoInfo(QString info)
 bool RecomVideoTab::slot_addRecVideoItem(QVariant musicVariant)
 {
     MusicData data = musicVariant.value<MusicData>();// 通用类型转为专用类型
-    RecVideoItem *videoItem = new RecVideoItem(data.url,data.cover,data.duration,data.alias,data.uplove);
-    QListWidgetItem *item = new QListWidgetItem(data.url);
-    item->setData(Qt::UserRole,data.alias);
+    RecVideoItem *videoItem = new RecVideoItem(data.url.toUtf8(),data.cover.toUtf8(),data.duration,data.alias.toUtf8(),data.uplove);
+    QListWidgetItem *item = new QListWidgetItem(data.url.toUtf8());
+    item->setData(Qt::UserRole,data.alias.toUtf8());
     item->setSizeHint(videoItem->size());//留出来1px的边框
     ui->listWidget_recommend->addItem(item);
     ui->listWidget_recommend->setItemWidget(item,videoItem);
-    m_tempVideoList.append(data.url);
-    m_tempInfoList.append(data.alias);
-    m_recplayList.append(data.url);
+    m_tempVideoList.append(data.url.toUtf8());
+    m_tempInfoList.append(data.alias.toUtf8());
+    m_recplayList.append(data.url.toUtf8());
 
     //信号与槽函数
     connect(videoItem,&RecVideoItem::sig_sendVideoUrl,[=](){
