@@ -84,6 +84,7 @@ void VideoTitleBar::setTitleText(const QString &text)
 void VideoTitleBar::clearTitleText()
 {
     ui->label_title->clear();
+    ui->label_title->setText("");
 }
 
 void VideoTitleBar::mouseDoubleClickEvent(QMouseEvent *event)

@@ -161,7 +161,7 @@ void ShortVideo::slot_addSelectTypeToList(const QStringList &typelist)
         ui->listWidget_type->setCurrentRow(0);
 }
 
-bool ShortVideo::slot_addRecVideoItem(QVariant musicVariant)
+bool ShortVideo::slot_addShortVideoItem(QVariant musicVariant)
 {
     MusicData data = musicVariant.value<MusicData>();// 通用类型转为专用类型
     RecVideoItem *videoItem = new RecVideoItem(data.url,data.cover,data.duration,data.alias,data.uplove);
@@ -179,7 +179,7 @@ bool ShortVideo::slot_addRecVideoItem(QVariant musicVariant)
     return true;
 }
 
-bool ShortVideo::slot_addRecVideoItem(QString url, QString path, QString time, QString info, QString count)
+bool ShortVideo::slot_addShortVideoItem(QString url, QString path, QString time, QString info, QString count)
 {
     RecVideoItem *videoItem = new RecVideoItem(url,path,time,info,count);
     QListWidgetItem *item = new QListWidgetItem(url);
@@ -193,6 +193,12 @@ bool ShortVideo::slot_addRecVideoItem(QString url, QString path, QString time, Q
         ui->listWidget_medialist->setCurrentItem(item);//实现选中样式
     });
     return true;
+}
+
+void ShortVideo::slot_clearShortLists()
+{
+    if(ui->listWidget_medialist->count() != 0)
+    ui->listWidget_medialist->clear();
 }
 
 bool ShortVideo::eventFilter(QObject *watched, QEvent *event)

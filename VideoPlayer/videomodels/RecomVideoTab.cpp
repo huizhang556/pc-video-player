@@ -117,7 +117,6 @@ void RecomVideoTab::slot_setCurrentVideoInfo(QString info)
 
 bool RecomVideoTab::slot_addRecVideoItem(QVariant musicVariant)
 {
-    ui->listWidget_recommend->clear();//每次清空
     MusicData data = musicVariant.value<MusicData>();// 通用类型转为专用类型
     RecVideoItem *videoItem = new RecVideoItem(data.url,data.cover,data.duration,data.alias,data.uplove);
     QListWidgetItem *item = new QListWidgetItem(data.url);
@@ -141,7 +140,6 @@ bool RecomVideoTab::slot_addRecVideoItem(QVariant musicVariant)
 
 bool RecomVideoTab::slot_addRecVideoItem(QString url, QString path, QString time, QString info, QString count)
 {
-    ui->listWidget_recommend->clear();//每次清空
     RecVideoItem *videoItem = new RecVideoItem(url,path,time,info,count);
     QListWidgetItem *item = new QListWidgetItem(url);
     item->setSizeHint(videoItem->size());//留出来1px的边框
@@ -165,6 +163,12 @@ bool RecomVideoTab::slot_addRecVideoItem(QString url, QString path, QString time
 void RecomVideoTab::slot_setListWidgetCurrentIndex(int index)
 {
     ui->listWidget_recommend->setCurrentRow(index);
+}
+
+void RecomVideoTab::slot_clearRecLists()
+{
+    if(ui->listWidget_recommend->count() != 0)
+    ui->listWidget_recommend->clear();
 }
 
 void RecomVideoTab::slots_switchTurn()

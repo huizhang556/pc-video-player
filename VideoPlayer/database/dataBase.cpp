@@ -1069,7 +1069,7 @@ bool dataBase::video_recDramaInfo()
 //            qDebug() << "finded drama video info = "
 //                     << id << alias <<url <<duration << cover << uplove;
             emit sig_sendVideoDramaInfo(musicdata);//主播放器推荐视频+热点资讯推荐视频用
-            emit sig_sendVideoDramaUrl(id,url);//主界面播放用
+//            emit sig_sendVideoDramaUrl(id,url);//主界面播放用（弃用）
         }
     }
     else
@@ -1098,7 +1098,7 @@ bool dataBase::creator_getdoneWorks(const QString &tags)
             body.fsize              =   query.value(6).toInt();//size
             QVariant    doneMedia;
             doneMedia.setValue(body);
-            emit sig_sendUserDoneWorks(doneMedia);//主播放器推荐视频+热点资讯推荐视频用
+            emit sig_sendUserDoneWorks(doneMedia);//完成作品展示用
             qDebug() << QString(u8"查询到用户：%1 指定类型： %2 的视频集合,且已发出信号！").arg(m_curUserID).arg(tags);
         }
     }

@@ -113,7 +113,7 @@ void DoneWorks::handleSignalsAndSlots()
                 ui->listWidget_prod_pictures->clear();
             }
             QStringList list_tags_counts = dataBase::getInstance()->creator_getAllTagsWorkCounts();
-            setUserTagsWorkCounts(list_tags_counts);
+            setUserTagsWorkCounts(list_tags_counts);//设置当前用户每种类型媒体的数量
             m_items = dataBase::getInstance()->creator_getdoneWorkCounts(current->data(Qt::UserRole).toString());//查询某个类型数量
 
             if(m_items == -1)
@@ -242,7 +242,7 @@ void DoneWorks::slot_receivedData_findTypeResult(QVariant& media)
         });
         //播放
         connect(itemWidget,&FilesItem::sig_sendItem_play,[=](){
-        MultipPlayer::getInstance()->slot_addTempPlaylist(666,QStringList{item->data(Qt::UserRole).toString()},item->text());//url + 介绍
+        MultipPlayer::getInstance()->slot_addTempPlaylist(666,QStringList{item->data(Qt::UserRole).toString()},item->data(Qt::UserRole).toString());
         });
 }
 

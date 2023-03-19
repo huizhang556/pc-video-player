@@ -383,11 +383,11 @@ void MultipPlayer::handleSignalAndSLots()
     //同类型视频推荐（添加item）
     connect(dataBase::getInstance(),SIGNAL(sig_sendVideoDramaInfo(QVariant)),m_recomTab,SLOT(slot_addRecVideoItem(QVariant)));
     //播放器右侧推荐视频---同类型视频列表
-    connect(dataBase::getInstance(),&dataBase::sig_sendVideoDramaUrl,[=](int id,QString url){
+//    connect(dataBase::getInstance(),&dataBase::sig_sendVideoDramaUrl,[=](int id,QString url){
 //        m_tempList.append(url);//临时列表添加
 //        m_t_MapList.insert(id,url);
 //        addToPlaylist(playlist_t,url);
-    });
+//    });
 
     //推荐视频
     connect(ui->pushButton_comments,&QPushButton::clicked,[=](){
@@ -614,6 +614,7 @@ void MultipPlayer::handleSignalAndSLots()
         int row = m_listWisget2->row(item);
         playlist->setCurrentIndex(row);
         m_curMediaUrl = item->data(Qt::UserRole).toString();//保存的是url
+        fileType(QUrl(m_curMediaUrl));//改变当前名称+URL
         m_player->play();
     });
 
@@ -695,7 +696,7 @@ void MultipPlayer::handleSignalAndSLots()
         if(m_player->playlist() == playlist)
         {
             fileType(index);//判断视频还是歌曲，显示对应的界面
-            m_listWisget2->setCurrentRow(index);
+            m_listWisget2->setCurrentRow(index);//设置对应的item选中
             setCollectBtnShowStatus();//处理所有的item改变时的操作
             slot_updateRateTypeUiLayout();//速率恢复正常
         }
@@ -715,7 +716,7 @@ void MultipPlayer::handleSignalAndSLots()
     {
         if(m_player->playlist() == playlist)
         {
-            fileType(index);//判断视频还是歌曲，显示对应的界面
+//            fileType(index);//判断视频还是歌曲，显示对应的界面（貌似无用）
             setCollectBtnShowStatus();//处理所有的item改变时的操作
             slot_updateRateTypeUiLayout();//速率恢复正常
         }
@@ -833,7 +834,7 @@ void MultipPlayer::handleSignalAndSLots()
         {
             m_listManager->slot_setCurPlayListSelectedRow(index);
         }
-        fileType(playlist_t->currentMedia().canonicalUrl());
+        fileType(playlist_t->currentMedia().canonicalUrl());//正确可用
     });
 
     //临时列表item变化（等同于上边的）
@@ -1012,8 +1013,8 @@ void MultipPlayer::addToPlaylist(QMediaPlaylist *mylist, const QString &fileName
 /*判断文件类型3---根据文件列表和文件名检索文件名*/
 bool MultipPlayer::fileType(QStringList &filenames, int index)
 {
-    QString filename = filenames[index];
-    m_curMediaName = filename;
+    m_curMediaName = filenames[index];
+
 //    bool mp3 = filename.endsWith(QString(".mp3"),Qt::CaseInsensitive);//判断是否以.mp3结尾，去除大小写敏感
     bool mp3 = getCurrentFileType(m_curMediaName);
     if(!mp3)
@@ -1034,8 +1035,8 @@ bool MultipPlayer::fileType(QStringList &filenames, int index)
 /*判断文件类型1---根据索引检索文件名*/
 bool MultipPlayer::fileType(int index)
 {
-    QString filename = m_mapList2[index];
-    m_curMediaName = filename;
+    m_curMediaName = m_mapList2[index];
+    m_curMediaUrl   = m_mapList[index];
 //    bool mp3 = m_curMediaName.endsWith(QString(".mp3"),Qt::CaseInsensitive);//判断是否以.mp3结尾，去除大小写敏感
     bool mp3 = getCurrentFileType(m_curMediaName);
     if(!mp3)
@@ -1068,7 +1069,7 @@ bool MultipPlayer::fileType(QUrl furl)
         m_curMediaName = furl.fileName();//本地直接获取文件名
     }
 
-    bool mp3 = getCurrentFileType(m_curMediaUrl);//转化解密后的文件
+    bool mp3 = getCurrentFileType(m_curMediaUrl);//转化解密后的文件（文件名+文件地址都变过来）
     if(!mp3)
     {
         //音乐显示3，音乐界面
@@ -1169,7 +1170,7 @@ void MultipPlayer::addFileToList(const QStringList &strList)
         QString fileIcon = switchFileIconType(name);
         QListWidgetItem *pItem = new QListWidgetItem(name);
         pItem->setData(Qt::UserRole,path);//设置保存url
-        MediaItem *itemWidget = new MediaItem(MEDTYPE::MED_NORMAL,name,fileIcon,name,false,"11:18:36");
+        MediaItem *itemWidget = new MediaItem(MEDTYPE::MED_NORMAL,path,fileIcon,name,false,"11:18:36");
 
         //        pItem->setCheckState(Qt::Unchecked);//未选中
         pItem->setSizeHint(QSize(180,30));//每个item与整体空间宽度一致,效果不理想，需要在样式中设置
@@ -1184,7 +1185,7 @@ void MultipPlayer::addFileToList(const QStringList &strList)
 
         connect(itemWidget,&MediaItem::sig_media_download,[=](){
             qDebug() << QString(u8"当前item的row = ")<< m_listWisget2->row(pItem);
-            DownloadType::getInstance()->showDownloadForm(1,pItem->text());
+            DownloadType::getInstance()->showDownloadForm(1,pItem->text(),pItem->data(Qt::UserRole).toString());
         });
 
         connect(itemWidget,&MediaItem::sig_media_delete,[=](){
@@ -1900,6 +1901,11 @@ void MultipPlayer::keyPressEvent(QKeyEvent *event)
         slot_showNormalWindows();
     }
     //    qDebug() << event->key();
+}
+
+void MultipPlayer::slot_clearRecItemLists()
+{
+    m_recomTab->slot_clearRecLists();
 }
 
 void MultipPlayer::slot_setDanmuOpenClose(bool on)
@@ -3145,7 +3151,13 @@ void MultipPlayer::slot_closeCurrentWindow()
         slot_clearListWidgetList_history();//历史列表清空
         slot_clearUserInputSearchInfo();//登陆列表以往输入的信息清空
         slot_clearAllPopupUi();//清空未关闭在界面上的
-        emit sig_mainPlayerClose();//主界面处理内存删除  
+        m_videoTitleBar->clearTitleText();
+        ui->label_media_name->clear();
+        m_curMediaName = "";
+        m_curMediaUrl = "";
+
+        emit sig_mainPlayerClose();//主界面处理内存删除
+
 }
 
 //全屏退出统一操作（两处调用）

@@ -28,8 +28,9 @@ public:
 
 public  slots:
     void    slot_addSelectTypeToList(const QStringList& typelist);
-    bool    slot_addRecVideoItem(QVariant   musicVariant);//通过结构体传递信息
-    bool    slot_addRecVideoItem(QString url, QString path,QString time,QString info,QString count);//添加item
+    bool    slot_addShortVideoItem(QVariant   musicVariant);//通过结构体传递信息
+    bool    slot_addShortVideoItem(QString url, QString path,QString time,QString info,QString count);//添加item
+    void    slot_clearShortLists();
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;

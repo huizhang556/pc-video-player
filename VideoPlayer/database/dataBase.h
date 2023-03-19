@@ -176,7 +176,7 @@ signals:
     void        sig_sendVideoDramaInfo(QVariant);//推荐剧集列表
     void        sig_sendUserDoneWorks(QVariant&);//已完成作品列表
     void        sig_sendUserDoneWorkCounts(int);//某种已完成作品数量
-    void        sig_sendVideoDramaUrl(int,QString);
+//    void        sig_sendVideoDramaUrl(int,QString);
     void        sig_sendRecordInfo(QString,QString,QString);//urlnick url createtiem
     void        sig_sendHisRecordInfo(QString,QString);//url createtime
     void        sig_sendMessage(int,QString);//信息类型 消息体

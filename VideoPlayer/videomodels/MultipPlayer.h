@@ -155,6 +155,7 @@ protected:
     void    keyPressEvent(QKeyEvent *event) override;
 
 public slots:
+    void    slot_clearRecItemLists();
 
     void    slot_setDanmuOpenClose(bool on);//设置弹幕开关
 
@@ -401,7 +402,7 @@ private:
     CustomFileDialog            *m_cusDialog        = nullptr;//自定义选择框界面
     ListManager                 *m_listManager      = nullptr;//列表管理器
     QListWidget                 *m_listWisget1      = nullptr;
-    QListWidget                 *m_listWisget2      = nullptr;//我的歌单
+    QListWidget                 *m_listWisget2      = nullptr;//本地打开文件
     QListWidget                 *m_listWisget3      = nullptr;
     QListWidget                 *m_listWisget4      = nullptr;
     QHBoxLayout                 *m_hLayout          = nullptr; //搜索按钮和搜索框布局

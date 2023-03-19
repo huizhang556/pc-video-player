@@ -43,6 +43,7 @@ public slots:
     bool    slot_addRecVideoItem(QVariant   musicVariant);//通过结构体传递信息
     bool    slot_addRecVideoItem(QString url, QString path,QString time,QString info,QString count);//添加item
     void    slot_setListWidgetCurrentIndex(int index);//设置当前选中行
+    void    slot_clearRecLists();
 
 private slots:
     void slots_switchTurn();

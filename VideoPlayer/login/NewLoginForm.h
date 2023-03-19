@@ -86,12 +86,12 @@ private:
     void        showTipContentLenRule(const QString& ruleText);//显示账号规则
     void        initAnimations();
     void        update_QRcode();//刷新二维码
-    void       set_QRcode(const QString& content);//根据内容生成二维码
-    void       addProtocol();//添加协议
-    void       addUserQuestions(FAQitem *item);//添加问题
-    void       addUserToLoginLists(int id_index);
-    void       removeUserToLoginLists(int id_index);
-    void       updateUserListGeomotry();
+    void        set_QRcode(const QString& content);//根据内容生成二维码
+    void        addProtocol();//添加协议
+    void        addUserQuestions(FAQitem *item);//添加问题
+    void        addUserToLoginLists(int id_index);
+    void        removeUserToLoginLists(int id_index);
+    void        updateUserListGeomotry();
 
 private:
     explicit NewLoginForm(QWidget *parent = nullptr);
