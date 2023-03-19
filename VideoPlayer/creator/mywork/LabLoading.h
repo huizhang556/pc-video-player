@@ -30,6 +30,7 @@ private:
     int ProgressNum;    //进度
     QTimer *timerrun;   //定时器
     int startAngle;     //进度条开始角度
+
 protected:
     void paintEvent(QPaintEvent *);
     void drawBar(QPainter *painter);    //绘制进度条

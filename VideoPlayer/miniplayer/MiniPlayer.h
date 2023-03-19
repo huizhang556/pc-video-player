@@ -1,7 +1,7 @@
 ﻿#ifndef MINIPLAYER_H
 #define MINIPLAYER_H
 #define FIXEDHEIGHT 36
-
+#include "miniplayer/Waiting.h"
 #include <QResizeEvent>
 #include <QVideoWidget>
 #include <QPushButton>
@@ -19,6 +19,7 @@
 #include <QFrame>
 #include <QLabel>
 #include <QLayout>
+#include <QMouseEvent>
 #include <QDebug>
 
 namespace Ui {
@@ -35,7 +36,9 @@ public:
     void    initWorkUI();
     void    handleSignalsAndSlots();
     void    c_show();
+
 public  slots:
+    void    slot_stopPlayer();
     void    slot_receivePlayMediaFile(const QString& mediaUrl,const QString& mediaName);
     void    slot_mouseEnter();
     void    slot_mouseLeave();
@@ -62,8 +65,8 @@ private:
     QPushButton     *m_buttonPlayer     =   nullptr;//播放
     QPushButton     *m_buttonNext       =   nullptr;//下一首
     QLabel          *m_labelProgress    =   nullptr;//进度显示
-    QLabel          *m_loadingLabel     =   nullptr;//加载状态
-    QMovie          *m_loadMovie        =   nullptr;//动图加载
+    Waiting         *m_loadingLabel     =   nullptr;//加载状态
+//    QMovie          *m_loadMovie      =   nullptr;//动图加载
     QPushButton     *m_buttonClarity    =   nullptr;//清晰度
     QPushButton     *m_buttonSound      =   nullptr;//音量
     QTimer          *m_timer            =   nullptr;

@@ -642,8 +642,10 @@ void MainWidget::handleSignalAndSLots()
 
 
     /**********************热点资讯************************/
-    //热点资讯
+    //热点资讯(加载推荐视频)
     connect(dataBase::getInstance(),SIGNAL(sig_sendVideoDramaInfo(QVariant)),m_shortVideo,SLOT(slot_addRecVideoItem(QVariant)));
+    //短视频转到主播放器（777-url集合-url）
+    connect(m_shortVideo,&ShortVideo::sig_sendToMainPlayer,MultipPlayer::getInstance(),&MultipPlayer::slot_addTempPlaylist);
 
     /**********************浮动桌面***************************/
     //桌面歌词关闭

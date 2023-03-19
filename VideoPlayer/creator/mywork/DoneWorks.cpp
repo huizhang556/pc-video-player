@@ -78,15 +78,9 @@ void DoneWorks::handleSignalsAndSlots()
 
     //媒体列表
     connect(ui->listWidget_producelist,&QListWidget::currentItemChanged,[=](QListWidgetItem *current, QListWidgetItem *previous){
-        if(previous != nullptr)
-        {
-//            getProgresslable(previous,"label_status")->stopRun();
-        }
         if(current != nullptr)
         {
             m_curItem = current;
-//            getProgresslable(current,"label_status")->startRun();
-//            QTimer::singleShot(800,0,[=](){getProgresslable(m_curItem,"label_status")->stopRun();});
             qDebug()<< QString(u8"当前点击的item信息：") << current->text() << current->data(Qt::UserRole).toString();
             if(m_curItem->text() == QString(u8"电影"))
             {
@@ -118,8 +112,9 @@ void DoneWorks::handleSignalsAndSlots()
                 ui->stackedWidget_produce->setCurrentIndex(5);
                 ui->listWidget_prod_pictures->clear();
             }
-
-            m_items = dataBase::getInstance()->creator_getdoneWorkCounts(current->data(Qt::UserRole).toString());//查询数量
+            QStringList list_tags_counts = dataBase::getInstance()->creator_getAllTagsWorkCounts();
+            setUserTagsWorkCounts(list_tags_counts);
+            m_items = dataBase::getInstance()->creator_getdoneWorkCounts(current->data(Qt::UserRole).toString());//查询某个类型数量
 
             if(m_items == -1)
             {
@@ -198,7 +193,7 @@ void DoneWorks::slot_receivedData_findTypeResult(QVariant& media)
         qDebug() << "fmedtheme" << body.fmedtheme << endl;
         qDebug() << "fsize" << body.fsize << endl;
 
-        QListWidgetItem *item = new QListWidgetItem(body.fnick);
+        QListWidgetItem *item = new QListWidgetItem(body.fnick);//介绍
         item->setData(Qt::UserRole,body.furl);
         FilesItem *itemWidget = new FilesItem(FILEEDIT::CANEDIT,body.furl,body.fsize,body.fcover);
         itemWidget->initFileItem(body);
@@ -247,9 +242,7 @@ void DoneWorks::slot_receivedData_findTypeResult(QVariant& media)
         });
         //播放
         connect(itemWidget,&FilesItem::sig_sendItem_play,[=](){
-        MultipPlayer::getInstance()->show();
-        MultipPlayer::getInstance()->slot_addTempPlaylist(666,QStringList{item->data(Qt::UserRole).toString()},item->text());
-    //        qDebug() << QString(u8"接收到的播放地址：")<< item->data(Qt::UserRole).toString();
+        MultipPlayer::getInstance()->slot_addTempPlaylist(666,QStringList{item->data(Qt::UserRole).toString()},item->text());//url + 介绍
         });
 }
 
@@ -348,4 +341,20 @@ void DoneWorks::showErrorPageMessage(QWidget *page, const QString &message)
 {
     ui->stackedWidget_produce->setCurrentWidget(page);
     ui->pushButton_error->setText(message);
+}
+
+void DoneWorks::setUserTagsWorkCounts(QStringList &list_counts)
+{
+    for(int i = 0; i < list_counts.count(); i++)
+    {
+        QLabel *lab_counts = getCurrentItem(ui->listWidget_producelist->item(i),"label_counts");
+        if(lab_counts != nullptr)
+        {
+            lab_counts->setText(list_counts.at(i));//设置查询到的数量
+        }
+        else
+        {
+            qDebug() << QString(u8"设置数量的item 没找到！");
+        }
+    }
 }

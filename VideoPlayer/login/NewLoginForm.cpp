@@ -88,6 +88,10 @@ void NewLoginForm::initWorkUI()
     ui->lineEdit_userpwd->setPlaceholderText(QString(u8"登陆密码"));
     ui->lineEdit_userpwd->setEchoMode(QLineEdit::Password);
     ui->lineEdit_userpwd->addAction(m_actionShowPwd,QLineEdit::TrailingPosition);
+    ui->lineEdit_telNumber->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_checkCode->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_account->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_userpwd->setContextMenuPolicy(Qt::NoContextMenu);
 
     m_userLists = new UserList();
     m_userLists->setFixedWidth(316);//等宽度
@@ -106,6 +110,10 @@ void NewLoginForm::initWorkUI()
     ui->lineEdit_regis_checkCode->setPlaceholderText(QString(u8"请输入验证码或密码"));
     ui->lineEdit_regis_checkCode->setEchoMode(QLineEdit::Password);
     ui->lineEdit_regis_checkCode->addAction(m_act_pwd,QLineEdit::TrailingPosition);
+    ui->lineEdit_regis_telNumber->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_regis_checkCode->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_regis_email->setContextMenuPolicy(Qt::NoContextMenu);
+
 
     //正则限制输入内容
     QRegExp regExp_account(QString(u8"[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]+"));//汉字+字母+数字，不限制长度
@@ -125,6 +133,10 @@ void NewLoginForm::initWorkUI()
     ui->lineEdit_secondpwd->setPlaceholderText(QString(u8"再次输入新的密码"));
     ui->lineEdit_firstpwd->setEchoMode(QLineEdit::Password);
     ui->lineEdit_secondpwd->setEchoMode(QLineEdit::Password);
+    ui->lineEdit_fpwd_account->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_fpwd_checkCode->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_firstpwd->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_secondpwd->setContextMenuPolicy(Qt::NoContextMenu);
     ui->stackedWidget_right->setCurrentIndex(0);
     //解决QLineEdit回车键退出
     ui->pushButton_close->setFocusPolicy(Qt::NoFocus);//默认具有焦点

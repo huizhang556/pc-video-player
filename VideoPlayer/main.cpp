@@ -87,7 +87,11 @@ int main(int argc, char *argv[])
 #if 0
     //    DesktopLyric::getInstance()->show();
 
-//        MultipPlayer::getInstance()->show();
+    //    MultipPlayer::getInstance()->show();
+
+//    MiniPlayer m;
+//    m.c_show();
+//    m.slot_receivePlayMediaFile("http://43.143.226.251:8080/group1/videos_drama/SuperStar_SHE.mp4","SuperStar_SHE");
 
     //    ResultLists w; w.show();
 

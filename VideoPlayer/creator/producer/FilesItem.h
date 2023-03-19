@@ -107,6 +107,9 @@ private:
     QString    getCurtentComboBoxText(const QComboBox* combobox, const QString& itemtext);
     void       file_insertItemDataTodb(const fileBody& body);//插入数据库媒体信息
 
+    QString    QStrToBase64(QString str);
+    QString    Base64ToQStr(QString base64Str);
+
 private slots:
     void    slot_replyCoverFinished(QNetworkReply *reply);
 

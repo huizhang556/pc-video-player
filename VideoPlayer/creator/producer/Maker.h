@@ -29,9 +29,9 @@ class Maker : public QWidget
 public:
     explicit Maker(QWidget *parent = nullptr);
     ~Maker();
-    void    initWorkUI();
-    void    handleSignalsAndSlots();
-    void    setInstallEventer();
+    void            initWorkUI();
+    void            handleSignalsAndSlots();
+    void            setInstallEventer();
 
 private slots:
     void            addMediaType(const QString& title);
@@ -40,22 +40,22 @@ private slots:
 
 private:
 private:
-    void           file_upload_pause();//暂停
-    void           file_upload_stop();//移除
-    void           file_upload_start(const QUrlQuery media_url, const QByteArray &pic_url, FilesItem *fileItem);//上传文件到服务器
-    QList<QUrl>    getOpenFileSystem();
-    void           checkListItemsCounts();
-    void           file_createItemToAnotherListWgt(const fileBody& body);
-    void           addFileItemsToList(const QList<QUrl> urlLists);
-    QString        file_getFileSuffix(const QString& suffix);//获取文件类型
+    void            file_upload_pause();//暂停
+    void            file_upload_stop();//移除
+    void            file_upload_start(const QUrlQuery media_url, const QByteArray &pic_url, FilesItem *fileItem);//上传文件到服务器
+    QList<QUrl>     getOpenFileSystem();
+    void            checkListItemsCounts();
+    void            file_createItemToAnotherListWgt(const fileBody& body);
+    void            addFileItemsToList(const QList<QUrl> urlLists);
+    QString         file_getFileSuffix(const QString& suffix);//获取文件类型
 
 private:
     Ui::Maker *ui;
     QSignalMapper   *m_signalMapper =   nullptr;
-    AddMediaInfo   *m_mediaBox      =   nullptr;
-    QButtonGroup   *m_buttonGroup1  =   nullptr;
-    QButtonGroup   *m_buttonGroup2  =   nullptr;
-    QButtonGroup   *m_buttonGroup3  =   nullptr;
+    AddMediaInfo    *m_mediaBox      =   nullptr;
+    QButtonGroup    *m_buttonGroup1  =   nullptr;
+    QButtonGroup    *m_buttonGroup2  =   nullptr;
+    QButtonGroup    *m_buttonGroup3  =   nullptr;
 
 signals:
     void    sig_file_uploadall_clear();

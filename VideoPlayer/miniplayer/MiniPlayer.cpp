@@ -3,7 +3,7 @@
 MiniPlayer::MiniPlayer(QWidget *parent) :
     QWidget(parent)
 {
-    setWindowFlags(Qt::FramelessWindowHint);
+//    setWindowFlags(Qt::FramelessWindowHint);
     initWorkUI();
     handleSignalsAndSlots();
 }
@@ -15,6 +15,7 @@ MiniPlayer::~MiniPlayer()
     delete  m_videoMenu;
     delete  m_clityListWgt;
     delete  m_frameSound;
+    delete  m_loadingLabel;
 //    delete  m_player;
 //    delete  m_playlist;
 //    delete  m_videoWidget;
@@ -26,17 +27,17 @@ void MiniPlayer::initWorkUI()
 
     m_timer = new QTimer(this);
     m_timer->start(1000);
-
+    //标题栏整体
     m_frameTitle = new QFrame(this);
     m_frameTitle->setContentsMargins(0,0,0,0);
     m_frameTitle->setFixedHeight(FIXEDHEIGHT);
     m_frameTitle->setMinimumWidth(700);
     m_frameTitle->setObjectName(QString::fromUtf8(u8"m_miniframeTitle"));
-
+    //标题显示安妮
     m_buttonTitle = new QPushButton(QString(u8"mini播放器"));
     m_buttonTitle->setObjectName(QString::fromUtf8("m_minibuttonTitle"));
     m_buttonTitle->setMinimumSize(600,FIXEDHEIGHT-4);
-
+    //关闭按钮
     m_buttonClose = new QPushButton(QString(u8"X"));
     m_buttonClose->setObjectName(QString::fromUtf8("m_minim_buttonClose"));
     m_buttonClose->setFixedSize(30,30);
@@ -50,12 +51,13 @@ void MiniPlayer::initWorkUI()
     hblayout1->addWidget(m_buttonClose);
     m_frameTitle->setLayout(hblayout1);
 
+    //下部整个大的控制部分
     m_frameControl = new QFrame(this);
     m_frameControl->setContentsMargins(0,0,0,0);
     m_frameControl->setFixedHeight(FIXEDHEIGHT+12);//加一个进度条高度
     m_frameControl->setMinimumWidth(700);
     m_frameControl->setObjectName(QString::fromUtf8(u8"m_miniframeControl"));
-
+    //清晰度选择
     m_clityListWgt = new QListWidget();
     m_clityListWgt->installEventFilter(this);
     m_clityListWgt->setFixedSize(80,150);
@@ -84,7 +86,7 @@ void MiniPlayer::initWorkUI()
     m_clityListWgt->addItem(item_clity3);
     m_clityListWgt->addItem(item_clity2);
     m_clityListWgt->addItem(item_clity1);
-
+    //声音部分
     m_frameSound = new QFrame();
     m_frameSound->installEventFilter(this);
     m_frameSound->setContentsMargins(0,0,0,0);
@@ -92,7 +94,7 @@ void MiniPlayer::initWorkUI()
     m_frameSound->setHidden(true);//指定父亲默认是显示在父亲的左上角
     m_frameSound->setObjectName(QString::fromUtf8(u8"m_miniframeSound"));
     m_frameSound->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool);
-
+    //垂直QSlider
     m_verSlider = new QSlider(Qt::Vertical);
     m_verSlider->setFixedSize(30,100);
     m_verSlider->setRange(0,100);
@@ -104,36 +106,36 @@ void MiniPlayer::initWorkUI()
     vblayout0->setContentsMargins(0,0,0,0);
     vblayout0->setMargin(0);
     vblayout0->addWidget(m_verSlider);
-
+    //进度条
     m_horSlider = new QSlider(Qt::Horizontal);
     m_horSlider->setFixedHeight(12);
     m_horSlider->setObjectName(QString::fromUtf8("m_minihorSlider"));
-
+    //播放按钮
     m_buttonPlayer = new QPushButton();
     m_buttonPlayer->setObjectName(QString::fromUtf8("m_minibuttonPlayer"));
     m_buttonPlayer->setFixedSize(20,20);
     m_buttonPlayer->setCheckable(true);
-
+    //下一首按钮
     m_buttonNext = new QPushButton();
     m_buttonNext->setObjectName(QString::fromUtf8("m_minibuttonNext"));
     m_buttonNext->setFixedSize(20,20);
-
+    //时间进度显示
     m_labelProgress = new QLabel();
     m_labelProgress->setText(QString(u8""));
     m_labelProgress->setObjectName(QString::fromUtf8("m_minilabelProgress"));
     m_labelProgress->setFixedSize(220,FIXEDHEIGHT-4);
-
+    //清晰度选择按钮
     m_buttonClarity = new QPushButton(QString(u8"清晰度"));
     m_buttonClarity->installEventFilter(this);
     m_buttonClarity->setObjectName(QString::fromUtf8("m_minibuttonClarity"));
     m_buttonClarity->setFixedSize(60,20);
-
+    //声音选择按钮
     m_buttonSound = new QPushButton();
     m_buttonSound->installEventFilter(this);
     m_buttonSound->setObjectName(QString::fromUtf8("m_minibuttonSound"));
     m_buttonSound->setFixedSize(20,20);
     m_buttonSound->setCheckable(true);
-
+    //播放按钮+下一首+进度显示+清晰度按钮+声音按钮
     QHBoxLayout *hblayout2 = new QHBoxLayout();
     hblayout2->setSpacing(10);
     hblayout2->setMargin(0);
@@ -144,7 +146,7 @@ void MiniPlayer::initWorkUI()
     hblayout2->addSpacerItem(new QSpacerItem(300,FIXEDHEIGHT,QSizePolicy::Expanding,QSizePolicy::Fixed));
     hblayout2->addWidget(m_buttonClarity);
     hblayout2->addWidget(m_buttonSound);
-
+    //关注+转到主播放器+收藏+下载+更多
     QVBoxLayout *vblayout1 = new QVBoxLayout();
     vblayout1->setSpacing(0);
     vblayout1->setMargin(0);
@@ -152,8 +154,9 @@ void MiniPlayer::initWorkUI()
     vblayout1->addWidget(m_horSlider);
     vblayout1->addLayout(hblayout2);
     m_frameControl->setLayout(vblayout1);
-
-    m_videoWidget = new QVideoWidget();
+    //视频输出（要想有图像需要有背景）
+    m_videoWidget = new QVideoWidget(this);
+    m_videoWidget->installEventFilter(this);
     m_videoWidget->setContextMenuPolicy(Qt::CustomContextMenu);//自定义右键菜单
 
     QVBoxLayout *vblayout2 = new QVBoxLayout();
@@ -165,18 +168,24 @@ void MiniPlayer::initWorkUI()
     this->setContentsMargins(0,0,0,0);
 
     //动图
-    m_loadingLabel = new QLabel(this);
+    m_loadingLabel = new Waiting();
     m_loadingLabel->setFixedSize(66,66);
+    m_loadingLabel->setBgColor(QColor(0, 0, 0));//纯黑
+    m_loadingLabel->setBarColor(QColor(77, 195, 237));//浅蓝色
+    m_loadingLabel->setTextColor(QColor(Qt::white));
     m_loadingLabel->setObjectName(QString::fromUtf8("m_loadingLabel"));
-    m_loadMovie = new QMovie("://images/bgpic/loading_000.gif");
-    m_loadingLabel->setMovie(m_loadMovie);
-    m_loadingLabel->hide();
-
+    m_loadingLabel->hide();//由于设置父亲，所以初始化需要隐藏
+//    m_loadMovie = new QMovie("://images/bgpic/loading_000.gif");
+//    m_loadingLabel->setMovie(m_loadMovie);
+    //播放器
     m_player = new QMediaPlayer(this);
     m_playlist = new QMediaPlaylist(m_player);
-    m_playlist->setPlaybackMode(QMediaPlaylist::Loop);
+    m_playlist->setPlaybackMode(QMediaPlaylist::Loop);//循环播放
     m_playlist->addMedia(QUrl("http://43.143.226.251:8080/group1/tempvideo/temp001.flv"));
     m_player->setPlaylist(m_playlist);
+//    void setVideoOutput(QVideoWidget *);
+//    void setVideoOutput(QGraphicsVideoItem *);
+//    void setVideoOutput(QAbstractVideoSurface *surface);
     m_player->setVideoOutput(m_videoWidget);
     m_player->setMuted(false);//静音
     m_player->setVolume(10);
@@ -196,8 +205,18 @@ void MiniPlayer::handleSignalsAndSlots()
 
     //定时器
     connect(m_timer,&QTimer::timeout,[=](){
-        on_updatePosition();
+        on_updatePosition();//更新进度值
     });
+
+    //媒体缓冲
+    connect(m_player,&QMediaPlayer::bufferStatusChanged,[=](int percent){
+        qDebug() << QString(u8"缓冲进度: %1").arg(percent);
+        if(!m_loadingLabel->isHidden())
+        {
+            m_loadingLabel->setProgressNum(percent);
+        }
+    });
+
     //媒体状态改变
     connect(m_player,&QMediaPlayer::stateChanged,[=](QMediaPlayer::State newState){
         qDebug() << QString(u8"当前媒体状态：")<<newState;
@@ -242,6 +261,8 @@ void MiniPlayer::handleSignalsAndSlots()
         }
     });
 
+
+
     connect(m_buttonSound,&QPushButton::clicked,[=](bool checked){
         if(checked)
         {
@@ -270,10 +291,11 @@ void MiniPlayer::handleSignalsAndSlots()
         emit sig_player_next();
     });
 
-    //视频右键
+    //视频右键菜单
     connect(m_videoWidget,&QVideoWidget::customContextMenuRequested,[=](){
         m_videoMenu->exec(QCursor::pos());
     });
+
 
     //全屏/退出全屏
     connect(m_screenAction,&QAction::triggered,[=](){
@@ -311,6 +333,14 @@ void MiniPlayer::c_show()
 {
     this->show();
     m_buttonClose->show();
+}
+
+void MiniPlayer::slot_stopPlayer()
+{
+    if(m_player->state() == QMediaPlayer::PlayingState)
+    {
+        m_buttonPlayer->click();
+    }
 }
 
 void MiniPlayer::slot_receivePlayMediaFile(const QString &mediaUrl, const QString &mediaName)
@@ -408,6 +438,14 @@ bool MiniPlayer::eventFilter(QObject *watched, QEvent *event)
     {
         if(event->type() == QEvent::Leave)
             m_clityListWgt->hide();
+    }
+    else if(watched == m_videoWidget)
+    {
+        QMouseEvent *mevent = static_cast<QMouseEvent*>(event);
+        if((mevent->buttons() & Qt::LeftButton) && event->type() == QEvent::MouseButtonPress)
+        {
+            m_buttonPlayer->click();
+        }
     }
     return QWidget::eventFilter(watched,event);
 }
@@ -682,14 +720,22 @@ void MiniPlayer::slot_mediaLoadingStatus(QMediaPlayer::MediaStatus status)
 
 void MiniPlayer::media_loading_start()
 {
-    m_loadMovie->start();
-    m_loadingLabel->move(this->width()/2-m_loadingLabel->width()/2,this->height()/2-m_loadingLabel->height()/2);
+//    m_loadMovie->start();
+//    m_loadingLabel->move(this->width()/2-m_loadingLabel->width()/2,this->height()/2-m_loadingLabel->height()/2);
+    const int g_x = this->parentWidget()->mapToGlobal(this->pos()).x();
+    const int g_y = this->parentWidget()->mapToGlobal(this->pos()).y();
+    m_loadingLabel->setGeometry(g_x + (this->width()-m_loadingLabel->width())/2,
+                                g_y + (this->height()-m_loadingLabel->height())/2,
+                                m_loadingLabel->width(),
+                                m_loadingLabel->height());
     m_loadingLabel->raise();
+    m_loadingLabel->startRun();
     m_loadingLabel->show();
 }
 
 void MiniPlayer::media_loading_end()
 {
-    m_loadMovie->stop();
+//    m_loadMovie->stop();
+//    m_loadingLabel->stopRun();
     m_loadingLabel->hide();
 }

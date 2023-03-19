@@ -4,7 +4,7 @@
 #音视频播放器
 #-------------------------------------------------
 
-QT       += core gui xml  multimediawidgets multimedia sql network webenginewidgets concurrent
+QT += core gui xml  multimediawidgets multimedia sql network webenginewidgets concurrent printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += C++11 ##使用C++11某些新语法
@@ -22,7 +22,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #调试窗口必须要release才能生效，而后再使用debug
 #CONFIG += console pro
 #关闭编译警告提示
-CONFIG      += warn_off
+CONFIG += warn_off
 
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.

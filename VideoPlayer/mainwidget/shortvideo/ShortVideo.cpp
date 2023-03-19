@@ -28,6 +28,7 @@ void ShortVideo::initWorkUI()
     ui->pushButton_collect->setCheckable(true);
     ui->pushButton_collect->setChecked(false);
 
+    ui->listWidget_type->setFixedWidth(900);//固定900，不动态变化调整
     ui->listWidget_type->setFocusPolicy(Qt::NoFocus);
     ui->listWidget_type->setViewMode(QListView::IconMode);
     ui->listWidget_type->setWrapping(false);
@@ -37,6 +38,7 @@ void ShortVideo::initWorkUI()
     ui->listWidget_type->setHorizontalScrollMode(QAbstractItemView::ScrollPerItem);
     ui->listWidget_type->setOffset(180,0,7,0,3);
     ui->listWidget_type->setButtonControl(true);
+    ui->listWidget_type->setAdjist(false);//不动态调节
 
     ui->listWidget_medialist->setFocusPolicy(Qt::NoFocus);
     ui->listWidget_medialist->setViewMode(QListView::ListMode);
@@ -54,7 +56,7 @@ void ShortVideo::initWorkUI()
 void ShortVideo::handleSignalsAndSLots()
 {
     //节目类型选择
-    connect(ui->listWidget_type,&CusListWidget::itemClicked,[=](QListWidgetItem *item){
+    connect(ui->listWidget_type,&QListWidget::itemClicked,[=](QListWidgetItem *item){
         qDebug() << item->text();
     });
 
@@ -69,12 +71,14 @@ void ShortVideo::handleSignalsAndSLots()
             getListWidgetItemButton(current,"pushButton_videoInfo")->setChecked(true);
             m_curMediaUrl = current->text();//url
             m_curMediaName = current->data(Qt::UserRole).toString();//介绍
-            ui->widget_player->slot_receivePlayMediaFile(m_curMediaUrl,m_curMediaName);
+            ui->widget_player->slot_receivePlayMediaFile(m_curMediaUrl,m_curMediaName);//URL+介绍
         }
     });
 
-    //转到主 播放器
+    //转到主 播放器(固定编号777)
     connect(ui->pushButton_toPlayer,&QPushButton::clicked,[=](){
+        ui->widget_player->slot_stopPlayer();//停止mini播放器播放
+        emit sig_sendToMainPlayer(777,QStringList{m_curMediaUrl},m_curMediaUrl);
         qDebug() << QString(u8"转到主 播放器");
     });
 

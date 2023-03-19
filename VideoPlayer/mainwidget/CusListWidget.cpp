@@ -123,6 +123,11 @@ void CusListWidget::setZoomScale(double scale)
     m_scale = scale;
 }
 
+void CusListWidget::setAdjist(bool adjust)
+{
+    m_adjust = adjust;
+}
+
 bool CusListWidget::eventFilter(QObject *object, QEvent *event)
 {
     if(object == this && event->type() == QEvent::Resize)
@@ -136,8 +141,9 @@ bool CusListWidget::eventFilter(QObject *object, QEvent *event)
 
 void CusListWidget::autoResizeListItemsSize()
 {
-    if(this->count() == 0)
-        return;
+    if(!m_adjust) return;
+    if(this->count() == 0) return;
+
     if(this->count() > 0)
     {
         int sizeHint_h = this->item(0)->sizeHint().height();//求默认宽度

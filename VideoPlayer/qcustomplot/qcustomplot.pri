@@ -1,9 +1,9 @@
 
-SOURCES +=
-#    $$PWD/qcustomplot.cpp
+SOURCES += \
+    $$PWD/qcustomplot.cpp
 
 
-HEADERS +=
-#    $$PWD/qcustomplot.h
+HEADERS += \
+    $$PWD/qcustomplot.h
 
 FORMS +=

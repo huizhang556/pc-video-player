@@ -5,9 +5,11 @@
 #include <QTimer>
 #include <QEvent>
 #include <QVector>
+#include <QUrlQuery>
 #include <QVariant>
 #include <QListView>
 #include <QComboBox>
+#include <QFileInfo>
 #include <QClipboard>
 #include <QRadioButton>
 #include <QButtonGroup>
@@ -73,10 +75,10 @@ private:
     void    addSongQualityItem_4(bool vip, const QString& size);//无损
 
     void    addVideoQualityItem_1(QVector<QVariant>& videoBody);//视频
-
+    QString Base64ToQStr(QString base64Str);
 signals:
-    void    sig_source_song_download(int,QString,QString,QString);//类型（视频or歌曲），下载url,品质,保存路劲
-    void    sig_source_video_download(int,QString,QString,QString);//类型（视频or歌曲），下载url,品质,保存路劲
+    void    sig_source_song_download(int,QUrlQuery,QString,QString);//类型（视频or歌曲），下载url,品质,保存路劲
+    void    sig_source_video_download(int,QUrlQuery,QString,QString);//类型（视频or歌曲），下载url,品质,保存路劲
     void    sig_sendToconfig();//设置
 };
 

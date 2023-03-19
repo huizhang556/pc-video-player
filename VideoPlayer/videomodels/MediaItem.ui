@@ -132,7 +132,7 @@ color: rgb(120, 120, 120);
         <string notr="true"/>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="page1">
         <property name="minimumSize">
@@ -303,13 +303,13 @@ image: url(:/images/fileitem/file_ismore.png);
           <widget class="QPushButton" name="pushButton_duration">
            <property name="minimumSize">
             <size>
-             <width>40</width>
+             <width>88</width>
              <height>25</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>16777215</width>
+             <width>88</width>
              <height>25</height>
             </size>
            </property>

@@ -290,7 +290,7 @@ void ListManager::createNewSongList(FINSTATUS status, QString sname)
         }
     });
 
-    //item被点击，播放器播放媒体
+    //item被点击，播放器播放媒体(id +url集合 + url)
     connect(itemWidget,&NewListItem::sig_item_newPlaylist,[=](int id,QStringList list,QString url){
         m_playListItem = itemWidget;
         emit sig_play_newPlayist(id,list,url);

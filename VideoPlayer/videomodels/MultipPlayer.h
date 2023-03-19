@@ -57,6 +57,7 @@
 #include <QDesktopWidget>
 #include <QStackedWidget>
 #include <QMediaPlaylist>
+#include <QMediaContent>
 #include <QSystemTrayIcon>
 #include <QDesktopServices>
 #include <QPropertyAnimation>
@@ -105,13 +106,18 @@ public:
 
     const QString switchFileIconType(const QString& filename);//判断文件图标类型
 
-    bool    getCurrentFileType(const QString& filename);//视频 or 音乐
+    bool    getCurrentFileType(const QString &fpath_name);//重载函数1 视频 or 音乐
+
+    bool    getFileType2(const QString& fileName);//根据文件名判断是音乐还是视频
+
+    bool    getFileType(const QString& fileSuffix);//重载函数1 视频 or 音乐
 
     bool    fileType(int index);// 重载函数1  判断文件类型显示视频还是音乐
 
-    bool    fileType(QString filename);// 重载函数2  判断文件类型显示视频还是音乐
+    bool    fileType(QUrl furl);// 重载函数2  判断文件类型显示视频还是音乐
 
     bool    fileType(QStringList &filenames,int index);// 重载函数3  判断文件类型显示视频还是音乐
+
 
     void    removeTabwidgetTabBar(QTabWidget *tabwidget);
 
@@ -194,7 +200,7 @@ public slots:
 
     void    slot_setVideTitleBar(int index);
 
-    void    slot_addTempPlaylist(const int id,const QStringList& list, const QString& curMedia);//切换播放列表
+    void    slot_addTempPlaylist(const int id,const QStringList& list, const QString& curUrl);//切换播放列表
 
     void    on_pushButton_pauseStart_clicked();//暂停、播放
 
@@ -332,6 +338,9 @@ private slots:
     void    slot_selectAllListItem(QListWidget *obj);//全选
 
 private:
+    QString         Base64ToQStr(QString base64Str);
+
+    QString         Base64UrlToString(QUrl base64Url);
 
     void    setAnyFrameMediaUrl(const QUrl& url);//设置求取任意帧的资源路径
 

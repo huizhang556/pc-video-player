@@ -141,9 +141,14 @@ void DownloadType::handleSignalsAndSlots()
             return;
         }
         m_sourceUrl = ui->lineEdit_downloadUrl->text().trimmed();
-        emit sig_source_song_download(m_sourceType,m_sourceUrl,m_quality,m_curOpenPath);
-        emit sig_source_video_download(m_sourceType,m_sourceUrl,m_quality,m_curOpenPath);
-        qDebug() << QString(u8"要下载的资源选择的信息：类型：%1，路径：%2，质量：%3，会员类型：%4").arg(m_sourceType).arg(m_sourceUrl).arg(m_quality).arg(m_sourceVip);
+        QFileInfo info(m_sourceUrl);
+        QString realName = Base64ToQStr(info.fileName());//名称+后缀（xxxx.mp4）
+        QUrlQuery query_url;
+        query_url.addQueryItem("url",m_sourceUrl);
+        query_url.addQueryItem("nick",realName);
+        emit sig_source_song_download(m_sourceType,query_url,m_quality,m_curOpenPath);//歌曲类型
+        emit sig_source_video_download(m_sourceType,query_url,m_quality,m_curOpenPath);//视频类型
+        qDebug() << QString(u8"要下载的资源选择的信息：类型：%1，路径：%2，质量：%3，会员类型：%4").arg(m_sourceType).arg(query_url.queryItemValue("url")).arg(m_quality).arg(m_sourceVip);
         this->accept();
         this->close();
     });
@@ -181,6 +186,16 @@ void DownloadType::handleSignalsAndSlots()
     connect(ui->pushButton_moreSet,&QPushButton::clicked,[=](){
         emit sig_sendToconfig();
     });
+}
+
+QString DownloadType::Base64ToQStr(QString base64Str)
+{
+    QByteArray byteA;
+    std::string stdStr = base64Str.toStdString();
+    byteA=QByteArray(stdStr.c_str() );
+    byteA=byteA.fromBase64(byteA);
+
+    return  QString::fromUtf8(byteA);
 }
 
 void DownloadType::showDownloadForm(int type, const QString &name, const QString &url)

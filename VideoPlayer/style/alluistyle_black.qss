@@ -156,11 +156,21 @@ font-size: 16px;
 background-color: transparent;
 }
 
+#m_minibuttonTitle:hover
+{
+color: #c0ff02;
+}
+
 #m_minim_buttonClose
 {
 color: red;
 font-size: 12px;
 background-color: transparent;
+}
+
+#m_minim_buttonClose:hover
+{
+color: #c0ff02;
 }
 
 /**底部控制栏**/
@@ -211,7 +221,7 @@ background-color: transparent;
 
 #m_minibuttonClarity:hover
 {
-color: blue;
+color: #c0ff02;
 }
 
 /*声音*/

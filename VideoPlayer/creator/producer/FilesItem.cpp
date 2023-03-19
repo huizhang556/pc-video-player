@@ -59,12 +59,16 @@ void FilesItem::initWorkUI()
     //文件名应该加正则限制
     ui->lineEdit_filename->setAlignment(Qt::AlignLeft);
     ui->lineEdit_filename->setToolTip(QString(u8"自定义文件名称"));
-
+    ui->lineEdit_filename->setContextMenuPolicy(Qt::NoContextMenu);
 
     ui->lineEdit_displaytitle->setAlignment(Qt::AlignLeft);
     ui->lineEdit_displaytitle->setCursorPosition(0);
+    ui->lineEdit_displaytitle->setContextMenuPolicy(Qt::NoContextMenu);
+
     ui->lineEdit_mduration->setAlignment(Qt::AlignLeft);
 //    ui->lineEdit_mduration->setCursorPosition(0);
+    ui->lineEdit_mduration->setContextMenuPolicy(Qt::NoContextMenu);
+
     ui->comboBox_mtype->setView(new QListView());
     ui->comboBox_mtype->addItem(QString(u8"电影"),QString(u8"movies"));
     ui->comboBox_mtype->addItem(QString(u8"网络剧"),QString(u8"netdrama"));
@@ -83,6 +87,7 @@ void FilesItem::initWorkUI()
     ui->comboBox_mtheme->addItem(QString(u8"脱口秀"),QString(u8"脱口秀"));
     ui->lineEdit_displaycover->setPlaceholderText(QString(u8"选择自定义封面"));
     ui->lineEdit_displaycover->setReadOnly(true);//只读
+    ui->lineEdit_displaycover->setContextMenuPolicy(Qt::NoContextMenu);
 
     ui->stackedWidget_info->setCurrentIndex(0);
 }
@@ -115,7 +120,10 @@ void FilesItem::handleSignalsAndSlots()
             QUrlQuery urlQuery;
             urlQuery.addQueryItem(QString(u8"url"),m_furl);//url
             //别名应该有特殊字符转换，且在输入文件的别名的时候就应该使用正则限制
-            urlQuery.addQueryItem(QString(u8"rename"),ui->lineEdit_filename->text().replace(" ","_").trimmed());//别名去空格（格式应为： xxx.flv等，加后缀）
+//            urlQuery.addQueryItem(QString(u8"rename"),ui->lineEdit_filename->text().replace(" ","_").trimmed());//别名去空格（格式应为： xxx.flv等，加后缀）
+            //改用将QString 转换为 Base64 特殊字符也能包含进去，只是将名称改变
+            QString rename  = QStrToBase64(ui->lineEdit_filename->text());
+            urlQuery.addQueryItem(QString(u8"rename"),rename);
             emit sig_sendItem_upload(checked,urlQuery,imageArray);
         }
         else if(m_canedit == FILEEDIT::CANEDIT)
@@ -353,11 +361,22 @@ void FilesItem::slot_setItemSize()
 
 void FilesItem::slot_setItemName()
 {
-    ui->lineEdit_filename->setText(m_name);
-    ui->lineEdit_displaytitle->setText(m_name.split(".").first());
-//    ui->lineEdit_filename->setCursorPosition(0);鼠标到达最左边
-    ui->lineEdit_filename->setFocusPolicy(Qt::ClickFocus);
-    ui->label_pic->setToolTip(m_name);
+    if(m_canedit == FILEEDIT::CANWRITE)//上传时不加密
+    {
+        ui->lineEdit_filename->setText(m_name);
+        ui->lineEdit_displaytitle->setText(m_name.split(".").first());
+    //    ui->lineEdit_filename->setCursorPosition(0);鼠标到达最左边
+        ui->lineEdit_filename->setFocusPolicy(Qt::ClickFocus);
+        ui->label_pic->setToolTip(m_name);
+    }
+    else//需要解析
+    {
+        ui->lineEdit_filename->setText(Base64ToQStr(m_name));//filename直接解析出来
+        ui->lineEdit_displaytitle->setText(Base64ToQStr(m_name).split(".").first());//解析出来的文件名去后缀
+    //    ui->lineEdit_filename->setCursorPosition(0);鼠标到达最左边
+        ui->lineEdit_filename->setFocusPolicy(Qt::ClickFocus);
+        ui->label_pic->setToolTip(Base64ToQStr(m_name));
+    }
 }
 
 //根据不同情况加载图片（视频截取或者自定义封面）
@@ -644,6 +663,24 @@ void FilesItem::file_insertItemDataTodb(const fileBody &body)
     qDebug() << "size       = :" << body.fsize;
     QStringList parma = {body.fnick.toUtf8(),body.furl.toUtf8(),body.fduration,m_picpath,QString(u8"8.8万"),body.fmedtype,body.fmedtheme,QString::number(body.fsize)};
     dataBase::getInstance()->video_insertRecDramaListDB(parma);//插入数据
+}
+
+QString FilesItem::QStrToBase64(QString str)
+{
+    QByteArray byteA;
+    byteA=str.toUtf8();
+    byteA=byteA.toBase64();
+    char* cbyteA=byteA.data();
+    return QString(cbyteA);
+}
+
+QString FilesItem::Base64ToQStr(QString base64Str)
+{
+    QByteArray byteA;
+    std::string stdStr = base64Str.toStdString();
+    byteA=QByteArray(stdStr.c_str() );
+    byteA=byteA.fromBase64(byteA);
+    return  QString::fromUtf8(byteA);
 }
 
 void FilesItem::slot_replyCoverFinished(QNetworkReply *reply)

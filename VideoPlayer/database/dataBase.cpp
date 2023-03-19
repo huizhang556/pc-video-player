@@ -120,6 +120,7 @@ bool dataBase::creatMysqlConnection()
     else
     {
         qDebug()<<"database is open!";
+        qDebug() <<"this DB hasFeature:Transaction:" <<getSqlDataBase().driver()->hasFeature(QSqlDriver::Transactions);
         QSqlQuery query(getSqlDataBase());
         //sqlite2.3.4 版本开始,主键自动为自增，但是主键不能设置字符长度，否则失效
         //建表---用户信息表
@@ -1127,6 +1128,45 @@ int dataBase::creator_getdoneWorkCounts(const QString &tags)
     {
         qDebug()<< QString::fromLocal8Bit("查找 %1 用户拥有 %2 类型剧集信息记录错误").arg(m_curUserID).arg(tags) << query.lastError();
         return -1;
+    }
+}
+
+QStringList dataBase::creator_getAllTagsWorkCounts()
+{
+    QSqlQuery query(getSqlDataBase());
+//    getSqlDataBase().transaction();//开启事务
+//    getSqlDataBase().commit();//提交事务
+
+    bool isOK = query.exec(QString("select sum(case when type = '%1' then 1 else 0 end) as movie_count,"
+                                "sum(case when type = '%2' then 1 else 0 end) as drama_count,"
+                                "sum(case when type = '%3' then 1 else 0 end) as short_count,"
+                                "sum(case when type = '%4' then 1 else 0 end) as midmov_count,"
+                                "sum(case when type = '%5' then 1 else 0 end) as music_count,"
+                                "sum(case when type = '%6' then 1 else 0 end) as pic_count"
+                                " from dramalist where userid = '%7';").arg("movies").arg("netdrama").arg("shortvideos").arg("midvideos").arg("musics").arg("pictures").arg(m_curUserID));
+    if(isOK)
+    {
+        if(query.next())
+        {
+            int movie_count     = query.value(0).toInt();   qDebug() << QString(u8"movie_count: %1").arg(movie_count);
+            int drama_count     = query.value(1).toInt();   qDebug() << QString(u8"drama_count: %1").arg(drama_count);
+            int short_count     = query.value(2).toInt();   qDebug() << QString(u8"short_count: %1").arg(short_count);
+            int midmov_count    = query.value(3).toInt();   qDebug() << QString(u8"midmov_count: %1").arg(midmov_count);
+            int music_count     = query.value(4).toInt();   qDebug() << QString(u8"music_count: %1").arg(music_count);
+            int pic_count       = query.value(5).toInt();   qDebug() << QString(u8"pic_count: %1").arg(pic_count);
+            qDebug() << QString(u8"查询到用户：%1 指定各个类型的视频集合数量,且已发出信号！").arg(m_curUserID);
+            return QStringList{QString::number(movie_count),
+                        QString::number(drama_count),
+                        QString::number(short_count),
+                        QString::number(midmov_count),
+                        QString::number(music_count),
+                        QString::number(pic_count)};
+        }
+    }
+    else
+    {
+        qDebug() <<QString(u8"没有查询到用户：%1 指定各个类型的视频集合数量,且已发出信号！").arg(m_curUserID);
+        return QStringList();
     }
 }
 

@@ -55,6 +55,7 @@ private:
     QString     m_curMediaUrl;
 
 signals:
+    void    sig_sendToMainPlayer(int,const QStringList&,const QString&);
 
 };
 

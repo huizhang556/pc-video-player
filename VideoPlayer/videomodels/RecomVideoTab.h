@@ -6,6 +6,7 @@
 #include <QListWidget>
 #include <QPushButton>
 #include <QStringList>
+#include <QFileInfo>
 
 typedef struct MusicInfo //定义结构体
 {
@@ -55,6 +56,7 @@ private:
     QList<QString>          m_recplayList;//推荐播放列表
 
 private:
+
     QPushButton*    getListWidgetItemButton(QListWidgetItem* item, QString objname);//在item中查找指定按钮
 
 signals:

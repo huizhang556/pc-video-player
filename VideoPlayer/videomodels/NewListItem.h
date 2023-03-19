@@ -57,7 +57,7 @@ private:
     QString     m_name;//item 列表名称
     bool        m_switch        =   true;//default switch is open.
     QMenu       *m_rMenu        =   nullptr;//右键菜单
-    QList<QString>  m_playlist;
+    QList<QString>  m_playlist;//当前列表url集合
 private:
     void    createRightMenu();
     void    setFinishedStatus();//设置完成状态

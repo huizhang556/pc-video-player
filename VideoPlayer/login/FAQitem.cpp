@@ -34,6 +34,7 @@ void FAQitem::initWorkUI()
     ui->pushButton_indicator->setCheckable(true);
     ui->pushButton_indicator->setChecked(false);//默认是关闭的
     ui->plainTextEdit->hide();
+    ui->plainTextEdit->setReadOnly(true);//只读
     ui->plainTextEdit->setContextMenuPolicy(Qt::NoContextMenu);
     ui->plainTextEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->plainTextEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

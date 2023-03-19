@@ -1233,7 +1233,7 @@ background-color: rgba(157, 157, 157,0.8);
             <item>
              <widget class="QStackedWidget" name="stackedWidget_showType">
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="page_table">
                <layout class="QVBoxLayout" name="verticalLayout_56">
@@ -1387,21 +1387,7 @@ image: ;
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QWidget" name="widget_lines" native="true">
-                  <widget class="QLabel" name="label_4">
-                   <property name="geometry">
-                    <rect>
-                     <x>280</x>
-                     <y>80</y>
-                     <width>54</width>
-                     <height>12</height>
-                    </rect>
-                   </property>
-                   <property name="text">
-                    <string>折线图</string>
-                   </property>
-                  </widget>
-                 </widget>
+                 <widget class="QWidget" name="widget_lines" native="true"/>
                 </item>
                </layout>
               </widget>

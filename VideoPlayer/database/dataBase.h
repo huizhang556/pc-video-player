@@ -10,6 +10,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QStringList>
+#include <QSqlDriver>
 #include <QSqlDatabase>
 #include <QDesktopWidget>
 #include <QDebug>
@@ -129,6 +130,7 @@ public slots:
     //查询作品
     bool                    creator_getdoneWorks(const QString& tags);//按标签查询作品
     int                     creator_getdoneWorkCounts(const QString& tags);//查询数量
+    QStringList             creator_getAllTagsWorkCounts();//查询所有标签的媒体数量
 
 protected:
 

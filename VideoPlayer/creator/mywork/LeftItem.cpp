@@ -37,7 +37,11 @@ void LeftItem::initWorkUI()
 void LeftItem::handleSignalsAndSlots()
 {
     connect(ui->pushButton_text,&QPushButton::clicked,[=](){
+        ui->label_status->startRun();
         emit sig_item_selected(ui->pushButton_text->text());
+        QTimer::singleShot(800,0,[=](){
+            ui->label_status->stopRun();
+        });
         qDebug() << QString(u8"已发出信号：")<< ui->pushButton_text->text();
     });
 }
@@ -54,6 +58,6 @@ void LeftItem::setItemText(const QString &text)
 
 void LeftItem::setItemCounts(int counts)
 {
-    if(counts == 0) return;
+//    if(counts == 0) return;
     ui->label_counts->setText(QString::number(counts));
 }

@@ -23,6 +23,7 @@ public:
     void        setButtonControl(bool enabled);//是否需要显示左右调节按钮
     void        setOffset(int itemwidth,int width_offset,int adjust_lw,int adjust_rw,int adjust_h);
     void        setZoomScale(double scale);
+    void        setAdjist(bool adjust);
 
 protected:
     bool        eventFilter(QObject *object, QEvent *event)override;
@@ -35,6 +36,7 @@ private:
     int         m_itemWidth;
     int         m_widthOffset;
     bool        m_isShow = false;
+    bool        m_adjust = true;
 
     QPushButton     *m_videoButton_L   =   nullptr;
     QPushButton     *m_videoButton_R   =   nullptr;

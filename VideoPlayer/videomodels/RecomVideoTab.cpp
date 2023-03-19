@@ -35,7 +35,7 @@ void RecomVideoTab::initWorkUI()
 //                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp007.flv")
 //                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp008.flv")
 //                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp009.flv")
-//                  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp010.flv");
+//                  <<QString::fromLocal8Bit("http://82.1556.175.81:8080/group1/tempvideo/temp010.flv");
 
 //                  m_tempInfoList
 //                  <<QString::fromLocal8Bit("测试视频-剧集列表-赵本山改革春风吹满地，中国人民真争气")
@@ -117,16 +117,17 @@ void RecomVideoTab::slot_setCurrentVideoInfo(QString info)
 
 bool RecomVideoTab::slot_addRecVideoItem(QVariant musicVariant)
 {
+    ui->listWidget_recommend->clear();//每次清空
     MusicData data = musicVariant.value<MusicData>();// 通用类型转为专用类型
-    RecVideoItem *videoItem = new RecVideoItem(data.url.toUtf8(),data.cover.toUtf8(),data.duration,data.alias.toUtf8(),data.uplove);
-    QListWidgetItem *item = new QListWidgetItem(data.url.toUtf8());
-    item->setData(Qt::UserRole,data.alias.toUtf8());
+    RecVideoItem *videoItem = new RecVideoItem(data.url,data.cover,data.duration,data.alias,data.uplove);
+    QListWidgetItem *item = new QListWidgetItem(data.url);
+    item->setData(Qt::UserRole,data.alias);//介绍
     item->setSizeHint(videoItem->size());//留出来1px的边框
     ui->listWidget_recommend->addItem(item);
     ui->listWidget_recommend->setItemWidget(item,videoItem);
-    m_tempVideoList.append(data.url.toUtf8());
-    m_tempInfoList.append(data.alias.toUtf8());
-    m_recplayList.append(data.url.toUtf8());
+    m_tempVideoList.append(data.url);
+    m_tempInfoList.append(data.alias);
+    m_recplayList.append(data.url);
 
     //信号与槽函数
     connect(videoItem,&RecVideoItem::sig_sendVideoUrl,[=](){
@@ -140,6 +141,7 @@ bool RecomVideoTab::slot_addRecVideoItem(QVariant musicVariant)
 
 bool RecomVideoTab::slot_addRecVideoItem(QString url, QString path, QString time, QString info, QString count)
 {
+    ui->listWidget_recommend->clear();//每次清空
     RecVideoItem *videoItem = new RecVideoItem(url,path,time,info,count);
     QListWidgetItem *item = new QListWidgetItem(url);
     item->setSizeHint(videoItem->size());//留出来1px的边框
@@ -153,7 +155,7 @@ bool RecomVideoTab::slot_addRecVideoItem(QString url, QString path, QString time
     //信号与槽函数
     connect(videoItem,&RecVideoItem::sig_sendVideoUrl,[=](){
 //        emit sig_sendVideoUrl(item->text());
-        emit sig_recom_playlist(666,m_recplayList,item->text());
+        emit sig_recom_playlist(888,m_recplayList,item->text());
         ui->listWidget_recommend->setCurrentItem(item);//实现选种样式
         qDebug() <<QString::fromLocal8Bit("已发送临时播放连接url:")<<item->text();
     });
