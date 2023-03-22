@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     QApplication::setAttribute(Qt::AA_UseOpenGLES);
 //    QApplication::setLibraryPaths(QStringList(Global::appDirPath+"/plugins"));
 //    QApplication::addLibraryPath(Global::appDirPath +"/plugins");
-    qDebug() << QApplication::libraryPaths();
+    qDebug() << QApplication::libraryPaths();//打印库路径
 
     QTranslator translator1;
     translator1.load(":/font/qt_zh_CN.qm");//翻译为中文

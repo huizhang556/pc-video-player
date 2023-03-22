@@ -112,8 +112,7 @@ void DoneWorks::handleSignalsAndSlots()
                 ui->stackedWidget_produce->setCurrentIndex(5);
                 ui->listWidget_prod_pictures->clear();
             }
-            QStringList list_tags_counts = dataBase::getInstance()->creator_getAllTagsWorkCounts();
-            setUserTagsWorkCounts(list_tags_counts);//设置当前用户每种类型媒体的数量
+
             m_items = dataBase::getInstance()->creator_getdoneWorkCounts(current->data(Qt::UserRole).toString());//查询某个类型数量
 
             if(m_items == -1)
@@ -343,7 +342,7 @@ void DoneWorks::showErrorPageMessage(QWidget *page, const QString &message)
     ui->pushButton_error->setText(message);
 }
 
-void DoneWorks::setUserTagsWorkCounts(QStringList &list_counts)
+void DoneWorks::slot_setUserTagsWorkCounts(QStringList &list_counts)
 {
     for(int i = 0; i < list_counts.count(); i++)
     {

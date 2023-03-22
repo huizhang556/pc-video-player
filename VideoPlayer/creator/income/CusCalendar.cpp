@@ -7,7 +7,7 @@ CusCalendar::CusCalendar(QWidget *parent) :
 {
     ui->setupUi(this);
     this->installEventFilter(this);
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    this->setWindowFlags(Qt::FramelessWindowHint);
     setFixedSize(500,230);
 //    setAttribute(Qt::WA_StyledBackground);
     ui->calendarWidget1->installEventFilter(this);

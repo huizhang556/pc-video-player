@@ -2121,7 +2121,8 @@ void MultipPlayer::floatPlayCtrlEnterLeave(QObject *watched, QMouseEvent *mousev
 {
     if(watched == videoWidget)
     {
-        if(mousevent->type() == QEvent::MouseButtonPress && isFullScreen() && mousevent->buttons() & Qt::LeftButton)
+        //全屏时右键点击显示控制栏，左键暂停
+        if(mousevent->type() == QEvent::MouseButtonPress && isFullScreen() && mousevent->buttons() & Qt::RightButton)
         {
             FloatPlayCtl::getInstance()->raise();
             FloatPlayCtl::getInstance()->show();
@@ -3140,6 +3141,8 @@ void MultipPlayer::slot_closeCurrentWindow()
         VideoProgressBar::getInstance()->close();
         m_player->stop();//暂停播放
         playlist->clear();//播放列表清空
+        playlist_t->clear();
+        m_t_MapList.clear();
         m_mapList.clear();//清空容器
         m_mapList2.clear();//清空容器
         m_mapList_collect.clear();
@@ -3461,7 +3464,8 @@ bool MultipPlayer::eventFilter(QObject *watched, QEvent *event)
     slot_showDanmuSettingForm(watched,mousevent);//弹幕设置
 //    videoDouleExit(watched,mousevent);
     stackWidget_player_enter(watched,mousevent);
-    if(watched == videoWidget && event->type() == QEvent::MouseButtonPress)
+
+    if(watched == videoWidget && event->type() == QEvent::MouseButtonPress && mousevent->buttons() & Qt::LeftButton )
     {
         on_pushButton_pauseStart_clicked();//模拟暂停按钮点击
     }

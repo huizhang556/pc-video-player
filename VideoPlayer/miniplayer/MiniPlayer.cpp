@@ -181,7 +181,7 @@ void MiniPlayer::initWorkUI()
     m_player = new QMediaPlayer(this);
     m_playlist = new QMediaPlaylist(m_player);
     m_playlist->setPlaybackMode(QMediaPlaylist::Loop);//循环播放
-    m_playlist->addMedia(QUrl("http://43.143.226.251:8080/group1/tempvideo/temp001.flv"));
+//    m_playlist->addMedia(QUrl("http://43.143.226.251:8080/group1/tempvideo/temp001.flv"));
     m_player->setPlaylist(m_playlist);
 //    void setVideoOutput(QVideoWidget *);
 //    void setVideoOutput(QGraphicsVideoItem *);

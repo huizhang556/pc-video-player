@@ -90,6 +90,28 @@ void CreateCenter::initWorkUI()
 
 void CreateCenter::handleSignalsAndSlots()
 {
+    //tab切换
+    connect(ui->tabWidget_create,&QTabWidget::tabBarClicked,[=](int index){
+        if(ui->tabWidget_create->widget(index) == m_doneWorks)
+        {
+           QStringList list_counts = dataBase::getInstance()->creator_getAllTagsWorkCounts();
+           m_doneWorks->slot_setUserTagsWorkCounts(list_counts);
+        }
+        else if(ui->tabWidget_create->widget(index) == m_perCenter)
+        {
+
+        }
+        else if(ui->tabWidget_create->widget(index) == m_maker)
+        {
+
+        }
+        else if(ui->tabWidget_create->widget(index) == m_income)
+        {
+
+        }
+        qDebug() << QString(u8"当前tab索引号：%1").arg(index);
+    });
+
     //接收标题栏
     //关闭
     connect(m_ctitleBar,&CreTitleBar::sig_win_close,[=](){this->close();});

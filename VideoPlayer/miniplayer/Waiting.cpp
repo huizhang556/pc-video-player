@@ -5,7 +5,6 @@ Waiting::Waiting(QWidget *parent):
 {
     setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
     setAttribute(Qt::WA_TranslucentBackground);
-    setAttribute(Qt::WA_StyledBackground);
     BgColor = QColor(255,255,255,0);
     BarColor = QColor(Qt::red);
     TextColor = QColor(Qt::black);

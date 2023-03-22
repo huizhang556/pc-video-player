@@ -4,7 +4,7 @@
 #音视频播放器
 #-------------------------------------------------
 
-QT += core gui xml  multimediawidgets multimedia sql network webenginewidgets concurrent printsupport
+QT += core gui xml  multimediawidgets multimedia sql network webenginewidgets concurrent
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += C++11 ##使用C++11某些新语法
@@ -73,6 +73,11 @@ CONFIG(debug, debug|release){
     DESTDIR = $$PWD/bin/debug
 }else{
     DESTDIR = $$PWD/bin/release
+}
+
+#指定MSVC编译器多核编译
+win32-msvc*{
+    QMAKE_CXXFLAGS += /MP
 }
 
 # Default rules for deployment.

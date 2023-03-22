@@ -37,6 +37,7 @@ public slots:
     void    slot_receivedData_findTypeResult(QVariant &media);
     void    slot_addItemToList(const QString text,const QVariant& data, int counts);
     void    slot_insertItemToList(int index, QString& text,const  QVariant& data, int counts);
+    void    slot_setUserTagsWorkCounts(QStringList& list_counts);//查询各个标签视频数量
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event)override;
@@ -47,7 +48,6 @@ private:
     QLabel*         getCurrentItem(QListWidgetItem *item, const QString &objname);
     LabLoading*     getProgresslable(QListWidgetItem *item, const QString &objname);
     void            showErrorPageMessage(QWidget* page, const QString& message);
-    void            setUserTagsWorkCounts(QStringList& list_counts);//查询各个标签视频数量
 
 private:
     Ui::DoneWorks *ui;
