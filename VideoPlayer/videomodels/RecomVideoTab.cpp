@@ -167,8 +167,8 @@ void RecomVideoTab::slot_setListWidgetCurrentIndex(int index)
 
 void RecomVideoTab::slot_clearRecLists()
 {
-    if(ui->listWidget_recommend->count() != 0)
-    ui->listWidget_recommend->clear();
+//    if(ui->listWidget_recommend->count() != 0)
+//    ui->listWidget_recommend->clear();
 }
 
 void RecomVideoTab::slots_switchTurn()

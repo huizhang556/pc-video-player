@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
 #if 0
     //    DesktopLyric::getInstance()->show();
 
-    //    MultipPlayer::getInstance()->show();
+        MultipPlayer::getInstance()->show();
 
 //    MiniPlayer m;
 //    m.c_show();
@@ -111,13 +111,13 @@ int main(int argc, char *argv[])
     //    CusVideoBox7 w1;
     //    w1.show();
 
-    //    CPolLabel w1(QSize(100,100),QString(":/images/bgpic/dieji3.png"),8);
-    //    w1.show();
+//        CPolLabel w1(QSize(100,100),QString(":/images/bgpic/dieji3.png"),8);
+//        w1.show();
 
     //    MainNotice w1;
     //    w1.show();
 
-        CreateCenter::getInstance()->show();
+//        CreateCenter::getInstance()->show();
 
     //    MyEmotionWindow w1;
     //    w1.showNormalEmotion(QPoint(500 , 500));

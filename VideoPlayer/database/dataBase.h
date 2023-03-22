@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QDomDocument>
 #include <QSize>
+#include <QPixmap>
 #include <QSqlResult>
 #include <QSqlRecord>
 #include <QVariant>
@@ -13,6 +14,9 @@
 #include <QSqlDriver>
 #include <QSqlDatabase>
 #include <QDesktopWidget>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QNetworkAccessManager>
 #include <QDebug>
 
 
@@ -62,6 +66,8 @@ public:
     static  bool            creatMysqlConnection();//创建mysql连接
     static  bool            removeMysqlConnection();//移除mysql连接
     bool                    initGlobalDate();//初始化全局数据
+    bool                    initCurUserData();//初始化当前用户数据
+    void                    initWorkUI();//初始化
     void                    handleSignalsAndSlots();//处理信号与槽函数
     //获取用户信息
     QString                 getCurrentUserID() const;
@@ -69,6 +75,7 @@ public:
     QString                 getCurrentUserHead() const;
     int                     getCurrentUserGrade() const;
     bool                    getCurrentUserOnline() const;
+    const QPixmap&          getCurrentUserHeadPix();
 
     //读取cfg.xml信息
     static void             readXML(const QString& path);
@@ -137,13 +144,16 @@ protected:
 
 private:
     dataBase();
-    static  dataBase*       m_pInstance;//全局唯一
+    QNetworkAccessManager   *m_manager  =   nullptr;
 
+    static  dataBase*       m_pInstance;//全局唯一
     QString                 m_curUserID;//当前用户唯一识别id
     QString                 m_curUserHead;//当前用户头像连接
     QString                 m_curUserName;//当前用户名称
     int                     m_curUserGrade;//当前用户等级 游客0 普通1 会员2 超级会员3
     bool                    m_online;//是否在线
+    QPixmap                 m_curHeadPix;//用户头像
+
     //数据库连接
     static      QString     m_hostName;//主机ip
     static      QString     m_hostPort;//主机端口
@@ -171,6 +181,9 @@ private:
     static      QString     getDataName();
 
     void        showResult(const QSqlQuery& query);//展示查询结果
+    void        getUserHeaderPix(QNetworkReply* reply);//接收用户头像数据
+
+
 signals:
     void        sig_loginStatusChanged(bool);//0下线 1登录
     void        sig_sendVideoDramaInfo(QVariant);//推荐剧集列表

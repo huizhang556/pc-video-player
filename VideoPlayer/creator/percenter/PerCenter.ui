@@ -82,7 +82,7 @@ background-color: rgb(255, 255, 255);
               <height>200</height>
              </size>
             </property>
-            <widget class="QLabel" name="label_header">
+            <widget class="RoundLab" name="label_header">
              <property name="geometry">
               <rect>
                <x>60</x>
@@ -110,7 +110,7 @@ border: 2px solid red;
 }</string>
              </property>
              <property name="text">
-              <string>     头像</string>
+              <string/>
              </property>
             </widget>
             <widget class="QPushButton" name="pushButton_newcreate">
@@ -183,7 +183,7 @@ color: red;
               <string>发布视频</string>
              </property>
             </widget>
-            <widget class="QPushButton" name="pushButton_9">
+            <widget class="QPushButton" name="pushButton_userName">
              <property name="geometry">
               <rect>
                <x>4</x>
@@ -1719,6 +1719,13 @@ font: 400 16px &quot;微软雅黑&quot;;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>RoundLab</class>
+   <extends>QLabel</extends>
+   <header>customer/RoundLab.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

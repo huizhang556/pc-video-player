@@ -2,23 +2,22 @@
 #include "ui_Danmu.h"
 
 Danmu::Danmu(QWidget *parent) :
-    QLabel(parent),
+    QWidget(parent),
     ui(new Ui::Danmu)
 {
     ui->setupUi(this);
 }
 
 Danmu::Danmu(QWidget *parent, QString text, ColorType color, int type, QRect rect, QFont danmuFont, double Transparency, int runTime):
-    QLabel(parent),
+    QWidget(parent),
     ui(new Ui::Danmu)
 {
     ui->setupUi(this);
+    this->setAutoFillBackground(true);
 //    SetWindowPos(HWND(this->winId()), HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
     //设置弹幕为无窗口无工具栏且呆在窗口顶端,但是会导致坐标错乱，尤其是丢掉了标题栏
-//    setWindowFlags(this->windowFlags() | Qt::FramelessWindowHint | Qt::Tool);
-    setAttribute(Qt::WA_TranslucentBackground,true);//背景透明
-//    setAttribute(Qt::WA_StyledBackground,true);
-    setAutoFillBackground(true);
+//    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
+    this->setAttribute(Qt::WA_TranslucentBackground);//背景透明
     DText = text;
     this->setType(type);        //设置类型
     this->setQFont(danmuFont);      //弹幕字体
@@ -99,7 +98,8 @@ Danmu::Danmu(QWidget *parent, QString text, ColorType color, int type, QRect rec
     this->setFixedHeight(metrics.height()+5);
     this->setFixedWidth(metrics.width(DText)+4);
 
-    palll.setBrush(QPalette::Base, QBrush(QColor(255,0,0,0)));//背景透明，不起作用
+    palll.setColor(QPalette::Background, QColor(0,0,0));
+    palll.setBrush(this->backgroundRole(), QBrush(QColor(0,0,0)));
     this->setPalette(palll);//设置调色盘（主要设置WindowText字体颜色）
 
     int yy = qrand()%(rect.height());//在这里使用了矩形这个变量的范围
@@ -154,7 +154,7 @@ void Danmu::paintEvent(QPaintEvent *)
         painter.save();
         QFontMetrics metrics(this->getQFont());     //获取弹幕字体
         QPainterPath path;      //描绘路径用
-        QPen pen(QColor(0, 0, 0, 230));       //自定义画笔的样式，让文字周围有边框
+        QPen pen(QColor(0, 0, 0, 233));       //自定义画笔的样式，让文字周围有边框
         painter.setRenderHint(QPainter::Antialiasing);
         int penwidth = 4;
         pen.setWidth(penwidth);
@@ -170,10 +170,11 @@ void Danmu::paintEvent(QPaintEvent *)
         {
             py = -py;
         }
-        path.addText(px+2,py+2,this->getQFont(),DText);     //画字体轮廓
-        painter.strokePath(path, pen);//描边
+        path.addText(px+2,py+2,this->getQFont(),DText);//画字体轮廓
+        painter.strokePath(path, pen);//给字描边
         painter.drawPath(path);
-        painter.fillPath(path, QBrush(this->getQColor()));      //用画刷填充
+        painter.fillPath(path,QBrush(this->getQColor()));//用画刷填充
+//        painter.fillRect(rect(),Qt::red);
         painter.restore();
 
 }

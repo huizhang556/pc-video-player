@@ -49,12 +49,12 @@ void CreateCenter::exec_()
     if(isOnline)//在线
     {
         ui->label_loginbg->setLoginTips(true);
-        m_ctitleBar->setUserIcon(true,dataBase::getInstance()->getCurrentUserHead());
+//        m_ctitleBar->setUserIcon(true,dataBase::getInstance()->getCurrentUserHead());
     }
     else
     {
         ui->label_loginbg->setLoginTips(false);
-        m_ctitleBar->setUserIcon(false,"://images/icon/kugou.ico");
+//        m_ctitleBar->setUserIcon(false,"://images/icon/kugou.ico");
     }
     this->show();
 }
@@ -99,7 +99,7 @@ void CreateCenter::handleSignalsAndSlots()
         }
         else if(ui->tabWidget_create->widget(index) == m_perCenter)
         {
-
+            m_perCenter->setCurUserInfo(dataBase::getInstance()->getCurrentUserName(),dataBase::getInstance()->getCurrentUserHeadPix());
         }
         else if(ui->tabWidget_create->widget(index) == m_maker)
         {

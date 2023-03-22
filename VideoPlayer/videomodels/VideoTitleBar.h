@@ -40,6 +40,7 @@ signals:
     void sig_winVRestore();
     void sig_doubleClick();
     void sig_returnMainUi();
+    void sig_videodownload();
     void sig_inputSourceUrl(QString url);
 };
 

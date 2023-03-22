@@ -20,13 +20,14 @@ void CusHSlider::initWorkUI()
 //    setSpacing(25);
 //    setOpenTipImage(true);
     m_seekBtn = new QPushButton(this);
+    m_seekBtn->setObjectName(QString::fromUtf8("m_seekBtn"));
     m_seekBtn->setFlat(true);
     m_seekBtn->setDefault(false);
-    m_seekBtn->setFixedSize(10,this->height());
-    m_seekBtn->setStyleSheet("QPushButton{"
+    m_seekBtn->setFixedSize(7,this->height());
+    m_seekBtn->setStyleSheet("QPushButton#m_seekBtn{"
                             "border-image: url(://images/icon/arrow_seek.png);"
                             "border: none;"
-                            "margin: 2px 0px 5px 0px;"
+                            "margin: 5px 0px 9px 0px;"
                             "}");
     m_seekBtn->hide();
 

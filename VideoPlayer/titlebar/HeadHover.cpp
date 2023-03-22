@@ -39,9 +39,9 @@ void HeadHover::initWorkUI()
     slots_setUserIcon(1,"visitor");
 
     //遮罩
-    ui->label_head->setFixedSize(QSize(50,50));//遮罩矩形要使用这个大小
-    QRegion maskRegion(ui->label_head->rect(),QRegion::Ellipse);//创建圆形遮罩
-    ui->label_head->setMask(maskRegion);//设置圆形遮罩
+//    ui->label_head->setFixedSize(QSize(50,50));//遮罩矩形要使用这个大小
+//    QRegion maskRegion(ui->label_head->rect(),QRegion::Ellipse);//创建圆形遮罩
+//    ui->label_head->setMask(maskRegion);//设置圆形遮罩
 }
 
 void HeadHover::handleSignalsAndSlots()
@@ -124,7 +124,7 @@ void HeadHover::slot_receivedNetworkPicture(QNetworkReply *reply)
         //获取字节流构造 QPixmap 对象
         m_headBytes = reply->readAll();
         m_headPixmap.loadFromData(m_headBytes);
-        ui->label_head->setPixmap(m_headPixmap);
+        ui->label_head->setPixmap_(m_headPixmap);
         ui->label_head->setScaledContents(true);
         qDebug() <<QString::fromLocal8Bit("网络请求图片设置成功！");
         qDebug() <<QString::fromLocal8Bit("本次网络请求图片的大小：")<<m_headBytes.size()<<endl
@@ -134,7 +134,7 @@ void HeadHover::slot_receivedNetworkPicture(QNetworkReply *reply)
     {
         qDebug() <<  QString::fromLocal8Bit("请求错误：")<<reply->errorString();
         QPixmap pixmap("://images/user/default_woman00.png");//默认图标
-        ui->label_head->setPixmap(pixmap);
+        ui->label_head->setPixmap_(pixmap);
         ui->label_head->setScaledContents(true);
     }
 }

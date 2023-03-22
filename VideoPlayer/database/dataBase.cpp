@@ -36,6 +36,7 @@ dataBase::dataBase():
     qRegisterMetaType<UserInfo>("UserInfo"); //构造函数注册自定义结构体
     qRegisterMetaType<Message>("Message"); //构造函数注册自定义结构体
     qRegisterMetaType<QVariant>("QVariant"); //构造函数注册自定义结构体
+    initWorkUI();
     handleSignalsAndSlots();
 }
 
@@ -70,6 +71,22 @@ void dataBase::showResult(const QSqlQuery &query)
     qDebug() << QString(u8"查询结果集展示：结果条数：%1 每条列数：%2").arg(query.size()).arg(rec.count());
 }
 
+void dataBase::getUserHeaderPix(QNetworkReply *reply)
+{
+    if (reply->error() == QNetworkReply::NoError)
+    {
+        //获取字节流构造 QPixmap 对象
+        m_curHeadPix.loadFromData(reply->readAll());
+        qDebug() <<QString::fromLocal8Bit("[数据库：]网络请求图片成功！");
+    }
+    else//请求失败，加载默认图片
+    {
+        qDebug() <<  QString::fromLocal8Bit("[数据库]请求错误：")<<reply->errorString();
+        QPixmap pixmap("://images/user/default_woman00.png");//默认图标
+        m_curHeadPix = pixmap;
+    }
+}
+
 
 dataBase::~dataBase()
 {
@@ -95,6 +112,8 @@ void dataBase::handleSignalsAndSlots()
     connect(this,&dataBase::sig_loginStatusChanged,[=](bool status){
        qDebug() << "login status = "<< status;
     });
+
+    connect(m_manager,&QNetworkAccessManager::finished,this,&dataBase::getUserHeaderPix,Qt::UniqueConnection);
 }
 
 QSqlDatabase dataBase::getSqlDataBase()
@@ -273,10 +292,23 @@ bool dataBase::removeSqliteConnection()
 //初始化全局数据
 bool dataBase::initGlobalDate()
 {
-    browser_loadAllRecordsToList();
+    browser_loadAllRecordsToList();//收藏记录
     browser_loadAllHisRecordsToList();
     video_recDramaInfo();
     return true;
+}
+
+//更新某个用户的信息
+bool dataBase::initCurUserData()
+{
+    browser_loadAllRecordsToList();//收藏记录
+    browser_loadAllHisRecordsToList();
+    return true;
+}
+
+void dataBase::initWorkUI()
+{
+    m_manager = new QNetworkAccessManager(this);
 }
 
 QString dataBase::getCurrentUserID() const
@@ -292,6 +324,11 @@ QString dataBase::getCurrentUserName() const
 QString dataBase::getCurrentUserHead() const
 {
     return m_curUserHead;
+}
+
+const QPixmap &dataBase::getCurrentUserHeadPix()
+{
+    return m_curHeadPix;
 }
 
 int dataBase::getCurrentUserGrade() const
@@ -760,7 +797,7 @@ bool dataBase::login_verification(const QString &name, const QString &pwd)
             //发射信号(头像和名称)
 
             login_setLoginStatus(true);//先设置状态，发送信号
-            initGlobalDate();//初始化要用到状态值
+            initCurUserData();//初始化要用到状态值
             return true;
         }
     }
@@ -783,6 +820,7 @@ bool dataBase::login_setLoginStatus(bool status)
         {
             emit sig_loginStatusChanged(true);//上线
             m_online = true;//在线状态
+            m_manager->get(QNetworkRequest(QUrl(m_curUserHead)));//每设置一次登陆状态，就请求一次头像
             qDebug()<<"user sign in status data update successful，m_online is true!";
             return true;
         }

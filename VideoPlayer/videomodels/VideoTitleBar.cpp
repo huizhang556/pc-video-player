@@ -55,6 +55,9 @@ void VideoTitleBar::chandleSignalsAndSlots()
         if(input.isEmpty()) return;
         emit sig_inputSourceUrl(input);
     });
+
+    //下载
+    connect(ui->pushButton_vdownload,&QPushButton::clicked,[=](){ emit sig_videodownload(); });
 }
 
 /*设置标题栏*/

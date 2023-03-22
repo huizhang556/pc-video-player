@@ -62,6 +62,7 @@ public:
     void        chandleSignalsAndSLots();
     void        setInstallEventFilter();
     void        setType(TipType type);
+    void        show_c();
 
     static void showCText(TipType type, const QPoint &pos, const QString& text, QWidget *w, const QRect &rect, int msecShowTime);
     static      NewLoginForm* getInstance();
@@ -83,6 +84,8 @@ private slots:
     void        slot_clearTempInputText();
 
 private:
+    bool        checkCurUserLoginStatus();//检查登录状态
+    void        setCurUserLoginedInfo(int grade,const QString &nick);//设置当前登录用户信息
     void        showTipContentLenRule(const QString& ruleText);//显示账号规则
     void        initAnimations();
     void        update_QRcode();//刷新二维码

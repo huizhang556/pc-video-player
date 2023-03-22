@@ -49,10 +49,10 @@ void TitleBar::initWorker()
     m_ncmgr = new QNetworkConfigurationManager();//网络连接用
 
     //遮罩
-    ui->label_userHead->setFixedSize(QSize(40,40));
-    QRegion maskRegion(ui->label_userHead->rect(),QRegion::Ellipse);//创建圆形遮罩
-    ui->label_userHead->setMask(maskRegion);//设置圆形遮罩
-    ui->label_defaultHead->setMask(maskRegion);
+//    ui->label_userHead->setFixedSize(QSize(40,40));
+//    QRegion maskRegion(ui->label_userHead->rect(),QRegion::Ellipse);//创建圆形遮罩
+//    ui->label_userHead->setMask(maskRegion);//设置圆形遮罩
+//    ui->label_defaultHead->setMask(maskRegion);
     ui->label_userHead->installEventFilter(this);
     ui->stackedWidget_title->setCurrentIndex(0);
     ui->label_usermark->hide();
@@ -1393,14 +1393,14 @@ void TitleBar::slot_replyFinished(QNetworkReply *reply)
     {
         //获取字节流构造 QPixmap 对象
         m_headPixmap.loadFromData(reply->readAll());
-        ui->label_userHead->setPixmap(m_headPixmap);
+        ui->label_userHead->setPixmap_(m_headPixmap);
         ui->label_userHead->setScaledContents(true);
     }
     else//请求失败，加载默认图片
     {
         qDebug() <<  QString::fromLocal8Bit("请求错误：")<<reply->errorString();
         QPixmap pixmap(":/images/icon/kugou.ico");
-        ui->label_userHead->setPixmap(pixmap);
+        ui->label_userHead->setPixmap_(pixmap);
         ui->label_userHead->setScaledContents(true);
     }
 }
@@ -1608,6 +1608,7 @@ void TitleBar::receiveMainFormClose()
 {
     m_loginForm->close();
     m_loginForm->receiveMainWinCloseAppSignal();
+    CreateCenter::getInstance()->close();
 }
 
 /*观看历史提示界面*/

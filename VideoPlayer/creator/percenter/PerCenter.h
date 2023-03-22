@@ -1,6 +1,8 @@
 ﻿#ifndef PERCENTER_H
 #define PERCENTER_H
 
+#include "database/dataBase.h"
+
 #include <QWidget>
 
 namespace Ui {
@@ -17,6 +19,10 @@ public:
     void    initWorkUI();
     void    handleSignalsAndSlots();
     void    setInstallEventer();
+
+
+public slots:
+    void    setCurUserInfo(const QString& name, const QPixmap& pix);
 
 private:
     Ui::PerCenter *ui;

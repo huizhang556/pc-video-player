@@ -54,3 +54,10 @@ void PerCenter::setInstallEventer()
 {
 
 }
+
+void PerCenter::setCurUserInfo(const QString &name, const QPixmap &pix)
+{
+    ui->pushButton_userName->setText(name);
+    ui->label_header->setPixmap_(pix);
+    ui->label_header->setScaledContents(true);
+}

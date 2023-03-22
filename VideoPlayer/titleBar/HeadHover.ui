@@ -72,7 +72,7 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #31cafe, 
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="label_head">
+         <widget class="RoundLab" name="label_head">
           <property name="minimumSize">
            <size>
             <width>50</width>
@@ -88,7 +88,8 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #31cafe, 
           <property name="styleSheet">
            <string notr="true">QLabel
 {
-border-image: url(:/images/user/default_man01.png);
+/*border-image: url(:/images/user/default_man01.png);*/
+background-color: transparent;
 }</string>
           </property>
           <property name="text">
@@ -237,6 +238,13 @@ padding-left:20px;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>RoundLab</class>
+   <extends>QLabel</extends>
+   <header>customer/RoundLab.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -76,6 +76,20 @@ void NewLoginForm::initWorkUI()
 //    shadow_effect->setColor(QColor(93, 95, 96));
 //    shadow_effect->setBlurRadius(15);//阴影也是个矩形，需要圆角
 //    this->setGraphicsEffect(shadow_effect);
+    ui->pushButton_exitUser->setIcon(QIcon("://images/icon/login_exit.png"));
+    ui->pushButton_exitUser->setIconSize(QSize(18,18));
+    ui->pushButton_userGrade->setIconSize(QSize(18,18));
+    ui->pushButton_userGrade->setLayoutDirection(Qt::RightToLeft);
+    ui->pushButton_exitUser->setLayoutDirection(Qt::RightToLeft);
+
+    ui->pushButton_switchUser->setIcon(QIcon("://images/icon/login_switch.png"));
+    ui->pushButton_switchUser->setIconSize(QSize(14,18));
+    ui->pushButton_switchUser->setLayoutDirection(Qt::RightToLeft);
+
+//    ui->label_userHeader->setFixedSize(QSize(160,160));
+//    QRegion maskRegion(ui->label_userHeader->rect(),QRegion::Ellipse);//创建圆形遮罩
+//    ui->label_userHeader->setMask(maskRegion);//设置圆形遮罩
+    ui->stackedWidget_left->setCurrentWidget(ui->stackedpage_unlogin);
 
     //登录部分
     m_actionShowPwd = new QAction(QIcon(":/images/icon/passwd_hide.png"),"");
@@ -316,6 +330,19 @@ NewLoginForm *NewLoginForm::getInstance()
 
 void NewLoginForm::chandleSignalsAndSLots()
 {
+//    connect(ui->pushButton_otherMethed1,&QPushButton::clicked,[=](){ui->stackedWidget_left->setCurrentWidget(ui->stackedpage_logined);});
+    //退出登录
+    connect(ui->pushButton_exitUser,&QPushButton::clicked,[=](){
+        ui->stackedWidget_left->setCurrentWidget(ui->stackedpage_unlogin);
+        //数据库设置登录状态，并通知其他部分
+    });
+
+    //切换用户
+    connect(ui->pushButton_switchUser,&QPushButton::clicked,[=](){
+        ui->stackedWidget_left->setCurrentWidget(ui->stackedpage_unlogin);
+        //数据库设置登录状态，并通知其他部分
+    });
+
     //关闭
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){
         aniGroup->start();
@@ -633,50 +660,54 @@ void NewLoginForm::receiveLoginAppClose()
 
 void NewLoginForm::slot_switchWinType(ShowType type)
 {
-    switch (type) {
-    case ShowType::LoginWin_0://扫码登录
+    bool login = checkCurUserLoginStatus();
+    if(!login)
     {
-        ui->tabWidget_login->setCurrentIndex(0);
-        ui->stackedWidget_right->setCurrentIndex(0);
-    }
-        break;
-    case ShowType::LoginWin_1://短信登录
-    {
-        ui->tabWidget_login->setCurrentIndex(0);
-        ui->stackedWidget_right->setCurrentIndex(0);
-        ui->lineEdit_telNumber->setFocus();
-    }
-        break;
-    case ShowType::LoginWin_2://账号登录
-    {
-        ui->tabWidget_login->setCurrentIndex(1);
-        ui->stackedWidget_right->setCurrentIndex(0);
-        ui->lineEdit_account->setFocus();
-    }
-        break;
-    case ShowType::RegisWin://注册窗口
-    {
-        ui->tabWidget_login->setCurrentIndex(1);
-        ui->stackedWidget_right->setCurrentIndex(1);
-        ui->lineEdit_regis_telNumber->setFocus();
-    }
-        break;
-    case ShowType::ReSetWin://重置窗口
-    {
-        ui->tabWidget_login->setCurrentIndex(1);
-        ui->stackedWidget_right->setCurrentIndex(2);
-        ui->lineEdit_fpwd_account->setFocus();
-    }
-        break;
-    default:
-        break;
-    }
+        switch (type) {
+        case ShowType::LoginWin_0://扫码登录
+        {
+            ui->tabWidget_login->setCurrentIndex(0);
+            ui->stackedWidget_right->setCurrentIndex(0);
+        }
+            break;
+        case ShowType::LoginWin_1://短信登录
+        {
+            ui->tabWidget_login->setCurrentIndex(0);
+            ui->stackedWidget_right->setCurrentIndex(0);
+            ui->lineEdit_telNumber->setFocus();
+        }
+            break;
+        case ShowType::LoginWin_2://账号登录
+        {
+            ui->tabWidget_login->setCurrentIndex(1);
+            ui->stackedWidget_right->setCurrentIndex(0);
+            ui->lineEdit_account->setFocus();
+        }
+            break;
+        case ShowType::RegisWin://注册窗口
+        {
+            ui->tabWidget_login->setCurrentIndex(1);
+            ui->stackedWidget_right->setCurrentIndex(1);
+            ui->lineEdit_regis_telNumber->setFocus();
+        }
+            break;
+        case ShowType::ReSetWin://重置窗口
+        {
+            ui->tabWidget_login->setCurrentIndex(1);
+            ui->stackedWidget_right->setCurrentIndex(2);
+            ui->lineEdit_fpwd_account->setFocus();
+        }
+            break;
+        default:
+            break;
+        }
 
-    if(this->windowOpacity() == 0)
-    {
-        this->setWindowOpacity(1);
+        if(this->windowOpacity() == 0)
+        {
+            this->setWindowOpacity(1);
+        }
     }
-    this->exec();
+    this->exec();//最后显示
 }
 
 void NewLoginForm::paintEvent(QPaintEvent *event)
@@ -815,6 +846,61 @@ void NewLoginForm::slot_clearTempInputText()
     ui->lineEdit_secondpwd->clear();
 }
 
+bool NewLoginForm::checkCurUserLoginStatus()
+{
+    bool online = dataBase::getInstance()->getCurrentUserOnline();
+    if(online)
+    {
+        ui->stackedWidget_left->setCurrentWidget(ui->stackedpage_logined);
+        ui->label_userHeader->setPixmap_(dataBase::getInstance()->getCurrentUserHeadPix());
+        ui->label_userHeader->setScaledContents(true);
+        setCurUserLoginedInfo(dataBase::getInstance()->getCurrentUserGrade(),dataBase::getInstance()->getCurrentUserName());
+        return true;
+    }
+    else
+    {
+        ui->stackedWidget_left->setCurrentWidget(ui->stackedpage_unlogin);
+        ui->tabWidget_login->setCurrentWidget(ui->tab_login2);
+        return false;
+    }
+}
+
+void NewLoginForm::setCurUserLoginedInfo(int grade, const QString &nick)
+{
+    ui->pushButton_userName->setText(nick);
+    switch (grade)
+    {
+    case 0:
+    {
+        ui->pushButton_userGrade->setIcon(QIcon("://images/user/user_visitor.png"));
+        ui->pushButton_userGrade->setText(QString(u8"等级：普通游客"));
+    }
+        break;
+    case 1:
+    {
+        ui->pushButton_userGrade->setIcon(QIcon("://images/user/user_vip.png"));
+        ui->pushButton_userGrade->setText(QString(u8"等级：注册用户"));
+    }
+        break;
+    case 2:
+    {
+        ui->pushButton_userGrade->setIcon(QIcon("://images/user/user_suvip.png"));
+        ui->pushButton_userGrade->setText(QString(u8"等级：普通会员"));
+    }
+        break;
+    case 3:
+    {
+        ui->pushButton_userGrade->setIcon(QIcon("://images/user/user_ssvip.png"));
+        ui->pushButton_userGrade->setText(QString(u8"等级：超级会员"));
+    }
+        break;
+    default:
+        ui->pushButton_userGrade->setIcon(QIcon("://images/user/user_zhuye.png"));
+        ui->pushButton_userGrade->setText(QString(u8"非注册用户"));
+        break;
+    }
+}
+
 void NewLoginForm::showTipContentLenRule(const QString &ruleText)
 {
     setType(TipType::Error);
@@ -870,5 +956,11 @@ void NewLoginForm::setType(TipType type)
     }
 
 //  pal.setColor(QPalette::ToolTipBase, Qt::red);
-//  pal.setColor(QPalette::ToolTipText, Qt::green);
+    //  pal.setColor(QPalette::ToolTipText, Qt::green);
+}
+
+void NewLoginForm::show_c()
+{
+    checkCurUserLoginStatus();//先核对登陆状态
+    this->exec();
 }

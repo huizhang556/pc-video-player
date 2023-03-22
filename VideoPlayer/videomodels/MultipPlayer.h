@@ -240,15 +240,15 @@ private slots:
 
     void    loadDefaultLogo();//加载默认图标
 
-    void    on_pushButton_5_clicked();//打开文件
+    void    slot_firstOpen_clicked();//打开文件
 
-    void    on_pushButton_6_clicked();//重新打开
+    void    slot_secondOpen_clicked();//重新打开
 
     void    switchListPage(int index);
 
     void    setVideoRate(int value);
 
-    void    on_moreBtn_clicked();
+//    void    on_moreBtn_clicked();
 
     void    set_adjustBright();
 

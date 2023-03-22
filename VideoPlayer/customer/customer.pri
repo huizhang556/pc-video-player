@@ -16,7 +16,8 @@ SOURCES += \
     $$PWD/RingWait1.cpp \
     $$PWD/CPolLabel.cpp \
     $$PWD/CusHSlider.cpp \
-    $$PWD/ValueToImage.cpp
+    $$PWD/ValueToImage.cpp \
+    $$PWD/RoundLab.cpp
 
 HEADERS += \
     $$PWD/CusTabWidget.h \
@@ -36,7 +37,8 @@ HEADERS += \
     $$PWD/RingWait1.h \
     $$PWD/CPolLabel.h \
     $$PWD/CusHSlider.h \
-    $$PWD/ValueToImage.h
+    $$PWD/ValueToImage.h \
+    $$PWD/RoundLab.h
 
 FORMS += \
     $$PWD/CusTabWidget.ui \

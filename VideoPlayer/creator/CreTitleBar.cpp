@@ -35,6 +35,7 @@ void CreTitleBar::initWorkUI()
     ui->label_user->setFixedSize(QSize(50,50));//要使用遮罩，UI或者代码要设置大小，否则无法计算大小
     QRegion maskRegion(ui->label_user->rect(),QRegion::Ellipse);//创建圆形遮罩
     ui->label_user->setMask(maskRegion);//设置圆形遮罩
+    ui->stackedWidget_icon->setCurrentWidget(ui->page_unlogin);
 }
 
 void CreTitleBar::handleSignalsAndSlots()

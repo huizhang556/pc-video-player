@@ -483,6 +483,10 @@ border-image: url(:/images/icon/vtitle_download.png);
 background-color: transparent;
 border-image: url(:/images/icon/vtitle_fixed.png);
 }
+QPushButton:hover
+{
+border-image: url(:/images/icon/vtitle_fixed_hover.png);
+}
 </string>
                 </property>
                 <property name="text">

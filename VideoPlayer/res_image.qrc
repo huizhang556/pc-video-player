@@ -648,5 +648,8 @@
         <file>images/player/player_itemlist_right_white.png</file>
         <file>images/player/user_closeBtn.png</file>
         <file>images/player/user_closeBtn_hover.png</file>
+        <file>images/icon/vtitle_fixed_hover.png</file>
+        <file>images/icon/login_exit.png</file>
+        <file>images/icon/login_switch.png</file>
     </qresource>
 </RCC>

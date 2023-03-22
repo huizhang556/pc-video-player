@@ -1204,7 +1204,7 @@ void MainWidget::tray_systemLogout()
     else if(action->text() == QString::fromLocal8Bit("登录账号"))
     {
 //        m_titleBar->showLoginForm();
-        NewLoginForm::getInstance()->exec();
+        NewLoginForm::getInstance()->show_c();
         userSignIn();
     }
 }

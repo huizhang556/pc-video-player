@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1365</width>
+    <width>1079</width>
     <height>60</height>
    </rect>
   </property>
@@ -112,7 +112,7 @@ border: 0px solid #909090;
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_6">
                <property name="spacing">
-                <number>2</number>
+                <number>4</number>
                </property>
                <item>
                 <widget class="QLabel" name="label_defaultHead">
@@ -150,7 +150,7 @@ border-image: url(:/images/icon/kugou.ico);
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
-                   <width>15</width>
+                   <width>10</width>
                    <height>20</height>
                   </size>
                  </property>
@@ -158,15 +158,23 @@ border-image: url(:/images/icon/kugou.ico);
                </item>
                <item>
                 <widget class="QPushButton" name="pushButton_userlogin">
+                 <property name="minimumSize">
+                  <size>
+                   <width>28</width>
+                   <height>30</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
-                   <width>30</width>
-                   <height>16777215</height>
+                   <width>28</width>
+                   <height>30</height>
                   </size>
                  </property>
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
+border: none;
+text-align: center;
 background-color:transparent;
 color:#8c8c8f;
 
@@ -184,21 +192,26 @@ color: #2de05d;
                 </widget>
                </item>
                <item>
-                <widget class="Line" name="line">
+                <widget class="Line" name="line1">
                  <property name="minimumSize">
                   <size>
                    <width>1</width>
-                   <height>18</height>
+                   <height>13</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>1</width>
-                   <height>18</height>
+                   <height>13</height>
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  <string notr="true">#line1
+{
+margin: 0px 6px;
+color:#8c8c8f;
+background-color: rgb(255, 255, 255);
+}</string>
                  </property>
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
@@ -207,15 +220,23 @@ color: #2de05d;
                </item>
                <item>
                 <widget class="QPushButton" name="pushButton_userregis">
+                 <property name="minimumSize">
+                  <size>
+                   <width>28</width>
+                   <height>30</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
-                   <width>30</width>
-                   <height>16777215</height>
+                   <width>28</width>
+                   <height>30</height>
                   </size>
                  </property>
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
+border: none;
+text-align: center;
 background-color:transparent;
 color:#8c8c8f;
 }
@@ -241,28 +262,31 @@ color: #2de05d;
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
-                   <width>20</width>
+                   <width>10</width>
                    <height>20</height>
                   </size>
                  </property>
                 </spacer>
                </item>
                <item>
-                <widget class="Line" name="line_2">
+                <widget class="Line" name="line2">
                  <property name="minimumSize">
                   <size>
                    <width>1</width>
-                   <height>36</height>
+                   <height>30</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>1</width>
-                   <height>36</height>
+                   <height>30</height>
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: #44444f;</string>
+                  <string notr="true">#line2
+{
+background-color: #44444f;
+}</string>
                  </property>
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
@@ -301,7 +325,7 @@ color: #2de05d;
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QLabel" name="label_userHead">
+                  <widget class="RoundLab" name="label_userHead">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -1854,6 +1878,11 @@ border: 1px solid #3C80B1;
    <class>CusLineEdit</class>
    <extends>QLineEdit</extends>
    <header>customer/CusLineEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>RoundLab</class>
+   <extends>QLabel</extends>
+   <header>customer/RoundLab.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

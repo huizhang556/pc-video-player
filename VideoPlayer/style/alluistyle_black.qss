@@ -64,14 +64,6 @@ background-color: transparent;
 background-color: transparent;
 }
 
-
-/*Danmu背景*/
-Danmu
-{
-background-color: transparent;
-border-image: url(:/images/bgpic/transparent.png);
-}
-
 /*弹幕---登录按钮*/
 
 /**登录状态按钮**/

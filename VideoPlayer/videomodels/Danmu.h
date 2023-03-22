@@ -1,7 +1,7 @@
 ﻿#ifndef DANMU_H
 #define DANMU_H
 
-#include <QLabel>
+#include <QWidget>
 #include <QRect>
 #include <QColor>
 #include <QDebug>
@@ -32,7 +32,7 @@ namespace Ui {
 class Danmu;
 }
 
-class Danmu : public QLabel
+class Danmu : public QWidget
 {
     Q_OBJECT
 

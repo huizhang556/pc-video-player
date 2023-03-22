@@ -86,7 +86,7 @@ background-color: transparent;
 }</string>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="page_unlogin">
          <layout class="QVBoxLayout" name="verticalLayout_2">

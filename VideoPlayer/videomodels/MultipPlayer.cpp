@@ -137,7 +137,7 @@ void MultipPlayer::initMainWindow()
     videoWidget->setMouseTracking(true);
     m_player->setVideoOutput(videoWidget);
 
-    //以下是获取任意帧使用
+    //以下是获取任意帧画面使用
     m_videoSurface = new VideoSurface();
     m_player2 = new QMediaPlayer(this);
     m_player2->setMuted(true);//静音
@@ -162,6 +162,10 @@ void MultipPlayer::initMainWindow()
     ui->stackedWidget->insertWidget(2,m_musicUi);
     ui->stackedWidget->setCurrentIndex(0);//默认显示空白界面
     ui->stackedWidget->setMinimumSize(700,555);//必须设置最小尺寸，否则播放控制栏位置不正确
+//    ui->stackedWidget->setAttribute(Qt::WA_TranslucentBackground,true);
+//    ui->stackedWidget->widget(0)->setAttribute(Qt::WA_TranslucentBackground);
+//    ui->stackedWidget->widget(1)->setAttribute(Qt::WA_TranslucentBackground);
+//    ui->stackedWidget->widget(2)->setAttribute(Qt::WA_TranslucentBackground);
 
     //我的歌单（暂时）
     m_listWisget1 = new QListWidget();
@@ -474,9 +478,10 @@ void MultipPlayer::handleSignalAndSLots()
     //当前播放媒体改变，设置求取任意帧的player2的媒体路径
     connect(m_player,&QMediaPlayer::currentMediaChanged,[=](const QMediaContent &media){
         qDebug() << QString(u8"当前媒体url:") <<  media.canonicalResource().url();
-        setAnyFrameMediaUrl(media.canonicalResource().url());
+        setAnyFrameMediaUrl(media.canonicalResource().url());//辨别是否为video,是，设置player2的媒体路径，并开启显示图片
     });
 
+    //由player1的媒体url改变设置player2的媒体路径
     connect(m_player2,&QMediaPlayer::bufferStatusChanged,[=](int percentFilled){
         qDebug() <<QString(u8"播放器2缓冲进度: %1").arg(percentFilled);
     });
@@ -641,6 +646,8 @@ void MultipPlayer::handleSignalAndSLots()
         ui->widget_media_pic->resetRoate(0);
     });
 
+    //标题栏--下载
+    connect(m_videoTitleBar,&VideoTitleBar::sig_videodownload,[=](){ui->pushButton_download->click();});
     //标题栏---窗口最小化按钮
     connect(m_videoTitleBar,&VideoTitleBar::sig_winVMinimum,this,&MultipPlayer::showMinimized);
     connect(m_videoTitleBar,&VideoTitleBar::sig_winVMinimum,[=](){slot_clearAllPopupUi();});
@@ -784,12 +791,12 @@ void MultipPlayer::handleSignalAndSLots()
     {
         if(!m_newStart)
         {
-            on_pushButton_5_clicked();
+            slot_firstOpen_clicked();
         }
         else
         {
 
-            on_pushButton_6_clicked();
+            slot_secondOpen_clicked();
         }
     });
     //打开文件
@@ -797,12 +804,12 @@ void MultipPlayer::handleSignalAndSLots()
     {
         if(!m_newStart)
         {
-            on_pushButton_5_clicked();
+            slot_firstOpen_clicked();
         }
         else
         {
 
-            on_pushButton_6_clicked();
+            slot_secondOpen_clicked();
         }
     });
 
@@ -1391,7 +1398,7 @@ void MultipPlayer::slot_itemDoubleClick(QListWidgetItem *item)
 
 
 /*第一次打开文件*/
-void MultipPlayer::on_pushButton_5_clicked()
+void MultipPlayer::slot_firstOpen_clicked()
 {
     if(!m_newStart)
     {
@@ -1433,7 +1440,7 @@ void MultipPlayer::on_pushButton_5_clicked()
 }
 
 /*重新打开播放新文件*/
-void MultipPlayer::on_pushButton_6_clicked()
+void MultipPlayer::slot_secondOpen_clicked()
 {
     if(!m_newStart)
     {
@@ -1489,7 +1496,7 @@ void MultipPlayer::on_pushButton_6_clicked()
 /*打开本地文件*/
 void MultipPlayer::slot_openLocalFile()
 {
-    on_pushButton_5_clicked();
+    slot_firstOpen_clicked();
 }
 
 
@@ -2009,10 +2016,10 @@ void MultipPlayer::setCursorType(int flag)
 }
 
 /*展开更多*/
-void MultipPlayer::on_moreBtn_clicked()
-{
-    ui->stackedWidget->setCurrentIndex(3);
-}
+//void MultipPlayer::on_moreBtn_clicked()
+//{
+//    ui->stackedWidget->setCurrentIndex(3);
+//}
 
 /*顶层搜索框鼠标进入离开*/
 void MultipPlayer::searchMouseEnterLeaveShow(QObject *watched, QEvent *event)
@@ -3027,15 +3034,15 @@ QString MultipPlayer::Base64UrlToString(QUrl base64Url)
 //设置任意帧当前视频路径
 void MultipPlayer::setAnyFrameMediaUrl(const QUrl &url)
 {
-    bool mp3 = getCurrentFileType(url.toString());
-    if(mp3)
+    bool mp4 = getCurrentFileType(url.toString());
+    if(mp4)
     {
         qDebug() <<QString(u8"媒体为视频资源！");
         if(m_anyFrameMediaUrl != url)//与当前资源路径不一样，则认为不是同一个资源
         {
             m_player2->stop();
             m_anyFrameMediaUrl = url;
-            m_player2->setMedia(url);
+            m_player2->setMedia(m_anyFrameMediaUrl);
             m_player2->play();//直接打开不关闭（主要是网络视频容易加载不出来）
 //            QTimer::singleShot(1000,0,[=](){
 //                m_player2->pause();
@@ -3140,6 +3147,7 @@ void MultipPlayer::slot_closeCurrentWindow()
     if(!VideoProgressBar::getInstance()->isHidden())
         VideoProgressBar::getInstance()->close();
         m_player->stop();//暂停播放
+        m_player2->stop();
         playlist->clear();//播放列表清空
         playlist_t->clear();
         m_t_MapList.clear();

@@ -197,8 +197,8 @@ bool ShortVideo::slot_addShortVideoItem(QString url, QString path, QString time,
 
 void ShortVideo::slot_clearShortLists()
 {
-    if(ui->listWidget_medialist->count() != 0)
-    ui->listWidget_medialist->clear();
+//    if(ui->listWidget_medialist->count() != 0)
+//    ui->listWidget_medialist->clear();
 }
 
 bool ShortVideo::eventFilter(QObject *watched, QEvent *event)
