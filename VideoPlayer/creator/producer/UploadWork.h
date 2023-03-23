@@ -53,7 +53,7 @@ private:
 
 signals:
     void    sig_work_uploadprogress(qint64,qint64);
-    void    sig_work_finished(QString,QString);
+    void    sig_work_finished(bool,QString,QString);
 
 };
 

@@ -23,8 +23,8 @@ void HeadHover::initWorkUI()
 {
     m_manager = new QNetworkAccessManager(this);
 
-    QListWidgetItem *item1 = new QListWidgetItem(QIcon("://images/user/user_zhuye.png"),QString::fromLocal8Bit("个人主页"));
-    QListWidgetItem *item2 = new QListWidgetItem(QIcon("://images/user/user_vipcenter.png"),QString::fromLocal8Bit("会员中心"));
+    QListWidgetItem *item1 = new QListWidgetItem(QIcon("://images/user/user_zhuye.png"),QString::fromLocal8Bit("创作中心"));
+    QListWidgetItem *item2 = new QListWidgetItem(QIcon("://images/user/user_vipcenter.png"),QString::fromLocal8Bit("个人主页"));
     QListWidgetItem *item3 = new QListWidgetItem(QIcon("://images/user/user_changepwd.png"),QString::fromLocal8Bit("重置密码"));
     QListWidgetItem *item4 = new QListWidgetItem(QIcon("://images/user/user_songlist.png"),QString::fromLocal8Bit("注销账号"));
     QListWidgetItem *item5 = new QListWidgetItem(QIcon("://images/user/user_exit.png"),QString::fromLocal8Bit("退出登录"));

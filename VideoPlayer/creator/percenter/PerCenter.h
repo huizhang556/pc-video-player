@@ -26,6 +26,10 @@ public slots:
 
 private:
     Ui::PerCenter *ui;
+
+signals:
+    void    sig_person_createguid();
+    void    sig_person_polish();
 };
 
 #endif // PERCENTER_H

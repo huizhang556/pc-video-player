@@ -198,11 +198,11 @@ void TitleBar::handleSignalAndSLots()
 
     //个人信息选择改变
     connect(m_headHover,&HeadHover::sig_itemChanged,[=](QString text){
-        if(QString::fromLocal8Bit("个人主页") == text)
+        if(QString::fromLocal8Bit("创作中心") == text)
         {
-            emit sig_filesUploadDownLoad(5,4);//主界面反应
+            CreateCenter::getInstance()->exec_();
         }
-        else if(QString::fromLocal8Bit("会员中心") == text)
+        else if(QString::fromLocal8Bit("个人主页") == text)
         {
             emit sig_filesUploadDownLoad(5,4);//主界面反应
         }

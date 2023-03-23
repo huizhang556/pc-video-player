@@ -47,7 +47,15 @@ void PerCenter::initWorkUI()
 
 void PerCenter::handleSignalsAndSlots()
 {
+    connect(ui->pushButton_newcreate,&QPushButton::clicked,[=](){
+        emit sig_person_createguid();
+        qDebug() <<QString(u8"新手创作");
+    });
 
+    connect(ui->pushButton_polish,&QPushButton::clicked,[=](){
+        emit sig_person_polish();
+        qDebug() <<QString(u8"发布视频");
+    });
 }
 
 void PerCenter::setInstallEventer()

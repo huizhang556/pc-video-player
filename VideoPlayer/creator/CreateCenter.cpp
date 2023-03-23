@@ -45,6 +45,7 @@ CreateCenter *CreateCenter::getInstance()
 void CreateCenter::exec_()
 {
     ui->stackedWidget_switch->setCurrentWidget(ui->page_login);
+    ui->tabWidget_create->setCurrentWidget(m_perCenter);
     bool isOnline = dataBase::getInstance()->getCurrentUserOnline();
     if(isOnline)//在线
     {
@@ -85,13 +86,13 @@ void CreateCenter::initWorkUI()
     ui->verticalLayout_all->insertWidget(0,m_ctitleBar);//垂直布局插入到顶端
 
     ui->stackedWidget_switch->setCurrentWidget(ui->page_login);//整体转换
-    ui->tabWidget_create->setCurrentIndex(0);
+    ui->tabWidget_create->setCurrentWidget(m_perCenter);
 }
 
 void CreateCenter::handleSignalsAndSlots()
 {
     //tab切换
-    connect(ui->tabWidget_create,&QTabWidget::tabBarClicked,[=](int index){
+    connect(ui->tabWidget_create,&QTabWidget::currentChanged,[=](int index){
         if(ui->tabWidget_create->widget(index) == m_doneWorks)
         {
            QStringList list_counts = dataBase::getInstance()->creator_getAllTagsWorkCounts();
@@ -138,9 +139,17 @@ void CreateCenter::handleSignalsAndSlots()
     //登录
     connect(ui->label_loginbg,&MoveLabel::sig_sendLogin,[=](){
         ui->stackedWidget_switch->setCurrentWidget(ui->page_create);
-        ui->tabWidget_create->setCurrentIndex(0);
+        ui->tabWidget_create->setCurrentWidget(m_perCenter);
     });
 
+
+    connect(m_perCenter,&PerCenter::sig_person_createguid,[=](){
+
+    });
+
+    connect(m_perCenter,&PerCenter::sig_person_polish,[=](){
+        ui->tabWidget_create->setCurrentWidget(m_maker);
+    });
 }
 
 void CreateCenter::setInstallEventer()

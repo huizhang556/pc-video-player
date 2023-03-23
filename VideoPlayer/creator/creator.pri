@@ -11,7 +11,8 @@ FORMS += \
     $$PWD/mywork/DoneWorks.ui \
     $$PWD/income/CusCalendar.ui \
     $$PWD/income/Income.ui \
-    $$PWD/mywork/LeftItem.ui
+    $$PWD/mywork/LeftItem.ui \
+    $$PWD/producer/TextImageLab.ui
 
 
 HEADERS += \
@@ -29,7 +30,8 @@ HEADERS += \
     $$PWD/income/CusCalendar.h \
     $$PWD/income/Income.h \
     $$PWD/mywork/LeftItem.h \
-    $$PWD/mywork/LabLoading.h
+    $$PWD/mywork/LabLoading.h \
+    $$PWD/producer/TextImageLab.h
 
 
 SOURCES += \
@@ -47,7 +49,8 @@ SOURCES += \
     $$PWD/income/CusCalendar.cpp \
     $$PWD/income/Income.cpp \
     $$PWD/mywork/LeftItem.cpp \
-    $$PWD/mywork/LabLoading.cpp
+    $$PWD/mywork/LabLoading.cpp \
+    $$PWD/producer/TextImageLab.cpp
 
 
 

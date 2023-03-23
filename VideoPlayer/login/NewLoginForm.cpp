@@ -151,7 +151,7 @@ void NewLoginForm::initWorkUI()
     ui->lineEdit_fpwd_checkCode->setContextMenuPolicy(Qt::NoContextMenu);
     ui->lineEdit_firstpwd->setContextMenuPolicy(Qt::NoContextMenu);
     ui->lineEdit_secondpwd->setContextMenuPolicy(Qt::NoContextMenu);
-    ui->stackedWidget_right->setCurrentIndex(0);
+    ui->stackedWidget_right->setCurrentWidget(ui->page_login);
     //解决QLineEdit回车键退出
     ui->pushButton_close->setFocusPolicy(Qt::NoFocus);//默认具有焦点
     ui->pushButton_register->setFocusPolicy(Qt::NoFocus);//默认具有焦点
@@ -351,7 +351,7 @@ void NewLoginForm::chandleSignalsAndSLots()
 
     //跳转到注册
     connect(ui->pushButton_register,&QPushButton::clicked,[=](){
-        ui->stackedWidget_right->setCurrentIndex(1);
+        ui->stackedWidget_right->setCurrentWidget(ui->page_regis);
         ui->pushButton_register->setText(QString(u8"注册"));
         qDebug() << QString(u8"注册按钮");
     });
@@ -361,12 +361,12 @@ void NewLoginForm::chandleSignalsAndSLots()
     });
     //忘记密码
     connect(ui->pushButton_forgotPwd,&QPushButton::clicked,[=](){
-        ui->stackedWidget_right->setCurrentIndex(2);
+        ui->stackedWidget_right->setCurrentWidget(ui->page_resetPwd);
         qDebug() << QString(u8"忘记密码");
     });
     //扫码登录
     connect(ui->pushButton_scanCode,&QPushButton::clicked,[=](){
-        ui->stackedWidget_right->setCurrentIndex(0);//右侧变为扫码登录界面
+        ui->stackedWidget_right->setCurrentWidget(ui->page_login);//右侧变为扫码登录界面
         ui->pushButton_updateQR->click();//模拟点击刷新
     });
 
@@ -661,40 +661,40 @@ void NewLoginForm::receiveLoginAppClose()
 void NewLoginForm::slot_switchWinType(ShowType type)
 {
     bool login = checkCurUserLoginStatus();
-    if(!login)
+    if(!login)//不在线
     {
         switch (type) {
         case ShowType::LoginWin_0://扫码登录
         {
-            ui->tabWidget_login->setCurrentIndex(0);
-            ui->stackedWidget_right->setCurrentIndex(0);
+            ui->tabWidget_login->setCurrentWidget(ui->tab_login1);
+            ui->stackedWidget_right->setCurrentWidget(ui->page_login);
         }
             break;
         case ShowType::LoginWin_1://短信登录
         {
-            ui->tabWidget_login->setCurrentIndex(0);
-            ui->stackedWidget_right->setCurrentIndex(0);
+            ui->tabWidget_login->setCurrentWidget(ui->tab_login1);
+            ui->stackedWidget_right->setCurrentWidget(ui->page_login);
             ui->lineEdit_telNumber->setFocus();
         }
             break;
         case ShowType::LoginWin_2://账号登录
         {
-            ui->tabWidget_login->setCurrentIndex(1);
-            ui->stackedWidget_right->setCurrentIndex(0);
+            ui->tabWidget_login->setCurrentWidget(ui->tab_login2);
+            ui->stackedWidget_right->setCurrentWidget(ui->page_login);
             ui->lineEdit_account->setFocus();
         }
             break;
-        case ShowType::RegisWin://注册窗口
+        case ShowType::RegisWin://注册账户窗口
         {
-            ui->tabWidget_login->setCurrentIndex(1);
-            ui->stackedWidget_right->setCurrentIndex(1);
+            ui->tabWidget_login->setCurrentWidget(ui->tab_login2);
+            ui->stackedWidget_right->setCurrentWidget(ui->page_regis);
             ui->lineEdit_regis_telNumber->setFocus();
         }
             break;
-        case ShowType::ReSetWin://重置窗口
+        case ShowType::ReSetWin://重置密码窗口
         {
-            ui->tabWidget_login->setCurrentIndex(1);
-            ui->stackedWidget_right->setCurrentIndex(2);
+            ui->tabWidget_login->setCurrentWidget(ui->tab_login2);
+            ui->stackedWidget_right->setCurrentWidget(ui->page_resetPwd);
             ui->lineEdit_fpwd_account->setFocus();
         }
             break;
@@ -702,12 +702,46 @@ void NewLoginForm::slot_switchWinType(ShowType type)
             break;
         }
 
+    }
+    else//在线
+    {
+                switch (type)
+                {
+                case ShowType::LoginWin_0://扫码登录
+                {
+                    ui->stackedWidget_right->setCurrentWidget(ui->page_login);
+                }
+                    break;
+                case ShowType::LoginWin_1://短信登录
+                {
+                    ui->stackedWidget_right->setCurrentWidget(ui->page_login);
+                    ui->lineEdit_telNumber->setFocus();
+                }
+                    break;
+                case ShowType::LoginWin_2://账号登录
+                {
+                    ui->stackedWidget_right->setCurrentWidget(ui->page_login);
+                    ui->lineEdit_account->setFocus();
+                }
+                    break;
+                case ShowType::ReSetWin://重置密码窗口
+                {
+                    ui->tabWidget_login->setCurrentWidget(ui->tab_login2);
+                    ui->stackedWidget_right->setCurrentWidget(ui->page_resetPwd);
+                    ui->lineEdit_fpwd_account->setFocus();
+                }
+                    break;
+                default:
+                    break;
+            }
+
+     }
+
         if(this->windowOpacity() == 0)
         {
             this->setWindowOpacity(1);
         }
-    }
-    this->exec();//最后显示
+        this->exec();//最后显示
 }
 
 void NewLoginForm::paintEvent(QPaintEvent *event)
@@ -810,7 +844,7 @@ void NewLoginForm::setUser_register()
             //showLoginWindow(0);
             setType(TipType::Correct);
             showCText(TipType::Normal,ui->pushButton_regis->mapToGlobal(ui->pushButton_regis->pos())- QPoint(-230,70),QString(u8"恭喜您，注册成功！"),ui->pushButton_regis,ui->lineEdit_regis_telNumber->rect(),2000);
-            ui->stackedWidget_right->setCurrentIndex(0);//右侧变为扫码登录界面
+            ui->stackedWidget_right->setCurrentWidget(ui->page_login);//右侧变为扫码登录界面
             ui->pushButton_updateQR->click();//模拟点击刷新二维码
         });//转到登录界面
     }

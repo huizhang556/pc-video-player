@@ -757,8 +757,8 @@ void MainWidget::handleSignalAndSLots()
     connect(this,SIGNAL(sig_canGoForward(bool)),m_titleBar,SLOT(slot_setCanGoForward(bool)));
     //上传下载
     connect(m_titleBar,&TitleBar::sig_filesUploadDownLoad,[=](int index1,int index2){
-       m_stackWidget_center->setCurrentWidget(m_fileTrans);//个人信息界面
-       m_personForm->getCurrentShowWidget_TW()->setCurrentIndex(index2);
+       m_stackWidget_center->setCurrentWidget(m_personForm);//个人信息界面
+//       m_personForm->getCurrentShowWidget_TW()->setCurrentIndex(index2);
     });
     //历史记录
     connect(m_titleBar,&TitleBar::sig_historyDownload,[=](int index1,int index2){

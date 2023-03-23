@@ -7,9 +7,11 @@
 #include <QWidget>
 #include <QMenu>
 #include <QThread>
+#include <QPushButton>
 #include <QSignalMapper>
 #include <QButtonGroup>
 #include <QScrollBar>
+#include <QListWidget>
 #include <QFileDialog>
 #include <QDebug>
 
@@ -48,6 +50,7 @@ private:
     void            file_createItemToAnotherListWgt(const fileBody& body);
     void            addFileItemsToList(const QList<QUrl> urlLists);
     QString         file_getFileSuffix(const QString& suffix);//获取文件类型
+    QPushButton*    getCurrentItemButton(QListWidgetItem* item, const QString& objname);
 
 private:
     Ui::Maker *ui;

@@ -92,8 +92,8 @@ public slots:
     void    slot_updateProgress(qint64 bytesSent, qint64 bytesTotal);
     void    slot_updateProgress_header(qint64 bytesSent, qint64 bytesTotal);
     void    slot_updateStatus(qint64 bytesSent, qint64 bytesTotal);
-    void    slot_update_url_md5(const QString& url,const QString& md5);
-    void    slot_update_header(const QString& url_header,const QString& md5);
+    void    slot_update_url_md5(bool sucess,const QString& url,const QString& md5);
+    void    slot_update_header(bool success, const QString& url_header, const QString& md5);
     void    slot_pauseButtonClick();//模拟暂停按钮点击
     void    slot_statusButtonClick();//模拟状态按钮点击
 

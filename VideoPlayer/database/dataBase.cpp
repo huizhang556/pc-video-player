@@ -1063,7 +1063,7 @@ void dataBase::browser_deleteAllHisRecordToList()
 }
 
 //推荐列表插入视频
-void dataBase::video_insertRecDramaListDB(const QStringList &parma)
+bool dataBase::video_insertRecDramaListDB(const QStringList &parma)
 {
     QSqlQuery query(getSqlDataBase());
     //自增id插入时，id为0 参数：记录id 用户id 时长 介绍 url 封面 点赞数 类型 主题
@@ -1072,10 +1072,12 @@ void dataBase::video_insertRecDramaListDB(const QStringList &parma)
     if(isOK)
     {
         qDebug()<< QString::fromLocal8Bit("插入剧集信息成功~");
+        return true;
     }
     else
     {
         qDebug()<< QString::fromLocal8Bit("插入剧集信息错误：") << query.lastError();
+        return false;
     }
 
 }

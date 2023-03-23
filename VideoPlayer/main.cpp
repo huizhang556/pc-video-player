@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
 #if 0
     //    DesktopLyric::getInstance()->show();
 
-        MultipPlayer::getInstance()->show();
+//        MultipPlayer::getInstance()->show();
 
 //    MiniPlayer m;
 //    m.c_show();
@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
     //    MainNotice w1;
     //    w1.show();
 
-//        CreateCenter::getInstance()->show();
+        CreateCenter::getInstance()->show();
 
     //    MyEmotionWindow w1;
     //    w1.showNormalEmotion(QPoint(500 , 500));

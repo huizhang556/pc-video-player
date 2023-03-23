@@ -48,6 +48,7 @@ void FilesItem::initWorkUI()
     manager = new QNetworkAccessManager(this);
 
     ui->pushButton_remove->setToolTip(QString(u8"移除"));
+    ui->label_pic->setAlignment(Qt::AlignCenter);
 
     ui->progressBar->setValue(0);
     ui->progressBar->setRange(0,100);
@@ -297,34 +298,41 @@ void FilesItem::slot_setItemStatus(FILESTATUS status)
     case READY:
     {
         m_curStatus = QString(u8"待上传");
+        ui->label_pic->setLabWarnText(QString(u8"待上传"));
     }
         break;
     case WAITING:
     {
         m_curStatus = QString(u8"等待中");
+        ui->label_pic->setLabWarnText(QString(u8"等待中"));
     }
         break;
     case UPLOADING:
     {
         m_curStatus = QString(u8"上传中");
+        ui->label_pic->setLabWarnText(QString(u8"上传中"));
     }
         break;
     case FINISHED:
     {
         m_canedit = FILEEDIT::CANEDIT;
         m_curStatus = QString(u8"已完成");
+        ui->label_pic->setLabWarnText(QString(u8"已完成"));
         ui->pushButton_editinfo->setText(QString(u8"详细"));
         ui->pushButton_pause->setText(QString(u8"播放"));
     }
         break;
     case UNKNOW:
     {
-        m_curStatus = QString(u8"未知");
+        m_curStatus = QString(u8"上传错误");
+        ui->label_pic->setLabWarnText(QString(u8"上传失败！"));
+        ui->pushButton_pause->setText(QString(u8"重传"));
     }
         break;
     default:
         break;
     }
+    slot_setItemStatusText();
 }
 
 void FilesItem::slot_setItemStatusText()
@@ -604,15 +612,10 @@ void FilesItem::slot_updateStatus(qint64 bytesSent, qint64 bytesTotal)
         slot_setItemStatus(UPLOADING);
         if(bytesSent == bytesTotal)
         {
-            slot_setItemStatus(FINISHED);
-
-            //延时移除
-            QTimer::singleShot(1000,0,[=](){
-                slot_statusButtonClick();//移除
-            });
+            //此时完成
         }
     }
-    slot_setItemStatusText();
+//    slot_setItemStatusText();
 
     //状态改变
     connect(this,&FilesItem::sig_sendItem_statusChanged,[=](FILESTATUS status){
@@ -625,24 +628,31 @@ void FilesItem::slot_updateStatus(qint64 bytesSent, qint64 bytesTotal)
 }
 
 //回传回来的上传文件信息
-void FilesItem::slot_update_url_md5(const QString &url, const QString &md5)
+void FilesItem::slot_update_url_md5(bool sucess, const QString &url, const QString &md5)
 {
-//    qDebug() << QString(u8"video接收到传回的信息：")<< url << md5;
-    m_body.furl     = url;//文件url
-    m_body.fmd5     = md5;//文件md5
-    m_body.fname    =  ui->lineEdit_filename->text();//重命名以后的名称
-    m_body.fcover   =  ui->lineEdit_displaycover->text();//body创建新的item用的本地路径
-    m_body.fsize    =  m_size;//int，不是转换为时分秒的字符串
-    m_body.fnick    =  ui->lineEdit_displaytitle->text();//重新修改以后的介绍
-    m_body.fmedtype =  ui->comboBox_mtype->currentData().toString();//是data数据，英文（movies）
-    m_body.fmedtheme=  ui->comboBox_mtheme->currentData().toString();
-    m_body.fduration=  ui->lineEdit_mduration->text();//加载文件时候计算好的
-    //插入数据
-    file_insertItemDataTodb(m_body);//插入数据库用的http传回来的路径
-    emit sig_sendItem_finished(m_body);//创建新的完成的item（暂时无用了）
+    if(sucess)//成功上传
+    {
+        m_body.furl     = url;//文件url
+        m_body.fmd5     = md5;//文件md5
+        m_body.fname    =  ui->lineEdit_filename->text();//重命名以后的名称
+        m_body.fcover   =  ui->lineEdit_displaycover->text();//body创建新的item用的本地路径
+        m_body.fsize    =  m_size;//int，不是转换为时分秒的字符串
+        m_body.fnick    =  ui->lineEdit_displaytitle->text();//重新修改以后的介绍
+        m_body.fmedtype =  ui->comboBox_mtype->currentData().toString();//是data数据，英文（movies）
+        m_body.fmedtheme=  ui->comboBox_mtheme->currentData().toString();
+        m_body.fduration=  ui->lineEdit_mduration->text();//加载文件时候计算好的
+        //插入数据
+        file_insertItemDataTodb(m_body);//插入数据库用的http传回来的路径
+    //    emit sig_sendItem_finished(m_body);//创建新的完成的item（暂时无用了）
+    }
+    else//上传解析失败
+    {
+
+        slot_setItemStatus(UNKNOW);//设置为UNKNOW，数据库插入失败也是如此处理！
+    }
 }
 
-void FilesItem::slot_update_header(const QString &url_header, const QString &md5)
+void FilesItem::slot_update_header(bool success,const QString &url_header, const QString &md5)
 {
     //必须保证header的回传信息在video之前接收到
     qDebug() << QString(u8"header接收到传回的信息：")<< url_header << md5;
@@ -662,7 +672,19 @@ void FilesItem::file_insertItemDataTodb(const fileBody &body)
     qDebug() << "theme      = :" << body.fmedtheme;
     qDebug() << "size       = :" << body.fsize;
     QStringList parma = {body.fnick.toUtf8(),body.furl.toUtf8(),body.fduration,m_picpath,QString(u8"8.8万"),body.fmedtype,body.fmedtheme,QString::number(body.fsize)};
-    dataBase::getInstance()->video_insertRecDramaListDB(parma);//插入数据
+    bool success = dataBase::getInstance()->video_insertRecDramaListDB(parma);//插入数据
+    if(success)
+    {
+        slot_setItemStatus(FINISHED);//设置为完成状态
+        //延时移除
+        QTimer::singleShot(1000,0,[=](){
+            slot_statusButtonClick();//应该由数据库插入成功通知移除
+        });
+    }
+    else
+    {
+        slot_setItemStatus(UNKNOW);//设置为完成状态
+    }
 }
 
 QString FilesItem::QStrToBase64(QString str)
@@ -709,6 +731,7 @@ void FilesItem::slot_pauseButtonClick()
     ui->pushButton_pause->click();
 }
 
+//上传完成
 void FilesItem::slot_statusButtonClick()
 {
     ui->pushButton_remove->click();//完成即移除

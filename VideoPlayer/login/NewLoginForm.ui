@@ -204,7 +204,7 @@ color: #2494e4;
           <property name="currentIndex">
            <number>1</number>
           </property>
-          <widget class="QWidget" name="stackedpage_unlogin" native="true">
+          <widget class="QWidget" name="stackedpage_unlogin">
            <layout class="QVBoxLayout" name="verticalLayout_20">
             <property name="spacing">
              <number>0</number>
@@ -996,18 +996,23 @@ color: white;
                       </size>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">QPushButton
+                      <string notr="true">
+QPushButton
 {
 color: white;
 font: 75 12pt &quot;Microsoft YaHei UI&quot;;
 border-radius: 18px;
-background-color:#00beff;
+background-color: rgba(53, 84, 135,0.7);
 }
 
 QPushButton:hover
 {
-color: ;
-}</string>
+color: #a4cc27;
+border: 2px solid #a1a1ff;
+background-color: rgba(53, 84, 135,0.9);
+}
+
+</string>
                      </property>
                      <property name="text">
                       <string>登  录</string>
@@ -1797,7 +1802,7 @@ background-color: rgba(58, 58, 65,0.7);
         <item>
          <widget class="QStackedWidget" name="stackedWidget_right">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page_login">
            <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -2709,8 +2714,24 @@ QLineEdit:hover
                  <item>
                   <layout class="QVBoxLayout" name="verticalLayout_26">
                    <property name="spacing">
-                    <number>10</number>
+                    <number>6</number>
                    </property>
+                   <item>
+                    <spacer name="verticalSpacer_10">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeType">
+                      <enum>QSizePolicy::Fixed</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>9</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
                    <item>
                     <widget class="QPushButton" name="pushButton_regis">
                      <property name="minimumSize">
@@ -2726,18 +2747,23 @@ QLineEdit:hover
                       </size>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">QPushButton
+                      <string notr="true">
+QPushButton
 {
 color: white;
 font: 75 12pt &quot;Microsoft YaHei UI&quot;;
 border-radius: 18px;
-background-color:#00beff;
+background-color: rgba(53, 84, 135,0.7);
 }
 
 QPushButton:hover
 {
-color: ;
-}</string>
+color: #a4cc27;
+border: 2px solid #a1a1ff;
+background-color: rgba(53, 84, 135,0.9);
+}
+
+</string>
                      </property>
                      <property name="text">
                       <string>同意协议并注册</string>
@@ -3442,33 +3468,53 @@ QLineEdit:hover
                </widget>
               </item>
               <item>
+               <spacer name="verticalSpacer_9">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>10</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
                <widget class="QPushButton" name="pushButton_resetPwd">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>50</height>
+                  <height>40</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>50</height>
+                  <height>40</height>
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QPushButton
+                 <string notr="true">
+QPushButton
 {
 color: white;
-margin-top: 10px;
 font: 75 12pt &quot;Microsoft YaHei UI&quot;;
 border-radius: 18px;
-background-color:#00beff;
+background-color: rgba(53, 84, 135,0.7);
 }
 
 QPushButton:hover
 {
-color: #d81e06;
-}</string>
+color: #a4cc27;
+border: 2px solid #a1a1ff;
+background-color: rgba(53, 84, 135,0.9);
+}
+
+</string>
                 </property>
                 <property name="text">
                  <string>重置密码</string>
@@ -3905,8 +3951,8 @@ border: none;
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>81</width>
-                 <height>16</height>
+                 <width>325</width>
+                 <height>341</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="addVerLayout">

@@ -119,13 +119,54 @@ void Maker::handleSignalsAndSlots()
         if(checked)
         {
             emit sig_file_uploadall_start();
-            ui->pushButton_uploadFiles->setText(QString(u8"全部暂停"));
+            ui->pushButton_uploadFiles->setText(QString(u8"全部暂停(%1)").arg(ui->listWidget_videopolish->count()));
         }
         else
         {
             emit sig_file_uploadall_stop();
-            ui->pushButton_uploadFiles->setText(QString(u8"全部开始"));
+            ui->pushButton_uploadFiles->setText(QString(u8"全部开始(%1)").arg(ui->listWidget_videopolish->count()));
         }
+    });
+
+    //全部清除
+    connect(this,&Maker::sig_file_uploadall_clear,[=](){
+        //此处应该循环遍历，再模拟点击，否则被移除的也会接收信号
+        for (int i = 0; i < ui->listWidget_videopolish->count(); ++i)
+        {
+            QPushButton *btn_ctl =  getCurrentItemButton(ui->listWidget_videopolish->item(i),"pushButton_remove");
+            if(btn_ctl != nullptr)
+            {
+                btn_ctl->click();//模拟点击移除
+            }
+        }
+    });
+
+
+    //全部上传（点击按钮）
+    connect(this,&Maker::sig_file_uploadall_start,[=](){
+        //此处应该循环遍历，再模拟点击，否则被移除的也会接收信号
+        for (int i = 0; i < ui->listWidget_videopolish->count(); ++i)
+        {
+          QPushButton *btn_ctl =  getCurrentItemButton(ui->listWidget_videopolish->item(i),"pushButton_pause");
+          if(btn_ctl != nullptr)
+          {
+              btn_ctl->click();//模拟点击上传
+          }
+        }
+    });
+
+    //全部暂停
+    connect(this,&Maker::sig_file_uploadall_stop,[=](){
+        //此处应该循环遍历，再模拟点击，否则被移除的也会接收信号
+        for (int i = 0; i < ui->listWidget_videopolish->count(); ++i)
+        {
+          QPushButton *btn_ctl =  getCurrentItemButton(ui->listWidget_videopolish->item(i),"pushButton_pause");
+          if(btn_ctl != nullptr)
+          {
+              btn_ctl->click();//模拟点击上传
+          }
+        }
+
     });
 
     //上传列表（右键菜单）
@@ -173,6 +214,7 @@ void Maker::slot_addFileToList()
     ui->pushButton_openfile->click();//模拟按钮点击
 }
 
+//全部清除列表
 void Maker::slot_clearList()
 {
     //    emit sig_file_uploadall_clear();//（让自己清除，解除信号与槽函数关联）
@@ -215,7 +257,7 @@ void Maker::file_upload_start(const QUrlQuery media_url, const QByteArray &pic_u
         //关联文件状态()
         connect(upWorker,SIGNAL(sig_work_uploadprogress(qint64,qint64)),fileItem,SLOT(slot_updateStatus(qint64,qint64)));
         //上传完成--传回信息
-        connect(upWorker,SIGNAL(sig_work_finished(QString,QString)),fileItem,SLOT(slot_update_url_md5(QString,QString)));
+        connect(upWorker,SIGNAL(sig_work_finished(bool,QString,QString)),fileItem,SLOT(slot_update_url_md5(bool,QString,QString)));
     }
     else
     {
@@ -235,7 +277,7 @@ void Maker::file_upload_start(const QUrlQuery media_url, const QByteArray &pic_u
         connect(workThread2,&QThread::finished,upWorker2,&QThread::deleteLater);
         connect(workThread2,&QThread::finished,workThread2,&QObject::deleteLater);
         connect(upWorker2,SIGNAL(sig_work_uploadprogress(qint64,qint64)),fileItem,SLOT(slot_updateProgress_header(qint64,qint64)));
-        connect(upWorker2,SIGNAL(sig_work_finished(QString,QString)),fileItem,SLOT(slot_update_header(QString,QString)));
+        connect(upWorker2,SIGNAL(sig_work_finished(bool,QString,QString)),fileItem,SLOT(slot_update_header(bool,QString,QString)));
     }
     else
     {
@@ -256,7 +298,9 @@ void Maker::checkListItemsCounts()
 {
     if(ui->listWidget_videopolish->count() == 0)
     {
+        ui->listWidget_videopolish->clear();
         ui->stackedWidget_upload->setCurrentWidget(ui->stacked_blank);
+        ui->pushButton_uploadFiles->setText(QString(u8"全部上传"));
         ui->pushButton_uploadFiles->setEnabled(false);
         ui->pushButton_uploadFiles->setProperty("enabled",false);
         ui->pushButton_uploadFiles->style()->polish(ui->pushButton_uploadFiles);
@@ -264,10 +308,11 @@ void Maker::checkListItemsCounts()
     }
     else
     {
-            ui->pushButton_uploadFiles->setEnabled(true);
-            ui->pushButton_uploadFiles->setProperty("enabled",true);
-            ui->pushButton_uploadFiles->style()->polish(ui->pushButton_uploadFiles);
-            qDebug() << QString(u8"列表不为空，上传按钮可用！");
+        ui->pushButton_uploadFiles->setText(QString(u8"全部上传(%1)").arg(ui->listWidget_videopolish->count()));
+        ui->pushButton_uploadFiles->setEnabled(true);
+        ui->pushButton_uploadFiles->setProperty("enabled",true);
+        ui->pushButton_uploadFiles->style()->polish(ui->pushButton_uploadFiles);
+        qDebug() << QString(u8"列表不为空，上传按钮可用！");
     }
 }
 
@@ -351,38 +396,23 @@ void Maker::addFileItemsToList(const QList<QUrl> urlLists)
         ui->listWidget_videopolish->setItemWidget(item,itemWidget);
         //关联信号槽
         //移除item(1.未上传时移除2.上传进度100%时，模拟按钮点击移除)
+        //注意：使用lambda表达式，[]捕获列表语法默认是不允许对捕获参数赋值的，如需要改变，可以在()后加mutable，但是只是一份值拷贝
+        //如果需要修改外部变量的值，可以在[]以指针或者引用形式传递
         connect(itemWidget,&FilesItem::sig_sendItem_remove,[=](){
             itemWidget->disconnect();//断开与itemWidget关联的所有信号槽（否则移除之后，如果在没有delete的情况下，还是会触发信号槽）
             itemWidget->deleteLater();
             item->listWidget()->takeItem(item->listWidget()->row(item));
             delete item;
-            checkListItemsCounts();
+            checkListItemsCounts();//核对数量是否为0
         });
 
-        //全部清除
-        connect(this,&Maker::sig_file_uploadall_clear,[=](){
-            itemWidget->disconnect();
-            itemWidget->deleteLater();
-            item->listWidget()->takeItem(item->listWidget()->row(item));
-            delete item;
-            qDebug() <<QString(u8"接收到清除全部的信号！");
-        });
 
         //完成添加进入另一个list（url回传回来的时候body齐全，发出finished）
         connect(itemWidget,&FilesItem::sig_sendItem_finished,[=](fileBody body){
 //            file_createItemToAnotherListWgt(body);//上传以后的body信息
         });
 
-        //全部上传（点击按钮）
-        connect(this,&Maker::sig_file_uploadall_start,[=](){
-            itemWidget->slot_pauseButtonClick();
-            qDebug() << QString(u8"全部上传");
-        });
-        //全部暂停
-        connect(this,&Maker::sig_file_uploadall_stop,[=](){
-            itemWidget->slot_pauseButtonClick();
-            qDebug() << QString(u8"全部暂停");
-        });
+
 
         //开始上传（单个）
         connect(itemWidget,&FilesItem::sig_sendItem_upload,[=](bool start,QUrlQuery media_url,QByteArray& media_cover){
@@ -447,5 +477,24 @@ QString Maker::file_getFileSuffix(const QString &suffix)
     else
     {
         return ":/images/creator/fileitem_videos.png";
+    }
+}
+
+QPushButton *Maker::getCurrentItemButton(QListWidgetItem* item, const QString& objname)
+{
+    QWidget* itemWidget = ui->listWidget_videopolish->itemWidget(item);
+    if(nullptr != itemWidget)
+    {
+        QPushButton*  btn_ctl = itemWidget->findChild<QPushButton*>(objname);//可以指定查找范围（最近一级的还是所有的）
+        if(nullptr != btn_ctl)
+        {
+            qDebug() <<QString(u8"找到%1控制按钮！").arg(objname);
+            return btn_ctl;
+        }
+    }
+    else
+    {
+        qDebug() <<QString(u8"没找到%1按钮").arg(objname);
+        return nullptr;
     }
 }

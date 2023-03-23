@@ -168,8 +168,8 @@ font: 400 15px &quot;微软雅黑&quot;;
              <property name="styleSheet">
               <string notr="true">QLabel
 {
-color: red;
-font: 400 12px &quot;微软雅黑&quot;;
+color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #0aebe7, stop:1  #518df9);
+font: 800 12px &quot;微软雅黑&quot;;
 }
 </string>
              </property>

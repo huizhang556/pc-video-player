@@ -357,8 +357,13 @@ void UploadWork::getJson(QJsonObject &jsonObj)
         //插入数据库
         if(!savePath.isEmpty() && !md5.isEmpty())
         {
-            emit sig_work_finished(savePath,md5);
-            qDebug() << QString(u8"服务器回传信息的信号已发出！");
+            emit sig_work_finished(true,savePath,md5);
+            qDebug() << QString(u8"服务器回传数据正确！");
+        }
+        else
+        {
+            emit sig_work_finished(false,savePath,md5);
+            qDebug() << QString(u8"服务器回传数据错误！");
         }
 }
 

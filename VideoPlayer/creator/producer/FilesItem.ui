@@ -263,7 +263,7 @@ color: #ff4335;
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
-             <widget class="QLabel" name="label_pic">
+             <widget class="TextImageLab" name="label_pic">
               <property name="minimumSize">
                <size>
                 <width>50</width>
@@ -854,6 +854,13 @@ background-color: #d3d3d3;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TextImageLab</class>
+   <extends>QLabel</extends>
+   <header>creator/producer/TextImageLab.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

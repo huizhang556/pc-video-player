@@ -477,9 +477,16 @@ void MultipPlayer::handleSignalAndSLots()
 
     //当前播放媒体改变，设置求取任意帧的player2的媒体路径
     connect(m_player,&QMediaPlayer::currentMediaChanged,[=](const QMediaContent &media){
-        qDebug() << QString(u8"当前媒体url:") <<  media.canonicalResource().url();
+        qDebug() << QString(u8"正式列表当前媒体url:") <<  media.canonicalResource().url();
         setAnyFrameMediaUrl(media.canonicalResource().url());//辨别是否为video,是，设置player2的媒体路径，并开启显示图片
     });
+
+    //临时列表媒体改变
+//    connect(m_player2,&QMediaPlayer::currentMediaChanged,[=](const QMediaContent &media){
+//        qDebug() << QString(u8"临时列表当前媒体url:") <<  media.canonicalResource().url();
+//        m_videoTitleBar->clearTitleText();
+//        ui->label_media_name->clear();
+//    });
 
     //由player1的媒体url改变设置player2的媒体路径
     connect(m_player2,&QMediaPlayer::bufferStatusChanged,[=](int percentFilled){
@@ -623,7 +630,7 @@ void MultipPlayer::handleSignalAndSLots()
         m_player->play();
     });
 
-    //标题栏显示当前播放文件名
+    //标题栏显示当前播放文件名(在媒体改变的时候，先清除文本，以防止没有媒体的情况)
     connect(this,&MultipPlayer::sig_sendSwitchToMusicPage,[=](QString nameUrl){
         if(m_player->playlist() == playlist)
         {
@@ -1654,6 +1661,8 @@ void MultipPlayer::checkChandleMediaPlayerStatus(QMediaPlayer::State newState)
     else if(newState == QMediaPlayer::StoppedState)
     {
         ui->widget_media_pic->pause();
+        m_videoTitleBar->clearTitleText();
+        ui->label_media_name->clear();
         qDebug() << QString::fromLocal8Bit("设置后，当前状态是：QMediaPlayer::StoppedState");
         emit sig_currentMediaPlayStatus(false);//false 代表暂停状态
     }
@@ -1703,10 +1712,14 @@ void MultipPlayer::checkChandleMediaStatus()
     }
     else if(m_player->mediaStatus() == QMediaPlayer::EndOfMedia)//媒体结束
     {
+        m_videoTitleBar->clearTitleText();
+        ui->label_media_name->clear();
         qDebug() << QString::fromLocal8Bit("QMediaPlayer::EndOfMedia");
     }
     else if(m_player->mediaStatus() == QMediaPlayer::InvalidMedia)//媒体无效
     {
+        m_videoTitleBar->clearTitleText();
+        ui->label_media_name->clear();
         qDebug() << QString::fromLocal8Bit("QMediaPlayer::InvalidMedia");
     }
     else
