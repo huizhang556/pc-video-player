@@ -235,7 +235,6 @@ private slots:
 
     void    checkChandleMediaPlayerStatus(QMediaPlayer::State newState);//监测处理媒体播放状态
 
-
     void    checkChandleMediaStatus();//监测处理媒体状态
 
     void    loadDefaultLogo();//加载默认图标
@@ -367,7 +366,7 @@ signals:
 
     void    sig_currentMediaSoundChanged(bool);
 
-    void    sig_mainPlayerClose();
+    void    sig_mainPlayerClose(bool);
 
     void    sig_playerIsMutedStatus(bool);
 
@@ -382,6 +381,8 @@ signals:
     void    sig_winResize();
 
     void    sig_mediaListIndex(int);
+
+    void    sig_showMainForm();
 
 
 private:
@@ -428,6 +429,7 @@ private:
 
     int                         m_voice;                        //静音之前的值
     bool                        m_winMax;                       //默认非最大化
+    bool                        m_extraFlag         = false;    //是否为外部拖动文件打开的播放器（默认不是）
     bool                        m_isClose;
     bool                        m_orderStatus       = false;
     bool                        m_isHide            = false;    //侧边栏显示/隐藏按钮，默认没隐藏

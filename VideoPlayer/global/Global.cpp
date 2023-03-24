@@ -169,6 +169,55 @@ Global *Global::getInstance()
     return m_pInstance;
 }
 
+bool Global::getFileType(const QString &filepath)
+{
+    if(filepath.isEmpty())
+    {
+        return false;
+    }
+    else
+    {
+        QFileInfo info(filepath);
+        QString suffix = info.suffix();
+        if(suffix == "mp4")//返回的是mp4,而非 .mp4
+        {
+            return true;
+        }
+        else if(suffix == "mov")
+        {
+            return true;
+        }
+        else if(suffix == "avi")
+        {
+            return true;
+        }
+        else if(suffix == "flv")
+        {
+            return true;
+        }
+        else if(suffix == "mp3")
+        {
+            return true;
+        }
+        else if(suffix == "aac")
+        {
+            return true;
+        }
+        else if(suffix == "wav")
+        {
+            return true;
+        }
+        else if(suffix == "wma")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
+
 //读取注册状态(退出)
 QString Global::readIni_exit()
 {

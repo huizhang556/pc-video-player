@@ -45,7 +45,7 @@ void VideoTitleBar::chandleSignalsAndSlots()
     //最小化按钮
     connect(ui->pushButton_min,&QPushButton::clicked,[=](){emit sig_winVMinimum();});
     //返回主界面按钮
-    connect(ui->pushButton_return,&QPushButton::clicked,[=](){emit sig_winVMinimum();});
+    connect(ui->pushButton_return,&QPushButton::clicked,[=](){emit sig_returnMainUi();});
     //清除标题文字
     connect(this,&VideoTitleBar::sig_winVClose,this,&VideoTitleBar::clearTitleText);
     //发送输入的视频地址

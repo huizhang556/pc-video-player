@@ -450,6 +450,7 @@ void MultipPlayer::handleSignalAndSLots()
     connect(m_player,SIGNAL(stateChanged(QMediaPlayer::State)),this,SLOT(checkChandleMediaPlayerStatus(QMediaPlayer::State)));
     //外界使用状态改变信号
     connect(this,SIGNAL(sig_currentMediaPlayStatus(bool)),m_musicUi,SLOT(slot_controlPlayStatus(bool)));
+    connect(this,SIGNAL(sig_currentMediaPlayStatus(bool)),this,SLOT(slot_setPlayStatusStyle_main(bool)));
     //监测媒体本身状态,所带参数为新的媒体状态，比如缓冲状态 BufferingMedia BufferedMedia
     connect(m_player,&QMediaPlayer::mediaStatusChanged,this,&MultipPlayer::checkChandleMediaStatus);
     //计算媒体播放数值范围
@@ -656,8 +657,15 @@ void MultipPlayer::handleSignalAndSLots()
     //标题栏--下载
     connect(m_videoTitleBar,&VideoTitleBar::sig_videodownload,[=](){ui->pushButton_download->click();});
     //标题栏---窗口最小化按钮
-    connect(m_videoTitleBar,&VideoTitleBar::sig_winVMinimum,this,&MultipPlayer::showMinimized);
-    connect(m_videoTitleBar,&VideoTitleBar::sig_winVMinimum,[=](){slot_clearAllPopupUi();});
+    connect(m_videoTitleBar,&VideoTitleBar::sig_returnMainUi,[=](){
+        m_extraFlag = false;//只要打开主界面，标志失效
+        emit sig_showMainForm();
+    });
+
+    connect(m_videoTitleBar,&VideoTitleBar::sig_winVMinimum,[=](){
+        slot_clearAllPopupUi();
+        showMinimized();
+    });
     //标题栏改变窗口大小--->主界面控制大小（并发送信号）--->标题栏修改样式
     connect(this,SIGNAL(sig_winVStatus(bool)),m_videoTitleBar,SLOT(chandleVMainWinStatus(bool)));
     //标题栏--->双击标题栏改变窗口大小
@@ -844,7 +852,7 @@ void MultipPlayer::handleSignalAndSLots()
     //临时playlist发出的index
     connect(playlist_t,&QMediaPlaylist::currentIndexChanged,[=](int index){
         emit sig_mediaListIndex(index);
-        if(m_playlist_id != 888 && m_playlist_id != 777 && m_playlist_id != 666 )//不是推荐列表（888）和展示作品列表（666）的时候才设置
+        if(m_playlist_id != 999 && m_playlist_id != 888 && m_playlist_id != 777 && m_playlist_id != 666 )//不是外界拖放（999）推荐列表（888）mini转到主播放器（777）和展示作品列表（666）的时候才设置
         {
             m_listManager->slot_setCurPlayListSelectedRow(index);
         }
@@ -3157,6 +3165,7 @@ void MultipPlayer::setDanmuInfo(Danmu *danmu, const QString &color, const QFont 
 
 void MultipPlayer::slot_closeCurrentWindow()
 {
+    emit sig_mainPlayerClose(m_extraFlag);//主界面处理内存删除
     if(!VideoProgressBar::getInstance()->isHidden())
         VideoProgressBar::getInstance()->close();
         m_player->stop();//暂停播放
@@ -3179,9 +3188,7 @@ void MultipPlayer::slot_closeCurrentWindow()
         ui->label_media_name->clear();
         m_curMediaName = "";
         m_curMediaUrl = "";
-
-        emit sig_mainPlayerClose();//主界面处理内存删除
-
+        this->close();
 }
 
 //全屏退出统一操作（两处调用）
@@ -3420,7 +3427,10 @@ void MultipPlayer::slot_setVideTitleBar(int index)
 void MultipPlayer::slot_addTempPlaylist(const int id, const QStringList &list, const QString &curUrl)
 {
     qDebug() << QString(u8"接收到当前临时列表播放请求：URL = %1 --- 介绍（文件名）：'%2' --- 列表ID: '%3' ---列表总数：'%4'").arg(curUrl).arg(curUrl).arg(id).arg(list.count());
-    m_player->pause();
+     if(m_player->state() == QMediaPlayer::PlayingState)
+     {
+         m_player->pause();
+     }
     if(m_playlist_id != id)//不同表
     {
         qDebug() << QString(u8"列表id不一致");
@@ -3445,7 +3455,7 @@ void MultipPlayer::slot_addTempPlaylist(const int id, const QStringList &list, c
             addToPlaylist(playlist_t,list.at(i));
         }
     }
-    else if(m_playlist_id == 777)
+    else if(m_playlist_id == 777)//热点资讯转主播放器
     {
         qDebug() << QString(u8"热点资讯发过来的~！");
         m_playlist_id = id;//当前列表id
@@ -3456,6 +3466,21 @@ void MultipPlayer::slot_addTempPlaylist(const int id, const QStringList &list, c
             m_t_MapList.insert(i,list.at(i));
             addToPlaylist(playlist_t,list.at(i));
         }
+        //888为推荐列表（短视频推荐和主播放器）999为桌面文件拖动放上去
+    }
+    else if(m_playlist_id == 999)//热点资讯转主播放器
+    {
+        qDebug() << QString(u8"外部拖动文件发过来的~！");
+        m_extraFlag = true;//外部文件打开的播放器
+        m_playlist_id = id;//当前列表id
+        m_t_MapList.clear();
+        playlist_t->clear();
+        for(int i = 0; i < list.count(); i++)
+        {
+            m_t_MapList.insert(i,list.at(i));
+            addToPlaylist(playlist_t,list.at(i));
+        }
+        //888为推荐列表（短视频推荐和主播放器）999为桌面文件拖动放上去
     }
     slot_switchPlayerList(playlist_t);
     ui->horizontalSlider->setEnabled(true);

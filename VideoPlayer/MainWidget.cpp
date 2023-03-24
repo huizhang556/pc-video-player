@@ -713,6 +713,9 @@ void MainWidget::handleSignalAndSLots()
     //弹幕处登录
     connect(MultipPlayer::getInstance(),&MultipPlayer::sig_userLogin,m_titleBar,&TitleBar::slot_showPersonLogin);
 
+    //返回主界面
+    connect(MultipPlayer::getInstance(),&MultipPlayer::sig_showMainForm,this,&MainWidget::tray_showMainWidget);
+
     //清除临时记录
     connect(m_titleBar,&TitleBar::sig_sendClearTempRecords,[=](){
         m_webRecords->slot_clearUserRecords();//清除6个分栏，1个总栏
@@ -896,7 +899,7 @@ void MainWidget::handleSignalAndSLots()
     connect(FloatPlayCtl::getInstance(),SIGNAL(sig_sendPlayNext()),MultipPlayer::getInstance(),SLOT(on_pushButton_next_clicked()));
 
     //01-播放器主界面---接收播放器发送的播放/暂停
-    connect(MultipPlayer::getInstance(),SIGNAL(sig_currentMediaPlayStatus(bool)),MultipPlayer::getInstance(),SLOT(slot_setPlayStatusStyle_main(bool)));
+//    connect(MultipPlayer::getInstance(),SIGNAL(sig_currentMediaPlayStatus(bool)),MultipPlayer::getInstance(),SLOT(slot_setPlayStatusStyle_main(bool)));
     //02-托盘---接收播放器发送的播放/暂停
     connect(MultipPlayer::getInstance(),SIGNAL(sig_currentMediaPlayStatus(bool)),m_systemTray,SLOT(slot_setCurrentPlayStatus(bool)));
     //03-浮动控制---接收播放器发送的播放/暂停
@@ -946,10 +949,18 @@ void MainWidget::handleSignalAndSLots()
 
     /************************************播放器部分信号处理************************************/
     //接收播放器关闭
-    connect(MultipPlayer::getInstance(),&MultipPlayer::sig_mainPlayerClose,[=](){
+    connect(MultipPlayer::getInstance(),&MultipPlayer::sig_mainPlayerClose,[=](bool open){
         if(MultipPlayer::getInstance() != nullptr)
         {
             MultipPlayer::getInstance()->close();//实际没有删除，需要手动delete
+        }
+        if(open)//外部文件触发主播放器播放，但是主界面从未打开
+        {
+            this->close();
+        }
+        else//外部文件触发主播放器播放，且主界面已经打开
+        {
+            //不作处理
         }
     });
 
@@ -1173,8 +1184,15 @@ void MainWidget::slot_showLinkOnStatusBar(const QString &text)
 /*私有槽函数：显示主界面*/
 void MainWidget::tray_showMainWidget()
 {
-    this->showNormal();
-    qDebug() << "this is show";
+    if(this->isHidden())
+    {
+        this->showNormal();
+    }
+    else if(this->isMinimized())
+    {
+        this->showNormal();
+    }
+    qDebug() << "this is show main  UI ";
 }
 
 void MainWidget::tray_showDesktopLyric()
@@ -1889,6 +1907,10 @@ void MainWidget::closeEvent(QCloseEvent *event)
          event->accept();
      }
      MainNotice::getInstance()->close();
+     if(MultipPlayer::getInstance() != nullptr)
+     {
+         MultipPlayer::getInstance()->close();
+     }
 }
 
 /*界面缩放调整事件*/

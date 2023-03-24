@@ -10,6 +10,7 @@
 #include <QProcess>
 #include <QLibrary>
 #include <QHostInfo>
+#include <QFileInfo>
 #include <QApplication>
 #include <QNetworkConfigurationManager>
 
@@ -32,6 +33,7 @@ public:
     static bool         getRegisStatus();
     static void         checkNetWorkOnline();//检查网络在线
     static Global*      getInstance();
+    static bool         getFileType(const QString& filepath);
 public:
     //声明共有静态变量
     static QString  appDirPath;

@@ -24,12 +24,37 @@
 #include <QLabel>
 #include <QMovie>
 #include <QDebug>
+//QFileOpenEvent只支持只支持MacOS X和Symbian
+#include <QFileOpenEvent>
 
+//自定义一个可以接接收外部文件请求的QApplication
+//class MyApplication : public QApplication
+//{
+//public:
+//    MyApplication(int &argc, char **argv):
+//    QApplication(argc, argv)
+//    {
+//    }
+
+//    bool event(QEvent *event) override
+//    {
+//        if (event->type() == QEvent::DragEnter)
+//        {
+//            QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(event);
+//            qDebug() << "Open file" << openEvent->url();
+//            MultipPlayer::getInstance()->slot_addTempPlaylist(999,QStringList{openEvent->url().toString()},QString(openEvent->url().toString()));
+//        }
+
+//        return QApplication::event(event);
+//    }
+//};
 
 int main(int argc, char *argv[])
 {
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);//高分辨率支持
     QApplication a(argc, argv);
+
+    qDebug()<< QString(u8"argv: %1,argv[1]:%2").arg(argc).arg(QString::fromLocal8Bit(argv[1]));
 
     //00--->加载翻译文件，插件
     QApplication::setAttribute(Qt::AA_UseOpenGLES);
@@ -40,7 +65,6 @@ int main(int argc, char *argv[])
     QTranslator translator1;
     translator1.load(":/font/qt_zh_CN.qm");//翻译为中文
     a.installTranslator(&translator1);
-
 
 
     //01--->加载全局样式
@@ -64,83 +88,100 @@ int main(int argc, char *argv[])
         qDebug() << QString::fromLocal8Bit("播放器已经注册！");
     }
 
-    //04--->开机启动屏幕
-    QPixmap pixmap(Global::appDirPath + dataBase::getSkin_splash());
-    pixmap = pixmap.scaled(dataBase::getSize_splash(),Qt::KeepAspectRatio,Qt::SmoothTransformation);
-    CSplashScreen splashscream(pixmap);
-    if(dataBase::getSkin_switch())
+    //判断是否为播放器支持的类型
+    if(Global::getFileType(QString::fromLocal8Bit(argv[1])))//支持类型（直接显示主播放器）
     {
-        //    QPixmap pixmap(Global::appDirPath + "/pictures/splashscreen/splash.png");//静图
-        //    QPixmap pixmap(Global::appDirPath + "/pictures/splashscreen/splash1.gif");//动态
-        a.processEvents();
-        splashscream.show();
-        splashscream.setCursor(Qt::BlankCursor);
-        for(int i = 0; i< 6; ++i)
-        {
-            splashscream.slot_updateProgressbarValue(i*19);
-            QThread::sleep(1);//450 280 270 100
-        }
-    }
+        MultipPlayer::getInstance()->slot_addTempPlaylist(999,QStringList{QString::fromLocal8Bit(argv[1])},QString::fromLocal8Bit(argv[1]));
+        MainWidget w1;
+        w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
+        w1.hide();
 
-    //05--->显示主界面
+        //数据恢复初始化
+        QTimer::singleShot(1500,0,[=](){
+            dataBase::getInstance()->initGlobalDate();
+        });
+        return a.exec();
+    }
+    else//不支持类型（正常启动）
+    {
+        //04--->开机启动屏幕
+        QPixmap pixmap(Global::appDirPath + dataBase::getSkin_splash());
+        pixmap = pixmap.scaled(dataBase::getSize_splash(),Qt::KeepAspectRatio,Qt::SmoothTransformation);
+        CSplashScreen splashscream(pixmap);
+        if(dataBase::getSkin_switch())
+        {
+            //    QPixmap pixmap(Global::appDirPath + "/pictures/splashscreen/splash.png");//静图
+            //    QPixmap pixmap(Global::appDirPath + "/pictures/splashscreen/splash1.gif");//动态
+            a.processEvents();
+            splashscream.show();
+            splashscream.setCursor(Qt::BlankCursor);
+            for(int i = 0; i< 6; ++i)
+            {
+                splashscream.slot_updateProgressbarValue(i*19);
+                QThread::sleep(1);//450 280 270 100
+            }
+        }
+
+        //05--->显示主界面
 
 #if 0
-    //    DesktopLyric::getInstance()->show();
+        //    DesktopLyric::getInstance()->show();
 
-//        MultipPlayer::getInstance()->show();
+        //        MultipPlayer::getInstance()->show();
 
-//    MiniPlayer m;
-//    m.c_show();
-//    m.slot_receivePlayMediaFile("http://43.143.226.251:8080/group1/videos_drama/SuperStar_SHE.mp4","SuperStar_SHE");
+        //    MiniPlayer m;
+        //    m.c_show();
+        //    m.slot_receivePlayMediaFile("http://43.143.226.251:8080/group1/videos_drama/SuperStar_SHE.mp4","SuperStar_SHE");
 
-    //    ResultLists w; w.show();
+        //    ResultLists w; w.show();
 
-    //    MainNotice::getInstance()->show();
+        //    MainNotice::getInstance()->show();
 
-    //    ExitDialog w; w.show();
+        //    ExitDialog w; w.show();
 
-    //    TitleBar w1;
-    //    w1.show();
+        //    TitleBar w1;
+        //    w1.show();
 
-    //    RankList w1(QString(u8"动画热播榜"),10);
-    //    w1.show();
+        //    RankList w1(QString(u8"动画热播榜"),10);
+        //    w1.show();
 
-    //    ShortVideo w1;
-    //    w1.show();
+        //    ShortVideo w1;
+        //    w1.show();
 
-    //    CusVideoBox7 w1;
-    //    w1.show();
+        //    CusVideoBox7 w1;
+        //    w1.show();
 
-//        CPolLabel w1(QSize(100,100),QString(":/images/bgpic/dieji3.png"),8);
-//        w1.show();
+        //        CPolLabel w1(QSize(100,100),QString(":/images/bgpic/dieji3.png"),8);
+        //        w1.show();
 
-    //    MainNotice w1;
-    //    w1.show();
+        //    MainNotice w1;
+        //    w1.show();
 
         CreateCenter::getInstance()->show();
 
-    //    MyEmotionWindow w1;
-    //    w1.showNormalEmotion(QPoint(500 , 500));
-//        DownloadType::getInstance()->show();
-//        NewLoginForm::getInstance()->show();
-    //    AniStackWidget w1;
-    //    w1.show();
+        //    MyEmotionWindow w1;
+        //    w1.showNormalEmotion(QPoint(500 , 500));
+        //        DownloadType::getInstance()->show();
+        //        NewLoginForm::getInstance()->show();
+        //    AniStackWidget w1;
+        //    w1.show();
 
-    //    splashscream.finish(&w1);
+        //    splashscream.finish(&w1);
 
 #else
-    MainWidget w1;
-    w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
-    w1.show();
-    splashscream.finish(&w1);
+        MainWidget w1;
+        w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
+        w1.show();
+        splashscream.finish(&w1);
 #endif
 
-
-    //06--->数据恢复初始化
-    QTimer::singleShot(1500,0,[=](){
-        dataBase::getInstance()->initGlobalDate();
-    });
-
-    return a.exec();
+        //06--->数据恢复初始化
+        QTimer::singleShot(1500,0,[=](){
+            dataBase::getInstance()->initGlobalDate();
+        });
+        return a.exec();
+    }
 }
+
+
 
