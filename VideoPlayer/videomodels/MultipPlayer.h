@@ -21,11 +21,13 @@
 #include "customer/CustomFileDialog.h"
 #include "musicmodels/MusicPlayShow.h"
 #include "videomodels/MyVideoWidget.h"
+#include "videomodels/CVideoWidget.h"
 #include "videomodels/VideoTitleBar.h"
 #include "videomodels/RecomVideoTab.h"
 #include "videomodels/DramaListForm.h"
 #include "videomodels/PlayOrderForm.h"
 #include "videomodels/DanmuSetting.h"
+#include "capturepix/CaptureScreen.h"
 #include "videomodels/VideoProgressBar.h"
 #include "fileshandle/DownloadType.h"
 #include "mainwidget/vipmember/BuyVip.h"
@@ -393,7 +395,7 @@ private:
     QTimer                      *m_pTimer2          = nullptr; //延迟ui界面
     QTimer                      *m_showFloat        = nullptr;//定时显示浮动界面
     QWidget                     *m_widget1          = nullptr;
-    QWidget                     *m_widget2          = nullptr; //暂时不用
+    QWidget                     *m_widget2          = nullptr;
     QToolBox                    *m_toolBox          = nullptr;
     QLineEdit                   *m_lineEdit         = nullptr;
     muteDialog                  *m_muteDlg          = nullptr;

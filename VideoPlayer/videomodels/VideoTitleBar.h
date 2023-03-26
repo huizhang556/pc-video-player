@@ -41,6 +41,7 @@ signals:
     void sig_doubleClick();
     void sig_returnMainUi();
     void sig_videodownload();
+    void sig_videoCapture();//截图
     void sig_inputSourceUrl(QString url);
 };
 

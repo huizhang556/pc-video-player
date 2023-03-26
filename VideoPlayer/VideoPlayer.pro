@@ -20,7 +20,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #禁用qdebug打印输出
 #DEFINES     += QT_NO_DEBUG_OUTPUT
 #调试窗口必须要release才能生效，而后再使用debug
-CONFIG += console pro
+#CONFIG += console pro
 #关闭编译警告提示
 CONFIG += warn_off
 
@@ -55,10 +55,10 @@ include($$PWD/titlebar/titlebar.pri)        #主界面标题栏
 include($$PWD/customer/customer.pri)        #自定义控件
 include($$PWD/ffmpeg/ffmpeg.pri)            #视频处理相关
 include($$PWD/creator/creator.pri)          #创作中心
-include($$PWD/pixviewer/pixviewer.pri)      #
 #include($$PWD/facebread/facebread.pri)     #表情包
 include($$PWD/pernotice/pernotice.pri)      #消息栏
 include($$PWD/desktoplyric/desktop.pri)     #桌面歌词
+include($$PWD/capturepix/capturepix.pri)      #
 include($$PWD/miniplayer/miniplayer.pri)    #迷你播放器
 include($$PWD/mainwidget/mainwidget.pri)    #承载主界面
 include($$PWD/qcustomplot/qcustomplot.pri)  #

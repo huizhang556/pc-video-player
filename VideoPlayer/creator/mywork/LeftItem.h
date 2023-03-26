@@ -2,6 +2,7 @@
 #define LEFTITEM_H
 
 #include <QWidget>
+#include <QStyle>
 #include <QDebug>
 
 namespace Ui {

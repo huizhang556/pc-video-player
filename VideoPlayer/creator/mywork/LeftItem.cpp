@@ -31,7 +31,9 @@ LeftItem::~LeftItem()
 
 void LeftItem::initWorkUI()
 {
-    ui->label_counts->setText("");//默认什么都不显示
+    ui->label_medcounts->setText("");//默认什么都不显示
+//    ui->label_medcounts->setProperty("cirle",false);
+//    ui->label_medcounts->style()->polish(ui->label_medcounts);
 }
 
 void LeftItem::handleSignalsAndSlots()
@@ -58,6 +60,14 @@ void LeftItem::setItemText(const QString &text)
 
 void LeftItem::setItemCounts(int counts)
 {
-//    if(counts == 0) return;
-    ui->label_counts->setText(QString::number(counts));
+    ui->label_medcounts->setText(QString::number(counts));
+    if(counts == 0)
+    {
+        ui->label_medcounts->setProperty("cirle",false);
+    }
+    else
+    {
+        ui->label_medcounts->setProperty("cirle",true);
+    }
+    ui->label_medcounts->style()->polish(ui->label_medcounts);
 }

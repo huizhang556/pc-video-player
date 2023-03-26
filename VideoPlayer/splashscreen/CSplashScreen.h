@@ -29,7 +29,10 @@ protected:
     virtual void    drawContents(QPainter *painter);
 
 private slots:
-    void slot_update();
+    void    slot_update();
+
+private:
+    void    playerWelcome();
 
 private:
     int             roate = 0;

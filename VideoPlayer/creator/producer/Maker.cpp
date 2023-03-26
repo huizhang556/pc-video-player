@@ -113,6 +113,12 @@ void Maker::handleSignalsAndSlots()
         }
     });
 
+    //拖拽上传
+    connect(ui->listWidget_videopolish,&DragListWidget::sig_item_url_list,[=](QUrl url){
+
+        addFileItemsToList(url);
+        checkListItemsCounts();//核对数量
+    });
 
     //全部上传
     connect(ui->pushButton_uploadFiles,&QPushButton::clicked,[=](bool checked){
@@ -170,7 +176,7 @@ void Maker::handleSignalsAndSlots()
     });
 
     //上传列表（右键菜单）
-    connect(ui->listWidget_videopolish,&CListWidget::customContextMenuRequested,[=](const QPoint &pos){
+    connect(ui->listWidget_videopolish,&QListWidget::customContextMenuRequested,[=](const QPoint &pos){
         qDebug() <<QString(u8"触发右键!");
         QMenu menu_rlist(this);
         menu_rlist.addAction(QIcon("://images/tray/tray_setting.png"),QString::fromLocal8Bit("添加文件"),this,SLOT(slot_addFileToList()));
@@ -380,55 +386,60 @@ void Maker::addFileItemsToList(const QList<QUrl> urlLists)
 {
     foreach (QUrl fileUrl, urlLists)
     {
-        qDebug() << QString(u8"文件名：")<<fileUrl.fileName();
-        QString filepath = QDir::toNativeSeparators(fileUrl.path().remove(0,1));//移除第一个/
-        qDebug() << QString(u8"文件路径：")<<filepath;
-        QFileInfo file(filepath);//file必须是堆
-        qDebug() << QString(u8"文件大小：%1字节").arg(file.size());
-        QString suffixpic  = file_getFileSuffix(file.suffix());
-        FilesItem *itemWidget = new FilesItem(FILEEDIT::CANWRITE,fileUrl,file.size(),suffixpic);//文件名 大小 图标
-        QListWidgetItem *item = new QListWidgetItem();
-        item->setData(Qt::UserRole,fileUrl);
-        item->setSizeHint(ITEMSIZE);
-        item->setTextAlignment(Qt::AlignRight | Qt::AlignCenter);
-//        item->setToolTip(fileUrl.fileName());
-        ui->listWidget_videopolish->addItem(item);
-        ui->listWidget_videopolish->setItemWidget(item,itemWidget);
-        //关联信号槽
-        //移除item(1.未上传时移除2.上传进度100%时，模拟按钮点击移除)
-        //注意：使用lambda表达式，[]捕获列表语法默认是不允许对捕获参数赋值的，如需要改变，可以在()后加mutable，但是只是一份值拷贝
-        //如果需要修改外部变量的值，可以在[]以指针或者引用形式传递
-        connect(itemWidget,&FilesItem::sig_sendItem_remove,[=](){
-            itemWidget->disconnect();//断开与itemWidget关联的所有信号槽（否则移除之后，如果在没有delete的情况下，还是会触发信号槽）
-            itemWidget->deleteLater();
-            item->listWidget()->takeItem(item->listWidget()->row(item));
-            delete item;
-            checkListItemsCounts();//核对数量是否为0
-        });
-
-
-        //完成添加进入另一个list（url回传回来的时候body齐全，发出finished）
-        connect(itemWidget,&FilesItem::sig_sendItem_finished,[=](fileBody body){
-//            file_createItemToAnotherListWgt(body);//上传以后的body信息
-        });
-
-
-
-        //开始上传（单个）
-        connect(itemWidget,&FilesItem::sig_sendItem_upload,[=](bool start,QUrlQuery media_url,QByteArray& media_cover){
-            qDebug() << start;
-            if(!start)
-            {
-                file_upload_start(media_url,media_cover,itemWidget);
-                qDebug() << QString(u8"开始上传") <<media_url.queryItemValue("url") << endl << media_cover ;
-            }
-            else
-            {
-                file_upload_pause();
-                qDebug() << QString(u8"暂停上传");
-            }
-        });
+        addFileItemsToList(fileUrl);
     }
+}
+
+void Maker::addFileItemsToList(QUrl &fileUrl)
+{
+    qDebug() << QString(u8"文件名：")<<fileUrl.fileName();
+    QString filepath = QDir::toNativeSeparators(fileUrl.path().remove(0,1));//移除第一个/
+    qDebug() << QString(u8"文件路径：")<<filepath;
+    QFileInfo file(filepath);//file必须是堆
+    qDebug() << QString(u8"文件大小：%1字节").arg(file.size());
+    QString suffixpic  = file_getFileSuffix(file.suffix());
+    FilesItem *itemWidget = new FilesItem(FILEEDIT::CANWRITE,fileUrl,file.size(),suffixpic);//文件名 大小 图标
+    QListWidgetItem *item = new QListWidgetItem();
+    item->setData(Qt::UserRole,fileUrl);
+    item->setSizeHint(ITEMSIZE);
+    item->setTextAlignment(Qt::AlignRight | Qt::AlignCenter);
+//        item->setToolTip(fileUrl.fileName());
+    ui->listWidget_videopolish->addItem(item);
+    ui->listWidget_videopolish->setItemWidget(item,itemWidget);
+    //关联信号槽
+    //移除item(1.未上传时移除2.上传进度100%时，模拟按钮点击移除)
+    //注意：使用lambda表达式，[]捕获列表语法默认是不允许对捕获参数赋值的，如需要改变，可以在()后加mutable，但是只是一份值拷贝
+    //如果需要修改外部变量的值，可以在[]以指针或者引用形式传递
+    connect(itemWidget,&FilesItem::sig_sendItem_remove,[=](){
+        itemWidget->disconnect();//断开与itemWidget关联的所有信号槽（否则移除之后，如果在没有delete的情况下，还是会触发信号槽）
+        itemWidget->deleteLater();
+        item->listWidget()->takeItem(item->listWidget()->row(item));
+        delete item;
+        checkListItemsCounts();//核对数量是否为0
+    });
+
+
+    //完成添加进入另一个list（url回传回来的时候body齐全，发出finished）
+    connect(itemWidget,&FilesItem::sig_sendItem_finished,[=](fileBody body){
+//            file_createItemToAnotherListWgt(body);//上传以后的body信息
+    });
+
+
+
+    //开始上传（单个）
+    connect(itemWidget,&FilesItem::sig_sendItem_upload,[=](bool start,QUrlQuery media_url,QByteArray& media_cover){
+        qDebug() << start;
+        if(!start)
+        {
+            file_upload_start(media_url,media_cover,itemWidget);
+            qDebug() << QString(u8"开始上传") <<media_url.queryItemValue("url") << endl << media_cover ;
+        }
+        else
+        {
+            file_upload_pause();
+            qDebug() << QString(u8"暂停上传");
+        }
+    });
 }
 
 QString Maker::file_getFileSuffix(const QString &suffix)

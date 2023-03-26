@@ -129,7 +129,7 @@ void DoneWorks::handleSignalsAndSlots()
             {
                 dataBase::getInstance()->creator_getdoneWorks(current->data(Qt::UserRole).toString());//查询具体get信息,返回查询到的信息
                 qDebug() << QString(u8"找到个%1资源！").arg(m_items);
-                QLabel *lab_counts = getCurrentItem(current,"label_counts");
+                QLabel *lab_counts = getCurrentItem(current,"label_medcounts");
                 if(lab_counts != nullptr)
                 {
                     lab_counts->setText(QString::number(m_items));//设置查询到的数量
@@ -306,7 +306,7 @@ QLabel *DoneWorks::getCurrentItem(QListWidgetItem *item, const QString& objname)
         QLabel*lab_counts = itemWidget->findChild<QLabel*>(objname);//可以指定查找范围（最近一级的还是所有的）
         if(nullptr != lab_counts)
         {
-            qDebug() <<QString(u8"lab_counts");
+            qDebug() <<QString(u8"lab_medcounts");
             return lab_counts;
         }
     }
@@ -346,10 +346,18 @@ void DoneWorks::slot_setUserTagsWorkCounts(QStringList &list_counts)
 {
     for(int i = 0; i < list_counts.count(); i++)
     {
-        QLabel *lab_counts = getCurrentItem(ui->listWidget_producelist->item(i),"label_counts");
+        QLabel *lab_counts = getCurrentItem(ui->listWidget_producelist->item(i),"label_medcounts");
         if(lab_counts != nullptr)
         {
             lab_counts->setText(list_counts.at(i));//设置查询到的数量
+            if(list_counts.at(i).toInt() == 0)
+            {
+                lab_counts->setProperty("cirle",false);          }
+            else
+            {
+                lab_counts->setProperty("cirle",true);
+            }
+            lab_counts->style()->polish(lab_counts);
         }
         else
         {

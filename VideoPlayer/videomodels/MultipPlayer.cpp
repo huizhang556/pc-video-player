@@ -45,7 +45,7 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
     initMainWindow();//初始化界面
     handleSignalAndSLots();//处理信号与槽函数
     setInstallEventFilter();//设置监听
-    this->setTitleBarMoveArea(m_videoTitleBar,2);
+    this->setTitleBarMoveArea(m_videoTitleBar,2);//移动区域，拉伸感应边界宽度
 
   //测试功能
   list_temp
@@ -136,6 +136,7 @@ void MultipPlayer::initMainWindow()
     videoWidget = new MyVideoWidget(ui->stackedWidget);
     videoWidget->setMouseTracking(true);
     m_player->setVideoOutput(videoWidget);
+
 
     //以下是获取任意帧画面使用
     m_videoSurface = new VideoSurface();
@@ -312,13 +313,13 @@ void MultipPlayer::initMainWindow()
 
     VideoProgressBar::getInstance()->hide();
 
-    m_pTimer  = new QTimer(this);
+    m_pTimer  = new QTimer(this);//进度更新
     m_pTimer2 = new QTimer(this);
-    m_showFloat = new QTimer(this);
+    m_showFloat = new QTimer(this);//浮动窗口隐藏定时
 
     m_pTimer2->setSingleShot(true);//只执行一次定时器
-    m_pTimer->start(1000);//每1000毫秒执行一次
-    m_showFloat->start(5000);//每5000ms定时一次
+    m_pTimer->start(500);//每500毫秒执行一次
+    m_showFloat->start(5000);//每5s定时一次
 
     m_muteDlg = new muteDialog();//不加this
     m_muteDlg->setObjectName(QString::fromLocal8Bit("m_muteDlg"));
@@ -652,6 +653,15 @@ void MultipPlayer::handleSignalAndSLots()
     //旋转时钟改变
     connect(this,&MultipPlayer::sig_sendSwitchToMusicPage,[this](){
         ui->widget_media_pic->resetRoate(0);
+    });
+
+    //标题栏--截图
+    connect(m_videoTitleBar,&VideoTitleBar::sig_videoCapture,[=](){
+        if(ui->stackedWidget->currentWidget() == videoWidget)
+        {
+//            CaptureScreen screen;
+//            screen.show();
+        }
     });
 
     //标题栏--下载
@@ -3165,13 +3175,16 @@ void MultipPlayer::setDanmuInfo(Danmu *danmu, const QString &color, const QFont 
 
 void MultipPlayer::slot_closeCurrentWindow()
 {
-    emit sig_mainPlayerClose(m_extraFlag);//主界面处理内存删除
     if(!VideoProgressBar::getInstance()->isHidden())
         VideoProgressBar::getInstance()->close();
         m_player->stop();//暂停播放
+//        m_player->disconnect();
         m_player2->stop();
+//        m_player2->disconnect();
         playlist->clear();//播放列表清空
+//        playlist->disconnect();
         playlist_t->clear();
+//        playlist_t->disconnect();
         m_t_MapList.clear();
         m_mapList.clear();//清空容器
         m_mapList2.clear();//清空容器
@@ -3188,7 +3201,10 @@ void MultipPlayer::slot_closeCurrentWindow()
         ui->label_media_name->clear();
         m_curMediaName = "";
         m_curMediaUrl = "";
-        this->close();
+        QTimer::singleShot(500,0,[=](){
+            this->close();
+        });
+        emit sig_mainPlayerClose(m_extraFlag);//主界面处理内存删除
 }
 
 //全屏退出统一操作（两处调用）

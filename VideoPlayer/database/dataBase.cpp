@@ -28,7 +28,7 @@ dataBase* dataBase::m_pInstance = nullptr;
 
 dataBase::dataBase():
     m_online(false),
-    m_curUserID("0000000000"),
+    m_curUserID("0000000002"),
     m_curUserHead(""),
     m_curUserName(""),
     m_curUserGrade(1)

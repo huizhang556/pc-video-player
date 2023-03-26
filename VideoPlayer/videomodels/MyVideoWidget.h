@@ -24,13 +24,8 @@ public:
 protected:
     bool    eventFilter(QObject *watched, QEvent *event)override;
 
-    void    enterEvent(QEvent *e) override;
-
-    void    leaveEvent(QEvent *e) override;
-
 
 public slots:
-//    void updatePlayAdustForm();//更新播放栏目位置
 
 private:
     QMenu   *m_videoMenu    =   nullptr;

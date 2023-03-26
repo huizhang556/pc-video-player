@@ -44,8 +44,9 @@ void RoundLab::setBorderColor(const QColor &color)
     m_borberColor = color;
 }
 
-void RoundLab::setBorderWidth(int width)
+void RoundLab::setBorderWidth(bool open, int width)
 {
+    m_openBorder = open;
     m_border = width;
 }
 
@@ -60,13 +61,40 @@ bool RoundLab::eventFilter(QObject *watched, QEvent *event)
         }
         else if(event->type() == QEvent::Enter)
         {
-            m_border_t = 0;
-            this->update();
+            if(m_openBorder)
+            {
+                QRadialGradient gradient(0, 0, 200);  // 创建线性渐变，从左上到右下
+                gradient.setColorAt(0, QColor(0, 245, 244,255));  // 渐变起始颜色，紫色
+                gradient.setColorAt(0.33, QColor(9, 141, 235,255)); // 中间颜色，绿色
+                gradient.setColorAt(0.66, QColor(235, 90, 124,255)); // 中间颜色，绿色
+                gradient.setColorAt(1, QColor(124, 2, 185, 255));   // 渐变终止颜色，黄色
+                m_border_t = m_border;
+                m_pen.setBrush(QBrush(gradient));
+                m_pen.setWidth(m_border_t);
+                m_pen.setStyle(Qt::SolidLine);
+                m_pen.setCapStyle(Qt::RoundCap);
+                m_pen.setJoinStyle(Qt::RoundJoin);
+                this->update();
+            }
         }
         else if(event->type() == QEvent::Leave)
         {
-            m_border_t = 0;
-            this->update();
+            if(m_openBorder)
+            {
+                m_border_t = m_border;
+                QRadialGradient gradient(0, 0, 200);  // 创建线性渐变，从左上到右下
+                gradient.setColorAt(0, QColor(0, 245, 244,200));  // 渐变起始颜色，紫色
+                gradient.setColorAt(0.33, QColor(9, 141, 235,200)); // 中间颜色，绿色
+                gradient.setColorAt(0.66, QColor(235, 90, 124,200)); // 中间颜色，绿色
+                gradient.setColorAt(1, QColor(124, 2, 185, 200));   // 渐变终止颜色，黄色
+                m_pen.setBrush(QBrush(gradient));
+                m_pen.setWidth(m_border_t);
+                m_pen.setStyle(Qt::SolidLine);
+                m_pen.setCapStyle(Qt::RoundCap);
+                m_pen.setJoinStyle(Qt::RoundJoin);
+                this->update();
+            }
+
         }
     }
     return QLabel::eventFilter(watched,event);
@@ -77,12 +105,32 @@ void RoundLab::paintEvent(QPaintEvent *event)
     Q_UNUSED(event)
     QPainter painter(this);
     QPixmap pixmap(m_picpath);
-//    painter.setPen(QPen(m_borberColor,m_border_t,Qt::SolidLine));//这里主要是border
+    if(m_openBorder)
+    {
+
+    painter.setPen(m_pen);//设置边框
+    }
+    else
+    {
+    painter.setPen(QPen(Qt::transparent,0,Qt::SolidLine,Qt::RoundCap,Qt::RoundJoin));//不设置边框
+    }
     painter.setRenderHints(QPainter::Antialiasing,true);
     QPainterPath path;
-    path.addEllipse(m_padding,m_padding,qMin(width()-2*m_padding,height()-2*m_padding),qMin(width()-2*m_padding,height()-2*m_padding));
+    path.addEllipse((m_padding-m_border),
+                    (m_padding-m_border),
+                    qMin(width()-2*(m_padding-m_border),height()-2*(m_padding-m_border)),
+                    qMin(width()-2*(m_padding-m_border),height()-2*(m_padding-m_border)));
     painter.setClipPath(path);
-    painter.drawPixmap(QRect(m_padding,m_padding,qMin(width()-2*m_padding,height()-2*m_padding),qMin(width()-2*m_padding,height()-2*m_padding)),pixmap);
-    painter.drawArc(QRect(m_padding,m_padding,qMin(width()-2*m_padding,height()-2*m_padding),qMin(width()-2*m_padding,height()-2*m_padding)),16*0,360*16);
+
+    painter.drawPixmap((m_padding-m_border),
+                       (m_padding-m_border),
+                       qMin(width()-2*(m_padding-m_border),height()-2*(m_padding-m_border)),
+                       qMin(width()-2*(m_padding-m_border),height()-2*(m_padding-m_border)),pixmap);
+
+    painter.drawArc(QRect((m_padding-m_border),
+                          (m_padding-m_border),
+                          qMin(width()-2*(m_padding-m_border),height()-2*(m_padding-m_border)),
+                          qMin(width()-2*(m_padding-m_border),height()-2*(m_padding-m_border))),
+                          0*16,360*16);//315*16,270*16
 
 }

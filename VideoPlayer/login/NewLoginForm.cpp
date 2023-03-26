@@ -89,6 +89,8 @@ void NewLoginForm::initWorkUI()
 //    ui->label_userHeader->setFixedSize(QSize(160,160));
 //    QRegion maskRegion(ui->label_userHeader->rect(),QRegion::Ellipse);//创建圆形遮罩
 //    ui->label_userHeader->setMask(maskRegion);//设置圆形遮罩
+    ui->label_userHeader->setPadding(10);
+    ui->label_userHeader->setBorderWidth(true,10);
     ui->stackedWidget_left->setCurrentWidget(ui->stackedpage_unlogin);
 
     //登录部分
@@ -330,7 +332,7 @@ NewLoginForm *NewLoginForm::getInstance()
 
 void NewLoginForm::chandleSignalsAndSLots()
 {
-//    connect(ui->pushButton_otherMethed1,&QPushButton::clicked,[=](){ui->stackedWidget_left->setCurrentWidget(ui->stackedpage_logined);});
+    connect(ui->pushButton_otherMethed1,&QPushButton::clicked,[=](){ui->stackedWidget_left->setCurrentWidget(ui->stackedpage_logined);});
     //退出登录
     connect(ui->pushButton_exitUser,&QPushButton::clicked,[=](){
         ui->stackedWidget_left->setCurrentWidget(ui->stackedpage_unlogin);

@@ -189,7 +189,7 @@ border: 2px dashed gray;
                  <number>2</number>
                 </property>
                 <item>
-                 <widget class="CListWidget" name="listWidget_videopolish">
+                 <widget class="DragListWidget" name="listWidget_videopolish">
                   <property name="minimumSize">
                    <size>
                     <width>888</width>
@@ -1450,9 +1450,9 @@ text-decoration: underline;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CListWidget</class>
+   <class>DragListWidget</class>
    <extends>QListWidget</extends>
-   <header>creator/producer/CListWidget.h</header>
+   <header>creator/producer/DragListWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -52,14 +52,14 @@
 int main(int argc, char *argv[])
 {
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);//高分辨率支持
+    QString strLibPath(QDir::toNativeSeparators(QApplication::applicationDirPath())+QDir::separator()+"plugins");
+    QCoreApplication::addLibraryPath(strLibPath);
     QApplication a(argc, argv);
 
     qDebug()<< QString(u8"argv: %1,argv[1]:%2").arg(argc).arg(QString::fromLocal8Bit(argv[1]));
 
     //00--->加载翻译文件，插件
     QApplication::setAttribute(Qt::AA_UseOpenGLES);
-//    QApplication::setLibraryPaths(QStringList(Global::appDirPath+"/plugins"));
-//    QApplication::addLibraryPath(Global::appDirPath +"/plugins");
     qDebug() << QApplication::libraryPaths();//打印库路径
 
     QTranslator translator1;
@@ -115,19 +115,19 @@ int main(int argc, char *argv[])
             a.processEvents();
             splashscream.show();
             splashscream.setCursor(Qt::BlankCursor);
-            for(int i = 0; i< 6; ++i)
+            for(int i = 0; i< 100; ++i)
             {
-                splashscream.slot_updateProgressbarValue(i*19);
-                QThread::sleep(1);//450 280 270 100
+                splashscream.slot_updateProgressbarValue(i);
+                QThread::msleep(16);
             }
         }
 
         //05--->显示主界面
 
-#if 0
+#if 1
         //    DesktopLyric::getInstance()->show();
 
-        //        MultipPlayer::getInstance()->show();
+//                MultipPlayer::getInstance()->show();
 
         //    MiniPlayer m;
         //    m.c_show();
@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
         //    MyEmotionWindow w1;
         //    w1.showNormalEmotion(QPoint(500 , 500));
         //        DownloadType::getInstance()->show();
-        //        NewLoginForm::getInstance()->show();
+//                NewLoginForm::getInstance()->show();
         //    AniStackWidget w1;
         //    w1.show();
 

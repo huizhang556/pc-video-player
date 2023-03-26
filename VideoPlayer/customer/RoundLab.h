@@ -1,6 +1,7 @@
 ﻿#ifndef ROUNDLAB_H
 #define ROUNDLAB_H
 
+#include <QPen>
 #include <QLabel>
 #include <QPixmap>
 #include <QPainter>
@@ -20,7 +21,7 @@ public:
     void    setPixmap_(const QPixmap& path);
     void    setPadding(int padding);
     void    setBorderColor(const QColor& color);
-    void    setBorderWidth(int width);
+    void    setBorderWidth(bool open = false,int width = 0);
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event)override;
@@ -29,10 +30,12 @@ protected:
 
 private:
     QPixmap m_picpath;
-    QColor  m_borberColor   = Qt::red;
-    int     m_border        = 6;
+    QPen    m_pen;
+    QColor  m_borberColor   = QColor(192, 255, 2);
+    bool    m_openBorder    = false;
+    int     m_border        = 10;
     int     m_border_t      = 0;
-    int     m_padding       = 0;
+    int     m_padding       = 10;
 
 signals:
     void    sig_clicked();

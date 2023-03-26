@@ -93,7 +93,7 @@ background-color: #2a2a31;
 {
 border:none;
 margin:0px;
-background-color:transparent;
+background-color:#2a2a31;
 }
 </string>
           </property>

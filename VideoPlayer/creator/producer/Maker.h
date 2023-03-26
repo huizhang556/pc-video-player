@@ -49,6 +49,7 @@ private:
     void            checkListItemsCounts();
     void            file_createItemToAnotherListWgt(const fileBody& body);
     void            addFileItemsToList(const QList<QUrl> urlLists);
+    void            addFileItemsToList(QUrl& fileUrl);
     QString         file_getFileSuffix(const QString& suffix);//获取文件类型
     QPushButton*    getCurrentItemButton(QListWidgetItem* item, const QString& objname);
 
