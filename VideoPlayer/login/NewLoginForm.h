@@ -115,6 +115,7 @@ private:
 signals:
     void    sig_sendClearTempRecords();
     void    sig_sendLoginOK(QString,QString,int);
+    void    sig_sendToLoginedUser(QString,QString,QString);
 };
 
 #endif // NEWLOGINFORM_H

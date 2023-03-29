@@ -28,7 +28,7 @@ dataBase* dataBase::m_pInstance = nullptr;
 
 dataBase::dataBase():
     m_online(false),
-    m_curUserID("0000000002"),
+    m_curUserID("0000000000"),
     m_curUserHead(""),
     m_curUserName(""),
     m_curUserGrade(1)
@@ -319,6 +319,11 @@ QString dataBase::getCurrentUserID() const
 QString dataBase::getCurrentUserName() const
 {
     return m_curUserName;
+}
+
+QString dataBase::getCurrentUserPawd() const
+{
+    return m_curUserPawd;
 }
 
 QString dataBase::getCurrentUserHead() const
@@ -766,7 +771,7 @@ bool dataBase::login_verification(const QString &name, const QString &pwd)
         while(query.next())
         {
             QString     m_userId        =   query.value(0).toString();
-            QString     m_userPwd       =   query.value(1).toString();
+            QString     m_userPWD       =   query.value(1).toString();
             QString     m_userEmails    =   query.value(2).toString();
             QString     m_headPic       =   query.value(3).toString();
             int         m_vipType       =   query.value(4).toInt();
@@ -774,12 +779,13 @@ bool dataBase::login_verification(const QString &name, const QString &pwd)
             //外部使用
             m_curUserID     =   m_userId;
             m_curUserName   =   name;
+            m_curUserPawd   =   m_userPWD;
             m_curUserHead   =   m_headPic;
             m_curUserGrade  =   m_vipType;
 
             qDebug() << QString::fromLocal8Bit("用户：'%1'的信息如下：").arg(name)<<endl
                      <<QString::fromLocal8Bit("唯一id:")<<m_userId<<endl
-                     <<QString::fromLocal8Bit("密码：")<<m_userPwd<<endl
+                     <<QString::fromLocal8Bit("密码：")<<m_userPWD<<endl
                      <<QString::fromLocal8Bit("邮箱：")<<m_userEmails<<endl
                      <<QString::fromLocal8Bit("头像：")<<m_headPic<<endl
                      <<QString::fromLocal8Bit("vip类型：")<<m_vipType<<endl

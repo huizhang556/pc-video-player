@@ -110,7 +110,7 @@ void NewLoginForm::initWorkUI()
     ui->lineEdit_userpwd->setContextMenuPolicy(Qt::NoContextMenu);
 
     m_userLists = new UserList();
-    m_userLists->setFixedWidth(316);//等宽度
+    m_userLists->setFixedWidth(326);//等宽度
     m_userLists->setFixedHeight(156);//3个user的高度
     m_userLists->setHidden(true);
 
@@ -258,6 +258,8 @@ void NewLoginForm::initWorkUI()
 
     //二维码(初始化更新)
     update_QRcode();
+
+    m_userLists->config_initUser();//初始化用户列表
 
 }
 
@@ -408,6 +410,10 @@ void NewLoginForm::chandleSignalsAndSLots()
 
     //回车键---登录(模拟登陆按钮)
     connect(ui->lineEdit_userpwd,&QLineEdit::returnPressed,[=](){ui->pushButton_login->clicked();});
+    //使用信号回调添加item（添加或者调整顺序需要判断）
+    connect(this,&NewLoginForm::sig_sendToLoginedUser,[=](QString name,QString pwd,QString header){
+         m_userLists->config_addNewUser(name,pwd,header);
+    });
 
     //用户登录
     connect(ui->pushButton_login,&QPushButton::clicked,[=](){
@@ -447,7 +453,7 @@ void NewLoginForm::chandleSignalsAndSLots()
         }
     });
 
-    //回车键---登录(模拟登陆按钮)
+    //回车键---注册(模拟登陆按钮)
     connect(ui->lineEdit_regis_email,&QLineEdit::returnPressed,[=](){ui->pushButton_regis->clicked();});
 
     //用户注册
@@ -801,9 +807,11 @@ void NewLoginForm::setUser_login()
         emit sig_sendClearTempRecords();//清除临时记录（如果用户不登录，则切换用户时会用到）
         dataBase::getInstance()->login_verification(account,passwd);//将用户所有信息查询出来，并初始化
         QString nickname =  dataBase::getInstance()->getCurrentUserName();
+        QString pwd      =  dataBase::getInstance()->getCurrentUserPawd();
         QString head     =  dataBase::getInstance()->getCurrentUserHead();
         int     grade    =  dataBase::getInstance()->getCurrentUserGrade();
         emit sig_sendLoginOK(nickname,head,grade);//向外界发送用户信息
+        emit sig_sendToLoginedUser(nickname,pwd,head);
 //        slot_addLoginHisUsers(account);
         slot_clearTempInputText();//清除输入信息
         this->close();

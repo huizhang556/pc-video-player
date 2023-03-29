@@ -72,6 +72,7 @@ public:
     //获取用户信息
     QString                 getCurrentUserID() const;
     QString                 getCurrentUserName() const;
+    QString                 getCurrentUserPawd() const;
     QString                 getCurrentUserHead() const;
     int                     getCurrentUserGrade() const;
     bool                    getCurrentUserOnline() const;
@@ -150,6 +151,7 @@ private:
     QString                 m_curUserID;//当前用户唯一识别id
     QString                 m_curUserHead;//当前用户头像连接
     QString                 m_curUserName;//当前用户名称
+    QString                 m_curUserPawd;//当前用户密码
     int                     m_curUserGrade;//当前用户等级 游客0 普通1 会员2 超级会员3
     bool                    m_online;//是否在线
     QPixmap                 m_curHeadPix;//用户头像

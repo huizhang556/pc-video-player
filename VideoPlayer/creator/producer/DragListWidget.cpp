@@ -20,7 +20,7 @@ DragListWidget::~DragListWidget()
 //拖动事件
 void DragListWidget::dragEnterEvent(QDragEnterEvent *event)
 {
-    qDebug() << QString(u8"dragEnterEvent text:%1").arg(event->mimeData()->text());
+//    qDebug() << QString(u8"dragEnterEvent text:%1").arg(event->mimeData()->text());
     if (event->mimeData()->hasUrls())
     {
         event->acceptProposedAction();
@@ -34,7 +34,7 @@ void DragListWidget::dropEvent(QDropEvent *event)
     foreach (const QUrl &url, event->mimeData()->urls())
     {
         QString filePath = url.toLocalFile();
-        qDebug() << QString(u8"URL = :%1").arg(filePath);
+//        qDebug() << QString(u8"URL = :%1").arg(filePath);
         QString itemName = QFileInfo(filePath).fileName();
 //        QListWidgetItem *item = new QListWidgetItem(itemName, this);
 //        this->addItem(item);

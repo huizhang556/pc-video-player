@@ -98,7 +98,7 @@ background-color: rgba(102, 102, 102,1.0);
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="label_header">
+         <widget class="RoundLab" name="label_header">
           <property name="minimumSize">
            <size>
             <width>40</width>
@@ -114,8 +114,8 @@ background-color: rgba(102, 102, 102,1.0);
           <property name="styleSheet">
            <string notr="true">QLabel
 {
-border-radius:20px;
-border-image: url(:/images/bgpic/dieji.png);
+/*border-radius:20px;*/
+/*border-image: url(:/images/bgpic/dieji.png);*/
 background-color: transparent;
 }</string>
           </property>
@@ -201,6 +201,13 @@ border-image: url(:/images/player/user_closeBtn_hover.png);
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>RoundLab</class>
+   <extends>QLabel</extends>
+   <header>customer/RoundLab.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
