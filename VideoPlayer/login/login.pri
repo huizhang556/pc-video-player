@@ -7,7 +7,8 @@ SOURCES += \
     $$PWD/MaskLabel.cpp \
     $$PWD/FAQitem.cpp \
     $$PWD/UserList.cpp \
-    $$PWD/UserItem.cpp
+    $$PWD/UserItem.cpp \
+    $$PWD/FocusLineEdit.cpp
 
 
 HEADERS += \
@@ -19,7 +20,8 @@ HEADERS += \
     $$PWD/MaskLabel.h \
     $$PWD/FAQitem.h \
     $$PWD/UserList.h \
-    $$PWD/UserItem.h
+    $$PWD/UserItem.h \
+    $$PWD/FocusLineEdit.h
 
 FORMS += \
     $$PWD/Login.ui \
@@ -30,5 +32,6 @@ FORMS += \
     $$PWD/MaskLabel.ui \
     $$PWD/FAQitem.ui \
     $$PWD/UserList.ui \
-    $$PWD/UserItem.ui
+    $$PWD/UserItem.ui \
+    $$PWD/FocusLineEdit.ui
 

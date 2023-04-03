@@ -1,4 +1,10 @@
-﻿#ifndef ANISTACKWIDGET_H
+﻿/**************************
+ * 功能：轮播图+可随机选择视图（小轮播图）
+ *
+ *
+ * ***********************/
+
+#ifndef ANISTACKWIDGET_H
 #define ANISTACKWIDGET_H
 
 #define SACLWIDTH   1200 //开始放大最小宽度1200
@@ -13,6 +19,7 @@
 
 #define ITEMMARGIN  QSize(0,0)
 
+#include "global/Global.h"
 #include "mainwidget/SCrollListWidget.h"
 #include <QEvent>
 #include <QLabel>
@@ -46,7 +53,7 @@ private:
 
 private:
     SCrollListWidget    *m_scroListWidget   =   nullptr;
-
+    int     m_curIndex = 0;//当前page索引
 signals:
 
 

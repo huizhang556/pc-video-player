@@ -38,7 +38,16 @@ void CToTopWidget::handleSignalsAndSlots()
 
 void CToTopWidget::setScrollBarToTop()
 {
-    ui->scrollArea->verticalScrollBar()->setValue(0);//回到顶端
+
+    QPropertyAnimation *pAnimation = new QPropertyAnimation(ui->scrollArea->verticalScrollBar(),"value",this);
+    pAnimation->setDuration(500);
+    pAnimation->setStartValue(ui->scrollArea->verticalScrollBar()->value());
+    pAnimation->setEndValue(0);
+    pAnimation->start();
+    connect(pAnimation,&QPropertyAnimation::finished,[=](){
+    pAnimation->deleteLater();
+    });
+//    ui->scrollArea->verticalScrollBar()->setValue(0);//回到顶端(改用动画)
 }
 
 void CToTopWidget::setFlushContent()

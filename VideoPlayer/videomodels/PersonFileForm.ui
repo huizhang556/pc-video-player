@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>730</width>
-    <height>443</height>
+    <width>831</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -665,7 +665,7 @@ font-weight:bold;
 }</string>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab_history">
         <attribute name="title">
@@ -918,7 +918,7 @@ border-image: url(:/images/icon/his_delete_hover_orange.png);
            <item>
             <widget class="QStackedWidget" name="stackedWidget_history">
              <property name="currentIndex">
-              <number>0</number>
+              <number>1</number>
              </property>
              <widget class="QWidget" name="page">
               <layout class="QVBoxLayout" name="verticalLayout_7">

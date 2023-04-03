@@ -48,9 +48,9 @@ void DownloadType::initWorkUI()
     ui->lineEdit_downloadUrl->setText("https://82.156.175.81/study/index.html");
     ui->pushButton_ok->setCheckable(true);
     ui->pushButton_cancel->setCheckable(true);
+    ui->pushButton_ok->setChecked(true);
     ui->pushButton_ok->installEventFilter(this);
     ui->pushButton_cancel->installEventFilter(this);
-    ui->pushButton_ok->setChecked(true);
     ui->lineEdit_downloadUrl->setReadOnly(true);
     ui->lineEdit_downloadUrl->setContextMenuPolicy(Qt::NoContextMenu);
 

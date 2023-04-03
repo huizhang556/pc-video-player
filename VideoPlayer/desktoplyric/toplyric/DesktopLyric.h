@@ -25,6 +25,7 @@ public:
 
 public slots:
     void    slot_setCurrentPlayStatus(bool status);
+    void    slot_setCurrentLyric(QString &text);
 
 protected:
    void  mousePressEvent(QMouseEvent *event) override;

@@ -2,6 +2,8 @@
 #define HOTSEARCHITEM_H
 
 #include <QWidget>
+#include <QStyle>
+#include <QDebug>
 
 namespace Ui {
 class HotSearchItem;
@@ -20,6 +22,9 @@ public:
 
 private:
     Ui::HotSearchItem *ui;
+
+private:
+    void    setItemOrderText(const QString& order);
 
 signals:
     void    sig_sendItemText(QString);

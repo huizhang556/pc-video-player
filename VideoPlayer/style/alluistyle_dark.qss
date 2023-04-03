@@ -21,6 +21,7 @@ MultipPlayer
 {
 /*包含5px的margin*/
 background-color: #1a1a1b;
+/*border-image: url(://images/bgpic/cusvideoitem1.png);*/
 }
 
 MainWidget
@@ -34,6 +35,33 @@ background-color: #1a1a1b;
 QTabWidget::pane 
 {
 border-right: 0;
+}
+
+/*列表管理---item*/
+NewListItem
+{
+border: 1px solid rgb(113, 113, 113);
+border-left-width: 0px;
+border-right-width: 0px;
+}
+
+/*****设置禁词*****/
+#m_forbidebtn_text
+{
+color: white;
+text-align: left;
+background-color: transparent;
+}
+
+#m_forbidebtn_text:hover
+{
+color: red;
+background-color: transparent;
+}
+
+#m_forbidebtn_remove
+{
+background-color: transparent;
 }
 
 /*弹幕---登录按钮*/
@@ -120,11 +148,21 @@ font-size: 16px;
 background-color: transparent;
 }
 
+#m_minibuttonTitle:hover
+{
+color: #c0ff02;
+}
+
 #m_minim_buttonClose
 {
 color: red;
 font-size: 12px;
 background-color: transparent;
+}
+
+#m_minim_buttonClose:hover
+{
+color: #c0ff02;
 }
 
 /**底部控制栏**/
@@ -175,7 +213,7 @@ background-color: transparent;
 
 #m_minibuttonClarity:hover
 {
-color: blue;
+color: #c0ff02;
 }
 
 /*声音*/
@@ -767,9 +805,9 @@ border-bottom-right-radius:10px;
 #m_foldBtn
 {
 /*此处只做圆角修改，其他部分样式代码设置*/
+border-top-left-radius:10px;
+border-bottom-left-radius:10px;
 background-color: transparent;
-border-top-left-radius:8px;
-border-bottom-left-radius:8px;
 }
 
 /*推荐栏左右调节按钮*/
@@ -1523,7 +1561,7 @@ background-color: #2f3134;
 
 /*帮助按钮菜单-----------------------样式结束*/
 
-/*歌曲列表右键菜------------------------------开始*/
+/*我的歌曲---列表右键菜------------------------------开始*/
 #pmenu_right,#pmenu_songer,#pmenu_son_addto,#pmenu_son_sort,#pmenu_son_playmode,#pmenu_son_muctool,#menuSelection
 {
 background: white;
@@ -1567,34 +1605,62 @@ image: url(://images/tray/tray_checked.png);
 /*歌曲列表右键菜单-----------------------------结束*/
 
 /*播放列表，收藏列表，历史列表右键菜单---开始*/
-#playlist_playMenu,#playlist_collectMenu,#playlist_historytMenu
+#playlist_playMenu,#playlist_collectMenu,#playlist_historytMenu,#listmanager_rMenu
 {
-background-color:white;
+background-color: white;
 width:120px;
 font: 400 14px "微软雅黑";
 border-radius:20px;
 }
 
-#playlist_playMenu::item,#playlist_collectMenu::item,#playlist_historytMenu::item
+#playlist_playMenu::item,#playlist_collectMenu::item,#playlist_historytMenu::item,#listmanager_rMenu::item
 {
-background-color:white;
-height:28px;
+background-color: white;
 /*padding可修改item高度*/
+width:120px;
+min-height: 30px;
+padding: 0px 10px;
 }
 
-#playlist_playMenu::icon,#playlist_collectMenu::icon,#playlist_historytMenu::icon
+#playlist_playMenu::icon,#playlist_collectMenu::icon,#playlist_historytMenu::icon,#listmanager_rMenu::icon
 {
+height: 26px;
+padding-left: 5px;
 background-color:white;
-height:28px;
 }
 
-#playlist_playMenu::item:selected,#playlist_collectMenu::item:selected,#playlist_historytMenu::item:selected
+#playlist_playMenu::item:selected,#playlist_collectMenu::item:selected,#playlist_historytMenu::item:selected,#listmanager_rMenu::item:selected
 {
 color:#2ca5fc;
 background-color:#cccccc;
 }
 
 /*播放列表，收藏列表，历史列表右键菜单---结束*/
+
+/*listmanager单个item----右键--开始*/
+#addlist_Menu
+{
+background-color: white;
+width:120px;
+font: 400 14px "微软雅黑";
+}
+
+#addlist_Menu::item
+{
+background-color: white;
+/*padding可修改item高度*/
+width:120px;
+min-height: 30px;
+padding: 0px 10px;
+}
+
+#addlist_Menu::item:selected
+{
+color:#2ca5fc;
+background-color:#cccccc;
+}
+
+/*listmanager单个item----右键--结束*/
 
 QDockWidget#m_dockWidget::title
 {
@@ -1666,7 +1732,8 @@ border-bottom:2px solid #ff5c38;
 #m_toolBox_list
 {
 border-right:2px;
-background-color:#3d3d3d;
+background-color: #3d3d3d;
+background-color: #171c24;
  icon-size: 25px; 
 }
 
@@ -1756,6 +1823,7 @@ QToolBox QWidget  QListWidget::item
 color: transparent;
 min-height:30px;
 font-size:15px;
+border-radius: 5px;
 background-color: #333333;
 }
 
@@ -1771,6 +1839,7 @@ color: transparent;
 QToolBox QWidget  QListWidget::item:selected
 {
 color: transparent;
+border-radius: 5px;
 background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #5104e4, stop:1  #8e2ce1);
 }
 

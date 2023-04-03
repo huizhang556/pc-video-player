@@ -11,6 +11,7 @@ CusItemMsg::CusItemMsg(const QString &header, const QString &author, const QStri
     setMaximumWidth(400);
     initWorkUI();
     handleSignalsAndSlots();
+    setInstallEventFilter();
     setReadStatus(read);
     ui->pushButton_authName->setText(author);
     ui->label_pubTime->setText(datatime);
@@ -28,6 +29,7 @@ CusItemMsg::CusItemMsg(const QString &header, const QString &author, const QStri
     setMaximumWidth(400);
     initWorkUI();
     handleSignalsAndSlots();
+    setInstallEventFilter();
     ui->pushButton_author_reply->setText(author);
     setMultiTextToElidedText(ui->pushButton_replyContent,newContent,260);
     ui->textBrowser_replyContent->setPlainText(oldContent);
@@ -44,6 +46,7 @@ CusItemMsg::CusItemMsg(const QString &header, const QStringList &authors, const 
     setFixedHeight(70);
     initWorkUI();
     handleSignalsAndSlots();
+    setInstallEventFilter();
     QString string_autor = "";
     foreach (QString var, authors)
     {
@@ -87,15 +90,17 @@ void CusItemMsg::initWorkUI()
 
 void CusItemMsg::handleSignalsAndSlots()
 {
+    //聊天列表---点击消息
     connect(ui->pushButton_describle,&QPushButton::clicked,[=](){
         setReadStatus(true);
         emit sig_sendClicked();
     });
+    //聊天列表---点击阅读消息
     connect(ui->pushButton_expand,&QPushButton::clicked,[=](){
         setReadStatus(true);
         emit sig_sendClicked();
     });
-
+    //回复列表---点赞
     connect(ui->pushButton_like,&QPushButton::clicked,[=](bool checked){
         if(checked)
         {
@@ -107,9 +112,28 @@ void CusItemMsg::handleSignalsAndSlots()
         }
         emit sig_sendLike();
     });
+    //回复列表---删除
     connect(ui->pushButton_delete,&QPushButton::clicked,[=](){
        emit sig_sendDelete();
     });
+    //回复我的
+    connect(ui->pushButton_replyContent,&QPushButton::clicked,[=](){
+       emit sig_read_reply();
+    });
+    //@我的
+    connect(ui->pushButton_author_about,&QPushButton::clicked,[=](){
+       emit sig_read_about();
+    });
+    //点赞我的
+    connect(ui->pushButton_author_like,&QPushButton::clicked,[=](){
+       emit sig_read_like();
+    });
+}
+
+void CusItemMsg::setInstallEventFilter()
+{
+    ui->label_empty_about->installEventFilter(this);
+    ui->label_empty_like->installEventFilter(this);
 }
 
 void CusItemMsg::setReadStatus(bool read)
@@ -131,6 +155,44 @@ void CusItemMsg::setReadStatus(bool read)
 bool *CusItemMsg::getArroy_ON_Mark()
 {
     return array_on;
+}
+
+void CusItemMsg::setItemTop(bool top)
+{
+    if(top)
+    {
+        ui->pushButton_expand->setProperty("top",true);
+    }
+    else
+    {
+        ui->pushButton_expand->setProperty("top",false);
+    }
+}
+
+void CusItemMsg::setItemDisturb(bool disturb)
+{
+    if(disturb)
+    {
+        ui->pushButton_disturb->setProperty("checked",true);
+    }
+    else
+    {
+        ui->pushButton_disturb->setProperty("checked",false);
+    }
+}
+
+bool CusItemMsg::eventFilter(QObject *watched, QEvent *event)
+{
+    QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+    if(watched == ui->label_abooutCtl_like && event->type() == QEvent::MouseButtonPress && mouseEvent->buttons() & Qt::LeftButton)
+    {
+
+    }
+    else if(watched == ui->label_abooutCtl_about && event->type() == QEvent::MouseButtonPress && mouseEvent->buttons() & Qt::LeftButton)
+    {
+
+    }
+    return QWidget::eventFilter(watched,event);
 }
 
 void CusItemMsg::setMultiTextToElidedText(QAbstractButton *button, QString text,const int twidth)

@@ -2,6 +2,7 @@
 #define HOTLISTITEM_H
 
 #include <QWidget>
+#include <QStyle>
 #include <QScrollBar>
 #include <QDebug>
 
@@ -26,6 +27,9 @@ protected:
 
 private:
     Ui::HotListItem *ui;
+
+private:
+    void    setItemOrderText(const QString& num);
 
 signals:
 

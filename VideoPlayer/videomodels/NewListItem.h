@@ -10,6 +10,7 @@
 #include <QListWidget>
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QMouseEvent>
 #include <QDebug>
 
 

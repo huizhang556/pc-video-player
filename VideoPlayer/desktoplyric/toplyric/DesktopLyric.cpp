@@ -228,6 +228,11 @@ void DesktopLyric::slot_setCurrentPlayStatus(bool status)
     }
 }
 
+void DesktopLyric::slot_setCurrentLyric(QString& text)
+{
+    ui->label_lyric->setText(text);
+}
+
 void DesktopLyric::mousePressEvent(QMouseEvent *event)
 {
 //    if(ReleaseCapture())

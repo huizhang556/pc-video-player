@@ -26,7 +26,8 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton
+   <string notr="true">/*
+QPushButton
 {
 color: #37d5ff;
 border-radius: 6px;
@@ -37,7 +38,8 @@ QPushButton:hover
 {
 color: #ff008c;
 background-color: rgb(65, 70, 71);
-}</string>
+}
+*/</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -109,6 +111,7 @@ background-color: transparent;
          <property name="styleSheet">
           <string notr="true">#pushButton_totop
 {
+border: none;
 image: url(:/images/home/toTop_normal.png);
 }
 
@@ -123,7 +126,7 @@ image: url(:/images/home/toTop_hover.png);
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_flush">
+        <widget class="RefreshButton" name="pushButton_flush">
          <property name="minimumSize">
           <size>
            <width>45</width>
@@ -139,7 +142,7 @@ image: url(:/images/home/toTop_hover.png);
          <property name="styleSheet">
           <string notr="true">#pushButton_flush
 {
-
+border: none;
 image: url(:/images/home/vtitle_switch.png);
 }
 
@@ -160,6 +163,13 @@ image: url(:/images/home/vtitle_switch_hover.png);
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>RefreshButton</class>
+   <extends>QPushButton</extends>
+   <header>customer/RefreshButton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

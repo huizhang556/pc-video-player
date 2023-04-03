@@ -2,6 +2,7 @@
 #define LEFTSIDEBAR_H
 #define BTN_HEIGHT   40
 #include <QEvent>
+#include <QTimer>
 #include <QWidget>
 #include <QLayout>
 #include <QPushButton>

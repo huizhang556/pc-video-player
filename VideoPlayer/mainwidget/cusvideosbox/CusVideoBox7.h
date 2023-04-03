@@ -32,7 +32,7 @@ protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
 
 private:
-    AniStackWidget  *m_aniStackWgt  = nullptr;
+    AniStackWidget  *m_aniStackWgt  = nullptr;//上部轮播图部分
 };
 
 #endif // CUSVIDEOBOX7_H

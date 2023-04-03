@@ -34,6 +34,7 @@ protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
 
 signals:
+    void    sig_curLyric(QString&);
 
 private:
     Ui::MusicPlayShow *ui;

@@ -58,10 +58,10 @@ include($$PWD/creator/creator.pri)          #创作中心
 #include($$PWD/facebread/facebread.pri)     #表情包
 include($$PWD/pernotice/pernotice.pri)      #消息栏
 include($$PWD/desktoplyric/desktop.pri)     #桌面歌词
-include($$PWD/capturepix/capturepix.pri)      #
+include($$PWD/capturepix/capturepix.pri)    #截屏
 include($$PWD/miniplayer/miniplayer.pri)    #迷你播放器
 include($$PWD/mainwidget/mainwidget.pri)    #承载主界面
-include($$PWD/qcustomplot/qcustomplot.pri)  #
+include($$PWD/qcustomplot/qcustomplot.pri)  #曲线
 include($$PWD/musicmodels/musicmodels.pri)  #音乐模块
 include($$PWD/videomodels/videomodels.pri)  #视频模块
 include($$PWD/fileshandle/fileshandle.pri)  #文件处理

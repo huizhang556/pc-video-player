@@ -4,6 +4,7 @@
 #include "login/UserItem.h"
 #include <QWidget>
 #include <QFile>
+#include <QPushButton>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -35,6 +36,7 @@ public:
 public slots:
     void    slot_addItem(UITEMACT TYPE,const QString& user_nick, const QString& user_pwd, const QString& user_header);
     void    slot_removeItem(const QString& userName);
+    void    slot_findUserListResult(const QString& name);
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event)override;
@@ -50,6 +52,8 @@ private:
         QString(u8"美好的明天2023")
     };
 
+private:
+    QPushButton* getItemNameButton(const QString& objName, const QString& userName);
 
 public slots:
     //动态计算列表的高度

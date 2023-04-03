@@ -4,6 +4,7 @@
 #include <QLineEdit>
 #include <QEvent>
 #include <QDebug>
+#include <QPropertyAnimation>
 
 namespace Ui {
 class CusLineEdit;

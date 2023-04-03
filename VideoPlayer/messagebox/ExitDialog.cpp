@@ -7,107 +7,20 @@ ExitDialog::ExitDialog(QWidget *parent) :
     ui(new Ui::ExitDialog)
 {
     ui->setupUi(this);
-    //去掉边框
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::Window);
-    this->setAttribute(Qt::WA_TranslucentBackground);
-    this->setFixedSize(FIXSIZE);
-
-    QGraphicsDropShadowEffect *shadow_effect = new QGraphicsDropShadowEffect(this);
-    shadow_effect->setOffset(0,0);//阴影往边外（下和右）移出的距离
-    shadow_effect->setColor(QColor(93, 95, 96));
-    shadow_effect->setBlurRadius(8);//设置阴影圆角
-    this->setGraphicsEffect(shadow_effect);
-    this->setContentsMargins(3,3,3,3);//设置为0时，就看不到边框的阴影
-
-//    QPixmap pixmap(":/images/icon/cursor.png");
-//    QSize size(5,5);
-//    pixmap.scaled(5,5,Qt::KeepAspectRatio);
-//    QCursor *myCursor = new QCursor(pixmap,0,0);    //-1,-1表示热点位于图片中心
-//    this->setCursor(*myCursor);
-    ui->radioButton_miniSysTron->setChecked(true);
-    ui->pushButton_ok->setFocus();//显示选中状态
-    ui->pushButton_ok->setDefault(true);//按回车会关闭窗口
-    ui->pushButton_ok->setStyleSheet("border:2px solid #9e9e9e; border-radius:5px; background-color:#d44e7d; color: white; font-size:14px;");
-    m_iniPath = Global::appDirPath + "/config/config.ini";
-    qDebug() << "config file path = " << m_iniPath;
-    //此处有bug,只要点击，不管沟上还是没有勾上，都是设置为 1
-//    connect(ui->checkBox,&QCheckBox::clicked,[=](){
-
-//            setIni();//状态设置
-
-//    });
-
-    if(readIni() == "1")
-    {
-        isShow = true;
-    }
-    else
-    {
-        isShow = false;
-    }
-
-    //确定关闭
-    connect(ui->pushButton_ok,&QPushButton::clicked,[=](){
-        /*可以做一些类似数据保存的其他操作*/
-
-        emit sig_SendcloseMain();//给主窗口发送关闭窗口信号
-        this->close();
-    });
-    //确定取消
-    connect(ui->pushButton_cancel,&QPushButton::clicked,[=](){
-        emit sig_SendNotcloseMain();//发送不关闭主窗口信号
-        this->close();
-
-    });
-    //close
-    connect(ui->pushButton_close,&QPushButton::clicked,[=](){
-        emit sig_SendNotcloseMain();
-        close();
-    });
+    initWorkUI();
+    handleSignalsAndSlots();
 }
 
 //构造函数2
-ExitDialog::ExitDialog(QString title, QString warn, QWidget *parent) :
+ExitDialog::ExitDialog(QString title, QString warn, QWidget *parent):
     QDialog(parent),
     ui(new Ui::ExitDialog)
 {
     ui->setupUi(this);
-    //去掉边框
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::Window);
-    this->setAttribute(Qt::WA_TranslucentBackground);
-    this->setFixedSize(FIXSIZE);
-
-    QGraphicsDropShadowEffect *shadow_effect = new QGraphicsDropShadowEffect(this);
-    shadow_effect->setOffset(0,0);//阴影往边外（下和右）移出的距离
-    shadow_effect->setColor(QColor(93, 95, 96));
-    shadow_effect->setBlurRadius(8);//设置阴影圆角
-    this->setGraphicsEffect(shadow_effect);
-    this->setContentsMargins(3,3,3,3);//设置为0时，就看不到边框的阴影
-
-    ui->radioButton_miniSysTron->setChecked(true);
-    ui->pushButton_ok->setFocus();//显示选中状态
-    ui->pushButton_ok->setDefault(true);//按回车会关闭窗口
-    ui->pushButton_ok->setStyleSheet("border:2px solid #9e9e9e; border-radius:5px; background-color:#d44e7d; color: white; font-size:14px;");
-    m_iniPath = Global::appDirPath + "/config/config.ini";
+    initWorkUI();
+    handleSignalsAndSlots();
     ui->label->setText(title);
     ui->label_warning->setText(warn);
-    //确定关闭
-    connect(ui->pushButton_ok,&QPushButton::clicked,[=](){
-        /*可以做一些类似数据保存的其他操作*/
-        emit sig_SendcloseMain();//给主窗口发送关闭窗口信号
-        this->close();
-    });
-    //确定取消
-    connect(ui->pushButton_cancel,&QPushButton::clicked,[=](){
-        emit sig_SendNotcloseMain();//发送不关闭主窗口信号
-        this->close();
-
-    });
-    //close
-    connect(ui->pushButton_close,&QPushButton::clicked,[=](){
-        emit sig_SendNotcloseMain();
-        this->close();
-    });
 }
 
 
@@ -116,10 +29,79 @@ ExitDialog::~ExitDialog()
     delete ui;
 }
 
+void ExitDialog::initWorkUI()
+{
+    //去掉边框
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowStaysOnTopHint);
+    this->setAttribute(Qt::WA_TranslucentBackground);
+    this->setFixedSize(FIXSIZE);
+    this->setAttribute(Qt::WA_Hover);//必须要有这句，否则按钮选中无效
+
+    //设置边框阴影，影响部分功能（按钮选中就无效）
+//    QGraphicsDropShadowEffect *shadow_effect = new QGraphicsDropShadowEffect(this);
+//    shadow_effect->setOffset(0,0);//阴影往边外（下和右）移出的距离
+//    shadow_effect->setColor(QColor(93, 95, 96));
+//    shadow_effect->setBlurRadius(8);//设置阴影圆角
+//    this->setGraphicsEffect(shadow_effect);
+//    this->setContentsMargins(3,3,3,3);//设置为0时，就看不到边框的阴影
+
+    ui->pushButton_cancel->setCheckable(true);
+    ui->pushButton_ok->setCheckable(true);
+
+    m_buttonGroup = new QButtonGroup(this);
+    m_buttonGroup->addButton(ui->pushButton_cancel,0);
+    m_buttonGroup->addButton(ui->pushButton_ok,1);
+    m_buttonGroup->setExclusive(true);
+    ui->pushButton_ok->setChecked(true);
+
+    if(Global::readCloseAction())//真的关闭
+    {
+        ui->radioButton_exitApp->setChecked(true);
+        ui->radioButton_miniSysTron->setChecked(false);
+        qDebug() <<QString(u8"读取配置文件结果：直接退出");
+    }
+    else
+    {
+        ui->radioButton_exitApp->setChecked(false);
+        ui->radioButton_miniSysTron->setChecked(true);
+        qDebug() <<QString(u8"读取配置文件结果：最小化托盘");
+    }
+
+    m_iniPath = Global::appDirPath + "/config/config.ini";
+
+    if(readIni() == "1")
+        isShow = true;
+    else
+        isShow = false;
+}
+
+void ExitDialog::handleSignalsAndSlots()
+{
+    //确定关闭
+    connect(ui->pushButton_ok,&QPushButton::clicked,[=](){
+        /*可以做一些类似数据保存的其他操作*/
+        setIni();
+        setCloseType();//设置 m_closeType 值
+        emit sig_SendcloseMain(m_closeType);//给主窗口发送关闭窗口信号
+        this->accept();
+    });
+    //确定取消
+    connect(ui->pushButton_cancel,&QPushButton::clicked,[=](){
+        emit sig_SendNotcloseMain();//发送不关闭主窗口信号
+        ui->pushButton_ok->setChecked(true);//将选中行为设为“确定”按钮
+        this->reject();
+
+    });
+    //close
+    connect(ui->pushButton_close,&QPushButton::clicked,[=](){
+        emit sig_SendNotcloseMain();
+        this->close();
+    });
+}
+
 /*读取配置文件值*/
 QString ExitDialog::readIni() const
 {
-//    qDebug() << QString(u8"读取到勾选退出窗口值：")<<Global::readIni_exit();
    return Global::readIni_exit();
 }
 
@@ -131,7 +113,32 @@ void ExitDialog::setIni()
     {
        Global::setIni_exit(false);
     }
+}
 
+void ExitDialog::setCloseType()
+{
+    if(ui->radioButton_miniSysTron->isChecked())
+    {
+        m_closeType = false;
+        Global::setCloseAction(false);//隐藏
+    }
+    else if(ui->radioButton_exitApp->isChecked())
+    {
+        m_closeType = true;
+        Global::setCloseAction(true);//真关闭
+    }
+}
+
+bool ExitDialog::getCloseType()
+{
+    if(ui->radioButton_miniSysTron->isChecked())
+    {
+        return false;
+    }
+    else if(ui->radioButton_exitApp->isChecked())
+    {
+        return true;
+    }
 }
 
 void ExitDialog::setCloseText(QString waring)

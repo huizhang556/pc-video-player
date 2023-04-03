@@ -95,18 +95,19 @@ background-color: transparent;
 QListWidget::item
 {
 color: transparent;
-color:red;
-margin: 0px 5px 0px 5px;
+margin: 0px 3px 0px 3px;
 border-radius: 6px;
 }
 
 QListWidget::item:selected
 {
+border: 0px solid #03c8d4;
 background-color: transparent;
 }
 
 QListWidget::item:hover
 {
+border: 0px solid #03c8d4;
 background-color: transparent;
 }
 

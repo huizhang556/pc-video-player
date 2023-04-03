@@ -250,6 +250,34 @@ void Global::setIni_exit(bool on)
     set = nullptr;
 }
 
+bool Global::readCloseAction()
+{
+    QSettings *set = new QSettings(appDirPath + "/config/config.ini",QSettings::IniFormat);
+    QString statusValue = set->value("/close_type/type").toString();
+    delete set;
+    set = nullptr;
+    if(statusValue == "0")//隐藏
+    {
+        return false;
+    }
+    else if(statusValue == "1")//真的关闭
+    {
+        return true;
+    }
+
+}
+
+void Global::setCloseAction(bool on)
+{
+    QSettings *set = new QSettings(appDirPath + "/config/config.ini",QSettings::IniFormat);
+    if(on)
+    set->setValue("/close_type/type","1");
+    else
+    set->setValue("/close_type/type","0");
+    delete set;
+    set = nullptr;
+}
+
 void Global::setIni_ungis(bool on)
 {
     QSettings *set = new QSettings(appDirPath + "/config/config.ini",QSettings::IniFormat);

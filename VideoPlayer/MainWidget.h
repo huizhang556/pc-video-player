@@ -294,7 +294,7 @@ private:
     QMenu               *pmenu3                    = nullptr;
     bool                 m_isHide;        //左侧显示隐藏按钮
     bool                 m_winMax;        //默认非最大化
-    bool                 m_isClose;
+    bool                 m_isClose = false;
     bool                 m_firstOpen;     //第一次打开文件
     //界面拉伸私有成员变量
     bool                _isleftpressed             = false;      //判断是否是左键点击

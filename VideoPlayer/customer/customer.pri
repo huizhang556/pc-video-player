@@ -17,7 +17,8 @@ SOURCES += \
     $$PWD/CPolLabel.cpp \
     $$PWD/CusHSlider.cpp \
     $$PWD/ValueToImage.cpp \
-    $$PWD/RoundLab.cpp
+    $$PWD/RoundLab.cpp \
+    $$PWD/RefreshButton.cpp
 
 HEADERS += \
     $$PWD/CusTabWidget.h \
@@ -38,7 +39,8 @@ HEADERS += \
     $$PWD/CPolLabel.h \
     $$PWD/CusHSlider.h \
     $$PWD/ValueToImage.h \
-    $$PWD/RoundLab.h
+    $$PWD/RoundLab.h \
+    $$PWD/RefreshButton.h
 
 FORMS += \
     $$PWD/CusTabWidget.ui \

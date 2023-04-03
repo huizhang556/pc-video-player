@@ -4,9 +4,10 @@
 #include "customer/RingWait1.h"
 #include <QTimer>
 #include <QWidget>
-#include <QScrollBar>
 #include <QLayout>
 #include <QDebug>
+#include <QScrollBar>
+#include <QPropertyAnimation>
 
 namespace Ui {
 class CToTopWidget;

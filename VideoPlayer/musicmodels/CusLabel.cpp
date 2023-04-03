@@ -58,6 +58,16 @@ void CusLabel::setCurrentTextFontColor(const QString &color)
     ui->plainTextEdit->setStyleSheet(style);
 }
 
+void CusLabel::getCurPostionLyricText(int pos)
+{
+    QString lyric = ui->plainTextEdit->document()->findBlockByLineNumber(pos).text();
+//    qDebug() << QString(u8"当前获取到的歌词：") << lyric;
+    if(!lyric.isEmpty())
+    {
+        emit sig_curLyricText(ui->plainTextEdit->document()->findBlockByLineNumber(pos).text());
+    }
+}
+
 void CusLabel::slot_setCurPosition(int pos)
 {
 //    m_textCursor.setPosition(pos);
@@ -68,4 +78,5 @@ void CusLabel::slot_setCurPosition(int pos)
     if(m_pos == ui->plainTextEdit->verticalScrollBar()->maximum())
         m_pos = 0;
 //        m_timer->stop();
+    getCurPostionLyricText(pos);
 }

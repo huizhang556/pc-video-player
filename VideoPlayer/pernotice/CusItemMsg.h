@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QFontMetrics>
 #include <QAbstractButton>
+#include <QMouseEvent>
 #include <QDebug>
 
 namespace Ui {
@@ -28,8 +29,15 @@ public:
     ~CusItemMsg();
     void        initWorkUI();
     void        handleSignalsAndSlots();
+    void        setInstallEventFilter();
     void        setReadStatus(bool read);
     bool*       getArroy_ON_Mark();
+    void        setItemTop(bool top);
+    void        setItemDisturb(bool disturb);
+
+protected:
+    bool        eventFilter(QObject *watched, QEvent *event)override;
+
 private:
     Ui::CusItemMsg *ui;
     bool    array_on[4];//4个标志位
@@ -41,6 +49,11 @@ signals:
     void    sig_sendClicked();
     void    sig_sendLike();
     void    sig_sendDelete();
+
+    void    sig_read_chat();
+    void    sig_read_reply();
+    void    sig_read_about();
+    void    sig_read_like();
 };
 
 #endif // CUSITEMMSG_H

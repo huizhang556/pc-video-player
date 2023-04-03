@@ -1,5 +1,4 @@
 ﻿#include "MainWidget.h"
-#include <QApplication>
 #include "titlebar/TitleBar.h"
 #include "customer/CPolLabel.h"
 #include "style/loadGlobalQss.h"
@@ -7,6 +6,7 @@
 #include "creator/CreateCenter.h"
 #include "miniplayer/MiniPlayer.h"
 #include "messagebox/ExitDialog.h"
+#include "pernotice/ScrollToTop.h"
 #include "fileshandle/DownloadType.h"
 #include "videomodels/MultipPlayer.h"
 #include "mainwidget/AniStackWidget.h"
@@ -17,6 +17,7 @@
 #include "mainwidget/subunititems/HotRankList.h"
 #include "mainwidget/cusvideosbox/CusVideoBox7.h"
 
+#include <QApplication>
 #include <QTranslator>
 #include <QThread>
 #include <QTimer>
@@ -118,16 +119,16 @@ int main(int argc, char *argv[])
             for(int i = 0; i< 100; ++i)
             {
                 splashscream.slot_updateProgressbarValue(i);
-                QThread::msleep(16);
+                QThread::msleep(30);
             }
         }
 
         //05--->显示主界面
-
 #if 0
+        //    ScrollToTop::getInstance()->show();
         //    DesktopLyric::getInstance()->show();
 
-//                MultipPlayer::getInstance()->show();
+        //    MultipPlayer::getInstance()->show();
 
         //    MiniPlayer m;
         //    m.c_show();
@@ -148,24 +149,23 @@ int main(int argc, char *argv[])
         //    ShortVideo w1;
         //    w1.show();
 
-        //    CusVideoBox7 w1;
-        //    w1.show();
+//            CusVideoBox7 w1;
+//            w1.show();
 
         //        CPolLabel w1(QSize(100,100),QString(":/images/bgpic/dieji3.png"),8);
         //        w1.show();
 
-        //    MainNotice w1;
-        //    w1.show();
+//            MainNotice w1;
+//            w1.show();
 
-//        CreateCenter::getInstance()->show();
+        //    CreateCenter::getInstance()->show();
 
         //    MyEmotionWindow w1;
         //    w1.showNormalEmotion(QPoint(500 , 500));
-        //        DownloadType::getInstance()->show();
-                NewLoginForm::getInstance()->show();
+        //    DownloadType::getInstance()->show();
+            NewLoginForm::getInstance()->show();
         //    AniStackWidget w1;
         //    w1.show();
-
         //    splashscream.finish(&w1);
 
 #else

@@ -141,6 +141,11 @@ void LeftSideBar::handleSignalAndSLots()
     //消息
     connect(m_msgBtn,&QPushButton::clicked,[=](bool checked){
         emit sig_sendPersonMessage(checked);
+        m_msgBtn->setEnabled(false);
+        //防止连续点击
+        QTimer::singleShot(800,0,[=](){
+            m_msgBtn->setEnabled(true);
+        });
     });
 
     //模式转换

@@ -40,29 +40,30 @@ void SCrollListWidget::initWorkUI()
 
 void SCrollListWidget::handleSignalsAndSlots()
 {
-    connect(ui->listWidget_walls,&QListWidget::itemEntered,[=](QListWidgetItem *curitem){
-        if(curitem == nullptr) return;
-        int index = ui->listWidget_walls->row(curitem);
-        ui->listWidget_walls->setCurrentItem(curitem);
-        emit sig_sendCurIndex(index);
-    });
-
-//    connect(ui->listWidget_walls,&QListWidget::currentItemChanged,[=](QListWidgetItem *current, QListWidgetItem *previous){
-//        if(current != nullptr)
-//        {
-//            getMaskWidget(current,"widget_mask")->setStyleSheet("#widget_mask{"
-//                                                                "background-color: transparent;"
-//                                                                "}");
-//            qDebug() <<QString(u8"当前已经设置样式！");
-//        }
-//        if(previous != nullptr)
-//        {
-//            getMaskWidget(current,"widget_mask")->setStyleSheet("#widget_mask{"
-//                                                                "background-color: rgba(20, 20, 20,0.6);"
-//                                                                "}");
-//            qDebug() <<QString(u8"上一个已经设置样式！");
-//        }
+//    connect(ui->listWidget_walls,&QListWidget::itemEntered,[=](QListWidgetItem *curitem){
+//        if(curitem == nullptr) return;
+//        int index = ui->listWidget_walls->row(curitem);
+//        ui->listWidget_walls->setCurrentItem(curitem);
+//        emit sig_sendCurIndex(index);
+//        qDebug() <<QString(u8"当前选中的索引：%1").arg(index);
 //    });
+
+    connect(ui->listWidget_walls,&QListWidget::currentItemChanged,[=](QListWidgetItem *current, QListWidgetItem *previous){
+        if(current != nullptr)
+        {
+            getMaskWidget(current,"widget_mask")->setStyleSheet("#widget_mask{"
+                                                                "background-color: transparent;"
+                                                                "}");
+//            qDebug() <<QString(u8"当前已经设置样式！");
+        }
+        if(previous != nullptr)
+        {
+            getMaskWidget(previous,"widget_mask")->setStyleSheet("#widget_mask{"
+                                                                "background-color: rgba(20, 20, 20,0.6);"
+                                                                "}");
+//            qDebug() <<QString(u8"上一个已经设置样式！");
+        }
+    });
 
     connect(ui->pushButton_left,&QPushButton::clicked,[=](){
 //        if(ui->listWidget_walls->horizontalScrollBar()->value() == ui->listWidget_walls->horizontalScrollBar()->minimum()) return;
@@ -104,16 +105,23 @@ void SCrollListWidget::setInstallEventFilter()
 
 void SCrollListWidget::slot_addItemToList(const QString &picpath)
 {
-    //添加图片
+    //添加图片(路径+背景色+radius+是否收藏)
     CusLabel1 *label_pic = new CusLabel1(picpath,QColor(64, 66, 68),6,true);//此处需用指针，临时对象不行
 //    label_pic->setPixmap(QPixmap(picpath).scaled(QSize(135,80)));
     QListWidgetItem *item = new QListWidgetItem();
     item->setSizeHint(QSize(ITEMWIDTH,65));//高度一致，宽度留出spacing
     ui->listWidget_walls->addItem(item);//item要比图片大，包含边界
     ui->listWidget_walls->setItemWidget(item,label_pic);
+    //信号与槽函数
+    connect(label_pic,&CusLabel1::sig_item_enter,[=](){
+       ui->listWidget_walls->setCurrentItem(item);
+       int index = ui->listWidget_walls->currentRow();
+       emit sig_sendCurIndex(index);//外部发送当前索引
+       qDebug() <<QString(u8"当前选中的索引：%1").arg(index);
+    });
 }
 
-void SCrollListWidget::slot_addItemsToList(const QStringList &list_pic)
+void SCrollListWidget::slot_addItemsToList(const QStringList& list_pic)
 {
     for(int i = 0; i < list_pic.count(); ++i)
     {
@@ -121,10 +129,20 @@ void SCrollListWidget::slot_addItemsToList(const QStringList &list_pic)
     }
 }
 
+//由外部主轮播图大小的改变带动小轮播图的大小改变
 void SCrollListWidget::slot_update_RL_ITEM_geometry(const QSize& size)
 {
-    this->setFixedSize(size.width()*ITEMSACLE,80);
-    setButtons_LR_Geometry();
+    this->setFixedSize(size.width()*ITEMSACLE + ui->listWidget_walls->count()*6,80);//外部轮播图的大小乘以缩放比例
+    setButtons_LR_Geometry();//更新左右箭头位置
+    autoResizeListItems();//调整item大小
+}
+
+void SCrollListWidget::slot_setCurrentItem(int index)
+{
+    if(index >= ui->listWidget_walls->count()) return;
+    QListWidgetItem *citem = ui->listWidget_walls->item(index);
+    if(citem != nullptr)
+    ui->listWidget_walls->setCurrentItem(citem);
 }
 
 bool SCrollListWidget::eventFilter(QObject *watched, QEvent *event)
@@ -133,7 +151,7 @@ bool SCrollListWidget::eventFilter(QObject *watched, QEvent *event)
     {
         if(event->type() == QEvent::Resize)
         {
-           autoResizeListItems();
+//           autoResizeListItems();
         }
     }
     return QWidget::eventFilter(watched,event);
@@ -169,7 +187,7 @@ void SCrollListWidget::setButtons_LR_Geometry()
 
 int SCrollListWidget::calAvgWidth()
 {
-    int Width = (int)(ui->listWidget_walls->width() - ui->listWidget_walls->verticalScrollBar()->width()-20);
+    int Width = (int)(ui->listWidget_walls->width() - ui->listWidget_walls->verticalScrollBar()->width()-1);
     int sizeHint_w = ITEMWIDTH;
 
     int avgWidth = 0;
@@ -204,6 +222,7 @@ int SCrollListWidget::calAvgWidth()
     return avgWidth;
 }
 
+//查找mask_widget
 QWidget *SCrollListWidget::getMaskWidget(QListWidgetItem* item, const QString& objname)
 {
     QWidget* itemWidget = item->listWidget()->itemWidget(item);
@@ -212,6 +231,7 @@ QWidget *SCrollListWidget::getMaskWidget(QListWidgetItem* item, const QString& o
         QWidget *itemMask = itemWidget->findChild<QWidget*>(objname);//查找指定名称的按钮
         if(nullptr != itemMask)
         {
+//            qDebug() << QString(u8"找到了CusLabel");
             return itemMask;
         }
     }

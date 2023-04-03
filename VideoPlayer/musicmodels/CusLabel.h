@@ -8,6 +8,8 @@
 #include <QPalette>
 #include <QTextCursor>
 #include <QTextCharFormat>
+#include <QTextDocument>
+#include <QTextBlock>
 
 namespace Ui {
 class CusLabel;
@@ -24,6 +26,8 @@ public:
     void        chandleSinalsAndSlots();
     void        setCurrentTextFontSize(int size);
     void        setCurrentTextFontColor(const QString &color);
+    void        getCurPostionLyricText(int pos);
+
 
 private:
     Ui::CusLabel *ui;
@@ -33,6 +37,9 @@ private:
     QFont           m_font;
 private slots:
     void        slot_setCurPosition(int pos);
+
+signals:
+    void    sig_curLyricText(QString);
 
 };
 

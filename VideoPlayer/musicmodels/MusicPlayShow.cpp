@@ -56,6 +56,11 @@ void MusicPlayShow::handleSignalsAndSlots()
     connect(FontColor::getInstance(),&FontColor::sig_send_fontcolor,[=](QString color){
         ui->labelPicture->setCurrentTextFontColor(color);
     });
+
+    //发送当前歌词
+    connect(ui->labelPicture,&CusLabel::sig_curLyricText,[=](QString text){
+        emit sig_curLyric(text);
+    });
 }
 
 void MusicPlayShow::setInstallEventFilter()

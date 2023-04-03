@@ -30,8 +30,9 @@ public:
 
 public slots:
     void    slot_addItemToList(const QString& picpath);
-    void    slot_addItemsToList(const QStringList & list_pic);
-    void    slot_update_RL_ITEM_geometry(const QSize &size);
+    void    slot_addItemsToList(const QStringList& list_pic);
+    void    slot_update_RL_ITEM_geometry(const QSize& size);
+    void    slot_setCurrentItem(int index);
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event)override;

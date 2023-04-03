@@ -31,6 +31,7 @@
 #include "videomodels/VideoProgressBar.h"
 #include "fileshandle/DownloadType.h"
 #include "mainwidget/vipmember/BuyVip.h"
+#include "desktoplyric/toplyric/DesktopLyric.h"
 
 
 #include <QMap>

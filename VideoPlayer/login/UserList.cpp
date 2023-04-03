@@ -22,6 +22,7 @@ void UserList::initWorkUI()
 {
     ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->stackedWidget_results->setCurrentWidget(ui->page_resulits);
 
     //加载本地配置文件
 //    config_initUser();
@@ -60,6 +61,11 @@ void UserList::slot_removeItem(const QString& userName)
 
 }
 
+void UserList::slot_findUserListResult(const QString &name)
+{
+    getItemNameButton("pushButton_name",name);
+}
+
 bool UserList::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == this && event->type() == QEvent::Leave)
@@ -67,6 +73,30 @@ bool UserList::eventFilter(QObject *watched, QEvent *event)
         this->close();
     }
     return  QWidget::eventFilter(watched,event);
+}
+
+QPushButton *UserList::getItemNameButton(const QString &objName, const QString &userName)
+{
+    for(int i = 0; i < ui->verAddLayout->count(); i++)
+    {
+        QWidget *itemWidget = ui->verAddLayout->itemAt(i)->widget();
+        if(itemWidget != nullptr)
+        {
+            QPushButton* nameBtn = itemWidget->findChild<QPushButton*>(objName);
+            if(nameBtn != nullptr && nameBtn->text().contains(userName))
+            {
+                itemWidget->show();
+//                qDebug() << QString(u8"找到按钮,显示对应item");
+
+            }
+            else
+            {
+                itemWidget->hide();
+//                qDebug() << QString(u8"没找到按钮,隐藏对应item");
+            }
+        }
+    }
+    return nullptr;
 }
 
 void UserList::checkedItemsCounts()

@@ -3951,8 +3951,8 @@ border: none;
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>325</width>
-                 <height>341</height>
+                 <width>81</width>
+                 <height>16</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="addVerLayout">

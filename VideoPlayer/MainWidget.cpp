@@ -579,7 +579,7 @@ void MainWidget::handleSignalAndSLots()
 
 
     //点击托盘的信号
-//    connect(m_tray,&QSystemTrayIcon::activated,[=](QSystemTrayIcon::ActivationReason reason){slot_activeTray(reason);});
+    connect(m_tray,&QSystemTrayIcon::activated,[=](QSystemTrayIcon::ActivationReason reason){slot_activeTray(reason);});
 
 
     //更换皮肤
@@ -866,10 +866,19 @@ void MainWidget::handleSignalAndSLots()
 
 
     /************************************主窗口关闭关联窗口动作************************************/
-    //收到主窗口关闭信号
-    connect(m_pExitDlg,&ExitDialog::sig_SendcloseMain,[=](){m_isClose = true;});//确定关闭，需要做一些数据保存
-    //没收到主窗口关闭信号
-    connect(m_pExitDlg,&ExitDialog::sig_SendNotcloseMain,[=](){m_isClose = false;});//不关闭，数据暂时就不保存
+    //收到主窗口关闭信号(两种行为：隐藏 0 关闭 1)
+//    connect(m_pExitDlg,&ExitDialog::sig_SendcloseMain,[=](bool close){
+//        if(close)//直接关闭(双重检测)
+//        {
+//            m_isClose = true;
+//        }
+//        else
+//        {
+//            m_isClose = false;
+//        }
+//    });//确定关闭，需要做一些数据保存
+//    //没收到主窗口关闭信号
+//    connect(m_pExitDlg,&ExitDialog::sig_SendNotcloseMain,[=](){m_isClose = false;});//不关闭，数据暂时就不保存
 
     //关闭主窗口，先通知标题栏，再转发登录窗口关闭
     connect(this,&MainWidget::sig_startCloseAppliction,m_titleBar,&TitleBar::receiveMainFormClose);
@@ -1328,6 +1337,7 @@ void MainWidget::updateLeftNoticeSliderBar(bool show)
     MainNotice::getInstance()->setMinimumSize(0,0);
     const int slider_x = m_leftSideBar->parentWidget()->mapToGlobal(m_leftSideBar->pos()).x();
     const int slider_y = m_leftSideBar->parentWidget()->mapToGlobal(m_leftSideBar->pos()).y();
+    qDebug() << QString(u8"MainNotice::getInstance()是否隐藏：") << MainNotice::getInstance()->isHidden();
     if(MainNotice::getInstance()->isHidden())
     {
         qDebug() << "start animation";
@@ -1335,7 +1345,7 @@ void MainWidget::updateLeftNoticeSliderBar(bool show)
 //                                                   slider_y,
 //                                                   MainNotice::getInstance()->width(),
 //                                                   m_leftSideBar->height());
-
+//        MainNotice::getInstance()->raise();
         MainNotice::getInstance()->show();//必须show出来，否则看不到动画
         QPropertyAnimation *pAnimation = new QPropertyAnimation(MainNotice::getInstance(),"geometry",this);
         pAnimation->setDuration(800);
@@ -1411,22 +1421,21 @@ void MainWidget::slot_activeTray(QSystemTrayIcon::ActivationReason reason)
 {
     switch (reason)
     {
-    case QSystemTrayIcon::DoubleClick://单击
+    case QSystemTrayIcon::DoubleClick:
     {
-        m_tray->showMessage("Information",//消息窗口标题
-                            "There is a new message!",//消息内容
-                            QSystemTrayIcon::MessageIcon::Information,//消息窗口图标
-                            5000);//消息窗口显示时长
+//        m_tray->showMessage("Information",//消息窗口标题
+//                            "There is a new message!",//消息内容
+//                            QSystemTrayIcon::MessageIcon::Information,//消息窗口图标
+//                            5000);//消息窗口显示时长
     }
         break;
-    case QSystemTrayIcon::Trigger://双击
+    case QSystemTrayIcon::Trigger:
     {
-        if(this->isHidden())
         this->showNormal();
     }
         break;
     case QSystemTrayIcon::Context:
-        m_menuTray->show();
+//        m_menuTray->show();
         break;
     }
 }
@@ -1877,17 +1886,43 @@ void MainWidget::closeEvent(QCloseEvent *event)
         {
             m_pExitDlg->setCloseText(QString::fromLocal8Bit("您确定要退出软件吗？"));
         }
-        m_pExitDlg->exec();
+       int ret = m_pExitDlg->exec();//程序阻塞，等待返回值做下一步判断
+       qDebug() << QString(u8"是否关闭：") << ret;
+       if(ret)
+       {
+           qDebug() << QString(u8"是否为直接关闭：") << m_pExitDlg->getCloseType();
+           if(m_pExitDlg->getCloseType())
+           {
+               m_isClose = true;//不弹界面，但是确实是直接关闭
+           }
+           else
+           {
+               m_isClose = false;//不弹出界面，但是不是直接关闭（而是隐藏）
+           }
+       }
+       else
+       {
+           m_isClose = false;
+       }
     }
-    else//如果为非isShow就是不弹出提示界面，但是依旧要保存一些数据
+    else//如果为非isShow就是不弹出提示界面，还要根据配置做选择（直接关闭还是隐藏）
     {
         //没有退出界面提示，什么也不保存
-        m_isClose = true;//模拟点击确定按钮事件
+        qDebug() << QString(u8"是否为直接关闭：") << m_pExitDlg->getCloseType();
+        if(m_pExitDlg->getCloseType())
+        {
+            m_isClose = true;//不弹界面，但是确实是直接关闭
+        }
+        else
+        {
+            m_isClose = false;//不弹出界面，但是不是直接关闭（而是隐藏）
+        }
     }
 
     //以下流程在有界面的情况下才执行
      if(!m_isClose)//取消
      {
+//         this->hide();
          event->ignore();
      }
      else//确定退出 m_isClose = true

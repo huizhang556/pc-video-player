@@ -30,6 +30,13 @@
 {
 border: none;
 background-color: transparent;
+}
+
+QToolTip
+{
+color: #6b7077;
+border-radius: 3px;
+background-color: rgb(236, 255, 221);
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -40,10 +47,10 @@ background-color: transparent;
     <number>3</number>
    </property>
    <property name="topMargin">
-    <number>1</number>
+    <number>3</number>
    </property>
    <property name="rightMargin">
-    <number>3</number>
+    <number>1</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
@@ -66,7 +73,7 @@ background-color: transparent;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_chat">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -216,16 +223,56 @@ font: 800 15px &quot;微软雅黑&quot;;
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_readStatus">
+                 <widget class="QPushButton" name="pushButton_disturb">
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
+                    <width>26</width>
                     <height>26</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>16777215</width>
+                    <width>26</width>
+                    <height>26</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton
+{
+border: none;
+background-color: transparent;
+}
+
+QPushButton[disturb = &quot;true&quot;]
+{
+border: none;
+margin: 3px;
+background-color: transparent;
+border-image: url(:/images/user/itemmark_disturb.png);
+}
+
+QPushButton[disturb = &quot;false&quot;]
+{
+border: none;
+background-color: transparent;
+}</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_readStatus">
+                  <property name="minimumSize">
+                   <size>
+                    <width>40</width>
+                    <height>26</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>40</width>
                     <height>26</height>
                    </size>
                   </property>
@@ -238,7 +285,7 @@ font: 400 13px &quot;微软雅黑&quot;;
 
 QLabel[read = &quot;true&quot;]
 {
-color: green;
+color: #4cd40a;
 }
 
 QLabel[read = &quot;false&quot;]
@@ -261,7 +308,7 @@ color: red;
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>16777215</width>
+                    <width>60</width>
                     <height>26</height>
                    </size>
                   </property>
@@ -320,13 +367,13 @@ color: #e7e9eb;
              <widget class="QPushButton" name="pushButton_expand">
               <property name="minimumSize">
                <size>
-                <width>30</width>
+                <width>36</width>
                 <height>66</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>30</width>
+                <width>36</width>
                 <height>66</height>
                </size>
               </property>
@@ -340,6 +387,19 @@ font: 800 15px &quot;微软雅黑&quot;;
 QPushButton:hover
 {
 color: white;
+}
+
+QPushButton[top = &quot;true&quot;]
+{
+color: gray;
+font: 800 15px &quot;微软雅黑&quot;;
+background: transparent url(:/images/user/itemmark_top.png) right top  no-repeat;
+}
+
+QPushButton[top = &quot;false&quot;]
+{
+color: gray;
+font: 800 15px &quot;微软雅黑&quot;;
 }</string>
               </property>
               <property name="text">

@@ -9,8 +9,16 @@
 #include <QCursor>
 #include <QSettings>
 #include <QMouseEvent>
+#include <QButtonGroup>
 #include <QGraphicsDropShadowEffect>
 #include <QDebug>
+
+//关闭窗口类型
+enum CLOSE_TYPE
+{
+    _HIDE,//隐藏到托盘
+    _CLOSE//直接关闭
+};
 
 namespace Ui {
 class ExitDialog;
@@ -25,10 +33,13 @@ public:
     explicit ExitDialog(const QString title,const QString warn,QWidget *parent = nullptr);
 
     ~ExitDialog();
+    void    initWorkUI();
+    void    handleSignalsAndSlots();
 
     QString readIni() const;
-
-    void setIni(); 
+    void    setIni();
+    void    setCloseType();
+    bool    getCloseType();
 
 public:
     void    setCloseText(QString waring);
@@ -43,11 +54,13 @@ protected:
 signals:
     void sig_SendNotcloseMain();
 
-    void sig_SendcloseMain();
+    void sig_SendcloseMain(bool);//带个状态， 0 隐藏 1 关闭
 private:
     Ui::ExitDialog      *ui;
+    QButtonGroup        *m_buttonGroup  =  nullptr;
     QPoint              m_mvPoint;
     QString             m_iniPath;
+    bool                m_closeType;
 
 };
 

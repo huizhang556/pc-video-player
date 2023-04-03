@@ -23,7 +23,7 @@ NewLoginForm::NewLoginForm(QWidget *parent):
 //    setAttribute(Qt::WA_DeleteOnClose);
     initWorkUI();
     initAnimations();
-    chandleSignalsAndSLots();
+    handleSignalsAndSLots();
     setInstallEventFilter();
 }
 
@@ -332,7 +332,7 @@ NewLoginForm *NewLoginForm::getInstance()
     return m_pInstance;
 }
 
-void NewLoginForm::chandleSignalsAndSLots()
+void NewLoginForm::handleSignalsAndSLots()
 {
     connect(ui->pushButton_otherMethed1,&QPushButton::clicked,[=](){ui->stackedWidget_left->setCurrentWidget(ui->stackedpage_logined);});
     //退出登录
@@ -543,11 +543,19 @@ void NewLoginForm::chandleSignalsAndSLots()
         }
         m_userLists->hide();
     });
+
+    //账户输入匹配当前用户
+    connect(ui->lineEdit_account,&QLineEdit::textChanged,[=](const QString &name){
+//        updateUserListGeomotry();
+        m_userLists->slot_findUserListResult(name);
+    });
+
 }
 
 void NewLoginForm::setInstallEventFilter()
 {
     ui->lineEdit_account->installEventFilter(this);//移入移出
+    ui->lineEdit_userpwd->installEventFilter(this);
 }
 
 void NewLoginForm::update_QRcode()
@@ -657,8 +665,9 @@ void NewLoginForm::updateUserListGeomotry()
     const int g_x = ui->lineEdit_account->parentWidget()->mapToGlobal(ui->lineEdit_account->pos()).x();
     const int g_y = ui->lineEdit_account->parentWidget()->mapToGlobal(ui->lineEdit_account->pos()).y();
     m_userLists->setGeometry(g_x,g_y + ui->lineEdit_account->height()+8,m_userLists->width(),m_userLists->height());
+//    m_userLists->setAttribute(Qt::WA_ShowWithoutActivating);//只弹出，不获得焦点
     m_userLists->show();
-//    m_userLists->activateWindow();
+    ui->lineEdit_account->grabKeyboard();//获取键盘输入
 }
 
 void NewLoginForm::receiveLoginAppClose()
@@ -772,13 +781,29 @@ bool NewLoginForm::eventFilter(QObject *obj, QEvent *ev)
 {
     if(obj == ui->lineEdit_account)
     {
-        if(ev->type() == QEvent::MouseButtonPress)
+        if(ev->type() == QEvent::FocusIn)
+        {
+            ui->lineEdit_account->grabKeyboard();//获取键盘输入
+        }
+        else if(ev->type() == QEvent::FocusOut)
+        {
+//            qDebug() << QString(u8"释放键盘输入");
+            ui->lineEdit_account->releaseKeyboard();//释放键盘输入
+        }
+        else if(ev->type() == QEvent::MouseButtonPress)
         {
             updateUserListGeomotry();
             setAttribute(Qt::WA_NoMouseReplay);//避免重复触发窗口外的鼠标点击事件
-//            qDebug() <<QString(u8"鼠标按下！");
+            m_userLists->clearFocus();
+            ui->lineEdit_account->setFocus();
         }
-
+    }
+    if(obj == ui->lineEdit_userpwd)
+    {
+        if(ev->type() == QEvent::FocusIn)
+        {
+            m_userLists->close();
+        }
     }
     return QWidget::eventFilter(obj,ev);
 }
@@ -846,6 +871,7 @@ void NewLoginForm::setUser_register()
         slot_clearTempInputText();
         return;//直接返回
     }
+    //没有重命名
     bool isOK = dataBase::getInstance()->register_userInfo(name,pwd,email);//数据库插入用户信息
     if(isOK)//插入成功
     {

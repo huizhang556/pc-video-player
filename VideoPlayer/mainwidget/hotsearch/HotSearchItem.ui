@@ -46,11 +46,52 @@
      <property name="styleSheet">
       <string notr="true">QLabel
 {
-color: #ff3e33;
+color: #c8c8c8;
 font: 20px &quot;微软雅黑&quot;;
 padding-left: 3px;
 background-color: transparent;
-}</string>
+}
+
+QLabel
+{
+color: #c8c8c8;
+font: 800 20px &quot;微软雅黑&quot;;
+padding-left: 3px;
+background-color: transparent;
+}
+
+QLabel[first = &quot;true&quot;]
+{
+color: #df027b;
+font: 800 20px &quot;微软雅黑&quot;;
+padding-left: 3px;
+background-color: transparent;
+}
+
+QLabel[second = &quot;true&quot;]
+{
+color: #00dbde;
+font: 800 20px &quot;微软雅黑&quot;;
+padding-left: 3px;
+background-color: transparent;
+}
+
+QLabel[third = &quot;true&quot;]
+{
+color: #fa6400;
+font: 800 20px &quot;微软雅黑&quot;;
+padding-left: 3px;
+background-color: transparent;
+}
+
+QLabel[other = &quot;true&quot;]
+{
+color: #c8c8c8;
+font: 800 20px &quot;微软雅黑&quot;;
+padding-left: 3px;
+background-color: transparent;
+}
+</string>
      </property>
      <property name="text">
       <string/>

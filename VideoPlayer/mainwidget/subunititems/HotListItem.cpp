@@ -19,7 +19,7 @@ HotListItem::HotListItem(const QString &num, const QString &picpath, const QStri
     initWorkUI();
     handleSignalsAndSlots();
     setInstallEventFilter();
-    ui->pushButton_order->setText(num);
+    setItemOrderText(num);
     ui->label_itemicon->setPixmap(QPixmap(picpath));
     ui->label_itemicon->setScaledContents(true);
     QString html1 = QString(R"(<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
@@ -71,4 +71,26 @@ bool HotListItem::eventFilter(QObject *watched, QEvent *event)
         }
     }
     return QWidget::eventFilter(watched,event);
+}
+
+void HotListItem::setItemOrderText(const QString &num)
+{
+    if(num == "1")
+    {
+        ui->pushButton_order->setProperty("first",true);
+    }
+    else if(num == "2")
+    {
+        ui->pushButton_order->setProperty("second",true);
+    }
+    else if(num == "3")
+    {
+        ui->pushButton_order->setProperty("third",true);
+    }
+    else
+    {
+        ui->pushButton_order->setProperty("other",true);
+    }
+    ui->pushButton_order->setText(num);
+    ui->pushButton_order->style()->polish(ui->pushButton_order);//样式生效
 }

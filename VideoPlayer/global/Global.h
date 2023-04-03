@@ -29,6 +29,8 @@ public:
     static QString      readIni_exit();//读取配置文件（退出窗口）
     static QString      readIni_regis();//读取配置文件(播放器注册状态)
     static void         setIni_exit(bool on);//设置配置文件（退出窗口）
+    static bool         readCloseAction();//读取关闭行为配置
+    static void         setCloseAction(bool on);//设置关闭行为
     static void         setIni_ungis(bool on);
     static bool         getRegisStatus();
     static void         checkNetWorkOnline();//检查网络在线

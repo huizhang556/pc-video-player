@@ -452,6 +452,8 @@ void MultipPlayer::handleSignalAndSLots()
     //外界使用状态改变信号
     connect(this,SIGNAL(sig_currentMediaPlayStatus(bool)),m_musicUi,SLOT(slot_controlPlayStatus(bool)));
     connect(this,SIGNAL(sig_currentMediaPlayStatus(bool)),this,SLOT(slot_setPlayStatusStyle_main(bool)));
+    //响应显示歌词
+    connect(m_musicUi,&MusicPlayShow::sig_curLyric,DesktopLyric::getInstance(),&DesktopLyric::slot_setCurrentLyric);
     //监测媒体本身状态,所带参数为新的媒体状态，比如缓冲状态 BufferingMedia BufferedMedia
     connect(m_player,&QMediaPlayer::mediaStatusChanged,this,&MultipPlayer::checkChandleMediaStatus);
     //计算媒体播放数值范围
@@ -2716,14 +2718,15 @@ void MultipPlayer::slot_createRight_playListTable(const QPoint &pos)
 {
     if(m_listWisget2->count() == 0) return;//没有item就返回，不出现右键菜单
     QMenu *playMenu = new QMenu(m_listWisget2);
+//    playMenu->setLayoutDirection(Qt::RightToLeft);
     playMenu->setObjectName(QString::fromLocal8Bit("playlist_playMenu"));
-    QAction *playAction = new QAction(QIcon(""),QString::fromLocal8Bit("播放"));
-    QAction *nextAction = new QAction(QIcon(""),QString::fromLocal8Bit("下一首"));
-    QAction *deleteAction = new QAction(QIcon(""),QString::fromLocal8Bit("删除"));
-    QAction *downloadAction = new QAction(QIcon(""),QString::fromLocal8Bit("下载"));
-    QAction *collectAction = new QAction(QIcon(""),QString::fromLocal8Bit("收藏"));
+    QAction *playAction = new QAction(QIcon(":/images/music/song_play.png"),QString::fromLocal8Bit("播放"));
+    QAction *nextAction = new QAction(QIcon(":/images/music/song_next.png"),QString::fromLocal8Bit("下一首"));
+    QAction *deleteAction = new QAction(QIcon(":/images/music/song_delete.png"),QString::fromLocal8Bit("删除"));
+    QAction *downloadAction = new QAction(QIcon(":/images/music/song_download.png"),QString::fromLocal8Bit("下载"));
+    QAction *collectAction = new QAction(QIcon(":/images/music/song_collect.png"),QString::fromLocal8Bit("收藏"));
     QAction *selectallAction = new QAction(QIcon(""),QString::fromLocal8Bit("全选"));
-    QAction *clearAction = new QAction(QIcon(""),QString::fromLocal8Bit("清空列表"));
+    QAction *clearAction = new QAction(QIcon(":/images/music/song_clear.png"),QString::fromLocal8Bit("清空列表"));
 //    int row = m_listWisget2->currentRow();//当前选中的行号，注意-1和向后传递的情况
 //    QString text = m_listWisget2->currentItem()->text();
     //播放
@@ -2758,13 +2761,13 @@ void MultipPlayer::slot_createRight_playCollectTable(const QPoint &pos)
     if(m_listWisget3->count() == 0) return;
     QMenu *collectMenu = new QMenu(m_listWisget3);
     collectMenu->setObjectName(QString::fromLocal8Bit("playlist_collectMenu"));
-    QAction *playAction = new QAction(QIcon(""),QString::fromLocal8Bit("播放"));
-    QAction *downloadAction = new QAction(QIcon(""),QString::fromLocal8Bit("下载"));
-    QAction *deleteAction = new QAction(QIcon(""),QString::fromLocal8Bit("删除"));
-    QAction *nextAction = new QAction(QIcon(""),QString::fromLocal8Bit("下一首"));
+    QAction *playAction = new QAction(QIcon(":/images/music/song_play.png"),QString::fromLocal8Bit("播放"));
+    QAction *downloadAction = new QAction(QIcon(":/images/music/song_download.png"),QString::fromLocal8Bit("下载"));
+    QAction *deleteAction = new QAction(QIcon(":/images/music/song_delete.png"),QString::fromLocal8Bit("删除"));
+    QAction *nextAction = new QAction(QIcon(":/images/music/song_next.png"),QString::fromLocal8Bit("下一首"));
     QAction *selectallAction = new QAction(QIcon(""),QString::fromLocal8Bit("全选"));
-    QAction *collectAction = new QAction(QIcon(""),QString::fromLocal8Bit("取消收藏"));
-    QAction *clearAction = new QAction(QIcon(""),QString::fromLocal8Bit("清空列表"));
+    QAction *collectAction = new QAction(QIcon(":/images/music/song_collect.png"),QString::fromLocal8Bit("取消收藏"));
+    QAction *clearAction = new QAction(QIcon(":/images/music/song_clear.png"),QString::fromLocal8Bit("清空列表"));
 //    int row = m_listWisget3->currentRow();//当前选中的行号，注意-1和向后传递的情况
 //    QString text = m_listWisget3->currentItem()->text();
     //播放
@@ -2798,9 +2801,9 @@ void MultipPlayer::slot_createRight_playHistoryTable(const QPoint &pos)
     if(m_listWisget4->count() == 0) return;
     QMenu *historytMenu = new QMenu(m_listWisget4);
     historytMenu->setObjectName(QString::fromLocal8Bit("playlist_historytMenu"));
-    QAction *playAction = new QAction(QIcon(""),QString::fromLocal8Bit("播放"));
-    QAction *deleteAction = new QAction(QIcon(""),QString::fromLocal8Bit("删除"));
-    QAction *clearAction = new QAction(QIcon(""),QString::fromLocal8Bit("清空列表"));
+    QAction *playAction = new QAction(QIcon(":/images/music/song_play.png"),QString::fromLocal8Bit("播放"));
+    QAction *deleteAction = new QAction(QIcon(":/images/music/song_delete.png"),QString::fromLocal8Bit("删除"));
+    QAction *clearAction = new QAction(QIcon(":/images/music/song_clear.png"),QString::fromLocal8Bit("清空列表"));
 //    int row = m_listWisget4->currentRow();//当前选中的行号，注意-1和向后传递的情况
     //播放
     connect(playAction,&QAction::triggered,[=](){slot_playCurrentListItem(m_listWisget4,m_listWisget4->currentRow());});

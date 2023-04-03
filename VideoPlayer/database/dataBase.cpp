@@ -701,7 +701,7 @@ bool dataBase::register_userInfo(const QString &name, const QString &pwd, const 
     query.bindValue(2,name);//名称
     query.bindValue(3,pwd);//密码
     query.bindValue(4,emails);//邮箱
-    query.bindValue(5,"http://43.143.226.251:8080/group1/header/header9.jpg");//默认头像
+    query.bindValue(5,"http://43.143.226.251:8080/group1/user_header/header9.jpg");//默认头像
     query.bindValue(6,1);//VIP类型--普通
     query.bindValue(7,false);//不在线
     query.bindValue(8,QDateTime::currentDateTime().toString("yyyy-MM-dd:hh-mm-ss"));//登陆时间

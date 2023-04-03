@@ -61,7 +61,7 @@
     border-radius: 5px;
     margin-top: 1ex; /* leave space at the top for the title */
 	color: #cdcdcd;
-	background-color: #181b1f;
+	background-color: rgba(24, 27, 31,0.7);
 	/*font: 10pt &quot;Microsoft YaHei UI&quot;;*/
 }
 

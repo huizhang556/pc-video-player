@@ -1561,7 +1561,7 @@ background-color: #2f3134;
 
 /*帮助按钮菜单-----------------------样式结束*/
 
-/*歌曲列表右键菜------------------------------开始*/
+/*我的歌曲---列表右键菜------------------------------开始*/
 #pmenu_right,#pmenu_songer,#pmenu_son_addto,#pmenu_son_sort,#pmenu_son_playmode,#pmenu_son_muctool,#menuSelection
 {
 background: white;
@@ -1605,34 +1605,62 @@ image: url(://images/tray/tray_checked.png);
 /*歌曲列表右键菜单-----------------------------结束*/
 
 /*播放列表，收藏列表，历史列表右键菜单---开始*/
-#playlist_playMenu,#playlist_collectMenu,#playlist_historytMenu
+#playlist_playMenu,#playlist_collectMenu,#playlist_historytMenu,#listmanager_rMenu
 {
-background-color:white;
+background-color: white;
 width:120px;
 font: 400 14px "微软雅黑";
 border-radius:20px;
 }
 
-#playlist_playMenu::item,#playlist_collectMenu::item,#playlist_historytMenu::item
+#playlist_playMenu::item,#playlist_collectMenu::item,#playlist_historytMenu::item,#listmanager_rMenu::item
 {
-background-color:white;
-height:28px;
+background-color: white;
 /*padding可修改item高度*/
+width:120px;
+min-height: 30px;
+padding: 0px 10px;
 }
 
-#playlist_playMenu::icon,#playlist_collectMenu::icon,#playlist_historytMenu::icon
+#playlist_playMenu::icon,#playlist_collectMenu::icon,#playlist_historytMenu::icon,#listmanager_rMenu::icon
 {
+height: 26px;
+padding-left: 5px;
 background-color:white;
-height:28px;
 }
 
-#playlist_playMenu::item:selected,#playlist_collectMenu::item:selected,#playlist_historytMenu::item:selected
+#playlist_playMenu::item:selected,#playlist_collectMenu::item:selected,#playlist_historytMenu::item:selected,#listmanager_rMenu::item:selected
 {
 color:#2ca5fc;
 background-color:#cccccc;
 }
 
 /*播放列表，收藏列表，历史列表右键菜单---结束*/
+
+/*listmanager单个item----右键--开始*/
+#addlist_Menu
+{
+background-color: white;
+width:120px;
+font: 400 14px "微软雅黑";
+}
+
+#addlist_Menu::item
+{
+background-color: white;
+/*padding可修改item高度*/
+width:120px;
+min-height: 30px;
+padding: 0px 10px;
+}
+
+#addlist_Menu::item:selected
+{
+color:#2ca5fc;
+background-color:#cccccc;
+}
+
+/*listmanager单个item----右键--结束*/
 
 QDockWidget#m_dockWidget::title
 {

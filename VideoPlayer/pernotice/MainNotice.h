@@ -9,11 +9,13 @@
 #include <QWidget>
 #include <QSize>
 #include <QMenu>
+#include <QStyle>
 #include <QAction>
 #include <QVariant>
 #include <QScrollBar>
 #include <QDateTime>
 #include <QFileDialog>
+#include <QPushButton>
 #include <QListWidgetItem>
 #include <QButtonGroup>
 #include <QDebug>
@@ -83,11 +85,13 @@ private:
     void    switchToDetailMessage(const QString& title, const QString& datatime,const QString& content);
     void    switchToDetailMessage(NOTICETYPE type,const QString& header, const QString& datatime,const QString& content);
     QString &imgPathToHtml(QString &path);//图片路径转换为html语言
+    QPushButton* getItemButton(QListWidgetItem *item, const QString& objName);
+
 private:
     Ui::MainNotice *ui;
     static  MainNotice* m_pInstance;
     QButtonGroup    *m_buttonGroup1 =   nullptr;
-
+    int     msgCount[4] = {0,0,0,0};//记录未读消息数目
     bool    array[10] = {true,false,true,false,true,false,true,false,true,false};
 
 signals:

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>574</width>
-    <height>400</height>
+    <width>769</width>
+    <height>617</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,58 @@
    <item>
     <widget class="QScrollArea" name="scrollArea">
      <property name="styleSheet">
-      <string notr="true">border: none;</string>
+      <string notr="true">QHeaderView
+{
+font: 20px &quot;微软雅黑&quot;;
+color: #00ccff;
+border: none;
+background-color: #2a2a32;
+min-height:50px;
+}
+
+QHeaderView::section:horizontal
+{
+border: none;
+background-color: #2a2a32;
+padding-left: 20px;
+}
+
+QTreeView 
+{
+    show-decoration-selected: 1;
+	 font-size: 16px;
+	color: #2baffc;
+	border: none;
+	background-color: #25252b;
+}
+
+QTreeView::item 
+{
+	 min-height: 46px;
+	background-color: #25252b;
+}
+
+QTreeView::item:hover 
+{
+	background-color: #1e1e24;
+	color: #ff4f39;
+}
+
+QTreeView::item:selected 
+{
+    background-color: #1e1e24;
+	color: #ff4f39;
+}
+
+QTreeView::item:selected:active
+{
+     background-color: #1e1e24;
+}
+
+QTreeView::item:selected:!active 
+{
+    background-color: #1e1e24;
+}</string>
      </property>
      <property name="widgetResizable">
       <bool>true</bool>
@@ -41,9 +92,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-15</y>
-        <width>579</width>
-        <height>600</height>
+        <y>0</y>
+        <width>767</width>
+        <height>615</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -186,57 +237,7 @@ color: #8273e8;
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QHeaderView
-{
-font: 20px &quot;微软雅黑&quot;;
-color: #00ccff;
-border: none;
-background-color: #2a2a32;
-min-height:50px;
-}
-
-QHeaderView::section:horizontal
-{
-border: none;
-background-color: #2a2a32;
-padding-left: 20px;
-}
-
-QTreeView 
-{
-    show-decoration-selected: 1;
-	 font-size: 16px;
-	color: #2baffc;
-	border: none;
-	background-color: #25252b;
-}
-
-QTreeView::item 
-{
-	 min-height: 46px;
-	background-color: #25252b;
-}
-
-QTreeView::item:hover 
-{
-	background-color: #1e1e24;
-	color: #ff4f39;
-}
-
-QTreeView::item:selected 
-{
-    border: 1px solid #567dbc;
-}
-
-QTreeView::item:selected:active
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6ea1f1, stop: 1 #567dbc);
-}
-
-QTreeView::item:selected:!active 
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
-}</string>
+                  <string notr="true"/>
                  </property>
                  <column>
                   <property name="text">
@@ -260,57 +261,7 @@ QTreeView::item:selected:!active
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QHeaderView
-{
-font: 20px &quot;微软雅黑&quot;;
-color: #00ccff;
-border: none;
-background-color: #2a2a32;
-min-height:50px;
-}
-
-QHeaderView::section:horizontal
-{
-border: none;
-background-color: #2a2a32;
-padding-left: 20px;
-}
-
-QTreeView 
-{
-    show-decoration-selected: 1;
-	 font-size: 16px;
-	color: #2baffc;
-	border: none;
-	background-color: #25252b;
-}
-
-QTreeView::item 
-{
-	 min-height: 46px;
-	background-color: #25252b;
-}
-
-QTreeView::item:hover 
-{
-	background-color: #1e1e24;
-	color: #ff4f39;
-}
-
-QTreeView::item:selected 
-{
-    border: 1px solid #567dbc;
-}
-
-QTreeView::item:selected:active
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6ea1f1, stop: 1 #567dbc);
-}
-
-QTreeView::item:selected:!active 
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
-}</string>
+                  <string notr="true"/>
                  </property>
                  <column>
                   <property name="text">
@@ -334,57 +285,7 @@ QTreeView::item:selected:!active
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QHeaderView
-{
-font: 20px &quot;微软雅黑&quot;;
-color: #00ccff;
-border: none;
-background-color: #2a2a32;
-min-height:50px;
-}
-
-QHeaderView::section:horizontal
-{
-border: none;
-background-color: #2a2a32;
-padding-left: 20px;
-}
-
-QTreeView 
-{
-    show-decoration-selected: 1;
-	 font-size: 16px;
-	color: #2baffc;
-	border: none;
-	background-color: #25252b;
-}
-
-QTreeView::item 
-{
-	 min-height: 46px;
-	background-color: #25252b;
-}
-
-QTreeView::item:hover 
-{
-	background-color: #1e1e24;
-	color: #ff4f39;
-}
-
-QTreeView::item:selected 
-{
-    border: 1px solid #567dbc;
-}
-
-QTreeView::item:selected:active
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6ea1f1, stop: 1 #567dbc);
-}
-
-QTreeView::item:selected:!active 
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
-}</string>
+                  <string notr="true"/>
                  </property>
                  <column>
                   <property name="text">
@@ -415,57 +316,7 @@ QTreeView::item:selected:!active
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QHeaderView
-{
-font: 20px &quot;微软雅黑&quot;;
-color: #00ccff;
-border: none;
-background-color: #2a2a32;
-min-height:50px;
-}
-
-QHeaderView::section:horizontal
-{
-border: none;
-background-color: #2a2a32;
-padding-left: 20px;
-}
-
-QTreeView 
-{
-    show-decoration-selected: 1;
-	 font-size: 16px;
-	color: #2baffc;
-	border: none;
-	background-color: #25252b;
-}
-
-QTreeView::item 
-{
-	 min-height: 46px;
-	background-color: #25252b;
-}
-
-QTreeView::item:hover 
-{
-	background-color: #1e1e24;
-	color: #ff4f39;
-}
-
-QTreeView::item:selected 
-{
-    border: 1px solid #567dbc;
-}
-
-QTreeView::item:selected:active
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6ea1f1, stop: 1 #567dbc);
-}
-
-QTreeView::item:selected:!active 
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
-}</string>
+                  <string notr="true"/>
                  </property>
                  <column>
                   <property name="text">
@@ -489,57 +340,7 @@ QTreeView::item:selected:!active
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QHeaderView
-{
-font: 20px &quot;微软雅黑&quot;;
-color: #00ccff;
-border: none;
-background-color: #2a2a32;
-min-height:50px;
-}
-
-QHeaderView::section:horizontal
-{
-border: none;
-background-color: #2a2a32;
-padding-left: 20px;
-}
-
-QTreeView 
-{
-    show-decoration-selected: 1;
-	 font-size: 16px;
-	color: #2baffc;
-	border: none;
-	background-color: #25252b;
-}
-
-QTreeView::item 
-{
-	 min-height: 46px;
-	background-color: #25252b;
-}
-
-QTreeView::item:hover 
-{
-	background-color: #1e1e24;
-	color: #ff4f39;
-}
-
-QTreeView::item:selected 
-{
-    border: 1px solid #567dbc;
-}
-
-QTreeView::item:selected:active
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6ea1f1, stop: 1 #567dbc);
-}
-
-QTreeView::item:selected:!active 
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
-}</string>
+                  <string notr="true"/>
                  </property>
                  <column>
                   <property name="text">
@@ -563,57 +364,7 @@ QTreeView::item:selected:!active
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QHeaderView
-{
-font: 20px &quot;微软雅黑&quot;;
-color: #00ccff;
-border: none;
-background-color: #2a2a32;
-min-height:50px;
-}
-
-QHeaderView::section:horizontal
-{
-border: none;
-background-color: #2a2a32;
-padding-left: 20px;
-}
-
-QTreeView 
-{
-    show-decoration-selected: 1;
-	 font-size: 16px;
-	color: #2baffc;
-	border: none;
-	background-color: #25252b;
-}
-
-QTreeView::item 
-{
-	 min-height: 46px;
-	background-color: #25252b;
-}
-
-QTreeView::item:hover 
-{
-	background-color: #1e1e24;
-	color: #ff4f39;
-}
-
-QTreeView::item:selected 
-{
-    border: 1px solid #567dbc;
-}
-
-QTreeView::item:selected:active
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6ea1f1, stop: 1 #567dbc);
-}
-
-QTreeView::item:selected:!active 
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
-}</string>
+                  <string notr="true"/>
                  </property>
                  <column>
                   <property name="text">
@@ -644,57 +395,7 @@ QTreeView::item:selected:!active
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QHeaderView
-{
-font: 20px &quot;微软雅黑&quot;;
-color: #00ccff;
-border: none;
-background-color: #2a2a32;
-min-height:50px;
-}
-
-QHeaderView::section:horizontal
-{
-border: none;
-background-color: #2a2a32;
-padding-left: 20px;
-}
-
-QTreeView 
-{
-    show-decoration-selected: 1;
-	 font-size: 16px;
-	color: #2baffc;
-	border: none;
-	background-color: #25252b;
-}
-
-QTreeView::item 
-{
-	 min-height: 46px;
-	background-color: #25252b;
-}
-
-QTreeView::item:hover 
-{
-	background-color: #1e1e24;
-	color: #ff4f39;
-}
-
-QTreeView::item:selected 
-{
-    border: 1px solid #567dbc;
-}
-
-QTreeView::item:selected:active
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6ea1f1, stop: 1 #567dbc);
-}
-
-QTreeView::item:selected:!active 
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
-}</string>
+                  <string notr="true"/>
                  </property>
                  <column>
                   <property name="text">
@@ -718,57 +419,7 @@ QTreeView::item:selected:!active
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QHeaderView
-{
-font: 20px &quot;微软雅黑&quot;;
-color: #00ccff;
-border: none;
-background-color: #2a2a32;
-min-height:50px;
-}
-
-QHeaderView::section:horizontal
-{
-border: none;
-background-color: #2a2a32;
-padding-left: 20px;
-}
-
-QTreeView 
-{
-    show-decoration-selected: 1;
-	 font-size: 16px;
-	color: #2baffc;
-	border: none;
-	background-color: #25252b;
-}
-
-QTreeView::item 
-{
-	 min-height: 46px;
-	background-color: #25252b;
-}
-
-QTreeView::item:hover 
-{
-	background-color: #1e1e24;
-	color: #ff4f39;
-}
-
-QTreeView::item:selected 
-{
-    border: 1px solid #567dbc;
-}
-
-QTreeView::item:selected:active
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6ea1f1, stop: 1 #567dbc);
-}
-
-QTreeView::item:selected:!active 
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
-}</string>
+                  <string notr="true"/>
                  </property>
                  <column>
                   <property name="text">
@@ -792,57 +443,7 @@ QTreeView::item:selected:!active
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QHeaderView
-{
-font: 20px &quot;微软雅黑&quot;;
-color: #00ccff;
-border: none;
-background-color: #2a2a32;
-min-height:50px;
-}
-
-QHeaderView::section:horizontal
-{
-border: none;
-background-color: #2a2a32;
-padding-left: 20px;
-}
-
-QTreeView 
-{
-    show-decoration-selected: 1;
-	 font-size: 16px;
-	color: #2baffc;
-	border: none;
-	background-color: #25252b;
-}
-
-QTreeView::item 
-{
-	 min-height: 46px;
-	background-color: #25252b;
-}
-
-QTreeView::item:hover 
-{
-	background-color: #1e1e24;
-	color: #ff4f39;
-}
-
-QTreeView::item:selected 
-{
-    border: 1px solid #567dbc;
-}
-
-QTreeView::item:selected:active
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6ea1f1, stop: 1 #567dbc);
-}
-
-QTreeView::item:selected:!active 
-{
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
-}</string>
+                  <string notr="true"/>
                  </property>
                  <column>
                   <property name="text">

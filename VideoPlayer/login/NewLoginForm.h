@@ -59,7 +59,7 @@ class NewLoginForm : public QDialog
 public:
     ~NewLoginForm();
     void        initWorkUI();
-    void        chandleSignalsAndSLots();
+    void        handleSignalsAndSLots();
     void        setInstallEventFilter();
     void        setType(TipType type);
     void        show_c();

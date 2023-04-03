@@ -119,13 +119,15 @@ void NewListItem::handleSignalsAndSlots()
 
             //添加信号（中继）
             connect(itemWidget,&songListItem::sig_item_addtolist,[=](){
-                QMenu addlist_Menu;
-                addlist_Menu.addAction(QString(u8"添加到我的收藏"),this,SLOT(slot_menu_newList()));
-                addlist_Menu.addAction(QString(u8"添加到我的喜欢"),this,SLOT(slot_menu_deleteList()));
-                addlist_Menu.addAction(QString(u8"添加到清脆悠远"),this,SLOT(slot_menu_clearList()));
-                addlist_Menu.addAction(QString(u8"添加到热门DJ"),this,SLOT(slot_menu_renameList()));
-                addlist_Menu.exec(QCursor::pos());
-
+                QMenu *addlist_Menu = new QMenu(this);
+                addlist_Menu->setObjectName(QString::fromUtf8("addlist_Menu"));
+                addlist_Menu->addAction(QString(u8"添加到我的收藏"),this,SLOT(slot_menu_newList()));
+                addlist_Menu->addAction(QString(u8"添加到我的喜欢"),this,SLOT(slot_menu_deleteList()));
+                addlist_Menu->addAction(QString(u8"添加到清脆悠远"),this,SLOT(slot_menu_clearList()));
+                addlist_Menu->addAction(QString(u8"添加到热门DJ"),this,SLOT(slot_menu_renameList()));
+                addlist_Menu->exec(QCursor::pos());
+                delete addlist_Menu;
+                addlist_Menu = nullptr;
             });
 
         }
@@ -239,17 +241,21 @@ void NewListItem::slot_finishedRename()
 
 bool NewListItem::eventFilter(QObject *watched, QEvent *event)
 {
-    if(watched == ui->label_listName && event->type() == QEvent::MouseButtonDblClick)
+    QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+    if(watched == ui->label_listName && event->type() == QEvent::MouseButtonDblClick && mouseEvent->buttons() & Qt::LeftButton)//左键双击
     {
         ui->lineEdit_listName->setFocus();
         ui->lineEdit_listName->selectAll();
         ui->stackedWidget_listName->setCurrentWidget(ui->page_name2);
     }
-//    if(watched == ui->label_listName && event->type() == QEvent::FocusOut)
-//    {
-//        ui->stackedWidget_listName->setCurrentWidget(ui->page_name1);
-//        ui->label_listName->setText(ui->lineEdit_listName->text());
-//    }
+    else if(watched == ui->label_listName && event->type() == QEvent::MouseButtonPress && mouseEvent->buttons() & Qt::LeftButton)//左键单击
+    {
+        ui->pushButton_switch->click();
+    }
+    else if(watched == ui->label_listName && event->type() == QEvent::MouseButtonPress && mouseEvent->buttons() & Qt::RightButton)//右键单击
+    {
+//        ui->pushButton_rmenu->click();
+    }
 
     return QWidget::eventFilter(watched,event);
 }
@@ -261,11 +267,11 @@ void NewListItem::createRightMenu()
 //    m_rMenu->setWindowFlags(Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);//圆角需要
 //    m_rMenu->setAttribute(Qt::WA_TranslucentBackground);
 
-    m_rMenu->setObjectName(QString::fromUtf8("m_rMenu"));
+    m_rMenu->setObjectName(QString::fromUtf8("listmanager_rMenu"));
     m_rMenu->addAction(QIcon(":/images/player/player_itemlist_add.png"),QString::fromLocal8Bit("新建列表"),this,SLOT(slot_menu_newList()));
     m_rMenu->addAction(QIcon(":/images/player/player_itemlist_delete.png"),QString::fromLocal8Bit("删除列表"),this,SLOT(slot_menu_deleteList()));
-    m_rMenu->addAction(QIcon(":/images/player/player_itemlist_video.png"),QString::fromLocal8Bit("清空列表"),this,SLOT(slot_menu_clearList()));
-    m_rMenu->addAction(QIcon(":/images/player/player_itemlist_collected.png"),QString::fromLocal8Bit("重命名"),this,SLOT(slot_menu_renameList()));
+    m_rMenu->addAction(QIcon(":/images/music/song_clear.png"),QString::fromLocal8Bit("清空列表"),this,SLOT(slot_menu_clearList()));
+    m_rMenu->addAction(QIcon("://images/player/player_itemlist_rename.png"),QString::fromLocal8Bit("重命名"),this,SLOT(slot_menu_renameList()));
 }
 
 void NewListItem::setFinishedStatus()

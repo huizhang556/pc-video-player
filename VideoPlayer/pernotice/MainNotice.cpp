@@ -11,7 +11,8 @@ MainNotice::MainNotice(QWidget *parent) :
     ui->setupUi(this);
     setFixedSize(400,1000);
     setAttribute(Qt::WA_NoMouseReplay);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool |Qt::WindowStaysOnTopHint | Qt::SubWindow);
+    setFocusPolicy(Qt::NoFocus);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
     initWorkUI();
     handleSignalsAndSlots();
 }
@@ -55,11 +56,11 @@ void MainNotice::initWorkUI()
     ui->listWidget_like->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_details->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
-    slot_addAboutUserMessages(MSGTYPE::MSG_SYS);
-    slot_addAboutUserMessages(MSGTYPE::MSG_NOR);
-    slot_addAboutUserMessages(MSGTYPE::MSG_REPLY);
-    slot_addAboutUserMessages(MSGTYPE::MSG_ABOUT);
-    slot_addAboutUserMessages(MSGTYPE::MSG_LIKE);
+    slot_addAboutUserMessages(MSGTYPE::MSG_SYS);//系统消息
+    slot_addAboutUserMessages(MSGTYPE::MSG_NOR);//一般消息
+    slot_addAboutUserMessages(MSGTYPE::MSG_REPLY);//回复消息
+    slot_addAboutUserMessages(MSGTYPE::MSG_ABOUT);//@消息
+    slot_addAboutUserMessages(MSGTYPE::MSG_LIKE);//点赞消息
 }
 
 void MainNotice::handleSignalsAndSlots()
@@ -161,11 +162,15 @@ void MainNotice::slot_addAboutUserMessages(MSGTYPE type)
             item->setSizeHint(itemWidget->size());
             ui->listWidget_chat->addItem(item);
             ui->listWidget_chat->setItemWidget(item,itemWidget);
+            msgCount[0]++;//系统消息+1
             //信号与槽函数
             connect(itemWidget,&CusItemMsg::sig_sendClicked,[=](){
                 switchToDetailMessageList(NOTICETYPE::NOTICE_SYS,item->data(Qt::UserRole).toString());
+                msgCount[0]--;//系统消息-1
+//                ui->pushButton_chat->setText(QString(u8"聊天列表(%1)").arg(msgCount[0]));
             });
         }
+//        ui->pushButton_chat->setText(QString(u8"聊天列表(%1)").arg(msgCount[0]));
     }
         break;
     case MSG_NOR://普通消息
@@ -196,10 +201,13 @@ void MainNotice::slot_addAboutUserMessages(MSGTYPE type)
             item->setSizeHint(itemWidget->size());
             ui->listWidget_chat->addItem(item);
             ui->listWidget_chat->setItemWidget(item,itemWidget);
+            msgCount[0]++;//非系统消息+1
             //信号与槽函数（进入某一个详细的item）
             connect(itemWidget,&CusItemMsg::sig_sendClicked,[=](){
                 switchToDetailMessageList(NOTICETYPE::NOTICE_R,mbody.title);
                 ui->listWidget_chat->setCurrentItem(item);
+                msgCount[0]--;//系统消息-1
+//                ui->pushButton_chat->setText(QString(u8"聊天列表(%1)").arg(msgCount[0]));
             });
             //用户置顶（广播所有item可以实现倒序！！！）
 //            connect(this,&MainNotice::sig_item_scroll_top,[=](){
@@ -212,6 +220,7 @@ void MainNotice::slot_addAboutUserMessages(MSGTYPE type)
 //                ui->listWidget_chat->scrollToItem(item,QAbstractItemView::PositionAtTop);
 //            });
         }
+//        ui->pushButton_chat->setText(QString(u8"聊天列表(%1)").arg(msgCount[0]));
     }
         break;
     case MSG_REPLY://回复我的消息
@@ -227,13 +236,22 @@ void MainNotice::slot_addAboutUserMessages(MSGTYPE type)
             item->setSizeHint(itemWidget->size());
             ui->listWidget_reply->addItem(item);
             ui->listWidget_reply->setItemWidget(item,itemWidget);
+            msgCount[1]++;//回复消息+1
             //信号与槽函数
             connect(itemWidget,&CusItemMsg::sig_sendDelete,[=](){
                 itemWidget->deleteLater();
                 ui->listWidget_reply->takeItem(ui->listWidget_reply->row(item));
                 delete item;
+                msgCount[1]--;//回复消息-1
+//                ui->pushButton_reply->setText(QString(u8"回复我的(%1)").arg(msgCount[1]));
+            });
+            //阅读消息
+            connect(itemWidget,&CusItemMsg::sig_read_reply,[=](){
+                msgCount[1]--;//回复消息-1
+//                ui->pushButton_reply->setText(QString(u8"回复我的(%1)").arg(msgCount[1]));
             });
         }
+//        ui->pushButton_reply->setText(QString(u8"回复我的(%1)").arg(msgCount[1]));
     }
         break;
     case MSG_ABOUT://@我的消息
@@ -249,7 +267,15 @@ void MainNotice::slot_addAboutUserMessages(MSGTYPE type)
             item->setSizeHint(itemWidget->size());
             ui->listWidget_focus->addItem(item);
             ui->listWidget_focus->setItemWidget(item,itemWidget);
+            msgCount[2]++;//@我的消息+1
+
+            //阅读消息
+            connect(itemWidget,&CusItemMsg::sig_read_about,[=](){
+                msgCount[2]--;//@消息-1
+//                ui->pushButton_focus->setText(QString(u8"@我的(%1)").arg(msgCount[2]));
+            });
         }
+//        ui->pushButton_focus->setText(QString(u8"@我的(%1)").arg(msgCount[2]));
     }
         break;
     case MSG_LIKE://点赞我的消息
@@ -265,7 +291,15 @@ void MainNotice::slot_addAboutUserMessages(MSGTYPE type)
             item->setSizeHint(itemWidget->size());
             ui->listWidget_like->addItem(item);
             ui->listWidget_like->setItemWidget(item,itemWidget);
+            msgCount[3]++;//点赞消息+1
+
+            //阅读消息
+            connect(itemWidget,&CusItemMsg::sig_read_like,[=](){
+                msgCount[3]--;//点赞消息-1
+//                ui->pushButton_like->setText(QString(u8"收到的赞(%1)").arg(msgCount[3]));
+            });
         }
+//        ui->pushButton_like->setText(QString(u8"收到的赞(%1)").arg(msgCount[3]));
     }
         break;
     default:
@@ -275,10 +309,12 @@ void MainNotice::slot_addAboutUserMessages(MSGTYPE type)
 
 void MainNotice::slot_message_setTop()
 {
-    qDebug() <<QString(u8"收到置顶");
+    qDebug() <<QString(u8"收到置顶设置");
     QVariant var = ui->listWidget_chat->currentItem()->data(Qt::UserRole);
     MSGBODY mbody = var.value<MSGBODY>();
     mbody.isTop = !mbody.isTop;//取反操作
+    //根据标志位设置样式
+
     qDebug() << mbody.type;
     qDebug() << mbody.header;
     qDebug() << mbody.title;
@@ -300,6 +336,7 @@ void MainNotice::slot_message_setTop()
     item->setSizeHint(itemWidget->size());
     ui->listWidget_chat->insertItem(0,item);//头插入
     ui->listWidget_chat->setItemWidget(item,itemWidget);
+    ui->listWidget_chat->
     //信号与槽函数
     connect(itemWidget,&CusItemMsg::sig_sendClicked,[=](){
         switchToDetailMessageList(NOTICETYPE::NOTICE_R,mbody.title);
@@ -307,6 +344,18 @@ void MainNotice::slot_message_setTop()
         itemWidget->setReadStatus(true);
 
     });
+
+    //根据标志位设置（置顶）样式
+    QPushButton *topBtn = getItemButton(item,"pushButton_expand");
+    topBtn->setProperty("top",mbody.isTop);
+    topBtn->style()->polish(topBtn);
+
+    //根据标志位设置（勿打扰）样式
+    QPushButton *disturbBtn = getItemButton(item,"pushButton_disturb");
+    disturbBtn->setProperty("disturb",mbody.isDisturb);
+    disturbBtn->style()->polish(disturbBtn);
+
+    //考虑插入是否会改变currentItem（）？
     delete  ui->listWidget_chat->itemWidget(ui->listWidget_chat->currentItem());
     delete ui->listWidget_chat->currentItem();//最后再删除
 }
@@ -316,10 +365,16 @@ void MainNotice::slot_message_donotDisturb()
     QVariant var = ui->listWidget_chat->currentItem()->data(Qt::UserRole);
     MSGBODY mbody = var.value<MSGBODY>();
     mbody.isDisturb = !mbody.isDisturb;//取反操作
+
     QVariant var2;
     var2.setValue(mbody);
     ui->listWidget_chat->currentItem()->setData(Qt::UserRole,var2);
     emit sig_item_disturb();
+
+    //根据标志位设置样式
+    QPushButton *curBtn = getItemButton(ui->listWidget_chat->currentItem(),"pushButton_disturb");
+    curBtn->setProperty("disturb",mbody.isDisturb);
+    curBtn->style()->polish(curBtn);
 }
 
 void MainNotice::slot_message_closePush()
@@ -535,5 +590,19 @@ QString& MainNotice::imgPathToHtml(QString &path)
 {
     path = QString("<img width= %1 height= %2 src=\"%3\"/>").arg(260).arg(100).arg(path);
     return path;
+}
+
+QPushButton* MainNotice::getItemButton(QListWidgetItem *item, const QString &objName)
+{
+    QWidget* itemWidget = ui->listWidget_chat->itemWidget(item);
+    if(nullptr != itemWidget)
+    {
+        QPushButton *itemBtn = itemWidget->findChild<QPushButton*>(objName);//可以指定查找范围（最近一级的还是所有的）
+        if(nullptr != itemBtn)
+        {
+            qDebug() <<QString(u8"找到按钮：%1").arg(objName);
+            return itemBtn;
+        }
+    }
 }
 
