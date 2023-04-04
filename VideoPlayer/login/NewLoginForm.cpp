@@ -18,7 +18,7 @@ NewLoginForm::NewLoginForm(QWidget *parent):
 {
     ui->setupUi(this);
     setFixedSize(720,465);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
     setAttribute(Qt::WA_TranslucentBackground,true);
 //    setAttribute(Qt::WA_DeleteOnClose);
     initWorkUI();
@@ -334,6 +334,11 @@ NewLoginForm *NewLoginForm::getInstance()
 
 void NewLoginForm::handleSignalsAndSLots()
 {
+    //头像点击
+    connect(ui->label_userHeader,&RoundLab::sig_clicked,[=](){
+        ChangeHead::getInstance()->exec_();
+    });
+
     connect(ui->pushButton_otherMethed1,&QPushButton::clicked,[=](){ui->stackedWidget_left->setCurrentWidget(ui->stackedpage_logined);});
     //退出登录
     connect(ui->pushButton_exitUser,&QPushButton::clicked,[=](){

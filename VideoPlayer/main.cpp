@@ -1,4 +1,5 @@
 ﻿#include "MainWidget.h"
+#include "login/ChangeHead.h"
 #include "titlebar/TitleBar.h"
 #include "customer/CPolLabel.h"
 #include "style/loadGlobalQss.h"
@@ -124,11 +125,12 @@ int main(int argc, char *argv[])
         }
 
         //05--->显示主界面
-#if 0
+#if 1
         //    ScrollToTop::getInstance()->show();
         //    DesktopLyric::getInstance()->show();
 
-        //    MultipPlayer::getInstance()->show();
+//            MultipPlayer::getInstance()->show();
+        ChangeHead::getInstance()->exec_();
 
         //    MiniPlayer m;
         //    m.c_show();
@@ -163,7 +165,7 @@ int main(int argc, char *argv[])
         //    MyEmotionWindow w1;
         //    w1.showNormalEmotion(QPoint(500 , 500));
         //    DownloadType::getInstance()->show();
-            NewLoginForm::getInstance()->show();
+//            NewLoginForm::getInstance()->show();
         //    AniStackWidget w1;
         //    w1.show();
         //    splashscream.finish(&w1);

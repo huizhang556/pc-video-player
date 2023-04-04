@@ -202,7 +202,7 @@ color: #2494e4;
            <string notr="true"/>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="stackedpage_unlogin">
            <layout class="QVBoxLayout" name="verticalLayout_20">
@@ -291,7 +291,7 @@ QTabBar::tab:only-one
 }</string>
                 </property>
                 <property name="currentIndex">
-                 <number>1</number>
+                 <number>0</number>
                 </property>
                 <widget class="QWidget" name="tab_login1">
                  <attribute name="title">

@@ -1216,5 +1216,102 @@ QStringList dataBase::creator_getAllTagsWorkCounts()
     }
 }
 
+//头像部分初始化
+void dataBase::header_initHeader()
+{
+    header_getUserHistory();
+    header_getManHeaderList();
+    header_getWomanHeaderList();
+    header_getGifHeaderList();
+}
+
+//查询当前用户历史头像
+bool dataBase::header_getUserHistory()
+{
+    QSqlQuery query(getSqlDataBase());
+    //按某个字段统计效率高
+    bool isOK = query.exec(QString("select pix_url from user_header where user_id = %1 and pix_type = '%2'; ").arg(m_curUserID).arg("custom"));
+    if(isOK)
+    {
+        while (query.next())
+        {
+            QString pix_url = query.value(0).toString();
+            emit sig_header_history(pix_url);
+            qDebug() << QString(u8"用户：%1 在标签： %2 类型下找到文件。").arg(m_curUserID).arg("custom");
+        }
+    }
+    else
+    {
+        qDebug() << QString(u8"用户：%1 在标签： %2 类型下未查找到文件。").arg(m_curUserID).arg("custom");
+        return -1;
+    }
+}
+
+//查询男性头像
+bool dataBase::header_getManHeaderList()
+{
+    QSqlQuery query(getSqlDataBase());
+    //按某个字段统计效率高
+    bool isOK = query.exec(QString("select pix_url from user_header where user_id = %1 and pix_type = '%2'; ").arg("0000000000").arg("man"));
+    if(isOK)
+    {
+        while (query.next())
+        {
+            QString pix_url = query.value(0).toString();
+            emit sig_header_man(pix_url);
+            qDebug() << QString(u8"用户：%1 在标签： %2 类型下找到文件。").arg("0000000000").arg("man");
+        }
+    }
+    else
+    {
+        qDebug() << QString(u8"用户：%1 在标签： %2 类型下未查找到文件。").arg("0000000000").arg("man");
+        return -1;
+    }
+}
+
+//查询女性头像
+bool dataBase::header_getWomanHeaderList()
+{
+    QSqlQuery query(getSqlDataBase());
+    //按某个字段统计效率高
+    bool isOK = query.exec(QString("select pix_url from user_header where user_id = %1 and pix_type = '%2'; ").arg("0000000000").arg("woman"));
+    if(isOK)
+    {
+        while (query.next())
+        {
+            QString pix_url = query.value(0).toString();
+            emit sig_header_woman(pix_url);
+            qDebug() << QString(u8"用户：%1 在标签： %2 类型下找到文件。").arg("0000000000").arg("woman");
+        }
+    }
+    else
+    {
+        qDebug() << QString(u8"用户：%1 在标签： %2 类型下未查找到文件。").arg("0000000000").arg("woman");
+        return -1;
+    }
+}
+
+//查询动态头像
+bool dataBase::header_getGifHeaderList()
+{
+    QSqlQuery query(getSqlDataBase());
+    //按某个字段统计效率高
+    bool isOK = query.exec(QString("select pix_url from user_header where user_id = %1 and pix_type = '%2'; ").arg("0000000000").arg("gif"));
+    if(isOK)
+    {
+        while (query.next())
+        {
+            QString pix_url = query.value(0).toString();
+            emit sig_header_gif(pix_url);
+            qDebug() << QString(u8"用户：%1 在标签： %2 类型下找到文件。").arg("0000000000").arg("gif");
+        }
+    }
+    else
+    {
+        qDebug() << QString(u8"用户：%1 在标签： %2 类型下未查找到文件。").arg("0000000000").arg("gif");
+        return -1;
+    }
+}
+
 
 

@@ -140,6 +140,13 @@ public slots:
     int                     creator_getdoneWorkCounts(const QString& tags);//查询数量
     QStringList             creator_getAllTagsWorkCounts();//查询所有标签的媒体数量
 
+    //历史头像
+    void                    header_initHeader();//初始化
+    bool                    header_getUserHistory();//查询当前用户历史头像
+    bool                    header_getManHeaderList();//查询男性头像
+    bool                    header_getWomanHeaderList();//查询女性头像
+    bool                    header_getGifHeaderList();//查询动态头像
+
 protected:
 
 
@@ -200,6 +207,11 @@ signals:
     void        sig_errorMessage_register(int,QString);//注册消息
     void        sig_errorMessage_recover(int,QString);//找回消息
     void        sig_errorMessage_testing(int,QString);//测试消息
+
+    void        sig_header_history(QString);
+    void        sig_header_man(QString);
+    void        sig_header_woman(QString);
+    void        sig_header_gif(QString);
 };
 
 #endif // DATABASE_H

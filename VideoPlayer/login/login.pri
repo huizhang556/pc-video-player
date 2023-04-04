@@ -8,7 +8,9 @@ SOURCES += \
     $$PWD/FAQitem.cpp \
     $$PWD/UserList.cpp \
     $$PWD/UserItem.cpp \
-    $$PWD/FocusLineEdit.cpp
+    $$PWD/FocusLineEdit.cpp \
+    $$PWD/ChangeHead.cpp \
+    $$PWD/HeadLabel.cpp
 
 
 HEADERS += \
@@ -21,7 +23,9 @@ HEADERS += \
     $$PWD/FAQitem.h \
     $$PWD/UserList.h \
     $$PWD/UserItem.h \
-    $$PWD/FocusLineEdit.h
+    $$PWD/FocusLineEdit.h \
+    $$PWD/ChangeHead.h \
+    $$PWD/HeadLabel.h
 
 FORMS += \
     $$PWD/Login.ui \
@@ -33,5 +37,7 @@ FORMS += \
     $$PWD/FAQitem.ui \
     $$PWD/UserList.ui \
     $$PWD/UserItem.ui \
-    $$PWD/FocusLineEdit.ui
+    $$PWD/FocusLineEdit.ui \
+    $$PWD/ChangeHead.ui \
+    $$PWD/HeadLabel.ui
 

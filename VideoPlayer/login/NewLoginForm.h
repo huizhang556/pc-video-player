@@ -5,6 +5,7 @@
 #include "login/UserList.h"
 #include "database/dataBase.h"
 #include "qrcode/QrCode.hpp"
+#include "login/ChangeHead.h"
 
 #include <string>
 #include <vector>
