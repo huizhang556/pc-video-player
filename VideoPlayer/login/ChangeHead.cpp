@@ -32,7 +32,7 @@ ChangeHead *ChangeHead::getInstance()
     return m_pInstance;
 }
 
-void ChangeHead::exec_()
+void ChangeHead::exec_(OPENTYPE type)
 {
     ui->listWidget_hispix->clear();
     ui->listWidget_manpix->clear();
@@ -45,11 +45,41 @@ void ChangeHead::exec_()
     {
         slot_setCurViewHeader(pix_user);
     }
+
+    switch (type)
+    {
+    case OPENTYPE::PER_INFO:
+    {
+       ui->tabWidget_change->setCurrentIndex(0);
+    }
+        break;
+    case OPENTYPE::PER_HEAD:
+    {
+       ui->tabWidget_change->setCurrentIndex(1);
+    }
+        break;
+    case OPENTYPE::GENERAL:
+    {
+       ui->tabWidget_change->setCurrentIndex(2);
+    }
+        break;
+    default:
+        break;
+    }
+
     this->exec();
 }
 
 void ChangeHead::initWorkUI()
 {
+    ui->pushButton_add->setToolTip(QString(u8"放大"));
+    ui->pushButton_sub->setToolTip(QString(u8"缩小"));
+    ui->pushButton_roate_L->setToolTip(QString(u8"左旋90°"));
+    ui->pushButton_roate_R->setToolTip(QString(u8"右旋90°"));
+    ui->pushButton_cutpix->setToolTip(QString(u8"剪裁"));
+    ui->comboBox_type->setView(new QListView());
+    ui->comboBox_type->hide();
+
     ui->pushButton_localpix->setIcon(QIcon("://images/user/user_loadheader.png"));
     ui->pushButton_localpix->setIconSize(QSize(17,17));
     ui->pushButton_localpix->setLayoutDirection(Qt::RightToLeft);
@@ -103,7 +133,7 @@ void ChangeHead::handleSignalsAndSlots()
         m_curPixPath = QFileDialog::getOpenFileName(this,//不指定父窗口，设置自己的样式
                                                     QString::fromLocal8Bit("选择文件"),
                                                     QApplication::applicationDirPath(),
-                                                    QString(u8"*.png *.jpg *.bmp")
+                                                    QString(u8"*.png *.jpg *.jpeg *.bmp")
                                                     );
         if(!m_curPixPath.isEmpty())
         {
@@ -118,21 +148,34 @@ void ChangeHead::handleSignalsAndSlots()
 
     //头像--向左旋转
     connect(ui->pushButton_roate_L,&QPushButton::clicked,[=](){
-        if(m_pixItem == nullptr) return;
+        if(m_pixItem == nullptr)
+            {
+            setOperateTip(QString(u8"请添加图片资源！"),1500);
+            return;
+        }
+
         ui->graphicsView->rotate(-90);
         m_viewRotate -= 90;
     });
 
     //头像--向右旋转
     connect(ui->pushButton_roate_R,&QPushButton::clicked,[=](){
-        if(m_pixItem == nullptr) return;
+        if(m_pixItem == nullptr)
+            {
+            setOperateTip(QString(u8"请添加图片资源！"),1500);
+            return;
+        }
         ui->graphicsView->rotate(90);
         m_viewRotate += 90;
     });
 
     //头像--缩小
     connect(ui->pushButton_sub,&QPushButton::clicked,[=](){
-        if(m_pixItem == nullptr) return;
+        if(m_pixItem == nullptr)
+            {
+            setOperateTip(QString(u8"请添加图片资源！"),1500);
+            return;
+        }
         if(ui->horizontalSlider->value() == 0) return;
         ui->graphicsView->scale(0.93,0.93);
         ui->horizontalSlider->setValue(ui->horizontalSlider->value()-10);
@@ -140,7 +183,11 @@ void ChangeHead::handleSignalsAndSlots()
 
     //头像--放大
     connect(ui->pushButton_add,&QPushButton::clicked,[=](){
-        if(m_pixItem == nullptr) return;
+        if(m_pixItem == nullptr)
+            {
+            setOperateTip(QString(u8"请添加图片资源！"),1500);
+            return;
+        }
         if(ui->horizontalSlider->value() == 100) return;
         ui->graphicsView->scale(1.075,1.075);
         ui->horizontalSlider->setValue(ui->horizontalSlider->value()+10);
@@ -153,6 +200,31 @@ void ChangeHead::handleSignalsAndSlots()
 
     //操作--确定
     connect(ui->pushButton_ok,&QPushButton::clicked,[=](){
+        if(m_pixItem == nullptr)
+            {
+            setOperateTip(QString(u8"请添加图片资源！"),1500);
+            return;
+        }
+
+        QPixmap pixmap = ui->graphicsView->grab();
+        QByteArray bytes;
+        QBuffer buffer(&bytes);//此句等同于：bytes.append(buffer.data());
+        buffer.open(QIODevice::WriteOnly);
+        pixmap.save(&buffer, "PNG");
+        buffer.close();
+        bool isOK = uplaodUserCurHeader(bytes);
+        if(isOK)
+        setOperateTip(QString(u8"恭喜您，头像设置成功^_^"),1500);
+
+    });
+
+    //操作--剪裁
+    connect(ui->pushButton_cutpix,&QPushButton::clicked,[=](){
+        if(m_pixItem == nullptr)
+            {
+            setOperateTip(QString(u8"请添加图片资源！"),1500);
+            return;
+        }
         QPixmap pixmap = ui->graphicsView->grab();
         HeadLabel *itemWidget = new HeadLabel(pixmap,true,true);
         QListWidgetItem* item = new QListWidgetItem();
@@ -174,52 +246,15 @@ void ChangeHead::handleSignalsAndSlots()
             ui->listWidget_hispix->setCurrentItem(item);
         });
 
-        ui->listWidget_hispix->scrollToItem(item);//默认滚动到可见区域
-        ui->pushButton_tips->setText(QString(u8"头像设置成功！"));
-        QTimer::singleShot(1500,0,[=](){
-            ui->pushButton_tips->setText("");
-        });
+        ui->listWidget_hispix->scrollToItem(item);//默认滚动到可见区域       
     });
 
-
-    // 男头像
-    connect(ui->listWidget_manpix,&QListWidget::itemClicked,[=](QListWidgetItem *item){
-        if(m_pixItem != nullptr)
-        {
-            delete m_pixItem;
-        }
-        ui->horizontalSlider->setValue(0);
-        m_pixItem = m_scence->addPixmap(item->icon().pixmap(ui->graphicsView->size()).scaled(ui->graphicsView->size(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
-        ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-    });
-
-    //女头像
-    connect(ui->listWidget_womanpix,&QListWidget::itemClicked,[=](QListWidgetItem *item){
-        if(m_pixItem != nullptr)
-        {
-            delete m_pixItem;
-        }
-        ui->horizontalSlider->setValue(0);
-        m_pixItem = m_scence->addPixmap(item->icon().pixmap(ui->graphicsView->size()).scaled(ui->graphicsView->size(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
-        ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-    });
-
-    //gif头像
-    connect(ui->listWidget_gifpix,&QListWidget::itemClicked,[=](QListWidgetItem *item){
-        if(m_pixItem != nullptr)
-        {
-            delete m_pixItem;
-        }
-        ui->horizontalSlider->setValue(0);
-        m_pixItem = m_scence->addPixmap(item->icon().pixmap(ui->graphicsView->size()).scaled(ui->graphicsView->size(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
-        ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-    });
 
     connect(ui->horizontalSlider,&QSlider::valueChanged,[=](int value){
-        qDebug() << QString(u8"当前进度条值:%1").arg(value);
+//        qDebug() << QString(u8"当前进度条值:%1").arg(value);
     });
 
-    //item改变
+    //历史item改变
     connect(ui->listWidget_hispix,&QListWidget::currentItemChanged,[=](QListWidgetItem *current, QListWidgetItem *previous){
         if(current != nullptr)
         {
@@ -263,6 +298,8 @@ void ChangeHead::slot_setCurViewHeader(const QString &pixmap)
 
 void ChangeHead::slot_setCurViewHeader(QPixmap pixmap)
 {
+//    qDebug() << QString(u8"显示的图像信息：") << pixmap.size();
+//    qDebug() <<QString(u8"当前VIEW大小：") << ui->graphicsView->size();
     if(m_pixItem != nullptr)
     {
         delete m_pixItem;
@@ -279,20 +316,26 @@ void ChangeHead::slot_setCurViewHeader(QPixmap pixmap)
 }
 
 //添加历史头像
-void ChangeHead::slot_addHeader_history(const QString &headers)
+void ChangeHead::slot_addHeader_history(const QString &pixid,const QString &headers)
 {
     HeadLabel *itemWidget = new HeadLabel(headers,true,true);
     QListWidgetItem* item = new QListWidgetItem();
     item->setSizeHint(QSize(70,70));
-    item->setData(Qt::UserRole,headers);
+    item->setData(Qt::UserRole,pixid);
     ui->listWidget_hispix->addItem(item);
     ui->listWidget_hispix->setItemWidget(item,itemWidget);
 
     //信号与槽函数
     connect(itemWidget,&HeadLabel::sig_item_delete,[=](){
         itemWidget->deleteLater();
-        ui->listWidget_hispix->takeItem(ui->listWidget_hispix->row(item));
-        delete item;
+        qDebug() << QString(u8"item图片ID：") << item->data(Qt::UserRole).toString();
+        //数据库进行删除(目前只假移除，数据库不删除)
+//        bool isOK =  dataBase::getInstance()->header_deleteUserHisHeader(dataBase::getInstance()->getCurrentUserID(),item->data(Qt::UserRole).toString());
+//        if(isOK)
+//        {
+            ui->listWidget_hispix->takeItem(ui->listWidget_hispix->row(item));
+            delete item;
+//        }
     });
 
 
@@ -346,11 +389,31 @@ void ChangeHead::slot_addHeader_gif(const QString &headers)
     ui->listWidget_gifpix->addItem(item);
     ui->listWidget_gifpix->setItemWidget(item,itemWidget);
 
+
     //信号与槽函数
     connect(itemWidget,&HeadLabel::sig_item_pix,[=](QPixmap& pixmap){
         slot_setCurViewHeader(pixmap);
         ui->listWidget_gifpix->setCurrentItem(item);
+        setOperateTip(QString(u8"动态头像不支持剪裁!"),5000);
     });
+}
+
+void ChangeHead::slot_inserHeadToDB(bool success, QString url, QString md5)
+{
+    if(!success)//不成功
+    {
+        setOperateTip(QString(u8"返回数有误！"),1500);
+        return;
+    }
+    bool  isOK = dataBase::getInstance()->header_inserUsrHeaderToDB(url,"custom");
+    if(isOK)
+    {
+        setOperateTip(QString(u8"头像上传成功！"),1500);
+    }
+    else
+    {
+        setOperateTip(QString(u8"头像上传失败！"),1500);
+    }
 }
 
 //重写滚轮事件
@@ -376,6 +439,14 @@ void ChangeHead::resetRotate()
     }
 }
 
+void ChangeHead::setOperateTip(const QString &tip, const int duration)
+{
+    ui->pushButton_tips->setText(tip);
+    QTimer::singleShot(duration,0,[=](){
+        ui->pushButton_tips->setText("");
+    });
+}
+
 QPushButton *ChangeHead::getDeleteButton(QListWidgetItem *item, const QString &objName)
 {
     QWidget *itemWidget = ui->listWidget_hispix->itemWidget(item);
@@ -393,3 +464,29 @@ QPushButton *ChangeHead::getDeleteButton(QListWidgetItem *item, const QString &o
     }
     return nullptr;
 }
+
+bool ChangeHead::uplaodUserCurHeader(const QByteArray &pic_bytedata)
+{
+    if(pic_bytedata.isNull() || pic_bytedata.isEmpty())
+    {
+        setOperateTip(QString(u8"图像资源为空！"),1500);
+        return false;
+    }
+    //创建工作对象
+    UploadWork* upWorker = new UploadWork();
+    //创建线程
+    QThread *workThread = new QThread();
+    //工作对象移动到线程中
+    upWorker->moveToThread(workThread);
+    //开启线程
+    workThread->start();//开启线程
+    //工作线程开始上传
+    upWorker->slot_receiveData_accept(pic_bytedata,"user_header");//图片数据 + 自定义路径
+    //信号与槽函数
+    connect(workThread,&QThread::finished,upWorker,&QObject::deleteLater);//线程结束时，工作对象自动删除
+    connect(workThread,&QThread::finished,workThread,&QThread::deleteLater);//线程结束时，线程内对象自动删除
+    //上传完成--传回信息,插入数据库
+    connect(upWorker,&UploadWork::sig_work_finished,this,&ChangeHead::slot_inserHeadToDB);
+
+}
+

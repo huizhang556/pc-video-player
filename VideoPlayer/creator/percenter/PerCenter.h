@@ -2,7 +2,7 @@
 #define PERCENTER_H
 
 #include "database/dataBase.h"
-
+#include "login/ChangeHead.h"
 #include <QWidget>
 
 namespace Ui {

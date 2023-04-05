@@ -279,7 +279,7 @@ void Maker::file_upload_start(const QUrlQuery media_url, const QByteArray &pic_u
         upWorker2->moveToThread(workThread2);
         workThread2->start();
         qDebug() << QString(u8"新的线程启动(thread_2)，地址：")<< workThread2;
-        upWorker2->slot_receiveData_accept(pic_url);
+        upWorker2->slot_receiveData_accept(pic_url,"header_pic");//图片数据 + 自定义路径
         connect(workThread2,&QThread::finished,upWorker2,&QThread::deleteLater);
         connect(workThread2,&QThread::finished,workThread2,&QObject::deleteLater);
         connect(upWorker2,SIGNAL(sig_work_uploadprogress(qint64,qint64)),fileItem,SLOT(slot_updateProgress_header(qint64,qint64)));

@@ -660,5 +660,12 @@
         <file>images/icon/roate_R.png</file>
         <file>images/user/user_loadheader.png</file>
         <file>images/user/user_checked.png</file>
+        <file>images/user/default_failed.png</file>
+        <file>images/user/user_header_cut.png</file>
+        <file>images/user/user_header_cut_hover.png</file>
+        <file>images/user/header_roate_L.png</file>
+        <file>images/user/header_roate_L_hover.png</file>
+        <file>images/user/header_roate_R.png</file>
+        <file>images/user/header_roate_R_hover.png</file>
     </qresource>
 </RCC>

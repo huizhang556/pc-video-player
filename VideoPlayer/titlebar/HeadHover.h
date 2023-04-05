@@ -1,6 +1,8 @@
 ﻿#ifndef HEADHOVER_H
 #define HEADHOVER_H
 
+#include "login/ChangeHead.h"
+
 #include <QWidget>
 #include <QPixmap>
 

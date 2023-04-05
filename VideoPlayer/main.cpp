@@ -125,12 +125,12 @@ int main(int argc, char *argv[])
         }
 
         //05--->显示主界面
-#if 1
+#if 0
         //    ScrollToTop::getInstance()->show();
         //    DesktopLyric::getInstance()->show();
 
-//            MultipPlayer::getInstance()->show();
-        ChangeHead::getInstance()->exec_();
+            MultipPlayer::getInstance()->show();
+//        ChangeHead::getInstance()->exec_(OPENTYPE::PER_HEAD);
 
         //    MiniPlayer m;
         //    m.c_show();

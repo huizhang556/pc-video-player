@@ -334,12 +334,13 @@ NewLoginForm *NewLoginForm::getInstance()
 
 void NewLoginForm::handleSignalsAndSLots()
 {
-    //头像点击
+//    connect(ui->pushButton_otherMethed1,&QPushButton::clicked,[=](){ui->stackedWidget_left->setCurrentWidget(ui->stackedpage_logined);});
+
+    //修改头像
     connect(ui->label_userHeader,&RoundLab::sig_clicked,[=](){
-        ChangeHead::getInstance()->exec_();
+        ChangeHead::getInstance()->exec_(OPENTYPE::PER_HEAD);
     });
 
-    connect(ui->pushButton_otherMethed1,&QPushButton::clicked,[=](){ui->stackedWidget_left->setCurrentWidget(ui->stackedpage_logined);});
     //退出登录
     connect(ui->pushButton_exitUser,&QPushButton::clicked,[=](){
         ui->stackedWidget_left->setCurrentWidget(ui->stackedpage_unlogin);

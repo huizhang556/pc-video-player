@@ -146,12 +146,25 @@ public slots:
     bool                    header_getManHeaderList();//查询男性头像
     bool                    header_getWomanHeaderList();//查询女性头像
     bool                    header_getGifHeaderList();//查询动态头像
+    bool                    header_inserUsrHeaderToDB(const QString &pix_url,const QString& pix_type);//插入头像图片数据
+    bool                    header_updateUserHeader(const QString &user_id,const QString& pix_url);//更新用户头像
+    bool                    header_deleteUserHisHeader(const QString &user_id, const QString& pix_id);//删除用户历史头像
 
 protected:
 
 
 private:
     dataBase();
+    static      QString     getHostName();
+    static      QString     getHostPort();
+    static      QString     getUserName();
+    static      QString     getUserPawd();
+    static      QString     getDataName();
+
+    void        showResult(const QSqlQuery& query);//展示查询结果
+    void        getUserHeaderPix(QNetworkReply* reply);//接收用户头像数据
+
+private:
     QNetworkAccessManager   *m_manager  =   nullptr;
 
     static  dataBase*       m_pInstance;//全局唯一
@@ -182,17 +195,6 @@ private:
     static      int         m_splash_width;//加载缓冲界面宽度
     static      int         m_splash_height;//加载缓冲界面高度
 
-private:
-    static      QString     getHostName();
-    static      QString     getHostPort();
-    static      QString     getUserName();
-    static      QString     getUserPawd();
-    static      QString     getDataName();
-
-    void        showResult(const QSqlQuery& query);//展示查询结果
-    void        getUserHeaderPix(QNetworkReply* reply);//接收用户头像数据
-
-
 signals:
     void        sig_loginStatusChanged(bool);//0下线 1登录
     void        sig_sendVideoDramaInfo(QVariant);//推荐剧集列表
@@ -208,7 +210,7 @@ signals:
     void        sig_errorMessage_recover(int,QString);//找回消息
     void        sig_errorMessage_testing(int,QString);//测试消息
 
-    void        sig_header_history(QString);
+    void        sig_header_history(QString,QString);// id +url
     void        sig_header_man(QString);
     void        sig_header_woman(QString);
     void        sig_header_gif(QString);

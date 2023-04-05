@@ -12,7 +12,7 @@ UploadWork::~UploadWork()
     delete m_manager;
 }
 
-void UploadWork::slot_receiveData_accept(const QByteArray &media_data)
+void UploadWork::slot_receiveData_accept(const QByteArray &media_data, const QString& cus_dir)
 {
     //00---打开文件
     QString fname_t = QString(QDateTime::currentDateTime().toString("yyyyMMddhhmmsszzz")+".png");
@@ -33,7 +33,7 @@ void UploadWork::slot_receiveData_accept(const QByteArray &media_data)
 
    QHttpPart pathPart;
    pathPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"path\""));
-   pathPart.setBody(QString("header_pic").toUtf8());//自定义存储路径(如无路径，则主动创建)
+   pathPart.setBody(QString(cus_dir).toUtf8());//自定义存储路径(如无路径，则主动创建)
 
    //02---构造文件部分
    QHttpPart filePart;
@@ -354,7 +354,7 @@ void UploadWork::getJson(QJsonObject &jsonObj)
         int     pos     = url.indexOf("?");//以第一个？位置处截断
         QString savePath = url.left(pos);
         qDebug() << "really file savepath = " << savePath;
-        //插入数据库
+        //为插入数据库返回数据
         if(!savePath.isEmpty() && !md5.isEmpty())
         {
             emit sig_work_finished(true,savePath,md5);

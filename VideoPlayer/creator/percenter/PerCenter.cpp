@@ -47,6 +47,11 @@ void PerCenter::initWorkUI()
 
 void PerCenter::handleSignalsAndSlots()
 {
+    //修改头像
+    connect(ui->label_header,&RoundLab::sig_clicked,[=](){
+        ChangeHead::getInstance()->exec_(OPENTYPE::PER_HEAD);
+    });
+
     connect(ui->pushButton_newcreate,&QPushButton::clicked,[=](){
         emit sig_person_createguid();
         qDebug() <<QString(u8"新手创作");

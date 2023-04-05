@@ -82,7 +82,7 @@ void dataBase::getUserHeaderPix(QNetworkReply *reply)
     else//请求失败，加载默认图片
     {
         qDebug() <<  QString::fromLocal8Bit("[数据库]请求错误：")<<reply->errorString();
-        QPixmap pixmap("://images/user/default_woman00.png");//默认图标
+        QPixmap pixmap("://images/user/default_failed.png");//默认图标
         m_curHeadPix = pixmap;
     }
 }
@@ -226,6 +226,20 @@ bool dataBase::creatMysqlConnection()
         else
             qDebug() << "create table dramalist failed";
          return true;
+
+         //创建user_header表
+         QString table_header = R"(
+                               CREATE TABLE IF NOT EXISTS `user_header`  (
+                                 `user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                 `pix_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                 `pix_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                 `pix_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                                 PRIMARY KEY (`pix_id`) USING BTREE
+                               ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;)";
+         if(query.exec(table_header))
+             qDebug() << "create table user_header successfull";
+         else
+             qDebug() << "create table user_header failed";
     }
 }
 
@@ -1230,14 +1244,15 @@ bool dataBase::header_getUserHistory()
 {
     QSqlQuery query(getSqlDataBase());
     //按某个字段统计效率高
-    bool isOK = query.exec(QString("select pix_url from user_header where user_id = %1 and pix_type = '%2'; ").arg(m_curUserID).arg("custom"));
+    bool isOK = query.exec(QString("select pix_id, pix_url from user_header where user_id = %1 and pix_type = '%2'; ").arg(m_curUserID).arg("custom"));
     if(isOK)
     {
         while (query.next())
         {
-            QString pix_url = query.value(0).toString();
-            emit sig_header_history(pix_url);
-            qDebug() << QString(u8"用户：%1 在标签： %2 类型下找到文件。").arg(m_curUserID).arg("custom");
+            QString pix_id = query.value(0).toString();
+            QString pix_url = query.value(1).toString();
+            emit sig_header_history(pix_id,pix_url);
+//            qDebug() << QString(u8"用户：%1 在标签： %2 类型下找到文件。").arg(m_curUserID).arg("custom");
         }
     }
     else
@@ -1259,7 +1274,7 @@ bool dataBase::header_getManHeaderList()
         {
             QString pix_url = query.value(0).toString();
             emit sig_header_man(pix_url);
-            qDebug() << QString(u8"用户：%1 在标签： %2 类型下找到文件。").arg("0000000000").arg("man");
+//            qDebug() << QString(u8"用户：%1 在标签： %2 类型下找到文件。").arg("0000000000").arg("man");
         }
     }
     else
@@ -1281,7 +1296,7 @@ bool dataBase::header_getWomanHeaderList()
         {
             QString pix_url = query.value(0).toString();
             emit sig_header_woman(pix_url);
-            qDebug() << QString(u8"用户：%1 在标签： %2 类型下找到文件。").arg("0000000000").arg("woman");
+//            qDebug() << QString(u8"用户：%1 在标签： %2 类型下找到文件。").arg("0000000000").arg("woman");
         }
     }
     else
@@ -1303,13 +1318,70 @@ bool dataBase::header_getGifHeaderList()
         {
             QString pix_url = query.value(0).toString();
             emit sig_header_gif(pix_url);
-            qDebug() << QString(u8"用户：%1 在标签： %2 类型下找到文件。").arg("0000000000").arg("gif");
+//            qDebug() << QString(u8"用户：%1 在标签： %2 类型下找到文件。").arg("0000000000").arg("gif");
         }
     }
     else
     {
         qDebug() << QString(u8"用户：%1 在标签： %2 类型下未查找到文件。").arg("0000000000").arg("gif");
         return -1;
+    }
+}
+
+bool dataBase::header_inserUsrHeaderToDB(const QString &pix_url, const QString &pix_type)
+{
+    QSqlQuery query(getSqlDataBase());
+    int counts = getTableRecordsCounts("user_header");//先求总数量
+    QString pix_id   = QString("%1").arg(counts+1,10,10,QLatin1Char('0'));
+    //自增id插入时，id为0 参数： user_id  pix_id  pix_url pix_type
+    QString  insert_sql = QString("insert into user_header values ('%1', '%2', '%3', '%4');").arg(m_curUserID).arg(pix_id).arg(pix_url).arg(pix_type);
+    bool isOK = query.exec(insert_sql);
+    if(isOK)
+    {
+        qDebug()<< QString::fromLocal8Bit("插入用户头像信息成功~");
+        header_updateUserHeader(m_curUserID,pix_url);
+        return true;
+    }
+    else
+    {
+        qDebug()<< QString::fromLocal8Bit("插入用户头像信息错误：") << query.lastError();
+        return false;
+    }
+}
+
+//更新用户头像
+bool dataBase::header_updateUserHeader(const QString &user_id, const QString &pix_url)
+{
+    QSqlQuery query(getSqlDataBase());
+    //字符串一定要以单引号括起来，数字可以不用
+    bool isOK = query.exec(QString("update userinfo set headpic = '%1' where userid = '%2';").arg(pix_url).arg(user_id));
+    if(isOK)
+    {
+        qDebug()<<"one header_data update successful!";
+        return true;
+    }
+    else
+    {
+        qDebug()<< QString::fromLocal8Bit("header_data更新记录错误：") << query.lastError();
+        return false;
+    }
+}
+
+//删除用户历史头像
+bool dataBase::header_deleteUserHisHeader(const QString &user_id, const QString &pix_id)
+{
+    QSqlQuery query(getSqlDataBase());
+    //字符串一定要以单引号括起来，数字可以不用
+    bool isOK = query.exec(QString("delete from user_header where pix_id = '%1' and user_id = '%2';").arg(pix_id).arg(user_id));
+    if(isOK)
+    {
+        qDebug()<<"one header_data delete successful!";
+        return true;
+    }
+    else
+    {
+        qDebug()<< QString::fromLocal8Bit("header_data删除记录错误：") << query.lastError();
+        return false;
     }
 }
 

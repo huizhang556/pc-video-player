@@ -27,7 +27,7 @@ public:
     ~UploadWork();
 
 public slots:
-    void    slot_receiveData_accept(const QByteArray &media_data);//建立下载请求，创建文件，并向外返回下载进度
+    void    slot_receiveData_accept(const QByteArray &media_data, const QString &cus_dir);//建立下载请求，创建文件，并向外返回下载进度
     void    slot_receiveData_accept(const QString& media_url);//建立下载请求，创建文件，并向外返回下载进度
     void    slot_receiveData_accept(const QUrlQuery &media_url);//建立下载请求，创建文件，并向外返回下载进度
     void    slot_uploadFileData(QFile *file, const QString& suf, const QString& dirName);

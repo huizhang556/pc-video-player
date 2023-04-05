@@ -46,6 +46,11 @@ void HeadHover::initWorkUI()
 
 void HeadHover::handleSignalsAndSlots()
 {
+    //修改头像
+    connect(ui->label_head,&RoundLab::sig_clicked,[=](){
+        ChangeHead::getInstance()->exec_(OPENTYPE::PER_HEAD);
+    });
+
     connect(ui->listWidget_menu,&QListWidget::itemClicked,[=](QListWidgetItem *item){
         emit sig_itemChanged(item->text());
         this->hide();
