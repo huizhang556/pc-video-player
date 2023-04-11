@@ -18,6 +18,8 @@ PerCenter::~PerCenter()
 
 void PerCenter::initWorkUI()
 {
+    ui->label_header->setToolTip(QString(u8"单击修改头像"));
+
     ui->toolBox_center->layout()->setSpacing(1);//item之间的间距
     ui->toolBox_center->setItemIcon(0,QIcon(""));
     ui->toolBox_center->setItemIcon(1,QIcon(""));

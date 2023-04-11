@@ -241,7 +241,11 @@ void DoneWorks::slot_receivedData_findTypeResult(QVariant& media)
         });
         //播放
         connect(itemWidget,&FilesItem::sig_sendItem_play,[=](){
-        MultipPlayer::getInstance()->slot_addTempPlaylist(666,QStringList{item->data(Qt::UserRole).toString()},item->data(Qt::UserRole).toString());
+        QUrlQuery query;
+        query.addQueryItem(u8"url",item->data(Qt::UserRole).toString());
+        query.addQueryItem(u8"nick",item->data(Qt::UserRole).toString());
+        query.addQueryItem(u8"pos","0");
+        MultipPlayer::getInstance()->slot_addTempPlaylist(666,QStringList{item->data(Qt::UserRole).toString()},query);
         });
 }
 

@@ -345,6 +345,16 @@ QString dataBase::getCurrentUserHead() const
     return m_curUserHead;
 }
 
+QString dataBase::getCurrentUserLoginTime() const
+{
+    return m_time_login;
+}
+
+QString dataBase::getCurrentUserCreateTime() const
+{
+    return m_time_create;
+}
+
 const QPixmap &dataBase::getCurrentUserHeadPix()
 {
     return m_curHeadPix;
@@ -779,7 +789,7 @@ bool dataBase::login_verification(const QString &name, const QString &pwd)
     //登录界面传过来的信息不会为空(已做过滤)
     QSqlQuery query(getSqlDataBase());
     //查询注意：所有的字符串在使用arg()方法的时候，都要加'',这个是sql一部分，除非字符串直接写死在sql中；数字不需要加
-    bool isOK = query.exec(QString("select userid, passwd, emalis, headpic, viptype, createtime from userinfo where name = '%1' and passwd = '%2';").arg(name).arg(pwd));
+    bool isOK = query.exec(QString("select userid, passwd, emalis, headpic, viptype, logintime, createtime from userinfo where name = '%1' and passwd = '%2';").arg(name).arg(pwd));
     if(isOK)
     {
         while(query.next())
@@ -789,13 +799,16 @@ bool dataBase::login_verification(const QString &name, const QString &pwd)
             QString     m_userEmails    =   query.value(2).toString();
             QString     m_headPic       =   query.value(3).toString();
             int         m_vipType       =   query.value(4).toInt();
-            QString     m_createTime    =   query.value(5).toString();
+            QString     m_loginTime     =   query.value(5).toString();
+            QString     m_createTime    =   query.value(6).toString();
             //外部使用
             m_curUserID     =   m_userId;
             m_curUserName   =   name;
             m_curUserPawd   =   m_userPWD;
             m_curUserHead   =   m_headPic;
             m_curUserGrade  =   m_vipType;
+            m_time_login    =   m_loginTime;
+            m_time_create   =   m_createTime;
 
             qDebug() << QString::fromLocal8Bit("用户：'%1'的信息如下：").arg(name)<<endl
                      <<QString::fromLocal8Bit("唯一id:")<<m_userId<<endl
@@ -803,6 +816,7 @@ bool dataBase::login_verification(const QString &name, const QString &pwd)
                      <<QString::fromLocal8Bit("邮箱：")<<m_userEmails<<endl
                      <<QString::fromLocal8Bit("头像：")<<m_headPic<<endl
                      <<QString::fromLocal8Bit("vip类型：")<<m_vipType<<endl
+                     <<QString::fromLocal8Bit("账号登录时间：")<<m_loginTime<<endl
                      <<QString::fromLocal8Bit("账号创建时间：")<<m_createTime<<endl;
 
     //        m_userDatda.m_userId        =   m_userId;

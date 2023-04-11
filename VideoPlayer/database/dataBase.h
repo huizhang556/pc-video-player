@@ -2,7 +2,6 @@
 #define DATABASE_H
 
 #include <QFile>
-#include <QDomDocument>
 #include <QSize>
 #include <QPixmap>
 #include <QSqlResult>
@@ -10,11 +9,12 @@
 #include <QVariant>
 #include <QSqlQuery>
 #include <QSqlError>
-#include <QStringList>
 #include <QSqlDriver>
+#include <QStringList>
+#include <QDomDocument>
 #include <QSqlDatabase>
-#include <QDesktopWidget>
 #include <QNetworkReply>
+#include <QDesktopWidget>
 #include <QNetworkRequest>
 #include <QNetworkAccessManager>
 #include <QDebug>
@@ -74,6 +74,8 @@ public:
     QString                 getCurrentUserName() const;
     QString                 getCurrentUserPawd() const;
     QString                 getCurrentUserHead() const;
+    QString                 getCurrentUserLoginTime() const;
+    QString                 getCurrentUserCreateTime() const;
     int                     getCurrentUserGrade() const;
     bool                    getCurrentUserOnline() const;
     const QPixmap&          getCurrentUserHeadPix();
@@ -173,6 +175,8 @@ private:
     QString                 m_curUserName;//当前用户名称
     QString                 m_curUserPawd;//当前用户密码
     int                     m_curUserGrade;//当前用户等级 游客0 普通1 会员2 超级会员3
+    QString                 m_time_login;  //最近一次登录
+    QString                 m_time_create; // 创建时间
     bool                    m_online;//是否在线
     QPixmap                 m_curHeadPix;//用户头像
 

@@ -131,7 +131,11 @@ bool RecomVideoTab::slot_addRecVideoItem(QVariant musicVariant)
     //信号与槽函数
     connect(videoItem,&RecVideoItem::sig_sendVideoUrl,[=](){
 //        emit sig_sendVideoUrl(item->text());
-        emit sig_recom_playlist(888,m_recplayList,item->text());
+        QUrlQuery query;
+        query.addQueryItem(u8"url",item->text());
+        query.addQueryItem(u8"nick",item->data(Qt::UserRole).toString());
+        query.addQueryItem(u8"pos",u8"0");
+        emit sig_recom_playlist(888,m_recplayList,query);
         ui->listWidget_recommend->setCurrentItem(item);//实现选种样式
         qDebug() <<QString::fromLocal8Bit("已发送临时播放连接url:")<<item->text();
     });
@@ -153,7 +157,11 @@ bool RecomVideoTab::slot_addRecVideoItem(QString url, QString path, QString time
     //信号与槽函数
     connect(videoItem,&RecVideoItem::sig_sendVideoUrl,[=](){
 //        emit sig_sendVideoUrl(item->text());
-        emit sig_recom_playlist(888,m_recplayList,item->text());
+        QUrlQuery query;
+        query.addQueryItem(u8"url",item->text());
+        query.addQueryItem(u8"nick",item->data(Qt::UserRole).toString());
+        query.addQueryItem(u8"pos",u8"0");
+        emit sig_recom_playlist(888,m_recplayList,query);
         ui->listWidget_recommend->setCurrentItem(item);//实现选种样式
         qDebug() <<QString::fromLocal8Bit("已发送临时播放连接url:")<<item->text();
     });

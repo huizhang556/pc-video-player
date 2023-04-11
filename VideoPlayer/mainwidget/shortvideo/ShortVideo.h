@@ -9,6 +9,7 @@
 #include <QScrollBar>
 #include <QWidget>
 #include <QVariant>
+#include <QUrlQuery>
 #include <QDebug>
 
 
@@ -29,7 +30,7 @@ public:
 public  slots:
     void    slot_addSelectTypeToList(const QStringList& typelist);
     bool    slot_addShortVideoItem(QVariant   musicVariant);//通过结构体传递信息
-    bool    slot_addShortVideoItem(QString url, QString path,QString time,QString info,QString count);//添加item
+    bool    slot_addShortVideoItem(QString url, QString path, QString time, QString info, QString count);//添加item
     void    slot_clearShortLists();
 
 protected:
@@ -56,7 +57,7 @@ private:
     QString     m_curMediaUrl;
 
 signals:
-    void    sig_sendToMainPlayer(int,const QStringList&,const QString&);
+    void    sig_sendToMainPlayer(int,const QStringList&,const QUrlQuery&);
 
 };
 

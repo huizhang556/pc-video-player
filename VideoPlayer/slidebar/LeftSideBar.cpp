@@ -92,7 +92,7 @@ void LeftSideBar::initWidgetUi()
     m_listWidget->setFocusPolicy(Qt::NoFocus);//作用是点击item去掉虚线边框
 
     //消息
-    m_msgBtn = new QPushButton(QIcon("://images/icon/leftbar_msg.png"),QString(u8""), this);
+    m_msgBtn = new QPushButton(QIcon("://images/icon/leftbar_msgs_hover.png"),QString(u8""), this);
     m_msgBtn->setObjectName(QString::fromLatin1("m_msgBtn"));
     m_msgBtn->setFixedHeight(BTN_HEIGHT);
     m_msgBtn->setCheckable(true);
@@ -141,10 +141,11 @@ void LeftSideBar::handleSignalAndSLots()
     //消息
     connect(m_msgBtn,&QPushButton::clicked,[=](bool checked){
         emit sig_sendPersonMessage(checked);
-        m_msgBtn->setEnabled(false);
+//        m_msgBtn->setEnabled(false);
         //防止连续点击
         QTimer::singleShot(800,0,[=](){
-            m_msgBtn->setEnabled(true);
+            m_msgBtn->setIcon(QIcon("://images/icon/leftbar_msgs.png"));
+//            m_msgBtn->setEnabled(true);
         });
     });
 

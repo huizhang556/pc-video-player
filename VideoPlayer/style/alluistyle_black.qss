@@ -488,14 +488,12 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #630f34, 
 color: #00d661;
 }
 
-/*侧边栏底部--展开按钮*/
+/*左侧边栏底部--控制按钮*/
 #m_moreBtn,#m_modeBtn,#m_setBtn,#m_msgBtn
 {
 background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #28405d, stop:1  #223a55);
 text-align: center;
-icon-size:20px;
 font-family:"微软雅黑";
-font-size:14px;
 color:#00e8f7;
 border:none;
 margin: 0px;

@@ -1,9 +1,11 @@
 ﻿#include "MainWidget.h"
+#include "login/Nationlity.h"
 #include "login/ChangeHead.h"
 #include "titlebar/TitleBar.h"
 #include "customer/CPolLabel.h"
 #include "style/loadGlobalQss.h"
 #include "pernotice/MainNotice.h"
+#include "slidebar/LeftSideBar.h"
 #include "creator/CreateCenter.h"
 #include "miniplayer/MiniPlayer.h"
 #include "messagebox/ExitDialog.h"
@@ -20,6 +22,7 @@
 
 #include <QApplication>
 #include <QTranslator>
+#include <QUrlQuery>
 #include <QThread>
 #include <QTimer>
 #include <QPixmap>
@@ -93,7 +96,11 @@ int main(int argc, char *argv[])
     //判断是否为播放器支持的类型
     if(Global::getFileType(QString::fromLocal8Bit(argv[1])))//支持类型（直接显示主播放器）
     {
-        MultipPlayer::getInstance()->slot_addTempPlaylist(999,QStringList{QString::fromLocal8Bit(argv[1])},QString::fromLocal8Bit(argv[1]));
+        QUrlQuery query;
+        query.addQueryItem(u8"url",QString::fromLocal8Bit(argv[1]));
+        query.addQueryItem(u8"nick",QString::fromLocal8Bit(argv[1]));
+        query.addQueryItem(u8"pos",u8"0");
+        MultipPlayer::getInstance()->slot_addTempPlaylist(999,QStringList{QString::fromLocal8Bit(argv[1])},query);
         MainWidget w1;
         w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
         w1.hide();
@@ -129,7 +136,10 @@ int main(int argc, char *argv[])
         //    ScrollToTop::getInstance()->show();
         //    DesktopLyric::getInstance()->show();
 
-            MultipPlayer::getInstance()->show();
+//            MultipPlayer::getInstance()->show();
+
+
+//        LeftSideBar lbar; lbar.show();
 //        ChangeHead::getInstance()->exec_(OPENTYPE::PER_HEAD);
 
         //    MiniPlayer m;
@@ -165,7 +175,7 @@ int main(int argc, char *argv[])
         //    MyEmotionWindow w1;
         //    w1.showNormalEmotion(QPoint(500 , 500));
         //    DownloadType::getInstance()->show();
-//            NewLoginForm::getInstance()->show();
+            NewLoginForm::getInstance()->show();
         //    AniStackWidget w1;
         //    w1.show();
         //    splashscream.finish(&w1);

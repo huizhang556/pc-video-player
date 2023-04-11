@@ -667,5 +667,9 @@
         <file>images/user/header_roate_L_hover.png</file>
         <file>images/user/header_roate_R.png</file>
         <file>images/user/header_roate_R_hover.png</file>
+        <file>images/icon/leftbar_msgs.png</file>
+        <file>images/icon/leftbar_msgs_hover.png</file>
+        <file>images/icon/vtitle_grub.png</file>
+        <file>images/icon/vtitle_grub_hover.png</file>
     </qresource>
 </RCC>

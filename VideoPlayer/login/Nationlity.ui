@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Nationlity</class>
+ <widget class="QWidget" name="Nationlity">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>222</width>
+    <height>190</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">*
+{
+border: none;
+outline: none;
+}
+
+QPushButton
+{
+border: 0px solid white;
+color: white;
+text-align: left;
+background-color: transparent;
+}
+
+QLineEdit
+{
+color: white;
+border-radius: 3px;
+margin: 0px 3px;
+background-color: rgba(81, 81, 81,0.8);
+}
+
+QListWidget
+{
+background-color: transparent;
+}
+
+QListWidget::item
+{
+color: white;
+min-height: 28px;
+background-color: transparent;
+}
+
+QListWidget::item:hover
+{
+color: #30e650;
+background-color: #002835;
+}</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_8">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QFrame" name="frame_mask">
+     <property name="styleSheet">
+      <string notr="true">#frame_mask
+{
+background-color:#001820;
+}</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>6</number>
+      </property>
+      <property name="topMargin">
+       <number>6</number>
+      </property>
+      <property name="rightMargin">
+       <number>6</number>
+      </property>
+      <property name="bottomMargin">
+       <number>6</number>
+      </property>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QStackedWidget" name="stackedWidget_country">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>28</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>28</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>28</height>
+           </size>
+          </property>
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
+          <widget class="QWidget" name="page_ctags">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="pushButton_country">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>国家/地区</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="page_cedits">
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_country">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>22</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>22</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="listWidget_country">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QStackedWidget" name="stackedWidget_province">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>28</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>28</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>28</height>
+           </size>
+          </property>
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
+          <widget class="QWidget" name="page_ptags">
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="pushButton_province">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>省/自治区</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="page_pedits">
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_province">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>22</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>22</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="listWidget_province">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>0</height>
+           </size>
+          </property>
+          <item>
+           <property name="text">
+            <string>北京市</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>天津市</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>上海市</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>重庆市</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>河北省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>山西省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>吉林省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>辽宁省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>黑龙江省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>陕西省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>甘肃省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>青海省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>山东省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>福建省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>浙江省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>台湾省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>河南省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>湖北省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>湖南省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>江西省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>江苏省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>安徽省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>广东省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>海南省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>四川省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>贵州省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>云南省</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>内蒙古自治区</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>新疆维吾尔自治区</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>宁夏回族自治区</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>广西壮族自治区</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>西藏自治区</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>香港特别行政区</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>澳门特别行政区</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QStackedWidget" name="stackedWidget_city">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>30</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>28</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>28</height>
+           </size>
+          </property>
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
+          <widget class="QWidget" name="page_ytags">
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="pushButton_city">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>市/直辖市</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="page_yedits">
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_city">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>22</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>22</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="listWidget_city">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>0</height>
+           </size>
+          </property>
+          <item>
+           <property name="text">
+            <string>西安市</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>宝鸡市</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>渭南市</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>榆林市</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>大庆市</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>高陵市</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>涪陵市</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

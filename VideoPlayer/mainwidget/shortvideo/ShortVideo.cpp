@@ -77,8 +77,14 @@ void ShortVideo::handleSignalsAndSLots()
 
     //转到主 播放器(固定编号777)
     connect(ui->pushButton_toPlayer,&QPushButton::clicked,[=](){
+        QString pos = QString::number(ui->widget_player->slot_player_pos());
+        qDebug() <<QString(u8"当前播放点：%1").arg(pos);
+        QUrlQuery query;
+        query.addQueryItem(u8"url",m_curMediaUrl);
+        query.addQueryItem(u8"nick",m_curMediaName);
+        query.addQueryItem(u8"pos",pos);
         ui->widget_player->slot_stopPlayer();//停止mini播放器播放
-        emit sig_sendToMainPlayer(777,QStringList{m_curMediaUrl},m_curMediaUrl);
+        emit sig_sendToMainPlayer(777,QStringList{m_curMediaUrl},query);
         qDebug() << QString(u8"转到主 播放器");
     });
 

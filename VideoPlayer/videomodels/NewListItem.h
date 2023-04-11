@@ -82,7 +82,7 @@ signals:
     void    sig_item_scrollbar(int);
     void    sig_item_addtolist();
     void    sig_item_addeditems();
-    void    sig_item_newPlaylist(int,QStringList,QString);
+    void    sig_item_newPlaylist(int,QStringList,QString,QString);
 };
 
 #endif // NEWLISTITEM_H

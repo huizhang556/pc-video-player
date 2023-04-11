@@ -113,7 +113,8 @@ void NewListItem::handleSignalsAndSlots()
             //单击播放（改为button鼠标穿透，listwidget响应）
             connect(itemWidget,&songListItem::sig_item_selected,[=](QString sname){
                 ui->listWidget_songerlist->setCurrentItem(item);
-                emit sig_item_newPlaylist(m_id,m_playlist,item->data(Qt::UserRole+1).toString());
+               // id list 文件路径 文件名
+                emit sig_item_newPlaylist(m_id,m_playlist,item->data(Qt::UserRole+1).toString(),item->data(Qt::UserRole).toString());
                 qDebug() <<QString(u8"当前item已被设定！点击的item名称：%1,真实路径：%2").arg(sname).arg(item->data(Qt::UserRole+1).toString());
             });
 

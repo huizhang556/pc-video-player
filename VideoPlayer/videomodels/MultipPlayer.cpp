@@ -659,11 +659,13 @@ void MultipPlayer::handleSignalAndSLots()
 
     //标题栏--截图
     connect(m_videoTitleBar,&VideoTitleBar::sig_videoCapture,[=](){
-        if(ui->stackedWidget->currentWidget() == videoWidget)
-        {
-//            CaptureScreen screen;
-//            screen.show();
-        }
+//        if(ui->stackedWidget->currentWidget() == videoWidget)
+//        {
+////            QPixmap pix_grub = QPixmap::grabWidget(videoWidget,videoWidgett->rect());//测试，截图为白屏（BUG）
+//            m_player2->setPosition(ui->horizontalSlider->value()*1000);
+
+//            connect(m_videoSurface,&VideoSurface::frameAvailable,this,&MultipPlayer::slot_saveCapturePixmap,Qt::QueuedConnection);
+//        }
     });
 
     //标题栏--下载
@@ -3049,6 +3051,20 @@ void MultipPlayer::slot_selectAllListItem(QListWidget *obj)
     }
 }
 
+void MultipPlayer::slot_saveCapturePixmap(QVideoFrame &frame)
+{
+    frame.map(QAbstractVideoBuffer::ReadOnly);
+    QImage recvImage(frame.bits(), frame.width(), frame.height(), QVideoFrame::imageFormatFromPixelFormat(frame.pixelFormat()));
+    //获取用户输入的名字，并进行保存
+    QString fileName = QFileDialog::getSaveFileName(this,QString(u8"保存图片"),QString(u8"."),QString(u8"Images(*.png, *.jpg)"));
+    if(!fileName.isEmpty())
+    {
+        QImageWriter writer(fileName);
+        writer.write(recvImage);
+    }
+    frame.unmap();
+}
+
 QString MultipPlayer::Base64ToQStr(QString base64Str)
 {
     QByteArray byteA;
@@ -3443,9 +3459,12 @@ void MultipPlayer::slot_setVideTitleBar(int index)
 }
 
 //播放临时列表（列表ID + url集合或者本地文件地址集合 + 当前播放URL又或者本地文件地址）
-void MultipPlayer::slot_addTempPlaylist(const int id, const QStringList &list, const QString &curUrl)
+void MultipPlayer::slot_addTempPlaylist(const int id, const QStringList &list, const QUrlQuery &media)
 {
-    qDebug() << QString(u8"接收到当前临时列表播放请求：URL = %1 --- 介绍（文件名）：'%2' --- 列表ID: '%3' ---列表总数：'%4'").arg(curUrl).arg(curUrl).arg(id).arg(list.count());
+    QString curUrl      = media.queryItemValue(u8"url");//播放链接
+    QString nick        = media.queryItemValue(u8"nick");//媒体介绍
+    QString pos         = media.queryItemValue(u8"pos");//播放点
+    qDebug() << QString(u8"接收到当前临时列表播放请求：URL = %1 --- 介绍（文件名）：'%2' --- 列表ID: '%3' ---列表总数：'%4' -----播放点：'%5'").arg(curUrl).arg(nick).arg(id).arg(list.count()).arg(pos);
      if(m_player->state() == QMediaPlayer::PlayingState)
      {
          m_player->pause();
@@ -3505,7 +3524,12 @@ void MultipPlayer::slot_addTempPlaylist(const int id, const QStringList &list, c
     ui->horizontalSlider->setEnabled(true);
     playlist_t->setCurrentIndex(getMapKeyFromValue(curUrl));//根据当前未解析的url去url集合查找对应的索引
     m_curMediaUrl = curUrl;//主播放器下载时候使用m_curMediaUrl加密的连接
+    //判断是否从头开始播放
     m_player->play();
+//    if(pos.toInt() != 0)
+//    {
+//        m_player->setPosition(pos.toInt());
+//    }
     this->raise();
     this->show();
 

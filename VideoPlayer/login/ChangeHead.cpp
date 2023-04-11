@@ -1,5 +1,6 @@
 ﻿#include "ChangeHead.h"
 #include "ui_ChangeHead.h"
+
 //类外初始化
 ChangeHead* ChangeHead::m_pInstance = nullptr;
 
@@ -10,6 +11,7 @@ ChangeHead::ChangeHead(QWidget *parent) :
     ui->setupUi(this);
     setTitleBarMoveArea(ui->frame_title,2);
     setFixedSize(330,520);
+//    setWindowModality(Qt::NonModal);
     initWorkUI();
     handleSignalsAndSlots();
 }
@@ -17,6 +19,10 @@ ChangeHead::ChangeHead(QWidget *parent) :
 ChangeHead::~ChangeHead()
 {
     delete ui;
+    if(m_nationlity != nullptr)
+    {
+        delete m_nationlity;
+    }
     //删除创建的单例
     if(m_pInstance != nullptr)
         delete m_pInstance;
@@ -39,12 +45,18 @@ void ChangeHead::exec_(OPENTYPE type)
     ui->listWidget_womanpix->clear();
     ui->listWidget_gifpix->clear();
 
-    dataBase::getInstance()->header_initHeader();
-    QPixmap pix_user = dataBase::getInstance()->getCurrentUserHeadPix();
+    dataBase::getInstance()->header_initHeader();//获取照片墙图片(信号槽传递)
+    QPixmap pix_user = dataBase::getInstance()->getCurrentUserHeadPix();//用户照片
+
     if(!pix_user.isNull())
     {
         slot_setCurViewHeader(pix_user);
     }
+
+    setUserNick(dataBase::getInstance()->getCurrentUserName());
+    setUserVip(dataBase::getInstance()->getCurrentUserGrade());
+    setUserCreateTime(dataBase::getInstance()->getCurrentUserCreateTime());
+    setUserLoginTime(dataBase::getInstance()->getCurrentUserLoginTime());
 
     switch (type)
     {
@@ -72,11 +84,38 @@ void ChangeHead::exec_(OPENTYPE type)
 
 void ChangeHead::initWorkUI()
 {
+    m_nationlity = new Nationlity();
+    m_nationlity->setFixedSize(227,212);
+    m_nationlity->hide();
+
+    //设置默认所在地
+    ui->pushButton_address->setText(QString(u8"中国-北京-东城区"));
+    //设置默认年龄
+    ui->spinBox_age->setValue(26);
+    ui->spinBox_age->setContextMenuPolicy(Qt::NoContextMenu);
+    //设置默认家乡
+    ui->pushButton_hometown->setText(QString(u8"中国-陕西-宝鸡"));
+
+    ui->pushButton_address->setLayoutDirection(Qt::RightToLeft);
+    ui->pushButton_address->setIcon(QIcon(":/images/function/download_arrow_hover.png"));
+    ui->pushButton_address->setIconSize(QSize(36,36));
+
+    ui->pushButton_hometown->setLayoutDirection(Qt::RightToLeft);
+    ui->pushButton_hometown->setIcon(QIcon(":/images/function/download_arrow_hover.png"));
+    ui->pushButton_hometown->setIconSize(QSize(36,36));
+
+    ui->textBrowser->setContextMenuPolicy(Qt::NoContextMenu);//禁用右键菜单
+    ui->textBrowser->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->textBrowser->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
     ui->pushButton_add->setToolTip(QString(u8"放大"));
     ui->pushButton_sub->setToolTip(QString(u8"缩小"));
     ui->pushButton_roate_L->setToolTip(QString(u8"左旋90°"));
     ui->pushButton_roate_R->setToolTip(QString(u8"右旋90°"));
     ui->pushButton_cutpix->setToolTip(QString(u8"剪裁"));
+
+    ui->comboBox_worktype->setView(new QListView());
+
     ui->comboBox_type->setView(new QListView());
     ui->comboBox_type->hide();
 
@@ -288,6 +327,46 @@ void ChangeHead::handleSignalsAndSlots()
 
     //通用动态头像
     connect(dataBase::getInstance(),&dataBase::sig_header_gif,this,&ChangeHead::slot_addHeader_gif);
+
+    //所在地
+    connect(ui->pushButton_address,&QPushButton::clicked,[=](){
+        m_curRecBtn = ui->pushButton_address;
+        const int g_x = ui->pushButton_address->parentWidget()->mapToGlobal(ui->pushButton_address->pos()).x();
+        const int g_y = ui->pushButton_address->parentWidget()->mapToGlobal(ui->pushButton_address->pos()).y();
+        m_nationlity->setGeometry(g_x,g_y+28,m_nationlity->width(),m_nationlity->height());
+        m_nationlity->show();
+    });
+
+    //家乡
+    connect(ui->pushButton_hometown,&QPushButton::clicked,[=](){
+        m_curRecBtn = ui->pushButton_hometown;
+        const int g_x = ui->pushButton_hometown->parentWidget()->mapToGlobal(ui->pushButton_hometown->pos()).x();
+        const int g_y = ui->pushButton_hometown->parentWidget()->mapToGlobal(ui->pushButton_hometown->pos()).y();
+        m_nationlity->setGeometry(g_x,g_y+28,m_nationlity->width(),m_nationlity->height());
+        m_nationlity->show();
+    });
+
+    //显示选择文本
+    connect(m_nationlity,&Nationlity::sig_send_selectedtext,[=](QString text){
+        if(ui->pushButton_address == m_curRecBtn)
+        {
+            ui->pushButton_address->setText(text);
+        }
+        else if(ui->pushButton_hometown == m_curRecBtn)
+        {
+            ui->pushButton_hometown->setText(text);
+        }
+        else
+        {
+            return;
+        }
+    });
+}
+
+void ChangeHead::setInstallEventFilter()
+{
+//    ui->pushButton_address->installEventFilter(this);
+//    ui->pushButton_hometown->installEventFilter(this);
 }
 
 void ChangeHead::slot_setCurViewHeader(const QString &pixmap)
@@ -307,9 +386,9 @@ void ChangeHead::slot_setCurViewHeader(QPixmap pixmap)
     resetRotate();
     ui->horizontalSlider->setValue(0);//因为是新的item，所以又回到初始角度
     ui->graphicsView->resetTransform();//先恢复缩放比例
-    m_pixItem = m_scence->addPixmap(pixmap.scaled(ui->graphicsView->size(),Qt::KeepAspectRatio,Qt::FastTransformation));
+    //将图片缩放至VIEW大小，忽略原来的宽高比，平滑缩放提高像素
+    m_pixItem = m_scence->addPixmap(pixmap.scaled(ui->graphicsView->size(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
     ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-
     //QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsFocusable
 //            m_pixItem->setFlags(QGraphicsItem::ItemIsSelectable);
 //    m_scence->setForegroundBrush(QColor(19, 26, 35,100));//前景层颜色
@@ -429,6 +508,34 @@ void ChangeHead::wheelEvent(QWheelEvent *event)
     }
 }
 
+bool ChangeHead::eventFilter(QObject *watched, QEvent *event)
+{
+//    if(watched == ui->pushButton_address)
+//    {
+//        if(event->type() == QEvent::Enter)
+//        {
+//            ui->pushButton_address->setEnabled(true);
+//        }
+//        else if(event->type() == QEvent::Leave)
+//        {
+//            ui->pushButton_address->setEnabled(false);
+//        }
+//    }
+
+//    if(watched == ui->pushButton_hometown)
+//    {
+//        if(event->type() == QEvent::Enter)
+//        {
+//            ui->pushButton_hometown->setEnabled(true);
+//        }
+//        else if(event->type() == QEvent::Leave)
+//        {
+//            ui->pushButton_hometown->setEnabled(false);
+//        }
+//    }
+    return QWidget::eventFilter(watched,event);
+}
+
 void ChangeHead::resetRotate()
 {
     if(m_viewRotate != 0)//场景进行了旋转
@@ -488,5 +595,53 @@ bool ChangeHead::uplaodUserCurHeader(const QByteArray &pic_bytedata)
     //上传完成--传回信息,插入数据库
     connect(upWorker,&UploadWork::sig_work_finished,this,&ChangeHead::slot_inserHeadToDB);
 
+}
+
+void ChangeHead::setUserNick(const QString &nick)
+{
+    ui->pushButton_nick->setText(nick);
+}
+
+void ChangeHead::setUserVip(const int grade)
+{
+    switch (grade)
+    {
+    case 0:
+    {
+        ui->pushButton_viptype->setIcon(QIcon("://images/user/user_visitor.png"));
+        ui->pushButton_viptype->setText(QString::fromLocal8Bit("(普通游客)"));
+    }
+        break;
+    case 1:
+    {
+        ui->pushButton_viptype->setIcon(QIcon("://images/user/user_vip.png"));
+        ui->pushButton_viptype->setText(QString::fromLocal8Bit("(注册用户)"));
+    }
+        break;
+    case 2:
+    {
+        ui->pushButton_viptype->setIcon(QIcon("://images/user/user_suvip.png"));
+        ui->pushButton_viptype->setText(QString::fromLocal8Bit("(普通会员)"));
+    }
+        break;
+    case 3:
+    {
+        ui->pushButton_viptype->setIcon(QIcon("://images/user/user_ssvip.png"));
+        ui->pushButton_viptype->setText(QString::fromLocal8Bit("(超级会员)"));
+    }
+        break;
+    default:
+        break;
+    }
+}
+
+void ChangeHead::setUserCreateTime(const QString &create)
+{
+    ui->pushButton_createtime->setText(create);
+}
+
+void ChangeHead::setUserLoginTime(const QString &login)
+{
+    ui->pushButton_logintime->setText(login);
 }
 

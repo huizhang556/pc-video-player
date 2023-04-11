@@ -15,6 +15,7 @@
 #include <QVariant>
 #include <QScrollBar>
 #include <QListWidget>
+#include <QUrlQuery>
 #include <QListWidgetItem>
 #include <QDebug>
 

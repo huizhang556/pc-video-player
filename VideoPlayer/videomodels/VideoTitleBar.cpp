@@ -59,7 +59,7 @@ void VideoTitleBar::chandleSignalsAndSlots()
     //下载
     connect(ui->pushButton_vdownload,&QPushButton::clicked,[=](){ emit sig_videodownload(); });
     //截图
-    connect(ui->pushButton_vsuggest,&QPushButton::clicked,[=](){ emit sig_videoCapture(); });
+    connect(ui->pushButton_grub,&QPushButton::clicked,[=](){ emit sig_videoCapture(); });
 }
 
 /*设置标题栏*/

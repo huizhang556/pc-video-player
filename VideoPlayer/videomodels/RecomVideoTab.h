@@ -3,6 +3,7 @@
 #include <QList>
 #include <QWidget>
 #include <QVariant>
+#include <QUrlQuery>
 #include <QListWidget>
 #include <QPushButton>
 #include <QStringList>
@@ -62,7 +63,7 @@ private:
 
 signals:
     void    sig_sendVideoUrl(QString);//弃用
-    void    sig_recom_playlist(int,QStringList,QString);//表id 表内url集合 单个url
+    void    sig_recom_playlist(int,QStringList,QUrlQuery);//表id 表内url集合 单个url
 };
 
 #endif // RECOMVIDEOTAB_H

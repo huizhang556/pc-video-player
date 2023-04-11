@@ -45,6 +45,9 @@
 #include <QKeyEvent>
 //#include <windows.h>
 //#include <windowsx.h>
+#include <QScreen>
+#include <QUrlQuery>
+#include <QVideoFrame>
 #include <QShowEvent>
 #include <QMainWindow>
 #include <QCloseEvent>
@@ -56,6 +59,7 @@
 #include <QPushButton>
 #include <QMediaPlayer>
 #include <QVideoWidget>
+#include <QImageWriter>
 #include <QWidgetAction>
 #include <QDesktopWidget>
 #include <QStackedWidget>
@@ -204,7 +208,7 @@ public slots:
 
     void    slot_setVideTitleBar(int index);
 
-    void    slot_addTempPlaylist(const int id,const QStringList& list, const QString& curUrl);//切换播放列表
+    void    slot_addTempPlaylist(const int id, const QStringList& list, const QUrlQuery &media);//切换播放列表
 
     void    on_pushButton_pauseStart_clicked();//暂停、播放
 
@@ -339,6 +343,8 @@ private slots:
     void    slot_collectListItem(QListWidget *obj,QString text);//收藏选中的某条记录
 
     void    slot_selectAllListItem(QListWidget *obj);//全选
+
+    void    slot_saveCapturePixmap(QVideoFrame& frame);
 
 private:
     QString         Base64ToQStr(QString base64Str);

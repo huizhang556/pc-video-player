@@ -12,6 +12,7 @@
 #include <QWidget>
 #include <QList>
 #include <QMap>
+#include <QUrlQuery>
 #include <QVector>
 #include <QDebug>
 
@@ -66,7 +67,7 @@ private:
 
 signals:
     void    sig_send_height(int);
-    void    sig_play_newPlayist(int,QStringList,QString);//表 id 表内url集合 单个url
+    void    sig_play_newPlayist(int,QStringList,QUrlQuery);//表 id 表内url集合 url 信息
 };
 
 #endif // LISTMANAGER_H

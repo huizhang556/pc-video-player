@@ -70,6 +70,7 @@ NewLoginForm::~NewLoginForm()
 
 void NewLoginForm::initWorkUI()
 {
+    ui->label_userHeader->setToolTip(QString(u8"单击修改头像"));
 //    this->setContentsMargins(15,15,15,15);//为阴影留出空间
 //    QGraphicsDropShadowEffect *shadow_effect = new QGraphicsDropShadowEffect(this);
 //    shadow_effect->setOffset(0,0);//阴影往边外（下和右）移出的距离

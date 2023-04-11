@@ -10,7 +10,8 @@ SOURCES += \
     $$PWD/UserItem.cpp \
     $$PWD/FocusLineEdit.cpp \
     $$PWD/ChangeHead.cpp \
-    $$PWD/HeadLabel.cpp
+    $$PWD/HeadLabel.cpp \
+    $$PWD/Nationlity.cpp
 
 
 HEADERS += \
@@ -25,7 +26,8 @@ HEADERS += \
     $$PWD/UserItem.h \
     $$PWD/FocusLineEdit.h \
     $$PWD/ChangeHead.h \
-    $$PWD/HeadLabel.h
+    $$PWD/HeadLabel.h \
+    $$PWD/Nationlity.h
 
 FORMS += \
     $$PWD/Login.ui \
@@ -39,5 +41,6 @@ FORMS += \
     $$PWD/UserItem.ui \
     $$PWD/FocusLineEdit.ui \
     $$PWD/ChangeHead.ui \
-    $$PWD/HeadLabel.ui
+    $$PWD/HeadLabel.ui \
+    $$PWD/Nationlity.ui
 

@@ -368,6 +368,11 @@ void MiniPlayer::slot_player_on()
     m_buttonPlayer->click();
 }
 
+qint64 MiniPlayer::slot_player_pos()
+{
+    return m_player->position();
+}
+
 bool MiniPlayer::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == m_buttonClarity)

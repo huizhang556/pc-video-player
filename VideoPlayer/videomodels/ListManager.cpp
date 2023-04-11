@@ -290,10 +290,14 @@ void ListManager::createNewSongList(FINSTATUS status, QString sname)
         }
     });
 
-    //item被点击，播放器播放媒体(id +url集合 + url)
-    connect(itemWidget,&NewListItem::sig_item_newPlaylist,[=](int id,QStringList list,QString url){
+    //item被点击，播放器播放媒体(id +url集合 + url + nick)
+    connect(itemWidget,&NewListItem::sig_item_newPlaylist,[=](int id, QStringList list, QString url, QString nick){
         m_playListItem = itemWidget;
-        emit sig_play_newPlayist(id,list,url);
+        QUrlQuery query;
+        query.addQueryItem(u8"url",url);
+        query.addQueryItem(u8"nick",nick);
+        query.addQueryItem(u8"pos","0");
+        emit sig_play_newPlayist(id,list,query);
     });
 
     //联动滚动条

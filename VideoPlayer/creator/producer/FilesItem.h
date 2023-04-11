@@ -46,12 +46,14 @@ struct fileBody
 };
 Q_DECLARE_METATYPE(fileBody)
 
+//ITEM类型
 enum FILEEDIT
 {
     CANWRITE,//可编辑
     CANEDIT  //只读
 };
 
+//ITEM状态
 enum FILESTATUS
 {
     READY,      //待上传

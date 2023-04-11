@@ -43,6 +43,8 @@ public  slots:
     void    slot_mouseEnter();
     void    slot_mouseLeave();
     void    slot_player_on();
+    qint64  slot_player_pos();
+
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
     void    enterEvent(QEvent *event) override;

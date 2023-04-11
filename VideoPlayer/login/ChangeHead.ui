@@ -49,12 +49,13 @@
      <property name="styleSheet">
       <string notr="true">#frame_mask
 {
-background-color: rgba(36, 48, 98,0.9);
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #00546e, stop:0.5 #031723, stop:1  #00546e);
 }
 
 QListWidget
 {
 border: none;
+margin: 3px 0px 0px 0px;
 background-color: transparent;
 }
 
@@ -62,13 +63,13 @@ QListWidget::item
 {
 color: transparent;
 margin: 2px;
-border-radius: 3px;
+border-radius: 0px;
 background-color: transparent;
 }
 
 QListWidget::item:hover
 {
-border: 2px solid rgb(23, 140, 209);
+border: 2px solid rgb(50, 173, 241);
 background-color: transparent;
 }
 </string>
@@ -117,7 +118,7 @@ background-color: transparent;
           <property name="styleSheet">
            <string notr="true">#frame_title
 {
-background-color: #202630;
+background-color: transparent;
 }</string>
           </property>
           <property name="frameShape">
@@ -254,75 +255,78 @@ border-image: url(:/images/icon/closehover.png);
           <property name="styleSheet">
            <string notr="true">QTabWidget::pane 
 {
-    border-top: 0px solid rgba(58, 58, 65,0.9);
-	background-color: transparent;
+border-top: 0px solid rgba(58, 58, 65,0.9);
+background-color: transparent;
 }
 
 QTabWidget::tab-bar 
 {
-    left: 10px; /* move to the right by 5px */
+left: 0px; /* move to the right by 5px */
 }
 
 QTabBar::tab 
 {
-    background-color: transparent;
-    /*border: 2px solid #C4C4C3;*/
-	/*border-bottom-color: #C2C7CB;*/
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
-    min-width: 100px;
-	height:30px;
-    padding: 2px;	
-	font: 75 11pt &quot;Microsoft YaHei UI&quot;;
+background-color: transparent;
+/*border: 2px solid #C4C4C3;*/
+/*border-bottom-color: #C2C7CB;*/
+border-top-left-radius: 0px;
+border-top-right-radius: 0px;
+min-width: 100px;
+height:30px;
+padding: 2px;
+margin: 0px 2px;	
+font: 75 11pt &quot;Microsoft YaHei UI&quot;;
 }
 
-QTabBar::tab:selected, QTabBar::tab:hover 
+QTabBar::tab:hover 
 {
- background-color: transparent;
+border-radius: 15px;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #d9f8fd, stop:0.5 #abf0f9, stop:1 #d9f8fd);
 }
 
 QTabBar::tab:selected 
 {
-	color: #efbe12;
-	border: 0px solid #9B9B9B;
-    border-bottom-color: #C2C7CB; /* same as pane color */
+font: 800 15px &quot;微软雅黑&quot;;
+color: #fbe145;
+border-radius: 16px;
+border: 0px solid #9B9B9B;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #2fd6f9, stop:0.5 #1f73de, stop:1  #2fd6f9);
 }
 
 QTabBar::tab:!selected 
 {
-	color: #7e7f81;
-    margin-top: 0px; /* make non-selected tabs look smaller */
+color: #7e7f81;
+margin-top: 0px;
 }
 
 
 QTabBar::tab:first:selected 
 {
-    margin-left: 0; /* the first selected tab has nothing to overlap with on the left */
+margin-left: 0; 
 }
 
 QTabBar::tab:last:selected 
 {
-    margin-right: 0; /* the last selected tab has nothing to overlap with on the right */
+margin-right: 0;
 }
 
 QTabBar::tab:only-one 
 {
-    margin: 0; /* if there is only one tab, we don't want overlapping margins */
+ margin: 0; 
 }
 
 QGroupBox
 {
-border: 0px solid #f40f5a;
+border: 1px solid #8b98a0;
 border-radius: 6px;
 margin-top: 5ex;
-color: #cdcdcd;
-font: 9pt &quot;Microsoft YaHei UI&quot;;
+font: 10pt &quot;Microsoft YaHei UI&quot;;
 background-color: transparent;
 }
 
 QGroupBox::title 
 {
-color: #6680ee;
+color: #00ceee;
 subcontrol-origin: margin;
 subcontrol-position: top left;
 padding: 0 5px;
@@ -339,16 +343,16 @@ padding: 0 5px;
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_15">
             <property name="leftMargin">
-             <number>3</number>
+             <number>9</number>
             </property>
             <property name="topMargin">
-             <number>3</number>
+             <number>9</number>
             </property>
             <property name="rightMargin">
-             <number>3</number>
+             <number>9</number>
             </property>
             <property name="bottomMargin">
-             <number>3</number>
+             <number>9</number>
             </property>
             <item>
              <widget class="QFrame" name="fram_perInfo">
@@ -356,21 +360,111 @@ padding: 0 5px;
                <string notr="true">*
 {
 border: none;
-background-color: #4ea8c0;
+background-color: transparent;
 }
 
 QLabel
 {
-color: #f3f1eb;
+color: #8b98a0;
 font: 400 14px &quot;微软雅黑&quot;;
 }
 
 QPushButton
 {
-color: #e9f4f2;
+color: #2fd6f9;
 border: none;
+text-align: left;
 font: 400 14px &quot;微软雅黑&quot;;
-}</string>
+
+}
+
+QPushButton:hover
+{
+color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #2fd6f9, stop:0.5 #1f73de, stop:1  #2fd6f9);
+}
+
+QSpinBox
+{
+color: #2fd6f9;
+border: none;
+text-align: left;
+font: 400 14px &quot;微软雅黑&quot;;
+}
+
+QComboBox
+{
+color:#2fd6f9;
+text-align: center;
+border-radius: 4px;
+padding-left: 0px;
+font: 400 14px &quot;微软雅黑&quot;;
+border:0px solid rgb(50, 173, 241);
+background-color: transparent;
+}
+
+QComboBox::drop-down
+{
+border: 0px solid rgb(50, 173, 241);
+border-left-width: 0px;
+background-color: transparent;
+width: 12px;
+}
+
+QComboBox::down-arrow
+{
+image: url(:/images/function/download_arrow_hover.png);
+}
+
+QComboBox QAbstractItemView 
+{
+height: 100px;
+border: 0px solid green;
+selection-background-color: transparent;						
+background-color: transparent;								
+}
+
+/*下拉列表item*/
+QListView
+{
+background-color: transparent;
+}
+
+/*下拉项样式 背景蓝色*/
+QListView::item
+{
+min-height:28px;
+padding:0px 0px;
+font: 400 14px &quot;微软雅黑&quot;;
+background-color: rgba(0, 80, 106,0.3);	
+color:#2ca5f9;
+
+}  
+
+/*下拉项选中样式（效果不明显）背景绿色*/
+QListView::item:selected
+{ 
+color:#2ca5f9;
+border-radius: 2px;
+background-color: rgba(0, 80, 106,0.5);	 
+}   
+
+/*下拉项鼠标悬浮样式 背景灰绿色*/
+QListView::item:hover
+{ 
+color: rgb(39, 255, 22);
+border-radius: 2px;
+background-color: rgba(0, 80, 106,0.5);	 
+}
+
+QToolTip
+{
+background-color:#f0f0f0;
+color:#404040;
+}
+
+
+
+</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_13">
                <property name="spacing">
@@ -420,6 +514,9 @@ border-bottom: 1px solid gray;
                   </property>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_7">
+                    <property name="spacing">
+                     <number>20</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label">
                       <property name="minimumSize">
@@ -440,7 +537,7 @@ border-bottom: 1px solid gray;
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton">
+                     <widget class="QPushButton" name="pushButton_nick">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -454,7 +551,7 @@ border-bottom: 1px solid gray;
                        </size>
                       </property>
                       <property name="text">
-                       <string>天空之城8020</string>
+                       <string/>
                       </property>
                      </widget>
                     </item>
@@ -462,6 +559,9 @@ border-bottom: 1px solid gray;
                   </item>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_10">
+                    <property name="spacing">
+                     <number>20</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label_4">
                       <property name="minimumSize">
@@ -482,7 +582,7 @@ border-bottom: 1px solid gray;
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton_4">
+                     <widget class="QPushButton" name="pushButton_viptype">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -496,7 +596,7 @@ border-bottom: 1px solid gray;
                        </size>
                       </property>
                       <property name="text">
-                       <string>黄金会员</string>
+                       <string/>
                       </property>
                      </widget>
                     </item>
@@ -504,6 +604,9 @@ border-bottom: 1px solid gray;
                   </item>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_11">
+                    <property name="spacing">
+                     <number>20</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label_5">
                       <property name="minimumSize">
@@ -524,7 +627,7 @@ border-bottom: 1px solid gray;
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton_5">
+                     <widget class="QPushButton" name="pushButton_createtime">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -538,7 +641,7 @@ border-bottom: 1px solid gray;
                        </size>
                       </property>
                       <property name="text">
-                       <string>2020-02-28</string>
+                       <string/>
                       </property>
                      </widget>
                     </item>
@@ -546,6 +649,9 @@ border-bottom: 1px solid gray;
                   </item>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_13">
+                    <property name="spacing">
+                     <number>20</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label_7">
                       <property name="minimumSize">
@@ -566,7 +672,7 @@ border-bottom: 1px solid gray;
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton_7">
+                     <widget class="QPushButton" name="pushButton_logintime">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -580,7 +686,7 @@ border-bottom: 1px solid gray;
                        </size>
                       </property>
                       <property name="text">
-                       <string>2023-04-05</string>
+                       <string/>
                       </property>
                      </widget>
                     </item>
@@ -631,6 +737,9 @@ border-bottom: 1px solid gray;
                   </property>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_14">
+                    <property name="spacing">
+                     <number>20</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label_8">
                       <property name="minimumSize">
@@ -646,12 +755,12 @@ border-bottom: 1px solid gray;
                        </size>
                       </property>
                       <property name="text">
-                       <string>所 在 地：</string>
+                       <string>所 在  地：</string>
                       </property>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton_8">
+                     <widget class="QPushButton" name="pushButton_address">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -665,7 +774,7 @@ border-bottom: 1px solid gray;
                        </size>
                       </property>
                       <property name="text">
-                       <string>河北-石家庄</string>
+                       <string/>
                       </property>
                      </widget>
                     </item>
@@ -673,6 +782,9 @@ border-bottom: 1px solid gray;
                   </item>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_17">
+                    <property name="spacing">
+                     <number>20</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label_11">
                       <property name="minimumSize">
@@ -693,7 +805,7 @@ border-bottom: 1px solid gray;
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton_11">
+                     <widget class="QSpinBox" name="spinBox_age">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -706,15 +818,15 @@ border-bottom: 1px solid gray;
                         <height>26</height>
                        </size>
                       </property>
-                      <property name="text">
-                       <string>26</string>
-                      </property>
                      </widget>
                     </item>
                    </layout>
                   </item>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_18">
+                    <property name="spacing">
+                     <number>20</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label_12">
                       <property name="minimumSize">
@@ -735,7 +847,7 @@ border-bottom: 1px solid gray;
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton_12">
+                     <widget class="QPushButton" name="pushButton_hometown">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -749,7 +861,7 @@ border-bottom: 1px solid gray;
                        </size>
                       </property>
                       <property name="text">
-                       <string>中国-陕西-宝鸡</string>
+                       <string/>
                       </property>
                      </widget>
                     </item>
@@ -757,6 +869,9 @@ border-bottom: 1px solid gray;
                   </item>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_19">
+                    <property name="spacing">
+                     <number>20</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label_13">
                       <property name="minimumSize">
@@ -777,7 +892,7 @@ border-bottom: 1px solid gray;
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton_13">
+                     <widget class="QComboBox" name="comboBox_worktype">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -790,15 +905,48 @@ border-bottom: 1px solid gray;
                         <height>26</height>
                        </size>
                       </property>
-                      <property name="text">
-                       <string>计算机/互联网/软件</string>
+                      <property name="styleSheet">
+                       <string notr="true"/>
                       </property>
+                      <item>
+                       <property name="text">
+                        <string>计算机/互联网/通信</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>生产/工艺/制造</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>医疗/护理/制药</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>金融/银行/投资/保险</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>商业/服务业/个体经营</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>文化/广告/传媒</string>
+                       </property>
+                      </item>
                      </widget>
                     </item>
                    </layout>
                   </item>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_20">
+                    <property name="spacing">
+                     <number>20</number>
+                    </property>
                     <item>
                      <layout class="QVBoxLayout" name="verticalLayout_2">
                       <item>
@@ -861,10 +1009,9 @@ border-radius:6px;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;1.唯有不断努力，才能走向更远、更高！&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2.世界是你们的，也是我们的，但终归还是你们的！&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;3.纸上得来终觉浅，绝知此事要躬行！&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#8b98a0;&quot;&gt;1.唯有不断努力，才能走向更远、更高！&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#8b98a0;&quot;&gt;2.世界是你们的，也是我们的，但终归还是你们的！&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#8b98a0;&quot;&gt;3.纸上得来终觉浅，绝知此事要躬行！&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                       </property>
                      </widget>
                     </item>
@@ -927,16 +1074,16 @@ p, li { white-space: pre-wrap; }
              <number>0</number>
             </property>
             <property name="leftMargin">
-             <number>0</number>
+             <number>9</number>
             </property>
             <property name="topMargin">
-             <number>0</number>
+             <number>9</number>
             </property>
             <property name="rightMargin">
-             <number>0</number>
+             <number>9</number>
             </property>
             <property name="bottomMargin">
-             <number>0</number>
+             <number>9</number>
             </property>
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1550,13 +1697,13 @@ border-image: url(:/images/user/user_header_cut_hover.png);
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>90</height>
+                  <height>95</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>90</height>
+                  <height>95</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -1583,6 +1730,18 @@ border-image: url(:/images/user/user_header_cut_hover.png);
                  </property>
                  <item>
                   <widget class="QListWidget" name="listWidget_hispix">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>80</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>80</height>
+                    </size>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true"/>
                    </property>
@@ -1616,13 +1775,13 @@ border-image: url(:/images/user/user_header_cut_hover.png);
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_3">
                  <property name="leftMargin">
-                  <number>5</number>
+                  <number>0</number>
                  </property>
                  <property name="topMargin">
                   <number>0</number>
                  </property>
                  <property name="rightMargin">
-                  <number>5</number>
+                  <number>0</number>
                  </property>
                  <property name="bottomMargin">
                   <number>0</number>
@@ -1682,7 +1841,7 @@ QPushButton:hover
 {
 color: #ffffff;
 border:2px solid gray;
-background-color: #eb257b;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #2fd6f9, stop:0.5 #1f73de, stop:1  #2fd6f9);
 }</string>
                    </property>
                    <property name="text">
@@ -1716,7 +1875,7 @@ QPushButton:hover
 {
 color: #ffffff;
 border:2px solid gray;
-background-color: #eb257b;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #2fd6f9, stop:0.5 #1f73de, stop:1  #2fd6f9);
 }</string>
                    </property>
                    <property name="text">
@@ -1823,7 +1982,7 @@ background-color: #eb257b;
                </size>
               </property>
               <property name="title">
-               <string>动态头像</string>
+               <string>情侣头像</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_8">
                <property name="leftMargin">

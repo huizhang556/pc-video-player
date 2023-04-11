@@ -4,12 +4,14 @@
 #include "login/HeadLabel.h"
 #include "database/dataBase.h"
 #include "customer/BaseDialog.h"
+#include "login/Nationlity.h"
 
 #include <QDialog>
 #include <QBuffer>
 #include <QPixmap>
 #include <QStyle>
 #include <QTimer>
+#include <QImage>
 #include <QBitmap>
 #include <QRegion>
 #include <QThread>
@@ -46,6 +48,7 @@ public:
     ~ChangeHead();
     void    initWorkUI();
     void    handleSignalsAndSlots();
+    void    setInstallEventFilter();
     static  ChangeHead* getInstance();
 
 public slots:
@@ -71,6 +74,7 @@ public slots:
 
 protected:
     void    wheelEvent(QWheelEvent* event)override;
+    bool    eventFilter(QObject *watched, QEvent *event)override;
 
 private:
     Ui::ChangeHead *ui;
@@ -78,6 +82,8 @@ private:
     QGraphicsPixmapItem *m_pixItem  =   nullptr;
     QString             m_curPixPath;
     qreal               m_viewRotate = 0;//view 旋转角度
+    Nationlity          *m_nationlity   =   nullptr;
+    QPushButton         *m_curRecBtn    =   nullptr;
     static  ChangeHead* m_pInstance;
 
 private:
@@ -86,6 +92,10 @@ private:
     QPushButton* getDeleteButton(QListWidgetItem* item, const QString& objName);
     bool    uplaodUserCurHeader(const QByteArray &pic_bytedata);//上传头像
 
+    void    setUserNick(const QString& nick);
+    void    setUserVip(const int grade);
+    void    setUserCreateTime(const QString& create);
+    void    setUserLoginTime(const QString& login);
 };
 
 #endif // CHANGEHEAD_H
