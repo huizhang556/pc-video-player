@@ -20,31 +20,13 @@ void PerCenter::initWorkUI()
 {
     ui->label_header->setToolTip(QString(u8"单击修改头像"));
 
-    ui->toolBox_center->layout()->setSpacing(1);//item之间的间距
-    ui->toolBox_center->setItemIcon(0,QIcon(""));
-    ui->toolBox_center->setItemIcon(1,QIcon(""));
-    ui->toolBox_center->setItemIcon(2,QIcon(""));
-    ui->toolBox_center->setItemIcon(3,QIcon(""));
-
-    for(int i = 0; i < ui->listWidget_perCenter->count(); i++)
+    for(int i = 0; i < manager.count(); i++)
     {
-        ui->listWidget_perCenter->item(i)->setTextAlignment(Qt::AlignCenter | Qt::AlignCenter);
+        QListWidgetItem *item = new QListWidgetItem(manager.at(i));
+        item->setTextAlignment(Qt::AlignCenter);
+        ui->listWidget_manager->addItem(item);
     }
 
-    for(int i = 0; i < ui->listWidget_shortVideo->count(); i++)
-    {
-        ui->listWidget_shortVideo->item(i)->setTextAlignment(Qt::AlignCenter | Qt::AlignCenter);
-    }
-
-    for(int i = 0; i < ui->listWidget_midVideo->count(); i++)
-    {
-        ui->listWidget_midVideo->item(i)->setTextAlignment(Qt::AlignCenter | Qt::AlignCenter);
-    }
-
-    for(int i = 0; i < ui->listWidget_musics->count(); i++)
-    {
-        ui->listWidget_musics->item(i)->setTextAlignment(Qt::AlignCenter | Qt::AlignCenter);
-    }
 }
 
 void PerCenter::handleSignalsAndSlots()

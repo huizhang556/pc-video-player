@@ -8,11 +8,16 @@
 #include "creator/mywork/LabLoading.h"
 #include "creator/mywork/LeftItem.h"
 #include "creator/producer/FilesItem.h"
+#include "creator/mywork/MediaGroup.h"
 #include "videomodels/MultipPlayer.h"
+#include "creator/mywork/SortDialog.h"
 #include <QSize>
 #include <QLabel>
 #include <QWidget>
+#include <QMenu>
+#include <QAction>
 #include <QVariant>
+#include <QUrlQuery>
 #include <QScrollBar>
 #include <QListWidget>
 #include <QUrlQuery>
@@ -35,13 +40,18 @@ public:
     void    setInstallEventer();
 
 public slots:
-    void    slot_receivedData_findTypeResult(QVariant &media);
-    void    slot_addItemToList(const QString text,const QVariant& data, int counts);
-    void    slot_insertItemToList(int index, QString& text,const  QVariant& data, int counts);
-    void    slot_setUserTagsWorkCounts(QStringList& list_counts);//查询各个标签视频数量
+    //左侧列表部分
+    void            slot_receivedData_findTypeResult(QVariant &media);//加载对应类型媒体item
+    void            slot_addItemToList(const QString text,const QVariant& data, int counts);//加载左侧类型列表item
+    void            slot_insertItemToList(int index, QString& text,const  QVariant& data, int counts);//特定位置加载左侧类型列表item
+    void            slot_setUserTagsWorkCounts(QStringList& list_counts);//查询各个标签视频数量
+    //合集部分
+    void            slot_initUserGroups();//查询初始化当前用户下合集组
+    void            slot_addItemToGroupList(GROUPTYPE TYPE, const QString& name, const QString& pix_url, const QString &group_id);//创建合集
+    void            slot_addItmeToGroupIDList(QVariant &media);
 
 protected:
-    bool    eventFilter(QObject *watched, QEvent *event)override;
+    bool            eventFilter(QObject *watched, QEvent *event)override;
 
 private:
     QListWidget*    getConnectListWidget(const QString& type);
@@ -49,13 +59,17 @@ private:
     QLabel*         getCurrentItem(QListWidgetItem *item, const QString &objname);
     LabLoading*     getProgresslable(QListWidgetItem *item, const QString &objname);
     void            showErrorPageMessage(QWidget* page, const QString& message);
+    void            createHJ_ContextMenu();
+
+private slots:
+    void            slot_createNewHJ();
 
 private:
     Ui::DoneWorks *ui;
     int             m_items = 0;
     QListWidgetItem *m_curItem  =   nullptr;//当前选中的item
 
-    QStringList m_producelist =
+    QStringList     m_producelist =
     {
         QString(u8"电影"),
         QString(u8"网络剧"),
@@ -65,7 +79,7 @@ private:
         QString(u8"图片")
     };
 
-    QStringList m_datalist =
+    QStringList     m_datalist =
     {
         QString(u8"movies"),
         QString(u8"netdrama"),
@@ -74,8 +88,6 @@ private:
         QString(u8"musics"),
         QString(u8"pictures")
     };
-
-    QStringList mediaList = {};
 
 signals:
 

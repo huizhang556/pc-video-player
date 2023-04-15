@@ -84,6 +84,9 @@ background-color: transparent;
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
@@ -105,11 +108,17 @@ background-color: transparent;
             <height>20</height>
            </size>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>60</width>
+            <height>20</height>
+           </size>
+          </property>
           <property name="styleSheet">
            <string notr="true">#label_jingdu
 {
 color: white;
-background-color: rgba(60, 68, 74,0.3);
+background-color: #000000;
 }</string>
           </property>
           <property name="text">

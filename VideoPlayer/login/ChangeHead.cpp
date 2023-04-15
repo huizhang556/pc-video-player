@@ -572,6 +572,7 @@ QPushButton *ChangeHead::getDeleteButton(QListWidgetItem *item, const QString &o
     return nullptr;
 }
 
+//上传头像
 bool ChangeHead::uplaodUserCurHeader(const QByteArray &pic_bytedata)
 {
     if(pic_bytedata.isNull() || pic_bytedata.isEmpty())
@@ -594,7 +595,6 @@ bool ChangeHead::uplaodUserCurHeader(const QByteArray &pic_bytedata)
     connect(workThread,&QThread::finished,workThread,&QThread::deleteLater);//线程结束时，线程内对象自动删除
     //上传完成--传回信息,插入数据库
     connect(upWorker,&UploadWork::sig_work_finished,this,&ChangeHead::slot_inserHeadToDB);
-
 }
 
 void ChangeHead::setUserNick(const QString &nick)

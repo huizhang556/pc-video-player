@@ -88,6 +88,7 @@ void Nationlity::handleSignalsAndSlots()
         ui->lineEdit_city->activateWindow();
     });
 
+
     connect(ui->listWidget_country,&QListWidget::itemClicked,[=](QListWidgetItem *item){
         m_country = item->text();
         emit sig_send_selectedtext(m_country.append("-"));
@@ -97,6 +98,7 @@ void Nationlity::handleSignalsAndSlots()
 
     });
 
+    //省-变化
     connect(ui->listWidget_province,&QListWidget::itemClicked,[=](QListWidgetItem *item){
         m_province = item->text();
         m_province.append("-");
@@ -107,6 +109,7 @@ void Nationlity::handleSignalsAndSlots()
 
     });
 
+    //市-变化
     connect(ui->listWidget_city,&QListWidget::itemClicked,[=](QListWidgetItem *item){
         m_city = item->text();
         emit sig_send_selectedtext(m_country + m_province + m_city);

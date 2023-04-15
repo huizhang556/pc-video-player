@@ -110,7 +110,7 @@ border: none;
         <property name="styleSheet">
          <string notr="true">QPushButton
 {
-color: black;
+color: #d7e2f3;
 text-align: center;
 font: 400 15px &quot;微软雅黑&quot;;
 }</string>

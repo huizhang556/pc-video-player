@@ -76,10 +76,14 @@ void CreateCenter::initWorkUI()
     m_income = new Income();
     m_income->setObjectName(QString::fromUtf8("m_income"));
 
+    m_dataAnaly = new DataAnalysis();
+    m_dataAnaly->setObjectName(QString::fromUtf8("m_dataAnaly"));
+
     ui->tabWidget_create->addTab(m_perCenter,QString(u8"个人中心"));
     ui->tabWidget_create->addTab(m_maker,QString(u8"创作中心"));
     ui->tabWidget_create->addTab(m_doneWorks,QString(u8"我的作品"));
     ui->tabWidget_create->addTab(m_income,QString(u8"创作收益"));
+    ui->tabWidget_create->addTab(m_dataAnaly,QString(u8"数据分析"));
 
     m_ctitleBar = new CreTitleBar(this);
     m_ctitleBar->setObjectName(QString::fromUtf8("m_ctitleBar"));
@@ -93,20 +97,25 @@ void CreateCenter::handleSignalsAndSlots()
 {
     //tab切换
     connect(ui->tabWidget_create,&QTabWidget::currentChanged,[=](int index){
-        if(ui->tabWidget_create->widget(index) == m_doneWorks)
+        if(ui->tabWidget_create->widget(index) == m_doneWorks)//已完成作品列表
         {
-           QStringList list_counts = dataBase::getInstance()->creator_getAllTagsWorkCounts();
+           m_doneWorks->slot_initUserGroups();//初始化对应用户的合集组
+           QStringList list_counts = dataBase::getInstance()->creator_getAllTagsWorkCounts();//获取各个类型的媒体数量
            m_doneWorks->slot_setUserTagsWorkCounts(list_counts);
         }
-        else if(ui->tabWidget_create->widget(index) == m_perCenter)
+        else if(ui->tabWidget_create->widget(index) == m_perCenter)//个人中心
         {
             m_perCenter->setCurUserInfo(dataBase::getInstance()->getCurrentUserName(),dataBase::getInstance()->getCurrentUserHeadPix());
         }
-        else if(ui->tabWidget_create->widget(index) == m_maker)
+        else if(ui->tabWidget_create->widget(index) == m_maker)//上传列表
         {
 
         }
-        else if(ui->tabWidget_create->widget(index) == m_income)
+        else if(ui->tabWidget_create->widget(index) == m_income)//个人收入
+        {
+
+        }
+        else if(ui->tabWidget_create->widget(index) == m_dataAnaly)//数据分析
         {
 
         }

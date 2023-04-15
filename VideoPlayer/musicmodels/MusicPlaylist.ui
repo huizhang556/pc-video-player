@@ -136,7 +136,7 @@ margin-top: 3px;
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab_danqu">
         <attribute name="title">
@@ -445,7 +445,7 @@ QToolButton:hover
                    <enum>QFrame::Raised</enum>
                   </property>
                   <property name="currentIndex">
-                   <number>0</number>
+                   <number>1</number>
                   </property>
                   <widget class="QWidget" name="page_0">
                    <layout class="QVBoxLayout" name="verticalLayout_8">

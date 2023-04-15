@@ -126,6 +126,7 @@ void CusHSlider::updateValueImagePosition(QMouseEvent *event)
     if(m_use && m_isImage && this->isEnabled())
     {
         m_seekBtn->show();
+//        m_frameImages->setFixedSize(150,100);
         m_frameImages->raise();
         m_frameImages->show();
         const int global_x = this->mapToGlobal(event->pos()).x();
@@ -160,6 +161,7 @@ void CusHSlider::updateValueImagePosition(QMouseEvent *event)
     else
     {
         m_frameImages->hide();
+//        m_frameImages->setFixedSize(60,20);
     }
 }
 

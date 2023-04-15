@@ -671,5 +671,9 @@
         <file>images/icon/leftbar_msgs_hover.png</file>
         <file>images/icon/vtitle_grub.png</file>
         <file>images/icon/vtitle_grub_hover.png</file>
+        <file>images/fileitem/item_return_hover.png</file>
+        <file>images/fileitem/item_return_normal.png</file>
+        <file>images/icon/addTab_white.png</file>
+        <file>images/bgpic/cusvideoitem4.png</file>
     </qresource>
 </RCC>

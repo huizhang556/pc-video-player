@@ -267,6 +267,7 @@ background-color: rgb(7, 202, 202);
                <property name="styleSheet">
                 <string notr="true">QPushButton
 {
+color: white;
 text-align: left;
 padding-left: 6px;
 font: 800 16px &quot;微软雅黑&quot;;
@@ -447,6 +448,7 @@ background-color: rgb(7, 202, 202);
                <property name="styleSheet">
                 <string notr="true">QPushButton
 {
+color: white;
 text-align: left;
 padding-left: 6px;
 font: 800 16px &quot;微软雅黑&quot;;
@@ -621,6 +623,7 @@ background-color: rgb(7, 202, 202);
                <property name="styleSheet">
                 <string notr="true">QPushButton
 {
+color: white;
 text-align: left;
 padding-left: 6px;
 font: 800 16px &quot;微软雅黑&quot;;
@@ -696,6 +699,9 @@ color: #ff4536;
                 <height>46</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
               <layout class="QHBoxLayout" name="horizontalLayout_30">
                <property name="leftMargin">
                 <number>0</number>
@@ -752,6 +758,12 @@ color: #ff4536;
                       <width>45</width>
                       <height>26</height>
                      </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel
+{
+color: white;
+}</string>
                     </property>
                     <property name="text">
                      <string>  分类</string>
@@ -876,6 +888,12 @@ QDateEdit::down-arrow:on
                       <height>26</height>
                      </size>
                     </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel
+{
+color: white;
+}</string>
+                    </property>
                     <property name="text">
                      <string>  时间</string>
                     </property>
@@ -898,6 +916,7 @@ QDateEdit::down-arrow:on
                     <property name="styleSheet">
                      <string notr="true">QPushButton
 {
+color: white;
 border: 1px solid black;
 border-radius: 3px;
 background-color: rgba(157, 157, 157,0.8);
@@ -936,6 +955,7 @@ background-color: rgb(157, 157, 157);
                     <property name="styleSheet">
                      <string notr="true">QPushButton
 {
+color: white;
 border: 1px solid black;
 border-radius: 3px;
 background-color: rgba(157, 157, 157,0.8);
@@ -1099,6 +1119,7 @@ border-image: url(:/images/creator/caledar_hover.png);
                     <property name="styleSheet">
                      <string notr="true">QPushButton
 {
+color: white;
 border: 1px solid black;
 border-radius: 3px;
 background-color: rgba(214, 214, 214,0.6);
@@ -1169,6 +1190,12 @@ background-color: rgba(157, 157, 157,0.8);
                       <width>60</width>
                       <height>26</height>
                      </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLabel
+{
+color: white;
+}</string>
                     </property>
                     <property name="text">
                      <string>显示方式</string>

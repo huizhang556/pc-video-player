@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1131</width>
-    <height>688</height>
+    <width>939</width>
+    <height>556</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <property name="spacing">
-      <number>10</number>
+      <number>0</number>
      </property>
      <item>
       <widget class="QWidget" name="widget_left" native="true">
@@ -51,10 +51,12 @@
        <property name="styleSheet">
         <string notr="true">#widget_left
 {
-border-radius: 6px;
-border: 2px solid green;
-background-color: rgb(255, 255, 255);
-}</string>
+border-radius: 0px;
+border: 0px solid green;
+background-color: #233248;
+}
+
+</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <property name="leftMargin">
@@ -75,7 +77,7 @@ background-color: rgb(255, 255, 255);
            <number>0</number>
           </property>
           <item>
-           <widget class="QWidget" name="widget_2" native="true">
+           <widget class="QWidget" name="widget_user" native="true">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -101,7 +103,8 @@ background-color: rgb(255, 255, 255);
               <string notr="true">QLabel
 {
 border-radius: 33px;
-background-color: rgb(0, 170, 127);
+border-image: url(:/images/bgpic/cusvideoitem3.png);
+background-color: transparent;
 }
 
 QLabel:hover
@@ -204,6 +207,18 @@ color: red;
                <height>26</height>
               </size>
              </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+border: none;
+color: white;
+}
+
+QPushButton:hover
+{
+color: #f52365;
+}</string>
+             </property>
              <property name="text">
               <string>天空之城8020</string>
              </property>
@@ -211,272 +226,28 @@ color: red;
            </widget>
           </item>
           <item>
-           <widget class="QToolBox" name="toolBox_center">
+           <widget class="QListWidget" name="listWidget_manager">
             <property name="styleSheet">
-             <string notr="true">#toolBox_center
-{
-/*item高度通过icon-size撑开，但是前提是必须设置icon才生效*/
-icon-size: 20px;
-background-color: rgb(192, 255, 2); 
-}
-
-/*抽屉控件,有效*/
-#toolBox_center::tab
-{
-font: 400 15px &quot;微软雅黑&quot;;
-color: rgb(17, 17, 17);
-/*控制文字居中只能通过padding,同时图标也会被移动在中间*/
-padding-left: 60px;
-background-color: rgb(192, 255, 2);
-}
-
-/*tab样式-hover*/
-#toolBox_center::tab:hover
-{
-color: #ff3b32;
-background-color: transparent;
-}
-
-/*tab样式-selected*/
-#toolBox_center::tab:selected
-{
-font-weight: mormal;
-color: #ff3b32;
-background-color: rgb(229, 250, 250);
-}
-
-/**里面嵌套的listwidget**/
-QListWidget
+             <string notr="true">QListWidget
 {
 border: none;
-font: 400 16px &quot;微软雅黑&quot;;
+font: 400 15px &quot;微软雅黑&quot;;
 background-color: transparent;
 }
 
 QListWidget::item
 {
-height: 36px;
-color: #a8a8a8;
+color: #e1eeff;
+min-height: 50px;
 background-color: transparent;
 }
 
-QListWidget::item:selected
+QListWidget::item:hover,QListWidget::item:selected
 {
-color: #65dede;
-}
-
-QListWidget::item:hover
-{
-color: #65dede;
+color: #e1eeff;
+background-color: #253c56;
 }</string>
             </property>
-            <property name="currentIndex">
-             <number>3</number>
-            </property>
-            <widget class="QWidget" name="page">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>192</width>
-               <height>338</height>
-              </rect>
-             </property>
-             <attribute name="label">
-              <string>个人中心</string>
-             </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout_26">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QListWidget" name="listWidget_perCenter">
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <item>
-                 <property name="text">
-                  <string>我的首页</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>账号数据</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>等级权益</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>账号管理</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="page_2">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>192</width>
-               <height>338</height>
-              </rect>
-             </property>
-             <attribute name="label">
-              <string>短视频</string>
-             </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout_27">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QListWidget" name="listWidget_shortVideo">
-                <item>
-                 <property name="text">
-                  <string>视频管理</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>合集管理</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>视频数据</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>收益数据</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="page_6">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>192</width>
-               <height>338</height>
-              </rect>
-             </property>
-             <attribute name="label">
-              <string>中视频</string>
-             </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout_28">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QListWidget" name="listWidget_midVideo">
-                <item>
-                 <property name="text">
-                  <string>原创视频</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>转载视频</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="page_5">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>192</width>
-               <height>338</height>
-              </rect>
-             </property>
-             <attribute name="label">
-              <string> 音乐</string>
-             </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout_29">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QListWidget" name="listWidget_musics">
-                <item>
-                 <property name="text">
-                  <string>新歌首发</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>自制音乐</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>转载音乐</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-             </layout>
-            </widget>
            </widget>
           </item>
           <item>
@@ -596,9 +367,9 @@ color: #ff3e33;
                   <property name="styleSheet">
                    <string notr="true">#widget_topleft
 {
-border-radius: 6px;
-border: 2px solid green;
-background-color: rgb(255, 255, 255);
+border-radius: 3px;
+border: 0px solid green;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #e05801, stop:1  #e00004);
 }</string>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -618,7 +389,7 @@ background-color: rgb(255, 255, 255);
                     <number>2</number>
                    </property>
                    <item>
-                    <widget class="QFrame" name="frame_title">
+                    <widget class="QFrame" name="frame_title1">
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
@@ -632,7 +403,10 @@ background-color: rgb(255, 255, 255);
                       </size>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true"/>
+                      <string notr="true">#frame_title1
+{
+background-color: #1195b8;
+}</string>
                      </property>
                      <property name="frameShape">
                       <enum>QFrame::StyledPanel</enum>
@@ -673,10 +447,12 @@ background-color: rgb(255, 255, 255);
                         <property name="styleSheet">
                          <string notr="true">QPushButton
 {
+color: white;
 text-align: left;
 padding-left: 6px;
 font: 400 16px &quot;微软雅黑&quot;;
-}</string>
+}
+</string>
                         </property>
                         <property name="text">
                          <string>    数据概况</string>
@@ -711,7 +487,18 @@ font: 400 16px &quot;微软雅黑&quot;;
                          </size>
                         </property>
                         <property name="styleSheet">
-                         <string notr="true"/>
+                         <string notr="true">QPushButton
+{
+color: white;
+text-align: left;
+padding-left: 6px;
+font: 400 12px &quot;微软雅黑&quot;;
+}
+
+QPushButton:hover
+{
+color: red;
+}</string>
                         </property>
                         <property name="text">
                          <string> 更多 &gt;</string>
@@ -776,7 +563,7 @@ background-color: transparent;
                           <property name="styleSheet">
                            <string notr="true">QPushButton
 {
-color: black;
+color: white;
 font: 800 18px &quot;微软雅黑&quot;;
 }</string>
                           </property>
@@ -890,7 +677,7 @@ background-color: transparent;
                           <property name="styleSheet">
                            <string notr="true">QPushButton
 {
-color: black;
+color: white;
 font: 800 18px &quot;微软雅黑&quot;;
 }</string>
                           </property>
@@ -1004,7 +791,7 @@ background-color: transparent;
                           <property name="styleSheet">
                            <string notr="true">QPushButton
 {
-color: black;
+color: white;
 font: 800 18px &quot;微软雅黑&quot;;
 }</string>
                           </property>
@@ -1118,7 +905,7 @@ background-color: transparent;
                           <property name="styleSheet">
                            <string notr="true">QPushButton
 {
-color: black;
+color: white;
 font: 800 18px &quot;微软雅黑&quot;;
 }</string>
                           </property>
@@ -1188,7 +975,7 @@ font: 400 12px &quot;微软雅黑&quot;;
                  </widget>
                 </item>
                 <item>
-                 <widget class="QWidget" name="widget_8" native="true">
+                 <widget class="QWidget" name="widget_announce" native="true">
                   <property name="minimumSize">
                    <size>
                     <width>365</width>
@@ -1202,11 +989,11 @@ font: 400 12px &quot;微软雅黑&quot;;
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">#widget_8
+                   <string notr="true">#widget_announce
 {
-border-radius: 6px;
-border: 2px solid green;
-background-color: rgb(255, 255, 255);
+border-radius: 3px;
+border: 0px solid green;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #b0cb37, stop:1  #7fa900);
 }</string>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_25">
@@ -1231,7 +1018,7 @@ background-color: rgb(255, 255, 255);
                       <number>0</number>
                      </property>
                      <item>
-                      <widget class="QFrame" name="frame_title_4">
+                      <widget class="QFrame" name="frame_title2">
                        <property name="minimumSize">
                         <size>
                          <width>0</width>
@@ -1243,6 +1030,12 @@ background-color: rgb(255, 255, 255);
                          <width>16777215</width>
                          <height>40</height>
                         </size>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">#frame_title2
+{
+background-color: #1195b8;
+}</string>
                        </property>
                        <property name="frameShape">
                         <enum>QFrame::StyledPanel</enum>
@@ -1283,10 +1076,13 @@ background-color: rgb(255, 255, 255);
                           <property name="styleSheet">
                            <string notr="true">QPushButton
 {
+color: white;
 text-align: left;
 padding-left: 6px;
 font: 400 16px &quot;微软雅黑&quot;;
-}</string>
+}
+
+</string>
                           </property>
                           <property name="text">
                            <string>  公告</string>
@@ -1320,6 +1116,20 @@ font: 400 16px &quot;微软雅黑&quot;;
                             <height>22</height>
                            </size>
                           </property>
+                          <property name="styleSheet">
+                           <string notr="true">QPushButton
+{
+color: white;
+text-align: left;
+padding-left: 6px;
+font: 400 12px &quot;微软雅黑&quot;;
+}
+
+QPushButton:hover
+{
+color: red;
+}</string>
+                          </property>
                           <property name="text">
                            <string> 更多 &gt;</string>
                           </property>
@@ -1329,7 +1139,13 @@ font: 400 16px &quot;微软雅黑&quot;;
                       </widget>
                      </item>
                      <item>
-                      <widget class="QScrollArea" name="scrollArea_3">
+                      <widget class="QScrollArea" name="scrollArea_announce">
+                       <property name="styleSheet">
+                        <string notr="true">#scrollArea_announce
+{
+background-color: transparent;
+}</string>
+                       </property>
                        <property name="widgetResizable">
                         <bool>true</bool>
                        </property>
@@ -1391,13 +1207,13 @@ font: 400 16px &quot;微软雅黑&quot;;
                  <number>10</number>
                 </property>
                 <item>
-                 <widget class="QWidget" name="widget_11" native="true">
+                 <widget class="QWidget" name="widget_hotactivity" native="true">
                   <property name="styleSheet">
-                   <string notr="true">#widget_11
+                   <string notr="true">#widget_hotactivity
 {
-border-radius: 6px;
-border: 2px solid green;
-background-color: rgb(255, 255, 255);
+border-radius: 3px;
+border: 0px solid green;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #ba87b6, stop:1  #22024c);
 }</string>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -1422,7 +1238,7 @@ background-color: rgb(255, 255, 255);
                       <number>0</number>
                      </property>
                      <item>
-                      <widget class="QFrame" name="frame_title_2">
+                      <widget class="QFrame" name="frame_title3">
                        <property name="minimumSize">
                         <size>
                          <width>0</width>
@@ -1434,6 +1250,12 @@ background-color: rgb(255, 255, 255);
                          <width>16777215</width>
                          <height>40</height>
                         </size>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">#frame_title3
+{
+background-color: #1195b8;
+}</string>
                        </property>
                        <property name="frameShape">
                         <enum>QFrame::StyledPanel</enum>
@@ -1474,10 +1296,12 @@ background-color: rgb(255, 255, 255);
                           <property name="styleSheet">
                            <string notr="true">QPushButton
 {
+color: white;
 text-align: left;
 padding-left: 6px;
 font: 400 16px &quot;微软雅黑&quot;;
-}</string>
+}
+</string>
                           </property>
                           <property name="text">
                            <string>热门征稿活动</string>
@@ -1511,6 +1335,20 @@ font: 400 16px &quot;微软雅黑&quot;;
                             <height>22</height>
                            </size>
                           </property>
+                          <property name="styleSheet">
+                           <string notr="true">QPushButton
+{
+color: white;
+text-align: left;
+padding-left: 6px;
+font: 400 12px &quot;微软雅黑&quot;;
+}
+
+QPushButton:hover
+{
+color: red;
+}</string>
+                          </property>
                           <property name="text">
                            <string> 更多 &gt;</string>
                           </property>
@@ -1520,7 +1358,13 @@ font: 400 16px &quot;微软雅黑&quot;;
                       </widget>
                      </item>
                      <item>
-                      <widget class="QScrollArea" name="scrollArea">
+                      <widget class="QScrollArea" name="scrollArea_activity">
+                       <property name="styleSheet">
+                        <string notr="true">#scrollArea_activity
+{
+background-color: transparent;
+}</string>
+                       </property>
                        <property name="widgetResizable">
                         <bool>true</bool>
                        </property>
@@ -1529,8 +1373,8 @@ font: 400 16px &quot;微软雅黑&quot;;
                          <rect>
                           <x>0</x>
                           <y>0</y>
-                          <width>530</width>
-                          <height>420</height>
+                          <width>348</width>
+                          <height>288</height>
                          </rect>
                         </property>
                        </widget>
@@ -1542,7 +1386,7 @@ font: 400 16px &quot;微软雅黑&quot;;
                  </widget>
                 </item>
                 <item>
-                 <widget class="QWidget" name="widget_12" native="true">
+                 <widget class="QWidget" name="widget_hotsucai" native="true">
                   <property name="minimumSize">
                    <size>
                     <width>365</width>
@@ -1556,11 +1400,11 @@ font: 400 16px &quot;微软雅黑&quot;;
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">#widget_12
+                   <string notr="true">#widget_hotsucai
 {
-border-radius: 6px;
-border: 2px solid green;
-background-color: rgb(255, 255, 255);
+border-radius: 3px;
+border: 0px solid green;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #98c698, stop:1  #01548f);
 }</string>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_23">
@@ -1585,7 +1429,7 @@ background-color: rgb(255, 255, 255);
                       <number>0</number>
                      </property>
                      <item>
-                      <widget class="QFrame" name="frame_title_3">
+                      <widget class="QFrame" name="frame_title4">
                        <property name="minimumSize">
                         <size>
                          <width>0</width>
@@ -1597,6 +1441,12 @@ background-color: rgb(255, 255, 255);
                          <width>16777215</width>
                          <height>40</height>
                         </size>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">#frame_title4
+{
+background-color: #1195b8;
+}</string>
                        </property>
                        <property name="frameShape">
                         <enum>QFrame::StyledPanel</enum>
@@ -1637,10 +1487,13 @@ background-color: rgb(255, 255, 255);
                           <property name="styleSheet">
                            <string notr="true">QPushButton
 {
+color: white;
 text-align: left;
 padding-left: 6px;
 font: 400 16px &quot;微软雅黑&quot;;
-}</string>
+}
+
+</string>
                           </property>
                           <property name="text">
                            <string>  热门素材</string>
@@ -1674,6 +1527,20 @@ font: 400 16px &quot;微软雅黑&quot;;
                             <height>22</height>
                            </size>
                           </property>
+                          <property name="styleSheet">
+                           <string notr="true">QPushButton
+{
+color: white;
+text-align: left;
+padding-left: 6px;
+font: 400 12px &quot;微软雅黑&quot;;
+}
+
+QPushButton:hover
+{
+color: red;
+}</string>
+                          </property>
                           <property name="text">
                            <string> 更多 &gt;</string>
                           </property>
@@ -1683,7 +1550,13 @@ font: 400 16px &quot;微软雅黑&quot;;
                       </widget>
                      </item>
                      <item>
-                      <widget class="QScrollArea" name="scrollArea_2">
+                      <widget class="QScrollArea" name="scrollArea_sucai">
+                       <property name="styleSheet">
+                        <string notr="true">#scrollArea_sucai
+{
+background-color: transparent;
+}</string>
+                       </property>
                        <property name="widgetResizable">
                         <bool>true</bool>
                        </property>
@@ -1693,7 +1566,7 @@ font: 400 16px &quot;微软雅黑&quot;;
                           <x>0</x>
                           <y>0</y>
                           <width>355</width>
-                          <height>420</height>
+                          <height>288</height>
                          </rect>
                         </property>
                        </widget>

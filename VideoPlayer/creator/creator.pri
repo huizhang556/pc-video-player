@@ -12,7 +12,10 @@ FORMS += \
     $$PWD/income/Income.ui \
     $$PWD/mywork/LeftItem.ui \
     $$PWD/producer/TextImageLab.ui \
-    $$PWD/producer/DragListWidget.ui
+    $$PWD/producer/DragListWidget.ui \
+    $$PWD/mywork/MediaGroup.ui \
+    $$PWD/analydata/DataAnalysis.ui \
+    $$PWD/mywork/SortDialog.ui
 
 
 HEADERS += \
@@ -31,7 +34,10 @@ HEADERS += \
     $$PWD/mywork/LeftItem.h \
     $$PWD/mywork/LabLoading.h \
     $$PWD/producer/TextImageLab.h \
-    $$PWD/producer/DragListWidget.h
+    $$PWD/producer/DragListWidget.h \
+    $$PWD/mywork/MediaGroup.h \
+    $$PWD/analydata/DataAnalysis.h \
+    $$PWD/mywork/SortDialog.h
 
 
 SOURCES += \
@@ -50,7 +56,10 @@ SOURCES += \
     $$PWD/mywork/LeftItem.cpp \
     $$PWD/mywork/LabLoading.cpp \
     $$PWD/producer/TextImageLab.cpp \
-    $$PWD/producer/DragListWidget.cpp
+    $$PWD/producer/DragListWidget.cpp \
+    $$PWD/mywork/MediaGroup.cpp \
+    $$PWD/analydata/DataAnalysis.cpp \
+    $$PWD/mywork/SortDialog.cpp
 
 
 

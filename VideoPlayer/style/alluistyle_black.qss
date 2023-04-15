@@ -16,6 +16,12 @@ QTabBar
 qproperty-usesScrollButtons: false;
 }
 
+/**视频归类**/
+SortDialog
+{
+background-color: rgb(57, 67, 87);
+}
+
 /*类选择器在代码里有效，样式表中无效，防止子控件继承样式*/
 MultipPlayer
 {

@@ -50,6 +50,9 @@ void FilesItem::initWorkUI()
     ui->pushButton_remove->setToolTip(QString(u8"移除"));
     ui->label_pic->setAlignment(Qt::AlignCenter);
 
+    ui->checkBox_selall->setCheckable(true);
+    ui->checkBox_selall->setChecked(false);
+
     ui->progressBar->setValue(0);
     ui->progressBar->setRange(0,100);
 
@@ -134,9 +137,14 @@ void FilesItem::handleSignalsAndSlots()
         }
     });
 
-//    connect(ui->pushButton_finish,&QPushButton::clicked,[=](){
-//        ui->pushButton_editinfo->click();
-//    });
+    //下载
+    connect(ui->pushButton_finish,&QPushButton::clicked,[=](){
+        QUrlQuery query;
+        query.addQueryItem(QString(u8"nick"),ui->lineEdit_displaytitle->text());
+        query.addQueryItem(QString(u8"url"),m_furl);
+        emit sig_sendItem_download(query);
+        qDebug() << QString(u8"下载");
+    });
 
     //媒体信息编辑
     connect(ui->pushButton_editinfo,&QPushButton::clicked,[=](bool checked){
@@ -238,7 +246,8 @@ void FilesItem::handleSignalsAndSlots()
 
 void FilesItem::setInstallEventFilter()
 {
-
+    this->installEventFilter(this);
+    ui->label_pic->installEventFilter(this);
 }
 
 void FilesItem::initFileItem(const fileBody &body)
@@ -253,6 +262,11 @@ void FilesItem::initFileItem(const fileBody &body)
     ui->lineEdit_mduration->setReadOnly(true);
 }
 
+QString FilesItem::getItem_furl()
+{
+    return m_furl;
+}
+
 void FilesItem::slot_setItemEdit(const FILEEDIT edit)
 {
     switch (edit)
@@ -261,18 +275,21 @@ void FilesItem::slot_setItemEdit(const FILEEDIT edit)
     {
         ui->pushButton_pause->setCheckable(true);
         ui->pushButton_pause->setChecked( true);
+        ui->stackedWidget_check->setCurrentWidget(ui->page_close);
     }
         break;
     case CANEDIT:
     {
+        m_rmenu = true;//可以右键
         ui->lineEdit_filename->setReadOnly(true);
         ui->progressBar->setHidden(true);
         ui->pushButton_editinfo->setText(QString(u8"详细"));
         ui->pushButton_pause->setText(QString(u8"播放"));
         ui->pushButton_pause->setCheckable(false);
-        ui->pushButton_finish->setText(QString(u8"已上传"));
-        ui->pushButton_finish->setDisabled(true);
+        ui->pushButton_finish->setText(QString(u8"下载"));
+        ui->pushButton_finish->setDisabled(false);
         ui->pushButton_opencover->setDisabled(true);
+        ui->stackedWidget_check->setCurrentWidget(ui->page_close);
     }
         break;
     default:
@@ -705,6 +722,16 @@ QString FilesItem::Base64ToQStr(QString base64Str)
     return  QString::fromUtf8(byteA);
 }
 
+void FilesItem::createContextMenu(const QStringList &menulist)
+{
+    QMenu menu;
+    for(int i = 0; i < menuList.count(); i++)
+    {
+        menu.addAction(menulist.at(i));
+    }
+    menu.exec(QCursor::pos());
+}
+
 void FilesItem::slot_replyCoverFinished(QNetworkReply *reply)
 {
     if (reply->error() == QNetworkReply::NoError)
@@ -738,11 +765,41 @@ void FilesItem::slot_statusButtonClick()
     //    slot_setItemEdit(FILEEDIT::CANEDIT);
 }
 
+void FilesItem::slot_setSelButtonChecked(const bool checked)
+{
+    if(checked)
+    {
+        ui->checkBox_selall->setChecked(true);
+        ui->stackedWidget_check->setCurrentWidget(ui->page_check);
+    }
+    else
+    {
+        ui->checkBox_selall->setChecked(false);
+        ui->stackedWidget_check->setCurrentWidget(ui->page_close);
+    }
+}
+
 bool FilesItem::eventFilter(QObject *watched, QEvent *event)
 {
+    QMouseEvent *mevent = static_cast<QMouseEvent*>(event);
     if(watched == this && event->type() == QEvent::Enter)
     {
-        setCursor(Qt::ArrowCursor);
+
+    }
+    if(watched == ui->label_pic)
+    {
+        if(event->type() == QEvent::MouseButtonPress && mevent->buttons() & Qt::RightButton && m_rmenu)
+        {
+//            createContextMenu(menuList);
+        }
+        else if(event->type() == QEvent::Enter)
+        {
+            setCursor(Qt::PointingHandCursor);
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+            setCursor(Qt::ArrowCursor);
+        }
     }
     return QWidget::eventFilter(watched,event);
 }

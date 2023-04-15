@@ -48,7 +48,8 @@ background-color: transparent;
      <property name="styleSheet">
       <string notr="true">#frame_bgmask
 {
-background-color: #a8e1e1;
+color: white;
+background-color: rgb(36, 36, 60);
 }</string>
      </property>
      <property name="frameShape">
@@ -152,12 +153,8 @@ right: 2px;
 
 QTabBar::tab 
 {
-background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
-                                stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
-background-color: transparent;
+color: #ffffff;
 font: 400 16px &quot;微软雅黑&quot;;
-color: #27282f;
 border: 0px solid green;
 border-bottom-color: red;
 border-top-left-radius: 4px;
@@ -165,19 +162,21 @@ border-top-right-radius: 4px;
 min-width: 100px;
 min-height:36px;
 margin: 0px 1px;
+background-color: transparent;
 }
 
-QTabBar::tab:selected, QTabBar::tab:hover 
+QTabBar::tab:selected
 {
-background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #fafafa, stop: 0.4 #f4f4f4,
-                                stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
-
-background-color: #fd78a7;
+color: #00ad87;
 font: 800 17px &quot;微软雅黑&quot;;
-color: #a17fc7;
+background-color: #3ed1fd;
 }
 
+QTabBar::tab:hover 
+{
+color: #00ad87;
+font: 800 17px &quot;微软雅黑&quot;;
+}
 
 QTabBar::tab:!selected 
 {

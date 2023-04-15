@@ -7,6 +7,7 @@
 #include <QSqlResult>
 #include <QSqlRecord>
 #include <QVariant>
+#include <QUrlQuery>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlDriver>
@@ -138,7 +139,7 @@ public slots:
     bool                    video_recDramaInfo();//查询推荐列表
 
     //查询作品
-    bool                    creator_getdoneWorks(const QString& tags);//按标签查询作品
+    bool                    creator_getdoneWorks(const QString& tags);//按标签查询作品  
     int                     creator_getdoneWorkCounts(const QString& tags);//查询数量
     QStringList             creator_getAllTagsWorkCounts();//查询所有标签的媒体数量
 
@@ -147,10 +148,23 @@ public slots:
     bool                    header_getUserHistory();//查询当前用户历史头像
     bool                    header_getManHeaderList();//查询男性头像
     bool                    header_getWomanHeaderList();//查询女性头像
-    bool                    header_getGifHeaderList();//查询动态头像
+    bool                    header_getGifHeaderList();//查询情侣头像
     bool                    header_inserUsrHeaderToDB(const QString &pix_url,const QString& pix_type);//插入头像图片数据
     bool                    header_updateUserHeader(const QString &user_id,const QString& pix_url);//更新用户头像
     bool                    header_deleteUserHisHeader(const QString &user_id, const QString& pix_id);//删除用户历史头像
+
+    //用户合集
+    bool                    group_getCurUserGroups(const QString &user_id);//获取当前用户的所有合集
+    QList<QUrlQuery>&       group_getCurUserAllGroups(const QString &user_id);
+    bool                    group_getCurUserGroupMedias(const QString& group_id);//获取当前用户的某个合集下所有媒体
+    QList<QVariant>&        group_getCurUserOneGroupAllMedias(const QString& group_id);
+    QList<QVariant>&        group_getCurUserOneSortAllMedias(const QString& tags);
+    QString                 group_insertGroups(const QString& user_id, const QString& group_name, const QString& group_pix);//添加某个合集
+    bool                    group_removeGroups(const QString& group_id);//删除某个合集
+    bool                    group_updateGroupsName(const QString& group_id,const QString& groupName);//更新合集名称
+    bool                    group_updateGroupsCover(const QString& group_id,const QString& groupCover);//更新合集封面
+    bool                    group_insertOneToGroups(const QString& group_id,const int media_id);//将某个媒体添加到合集当中
+    bool                    group_removeOneFromGroups(const QString& group_id,const int media_id);//从合集中删除某个媒体
 
 protected:
 
@@ -179,6 +193,11 @@ private:
     QString                 m_time_create; // 创建时间
     bool                    m_online;//是否在线
     QPixmap                 m_curHeadPix;//用户头像
+
+    //合集
+    QList<QUrlQuery>        m_groups;//所有合集
+    QList<QVariant>        m_groupItems;//某个合集所有item
+    QList<QVariant>        m_sortItems;//某个分类类型下所有item
 
     //数据库连接
     static      QString     m_hostName;//主机ip
@@ -218,6 +237,9 @@ signals:
     void        sig_header_man(QString);
     void        sig_header_woman(QString);
     void        sig_header_gif(QString);
+
+    void        sig_group_allgroups(QString,QString,QString);//name + pix + id
+    void        sig_group_groupMedias(QVariant&);//返回媒体信息
 };
 
 #endif // DATABASE_H

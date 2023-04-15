@@ -335,7 +335,7 @@ padding: 0 5px;
 </string>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab_perInfo">
            <attribute name="title">
@@ -387,6 +387,7 @@ QSpinBox
 {
 color: #2fd6f9;
 border: none;
+margin-right: -5px;
 text-align: left;
 font: 400 14px &quot;微软雅黑&quot;;
 }

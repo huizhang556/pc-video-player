@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1079</width>
+    <width>1223</width>
     <height>60</height>
    </rect>
   </property>
@@ -462,7 +462,7 @@ border:none;
 }</string>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="page">
             <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -1828,12 +1828,9 @@ background-color: transparent;
 border-image: url(:/images/icon/close3.png);
 }
 
-QPushButton:hover{
-/*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
-	stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
+QPushButton:hover
+{
 border-image: url(:/images/icon/closehover.png);
-border: 1px solid #3C80B1;
-
 }</string>
                  </property>
                  <property name="text">
@@ -1875,14 +1872,14 @@ border: 1px solid #3C80B1;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CusLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>customer/CusLineEdit.h</header>
-  </customwidget>
-  <customwidget>
    <class>RoundLab</class>
    <extends>QLabel</extends>
    <header>customer/RoundLab.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CusLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customer/CusLineEdit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

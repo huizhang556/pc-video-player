@@ -160,19 +160,18 @@ void TitleBar::initWorker()
 
     //历史记录列表
     m_listWdgt_history = new QListWidget();
+    m_listWdgt_history->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
     m_listWdgt_history->setObjectName(QString::fromLocal8Bit("m_listWdgt_history"));
     m_listWdgt_history->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_listWdgt_history->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    m_listWdgt_history->setWindowFlags(Qt::FramelessWindowHint);
     m_listWdgt_history->installEventFilter(this);
 
     //引擎列表
     m_listWdgt_engine = new QListWidget();
-    m_listWdgt_engine->setWindowFlags(Qt::Tool);
+    m_listWdgt_engine->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
     m_listWdgt_engine->setObjectName(QString::fromLocal8Bit("m_listWdgt_engine"));
     m_listWdgt_engine->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_listWdgt_engine->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    m_listWdgt_engine->setWindowFlags(Qt::FramelessWindowHint);
     m_listWdgt_engine->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     m_listWdgt_engine->installEventFilter(this);
     m_engineSetBtn = new QPushButton(QString::fromLocal8Bit("设置"));

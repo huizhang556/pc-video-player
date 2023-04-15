@@ -1399,5 +1399,336 @@ bool dataBase::header_deleteUserHisHeader(const QString &user_id, const QString 
     }
 }
 
+//查询当前用户下所有的合集
+bool dataBase::group_getCurUserGroups(const QString &user_id)
+{
+    QSqlQuery query(getSqlDataBase());
+    //按某个字段统计效率高
+    bool isOK = query.exec(QString("select group_name, group_pix, group_id from user_groups where user_id = '%1';").arg(user_id));
+    if(isOK)
+    {
+        qDebug() << QString(u8"在用户：%1 下找到 %2 个合集。").arg(user_id).arg(query.size());
+        while (query.next())
+        {
+            QString group_name  = query.value(0).toString();
+            QString group_pix   = query.value(1).toString();
+            QString group_id    = query.value(2).toString();
+            emit sig_group_allgroups(group_name,group_pix,group_id);
+        }
+    }
+    else
+    {
+        qDebug() << QString(u8"用户：%1 下查找到合集失败！").arg(user_id);
+        return -1;
+    }
+}
+
+//获取某个用户所有的合集
+QList<QUrlQuery> &dataBase::group_getCurUserAllGroups(const QString &user_id)
+{
+    m_groups.clear();
+    QSqlQuery query(getSqlDataBase());
+    //按某个字段统计效率高
+    bool isOK = query.exec(QString("select group_name, group_pix, group_id from user_groups where user_id = '%1';").arg(user_id));
+    if(isOK)
+    {
+        qDebug() << QString(u8"在用户：%1 下找到 %2 个合集。").arg(user_id).arg(query.size());
+        if(query.size() == 0)
+        {
+            return m_groups;
+        }
+        while (query.next())
+        {
+            QString group_name  = query.value(0).toString();
+            QString group_pix   = query.value(1).toString();
+            QString group_id    = query.value(2).toString();
+
+            QUrlQuery querys;
+            querys.addQueryItem(QString(u8"group_name"),group_name);
+            querys.addQueryItem(QString(u8"group_pix"),group_pix);
+            querys.addQueryItem(QString(u8"group_id"),group_id);
+            m_groups.append(querys);
+        }
+        qDebug() << QString(u8"用户：%1 下查找到合集已发出！").arg(user_id);
+        return m_groups;
+    }
+    else
+    {
+        qDebug() << QString(u8"用户：%1 下查找到合集失败！").arg(user_id);
+        return m_groups;
+    }
+}
+
+//查询某个合集下的所有媒体id
+bool dataBase::group_getCurUserGroupMedias(const QString &group_id)
+{
+    QSqlQuery query1(getSqlDataBase());
+
+    bool isOK = query1.exec(QString("select media_id from groups_drama where group_id = '%1';").arg(group_id));
+    if(isOK)
+    {
+        qDebug() << QString(u8"在合集id：%1 下找到 %2 个媒体。").arg(group_id).arg(query1.size());
+        while (query1.next())//遍历合集下的media_id
+        {
+            int media_id = query1.value(0).toInt();//某个media_id
+            qDebug() << QString(u8"遍历获取到的group_id:") << media_id;
+            //根据id 获取到媒体的详细信息
+            QSqlQuery query2(getSqlDataBase());
+            bool isOK2 = query2.exec(QString("select url, alias, duration, cover, type, theme, size from dramalist where id = %1;").arg(media_id));
+            if(isOK2)
+            {
+                while (query2.next())
+                {
+                    fileBody    body;
+                    body.fid                =   media_id;                 //id
+                    body.furl               =   query2.value(0).toString();//url
+                    body.fnick              =   query2.value(1).toString();//alias
+                    body.fduration          =   query2.value(2).toString();//duration
+                    body.fcover             =   query2.value(3).toString();//cover
+                    body.fmedtype           =   query2.value(4).toString();//type(音乐，电影等)
+                    body.fmedtheme          =   query2.value(5).toString();//theme(古装，科技等)
+                    body.fsize              =   query2.value(6).toInt();//size
+                    QVariant    doneMedia;
+                    doneMedia.setValue(body);
+                    emit sig_group_groupMedias(doneMedia);
+                }
+            }
+            else
+            {
+                qDebug()<< QString::fromLocal8Bit("查找关于媒体id： %1 信息失败！").arg(media_id) << query1.lastError();
+                return false;
+            }
+        }
+    }
+    else
+    {
+        qDebug() << QString(u8"在合集id：%1 下查找文件失败！").arg(group_id);
+        return false;
+    }
+}
+
+//获取某个用户某个合集所有的items
+QList<QVariant> &dataBase::group_getCurUserOneGroupAllMedias(const QString &group_id)
+{
+    m_groupItems.clear();
+    QSqlQuery query1(getSqlDataBase());
+
+    bool isOK = query1.exec(QString("select media_id from groups_drama where group_id = '%1';").arg(group_id));
+    if(isOK)
+    {
+        qDebug() << QString(u8"在合集id：%1 下找到 %2 个媒体。").arg(group_id).arg(query1.size());
+        if(query1.size() == 0)
+        {
+            return m_groupItems;
+        }
+        while (query1.next())//遍历合集下的media_id
+        {
+            int media_id = query1.value(0).toInt();//某个media_id
+            qDebug() << QString(u8"遍历获取到的group_id:") << media_id;
+            //根据id 获取到媒体的详细信息
+            QSqlQuery query2(getSqlDataBase());
+            bool isOK2 = query2.exec(QString("select url, alias, duration, cover, type, theme, size from dramalist where id = %1;").arg(media_id));
+            if(isOK2)
+            {
+                while (query2.next())
+                {
+                    fileBody    body;
+                    body.fid                =   media_id;                 //id
+                    body.furl               =   query2.value(0).toString();//url
+                    body.fnick              =   query2.value(1).toString();//alias
+                    body.fduration          =   query2.value(2).toString();//duration
+                    body.fcover             =   query2.value(3).toString();//cover
+                    body.fmedtype           =   query2.value(4).toString();//type(音乐，电影等)
+                    body.fmedtheme          =   query2.value(5).toString();//theme(古装，科技等)
+                    body.fsize              =   query2.value(6).toInt();//size
+                    QVariant    doneMedia;
+                    doneMedia.setValue(body);
+                    m_groupItems.append(doneMedia);
+                }
+
+            }
+            else
+            {
+                qDebug()<< QString::fromLocal8Bit("查找关于媒体id： %1 信息失败！").arg(media_id) << query1.lastError();
+                return m_groupItems;
+            }
+        }
+        return m_groupItems;
+    }
+    else
+    {
+        qDebug() << QString(u8"在合集id：%1 下查找文件失败！").arg(group_id);
+        return m_groupItems;
+    }
+}
+
+//查询某个分类下的所有媒体
+QList<QVariant> &dataBase::group_getCurUserOneSortAllMedias(const QString &tags)
+{
+    m_sortItems.clear();
+    QSqlQuery query(getSqlDataBase());
+    bool isOK = query.exec(QString("select url, alias, duration, cover, type, theme, size from dramalist where userid = %1 and type = '%2';").arg(m_curUserID).arg(tags));
+    if(isOK)
+    {
+        while (query.next())
+        {
+            fileBody    body;
+            body.furl               =   query.value(0).toString();//url
+            body.fnick              =   query.value(1).toString();//alias
+            body.fduration          =   query.value(2).toString();//duration
+            body.fcover             =   query.value(3).toString();//cover
+            body.fmedtype           =   query.value(4).toString();//type(音乐，电影等)
+            body.fmedtheme          =   query.value(5).toString();//theme(古装，科技等)
+            body.fsize              =   query.value(6).toInt();//size
+            QVariant    doneMedia;
+            doneMedia.setValue(body);
+            m_sortItems.append(doneMedia);
+            qDebug() << QString(u8"查询到用户：%1 指定类型： %2 的视频集合,且已发出信号！").arg(m_curUserID).arg(tags);
+        }
+        return m_sortItems;
+    }
+    else
+    {
+        qDebug()<< QString::fromLocal8Bit("查找 %1 用户拥有剧集信息记录错误").arg(m_curUserID)<< query.lastError();
+        return m_sortItems;
+    }
+}
+
+//添加某个合集
+QString dataBase::group_insertGroups(const QString &user_id, const QString &group_name, const QString &group_pix)
+{
+    QSqlQuery query(getSqlDataBase());
+    QString count_sql = QString("select count(1) from user_groups where user_id = '%1';").arg(user_id);
+    bool ok1 = query.exec(count_sql);
+    if(ok1)
+    {
+        int counts;
+        if(query.next())//必须先信选中一条数据
+        {
+            counts = query.value(0).toInt(); qDebug() <<QString(u8"插入前已有：%1个合集").arg(QString::number(counts));
+        }
+        QString group_id   = user_id + QString("_%1").arg(counts+1,3,10,QLatin1Char('0'));//列表3位置：如：0000000002 + 001
+        qDebug() << QString(u8"将要插入的列表id:") << group_id;
+        QString  insert_sql = QString("insert into user_groups values ('%1', '%2', '%3', '%4');").arg(m_curUserID).arg(group_name).arg(group_pix).arg(group_id);
+        bool isOK = query.exec(insert_sql);
+        if(isOK)
+        {
+            qDebug()<< QString::fromLocal8Bit("新建合集group_id：%1 ，name: %2 插入数据成功！").arg(group_id).arg(group_name);
+            return group_id;
+        }
+        else
+        {
+            qDebug()<< QString::fromLocal8Bit("新建合集group_id：%1 ，name: %2 插入数据失败！").arg(group_id).arg(group_name) << query.lastError();
+            return "";
+        }
+    }
+    else
+    {
+        qDebug()<< QString::fromLocal8Bit("新建合集：name: %1 查询合集数量失败！").arg(group_name) << query.lastError();
+        return "";
+    }
+}
+
+//将媒体添加到合集当中
+bool dataBase::group_insertOneToGroups(const QString& group_id,const int media_id)
+{
+    QSqlQuery query(getSqlDataBase());
+    QString  insert_sql = QString("insert into groups_drama values ('%1', %2);").arg(group_id).arg(media_id);
+    bool isOK = query.exec(insert_sql);
+    if(isOK)
+    {
+        qDebug()<< QString::fromLocal8Bit("向合集： %1 插入media_id为：%2 的媒体成功!").arg(group_id).arg(media_id);
+        return true;
+    }
+    else
+    {
+        qDebug()<< QString::fromLocal8Bit("向合集： %1 插入media_id为：%2 的媒体失败!").arg(group_id).arg(media_id) << query.lastError();
+        return false;
+    }
+}
+
+//删除某个合集
+bool dataBase::group_removeGroups(const QString &group_id)
+{
+    QSqlQuery query(getSqlDataBase());
+    //1.先删除合集中的item
+    bool isOK = query.exec(QString("delete from groups_drama where group_id = '%1';").arg(group_id));
+    if(isOK)
+    {
+        qDebug()<< QString(u8"删除合集：%1 下所有的item成功！").arg(group_id);
+        //2.再删除合集
+        bool isOK2 = query.exec(QString("delete from user_groups where group_id = '%1';").arg(group_id));
+        if(isOK2)
+        {
+            qDebug()<< QString(u8"从合集列表中删除合集：%1 成功！").arg(group_id);
+            return true;
+        }
+        else
+        {
+            qDebug()<< QString(u8"从合集列表中删除合集：%1 失败！").arg(group_id) << query.lastError();
+            return false;
+        }
+    }
+    else
+    {
+        qDebug()<< QString(u8"删除合集：%1 下所有的item失败！").arg(group_id) << query.lastError();
+        return false;
+    }
+}
+
+//从合集中删除媒体
+bool dataBase::group_removeOneFromGroups(const QString &group_id, const int media_id)
+{
+    QSqlQuery query(getSqlDataBase());
+    //字符串一定要以单引号括起来，数字可以不用
+    bool isOK = query.exec(QString("delete from groups_drama where group_id = '%1' and media_id = %2;").arg(group_id).arg(media_id));
+    if(isOK)
+    {
+        qDebug()<<"delete one data from groups_drama successful!";
+        return true;
+    }
+    else
+    {
+        qDebug()<< QString::fromLocal8Bit("delete one data from groups_drama failed！because：") << query.lastError();
+        return false;
+    }
+}
+
+//更新合集名称
+bool dataBase::group_updateGroupsName(const QString &group_id, const QString &groupName)
+{
+    QSqlQuery query(getSqlDataBase());
+    //字符串一定要以单引号括起来，数字可以不用
+    bool isOK = query.exec(QString("update user_groups set group_name = '%1' where group_id = '%2';").arg(groupName).arg(group_id));
+    if(isOK)
+    {
+        qDebug()<<QString(u8"更新合集id: %1 的名称为： %2 成功！").arg(group_id).arg(groupName);
+        return true;
+    }
+    else
+    {
+        qDebug()<<QString(u8"更新合集id: %1 的名称为： %2 失败！").arg(group_id).arg(groupName) << query.lastError();
+        return false;
+    }
+}
+
+//更新合集封面
+bool dataBase::group_updateGroupsCover(const QString & group_id, const QString & groupCover)
+{
+    QSqlQuery query(getSqlDataBase());
+    //字符串一定要以单引号括起来，数字可以不用
+    bool isOK = query.exec(QString("update user_groups set group_pix = '%1' where group_id = '%2';").arg(groupCover).arg(group_id));
+    if(isOK)
+    {
+        qDebug()<<QString(u8"更新合集id: %1 的封面为： %2 成功！").arg(group_id).arg(groupCover);
+        return true;
+    }
+    else
+    {
+        qDebug()<<QString(u8"更新合集id: %1 的封面为： %2 失败！").arg(group_id).arg(groupCover) << query.lastError();
+        return false;
+    }
+}
+
 
 

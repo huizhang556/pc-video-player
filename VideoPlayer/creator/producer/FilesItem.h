@@ -5,7 +5,9 @@
 #include <QUrl>
 #include <QUrlQuery>
 #include <QWidget>
+#include <QMenu>
 #include <QTimer>
+#include <QAction>
 #include <QLabel>
 #include <QImage>
 #include <QPixmap>
@@ -15,6 +17,7 @@
 #include <QListView>
 #include <QBuffer>
 #include <QRegExp>
+#include <QMouseEvent>
 #include <QRegExpValidator>
 #include <QByteArray>
 #include <QStringList>
@@ -34,6 +37,7 @@ extern "C" {
 
 struct fileBody
 {
+    int     fid;        //文件id
     QString furl;       //源地址
     QString fmd5;       //md5
     qint64  fsize;      //大小
@@ -75,32 +79,35 @@ public:
     explicit FilesItem(QWidget *parent = nullptr);
     explicit FilesItem(const FILEEDIT edit, const QUrl& url, const qint64 size, const QString& picpath, QWidget *parent = nullptr);
     ~FilesItem();
-    void    initWorkUI();
-    void    handleSignalsAndSlots();
-    void    setInstallEventFilter();
-    void    initFileItem(const fileBody& body);
+    void        initWorkUI();
+    void        handleSignalsAndSlots();
+    void        setInstallEventFilter();
+    void        initFileItem(const fileBody& body);
+
+    QString        getItem_furl();
 
 public slots:
-    void    slot_setItemEdit(const FILEEDIT edit);
-    void    slot_setItemStatus(FILESTATUS status);
-    void    slot_setItemStatusText();
-    void    slot_setItemStart(bool start);
-    void    slot_setItemUrl(QUrl url);
-    void    slot_setItemSize();
-    void    slot_setItemName();
-    void    slot_setItemPicture();
-    void    slot_setItemDuration();
-    void    slot_getVideoPicure(const char * file,QLabel* label);//如果是视频，获取视频第一帧
-    void    slot_updateProgress(qint64 bytesSent, qint64 bytesTotal);
-    void    slot_updateProgress_header(qint64 bytesSent, qint64 bytesTotal);
-    void    slot_updateStatus(qint64 bytesSent, qint64 bytesTotal);
-    void    slot_update_url_md5(bool sucess,const QString& url,const QString& md5);
-    void    slot_update_header(bool success, const QString& url_header, const QString& md5);
-    void    slot_pauseButtonClick();//模拟暂停按钮点击
-    void    slot_statusButtonClick();//模拟状态按钮点击
+    void        slot_setItemEdit(const FILEEDIT edit);
+    void        slot_setItemStatus(FILESTATUS status);
+    void        slot_setItemStatusText();
+    void        slot_setItemStart(bool start);
+    void        slot_setItemUrl(QUrl url);
+    void        slot_setItemSize();
+    void        slot_setItemName();
+    void        slot_setItemPicture();
+    void        slot_setItemDuration();
+    void        slot_getVideoPicure(const char * file,QLabel* label);//如果是视频，获取视频第一帧
+    void        slot_updateProgress(qint64 bytesSent, qint64 bytesTotal);
+    void        slot_updateProgress_header(qint64 bytesSent, qint64 bytesTotal);
+    void        slot_updateStatus(qint64 bytesSent, qint64 bytesTotal);
+    void        slot_update_url_md5(bool sucess,const QString& url,const QString& md5);
+    void        slot_update_header(bool success, const QString& url_header, const QString& md5);
+    void        slot_pauseButtonClick();//模拟暂停按钮点击
+    void        slot_statusButtonClick();//模拟状态按钮点击
+    void        slot_setSelButtonChecked(const bool checked = false);//设置选择状态(默认不选中)
 
 protected:
-    bool    eventFilter(QObject *watched, QEvent *event)override;
+    bool        eventFilter(QObject *watched, QEvent *event)override;
 
 private:
     QString    switchFormatTime(qint64 total);//秒转时分秒
@@ -111,9 +118,10 @@ private:
 
     QString    QStrToBase64(QString str);
     QString    Base64ToQStr(QString base64Str);
+    void       createContextMenu(const QStringList& menulist);
 
 private slots:
-    void    slot_replyCoverFinished(QNetworkReply *reply);
+    void       slot_replyCoverFinished(QNetworkReply *reply);
 
 private:
     Ui::FilesItem *ui;
@@ -127,9 +135,19 @@ private:
     fileBody    m_body;
     QString     m_duration;
     QImage      m_cover;
+    bool        m_rmenu = false;
 
     QNetworkAccessManager   *manager    =   nullptr;
     QNetworkReply           *reply      =   nullptr;
+
+    QStringList menuList =
+    {
+        QString(u8"自定义合集1"),
+        QString(u8"自定义合集2"),
+        QString(u8"自定义合集3"),
+        QString(u8"自定义合集4"),
+        QString(u8"自定义合集5")
+    };
 
 
 signals:
@@ -137,6 +155,7 @@ signals:
     void    sig_sendItem_pause(bool,QUrl,QUrl);//video_url pic_url
     void    sig_sendItem_play();//播放(播放地址)
     void    sig_sendItem_remove();
+    void    sig_sendItem_download(QUrlQuery);
     void    sig_sendItem_finished(fileBody);
     void    sig_sendItem_statusChanged(FILESTATUS);
 };

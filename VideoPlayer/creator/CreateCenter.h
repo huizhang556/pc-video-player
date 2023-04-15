@@ -10,6 +10,7 @@
 #include "creator/producer/Maker.h"
 #include "creator/mywork/DoneWorks.h"
 #include "creator/percenter/PerCenter.h"
+#include "creator/analydata/DataAnalysis.h"
 
 #include <QWidget>
 #include <QEvent>
@@ -46,6 +47,7 @@ private:
     Maker                   *m_maker        =   nullptr;
     DoneWorks               *m_doneWorks    =   nullptr;
     Income                  *m_income       =   nullptr;
+    DataAnalysis            *m_dataAnaly    =   nullptr;
 
 };
 
