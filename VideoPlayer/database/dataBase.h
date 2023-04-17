@@ -137,11 +137,13 @@ public slots:
     //推荐视频
     bool                    video_insertRecDramaListDB(const QStringList& parma);//插入视频
     bool                    video_recDramaInfo();//查询推荐列表
+    bool                    video_recDrama_of_theme(const QString& theme);//查询某个主题下的视频
 
     //查询作品
     bool                    creator_getdoneWorks(const QString& tags);//按标签查询作品  
     int                     creator_getdoneWorkCounts(const QString& tags);//查询数量
     QStringList             creator_getAllTagsWorkCounts();//查询所有标签的媒体数量
+    bool                    creator_removeOneMediaFromSort(const QString& tags, const int media_id);//删除某个分类下的某个item
 
     //历史头像
     void                    header_initHeader();//初始化
@@ -165,6 +167,9 @@ public slots:
     bool                    group_updateGroupsCover(const QString& group_id,const QString& groupCover);//更新合集封面
     bool                    group_insertOneToGroups(const QString& group_id,const int media_id);//将某个媒体添加到合集当中
     bool                    group_removeOneFromGroups(const QString& group_id,const int media_id);//从合集中删除某个媒体
+
+    //用户收益数据
+    QList<QStringList>&     income_getUserIncomeRecords(const QString& user_id,const QString& data_start,const QString& data_end);//获取用户收益
 
 protected:
 
@@ -195,9 +200,12 @@ private:
     QPixmap                 m_curHeadPix;//用户头像
 
     //合集
-    QList<QUrlQuery>        m_groups;//所有合集
+    QList<QUrlQuery>       m_groups;//所有合集
     QList<QVariant>        m_groupItems;//某个合集所有item
     QList<QVariant>        m_sortItems;//某个分类类型下所有item
+
+    //收益
+    QList<QStringList>      m_incomeRecords;
 
     //数据库连接
     static      QString     m_hostName;//主机ip
@@ -220,7 +228,9 @@ private:
 
 signals:
     void        sig_loginStatusChanged(bool);//0下线 1登录
-    void        sig_sendVideoDramaInfo(QVariant);//推荐剧集列表
+    void        sig_sendVideoDramaInfo(QVariant&);//推荐剧集列表
+    void        sig_sendRecThemeVideos(QVariant&);//相关主题视频
+    void        sig_sendRecThemeVideocounts(int);//相关主题视频数量
     void        sig_sendUserDoneWorks(QVariant&);//已完成作品列表
     void        sig_sendUserDoneWorkCounts(int);//某种已完成作品数量
 //    void        sig_sendVideoDramaUrl(int,QString);

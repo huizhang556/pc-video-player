@@ -141,7 +141,7 @@ background-color: #ffffde;
           <widget class="QLineEdit" name="lineEdit_filename">
            <property name="minimumSize">
             <size>
-             <width>130</width>
+             <width>100</width>
              <height>20</height>
             </size>
            </property>
@@ -310,8 +310,47 @@ border-image: url(:/images/icon/closehover.png);
                <property name="styleSheet">
                 <string notr="true">QCheckBox
 {
-padding-left: 4px;
-}</string>
+padding-left: 0px;
+}
+
+QCheckBox
+{
+font:400 14px &quot;微软雅黑&quot;;
+color: #a2a7ae;
+}
+
+QCheckBox::indicator 
+{
+width: 16px;
+height: 16px;
+color: #a2a7ae;
+border-image: url(:/images/icon/checkbox-unchecked.png);
+background-color: transparent;
+}
+
+/*未选中的样式*/
+QCheckBox::indicator:unchecked
+{
+width: 17px;
+height: 17px;
+border-image: url(:/images/icon/checkbox-unchecked.png);
+background-color: transparent;
+}
+
+QCheckBox::indicator:unchecked:hover
+{
+/*image: url(:/images/icon/unchecked.png);*/
+}
+
+/*选中时的样式*/
+QCheckBox::indicator:checked
+{
+width: 17px;
+height: 17px;
+border-image: url(:/images/icon/checkbox-checked.png);
+background-color: transparent;
+}
+</string>
                </property>
                <property name="text">
                 <string>CheckBox</string>
@@ -461,6 +500,15 @@ background-color:#1afa29;
                 <layout class="QHBoxLayout" name="horizontalLayout_2">
                  <item>
                   <widget class="QLabel" name="label_size">
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton
+{
+color: white;
+border: none;
+text-align: left;
+font: 400 12px &quot;微软雅黑&quot;;
+}</string>
+                   </property>
                    <property name="text">
                     <string/>
                    </property>

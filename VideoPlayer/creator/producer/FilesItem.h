@@ -77,14 +77,15 @@ class FilesItem : public QWidget
 
 public:
     explicit FilesItem(QWidget *parent = nullptr);
-    explicit FilesItem(const FILEEDIT edit, const QUrl& url, const qint64 size, const QString& picpath, QWidget *parent = nullptr);
+    explicit FilesItem(const FILEEDIT edit, const int id, const QUrl& url, const qint64 size, const QString& picpath, QWidget *parent = nullptr);
     ~FilesItem();
     void        initWorkUI();
     void        handleSignalsAndSlots();
     void        setInstallEventFilter();
     void        initFileItem(const fileBody& body);
 
-    QString        getItem_furl();
+    int         getItem_fid();
+    QString     getItem_furl();
 
 public slots:
     void        slot_setItemEdit(const FILEEDIT edit);
@@ -136,6 +137,7 @@ private:
     QString     m_duration;
     QImage      m_cover;
     bool        m_rmenu = false;
+    int         m_fid;
 
     QNetworkAccessManager   *manager    =   nullptr;
     QNetworkReply           *reply      =   nullptr;
@@ -157,6 +159,7 @@ signals:
     void    sig_sendItem_remove();
     void    sig_sendItem_download(QUrlQuery);
     void    sig_sendItem_finished(fileBody);
+    void    sig_sendItem_clicked();
     void    sig_sendItem_statusChanged(FILESTATUS);
 };
 

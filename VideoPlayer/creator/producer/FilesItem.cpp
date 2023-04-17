@@ -11,10 +11,10 @@ FilesItem::FilesItem(QWidget *parent) :
     setInstallEventFilter();
 }
 
-FilesItem::FilesItem(const FILEEDIT edit, const QUrl &url, const qint64 size, const QString &picpath, QWidget *parent):
+FilesItem::FilesItem(const FILEEDIT edit, const int id, const QUrl &url, const qint64 size, const QString &picpath, QWidget *parent):
     QWidget(parent),
     m_canedit(edit),
-//    m_furl(url.path().remove(0,1)),
+    m_fid(id),
     m_name(url.fileName()),
     m_size(size),
     m_picpath(picpath),
@@ -100,6 +100,15 @@ void FilesItem::handleSignalsAndSlots()
 {
     connect(ui->pushButton_remove,&QPushButton::clicked,[=](){
         emit sig_sendItem_remove();
+    });
+
+    //取消勾选(带回来的状态是勾选以后的状态)
+    connect(ui->checkBox_selall,&QCheckBox::clicked,[=](bool checked){
+        qDebug() <<QString(u8"勾选状态:") << checked;
+        if(!checked)
+        {
+            slot_setSelButtonChecked(false);
+        }
     });
 
     connect(ui->pushButton_pause,&QPushButton::clicked,[=](bool checked){
@@ -260,6 +269,11 @@ void FilesItem::initFileItem(const fileBody &body)
     ui->comboBox_mtheme->setDisabled(true);
     ui->lineEdit_displaytitle->setReadOnly(true);
     ui->lineEdit_mduration->setReadOnly(true);
+}
+
+int FilesItem::getItem_fid()
+{
+    return m_fid;
 }
 
 QString FilesItem::getItem_furl()
@@ -791,6 +805,11 @@ bool FilesItem::eventFilter(QObject *watched, QEvent *event)
         if(event->type() == QEvent::MouseButtonPress && mevent->buttons() & Qt::RightButton && m_rmenu)
         {
 //            createContextMenu(menuList);
+        }
+        else if(event->type() == QEvent::MouseButtonPress && mevent->buttons() & Qt::LeftButton && m_canedit == FILEEDIT::CANEDIT)
+        {
+            //FILEEDIT::CANEDIT有两种情况：只在分类的时候才展示
+            emit sig_sendItem_clicked();
         }
         else if(event->type() == QEvent::Enter)
         {

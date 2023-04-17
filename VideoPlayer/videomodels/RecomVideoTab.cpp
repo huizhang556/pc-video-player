@@ -110,12 +110,14 @@ void RecomVideoTab::slot_setCurrentVideoPicture(const QString &path)
     ui->label_currentPic->setScaledContents(true);
 }
 
+//设置视频介绍
 void RecomVideoTab::slot_setCurrentVideoInfo(QString info)
 {
     ui->pushButton_currentText->setText(info);
 }
 
-bool RecomVideoTab::slot_addRecVideoItem(QVariant musicVariant)
+//重载函数1（添加推荐视频）
+bool RecomVideoTab::slot_addRecVideoItem(QVariant& musicVariant)
 {
     MusicData data = musicVariant.value<MusicData>();// 通用类型转为专用类型
     RecVideoItem *videoItem = new RecVideoItem(data.url,data.cover,data.duration,data.alias,data.uplove);
@@ -142,6 +144,7 @@ bool RecomVideoTab::slot_addRecVideoItem(QVariant musicVariant)
     return true;
 }
 
+//重载函数2（添加推荐视频）
 bool RecomVideoTab::slot_addRecVideoItem(QString url, QString path, QString time, QString info, QString count)
 {
     RecVideoItem *videoItem = new RecVideoItem(url,path,time,info,count);

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>810</width>
+    <width>831</width>
     <height>488</height>
    </rect>
   </property>
@@ -227,8 +227,7 @@ background-color: rgb(40, 183, 194);
          <string notr="true">QSplitter::handle 
 {
 border: 1px solid darkgray;
-
-background:red;
+background: #57e5ff;
 
 }
 
@@ -259,7 +258,7 @@ height: 1px;
         <widget class="QFrame" name="frame_L">
          <property name="minimumSize">
           <size>
-           <width>390</width>
+           <width>405</width>
            <height>0</height>
           </size>
          </property>
@@ -273,8 +272,14 @@ background-color: rgb(61, 78, 102);
           <property name="leftMargin">
            <number>6</number>
           </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
           <property name="rightMargin">
            <number>6</number>
+          </property>
+          <property name="bottomMargin">
+           <number>5</number>
           </property>
           <item>
            <widget class="QWidget" name="widget_heji" native="true">
@@ -321,7 +326,13 @@ background-color: rgb(61, 78, 102);
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">QPushButton
+                <string notr="true">#frame_heji_t
+{
+border: 0px solid white;
+border-bottom-width: 1px;
+}
+
+QPushButton
 {
 color: white;
 border: 0px solid gray;
@@ -378,7 +389,7 @@ border-radius: 4px;
                    </size>
                   </property>
                   <property name="text">
-                   <string>合集管理</string>
+                   <string>合集分类</string>
                   </property>
                  </widget>
                 </item>
@@ -418,13 +429,6 @@ border-radius: 4px;
 color: white;
 }
 
-QComboBox
-{
-color: #03b2f5;
-border: 1px solid #03b2f5;
-border-radius: 4px;
-}
-
 QPushButton
 {
 color: white;
@@ -438,12 +442,7 @@ color: #03b2f5;
 border: 1px solid #03b2f5;
 }
 
-QLineEdit
-{
-color: #03b2f5;
-border: 1px solid gray;
-border-radius: 4px;
-}</string>
+</string>
                </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
@@ -500,6 +499,44 @@ border-radius: 4px;
                     <height>28</height>
                    </size>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">QComboBox
+{
+color: #03b2f5;
+border: 1px solid gray;
+border-radius: 3px;
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QComboBox::drop-down
+{
+border: 0px solid gray;
+border-left-width: 1px;
+}
+
+QComboBox::down-arrow 
+{
+border-image: url(:/images/fileitem/combobox_down.png);
+}
+
+QListView
+{
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QListView::item
+{
+color: gray;
+height: 26px;
+background-color: rgba(61, 78, 102,0.8);
+}
+
+QListView::item:hover
+{
+color: white;
+background-color: rgba(61, 78, 102,0.8);
+}</string>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -548,6 +585,37 @@ border-radius: 4px;
                     <height>28</height>
                    </size>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLineEdit
+{
+color: #03b2f5;
+border-radius: 3px;
+border: 1px solid #BFBFBF;
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QLineEdit::selected 
+{
+color: white;
+background-color: #3399FF;
+}
+
+QLineEdit:hover
+{
+border: 1px solid #5ae1eb;
+}
+
+QLineEdit:focus 
+{
+border: 1px solid #3399FF;
+}
+
+QLineEdit::cursor 
+{
+width: 1px;
+background-color: black;
+}</string>
+                  </property>
                  </widget>
                 </item>
                </layout>
@@ -568,7 +636,12 @@ border-radius: 4px;
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">QPushButton
+                <string notr="true">#frame_heji_ctl
+{
+border: 0px solid white;
+}
+
+QPushButton
 {
 color: white;
 border: 1px solid gray;
@@ -854,14 +927,45 @@ text-align: center;
                <number>0</number>
               </property>
               <item>
-               <widget class="QListWidget" name="listWidget_content_L"/>
+               <widget class="QListWidget" name="listWidget_content_L">
+                <property name="styleSheet">
+                 <string notr="true">QListWidget
+{
+border-radius: 0px;
+/*border: 2px dashed gray;*/
+font: 400 16px &quot;微软雅黑&quot;;
+background-color: transparent;
+}
+
+QListWidget::item
+{
+color:transparent;
+padding: 2px 2px;
+border-radius: 4px;
+background-color: #24243c;
+}
+
+QListWidget::item:selected
+{
+color:transparent;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #ba87b6, stop:1  #22024c);
+}
+
+QListWidget::item:hover
+{
+color:transparent;
+border: 1px solid #e00404;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #ba87b6, stop:1  #22024c);
+}</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
             <widget class="QWidget" name="page_blank_L">
              <layout class="QVBoxLayout" name="verticalLayout_13">
               <item>
-               <layout class="QVBoxLayout" name="verticalLayout_12">
+               <layout class="QVBoxLayout" name="verticalLayout_12" stretch="3,1,6">
                 <item>
                  <spacer name="verticalSpacer_4">
                   <property name="orientation">
@@ -891,22 +995,88 @@ text-align: center;
                    </spacer>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="pushButton_heji_blank">
+                   <widget class="QFrame" name="frame_L_blank">
                     <property name="minimumSize">
                      <size>
-                      <width>0</width>
-                      <height>28</height>
+                      <width>150</width>
+                      <height>190</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>16777215</width>
-                      <height>28</height>
+                      <width>150</width>
+                      <height>190</height>
                      </size>
                     </property>
-                    <property name="text">
-                     <string>暂无符合条件视频</string>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
                     </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <property name="leftMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="label_L_blank">
+                       <property name="minimumSize">
+                        <size>
+                         <width>150</width>
+                         <height>150</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>150</width>
+                         <height>150</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="pushButton_heji_blank">
+                       <property name="minimumSize">
+                        <size>
+                         <width>150</width>
+                         <height>30</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>150</width>
+                         <height>30</height>
+                        </size>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">QPushButton
+{
+border: none;
+color: white;
+font: 400 18px &quot;微软雅黑&quot;;
+}</string>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
                    </widget>
                   </item>
                   <item>
@@ -962,8 +1132,14 @@ background-color: rgb(61, 78, 102);
           <property name="leftMargin">
            <number>6</number>
           </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
           <property name="rightMargin">
            <number>6</number>
+          </property>
+          <property name="bottomMargin">
+           <number>5</number>
           </property>
           <item>
            <widget class="QWidget" name="widget_medias" native="true">
@@ -1010,7 +1186,13 @@ background-color: rgb(61, 78, 102);
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">QPushButton
+                <string notr="true">#frame_medias_t
+{
+border: 0px solid white;
+border-bottom-width: 1px;
+}
+
+QPushButton
 {
 color: white;
 border: 0px solid gray;
@@ -1107,12 +1289,6 @@ border-radius: 4px;
 color: white;
 }
 
-QComboBox
-{
-color: #03b2f5;
-border: 1px solid #03b2f5;
-border-radius: 4px;
-}
 
 QPushButton
 {
@@ -1125,13 +1301,6 @@ QPushButton:hover
 {
 color: #03b2f5;
 border: 1px solid #03b2f5;
-}
-
-QLineEdit
-{
-color: #03b2f5;
-border: 1px solid gray;
-border-radius: 4px;
 }</string>
                </property>
                <property name="frameShape">
@@ -1189,6 +1358,44 @@ border-radius: 4px;
                     <height>28</height>
                    </size>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">QComboBox
+{
+color: #03b2f5;
+border: 1px solid gray;
+border-radius: 3px;
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QComboBox::drop-down
+{
+border: 0px solid gray;
+border-left-width: 1px;
+}
+
+QComboBox::down-arrow 
+{
+border-image: url(:/images/fileitem/combobox_down.png);
+}
+
+QListView
+{
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QListView::item
+{
+color: gray;
+height: 26px;
+background-color: rgba(61, 78, 102,0.8);
+}
+
+QListView::item:hover
+{
+color: white;
+background-color: rgba(61, 78, 102,0.8);
+}</string>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -1237,6 +1444,37 @@ border-radius: 4px;
                     <height>28</height>
                    </size>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLineEdit
+{
+color: #03b2f5;
+border-radius: 3px;
+border: 1px solid #BFBFBF;
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QLineEdit::selected 
+{
+color: white;
+background-color: #3399FF;
+}
+
+QLineEdit:hover
+{
+border: 1px solid #5ae1eb;
+}
+
+QLineEdit:focus 
+{
+border: 1px solid #3399FF;
+}
+
+QLineEdit::cursor 
+{
+width: 1px;
+background-color: black;
+}</string>
+                  </property>
                  </widget>
                 </item>
                </layout>
@@ -1257,7 +1495,12 @@ border-radius: 4px;
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">QPushButton
+                <string notr="true">#frame_medias_ctl
+{
+border: 0px solid white;
+}
+
+QPushButton
 {
 color: white;
 border: 1px solid gray;
@@ -1543,14 +1786,45 @@ text-align: center;
                <number>0</number>
               </property>
               <item>
-               <widget class="QListWidget" name="listWidget_content_R"/>
+               <widget class="QListWidget" name="listWidget_content_R">
+                <property name="styleSheet">
+                 <string notr="true">QListWidget
+{
+border-radius: 0px;
+/*border: 2px dashed gray;*/
+font: 400 16px &quot;微软雅黑&quot;;
+background-color: transparent;
+}
+
+QListWidget::item
+{
+color:transparent;
+padding: 2px 2px;
+border-radius: 4px;
+background-color: #24243c;
+}
+
+QListWidget::item:selected
+{
+color:transparent;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #ba87b6, stop:1  #22024c);
+}
+
+QListWidget::item:hover
+{
+color:transparent;
+border: 1px solid #e00404;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #ba87b6, stop:1  #22024c);
+}</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
             <widget class="QWidget" name="page_blank_R">
              <layout class="QVBoxLayout" name="verticalLayout_11">
               <item>
-               <layout class="QVBoxLayout" name="verticalLayout_10">
+               <layout class="QVBoxLayout" name="verticalLayout_10" stretch="3,1,6">
                 <item>
                  <spacer name="verticalSpacer_2">
                   <property name="orientation">
@@ -1580,22 +1854,88 @@ text-align: center;
                    </spacer>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="pushButton_medias_blank">
+                   <widget class="QFrame" name="frame_R_blank">
                     <property name="minimumSize">
                      <size>
-                      <width>0</width>
-                      <height>28</height>
+                      <width>150</width>
+                      <height>190</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>16777215</width>
-                      <height>28</height>
+                      <width>150</width>
+                      <height>190</height>
                      </size>
                     </property>
-                    <property name="text">
-                     <string>暂无符合条件视频</string>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
                     </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout_3">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <property name="leftMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="label_R_blank">
+                       <property name="minimumSize">
+                        <size>
+                         <width>150</width>
+                         <height>150</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>150</width>
+                         <height>150</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="pushButton_medias_blank">
+                       <property name="minimumSize">
+                        <size>
+                         <width>150</width>
+                         <height>30</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>150</width>
+                         <height>30</height>
+                        </size>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">QPushButton
+{
+border: none;
+color: white;
+font: 400 18px &quot;微软雅黑&quot;;
+}</string>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
                    </widget>
                   </item>
                   <item>
@@ -1645,7 +1985,6 @@ text-align: center;
   <tabstop>pushButton_min</tabstop>
   <tabstop>pushButton_heji_title</tabstop>
   <tabstop>pushButton_close</tabstop>
-  <tabstop>listWidget_content_2</tabstop>
   <tabstop>listWidget_content_L</tabstop>
   <tabstop>pushButton_icon</tabstop>
  </tabstops>

@@ -49,6 +49,7 @@ void ShortVideo::initWorkUI()
     ui->listWidget_medialist->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     ui->stackedWidget_player->setCurrentWidget(ui->stackPage_novideo);
+    ui->stackedWidget_dramalist->setCurrentIndex(0);
 
     slot_addSelectTypeToList(typelist);
 }
@@ -57,7 +58,10 @@ void ShortVideo::handleSignalsAndSLots()
 {
     //节目类型选择
     connect(ui->listWidget_type,&QListWidget::itemClicked,[=](QListWidgetItem *item){
-        qDebug() << item->text();
+        qDebug() << QString(u8"当前查找主题：") << item->text();
+        //数据库查询数据并展示
+            ui->listWidget_medialist->clear();
+            emit sig_sendTheme(item->text());
     });
 
     connect(ui->listWidget_medialist,&QListWidget::currentItemChanged,[=](QListWidgetItem *current,QListWidgetItem *previous)
@@ -85,7 +89,7 @@ void ShortVideo::handleSignalsAndSLots()
         query.addQueryItem(u8"pos",pos);
         ui->widget_player->slot_stopPlayer();//停止mini播放器播放
         emit sig_sendToMainPlayer(777,QStringList{m_curMediaUrl},query);
-        qDebug() << QString(u8"转到主 播放器");
+        qDebug() << QString(u8"转到主播放器");
     });
 
     //收藏
@@ -167,7 +171,8 @@ void ShortVideo::slot_addSelectTypeToList(const QStringList &typelist)
         ui->listWidget_type->setCurrentRow(0);
 }
 
-bool ShortVideo::slot_addShortVideoItem(QVariant musicVariant)
+//重载函数1
+bool ShortVideo::slot_addShortVideoItem(QVariant& musicVariant)
 {
     MusicData data = musicVariant.value<MusicData>();// 通用类型转为专用类型
     RecVideoItem *videoItem = new RecVideoItem(data.url,data.cover,data.duration,data.alias,data.uplove);
@@ -177,7 +182,6 @@ bool ShortVideo::slot_addShortVideoItem(QVariant musicVariant)
     ui->listWidget_medialist->addItem(item);
     ui->listWidget_medialist->setItemWidget(item,videoItem);
 
-
     //信号与槽函数
     connect(videoItem,&RecVideoItem::sig_sendVideoUrl,[=](){
         ui->listWidget_medialist->setCurrentItem(item);//实现选中样式
@@ -185,6 +189,7 @@ bool ShortVideo::slot_addShortVideoItem(QVariant musicVariant)
     return true;
 }
 
+//重载函数2
 bool ShortVideo::slot_addShortVideoItem(QString url, QString path, QString time, QString info, QString count)
 {
     RecVideoItem *videoItem = new RecVideoItem(url,path,time,info,count);
@@ -201,10 +206,28 @@ bool ShortVideo::slot_addShortVideoItem(QString url, QString path, QString time,
     return true;
 }
 
-void ShortVideo::slot_clearShortLists()
+void ShortVideo::slot_setCurThemeCounts(int num)
 {
-//    if(ui->listWidget_medialist->count() != 0)
-//    ui->listWidget_medialist->clear();
+    if(num == 0)
+    {
+        setContentTips(QString(u8"暂无该类型资源！"));
+        ui->label_blank->setPixmap(QPixmap(":/images/bgpic/nothing.png"));
+        ui->label_blank->setScaledContents(true);
+        ui->stackedWidget_dramalist->setCurrentWidget(ui->page_blank);
+    }
+    else if(num > 0)
+    {
+        setContentTips(QString(u8"资源正在加载中..."));
+        ui->label_blank->setPixmap(QPixmap(":/images/bgpic/nothing.png"));
+        ui->label_blank->setScaledContents(true);
+        QTimer::singleShot(1500,0,[=](){
+            ui->stackedWidget_dramalist->setCurrentWidget(ui->page_themevideo);
+        });
+    }
+    else
+    {
+        ui->stackedWidget_dramalist->setCurrentWidget(ui->page_themevideo);
+    }
 }
 
 bool ShortVideo::eventFilter(QObject *watched, QEvent *event)
@@ -234,3 +257,10 @@ QPushButton *ShortVideo::getListWidgetItemButton(QListWidgetItem *item, QString 
         return itemBtn;
     }
 }
+
+void ShortVideo::setContentTips(const QString &tips)
+{
+    ui->pushButton_tips->setText(tips);
+
+}
+

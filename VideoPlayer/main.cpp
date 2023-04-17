@@ -158,8 +158,8 @@ int main(int argc, char *argv[])
         //    RankList w1(QString(u8"动画热播榜"),10);
         //    w1.show();
 
-        //    ShortVideo w1;
-        //    w1.show();
+//            ShortVideo w1;
+//            w1.show();
 
 //            CusVideoBox7 w1;
 //            w1.show();

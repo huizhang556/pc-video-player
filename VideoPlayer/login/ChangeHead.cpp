@@ -254,7 +254,7 @@ void ChangeHead::handleSignalsAndSlots()
         bool isOK = uplaodUserCurHeader(bytes);
         if(isOK)
         setOperateTip(QString(u8"恭喜您，头像设置成功^_^"),1500);
-
+        QTimer::singleShot(2000,0,[=](){this->hide();});
     });
 
     //操作--剪裁

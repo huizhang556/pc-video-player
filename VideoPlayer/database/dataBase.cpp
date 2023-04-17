@@ -140,8 +140,9 @@ bool dataBase::creatMysqlConnection()
     {
         qDebug()<<"database is open!";
         qDebug() <<"this DB hasFeature:Transaction:" <<getSqlDataBase().driver()->hasFeature(QSqlDriver::Transactions);
-        QSqlQuery query(getSqlDataBase());
+        QSqlQuery query_user(getSqlDataBase());
         //sqlite2.3.4 版本开始,主键自动为自增，但是主键不能设置字符长度，否则失效
+
         //建表---用户信息表
         QString table_user = R"(
                              CREATE TABLE IF NOT EXISTS `userinfo`  (
@@ -157,12 +158,13 @@ bool dataBase::creatMysqlConnection()
                                `createtime` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
                                PRIMARY KEY (`userid`) USING BTREE
                              ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;)";
-        if(query.exec(table_user))
+        if(query_user.exec(table_user))
             qDebug() << "create table user successfull";
         else
             qDebug() << "create table user failed";
 
         //建表---收藏记录表
+        QSqlQuery query_record(getSqlDataBase());
         QString table_record = R"(
                                CREATE TABLE IF NOT EXISTS `collectrecords`  (
                                  `id` int(20) NOT NULL AUTO_INCREMENT,
@@ -172,12 +174,13 @@ bool dataBase::creatMysqlConnection()
                                  `createtime` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
                                  PRIMARY KEY (`id`) USING BTREE
                                ) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;)";
-        if(query.exec(table_record))
+        if(query_record.exec(table_record))
             qDebug() << "create table collectrecords successfull";
         else
             qDebug() << "create table collectrecords failed";
 
         //创建历史记录表
+        QSqlQuery query_history(getSqlDataBase());
         QString table_history = R"(
                                 CREATE TABLE IF NOT EXISTS `historyrecords`  (
                                   `id` int(20) NOT NULL AUTO_INCREMENT,
@@ -186,12 +189,13 @@ bool dataBase::creatMysqlConnection()
                                   `createtime` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
                                   PRIMARY KEY (`id`) USING BTREE
                                 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;)";
-        if(query.exec(table_history))
+        if(query_history.exec(table_history))
             qDebug() << "create table historyrecords successfull";
         else
             qDebug() << "create table historyrecords failed";
 
         //创建本地音乐表
+        QSqlQuery query_music(getSqlDataBase());
         QString table_music = R"(
                               CREATE TABLE IF NOT EXISTS `localmusic`  (
                                 `id` int(20) NOT NULL AUTO_INCREMENT,
@@ -200,14 +204,15 @@ bool dataBase::creatMysqlConnection()
                                 `quality` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
                                 PRIMARY KEY (`id`) USING BTREE
                               ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;)";
-        if(query.exec(table_music))
+        if(query_music.exec(table_music))
             qDebug() << "create table localmusic successfull";
         else
             qDebug() << "create table localmusic failed";
 
 
         //创建剧集列表
-        QString table_drama = R"(
+        QSqlQuery query_dramalist(getSqlDataBase());
+        QString table_dramalist = R"(
                               CREATE TABLE IF NOT EXISTS `dramalist`  (
                               `id` int(20) NOT NULL AUTO_INCREMENT,
                                 `userid` int(20) NOT NULL,
@@ -221,14 +226,15 @@ bool dataBase::creatMysqlConnection()
                                 `size` int(20) NULL DEFAULT NULL,
                                 PRIMARY KEY (`id`) USING BTREE
                               ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;)";
-        if(query.exec(table_drama))
-            qDebug() << "create table dramalist successfull";
+        if(query_dramalist.exec(table_dramalist))
+            qDebug() << "create table dramalist successfull!";
         else
-            qDebug() << "create table dramalist failed";
+            qDebug() << "create table dramalist failed!";
          return true;
 
          //创建user_header表
-         QString table_header = R"(
+         QSqlQuery query_header(getSqlDataBase());
+         QString user_header = R"(
                                CREATE TABLE IF NOT EXISTS `user_header`  (
                                  `user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
                                  `pix_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -236,10 +242,38 @@ bool dataBase::creatMysqlConnection()
                                  `pix_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
                                  PRIMARY KEY (`pix_id`) USING BTREE
                                ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;)";
-         if(query.exec(table_header))
-             qDebug() << "create table user_header successfull";
+         if(query_header.exec(user_header))
+             qDebug() << "create table user_header successfull!";
          else
-             qDebug() << "create table user_header failed";
+             qDebug() << "create table user_header failed!";
+
+         //创建user_groups表
+         QSqlQuery query_group(getSqlDataBase());
+         QString user_group = R"(
+                              CREATE TABLE IF NOT EXISTS `user_groups`  (
+                                `user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                `group_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                `group_pix` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                `group_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                PRIMARY KEY (`group_id`) USING BTREE
+                              ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;)";
+         if(query_group.exec(user_group))
+             qDebug() << "create table user_group successfull";
+         else
+             qDebug() << "create table user_group failed";
+
+         //创建groups_drama表
+         QSqlQuery query_groups_drama(getSqlDataBase());
+         QString groups_drama = R"(
+                               CREATE TABLE IF NOT EXISTS `groups_drama`  (
+                                `group_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                  `media_id` int(255) NOT NULL
+                                ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;)";
+         if(query_groups_drama.exec(groups_drama))
+             qDebug() << "create table groups_drama successfull";
+         else
+             qDebug() << "create table groups_drama failed";
+
     }
 }
 
@@ -1154,22 +1188,59 @@ bool dataBase::video_recDramaInfo()
 
 }
 
+//查询某个主题下的视频
+bool dataBase::video_recDrama_of_theme(const QString &theme)
+{
+    QSqlQuery query(getSqlDataBase());
+    bool isOK = query.exec(QString("select id, alias, url, duration, cover, uplove from dramalist where theme = '%1';").arg(theme));
+    if(isOK)
+    {
+        emit sig_sendRecThemeVideocounts(query.size());
+        qDebug() << QString(u8"查找到主题：%1下有%2个视频").arg(theme).arg(query.size());
+        while (query.next())
+        {
+            int id              =   query.value(0).toInt();     //id
+            QString alias       =   query.value(1).toString();  //标题说明
+            QString url         =   query.value(2).toString();  //播放地址url
+            QString duration    =   query.value(3).toString();  //时长
+            QString cover       =   query.value(4).toString();  //封面url
+            QString uplove      =   query.value(5).toString();  //点赞
+            MusicData musicData;//结构体定义的头文件一定要添加进来
+            musicData.id        =   id;
+            musicData.alias     =   alias;
+            musicData.url       =   url;
+            musicData.duration  =   duration;
+            musicData.cover     =   cover;
+            musicData.uplove    =   uplove;
+            QVariant musicdata;
+            musicdata.setValue(musicData);
+            emit sig_sendRecThemeVideos(musicdata);//主播放器推荐视频+热点资讯推荐视频用
+        }
+    }
+    else
+    {
+        qDebug()<< QString::fromLocal8Bit("查找所有剧集信息记录错误：") << query.lastError();
+        return false;
+    }
+}
+
 bool dataBase::creator_getdoneWorks(const QString &tags)
 {
     QSqlQuery query(getSqlDataBase());
-    bool isOK = query.exec(QString("select url, alias, duration, cover, type, theme, size from dramalist where userid = %1 and type = '%2';").arg(m_curUserID).arg(tags));
+    bool isOK = query.exec(QString("select id, url, alias, duration, cover, type, theme, size from dramalist where userid = %1 and type = '%2';").arg(m_curUserID).arg(tags));
     if(isOK)
     {
         while (query.next())
         {
             fileBody    body;
-            body.furl               =   query.value(0).toString();//url
-            body.fnick              =   query.value(1).toString();//alias
-            body.fduration          =   query.value(2).toString();//duration
-            body.fcover             =   query.value(3).toString();//cover
-            body.fmedtype           =   query.value(4).toString();//type(音乐，电影等)
-            body.fmedtheme          =   query.value(5).toString();//theme(古装，科技等)
-            body.fsize              =   query.value(6).toInt();//size
+            body.fid                =   query.value(0).toInt();//id
+            body.furl               =   query.value(1).toString();//url
+            body.fnick              =   query.value(2).toString();//alias
+            body.fduration          =   query.value(3).toString();//duration
+            body.fcover             =   query.value(4).toString();//cover
+            body.fmedtype           =   query.value(5).toString();//type(音乐，电影等)
+            body.fmedtheme          =   query.value(6).toString();//theme(古装，科技等)
+            body.fsize              =   query.value(7).toInt();//size
             QVariant    doneMedia;
             doneMedia.setValue(body);
             emit sig_sendUserDoneWorks(doneMedia);//完成作品展示用
@@ -1241,6 +1312,24 @@ QStringList dataBase::creator_getAllTagsWorkCounts()
     {
         qDebug() <<QString(u8"没有查询到用户：%1 指定各个类型的视频集合数量,且已发出信号！").arg(m_curUserID);
         return QStringList();
+    }
+}
+
+//从dramalist根据id删除媒体(1.判断是否其他人有引用2.本地删除文件)
+bool dataBase::creator_removeOneMediaFromSort(const QString& tags, const int media_id)
+{
+    QSqlQuery query(getSqlDataBase());
+    //字符串一定要以单引号括起来，数字可以不用
+    bool isOK = query.exec(QString("delete from dramalist where userid = '%1' and type = '%2' and id =  %3;").arg(m_curUserID).arg(tags).arg(media_id));
+    if(isOK)
+    {
+        qDebug()<<"delete one data from dramalist successful!";
+        return true;
+    }
+    else
+    {
+        qDebug()<< QString::fromLocal8Bit("delete one data from dramalist failed！because：") << query.lastError();
+        return false;
     }
 }
 
@@ -1567,23 +1656,25 @@ QList<QVariant> &dataBase::group_getCurUserOneSortAllMedias(const QString &tags)
 {
     m_sortItems.clear();
     QSqlQuery query(getSqlDataBase());
-    bool isOK = query.exec(QString("select url, alias, duration, cover, type, theme, size from dramalist where userid = %1 and type = '%2';").arg(m_curUserID).arg(tags));
+    bool isOK = query.exec(QString("select id, url, alias, duration, cover, type, theme, size from dramalist where userid = %1 and type = '%2';").arg(m_curUserID).arg(tags));
     if(isOK)
     {
+        qDebug() << QString(u8"查询到用户：%1 指定类型： %2 的视频集合 %3个,且已发出信号！").arg(m_curUserID).arg(tags).arg(query.size());
         while (query.next())
         {
             fileBody    body;
-            body.furl               =   query.value(0).toString();//url
-            body.fnick              =   query.value(1).toString();//alias
-            body.fduration          =   query.value(2).toString();//duration
-            body.fcover             =   query.value(3).toString();//cover
-            body.fmedtype           =   query.value(4).toString();//type(音乐，电影等)
-            body.fmedtheme          =   query.value(5).toString();//theme(古装，科技等)
-            body.fsize              =   query.value(6).toInt();//size
+            body.fid                =   query.value(0).toInt();//id
+            body.furl               =   query.value(1).toString();//url
+            body.fnick              =   query.value(2).toString();//alias
+            body.fduration          =   query.value(3).toString();//duration
+            body.fcover             =   query.value(4).toString();//cover
+            body.fmedtype           =   query.value(5).toString();//type(音乐，电影等)
+            body.fmedtheme          =   query.value(6).toString();//theme(古装，科技等)
+            body.fsize              =   query.value(7).toInt();//size
             QVariant    doneMedia;
             doneMedia.setValue(body);
             m_sortItems.append(doneMedia);
-            qDebug() << QString(u8"查询到用户：%1 指定类型： %2 的视频集合,且已发出信号！").arg(m_curUserID).arg(tags);
+
         }
         return m_sortItems;
     }
@@ -1602,12 +1693,14 @@ QString dataBase::group_insertGroups(const QString &user_id, const QString &grou
     bool ok1 = query.exec(count_sql);
     if(ok1)
     {
-        int counts;
-        if(query.next())//必须先信选中一条数据
-        {
-            counts = query.value(0).toInt(); qDebug() <<QString(u8"插入前已有：%1个合集").arg(QString::number(counts));
-        }
-        QString group_id   = user_id + QString("_%1").arg(counts+1,3,10,QLatin1Char('0'));//列表3位置：如：0000000002 + 001
+//        int counts;
+//        if(query.next())//必须先选中一条数据
+//        {
+//            counts = query.value(0).toInt(); qDebug() <<QString(u8"插入前已有：%1个合集").arg(QString::number(counts));
+//        }
+//        QString group_id   = user_id + QString("_%1").arg(counts+1,3,10,QLatin1Char('0'));//列表3位置：如：0000000002 + 001
+        //使用user_id + 随即日期yyMMddhhmmss
+        QString group_id   = user_id + QString("_%1").arg(QDateTime::currentDateTime().toString("yyMMddhhmmss"));
         qDebug() << QString(u8"将要插入的列表id:") << group_id;
         QString  insert_sql = QString("insert into user_groups values ('%1', '%2', '%3', '%4');").arg(m_curUserID).arg(group_name).arg(group_pix).arg(group_id);
         bool isOK = query.exec(insert_sql);
@@ -1632,10 +1725,22 @@ QString dataBase::group_insertGroups(const QString &user_id, const QString &grou
 //将媒体添加到合集当中
 bool dataBase::group_insertOneToGroups(const QString& group_id,const int media_id)
 {
+    QSqlQuery query_check(getSqlDataBase());
+    bool isOK0 = query_check.exec(QString("select * from groups_drama where group_id = '%1' and media_id = %2;").arg(group_id).arg(media_id));
+    if(isOK0)
+    {
+        int counts = query_check.size();
+        qDebug() <<QString(u8"插入新数据前查询的结果为：%1个。").arg(counts);
+        if(counts != 0)//查到有相同的数据
+        {
+            return false;//直接返回，不执行任何操作
+        }
+    }
+    //如果没有相同的数据则执行以下语句：
     QSqlQuery query(getSqlDataBase());
     QString  insert_sql = QString("insert into groups_drama values ('%1', %2);").arg(group_id).arg(media_id);
-    bool isOK = query.exec(insert_sql);
-    if(isOK)
+    bool isOK1 = query.exec(insert_sql);
+    if(isOK1)
     {
         qDebug()<< QString::fromLocal8Bit("向合集： %1 插入media_id为：%2 的媒体成功!").arg(group_id).arg(media_id);
         return true;
@@ -1676,7 +1781,7 @@ bool dataBase::group_removeGroups(const QString &group_id)
     }
 }
 
-//从合集中删除媒体
+//从合集中删除一条媒体
 bool dataBase::group_removeOneFromGroups(const QString &group_id, const int media_id)
 {
     QSqlQuery query(getSqlDataBase());
@@ -1691,6 +1796,38 @@ bool dataBase::group_removeOneFromGroups(const QString &group_id, const int medi
     {
         qDebug()<< QString::fromLocal8Bit("delete one data from groups_drama failed！because：") << query.lastError();
         return false;
+    }
+}
+
+//查询收益记录
+QList<QStringList>& dataBase::income_getUserIncomeRecords(const QString &user_id, const QString &data_start, const QString &data_end)
+{
+    m_incomeRecords.clear();
+    QSqlQuery query(getSqlDataBase());
+    bool isOK0 = query.exec(QString("select * from income where userid = '%1' and time >= '%2' AND time < '%3';").arg(user_id).arg(data_start).arg(data_end));
+    if(isOK0)
+    {
+        qDebug() <<QString(u8"查询用户：'%1' 在时间段：'%2' - '%3' 之间的记录成功，查到个数为：'%4'！").arg(user_id).arg(data_start).arg(data_end).arg(query.size());
+            while (query.next())
+            {
+                QString time    = query.value(u8"time").toDateTime().toString("yyyy-MM-dd hh:mm:ss");
+                QString type    = query.value(u8"type").toString();
+                QString amount  = query.value(u8"amount").toString();
+                QString status  = query.value(u8"status").toString();
+                QString operate = query.value(u8"operate").toString();
+                QStringList recordlist;
+                recordlist.append(time);
+                recordlist.append(type);
+                recordlist.append(amount);
+                recordlist.append(status);
+                recordlist.append(operate);
+                m_incomeRecords.append(recordlist);
+            }
+            return m_incomeRecords;//直接返回，不执行任何操作
+    }
+    else
+    {
+        qDebug() <<QString(u8"查询用户：%1 在时间段：%2 - %3 之间的记录失败！").arg(user_id).arg(data_start).arg(data_end);
     }
 }
 

@@ -13,7 +13,7 @@ CreTitleBar::CreTitleBar(QWidget *parent) :
     ui(new Ui::CreTitleBar)
 {
     ui->setupUi(this);
-    setFixedHeight(66);
+    setFixedHeight(55);
     initWorkUI();
     handleSignalsAndSlots();
     setInstallEventer();

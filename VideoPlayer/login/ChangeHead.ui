@@ -261,35 +261,32 @@ background-color: transparent;
 
 QTabWidget::tab-bar 
 {
-left: 0px; /* move to the right by 5px */
+left: 20px; /* move to the right by 5px */
 }
 
 QTabBar::tab 
 {
+height:26px;
+min-width: 90px;
+margin: 0px 2px 6px 2px;
+font: 75 11pt &quot;Microsoft YaHei UI&quot;;
 background-color: transparent;
 /*border: 2px solid #C4C4C3;*/
 /*border-bottom-color: #C2C7CB;*/
-border-top-left-radius: 0px;
-border-top-right-radius: 0px;
-min-width: 100px;
-height:30px;
-padding: 2px;
-margin: 0px 2px;	
-font: 75 11pt &quot;Microsoft YaHei UI&quot;;
 }
 
 QTabBar::tab:hover 
 {
-border-radius: 15px;
+border-radius: 13px;
 background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #d9f8fd, stop:0.5 #abf0f9, stop:1 #d9f8fd);
 }
 
 QTabBar::tab:selected 
 {
-font: 800 15px &quot;微软雅黑&quot;;
 color: #fbe145;
-border-radius: 16px;
-border: 0px solid #9B9B9B;
+border-radius: 13px;
+font: 800 15px &quot;微软雅黑&quot;;
+border: 0px solid #f8021a;
 background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #2fd6f9, stop:0.5 #1f73de, stop:1  #2fd6f9);
 }
 

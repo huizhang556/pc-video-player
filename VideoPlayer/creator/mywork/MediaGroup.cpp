@@ -89,7 +89,6 @@ void MediaGroup::handleSignalsAndSlots()
             buffer.close();
             slot_uploadUserGroupCover(imageArray);
         }
-
     });
 }
 

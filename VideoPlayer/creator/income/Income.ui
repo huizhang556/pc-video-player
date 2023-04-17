@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1105</width>
+    <width>928</width>
     <height>688</height>
    </rect>
   </property>
@@ -231,7 +231,7 @@ color: #ff4536;
             <property name="styleSheet">
              <string notr="true">#widget_16
 {
-background-color: rgb(7, 202, 202);
+background-color: #3d4e66;
 }</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_23">
@@ -412,7 +412,7 @@ color: #65dede;
             <property name="styleSheet">
              <string notr="true">#widget_17
 {
-background-color: rgb(7, 202, 202);
+background-color: #3d4e66;
 }</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_24">
@@ -585,9 +585,9 @@ color: #65dede;
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">#widget_18
+             <string notr="true">#widget_20
 {
-background-color: rgb(7, 202, 202);
+background-color: #3d4e66;
 }</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_29">
@@ -686,7 +686,7 @@ color: #ff4536;
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_40">
             <item>
-             <widget class="QWidget" name="widget_21" native="true">
+             <widget class="QWidget" name="widget_bottom" native="true">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -700,7 +700,11 @@ color: #ff4536;
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true"/>
+               <string notr="true">#widget_bottom
+{
+border: 0px solid #57e5ff;
+border-bottom-width: 1px;
+}</string>
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_30">
                <property name="leftMargin">
@@ -774,13 +778,13 @@ color: white;
                    <widget class="QComboBox" name="comboBox_gains">
                     <property name="minimumSize">
                      <size>
-                      <width>150</width>
+                      <width>120</width>
                       <height>26</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>150</width>
+                      <width>120</width>
                       <height>26</height>
                      </size>
                     </property>
@@ -1103,7 +1107,7 @@ border-image: url(:/images/creator/caledar_hover.png);
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="pushButton_54">
+                   <widget class="QPushButton" name="pushButton_search">
                     <property name="minimumSize">
                      <size>
                       <width>60</width>
@@ -1260,7 +1264,7 @@ color: white;
             <item>
              <widget class="QStackedWidget" name="stackedWidget_showType">
               <property name="currentIndex">
-               <number>1</number>
+               <number>0</number>
               </property>
               <widget class="QWidget" name="page_table">
                <layout class="QVBoxLayout" name="verticalLayout_56">
@@ -1292,7 +1296,6 @@ background-color: rgb(80, 80, 80);
 QHeaderView::section:horizontal
 {/*横表头*/
 min-height:30px;
-border:0;
 border-bottom:1px solid rgb(0, 170, 255);
 background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(60, 60, 60, 255), stop:0.301136 rgba(40, 40, 40, 255), stop:0.909091 rgba(68, 68, 68, 255));
 }
@@ -1314,8 +1317,8 @@ font: 15px &quot;宋体&quot;;
 
 QHeaderView::section:hover
 {
-color:black;
-background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(255, 177, 21, 255), stop:0.335227 rgba(245, 163, 0, 255), stop:0.909091 rgba(255, 192, 66, 255));
+color:white;
+/*background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(255, 177, 21, 255), stop:0.335227 rgba(245, 163, 0, 255), stop:0.909091 rgba(255, 192, 66, 255));*/
 }
 
 QHeaderView::section:checked
@@ -1350,7 +1353,7 @@ QHeaderView::up-arrow
 /*表格*/
 QTableWidget
 {/*对齐方式代码设置*/
-border:1px solid rgb(128, 128, 128);
+border:0px solid rgb(128, 128, 128);
 gridline-color: rgb(128, 128, 128);/*网格线颜色*/
 background-color: transparent;
 }

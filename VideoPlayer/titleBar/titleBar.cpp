@@ -27,7 +27,7 @@ TitleBar::TitleBar(QWidget *parent) :
 {
     ui->setupUi(this);
     installEventFilter(this);
-    this->setFixedHeight(60);
+    setFixedHeight(60);
     initWorker();//初始化
     handleSignalAndSLots();
 }

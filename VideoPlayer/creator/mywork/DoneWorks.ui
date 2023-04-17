@@ -90,6 +90,11 @@ background-color:#233248;
              <string notr="true">#frame_tworklist
 {
 background-color: rgb(43, 59, 65);
+}
+
+#frame_tworklist:hover
+{
+background-color: #253c56;
 }</string>
             </property>
             <property name="frameShape">
@@ -135,7 +140,9 @@ color: #2ee253;
 text-align: center;
 font: 800 18px &quot;微软雅黑&quot;;
 background-color: transparent;
-}</string>
+}
+
+</string>
                </property>
                <property name="text">
                 <string>我的作品</string>
@@ -228,6 +235,11 @@ background-color: #253c56;
              <string notr="true">#frame_thejisort
 {
 background-color: rgb(43, 59, 65);
+}
+
+#frame_thejisort:hover
+{
+background-color: #253c56;
 }</string>
             </property>
             <property name="frameShape">
@@ -273,7 +285,8 @@ color: #2ee253;
 text-align: center;
 font: 800 18px &quot;微软雅黑&quot;;
 background-color: transparent;
-}</string>
+}
+</string>
                </property>
                <property name="text">
                 <string> 我的合集</string>

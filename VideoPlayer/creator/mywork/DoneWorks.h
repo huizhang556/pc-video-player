@@ -5,12 +5,12 @@
 #define DITEMSIZE QSize(212,170)
 
 #include "database/dataBase.h"
-#include "creator/mywork/LabLoading.h"
 #include "creator/mywork/LeftItem.h"
-#include "creator/producer/FilesItem.h"
-#include "creator/mywork/MediaGroup.h"
 #include "videomodels/MultipPlayer.h"
+#include "creator/mywork/LabLoading.h"
+#include "creator/mywork/MediaGroup.h"
 #include "creator/mywork/SortDialog.h"
+#include "creator/producer/FilesItem.h"
 #include <QSize>
 #include <QLabel>
 #include <QWidget>
@@ -35,20 +35,20 @@ class DoneWorks : public QWidget
 public:
     explicit DoneWorks(QWidget *parent = nullptr);
     ~DoneWorks();
-    void    initWorkUI();
-    void    handleSignalsAndSlots();
-    void    setInstallEventer();
+    void            initWorkUI();
+    void            handleSignalsAndSlots();
+    void            setInstallEventer();
 
 public slots:
     //左侧列表部分
-    void            slot_receivedData_findTypeResult(QVariant &media);//加载对应类型媒体item
-    void            slot_addItemToList(const QString text,const QVariant& data, int counts);//加载左侧类型列表item
-    void            slot_insertItemToList(int index, QString& text,const  QVariant& data, int counts);//特定位置加载左侧类型列表item
+    void            slot_addItemToList(const QString text,const QVariant& data, int counts);//加载左侧类型列表自定义刷新item
+    void            slot_insertItemToList(int index, QString& text, const  QVariant& data, int counts);//特定位置加载左侧类型列表自定义刷新item
+    void            slot_receivedData_findTypeResult(QVariant& media);//加载(更新)对应类型媒体下item
     void            slot_setUserTagsWorkCounts(QStringList& list_counts);//查询各个标签视频数量
     //合集部分
-    void            slot_initUserGroups();//查询初始化当前用户下合集组
-    void            slot_addItemToGroupList(GROUPTYPE TYPE, const QString& name, const QString& pix_url, const QString &group_id);//创建合集
-    void            slot_addItmeToGroupIDList(QVariant &media);
+    void            slot_initUserGroups();//查询初始化当前用户下所有合集
+    void            slot_addItemToGroupList(GROUPTYPE TYPE, const QString& name, const QString& pix_url, const QString &group_id);//添加合集
+    void            slot_addItmeToGroupIDList(QVariant& media);//添加某个合集的item
 
 protected:
     bool            eventFilter(QObject *watched, QEvent *event)override;

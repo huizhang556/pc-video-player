@@ -8,6 +8,8 @@
 #include <QListWidgetItem>
 #include <QScrollBar>
 #include <QWidget>
+#include <QTimer>
+#include <QMovie>
 #include <QVariant>
 #include <QUrlQuery>
 #include <QDebug>
@@ -29,35 +31,41 @@ public:
 
 public  slots:
     void    slot_addSelectTypeToList(const QStringList& typelist);
-    bool    slot_addShortVideoItem(QVariant   musicVariant);//通过结构体传递信息
+    bool    slot_addShortVideoItem(QVariant& musicVariant);//通过结构体传递信息
     bool    slot_addShortVideoItem(QString url, QString path, QString time, QString info, QString count);//添加item
-    void    slot_clearShortLists();
+    void    slot_setCurThemeCounts(int num);
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
 
 private:
     QPushButton*    getListWidgetItemButton(QListWidgetItem* item, QString objname);//在item中查找指定按钮
+    void            setContentTips(const QString& tips);
+
+private slots:
+
 
 private:
     Ui::ShortVideo *ui;
     QStringList typelist =
     {
-        QString(u8"为你推荐"),
-        QString(u8"热点"),
+        QString(u8"科技"),
+        QString(u8"体育"),
         QString(u8"军事"),
-        QString(u8"人文"),
-        QString(u8"财经"),
-        QString(u8"社会"),
-        QString(u8"历史"),
-        QString(u8"奇闻异事")
+        QString(u8"艺术"),
+        QString(u8"搞笑"),
+        QString(u8"恐怖"),
+        QString(u8"古装"),
+        QString(u8"脱口秀")
     };
 
     QString     m_curMediaName;
     QString     m_curMediaUrl;
 
+
 signals:
     void    sig_sendToMainPlayer(int,const QStringList&,const QUrlQuery&);
+    void    sig_sendTheme(const QString&);
 
 };
 

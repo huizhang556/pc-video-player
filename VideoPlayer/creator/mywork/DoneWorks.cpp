@@ -202,7 +202,7 @@ void DoneWorks::handleSignalsAndSlots()
 
 }
 
-//加载左侧类型列表item
+//加载左侧类型列表自定义刷新item
 void DoneWorks::slot_addItemToList(const QString text, const QVariant &data, int counts)
 {
     LeftItem *itemWgt = new LeftItem(text,counts);
@@ -218,6 +218,7 @@ void DoneWorks::slot_addItemToList(const QString text, const QVariant &data, int
     });
 }
 
+//特定位置加载左侧类型列表自定义刷新item
 void DoneWorks::slot_insertItemToList(int index, QString &text, const QVariant &data, int counts)
 {
     LeftItem *itemWgt = new LeftItem(text,counts);
@@ -246,41 +247,43 @@ void DoneWorks::slot_addItemToGroupList(GROUPTYPE TYPE, const QString &name, con
     ui->listWidget_groups->setItemWidget(item,itemWidget);
     ui->listWidget_groups->setCurrentItem(item);
     //关联信号与槽函数
+    //添加媒体
     connect(itemWidget,&MediaGroup::sig_item_additem,[=](){
         SortDialog::getInstance()->exec_(group_id);
     });
-
+    //合集点击重新展示合集下的items
     connect(itemWidget,&MediaGroup::sig_item_clicked,[=](){
         ui->listWidget_medgroups->clear();//先清除items
         ui->stackedWidget_produce->setCurrentWidget(ui->page_groups);
         dataBase::getInstance()->group_getCurUserGroupMedias(group_id);//加载对应group_id下的items
     });
-
+    //合集重命名
     connect(itemWidget,&MediaGroup::sig_item_rename,[=](const QString name){
         dataBase::getInstance()->group_updateGroupsName(group_id,name);//合集重命名
     });
-
+    //合集删除
     connect(itemWidget,&MediaGroup::sig_item_delete,[=](){
-//        bool ok = dataBase::getInstance()->group_removeGroups(group_id);
-//        if(ok)
-//        {
-//            itemWidget->disconnect();
-//            itemWidget->deleteLater();
-//            ui->listWidget_groups->takeItem(ui->listWidget_groups->row(item));
-//            delete item;
-//            ui->listWidget_medgroups->clear();
-//        }
+        bool ok = dataBase::getInstance()->group_removeGroups(group_id);
+        if(ok)
+        {
+            itemWidget->disconnect();
+            itemWidget->deleteLater();
+            ui->listWidget_groups->takeItem(ui->listWidget_groups->row(item));
+            delete item;
+            ui->listWidget_medgroups->clear();
+        }
     });
 
-    //更新封面数据
+    //合集替换新封面，更新封面链接
     connect(itemWidget,&MediaGroup::sig_item_newCover,dataBase::getInstance(),&dataBase::group_updateGroupsCover);
 }
 
+//合集列表展示
 void DoneWorks::slot_addItmeToGroupIDList(QVariant& media)
 {
     fileBody body = media.value<fileBody>();//通用类型转为专用类型
     qDebug() << QString(u8"[group_id]接收到数据库查询返回的信息，要被创建新的ITEM信息如下:") << endl;
-    qDebug() << "fnick" << body.fid << endl;
+    qDebug() << "fid" << body.fid << endl;
     qDebug() << "fnick" << body.fnick << endl;
     qDebug() << "furl"  << body.furl << endl;
     qDebug() << "fduration" << body.fduration << endl;
@@ -291,7 +294,7 @@ void DoneWorks::slot_addItmeToGroupIDList(QVariant& media)
 
     QListWidgetItem *item = new QListWidgetItem(body.fnick);//介绍
     item->setData(Qt::UserRole,body.furl);
-    FilesItem *itemWidget = new FilesItem(FILEEDIT::CANEDIT,body.furl,body.fsize,body.fcover);
+    FilesItem *itemWidget = new FilesItem(FILEEDIT::CANEDIT,body.fid,body.furl,body.fsize,body.fcover);
     itemWidget->initFileItem(body);
     item->setSizeHint(DITEMSIZE);
     item->setTextAlignment(Qt::AlignRight | Qt::AlignCenter);
@@ -300,17 +303,6 @@ void DoneWorks::slot_addItmeToGroupIDList(QVariant& media)
     ui->listWidget_medgroups->setItemWidget(item,itemWidget);
 
     //信号与槽函数
-    //移除
-    connect(itemWidget,&FilesItem::sig_sendItem_remove,[=](){
-        bool ok = dataBase::getInstance()->group_removeOneFromGroups(QString(u8"0000000001_001"),84);
-        if(ok)
-        {
-            itemWidget->disconnect();
-            itemWidget->deleteLater();
-            item->listWidget()->takeItem(item->listWidget()->row(item));
-            delete item;
-        }
-    });
     //播放
     connect(itemWidget,&FilesItem::sig_sendItem_play,[=](){
     QUrlQuery query;
@@ -332,11 +324,12 @@ void DoneWorks::setInstallEventer()
     ui->listWidget_producelist->installEventFilter(this);
 }
 
-//加载对应类型媒体item
+//加载对应类型媒体下item
 void DoneWorks::slot_receivedData_findTypeResult(QVariant& media)
 {
         fileBody body = media.value<fileBody>();//通用类型转为专用类型
         qDebug() << QString(u8"接收到数据库查询返回的信息，要被创建新的ITEM信息如下:") << endl;
+        qDebug() << "fid" << body.fid << endl;
         qDebug() << "fnick" << body.fnick << endl;
         qDebug() << "furl"  << body.furl << endl;
         qDebug() << "fduration" << body.fduration << endl;
@@ -347,7 +340,7 @@ void DoneWorks::slot_receivedData_findTypeResult(QVariant& media)
 
         QListWidgetItem *item = new QListWidgetItem(body.fnick);//介绍
         item->setData(Qt::UserRole,body.furl);
-        FilesItem *itemWidget = new FilesItem(FILEEDIT::CANEDIT,body.furl,body.fsize,body.fcover);
+        FilesItem *itemWidget = new FilesItem(FILEEDIT::CANEDIT,body.fid,body.furl,body.fsize,body.fcover);
         itemWidget->initFileItem(body);
         item->setSizeHint(DITEMSIZE);
         item->setTextAlignment(Qt::AlignRight | Qt::AlignCenter);
@@ -385,13 +378,6 @@ void DoneWorks::slot_receivedData_findTypeResult(QVariant& media)
 
 
         //信号与槽函数
-        //移除
-        connect(itemWidget,&FilesItem::sig_sendItem_remove,[=](){
-            itemWidget->disconnect();
-            itemWidget->deleteLater();
-            item->listWidget()->takeItem(item->listWidget()->row(item));
-            delete item;
-        });
         //播放
         connect(itemWidget,&FilesItem::sig_sendItem_play,[=](){
         QUrlQuery query;

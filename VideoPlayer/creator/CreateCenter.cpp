@@ -113,7 +113,7 @@ void CreateCenter::handleSignalsAndSlots()
         }
         else if(ui->tabWidget_create->widget(index) == m_income)//个人收入
         {
-
+//            m_income->getUserIncomeRecord();
         }
         else if(ui->tabWidget_create->widget(index) == m_dataAnaly)//数据分析
         {

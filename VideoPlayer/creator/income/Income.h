@@ -5,7 +5,11 @@
 #include <QMenu>
 #include <QStringList>
 #include <QWidgetAction>
+#include <QTableWidget>
+#include <QTableWidgetItem>
+#include <QDebug>
 
+#include "database/dataBase.h"
 #include "creator/income/CusCalendar.h"
 
 namespace Ui {
@@ -23,8 +27,15 @@ public:
     void    handleSignalsAndSlots();
     void    setInstallEventer();
 
+    void    getUserIncomeRecord();//查询区间记录
+
+private:
+    void    addOneUserIncomeRecordTo_UI(QStringList &recordlist);
+    void    clearTable();
+
 private:
     Ui::Income *ui;
+    int             m_row = 0;
     CusCalendar     *m_calendar     =   nullptr;
     QMenu           *m_menuDataTime =   nullptr;
     QWidgetAction   *m_wgtAction    =   nullptr;

@@ -675,5 +675,9 @@
         <file>images/fileitem/item_return_normal.png</file>
         <file>images/icon/addTab_white.png</file>
         <file>images/bgpic/cusvideoitem4.png</file>
+        <file>images/bgpic/nothing.png</file>
+        <file>images/bgpic/video_waiting.gif</file>
+        <file>images/fileitem/combobox_down.png</file>
+        <file>images/fileitem/combobox_up.png</file>
     </qresource>
 </RCC>

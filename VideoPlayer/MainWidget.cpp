@@ -642,8 +642,13 @@ void MainWidget::handleSignalAndSLots()
 
 
     /**********************热点资讯************************/
+    //热点资讯查找主题视频
+    connect(m_shortVideo,SIGNAL(sig_sendTheme(const QString&)),dataBase::getInstance(),SLOT(video_recDrama_of_theme(const QString&)));
+    //热点视频(接收查找的主题视频)
+    connect(dataBase::getInstance(),SIGNAL(sig_sendRecThemeVideocounts(int)),m_shortVideo,SLOT(slot_setCurThemeCounts(int)));
+    connect(dataBase::getInstance(),SIGNAL(sig_sendRecThemeVideos(QVariant&)),m_shortVideo,SLOT(slot_addShortVideoItem(QVariant&)));
     //热点资讯(加载推荐视频)
-    connect(dataBase::getInstance(),SIGNAL(sig_sendVideoDramaInfo(QVariant)),m_shortVideo,SLOT(slot_addShortVideoItem(QVariant)));
+    connect(dataBase::getInstance(),SIGNAL(sig_sendVideoDramaInfo(QVariant&)),m_shortVideo,SLOT(slot_addShortVideoItem(QVariant&)));
     //短视频转到主播放器（777-url集合-url）
     connect(m_shortVideo,&ShortVideo::sig_sendToMainPlayer,MultipPlayer::getInstance(),&MultipPlayer::slot_addTempPlaylist);
 
@@ -1307,7 +1312,6 @@ void MainWidget::userSignOut()
     m_webHistory->slot_clearUserRecords();//清除用户历史记录
     tray_setUserLoginStatusText(QString::fromLocal8Bit("退出登录"),QString::fromLocal8Bit("登录账号"));
     dataBase::getInstance()->login_setLoginStatus(0);//设置用户状态 -- 下线
-    m_shortVideo->slot_clearShortLists();//清空短视频列表
     MultipPlayer::getInstance()->slot_clearRecItemLists();//清空推荐列表
 }
 

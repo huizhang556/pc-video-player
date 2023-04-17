@@ -41,7 +41,7 @@ public:
 public slots:
     void    slot_setCurrentVideoPicture(const QString& path);//设置当前正在播放视频图片
     void    slot_setCurrentVideoInfo(QString info);//设置介绍
-    bool    slot_addRecVideoItem(QVariant   musicVariant);//通过结构体传递信息
+    bool    slot_addRecVideoItem(QVariant& musicVariant);//通过结构体传递信息
     bool    slot_addRecVideoItem(QString url, QString path,QString time,QString info,QString count);//添加item
     void    slot_setListWidgetCurrentIndex(int index);//设置当前选中行
     void    slot_clearRecLists();

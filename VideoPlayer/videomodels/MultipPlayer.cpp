@@ -386,7 +386,7 @@ void MultipPlayer::handleSignalAndSLots()
     connect(m_foldBtn,&QPushButton::clicked,[=](){slot_judgeFoldBtnOfRightDockList();});
 
     //同类型视频推荐（添加item）
-    connect(dataBase::getInstance(),SIGNAL(sig_sendVideoDramaInfo(QVariant)),m_recomTab,SLOT(slot_addRecVideoItem(QVariant)));
+    connect(dataBase::getInstance(),SIGNAL(sig_sendVideoDramaInfo(QVariant&)),m_recomTab,SLOT(slot_addRecVideoItem(QVariant&)));
     //播放器右侧推荐视频---同类型视频列表
 //    connect(dataBase::getInstance(),&dataBase::sig_sendVideoDramaUrl,[=](int id,QString url){
 //        m_tempList.append(url);//临时列表添加

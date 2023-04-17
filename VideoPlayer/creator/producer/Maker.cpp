@@ -398,7 +398,7 @@ void Maker::addFileItemsToList(QUrl &fileUrl)
     QFileInfo file(filepath);//file必须是堆
     qDebug() << QString(u8"文件大小：%1字节").arg(file.size());
     QString suffixpic  = file_getFileSuffix(file.suffix());
-    FilesItem *itemWidget = new FilesItem(FILEEDIT::CANWRITE,fileUrl,file.size(),suffixpic);//文件名 大小 图标
+    FilesItem *itemWidget = new FilesItem(FILEEDIT::CANWRITE,-1,fileUrl,file.size(),suffixpic);//文件名 大小 图标
     QListWidgetItem *item = new QListWidgetItem();
     item->setData(Qt::UserRole,fileUrl);
     item->setSizeHint(ITEMSIZE);
