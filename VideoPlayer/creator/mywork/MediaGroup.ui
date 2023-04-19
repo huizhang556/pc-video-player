@@ -35,7 +35,7 @@
       <string notr="true">#frame_mask
 {
 border-radius: 4px;
-background-color: #62c2f5;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #191daa, stop:1  #aeabec);
 }
 
 #frame_mask:hover
@@ -423,7 +423,7 @@ border-image: url(:/images/icon/addTab_hover.png);
                   <string notr="true">QPushButton
 {
 border: none;
-color: #f52365;
+color: #44aed3;
 font: 400 13px &quot;微软雅黑&quot;;
 background-color: transparent;
 }

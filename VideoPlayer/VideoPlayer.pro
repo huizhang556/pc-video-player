@@ -4,7 +4,7 @@
 #音视频播放器
 #-------------------------------------------------
 
-QT += core gui xml  multimediawidgets multimedia sql network webenginewidgets concurrent
+QT += core gui xml  multimediawidgets multimedia sql network webenginewidgets concurrent printsupport xlsx
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += C++11 ##使用C++11某些新语法

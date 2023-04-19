@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>928</width>
+    <width>1134</width>
     <height>688</height>
    </rect>
   </property>
@@ -15,13 +15,13 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="leftMargin">
-    <number>0</number>
+    <number>3</number>
    </property>
    <property name="topMargin">
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>3</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
@@ -788,6 +788,44 @@ color: white;
                       <height>26</height>
                      </size>
                     </property>
+                    <property name="styleSheet">
+                     <string notr="true">QComboBox
+{
+color: #03b2f5;
+border: 1px solid gray;
+border-radius: 3px;
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QComboBox::drop-down
+{
+border: 0px solid gray;
+border-left-width: 1px;
+}
+
+QComboBox::down-arrow 
+{
+border-image: url(:/images/fileitem/combobox_down.png);
+}
+
+QListView
+{
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QListView::item
+{
+color: gray;
+height: 26px;
+background-color: rgba(61, 78, 102,0.8);
+}
+
+QListView::item:hover
+{
+color: white;
+background-color: rgba(61, 78, 102,0.8);
+}</string>
+                    </property>
                     <item>
                      <property name="text">
                       <string>全部收益</string>
@@ -825,9 +863,10 @@ color: white;
                  <property name="styleSheet">
                   <string notr="true">QDateEdit
 {
-border: 1px solid rgb(22,63,23);
-color: black;
+border: 1px solid white;
+color: white;
 border-radius: 3px;
+background-color: transparent;
 }
  
 QDateEdit:on 
@@ -921,9 +960,9 @@ color: white;
                      <string notr="true">QPushButton
 {
 color: white;
-border: 1px solid black;
+border: 1px solid #57e5ff;
 border-radius: 3px;
-background-color: rgba(157, 157, 157,0.8);
+background-color: rgba(214, 214, 214,0.6);
 }
 
 QPushButton:checked
@@ -933,8 +972,8 @@ background-color: rgb(157, 157, 157);
 
 QPushButton:hover
 {
-color: #07caca;
-background-color: rgb(157, 157, 157);
+color: #03b2f5;
+border: 1px solid #57e5ff;
 }</string>
                     </property>
                     <property name="text">
@@ -960,9 +999,9 @@ background-color: rgb(157, 157, 157);
                      <string notr="true">QPushButton
 {
 color: white;
-border: 1px solid black;
+border: 1px solid #57e5ff;
 border-radius: 3px;
-background-color: rgba(157, 157, 157,0.8);
+background-color: rgba(214, 214, 214,0.6);
 }
 
 QPushButton:checked
@@ -972,8 +1011,8 @@ background-color: rgb(157, 157, 157);
 
 QPushButton:hover
 {
-color: #07caca;
-background-color: rgb(157, 157, 157);
+color: #03b2f5;
+border: 1px solid #57e5ff;
 }</string>
                     </property>
                     <property name="text">
@@ -1124,7 +1163,7 @@ border-image: url(:/images/creator/caledar_hover.png);
                      <string notr="true">QPushButton
 {
 color: white;
-border: 1px solid black;
+border: 1px solid #57e5ff;
 border-radius: 3px;
 background-color: rgba(214, 214, 214,0.6);
 }
@@ -1136,8 +1175,8 @@ background-color: rgb(157, 157, 157);
 
 QPushButton:hover
 {
-color: rgb(255, 81, 58);
-background-color: rgba(157, 157, 157,0.8);
+color: #03b2f5;
+border: 1px solid #57e5ff;
 }</string>
                     </property>
                     <property name="text">
@@ -1220,6 +1259,44 @@ color: white;
                       <height>26</height>
                      </size>
                     </property>
+                    <property name="styleSheet">
+                     <string notr="true">QComboBox
+{
+color: #03b2f5;
+border: 1px solid gray;
+border-radius: 3px;
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QComboBox::drop-down
+{
+border: 0px solid gray;
+border-left-width: 1px;
+}
+
+QComboBox::down-arrow 
+{
+border-image: url(:/images/fileitem/combobox_down.png);
+}
+
+QListView
+{
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QListView::item
+{
+color: gray;
+height: 26px;
+background-color: rgba(61, 78, 102,0.8);
+}
+
+QListView::item:hover
+{
+color: white;
+background-color: rgba(61, 78, 102,0.8);
+}</string>
+                    </property>
                     <item>
                      <property name="text">
                       <string>表格</string>
@@ -1257,6 +1334,72 @@ color: white;
                   </size>
                  </property>
                 </spacer>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_tips">
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>26</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>26</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton
+{
+color: #57e5ff;
+border: 0px solid #57e5ff;
+background-color: transparent;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_exportrecords">
+                 <property name="minimumSize">
+                  <size>
+                   <width>88</width>
+                   <height>26</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>88</width>
+                   <height>26</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton
+{
+color: white;
+border: 1px solid #57e5ff;
+border-radius: 3px;
+background-color: rgba(214, 214, 214,0.6);
+}
+
+QPushButton:checked
+{
+background-color: rgb(157, 157, 157);
+}
+
+QPushButton:hover
+{
+color: #03b2f5;
+border: 1px solid #57e5ff;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string>导出记录</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -1374,8 +1517,8 @@ background-color: rgb(80, 80, 80);
 
 QTableWidget::item:selected
 {
-color:black;
-background-color: rgb(255, 170, 0);
+color: #03b2f5;
+background-color: rgba(61, 78, 102,0.5);
 }
 
 QTableWidget::indicator
@@ -1417,7 +1560,7 @@ image: ;
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QWidget" name="widget_lines" native="true"/>
+                 <widget class="QCustomPlot" name="widget_lines" native="true"/>
                 </item>
                </layout>
               </widget>
@@ -1439,21 +1582,7 @@ image: ;
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QWidget" name="widget_barchart" native="true">
-                  <widget class="QLabel" name="label_5">
-                   <property name="geometry">
-                    <rect>
-                     <x>450</x>
-                     <y>70</y>
-                     <width>54</width>
-                     <height>12</height>
-                    </rect>
-                   </property>
-                   <property name="text">
-                    <string>柱状图</string>
-                   </property>
-                  </widget>
-                 </widget>
+                 <widget class="QCustomPlot" name="widget_barchart" native="true"/>
                 </item>
                </layout>
               </widget>
@@ -1475,21 +1604,7 @@ image: ;
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QWidget" name="widget_piechart" native="true">
-                  <widget class="QLabel" name="label_6">
-                   <property name="geometry">
-                    <rect>
-                     <x>480</x>
-                     <y>110</y>
-                     <width>54</width>
-                     <height>12</height>
-                    </rect>
-                   </property>
-                   <property name="text">
-                    <string>饼图</string>
-                   </property>
-                  </widget>
-                 </widget>
+                 <widget class="QCustomPlot" name="widget_piechart" native="true"/>
                 </item>
                </layout>
               </widget>
@@ -1506,6 +1621,14 @@ image: ;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot/QCustomPlot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

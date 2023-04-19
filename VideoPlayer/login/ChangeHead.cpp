@@ -9,6 +9,7 @@ ChangeHead::ChangeHead(QWidget *parent) :
     ui(new Ui::ChangeHead)
 {
     ui->setupUi(this);
+    setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint);
     setTitleBarMoveArea(ui->frame_title,2);
     setFixedSize(330,520);
 //    setWindowModality(Qt::NonModal);

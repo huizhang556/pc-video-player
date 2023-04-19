@@ -679,5 +679,8 @@
         <file>images/bgpic/video_waiting.gif</file>
         <file>images/fileitem/combobox_down.png</file>
         <file>images/fileitem/combobox_up.png</file>
+        <file>images/fileitem/record_export.png</file>
+        <file>images/status/video_loading.gif</file>
+        <file>images/status/video_pixfaild.png</file>
     </qresource>
 </RCC>

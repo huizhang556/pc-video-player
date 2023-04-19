@@ -568,13 +568,14 @@ void SortDialog::slot_combobox_HJ_changed(int index)
 {
     ui->listWidget_content_L->clear();
     qDebug() << QString(u8"heji索引改变了,index data:") << ui->comboBox_heji->itemData(index).toString();
-    if(index != -1)
+    if(index != -1)//索引有效
     {
         QString group_name = ui->comboBox_heji->itemText(index);
         QString group_id   = ui->comboBox_heji->itemData(index).toString();
         m_groupid = group_id;//随着item改变m_groupid也跟着改变
         if(!group_name.isEmpty())
         {
+            //如果数据量比较大，会产生阻塞，界面不能动（需改进）
             QList<QVariant> medias = dataBase::getInstance()->group_getCurUserOneGroupAllMedias(group_id);
             qDebug() << QString(u8"当前用户下查找到合集下面items的个数：%1").arg(medias.count());
             if(medias.count() == 0)
@@ -586,8 +587,15 @@ void SortDialog::slot_combobox_HJ_changed(int index)
             }
             else
             {
-                ui->stackedWidget_context_L->setCurrentIndex(0);
+                ui->stackedWidget_context_L->setCurrentIndex(1);
+                ui->label_L_blank->setPixmap(QPixmap(":/images/bgpic/nothing.png"));
+                ui->label_L_blank->setScaledContents(true);
+                ui->pushButton_heji_blank->setText(QString(u8"资源加载中..."));
+                QTimer::singleShot(1500,0,[=](){
+                    ui->stackedWidget_context_L->setCurrentIndex(0);
+                });
             }
+            //正式添加媒体
             if(!medias.isEmpty())
             {
                 slot_addItemsTo_MEDIA(medias);
@@ -602,10 +610,11 @@ void SortDialog::slot_combobox_SORT_changed(int index)
     ui->listWidget_content_R->clear();
     qDebug() << QString(u8"medias索引改变了,index data:") << ui->comboBox_medias->itemData(index).toString();
     m_curtype = ui->comboBox_medias->itemData(index).toString();
-    if(index != -1)
+    if(index != -1)//索引有效
     {
         QString type_name   = ui->comboBox_medias->itemText(index);
         QString type_data   = ui->comboBox_medias->itemData(index).toString();
+        //如果数据量比较大，会产生阻塞，界面不能动（需改进）
         QList<QVariant> sort_medias = dataBase::getInstance()->group_getCurUserOneSortAllMedias(type_data);
         qDebug() << QString(u8"当前用户下查找到合集下面items的个数：%1").arg(sort_medias.count());
         if(sort_medias.count() == 0)
@@ -617,8 +626,15 @@ void SortDialog::slot_combobox_SORT_changed(int index)
         }
         else
         {
-            ui->stackedWidget_context_R->setCurrentIndex(0);
+            ui->stackedWidget_context_R->setCurrentIndex(1);
+            ui->label_R_blank->setPixmap(QPixmap(":/images/bgpic/nothing.png"));
+            ui->label_R_blank->setScaledContents(true);
+            ui->pushButton_medias_blank->setText(QString(u8"资源加载中..."));
+            QTimer::singleShot(1500,0,[=](){
+                ui->stackedWidget_context_R->setCurrentIndex(0);
+            });
         }
+        //正式添加媒体
         if(!type_name.isEmpty())
         {
             slot_addItemsTo_SORTMEDIA(sort_medias);

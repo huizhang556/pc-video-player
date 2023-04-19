@@ -12,6 +12,7 @@
 #include <QMovie>
 #include <QVariant>
 #include <QUrlQuery>
+#include <QStringList>
 #include <QDebug>
 
 
@@ -34,6 +35,7 @@ public  slots:
     bool    slot_addShortVideoItem(QVariant& musicVariant);//通过结构体传递信息
     bool    slot_addShortVideoItem(QString url, QString path, QString time, QString info, QString count);//添加item
     void    slot_setCurThemeCounts(int num);
+    void    slot_setVideoMediaType(const QStringList& list);
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
@@ -47,17 +49,7 @@ private slots:
 
 private:
     Ui::ShortVideo *ui;
-    QStringList typelist =
-    {
-        QString(u8"科技"),
-        QString(u8"体育"),
-        QString(u8"军事"),
-        QString(u8"艺术"),
-        QString(u8"搞笑"),
-        QString(u8"恐怖"),
-        QString(u8"古装"),
-        QString(u8"脱口秀")
-    };
+    QStringList videoTypeList;//视频类型
 
     QString     m_curMediaName;
     QString     m_curMediaUrl;

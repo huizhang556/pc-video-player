@@ -1,16 +1,23 @@
 ﻿#ifndef INCOME_H
 #define INCOME_H
 
+#include "database/dataBase.h"
+#include "qcustomplot/qcustomplot.h"
+#include "creator/income/CusCalendar.h"
+
+#include <QtXlsx/xlsxdocument.h>
+
 #include <QWidget>
 #include <QMenu>
+#include <QTimer>
+#include <QMouseEvent>
+#include <QFileDialog>
 #include <QStringList>
 #include <QWidgetAction>
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QDebug>
 
-#include "database/dataBase.h"
-#include "creator/income/CusCalendar.h"
 
 namespace Ui {
 class Income;
@@ -32,6 +39,13 @@ public:
 private:
     void    addOneUserIncomeRecordTo_UI(QStringList &recordlist);
     void    clearTable();
+    void    exportTableRecords();//导出表记录
+    void    drawIncomeDataTo_line();//绘制折线图
+    void    drawIncomeDataTo_barchart();//绘制柱状图
+    void    drawIncomeDataTo_piechart();//绘制饼图
+
+private slots:
+    void    slot_updateTracerText(QMouseEvent *event);//更新游标内容
 
 private:
     Ui::Income *ui;
@@ -39,6 +53,10 @@ private:
     CusCalendar     *m_calendar     =   nullptr;
     QMenu           *m_menuDataTime =   nullptr;
     QWidgetAction   *m_wgtAction    =   nullptr;
+
+    QCPItemTracer   *tracer;//游标
+    QCPItemText     *tracerLabel;//游标显示内容的地方
+
 
     QStringList m_header =
     {

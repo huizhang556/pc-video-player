@@ -32,12 +32,16 @@ RecVideoItem::RecVideoItem(const QString &url, const QString& path, const QStrin
     ui->setupUi(this);
     this->setFixedHeight(85);
     this->setFixedWidth(250);
-    manager = new QNetworkAccessManager(this);
     handleSignalsAndSlots();
     ui->label_videoPic->installEventFilter(this);//获取点击事件
     ui->pushButton_videoInfo->setCheckable(true);
     ui->pushButton_videoInfo->setChecked(false);
+    m_movie.setFileName(":/images/status/video_loading.gif");
+    m_movie.setScaledSize(QSize(103,80));
+    ui->label_videoPic->setMovie(&m_movie);
+    m_movie.start();
 
+    manager = new QNetworkAccessManager(this);
     ui->pushButton_playAmount->setIcon(QIcon("://images/icon/recvideo_amount.png"));
     setVideoPicture(m_picPath);//视频封面
     setVideoTime(m_picTime);//视频时长
@@ -232,13 +236,21 @@ void RecVideoItem::slot_replyFinished(QNetworkReply *reply)
         pixmap.loadFromData(reply->readAll());
         ui->label_videoPic->setPixmap(pixmap);
         ui->label_videoPic->setScaledContents(true);//内容自适应
+        if(m_movie.state() == QMovie::Running)
+        {
+            m_movie.stop();
+        }
     }
     else//请求失败，加载默认图片
     {
         qDebug() <<  QString::fromLocal8Bit("请求错误：")<<reply->errorString();
-        QPixmap pixmap("://images/icon/createhover.png");
+        QPixmap pixmap("://images/status/video_pixfaild.png");
         ui->label_videoPic->setPixmap(pixmap);
         ui->label_videoPic->setScaledContents(true);//内容自适应
+        if(m_movie.state() == QMovie::Running)
+        {
+            m_movie.stop();
+        }
     }
 }
 

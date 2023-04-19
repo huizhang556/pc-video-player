@@ -76,6 +76,7 @@ void MainWidget::initOtherWidgetUi()
     m_shortVideo = new ShortVideo(m_stackWidget_center);
     m_shortVideo->setObjectName(QString::fromLatin1("m_shortVideo"));
 
+
 //    m_tabWidget = new CusTabWidget(m_stackWidget_center);
 //    m_tabWidget->setObjectName(QString::fromLatin1("m_tabWidget"));
 
@@ -599,12 +600,14 @@ void MainWidget::handleSignalAndSLots()
 
     //m_stackWidget_center改变
     connect(m_stackWidget_center,&QStackedWidget::currentChanged,[=](int index){
-        m_leftSideBar->slot_setCurrentIndex(index);//标题栏改变
+        m_leftSideBar->slot_setCurrentIndex(index);//左侧边栏跟着改变
         //切换时，hide，有些界面不需要
         if(!ScrollToTop::getInstance()->isHidden())//浏览器界面不需要
         {
             ScrollToTop::getInstance()->hide();
         }
+        slot_updateStackWidgetPageData();//更新对应界面数据
+
     });
 
     //消息提界面---设置
@@ -1419,6 +1422,81 @@ void MainWidget::connectToTopWidget(CToTopWidget *widget)
         RingWait1::getInstance()->close();
         });
     });
+}
+
+void MainWidget::slot_updateStackWidgetPageData()
+{
+    QWidget* page = m_stackWidget_center->currentWidget();
+    //以下添加一些数据更新操作
+    if(page == m_cusVideoBox)
+    {
+        qDebug(u8"当前及显示界面：m_cusVideoBox");
+    }
+    else if(page == m_cusVideoBox2)
+    {
+        qDebug(u8"当前及显示界面：m_cusVideoBox2");
+    }
+    else if(page == m_cusVideoBox3)
+    {
+        qDebug(u8"当前及显示界面：m_cusVideoBox3");
+    }
+    else if(page == m_cusVideoBox4)
+    {
+        qDebug(u8"当前及显示界面：m_cusVideoBox4");
+    }
+    else if(page == m_cusVideoBox5)
+    {
+        qDebug(u8"当前及显示界面：m_cusVideoBox5");
+    }
+    else if(page == videoFindResult)
+    {
+        qDebug(u8"当前及显示界面：videoFindResult");
+    }
+    else if(page == m_videoMember)
+    {
+        qDebug(u8"当前及显示界面：m_videoMember");
+    }
+    else if(page == m_webStackWgt)
+    {
+        qDebug(u8"当前及显示界面：m_webStackWgt");
+    }
+    else if(page == m_hotSearch)
+    {
+        qDebug(u8"当前及显示界面：m_hotSearch");
+    }
+    else if(page == m_songlistSort)
+    {
+        qDebug(u8"当前及显示界面：m_songlistSort");
+    }
+    else if(page == m_shortVideo)
+    {
+        m_shortVideo->slot_setVideoMediaType(dataBase::getInstance()->getVideoMediaType());//获取视频类型
+        qDebug(u8"当前及显示界面：m_shortVideo");
+    }
+    else if(page == m_musicList)
+    {
+        qDebug(u8"当前及显示界面：m_musicList");
+    }
+    else if(page == m_personForm)
+    {
+        qDebug(u8"当前及显示界面：m_personForm");
+    }
+    else if(page == m_fileTrans)
+    {
+        qDebug(u8"当前及显示界面：m_fileTrans");
+    }
+    else if(page == m_cusVideoBox6)
+    {
+        qDebug(u8"当前及显示界面：m_cusVideoBox6");
+    }
+    else if(page == m_cusVideoBox7)
+    {
+        qDebug(u8"当前及显示界面：m_cusVideoBox7");
+    }
+    else if(page == globalFindRlt)
+    {
+        qDebug(u8"当前及显示界面：globalFindRlt");
+    }
 }
 
 void MainWidget::slot_activeTray(QSystemTrayIcon::ActivationReason reason)

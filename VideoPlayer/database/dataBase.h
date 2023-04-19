@@ -81,6 +81,10 @@ public:
     bool                    getCurrentUserOnline() const;
     const QPixmap&          getCurrentUserHeadPix();
 
+
+    //获取视频类型
+    QStringList&            getVideoMediaType();
+
     //读取cfg.xml信息
     static void             readXML(const QString& path);
     static void             writeXML(const QString& path);
@@ -138,6 +142,9 @@ public slots:
     bool                    video_insertRecDramaListDB(const QStringList& parma);//插入视频
     bool                    video_recDramaInfo();//查询推荐列表
     bool                    video_recDrama_of_theme(const QString& theme);//查询某个主题下的视频
+
+    //视频类型
+    bool                    video_getVideoMediaSortType();//获取视频分类
 
     //查询作品
     bool                    creator_getdoneWorks(const QString& tags);//按标签查询作品  
@@ -225,6 +232,9 @@ private:
     static      QString     m_skin_splash;//加载缓冲界面
     static      int         m_splash_width;//加载缓冲界面宽度
     static      int         m_splash_height;//加载缓冲界面高度
+
+    //视频类型
+    QStringList videoTypeList;//视频分类
 
 signals:
     void        sig_loginStatusChanged(bool);//0下线 1登录

@@ -17,6 +17,7 @@
 #include <QListView>
 #include <QBuffer>
 #include <QRegExp>
+#include <QMovie>
 #include <QMouseEvent>
 #include <QRegExpValidator>
 #include <QByteArray>
@@ -138,9 +139,12 @@ private:
     QImage      m_cover;
     bool        m_rmenu = false;
     int         m_fid;
+    QMovie      m_movie;
 
     QNetworkAccessManager   *manager    =   nullptr;
     QNetworkReply           *reply      =   nullptr;
+
+    QStringList videoTypeList;
 
     QStringList menuList =
     {

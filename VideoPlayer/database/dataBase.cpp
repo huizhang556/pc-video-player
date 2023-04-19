@@ -340,6 +340,7 @@ bool dataBase::removeSqliteConnection()
 //初始化全局数据
 bool dataBase::initGlobalDate()
 {
+    video_getVideoMediaSortType();//获取视频分类
     browser_loadAllRecordsToList();//收藏记录
     browser_loadAllHisRecordsToList();
     video_recDramaInfo();
@@ -392,6 +393,11 @@ QString dataBase::getCurrentUserCreateTime() const
 const QPixmap &dataBase::getCurrentUserHeadPix()
 {
     return m_curHeadPix;
+}
+
+QStringList &dataBase::getVideoMediaType()
+{
+    return videoTypeList;
 }
 
 int dataBase::getCurrentUserGrade() const
@@ -1220,6 +1226,28 @@ bool dataBase::video_recDrama_of_theme(const QString &theme)
     else
     {
         qDebug()<< QString::fromLocal8Bit("查找所有剧集信息记录错误：") << query.lastError();
+        return false;
+    }
+}
+
+//获取视频分类
+bool dataBase::video_getVideoMediaSortType()
+{
+    QSqlQuery query(getSqlDataBase());
+    bool isOK = query.exec(QString("select video_type from video_sort;"));
+    if(isOK)
+    {
+        qDebug() << QString(u8"查找到视频主题数量：%1个分类。").arg(query.size());
+        while (query.next())
+        {
+
+            QString video_type   =   query.value(0).toString();  //标题说明
+            videoTypeList.append(video_type);
+        }
+    }
+    else
+    {
+        qDebug()<< QString::fromLocal8Bit("查找视频主题分类错误：") << query.lastError();
         return false;
     }
 }

@@ -17,6 +17,7 @@ ShortVideo::~ShortVideo()
 
 void ShortVideo::initWorkUI()
 {
+
 //    ui->stackedWidget_player->installEventFilter(this);
     ui->label_novideo->constructItem(":/images/bgpic/cusvideoitem2.png","://images/user/itemmark_vyp.png",QString(u8"6.6"),false,true,false);
     ui->pushButton_title->setText(QString(u8"热点资讯"));
@@ -51,7 +52,7 @@ void ShortVideo::initWorkUI()
     ui->stackedWidget_player->setCurrentWidget(ui->stackPage_novideo);
     ui->stackedWidget_dramalist->setCurrentIndex(0);
 
-    slot_addSelectTypeToList(typelist);
+
 }
 
 void ShortVideo::handleSignalsAndSLots()
@@ -228,6 +229,12 @@ void ShortVideo::slot_setCurThemeCounts(int num)
     {
         ui->stackedWidget_dramalist->setCurrentWidget(ui->page_themevideo);
     }
+}
+
+void ShortVideo::slot_setVideoMediaType(const QStringList &list)
+{
+    videoTypeList = list;
+    slot_addSelectTypeToList(videoTypeList);
 }
 
 bool ShortVideo::eventFilter(QObject *watched, QEvent *event)

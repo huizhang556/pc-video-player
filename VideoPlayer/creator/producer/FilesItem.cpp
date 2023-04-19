@@ -44,6 +44,13 @@ FilesItem::~FilesItem()
 
 void FilesItem::initWorkUI()
 {
+    videoTypeList = dataBase::getInstance()->getVideoMediaType();
+
+    m_movie.setFileName(":/images/status/video_loading.gif");
+    m_movie.setScaledSize(QSize(198,96));
+    ui->label_pic->setMovie(&m_movie);
+    m_movie.start();
+
 //    this->setFocusPolicy(Qt::NoFocus);
     manager = new QNetworkAccessManager(this);
 
@@ -82,13 +89,18 @@ void FilesItem::initWorkUI()
     ui->comboBox_mtype->addItem(QString(u8"图片"),QString(u8"pictures"));
 
     ui->comboBox_mtheme->setView(new QListView());
-    ui->comboBox_mtheme->addItem(QString(u8"搞笑"),QString(u8"搞笑"));
-    ui->comboBox_mtheme->addItem(QString(u8"恐怖"),QString(u8"恐怖"));
-    ui->comboBox_mtheme->addItem(QString(u8"科技"),QString(u8"科技"));
-    ui->comboBox_mtheme->addItem(QString(u8"艺术"),QString(u8"艺术"));
-    ui->comboBox_mtheme->addItem(QString(u8"体育"),QString(u8"体育"));
-    ui->comboBox_mtheme->addItem(QString(u8"古装"),QString(u8"古装"));
-    ui->comboBox_mtheme->addItem(QString(u8"脱口秀"),QString(u8"脱口秀"));
+    foreach (QString type, videoTypeList)
+    {
+        ui->comboBox_mtheme->addItem(type,type);
+    }
+
+    //combobox 禁止垂直滚动条和竖直滚动条
+    ui->comboBox_mtype->view()->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->comboBox_mtype->view()->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    ui->comboBox_mtheme->view()->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->comboBox_mtheme->view()->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
     ui->lineEdit_displaycover->setPlaceholderText(QString(u8"选择自定义封面"));
     ui->lineEdit_displaycover->setReadOnly(true);//只读
     ui->lineEdit_displaycover->setContextMenuPolicy(Qt::NoContextMenu);
@@ -755,13 +767,21 @@ void FilesItem::slot_replyCoverFinished(QNetworkReply *reply)
         pixmap.loadFromData(reply->readAll());
         ui->label_pic->setPixmap(pixmap);
         ui->label_pic->setScaledContents(true);//内容自适应
+        if(m_movie.state() == QMovie::Running)
+        {
+            m_movie.stop();
+        }
     }
     else//请求失败，加载默认图片
     {
         qDebug() <<  QString::fromLocal8Bit("请求错误：")<<reply->errorString();
-        QPixmap pixmap("://images/icon/createhover.png");
+        QPixmap pixmap("://images/status/video_pixfaild.png");
         ui->label_pic->setPixmap(pixmap);
         ui->label_pic->setScaledContents(true);//内容自适应
+        if(m_movie.state() == QMovie::Running)
+        {
+            m_movie.stop();
+        }
     }
 }
 

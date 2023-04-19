@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QPixmap>
+#include <QMovie>
+
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
 
@@ -48,6 +50,7 @@ private:
     QString     m_picTime;
     QString     m_picInfo;
     QString     m_picCount;
+    QMovie      m_movie;
     QNetworkAccessManager   *manager;
     QNetworkReply           *reply;
 

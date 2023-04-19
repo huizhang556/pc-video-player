@@ -18,9 +18,9 @@ NewLoginForm::NewLoginForm(QWidget *parent):
 {
     ui->setupUi(this);
     setFixedSize(720,465);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowStaysOnTopHint);
     setAttribute(Qt::WA_TranslucentBackground,true);
-//    setAttribute(Qt::WA_DeleteOnClose);
+//    setAttribute(Qt::WA_DeleteOnClose);//程序关闭或其父窗口关闭时，自己自动close
     initWorkUI();
     initAnimations();
     handleSignalsAndSLots();
