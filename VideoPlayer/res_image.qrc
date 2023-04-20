@@ -682,5 +682,7 @@
         <file>images/fileitem/record_export.png</file>
         <file>images/status/video_loading.gif</file>
         <file>images/status/video_pixfaild.png</file>
+        <file>images/icon/ratio_checked.png</file>
+        <file>images/icon/ratio_checked_hover.png</file>
     </qresource>
 </RCC>

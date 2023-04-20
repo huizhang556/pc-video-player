@@ -3,9 +3,19 @@
 
 #include "ValueToImage.h"
 #include <QSlider>
+#include <QImage>
+#include <QTimer>
 #include <QPushButton>
 #include <QMouseEvent>
 #include <QDebug>
+
+//以下ffmpeg获取视频信息使用
+extern "C" {
+#include <libavformat/avformat.h>
+#include <libavcodec/avcodec.h>
+#include <libswscale/swscale.h>
+#include <libswresample/swresample.h>
+}
 
 class CusHSlider : public QSlider
 {
@@ -33,6 +43,9 @@ protected:
 signals:
     void    sig_valueToPosition(int);
     void    sig_anyValuePosition(int);
+
+private:
+    void    ffmpeg_getVideoImageFrom_pos(const char *file, int seconds);
 
 private:
     int     m_spacing   = 0;//画面与slider间隔

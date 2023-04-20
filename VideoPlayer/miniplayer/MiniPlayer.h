@@ -95,6 +95,7 @@ private slots:
 private:
     void    media_loading_start();
     void    media_loading_end();
+    void    updateTitle_bottomCtl();
 
 signals:
     void    sig_player_toMainPlayer();

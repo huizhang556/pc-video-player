@@ -68,6 +68,7 @@
 #include <QSystemTrayIcon>
 #include <QDesktopServices>
 #include <QPropertyAnimation>
+#include <QAbstractVideoSurface>
 
 /**唯一的播放器对象--单例**/
 

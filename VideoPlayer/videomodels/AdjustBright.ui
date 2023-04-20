@@ -97,7 +97,10 @@ background-color: transparent;
         <item>
          <widget class="Line" name="line">
           <property name="styleSheet">
-           <string notr="true">background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));</string>
+           <string notr="true">#line
+{
+background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:0.3 rgba(7,208,255, 255),stop:0.7 rgba(7,208,255, 255),stop:1 rgba(231,80,229, 255));
+}</string>
           </property>
           <property name="frameShadow">
            <enum>QFrame::Plain</enum>
@@ -415,6 +418,65 @@ color: rgb(255, 255, 0);
            </widget>
           </item>
           <item>
+           <spacer name="horizontalSpacer_9">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>10</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="BtnRate_6">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>45</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"> QPushButton
+{
+border:1px solid white;
+background-color:gray;
+color: rgb(0, 0, 2);
+border-radius: 4px;
+}
+ QPushButton:hover 
+{
+background-color:rgb(14, 220, 0);
+color: rgb(0, 0, 0);
+}
+ 
+/*checked设置为checkable为true生效*/
+QPushButton:checked 
+{
+border:2px solid #f85a37;
+background-color:rgb(14, 170, 79);
+color: rgb(255, 255, 0);
+}
+ 
+ </string>
+            </property>
+            <property name="text">
+             <string>4x</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="horizontalSpacer_8">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -435,7 +497,10 @@ color: rgb(255, 255, 0);
         <item>
          <widget class="Line" name="line_3">
           <property name="styleSheet">
-           <string notr="true">background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));</string>
+           <string notr="true">#line_3
+{
+background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(7,208,255, 255), stop:0.5 rgba(231,80,229, 25),stop:1 rgba(7,208,255, 255));
+}</string>
           </property>
           <property name="frameShadow">
            <enum>QFrame::Plain</enum>
@@ -702,24 +767,25 @@ border-image: url(:/images/icon/radio_selected.png);
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>20</height>
+              <height>22</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>22</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">QLabel
 {
-color: rgb(85, 255, 0);
+color: #61f6ff;
+font: 400 13px &quot;微软雅黑&quot;;
 background-color: transparent;
 }</string>
             </property>
             <property name="text">
-             <string>亮    度</string>
+             <string>亮     度</string>
             </property>
            </widget>
           </item>
@@ -738,11 +804,11 @@ background-color: transparent;
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">QSlider
+             <string notr="true">QSlider:horizontal
 {
-background-color: transparent;
-margin-left:13px;
+margin: 0px 11px 0px 13px;
 }
+
 /*整个进度条*/
 QSlider::groove:horizontal 
 {
@@ -764,29 +830,37 @@ border-radius:1px;
 /*J拖动按钮*/
 QSlider::handle:horizontal 
 {
-
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
-stop:0.6 #e452e5, stop:0.778409 #14c9fe);
-height:8px;
-width:8px;
-margin-top: -4px;
-margin-bottom: -4px;
-border-radius:4px;
-padding-right:1px;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 rgba(0, 205, 76,1.0), stop:1  rgba(24, 247, 51,1.0));
+height:14px;
+width:14px;
+margin-top: -7px;
+margin-bottom: -7px;
+margin-left: -3px;
+margin-right: -3px;
+border-radius:7px;
+border-image: url(:/images/icon/player_slider_normal.png);
+background-color: transparent;
 }
 
 /*J拖动按钮-hover,只跟groove的hover时高度影响*/
 QSlider::handle:horizontal:hover 
 {
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
-stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+height:14px;
+width:14px;
+margin-top: -7px;
+margin-bottom: -7px;
+margin-left: -3px;
+margin-right: -3px;
+border-radius:7px;
+border-image: url(:/images/icon/player_slider_hover.png);
+background-color: transparent;
 }
 
 /*未划过的区域，右边界线*/
 QSlider::add-page:horizontal,QSlider::add-line:horizontal
 {
 border-radius:2px;
-background-color:#61f6ff;
+background-color:yellow;
 }
 
 /*已划过的区域，左边界线*/
@@ -837,19 +911,20 @@ margin-left:10px;
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>20</height>
+              <height>22</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>22</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">QLabel
 {
-color: rgb(85, 255, 0);
+color: #61f6ff;
+font: 400 13px &quot;微软雅黑&quot;;
 background-color: transparent;
 }</string>
             </property>
@@ -903,11 +978,11 @@ margin-left:10px;
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">QSlider
+             <string notr="true">QSlider:horizontal
 {
-background-color: transparent;
-margin-left:13px;
+margin: 0px 11px 0px 13px;
 }
+
 /*整个进度条*/
 QSlider::groove:horizontal 
 {
@@ -929,29 +1004,37 @@ border-radius:1px;
 /*J拖动按钮*/
 QSlider::handle:horizontal 
 {
-
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
-stop:0.6 #e452e5, stop:0.778409 #14c9fe);
-height:8px;
-width:8px;
-margin-top: -4px;
-margin-bottom: -4px;
-border-radius:4px;
-padding-right:1px;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 rgba(0, 205, 76,1.0), stop:1  rgba(24, 247, 51,1.0));
+height:14px;
+width:14px;
+margin-top: -7px;
+margin-bottom: -7px;
+margin-left: -3px;
+margin-right: -3px;
+border-radius:7px;
+border-image: url(:/images/icon/player_slider_normal.png);
+background-color: transparent;
 }
 
 /*J拖动按钮-hover,只跟groove的hover时高度影响*/
 QSlider::handle:horizontal:hover 
 {
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
-stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+height:14px;
+width:14px;
+margin-top: -7px;
+margin-bottom: -7px;
+margin-left: -3px;
+margin-right: -3px;
+border-radius:7px;
+border-image: url(:/images/icon/player_slider_hover.png);
+background-color: transparent;
 }
 
 /*未划过的区域，右边界线*/
 QSlider::add-page:horizontal,QSlider::add-line:horizontal
 {
 border-radius:2px;
-background-color:#61f6ff;
+background-color:yellow;
 }
 
 /*已划过的区域，左边界线*/
@@ -982,11 +1065,11 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">QSlider
+             <string notr="true">QSlider:horizontal
 {
-background-color: transparent;
-margin-left:13px;
+margin: 0px 11px 0px 13px;
 }
+
 /*整个进度条*/
 QSlider::groove:horizontal 
 {
@@ -1008,29 +1091,37 @@ border-radius:1px;
 /*J拖动按钮*/
 QSlider::handle:horizontal 
 {
-
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
-stop:0.6 #e452e5, stop:0.778409 #14c9fe);
-height:8px;
-width:8px;
-margin-top: -4px;
-margin-bottom: -4px;
-border-radius:4px;
-padding-right:1px;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 rgba(0, 205, 76,1.0), stop:1  rgba(24, 247, 51,1.0));
+height:14px;
+width:14px;
+margin-top: -7px;
+margin-bottom: -7px;
+margin-left: -3px;
+margin-right: -3px;
+border-radius:7px;
+border-image: url(:/images/icon/player_slider_normal.png);
+background-color: transparent;
 }
 
 /*J拖动按钮-hover,只跟groove的hover时高度影响*/
 QSlider::handle:horizontal:hover 
 {
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
-stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+height:14px;
+width:14px;
+margin-top: -7px;
+margin-bottom: -7px;
+margin-left: -3px;
+margin-right: -3px;
+border-radius:7px;
+border-image: url(:/images/icon/player_slider_hover.png);
+background-color: transparent;
 }
 
 /*未划过的区域，右边界线*/
 QSlider::add-page:horizontal,QSlider::add-line:horizontal
 {
 border-radius:2px;
-background-color:#61f6ff;
+background-color:yellow;
 }
 
 /*已划过的区域，左边界线*/
@@ -1051,24 +1142,25 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>20</height>
+              <height>22</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>22</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">QLabel
 {
-color: rgb(85, 255, 0);
+color: #61f6ff;
+font: 400 13px &quot;微软雅黑&quot;;
 background-color: transparent;
 }</string>
             </property>
             <property name="text">
-             <string>色    调</string>
+             <string>色     调</string>
             </property>
            </widget>
           </item>
@@ -1137,19 +1229,20 @@ margin-left:10px;
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>20</height>
+              <height>22</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>22</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">QLabel
 {
-color: rgb(85, 255, 0);
+color: #61f6ff;
+font: 400 13px &quot;微软雅黑&quot;;
 background-color: transparent;
 }</string>
             </property>
@@ -1173,11 +1266,11 @@ background-color: transparent;
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">QSlider
+             <string notr="true">QSlider:horizontal
 {
-background-color: transparent;
-margin-left:13px;
+margin: 0px 11px 0px 13px;
 }
+
 /*整个进度条*/
 QSlider::groove:horizontal 
 {
@@ -1199,29 +1292,37 @@ border-radius:1px;
 /*J拖动按钮*/
 QSlider::handle:horizontal 
 {
-
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
-stop:0.6 #e452e5, stop:0.778409 #14c9fe);
-height:8px;
-width:8px;
-margin-top: -4px;
-margin-bottom: -4px;
-border-radius:4px;
-padding-right:1px;
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 rgba(0, 205, 76,1.0), stop:1  rgba(24, 247, 51,1.0));
+height:14px;
+width:14px;
+margin-top: -7px;
+margin-bottom: -7px;
+margin-left: -3px;
+margin-right: -3px;
+border-radius:7px;
+border-image: url(:/images/icon/player_slider_normal.png);
+background-color: transparent;
 }
 
 /*J拖动按钮-hover,只跟groove的hover时高度影响*/
 QSlider::handle:horizontal:hover 
 {
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, 
-stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));
+height:14px;
+width:14px;
+margin-top: -7px;
+margin-bottom: -7px;
+margin-left: -3px;
+margin-right: -3px;
+border-radius:7px;
+border-image: url(:/images/icon/player_slider_hover.png);
+background-color: transparent;
 }
 
 /*未划过的区域，右边界线*/
 QSlider::add-page:horizontal,QSlider::add-line:horizontal
 {
 border-radius:2px;
-background-color:#61f6ff;
+background-color:yellow;
 }
 
 /*已划过的区域，左边界线*/
@@ -1242,7 +1343,10 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba
         <item>
          <widget class="Line" name="line_2">
           <property name="styleSheet">
-           <string notr="true">background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));</string>
+           <string notr="true">#line_2
+{
+background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(7,208,255, 255), stop:0.5 rgba(231,80,229, 25),stop:1 rgba(7,208,255, 255));
+}</string>
           </property>
           <property name="frameShadow">
            <enum>QFrame::Plain</enum>
@@ -1319,7 +1423,7 @@ height: 15px;
 /*未选中的样式*/
 QCheckBox::indicator:unchecked
 {
-image: url(:/images/icon/checkhover.png);
+image: url(:/images/icon/ratio_checked_hover.png);
 }
 
 QCheckBox::indicator:unchecked:hover
@@ -1330,7 +1434,7 @@ QCheckBox::indicator:unchecked:hover
 /*选中时的样式*/
 QCheckBox::indicator:checked
 {
-image: url(:/images/icon/checked.png);
+image: url(:/images/icon/ratio_checked.png);
 }
 </string>
             </property>
@@ -1394,7 +1498,7 @@ color: rgb(85, 255, 0);
 /*未选中的样式*/
 QCheckBox::indicator:unchecked
 {
-image: url(:/images/icon/checkhover.png);
+image: url(:/images/icon/ratio_checked_hover.png);
 }
 
 QCheckBox::indicator:unchecked:hover
@@ -1405,7 +1509,7 @@ QCheckBox::indicator:unchecked:hover
 /*选中时的样式*/
 QCheckBox::indicator:checked
 {
-image: url(:/images/icon/checked.png);
+image: url(:/images/icon/ratio_checked.png);
 }
 </string>
             </property>
@@ -1469,7 +1573,7 @@ color: rgb(85, 255, 0);
 /*未选中的样式*/
 QCheckBox::indicator:unchecked
 {
-image: url(:/images/icon/checkhover.png);
+image: url(:/images/icon/ratio_checked_hover.png);
 }
 
 QCheckBox::indicator:unchecked:hover
@@ -1480,7 +1584,7 @@ QCheckBox::indicator:unchecked:hover
 /*选中时的样式*/
 QCheckBox::indicator:checked
 {
-image: url(:/images/icon/checked.png);
+image: url(:/images/icon/ratio_checked.png);
 }
 </string>
             </property>
@@ -1544,7 +1648,7 @@ color: rgb(85, 255, 0);
 /*未选中的样式*/
 QCheckBox::indicator:unchecked
 {
-image: url(:/images/icon/checkhover.png);
+image: url(:/images/icon/ratio_checked_hover.png);
 }
 
 QCheckBox::indicator:unchecked:hover
@@ -1555,7 +1659,7 @@ QCheckBox::indicator:unchecked:hover
 /*选中时的样式*/
 QCheckBox::indicator:checked
 {
-image: url(:/images/icon/checked.png);
+image: url(:/images/icon/ratio_checked.png);
 }
 </string>
             </property>

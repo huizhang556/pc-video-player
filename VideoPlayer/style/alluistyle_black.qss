@@ -140,7 +140,6 @@ background-color: transparent;
 /**顶部标题栏**/
 QFrame#m_miniframeTitle
 {
-background-color: rgba(38, 40, 41,0.5);
 background-color: transparent;
 }
 
@@ -174,7 +173,6 @@ color: #c0ff02;
 /**底部控制栏**/
 QFrame#m_miniframeControl
 {
-background-color: rgba(38, 40, 41,0.5);
 background-color: transparent;
 }
 

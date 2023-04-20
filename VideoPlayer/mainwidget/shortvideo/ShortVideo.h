@@ -53,11 +53,12 @@ private:
 
     QString     m_curMediaName;
     QString     m_curMediaUrl;
-
+    QString     m_curTheme;
+    int         m_startpos = 0;//请求起始位置
 
 signals:
     void    sig_sendToMainPlayer(int,const QStringList&,const QUrlQuery&);
-    void    sig_sendTheme(const QString&);
+    void    sig_sendTheme(const QString&,int,int);//主题 + 请求起始位置 +请求多少条记录
 
 };
 

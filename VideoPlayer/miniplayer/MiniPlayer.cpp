@@ -61,7 +61,7 @@ void MiniPlayer::initWorkUI()
     m_clityListWgt->installEventFilter(this);
     m_clityListWgt->setFixedSize(80,150);
     m_clityListWgt->setLayoutDirection(Qt::RightToLeft);//图标在右侧,文字的布局方向也变反了
-    m_clityListWgt->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool);
+    m_clityListWgt->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::Popup);
     m_clityListWgt->setHidden(true);//指定父亲默认是显示在父亲的左上角
     m_clityListWgt->setFrameShape(QFrame::NoFrame);
     m_clityListWgt->setObjectName(QString::fromUtf8("m_miniclityListWgt"));
@@ -92,7 +92,7 @@ void MiniPlayer::initWorkUI()
     m_frameSound->setFixedSize(30,120);//加一个进度条高度
     m_frameSound->setHidden(true);//指定父亲默认是显示在父亲的左上角
     m_frameSound->setObjectName(QString::fromUtf8(u8"m_miniframeSound"));
-    m_frameSound->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool);
+    m_frameSound->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool | Qt::Popup);
     //垂直QSlider
     m_verSlider = new QSlider(Qt::Vertical);
     m_verSlider->setFixedSize(30,100);
@@ -306,6 +306,7 @@ void MiniPlayer::handleSignalsAndSlots()
         else if(m_screenAction->text() == QString(u8"退出全屏"))
         {
             m_videoWidget->setFullScreen(false);
+            updateTitle_bottomCtl();
             m_screenAction->setText(QString(u8"全屏"));
         }
     });
@@ -473,20 +474,8 @@ void MiniPlayer::leaveEvent(QEvent *event)
 void MiniPlayer::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event)
-    QRect rect_t = m_videoWidget->rect();
-    m_frameTitle->setGeometry(rect_t.x(),
-                              rect_t.y(),
-                              rect_t.width(),
-                              m_frameTitle->height());
-    m_frameTitle->raise();
-    m_frameTitle->show();
-
-    m_frameControl->setGeometry(rect_t.x(),
-                              rect_t.y() + rect_t.height()-m_frameControl->height(),
-                              rect_t.width(),
-                              m_frameControl->height());
-    m_frameControl->raise();
-    m_frameControl->show();
+    updateTitle_bottomCtl();
+    qDebug() <<QString(u8"MiniPlayer进行了resize");
 }
 
 void MiniPlayer::createRightMenu()
@@ -742,4 +731,23 @@ void MiniPlayer::media_loading_end()
 //    m_loadMovie->stop();
 //    m_loadingLabel->stopRun();
     m_loadingLabel->hide();
+}
+
+//更新标题栏和底部控制栏
+void MiniPlayer::updateTitle_bottomCtl()
+{
+    QRect rect_t = m_videoWidget->rect();
+    m_frameTitle->setGeometry(rect_t.x(),
+                              rect_t.y(),
+                              rect_t.width(),
+                              m_frameTitle->height());
+    m_frameTitle->raise();
+    m_frameTitle->show();
+
+    m_frameControl->setGeometry(rect_t.x(),
+                              rect_t.y() + rect_t.height()-m_frameControl->height(),
+                              rect_t.width(),
+                              m_frameControl->height());
+    m_frameControl->raise();
+    m_frameControl->show();
 }

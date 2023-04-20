@@ -659,13 +659,23 @@ void MultipPlayer::handleSignalAndSLots()
 
     //标题栏--截图
     connect(m_videoTitleBar,&VideoTitleBar::sig_videoCapture,[=](){
-//        if(ui->stackedWidget->currentWidget() == videoWidget)
-//        {
-////            QPixmap pix_grub = QPixmap::grabWidget(videoWidget,videoWidgett->rect());//测试，截图为白屏（BUG）
-//            m_player2->setPosition(ui->horizontalSlider->value()*1000);
-
-//            connect(m_videoSurface,&VideoSurface::frameAvailable,this,&MultipPlayer::slot_saveCapturePixmap,Qt::QueuedConnection);
-//        }
+        if(ui->stackedWidget->currentWidget() == videoWidget)
+        {
+            QTimer::singleShot(1000,[=]()
+            {
+                QString filePath = QFileDialog::getSaveFileName(this, "Save File", "", "Image Files (*.png)");
+                if(!filePath.isEmpty())
+                {
+                    // 获取所有屏幕
+                       QList<QScreen*> screens = QGuiApplication::screens();
+                       // 截取第一个屏幕
+                       QScreen* screen = screens.at(0);
+                       QPixmap screenshot = screen->grabWindow(this->window()->winId(),0,m_videoTitleBar->height(),videoWidget->width(),videoWidget->height());
+                       // 保存截图到文件
+                        screenshot.save(filePath,"png");
+                }
+            });
+        }
     });
 
     //标题栏--下载
@@ -799,17 +809,13 @@ void MultipPlayer::handleSignalAndSLots()
 //    connect(m_adjustBright,SIGNAL(valueChange_playBackMode(int)),this,SLOT(adjust_playBackMode(int)));
     //调节屏幕占比
     connect(m_adjustBright,SIGNAL(valueChange_aspectRatio(int)),this,SLOT(adjust_aspectRatioMode(int)));
-    //设置图像参数
-    m_adjustBright->slot_setProgressBarValue_brightness(videoWidget->brightness());
-    m_adjustBright->slot_setProgressBarValue_contrast(videoWidget->contrast());
-    m_adjustBright->slot_setProgressBarValue_saturation(videoWidget->saturation());
-    m_adjustBright->slot_setProgressBarValue_hue(videoWidget->hue());
 
+    //界面调整--->videoWidget输出
     connect(m_adjustBright,SIGNAL(valueChange_liangdu(int)),videoWidget,SLOT(setBrightness(int)));
     connect(m_adjustBright,SIGNAL(valueChange_duibidu(int)),videoWidget,SLOT(setContrast(int)));
     connect(m_adjustBright,SIGNAL(valueChange_baohedu(int)),videoWidget,SLOT(setSaturation(int)));
     connect(m_adjustBright,SIGNAL(valueChange_sediao(int)),videoWidget,SLOT(setHue(int)));
-
+    //videoWidget输出--->界面调整（主要是恢复的时候用一下）
     connect(videoWidget,&MyVideoWidget::brightnessChanged,m_adjustBright,&AdjustBright::slot_setProgressBarValue_brightness);
     connect(videoWidget,&MyVideoWidget::contrastChanged,m_adjustBright,&AdjustBright::slot_setProgressBarValue_contrast);
     connect(videoWidget,&MyVideoWidget::saturationChanged,m_adjustBright,&AdjustBright::slot_setProgressBarValue_saturation);
@@ -2075,6 +2081,7 @@ bool MultipPlayer::videoDouleExit(QObject *watched, QEvent *event)
                 QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
                 if(keyEvent->key() == Qt::Key_Escape)
                 {
+                    //作为子窗口
                     videoWidget->setWindowFlags(Qt::SubWindow);
                     videoWidget->showNormal();
                 }
@@ -2393,14 +2400,19 @@ void MultipPlayer::adjust_aspectRatioMode(int index)
     }
 }
 
-/*获取媒体信息，亮度，对比度，饱和度，色调*/
+/*重置：媒体信息，亮度，对比度，饱和度，色调*/
 void MultipPlayer::update_adjustBright()
 {
     //此处两个操作：01.videoWidget设置02.滑动条设置
-    videoWidget->setBrightness(videoWidget->brightness());
-    videoWidget->setSaturation(videoWidget->saturation());
-    videoWidget->setContrast(videoWidget->contrast());
-    videoWidget->setHue(videoWidget->hue());
+    videoWidget->setBrightness(0);//默认值为0，范围：[-100,100]
+    videoWidget->setSaturation(0);//默认值为0，范围：[-100,100]
+    videoWidget->setContrast(0);//默认值为0，范围：[-100,100]
+    videoWidget->setHue(0);//默认值为0，范围：[-100,100]
+    //界面恢复图像参数
+    m_adjustBright->slot_setProgressBarValue_brightness(videoWidget->brightness());
+    m_adjustBright->slot_setProgressBarValue_contrast(videoWidget->contrast());
+    m_adjustBright->slot_setProgressBarValue_saturation(videoWidget->saturation());
+    m_adjustBright->slot_setProgressBarValue_hue(videoWidget->hue());
 }
 
 void MultipPlayer::downloadInternetPathRecource()

@@ -342,8 +342,8 @@ bool dataBase::initGlobalDate()
 {
     video_getVideoMediaSortType();//获取视频分类
     browser_loadAllRecordsToList();//收藏记录
-    browser_loadAllHisRecordsToList();
-    video_recDramaInfo();
+    browser_loadAllHisRecordsToList();//历史记录
+    video_recDramaInfo();//推荐视频（限制10条加载）
     return true;
 }
 
@@ -1160,7 +1160,7 @@ bool dataBase::video_insertRecDramaListDB(const QStringList &parma)
 bool dataBase::video_recDramaInfo()
 {
     QSqlQuery query(getSqlDataBase());
-    bool isOK = query.exec(QString("select id, alias, url, duration, cover, uplove from dramalist;"));
+    bool isOK = query.exec(QString("select id, alias, url, duration, cover, uplove from dramalist limit 20;"));//限制在20条
     if(isOK)
     {
         while (query.next())
@@ -1195,10 +1195,10 @@ bool dataBase::video_recDramaInfo()
 }
 
 //查询某个主题下的视频
-bool dataBase::video_recDrama_of_theme(const QString &theme)
+bool dataBase::video_recDrama_of_theme(const QString &theme, int start, int counts)
 {
     QSqlQuery query(getSqlDataBase());
-    bool isOK = query.exec(QString("select id, alias, url, duration, cover, uplove from dramalist where theme = '%1';").arg(theme));
+    bool isOK = query.exec(QString("select id, alias, url, duration, cover, uplove from dramalist where theme = '%1' limit %2,%3;").arg(theme).arg(start).arg(counts));
     if(isOK)
     {
         emit sig_sendRecThemeVideocounts(query.size());

@@ -141,7 +141,7 @@ public slots:
     //推荐视频
     bool                    video_insertRecDramaListDB(const QStringList& parma);//插入视频
     bool                    video_recDramaInfo();//查询推荐列表
-    bool                    video_recDrama_of_theme(const QString& theme);//查询某个主题下的视频
+    bool                    video_recDrama_of_theme(const QString& theme,int start, int counts);//查询某个主题下的视频
 
     //视频类型
     bool                    video_getVideoMediaSortType();//获取视频分类

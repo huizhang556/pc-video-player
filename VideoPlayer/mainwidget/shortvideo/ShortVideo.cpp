@@ -18,6 +18,8 @@ ShortVideo::~ShortVideo()
 void ShortVideo::initWorkUI()
 {
 
+    ui->pushButton_themeflush->setIcon(QIcon(":/images/home/vtitle_switch.png"));
+    ui->pushButton_themeflush->setText(QString(u8"换一换"));
 //    ui->stackedWidget_player->installEventFilter(this);
     ui->label_novideo->constructItem(":/images/bgpic/cusvideoitem2.png","://images/user/itemmark_vyp.png",QString(u8"6.6"),false,true,false);
     ui->pushButton_title->setText(QString(u8"热点资讯"));
@@ -57,12 +59,28 @@ void ShortVideo::initWorkUI()
 
 void ShortVideo::handleSignalsAndSLots()
 {
+    //换一换
+    connect(ui->pushButton_themeflush,&QPushButton::clicked,[=](){
+        if(m_curTheme == ui->listWidget_type->currentItem()->text())//主题未改变
+        {
+            m_startpos += 10;
+        }
+        else
+        {
+            m_startpos = 0;
+        }
+        ui->listWidget_medialist->clear();
+        emit sig_sendTheme(ui->listWidget_type->currentItem()->text(),m_startpos,10);
+    });
+
     //节目类型选择
     connect(ui->listWidget_type,&QListWidget::itemClicked,[=](QListWidgetItem *item){
         qDebug() << QString(u8"当前查找主题：") << item->text();
         //数据库查询数据并展示
             ui->listWidget_medialist->clear();
-            emit sig_sendTheme(item->text());
+            m_curTheme = item->text();
+            m_startpos = 0;
+            emit sig_sendTheme(item->text(),m_startpos,10);
     });
 
     connect(ui->listWidget_medialist,&QListWidget::currentItemChanged,[=](QListWidgetItem *current,QListWidgetItem *previous)
@@ -162,6 +180,7 @@ void ShortVideo::handleSignalsAndSLots()
 
 void ShortVideo::slot_addSelectTypeToList(const QStringList &typelist)
 {
+
     foreach (const QString itenText, typelist)
     {
         QListWidgetItem *item = new QListWidgetItem(itenText);
@@ -169,7 +188,10 @@ void ShortVideo::slot_addSelectTypeToList(const QStringList &typelist)
         ui->listWidget_type->addItem(item);
     }
     if(ui->listWidget_type->count() != 0)
+    {
         ui->listWidget_type->setCurrentRow(0);
+        m_curTheme = ui->listWidget_type->currentItem()->text();
+    }
 }
 
 //重载函数1
@@ -233,6 +255,7 @@ void ShortVideo::slot_setCurThemeCounts(int num)
 
 void ShortVideo::slot_setVideoMediaType(const QStringList &list)
 {
+    ui->listWidget_type->clear();
     videoTypeList = list;
     slot_addSelectTypeToList(videoTypeList);
 }
