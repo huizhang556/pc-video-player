@@ -294,6 +294,7 @@ void ListManager::createNewSongList(FINSTATUS status, QString sname)
     connect(itemWidget,&NewListItem::sig_item_newPlaylist,[=](int id, QStringList list, QString url, QString nick){
         m_playListItem = itemWidget;
         QUrlQuery query;
+        query.addQueryItem(u8"id",u8"0");
         query.addQueryItem(u8"url",url);
         query.addQueryItem(u8"nick",nick);
         query.addQueryItem(u8"pos","0");

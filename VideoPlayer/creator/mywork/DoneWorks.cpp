@@ -306,8 +306,9 @@ void DoneWorks::slot_addItmeToGroupIDList(QVariant& media)
     //播放
     connect(itemWidget,&FilesItem::sig_sendItem_play,[=](){
     QUrlQuery query;
+    query.addQueryItem(u8"id",QString::number(body.fid));
     query.addQueryItem(u8"url",item->data(Qt::UserRole).toString());
-    query.addQueryItem(u8"nick",item->data(Qt::UserRole).toString());
+    query.addQueryItem(u8"nick",body.fnick);
     query.addQueryItem(u8"pos","0");
     MultipPlayer::getInstance()->slot_addTempPlaylist(666,QStringList{item->data(Qt::UserRole).toString()},query);
     });
@@ -381,8 +382,9 @@ void DoneWorks::slot_receivedData_findTypeResult(QVariant& media)
         //播放
         connect(itemWidget,&FilesItem::sig_sendItem_play,[=](){
         QUrlQuery query;
+        query.addQueryItem(u8"id",QString::number(body.fid));
         query.addQueryItem(u8"url",item->data(Qt::UserRole).toString());
-        query.addQueryItem(u8"nick",item->data(Qt::UserRole).toString());
+        query.addQueryItem(u8"nick",body.fnick);
         query.addQueryItem(u8"pos","0");
         MultipPlayer::getInstance()->slot_addTempPlaylist(666,QStringList{item->data(Qt::UserRole).toString()},query);
         });

@@ -684,5 +684,16 @@
         <file>images/status/video_pixfaild.png</file>
         <file>images/icon/ratio_checked.png</file>
         <file>images/icon/ratio_checked_hover.png</file>
+        <file>images/advterise/adv_collect.png</file>
+        <file>images/advterise/adv_comcount.png</file>
+        <file>images/advterise/adv_like.png</file>
+        <file>images/advterise/adv_pause.png</file>
+        <file>images/advterise/adv_play.png</file>
+        <file>images/advterise/adv_playcount.png</file>
+        <file>images/advterise/adv_relay.png</file>
+        <file>images/advterise/adv_replay.png</file>
+        <file>images/advterise/adv_toubi.png</file>
+        <file>images/advterise/adv-cache.png</file>
+        <file>images/advterise/adv_play_hover.png</file>
     </qresource>
 </RCC>

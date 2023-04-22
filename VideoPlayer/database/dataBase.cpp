@@ -1230,6 +1230,79 @@ bool dataBase::video_recDrama_of_theme(const QString &theme, int start, int coun
     }
 }
 
+//获取接下来播放的4个视频
+QList<QVariant> &dataBase::adv_getNext4Medais(const QString& theme, const int start, int counts)
+{
+    m_advItems.clear();
+    QSqlQuery query(getSqlDataBase());
+    bool isOK = query.exec(QString("select id, alias, url, duration, cover, uplove from dramalist where theme = '%1' limit %2,%3;").arg(theme).arg(start).arg(counts));
+    if(isOK)
+    {
+        while (query.next())
+        {
+            int id              =   query.value(0).toInt();     //id
+            QString alias       =   query.value(1).toString();  //标题说明
+            QString url         =   query.value(2).toString();  //播放地址url
+            QString duration    =   query.value(3).toString();  //时长
+            QString cover       =   query.value(4).toString();  //封面url
+            QString uplove      =   query.value(5).toString();  //点赞
+            MusicData musicData;//结构体定义的头文件一定要添加进来
+            musicData.id        =   id;
+            musicData.alias     =   alias;
+            musicData.url       =   url;
+            musicData.duration  =   duration;
+            musicData.cover     =   cover;
+            musicData.uplove    =   uplove;
+            QVariant musicdata;
+            musicdata.setValue(musicData);
+            m_advItems.append(musicdata);
+        }
+        return m_advItems;
+    }
+    else
+    {
+        qDebug()<< QString::fromLocal8Bit("查找广告推荐剧集信息记录错误：") << query.lastError();
+        return m_advItems;;
+    }
+}
+
+QUrlQuery dataBase::adv_getCurMediaUserInfo(const int media_id)
+{
+    QSqlQuery query(getSqlDataBase());
+    QUrlQuery query_media;
+    bool isOK = query.exec(QString("select userid, url, alias,theme from dramalist where id = %1;").arg(media_id));
+    if(isOK)
+    {
+        while (query.next())
+        {
+
+            int         m_id     = media_id;
+            QString     m_userId = query.value(0).toString();
+            QString     m_url    = query.value(1).toString();
+            QString     m_alias  = query.value(2).toString();
+            QString     m_theme  = query.value(3).toString();
+            QString     m_header = header_getUserHeader(m_userId);
+            QString     m_name   = header_getUserName(m_userId);
+
+            query_media.addQueryItem(u8"id",QString::number(m_id));
+            query_media.addQueryItem(u8"userid",m_userId);
+            query_media.addQueryItem(u8"url",m_url);
+            query_media.addQueryItem(u8"alias",m_alias);
+            query_media.addQueryItem(u8"theme",m_theme);
+            query_media.addQueryItem(u8"header",m_header);
+            query_media.addQueryItem(u8"nick",m_name);
+
+            qDebug() << QString(u8"查找到当前播放广告视频信息：[MEDIA_ID]:%1 [USE_ID]:%2 [URL]:%3 [ALIAS]:%4 [HEADER]:%5 [NICK]:%6 [THEME]:%7").arg(m_id).arg(m_userId).arg(m_url).arg(m_alias).arg(m_header).arg(m_name).arg(m_theme);
+            return query_media;
+        }
+    }
+    else
+    {
+        qDebug()<< QString::fromLocal8Bit("查找当前广告视频拥有者信息错误：") << query.lastError();
+        return query_media;
+    }
+}
+
 //获取视频分类
 bool dataBase::video_getVideoMediaSortType()
 {
@@ -1456,6 +1529,49 @@ bool dataBase::header_getGifHeaderList()
     {
         qDebug() << QString(u8"用户：%1 在标签： %2 类型下未查找到文件。").arg("0000000000").arg("gif");
         return -1;
+    }
+}
+
+//获取某位用户的头像
+const QString dataBase::header_getUserHeader(const QString &user_id)
+{
+    QSqlQuery query(getSqlDataBase());
+    //按某个字段统计效率高
+    bool isOK = query.exec(QString("select pix_url from user_header where user_id = '%1';").arg(user_id));
+    if(isOK)
+    {
+        while (query.next())
+        {
+            QString pix_url   = query.value(0).toString();
+            qDebug() << QString(u8"在用户：%1 下找到头像资源：%2").arg(user_id).arg(pix_url);
+            return pix_url;
+        }
+    }
+    else
+    {
+        qDebug() << QString(u8"在用户：%1 下查找用户头像资源失败！").arg(user_id);
+        return "";
+    }
+}
+
+const QString dataBase::header_getUserName(const QString &user_id)
+{
+    QSqlQuery query(getSqlDataBase());
+    //按某个字段统计效率高
+    bool isOK = query.exec(QString("select name from userinfo where userid = '%1';").arg(user_id));
+    if(isOK)
+    {
+        while (query.next())
+        {
+            QString user_name   = query.value(0).toString();
+            qDebug() << QString(u8"在用户：%1 下找到用户姓名为：%2").arg(user_id).arg(user_name);
+            return user_name;
+        }
+    }
+    else
+    {
+        qDebug() << QString(u8"在用户：%1 下查找用户姓名资源失败！").arg(user_id);
+        return "";
     }
 }
 

@@ -41,7 +41,6 @@ private slots:
     void            slot_clearList();
 
 private:
-private:
     void            file_upload_pause();//暂停
     void            file_upload_stop();//移除
     void            file_upload_start(const QUrlQuery media_url, const QByteArray &pic_url, FilesItem *fileItem);//上传文件到服务器

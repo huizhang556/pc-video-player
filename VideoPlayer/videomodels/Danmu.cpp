@@ -150,7 +150,9 @@ Danmu::~Danmu()
 
 void Danmu::paintEvent(QPaintEvent *)
 {  //弹幕字体绘制函数
-        QPainter painter(this);     //以弹幕窗口为画布
+        QPainter painter(this);//以弹幕窗口为画布
+//        painter.setCompositionMode(QPainter::CompositionMode_Clear);
+//        painter.eraseRect(this->rect());
         painter.save();
         QFontMetrics metrics(this->getQFont());     //获取弹幕字体
         QPainterPath path;      //描绘路径用
@@ -172,9 +174,8 @@ void Danmu::paintEvent(QPaintEvent *)
         }
         path.addText(px+2,py+2,this->getQFont(),DText);//画字体轮廓
         painter.strokePath(path, pen);//给字描边
-        painter.drawPath(path);
-        painter.fillPath(path,QBrush(this->getQColor()));//用画刷填充
-//        painter.fillRect(rect(),Qt::red);
+        painter.drawPath(path);//绘制描边颜色
+        painter.fillPath(path,QBrush(this->getQColor()));//用画刷填充字体中间颜色
         painter.restore();
 
 }

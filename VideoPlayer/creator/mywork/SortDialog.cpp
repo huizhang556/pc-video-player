@@ -418,6 +418,7 @@ void SortDialog::slot_addItemsTo_MEDIA(QList<QVariant>& medias)
         //播放
         connect(itemWidget,&FilesItem::sig_sendItem_play,[=](){
         QUrlQuery query;
+        query.addQueryItem(u8"id",QString::number(body.fid));
         query.addQueryItem(u8"url",item->data(Qt::UserRole).toString());
         query.addQueryItem(u8"nick",item->data(Qt::UserRole).toString());
         query.addQueryItem(u8"pos","0");
@@ -465,6 +466,7 @@ void SortDialog::slot_addItemsTo_SORTMEDIA(QList<QVariant> &medias)
         //播放
         connect(itemWidget,&FilesItem::sig_sendItem_play,[=](){
         QUrlQuery query;
+        query.addQueryItem(u8"id",QString::number(body.fid));
         query.addQueryItem(u8"url",item->data(Qt::UserRole).toString());
         query.addQueryItem(u8"nick",item->data(Qt::UserRole).toString());
         query.addQueryItem(u8"pos","0");

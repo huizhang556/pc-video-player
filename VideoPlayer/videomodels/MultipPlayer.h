@@ -9,6 +9,7 @@
 #include "database/dataBase.h"
 #include "videomodels/Danmu.h"
 #include "customer/BaseWidget.h"
+#include "videomodels/AdvDialog.h"
 #include "videomodels/MediaItem.h"
 #include "videomodels/VideoBlank.h"
 #include "videomodels/muteDialog.h"
@@ -209,7 +210,7 @@ public slots:
 
     void    slot_setVideTitleBar(int index);
 
-    void    slot_addTempPlaylist(const int id, const QStringList& list, const QUrlQuery &media);//切换播放列表
+    void    slot_addTempPlaylist(const int list_id, const QStringList& list, const QUrlQuery &media);//切换播放列表
 
     void    on_pushButton_pauseStart_clicked();//暂停、播放
 
@@ -262,6 +263,8 @@ private slots:
     void    slot_setPlayStatusStyle_main(bool status);//设置主界面的播放按钮样式
 
     void    slot_hideFloatPlayCtl();
+
+    void    slot_showAdvCtl(bool show);
 
     void    searchMouseEnterLeaveShow(QObject *watched, QEvent *event);
 
@@ -317,7 +320,9 @@ private slots:
 
     void    mediaLoadingStatusProgressBar_End();
 
-    bool    updateProgressBarGeometry();
+    bool    updateProgressBarGeometry();//加载进度条
+
+    void    updateADVGeomotry();//广告
 
     void    slot_createRight_playListTable(const QPoint &pos);//播放列表右键菜单
 
@@ -466,6 +471,7 @@ private:
     QMap<int,QString>           m_mapList_collect;
     QMap<int,QString>           m_mapList_history;
     QMediaPlayer::State         m_playerState;
+    int                         m_curMediaId = 0;
     QString                     m_curMediaName;
     QString                     m_curMediaUrl;
     QUrl                        m_anyFrameMediaUrl;

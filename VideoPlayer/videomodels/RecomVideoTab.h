@@ -62,6 +62,7 @@ private:
     QPushButton*    getListWidgetItemButton(QListWidgetItem* item, QString objname);//在item中查找指定按钮
 
 signals:
+    void    sig_sendPlayMode(bool);
     void    sig_sendVideoUrl(QString);//弃用
     void    sig_recom_playlist(int,QStringList,QUrlQuery);//表id 表内url集合 单个url
 };

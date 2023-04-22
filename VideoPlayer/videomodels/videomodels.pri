@@ -24,7 +24,10 @@ SOURCES += \
     $$PWD/songListItem.cpp \
     $$PWD/VideoSurface.cpp \
     $$PWD/Danmu.cpp \
-    $$PWD/CVideoWidget.cpp
+    $$PWD/CVideoWidget.cpp \
+    $$PWD/AdvDialog.cpp \
+    $$PWD/AdvterItem.cpp \
+    $$PWD/AdvCoverLab.cpp
 
 
 HEADERS += \
@@ -53,7 +56,10 @@ HEADERS += \
     $$PWD/songListItem.h \
     $$PWD/VideoSurface.h \
     $$PWD/Danmu.h \
-    $$PWD/CVideoWidget.h
+    $$PWD/CVideoWidget.h \
+    $$PWD/AdvDialog.h \
+    $$PWD/AdvterItem.h \
+    $$PWD/AdvCoverLab.h
 
 
 FORMS += \
@@ -78,7 +84,10 @@ FORMS += \
     $$PWD/NewListItem.ui \
     $$PWD/songListItem.ui \
     $$PWD/Danmu.ui \
-    $$PWD/CVideoWidget.ui
+    $$PWD/CVideoWidget.ui \
+    $$PWD/AdvDialog.ui \
+    $$PWD/AdvterItem.ui \
+    $$PWD/AdvCoverLab.ui
 
 #添加库文件
 #LIBS += -L ../lib/lib -luser32

@@ -11,6 +11,7 @@
 #include "messagebox/ExitDialog.h"
 #include "pernotice/ScrollToTop.h"
 #include "fileshandle/DownloadType.h"
+#include "videomodels/AdvDialog.h"
 #include "videomodels/MultipPlayer.h"
 #include "mainwidget/AniStackWidget.h"
 #include "splashscreen/CSplashScreen.h"
@@ -97,6 +98,7 @@ int main(int argc, char *argv[])
     if(Global::getFileType(QString::fromLocal8Bit(argv[1])))//支持类型（直接显示主播放器）
     {
         QUrlQuery query;
+        query.addQueryItem(u8"id",u8"0");
         query.addQueryItem(u8"url",QString::fromLocal8Bit(argv[1]));
         query.addQueryItem(u8"nick",QString::fromLocal8Bit(argv[1]));
         query.addQueryItem(u8"pos",u8"0");
@@ -138,7 +140,7 @@ int main(int argc, char *argv[])
 
             MultipPlayer::getInstance()->show();
 
-
+//            AdvDialog::getInstance()->exec_();
 //        LeftSideBar lbar; lbar.show();
 //        ChangeHead::getInstance()->exec_(OPENTYPE::PER_HEAD);
 

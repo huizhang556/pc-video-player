@@ -156,10 +156,9 @@ QTabBar::tab
 color: #ffffff;
 font: 400 16px &quot;微软雅黑&quot;;
 border: 0px solid green;
-border-bottom-color: red;
 border-top-left-radius: 4px;
 border-top-right-radius: 4px;
-min-width: 100px;
+min-width: 120px;
 min-height:36px;
 margin: 0px 1px;
 background-color: transparent;

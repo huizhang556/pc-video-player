@@ -77,7 +77,10 @@ void RecomVideoTab::initWorkUI()
 void RecomVideoTab::handleSignalsAndSLots()
 {
     //开关（连续推送）
-    connect(ui->Btn_turn,&QPushButton::clicked,this,&RecomVideoTab::slots_switchTurn);
+    connect(ui->Btn_turn,&QPushButton::clicked,[=](){
+        slots_switchTurn();
+
+    });
     //当前项改变（设置样式）
     connect(ui->listWidget_recommend,&QListWidget::currentItemChanged,[=](QListWidgetItem *current,QListWidgetItem *previous)
     {
@@ -134,6 +137,7 @@ bool RecomVideoTab::slot_addRecVideoItem(QVariant& musicVariant)
     connect(videoItem,&RecVideoItem::sig_sendVideoUrl,[=](){
 //        emit sig_sendVideoUrl(item->text());
         QUrlQuery query;
+        query.addQueryItem(u8"id",QString::number(data.id));
         query.addQueryItem(u8"url",item->text());
         query.addQueryItem(u8"nick",item->data(Qt::UserRole).toString());
         query.addQueryItem(u8"pos",u8"0");
@@ -160,11 +164,12 @@ bool RecomVideoTab::slot_addRecVideoItem(QString url, QString path, QString time
     //信号与槽函数
     connect(videoItem,&RecVideoItem::sig_sendVideoUrl,[=](){
 //        emit sig_sendVideoUrl(item->text());
-        QUrlQuery query;
-        query.addQueryItem(u8"url",item->text());
-        query.addQueryItem(u8"nick",item->data(Qt::UserRole).toString());
-        query.addQueryItem(u8"pos",u8"0");
-        emit sig_recom_playlist(888,m_recplayList,query);
+//        QUrlQuery query;
+//        query.addQueryItem(u8"id",QString::number(0));
+//        query.addQueryItem(u8"url",item->text());
+//        query.addQueryItem(u8"nick",item->data(Qt::UserRole).toString());
+//        query.addQueryItem(u8"pos",u8"0");
+//        emit sig_recom_playlist(888,m_recplayList,query);
         ui->listWidget_recommend->setCurrentItem(item);//实现选种样式
         qDebug() <<QString::fromLocal8Bit("已发送临时播放连接url:")<<item->text();
     });
@@ -190,6 +195,7 @@ void RecomVideoTab::slots_switchTurn()
         ui->Btn_turn->setStyleSheet("#Btn_turn{"
                                            "border-image: url(:/images/icon/turn_on.png);"
                                            "}");
+
     }
     else
     {
@@ -199,6 +205,7 @@ void RecomVideoTab::slots_switchTurn()
                                            "}");
     }
     m_turnOnStatus = !m_turnOnStatus;
+    emit sig_sendPlayMode(m_turnOnStatus);//向外发送当前是否连播
 }
 
 QPushButton *RecomVideoTab::getListWidgetItemButton(QListWidgetItem* item, QString objname)

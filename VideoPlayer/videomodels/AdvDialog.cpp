@@ -1,0 +1,237 @@
+﻿#include "AdvDialog.h"
+#include "ui_AdvDialog.h"
+
+//类外初始化
+AdvDialog* AdvDialog::m_pInstance = nullptr;
+
+AdvDialog::AdvDialog(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::AdvDialog)
+{
+    ui->setupUi(this);
+    setFixedSize(678,360);
+    setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint);
+    setAttribute(Qt::WA_TranslucentBackground);
+    setModal(false);
+    initWorkUI();
+    handleSignalsAndSlots();
+}
+
+AdvDialog::~AdvDialog()
+{
+    delete ui;
+    //删除创建的单例
+    if(m_pInstance != nullptr)
+        delete m_pInstance;
+    m_pInstance = nullptr;
+}
+
+void AdvDialog::slot_receivedUserHeader(QNetworkReply *reply)
+{
+    if (reply->error() == QNetworkReply::NoError)
+    {
+        //获取字节流构造 QPixmap 对象
+        QPixmap pixmap;
+        pixmap.loadFromData(reply->readAll());
+        ui->label_header->setPixmap_(pixmap);
+        ui->label_header->setScaledContents(true);
+        qDebug() <<QString::fromLocal8Bit("广告部分网络头像请求图片设置成功！");
+    }
+    else//请求失败，加载默认图片
+    {
+        qDebug() <<  QString::fromLocal8Bit("广告部分网络头像请求错误：")<<reply->errorString();
+        QPixmap pixmap("://images/user/default_woman00.png");//默认图标
+        ui->label_header->setPixmap_(pixmap);
+        ui->label_header->setScaledContents(true);
+    }
+}
+
+void AdvDialog::slot_setUserHeader(const QString &userHeader)
+{
+    m_manager->get(QNetworkRequest(QUrl(userHeader)));
+}
+
+void AdvDialog::initWorkUI()
+{
+    m_manager = new QNetworkAccessManager(this);
+    ui->stackedWidget_advswitch->setCurrentWidget(ui->page_next);
+    ui->toolButton_replay->setIcon(QIcon(":/images/advterise/adv_replay.png"));
+    ui->toolButton_replay->setIconSize(QSize(26,26));
+    ui->toolButton_replay->setText(QString(u8"重播"));
+    ui->toolButton_replay->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+    ui->toolButton_like->setIcon(QIcon(":/images/advterise/adv_like.png"));
+    ui->toolButton_like->setIconSize(QSize(33,30));
+    ui->toolButton_like->setText(QString(u8"点赞"));
+    ui->toolButton_like->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+    ui->toolButton_toubi->setIcon(QIcon(":/images/advterise/adv_toubi.png"));
+    ui->toolButton_toubi->setIconSize(QSize(30,30));
+    ui->toolButton_toubi->setText(QString(u8"投币"));
+    ui->toolButton_toubi->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+    ui->toolButton_collect->setIcon(QIcon(":/images/advterise/adv_collect.png"));
+    ui->toolButton_collect->setIconSize(QSize(26,26));
+    ui->toolButton_collect->setText(QString(u8"收藏"));
+    ui->toolButton_collect->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+    ui->toolButton_cache->setIcon(QIcon(":/images/advterise/adv-cache.png"));
+    ui->toolButton_cache->setIconSize(QSize(26,26));
+    ui->toolButton_cache->setText(QString(u8"缓存"));
+    ui->toolButton_cache->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+    ui->toolButton_relay->setIcon(QIcon(":/images/advterise/adv_relay.png"));
+    ui->toolButton_relay->setIconSize(QSize(26,26));
+    ui->toolButton_relay->setText(QString(u8"转发"));
+    ui->toolButton_relay->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+    //列表属性设置
+    //上传列表
+    ui->listWidget_userlist->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->listWidget_userlist->setViewMode(QListView::IconMode);
+    ui->listWidget_userlist->setMovement(QListView::Static);//图标不可拖动
+    ui->listWidget_userlist->setResizeMode(QListWidget::Adjust);
+    ui->listWidget_userlist->setWrapping(true);//自动换行 所有itm在一行显示
+    ui->listWidget_userlist->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->listWidget_userlist->horizontalScrollBar()->setDisabled(true);
+    ui->listWidget_userlist->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_userlist->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_userlist->setSelectionMode(QAbstractItemView::SingleSelection);//设置选择模式为单选
+}
+
+void AdvDialog::handleSignalsAndSlots()
+{
+    connect(m_manager,&QNetworkAccessManager::finished,this,&AdvDialog::slot_receivedUserHeader,Qt::UniqueConnection);
+    //重播
+    connect(ui->toolButton_replay,&QPushButton::clicked,[=](){
+        m_curPlayList.clear();
+        m_curPlayList = QStringList{m_curMediaUrl};
+        m_curQurlQuery.clear();
+        m_curQurlQuery.addQueryItem(u8"id",QString::number(m_media_id));
+        m_curQurlQuery.addQueryItem(u8"url",m_curMediaUrl);
+        m_curQurlQuery.addQueryItem(u8"nick",m_curMedialias);
+        m_curQurlQuery.addQueryItem(u8"pos",u8"0");
+        emit sig_play_continue(666,QStringList{m_curMediaUrl},m_curQurlQuery);
+    });
+}
+
+AdvDialog *AdvDialog::getInstance()
+{
+    if(m_pInstance == nullptr)
+    {
+        m_pInstance = new AdvDialog();
+    }
+    return m_pInstance;
+}
+
+void AdvDialog::exec_(POPTYPE type, const int media_id)
+{
+    m_curType = type;
+    slot_getCurUserInfo(media_id);//获取用户相关信息
+    //更新头像、名称、点赞数、等等
+    slot_setUserHeader(m_curHeader);
+    slot_setUserName(m_curUserName);
+
+    QList<QVariant> medias = dataBase::getInstance()->adv_getNext4Medais(m_curTheme,m_startpos,4);
+    qDebug() << QString(u8"广告请求到的数量：") << medias.count();
+    if(medias.count() != 0)
+    {
+        slot_addItemTo_ContinueNextList(medias);
+    }
+    this->raise();
+    this->show();
+//    switch (type)
+//    {
+//    case T_NEXTMEDIA:
+//    {
+//    }
+//        break;
+//    case T_BREAKMEDIA:
+//    {
+//    }
+//        break;
+//    case T_OTHEREDIA:
+//    {
+//    }
+//        break;
+//    case T_UNKNOW:
+//    {
+//    }
+//        break;
+//    default:
+//        break;
+    //    }
+}
+
+void AdvDialog::hide_()
+{
+    this->blockSignals(true);//停止一切信号发射
+    this->hide();
+}
+
+void AdvDialog::slot_setUserName(const QString& userName)
+{
+    ui->pushButton_name->setText(userName);
+}
+
+void AdvDialog::slot_getCurUserInfo(const int media_id)
+{
+    QUrlQuery media_info = dataBase::getInstance()->adv_getCurMediaUserInfo(media_id);
+    if(!media_info.isEmpty())
+    m_media_id      = media_id;
+    m_curUserId     = media_info.queryItemValue(u8"userid");
+    m_curMediaUrl   = media_info.queryItemValue(u8"url");
+    m_curMedialias  = media_info.queryItemValue(u8"alias");
+    m_curHeader     = media_info.queryItemValue(u8"header");
+    m_curUserName   = media_info.queryItemValue(u8"nick");
+    QString theme   = media_info.queryItemValue(u8"theme");
+    if(m_curTheme == theme)//本次请求主题相同
+    {
+        m_startpos += 4;//同一主题加载下一个 4条
+        qDebug() <<QString(u8"请求主题相同");
+    }
+    else
+    {
+        m_startpos = 0;//不同主题加载从0开始
+        qDebug() <<QString(u8"请求主题不同");
+    }
+    m_curTheme = theme;
+}
+
+void AdvDialog::slot_addItemTo_ContinueNextList(QList<QVariant> &medias)
+{
+    ui->listWidget_userlist->clear();
+    for(int i = 0; i < medias.count(); i++)
+    {
+        MusicData advdata = medias.at(i).value<MusicData>();// 通用类型转为专用类型
+        AdvterItem *itemWidget = nullptr;
+        if(i == 0 && m_curType == P_NEXTMEDIA)
+        {
+
+            itemWidget = new AdvterItem(ADVTYPE::ADV_CONTINUE,advdata.url,advdata.cover,advdata.duration,advdata.alias,advdata.uplove);
+        }
+        else
+        {
+            itemWidget = new AdvterItem(ADVTYPE::ADV_NOCONTINUE,advdata.url,advdata.cover,advdata.duration,advdata.alias,advdata.uplove);
+        }
+        QListWidgetItem *item = new QListWidgetItem(advdata.url);
+        item->setData(Qt::UserRole,advdata.id);//介绍
+        item->setSizeHint(QSize(167,195));
+        ui->listWidget_userlist->addItem(item);
+        ui->listWidget_userlist->setItemWidget(item,itemWidget);
+
+        //信号与槽函数
+        connect(itemWidget,&AdvterItem::sig_item_continue,[=](QString url){
+            slot_getCurUserInfo(advdata.id);//获取用户相关信息
+            QUrlQuery query;
+            query.addQueryItem(u8"id",QString::number(advdata.id));
+            query.addQueryItem(u8"url",m_curMediaUrl);
+            query.addQueryItem(u8"nick",m_curMedialias);
+            query.addQueryItem(u8"pos",u8"0");
+            m_curQurlQuery = query;
+            this->hide();
+            emit sig_play_continue(666,QStringList{m_curMediaUrl},m_curQurlQuery);
+            qDebug() << QString::fromLocal8Bit("已发送临时播放连接url:%1 ,NICK:%2").arg(m_curMediaUrl).arg(m_curMedialias);
+        });
+    }
+}

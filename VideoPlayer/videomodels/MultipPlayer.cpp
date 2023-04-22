@@ -130,7 +130,8 @@ void MultipPlayer::initMainWindow()
     ui->horizontalSlider->setSpacing(22);
     ui->horizontalSlider->setOpenTipImage(true);
 
-    playlist->setPlaybackMode(QMediaPlaylist::Loop);//设置默认播放模式
+    playlist->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);//设置默认播放模式（播放一次）
+    playlist_t->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);//设置默认播放模式（播放一次）
     m_player->setPlaylist(playlist);
 
     videoWidget = new MyVideoWidget(ui->stackedWidget);
@@ -312,6 +313,8 @@ void MultipPlayer::initMainWindow()
     loadDefaultLogo();//加载默认图标
 
     VideoProgressBar::getInstance()->hide();
+    AdvDialog::getInstance()->setParent(ui->stackedWidget);
+    AdvDialog::getInstance()->hide();
 
     m_pTimer  = new QTimer(this);//进度更新
     m_pTimer2 = new QTimer(this);
@@ -394,6 +397,19 @@ void MultipPlayer::handleSignalAndSLots()
 //        addToPlaylist(playlist_t,url);
 //    });
 
+    //是否连播
+    connect(m_recomTab,&RecomVideoTab::sig_sendPlayMode,[=](bool mode){
+        qDebug() << QString(u8"设置的播放模式：") << mode;
+        if(mode)
+        {
+            slot_getCurrentPlayList()->setPlaybackMode(QMediaPlaylist::Loop);
+        }
+        else
+        {
+            slot_getCurrentPlayList()->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
+        }
+    });
+
     //推荐视频
     connect(ui->pushButton_comments,&QPushButton::clicked,[=](){
         removeTabwidgetTabBar(m_tabWidget1);
@@ -462,6 +478,9 @@ void MultipPlayer::handleSignalAndSLots()
         ui->horizontalSlider->setRange(0,m_times);//播放器主界面设置本次播放长度
         FloatPlayCtl::getInstance()->setHorzontalSlider_PlayerRange(0,m_times);//浮动调节窗口调节设置本次播放长度
     });
+
+    //广告播放下一条
+    connect(AdvDialog::getInstance(),&AdvDialog::sig_play_continue,this,&MultipPlayer::slot_addTempPlaylist);
 
     //播放器错误提示
     connect(m_player,SIGNAL(error(QMediaPlayer::Error)),this,SLOT(slot_showPlayerErrot(QMediaPlayer::Error)));
@@ -1680,11 +1699,15 @@ void MultipPlayer::checkChandleMediaPlayerStatus(QMediaPlayer::State newState)
     {
         qDebug() << QString::fromLocal8Bit("设置后，当前状态是：QMediaPlayer::PausedState");
         emit sig_currentMediaPlayStatus(false);//false 代表暂停状态
+        updateADVGeomotry();//先更新位置
+//        AdvDialog::getInstance()->exec_(POPTYPE::P_BREAKMEDIA,m_curMediaId);
     }
     else if(newState == QMediaPlayer::PlayingState)
     {
         qDebug() << QString::fromLocal8Bit("设置后，当前状态是：QMediaPlayer::PlayingState");
         emit sig_currentMediaPlayStatus(true);//true 代表播放状态
+        AdvDialog::getInstance()->blockSignals(true);
+        AdvDialog::getInstance()->hide();
     }
     else if(newState == QMediaPlayer::StoppedState)
     {
@@ -1693,6 +1716,12 @@ void MultipPlayer::checkChandleMediaPlayerStatus(QMediaPlayer::State newState)
         ui->label_media_name->clear();
         qDebug() << QString::fromLocal8Bit("设置后，当前状态是：QMediaPlayer::StoppedState");
         emit sig_currentMediaPlayStatus(false);//false 代表暂停状态
+        if(m_player->position() == m_player->duration())
+        {
+            updateADVGeomotry();//先更新位置
+            AdvDialog::getInstance()->blockSignals(false);
+            AdvDialog::getInstance()->exec_(POPTYPE::P_NEXTMEDIA,m_curMediaId);
+        }
     }
     else
     {
@@ -1700,7 +1729,7 @@ void MultipPlayer::checkChandleMediaPlayerStatus(QMediaPlayer::State newState)
     }
 }
 
-//监测处理媒体本身状态，加载完毕，正在加载，缓冲结束，正在缓冲，未知，有效等
+//监测处理m_player媒体本身状态，加载完毕，正在加载，缓冲结束，正在缓冲，未知，有效等
 void MultipPlayer::checkChandleMediaStatus()
 {
     if(m_player->media().isNull()) return;
@@ -2162,6 +2191,11 @@ void MultipPlayer::stackWidgetSliderButtonEventFilter(QObject *watched, QEvent *
             m_foldBtn->hide();
             //            qDebug() << "stackwidget leave";
         }
+        else if(event->type() == QEvent::Resize)
+        {
+            updateADVGeomotry();
+            qDebug() << QString(u8"ui->stackedWidget RESIZE@!!!");
+        }
     }
 }
 
@@ -2349,6 +2383,18 @@ void MultipPlayer::slot_setPlayStatusStyle_main(bool status)
 void MultipPlayer::slot_hideFloatPlayCtl()
 {
     FloatPlayCtl::getInstance()->hide();
+}
+
+void MultipPlayer::slot_showAdvCtl(bool show)
+{
+    if(show)
+    {
+        AdvDialog::getInstance()->exec_(POPTYPE::P_BREAKMEDIA,m_curMediaId);
+    }
+    else
+    {
+        AdvDialog::getInstance()->close();
+    }
 }
 
 void MultipPlayer::slot_switchPlayerList(QMediaPlaylist* list)
@@ -2725,6 +2771,15 @@ bool MultipPlayer::updateProgressBarGeometry()
                                                  VideoProgressBar::getInstance()->width(),
                                                  VideoProgressBar::getInstance()->height());
     return 0;
+}
+
+void MultipPlayer::updateADVGeomotry()
+{
+    //因为设置了父亲，所以只需要相对位置即可
+    AdvDialog::getInstance()->setGeometry((ui->stackedWidget->width()-AdvDialog::getInstance()->width())/2,
+                                          (ui->stackedWidget->height()-AdvDialog::getInstance()->height())/2,
+                                          AdvDialog::getInstance()->width(),
+                                          AdvDialog::getInstance()->height());
 }
 
 //播放列表右键菜单
@@ -3471,20 +3526,21 @@ void MultipPlayer::slot_setVideTitleBar(int index)
 }
 
 //播放临时列表（列表ID + url集合或者本地文件地址集合 + 当前播放URL又或者本地文件地址）
-void MultipPlayer::slot_addTempPlaylist(const int id, const QStringList &list, const QUrlQuery &media)
+void MultipPlayer::slot_addTempPlaylist(const int list_id, const QStringList &list, const QUrlQuery &media)
 {
-    QString curUrl      = media.queryItemValue(u8"url");//播放链接
+    int     curId       = media.queryItemValue(u8"id").toInt();//播放链接ID
+    QString curUrl      = media.queryItemValue(u8"url");//播放链接url
     QString nick        = media.queryItemValue(u8"nick");//媒体介绍
     QString pos         = media.queryItemValue(u8"pos");//播放点
-    qDebug() << QString(u8"接收到当前临时列表播放请求：URL = %1 --- 介绍（文件名）：'%2' --- 列表ID: '%3' ---列表总数：'%4' -----播放点：'%5'").arg(curUrl).arg(nick).arg(id).arg(list.count()).arg(pos);
+    qDebug() << QString(u8"接收到当前临时列表播放请求：URL = %1 --- 介绍（文件名）：'%2' --- 列表ID: '%3' ---列表总数：'%4' -----播放点：'%5'").arg(curUrl).arg(nick).arg(list_id).arg(list.count()).arg(pos);
      if(m_player->state() == QMediaPlayer::PlayingState)
      {
          m_player->pause();
      }
-    if(m_playlist_id != id)//不同表
+    if(m_playlist_id != list_id)//不同表
     {
         qDebug() << QString(u8"列表id不一致");
-        m_playlist_id = id;//当前列表id
+        m_playlist_id = list_id;//当前列表id
         m_t_MapList.clear();
         playlist_t->clear();
         for(int i = 0; i < list.count(); i++)
@@ -3496,7 +3552,7 @@ void MultipPlayer::slot_addTempPlaylist(const int id, const QStringList &list, c
     else if(m_playlist_id == 666)//成品展示界面发过来的
     {
         qDebug() << QString(u8"成品展示界面发过来的~！");
-        m_playlist_id = id;//当前列表id
+        m_playlist_id = list_id;//当前列表id
         m_t_MapList.clear();
         playlist_t->clear();
         for(int i = 0; i < list.count(); i++)
@@ -3508,7 +3564,7 @@ void MultipPlayer::slot_addTempPlaylist(const int id, const QStringList &list, c
     else if(m_playlist_id == 777)//热点资讯转主播放器
     {
         qDebug() << QString(u8"热点资讯发过来的~！");
-        m_playlist_id = id;//当前列表id
+        m_playlist_id = list_id;//当前列表id
         m_t_MapList.clear();
         playlist_t->clear();
         for(int i = 0; i < list.count(); i++)
@@ -3522,7 +3578,7 @@ void MultipPlayer::slot_addTempPlaylist(const int id, const QStringList &list, c
     {
         qDebug() << QString(u8"外部拖动文件发过来的~！");
         m_extraFlag = true;//外部文件打开的播放器
-        m_playlist_id = id;//当前列表id
+        m_playlist_id = list_id;//当前列表id
         m_t_MapList.clear();
         playlist_t->clear();
         for(int i = 0; i < list.count(); i++)
@@ -3535,7 +3591,9 @@ void MultipPlayer::slot_addTempPlaylist(const int id, const QStringList &list, c
     slot_switchPlayerList(playlist_t);
     ui->horizontalSlider->setEnabled(true);
     playlist_t->setCurrentIndex(getMapKeyFromValue(curUrl));//根据当前未解析的url去url集合查找对应的索引
-    m_curMediaUrl = curUrl;//主播放器下载时候使用m_curMediaUrl加密的连接
+    m_curMediaId    = curId;
+    m_curMediaName  = nick;
+    m_curMediaUrl   = curUrl;//主播放器下载时候使用m_curMediaUrl加密的连接
     //判断是否从头开始播放
     m_player->play();
 //    if(pos.toInt() != 0)

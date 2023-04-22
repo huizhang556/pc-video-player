@@ -92,6 +92,7 @@ void ShortVideo::handleSignalsAndSLots()
         if(current != nullptr)
         {
             getListWidgetItemButton(current,"pushButton_videoInfo")->setChecked(true);
+            m_curMediaId = current->data(Qt::UserRole+1).toInt();//介绍
             m_curMediaUrl = current->text();//url
             m_curMediaName = current->data(Qt::UserRole).toString();//介绍
             ui->widget_player->slot_receivePlayMediaFile(m_curMediaUrl,m_curMediaName);//URL+介绍
@@ -103,6 +104,7 @@ void ShortVideo::handleSignalsAndSLots()
         QString pos = QString::number(ui->widget_player->slot_player_pos());
         qDebug() <<QString(u8"当前播放点：%1").arg(pos);
         QUrlQuery query;
+        query.addQueryItem(u8"id",QString::number(m_curMediaId));
         query.addQueryItem(u8"url",m_curMediaUrl);
         query.addQueryItem(u8"nick",m_curMediaName);
         query.addQueryItem(u8"pos",pos);
@@ -202,6 +204,7 @@ bool ShortVideo::slot_addShortVideoItem(QVariant& musicVariant)
     QListWidgetItem *item = new QListWidgetItem(data.url);
     item->setSizeHint(videoItem->size());//留出来1px的边框
     item->setData(Qt::UserRole,data.alias);
+    item->setData(Qt::UserRole+1,data.id);
     ui->listWidget_medialist->addItem(item);
     ui->listWidget_medialist->setItemWidget(item,videoItem);
 
