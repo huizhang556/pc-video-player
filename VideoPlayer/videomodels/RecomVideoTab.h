@@ -42,8 +42,9 @@ public slots:
     void    slot_setCurrentVideoPicture(const QString& path);//设置当前正在播放视频图片
     void    slot_setCurrentVideoInfo(QString info);//设置介绍
     bool    slot_addRecVideoItem(QVariant& musicVariant);//通过结构体传递信息
-    bool    slot_addRecVideoItem(QString url, QString path,QString time,QString info,QString count);//添加item
+    bool    slot_addRecVideoItem(int id, QString url, QString path,QString time,QString info,QString count);//添加item
     void    slot_setListWidgetCurrentIndex(int index);//设置当前选中行
+    int     slot_getCurrentItemMedia_ID();
     void    slot_clearRecLists();
 
 private slots:
@@ -53,6 +54,7 @@ private:
     bool        m_turnOnStatus;
     Ui::RecomVideoTab *ui;
 
+    int                     m_fid  = 0;
     QStringList             m_tempVideoList;//临时视频播放列表
     QStringList             m_tempInfoList;//临时视频信息列表
     QList<QString>          m_recplayList;//推荐播放列表

@@ -51,7 +51,7 @@ private:
     QString     m_duration;
     bool        m_clicked = false;
     QTimer      *m_timer    = nullptr;
-    int         time = 5;
+    int         time = 6;
     QNetworkAccessManager   *m_manager = nullptr;
 
 signals:

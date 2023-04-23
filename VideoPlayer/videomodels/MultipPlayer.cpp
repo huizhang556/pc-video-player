@@ -891,17 +891,23 @@ void MultipPlayer::handleSignalAndSLots()
     //临时playlist发出的index
     connect(playlist_t,&QMediaPlaylist::currentIndexChanged,[=](int index){
         emit sig_mediaListIndex(index);
-        if(m_playlist_id != 999 && m_playlist_id != 888 && m_playlist_id != 777 && m_playlist_id != 666 )//不是外界拖放（999）推荐列表（888）mini转到主播放器（777）和展示作品列表（666）的时候才设置
+        //不是外界拖放（999）推荐列表（888）mini转到主播放器（777）和展示作品列表（666）的时候才设置
+        if(m_playlist_id != 999 && m_playlist_id != 888 && m_playlist_id != 777 && m_playlist_id != 666 )
         {
+            //设置对应的m_listManager的行选中
             m_listManager->slot_setCurPlayListSelectedRow(index);
+            //获取对应的m_listManager的播放的文件的id
         }
         fileType(playlist_t->currentMedia().canonicalUrl());//正确可用
     });
 
-    //临时列表item变化（等同于上边的）
+    //playlist_t的临时列表item变化（等同于上边的）
     connect(this,&MultipPlayer::sig_playlistCurrentIndex,[=](int index){
         if(m_playlist_id == 888)//指定为推荐列表编号888
         m_recomTab->slot_setListWidgetCurrentIndex(index);
+        //获取推荐列表的正在播放的媒体id(主要考虑自动下一首时候没有更新id)
+//        m_curMediaId = m_recomTab->slot_getCurrentItemMedia_ID();
+        qDebug() << QString(u8"主播放器推荐列表的正在播放的媒体id：") << m_recomTab->slot_getCurrentItemMedia_ID();
     });
 
 
@@ -1690,7 +1696,7 @@ void MultipPlayer::slot_setMediaPlayPosition(int value)
     m_player->setPosition(value*1000);//positon 以ms为单位
 }
 
-/*监测处理媒体播放状态*/
+/*著播放器player监测处理媒体播放状态*/
 void MultipPlayer::checkChandleMediaPlayerStatus(QMediaPlayer::State newState)
 {
     qDebug() << QString::fromLocal8Bit("媒体状态改变，接收到将要设置到的新状态是：") <<newState ;
@@ -1714,10 +1720,12 @@ void MultipPlayer::checkChandleMediaPlayerStatus(QMediaPlayer::State newState)
         ui->widget_media_pic->pause();
         m_videoTitleBar->clearTitleText();
         ui->label_media_name->clear();
-        qDebug() << QString::fromLocal8Bit("设置后，当前状态是：QMediaPlayer::StoppedState");
+        qDebug() << QString(u8"设置后，当前状态是：QMediaPlayer::StoppedState");
         emit sig_currentMediaPlayStatus(false);//false 代表暂停状态
-        if(m_player->position() == m_player->duration())
+        //弹出广告窗口时机：播放模式为：当前单次播放 且 进度到最后
+        if(slot_getCurrentPlayList()->playbackMode() == QMediaPlaylist::CurrentItemOnce && m_player->position() == m_player->duration())
         {
+            qDebug() << QString(u8"----------------主播放器当前结束播放的媒体ID：") << m_curMediaId;
             updateADVGeomotry();//先更新位置
             AdvDialog::getInstance()->blockSignals(false);
             AdvDialog::getInstance()->exec_(POPTYPE::P_NEXTMEDIA,m_curMediaId);
@@ -2383,18 +2391,6 @@ void MultipPlayer::slot_setPlayStatusStyle_main(bool status)
 void MultipPlayer::slot_hideFloatPlayCtl()
 {
     FloatPlayCtl::getInstance()->hide();
-}
-
-void MultipPlayer::slot_showAdvCtl(bool show)
-{
-    if(show)
-    {
-        AdvDialog::getInstance()->exec_(POPTYPE::P_BREAKMEDIA,m_curMediaId);
-    }
-    else
-    {
-        AdvDialog::getInstance()->close();
-    }
 }
 
 void MultipPlayer::slot_switchPlayerList(QMediaPlaylist* list)
@@ -3532,7 +3528,13 @@ void MultipPlayer::slot_addTempPlaylist(const int list_id, const QStringList &li
     QString curUrl      = media.queryItemValue(u8"url");//播放链接url
     QString nick        = media.queryItemValue(u8"nick");//媒体介绍
     QString pos         = media.queryItemValue(u8"pos");//播放点
-    qDebug() << QString(u8"接收到当前临时列表播放请求：URL = %1 --- 介绍（文件名）：'%2' --- 列表ID: '%3' ---列表总数：'%4' -----播放点：'%5'").arg(curUrl).arg(nick).arg(list_id).arg(list.count()).arg(pos);
+
+    qDebug() << QString(u8"--------主播放器接收到外部临时播放媒体请求：--------") << endl
+            << QString(u8"媒体ID: %1").arg(curId) << endl
+            << QString(u8"媒体URL: %1").arg(curUrl) << endl
+            << QString(u8"媒体介绍: %1").arg(nick) << endl
+            << QString(u8"媒体播放点: %1").arg(pos);
+
      if(m_player->state() == QMediaPlayer::PlayingState)
      {
          m_player->pause();
@@ -3586,12 +3588,13 @@ void MultipPlayer::slot_addTempPlaylist(const int list_id, const QStringList &li
             m_t_MapList.insert(i,list.at(i));
             addToPlaylist(playlist_t,list.at(i));
         }
-        //888为推荐列表（短视频推荐和主播放器）999为桌面文件拖动放上去
+
     }
     slot_switchPlayerList(playlist_t);
     ui->horizontalSlider->setEnabled(true);
     playlist_t->setCurrentIndex(getMapKeyFromValue(curUrl));//根据当前未解析的url去url集合查找对应的索引
     m_curMediaId    = curId;
+    qDebug() << QString(u8"播放临时列表视频，对应的媒体ID:") << m_curMediaId;
     m_curMediaName  = nick;
     m_curMediaUrl   = curUrl;//主播放器下载时候使用m_curMediaUrl加密的连接
     //判断是否从头开始播放

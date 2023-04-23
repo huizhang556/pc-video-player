@@ -179,7 +179,7 @@ void MiniPlayer::initWorkUI()
     //播放器
     m_player = new QMediaPlayer(this);
     m_playlist = new QMediaPlaylist(m_player);
-    m_playlist->setPlaybackMode(QMediaPlaylist::Loop);//循环播放
+    m_playlist->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);//播放一次
 //    m_playlist->addMedia(QUrl("http://43.143.226.251:8080/group1/tempvideo/temp001.flv"));//导致黑屏
     m_player->setPlaylist(m_playlist);
 //    void setVideoOutput(QVideoWidget *);
@@ -285,6 +285,8 @@ void MiniPlayer::handleSignalsAndSlots()
         m_player->setPosition(pos*1000);
     });
 
+
+
     //下一首
     connect(m_buttonNext,&QPushButton::clicked,[=](){
         emit sig_player_next();
@@ -372,6 +374,13 @@ void MiniPlayer::slot_player_on()
 qint64 MiniPlayer::slot_player_pos()
 {
     return m_player->position();
+}
+
+void MiniPlayer::slot_player_setplaylist(QMediaPlaylist &playlist)
+{
+    m_playlist->clear();
+    m_playlist = &playlist;
+    m_player->setPlaylist(m_playlist);
 }
 
 bool MiniPlayer::eventFilter(QObject *watched, QEvent *event)
@@ -699,7 +708,8 @@ void MiniPlayer::slot_mediaLoadingStatus(QMediaPlayer::MediaStatus status)
     }
     else if(m_player->mediaStatus() == QMediaPlayer::EndOfMedia)//媒体结束
     {
-        qDebug() << QString::fromLocal8Bit("QMediaPlayer::EndOfMedia");
+        emit sig_player_next();//媒体结束的时候播放下一首
+        qDebug() << QString::fromLocal8Bit("QMediaPlayer::EndOfMedia，开始下一首");
     }
     else if(m_player->mediaStatus() == QMediaPlayer::InvalidMedia)//媒体无效
     {

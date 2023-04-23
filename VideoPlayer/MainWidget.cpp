@@ -648,8 +648,8 @@ void MainWidget::handleSignalAndSLots()
     //热点资讯查找主题视频
     connect(m_shortVideo,SIGNAL(sig_sendTheme(const QString&,int,int)),dataBase::getInstance(),SLOT(video_recDrama_of_theme(const QString&,int,int)));
     //热点视频(接收查找的主题视频)
-    connect(dataBase::getInstance(),SIGNAL(sig_sendRecThemeVideocounts(int)),m_shortVideo,SLOT(slot_setCurThemeCounts(int)));
-    connect(dataBase::getInstance(),SIGNAL(sig_sendRecThemeVideos(QVariant&)),m_shortVideo,SLOT(slot_addShortVideoItem(QVariant&)));
+    connect(dataBase::getInstance(),SIGNAL(sig_sendRecThemeVideocounts(int)),m_shortVideo,SLOT(slot_setCurThemeCounts(int)));//返回数量
+    connect(dataBase::getInstance(),SIGNAL(sig_sendRecThemeVideos(QVariant&)),m_shortVideo,SLOT(slot_addShortVideoItem(QVariant&)));//返回相关主题媒体
     //热点资讯(加载推荐视频)
     connect(dataBase::getInstance(),SIGNAL(sig_sendVideoDramaInfo(QVariant&)),m_shortVideo,SLOT(slot_addShortVideoItem(QVariant&)));
     //短视频转到主播放器（777-url集合-url）

@@ -39,11 +39,12 @@ public:
 
 public  slots:
     void    slot_stopPlayer();
-    void    slot_receivePlayMediaFile(const QString& mediaUrl,const QString& mediaName);
+    void    slot_receivePlayMediaFile(const QString& mediaUrl,const QString& mediaName);//接收外部请求
     void    slot_mouseEnter();
     void    slot_mouseLeave();
     void    slot_player_on();
     qint64  slot_player_pos();
+    void    slot_player_setplaylist(QMediaPlaylist& playlist);
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;

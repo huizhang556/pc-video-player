@@ -146,6 +146,9 @@ public slots:
     //广告推荐
     QList<QVariant>&        adv_getNext4Medais(const QString &theme,const int start,int counts);//获取接下来播放的4个视频
     QUrlQuery               adv_getCurMediaUserInfo(const int media_id);//根据当前媒体查询媒体拥者信息
+    QString                 adv_getMediaUserHeader(const QString &user_id);//根据user_id获取某位用户头像
+    QString                 adv_getMediaUserName(const QString &user_id);//根据user_id获取某位用户姓名
+    QString                 adv_getMediaUserId(const int media_id);//根据media_id查找用户userid
 
     //视频类型
     bool                    video_getVideoMediaSortType();//获取视频分类
@@ -165,8 +168,7 @@ public slots:
     bool                    header_inserUsrHeaderToDB(const QString &pix_url,const QString& pix_type);//插入头像图片数据
     bool                    header_updateUserHeader(const QString &user_id,const QString& pix_url);//更新用户头像
     bool                    header_deleteUserHisHeader(const QString &user_id, const QString& pix_id);//删除用户历史头像
-    const QString           header_getUserHeader(const QString &user_id);//根据user_id获取某位用户头像
-    const QString           header_getUserName(const QString &user_id);//根据user_id获取某位用户姓名
+
 
     //用户合集
     bool                    group_getCurUserGroups(const QString &user_id);//获取当前用户的所有合集

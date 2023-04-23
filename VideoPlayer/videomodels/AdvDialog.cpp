@@ -112,6 +112,7 @@ void AdvDialog::handleSignalsAndSlots()
         m_curQurlQuery.addQueryItem(u8"nick",m_curMedialias);
         m_curQurlQuery.addQueryItem(u8"pos",u8"0");
         emit sig_play_continue(666,QStringList{m_curMediaUrl},m_curQurlQuery);
+        this->hide();
     });
 }
 
@@ -126,20 +127,26 @@ AdvDialog *AdvDialog::getInstance()
 
 void AdvDialog::exec_(POPTYPE type, const int media_id)
 {
+    qDebug() << QString(u8"--------------广告界面接收到的当前媒体ID:") << media_id;
     m_curType = type;
     slot_getCurUserInfo(media_id);//获取用户相关信息
     //更新头像、名称、点赞数、等等
     slot_setUserHeader(m_curHeader);
     slot_setUserName(m_curUserName);
-
+    qDebug() << QString(u8"即将要请求的4个推荐视频的主题：%1 起始点：%2 ").arg(m_curTheme).arg(m_startpos);
     QList<QVariant> medias = dataBase::getInstance()->adv_getNext4Medais(m_curTheme,m_startpos,4);
     qDebug() << QString(u8"广告请求到的数量：") << medias.count();
+    ui->listWidget_userlist->clear();//不管请求到没请求到，都清空推荐列表。
     if(medias.count() != 0)
     {
         slot_addItemTo_ContinueNextList(medias);
     }
-    this->raise();
-    this->show();
+    //延时出现，让数据先加载出来
+    QTimer::singleShot(0,0,[=](){
+        this->raise();
+        this->show();
+    });
+
 //    switch (type)
 //    {
 //    case T_NEXTMEDIA:
@@ -178,29 +185,45 @@ void AdvDialog::slot_getCurUserInfo(const int media_id)
 {
     QUrlQuery media_info = dataBase::getInstance()->adv_getCurMediaUserInfo(media_id);
     if(!media_info.isEmpty())
-    m_media_id      = media_id;
-    m_curUserId     = media_info.queryItemValue(u8"userid");
-    m_curMediaUrl   = media_info.queryItemValue(u8"url");
-    m_curMedialias  = media_info.queryItemValue(u8"alias");
-    m_curHeader     = media_info.queryItemValue(u8"header");
-    m_curUserName   = media_info.queryItemValue(u8"nick");
-    QString theme   = media_info.queryItemValue(u8"theme");
-    if(m_curTheme == theme)//本次请求主题相同
     {
-        m_startpos += 4;//同一主题加载下一个 4条
-        qDebug() <<QString(u8"请求主题相同");
+        m_media_id      = media_id;
+        m_curUserName   = media_info.queryItemValue(u8"username");
+        m_curHeader     = media_info.queryItemValue(u8"userhead");
+        m_curUserId     = media_info.queryItemValue(u8"userid");
+        m_curMediaUrl   = media_info.queryItemValue(u8"url");
+        m_curMedialias  = media_info.queryItemValue(u8"alias");
+        QString theme   = media_info.queryItemValue(u8"theme");
+
+        qDebug() << QString(u8"--------广告接收到当前播放完毕的视频信息：--------") << endl
+                 << QString(u8"媒体ID:") << m_media_id << endl
+                 << QString(u8"所属用户ID:") << m_curUserId << endl
+                 << QString(u8"媒体用户名称:") << m_curUserName << endl
+                 << QString(u8"媒体所属主题:") << theme << endl
+                 << QString(u8"媒体URL:") << m_curMediaUrl << endl
+                 << QString(u8"媒体ALIAS:") << m_curMedialias << endl
+                 << QString(u8"媒体用户头像:") << m_curHeader << endl;
+
+        if(m_curTheme == theme)//本次请求主题相同
+        {
+            m_startpos += 4;//同一主题加载下一个 4条
+            qDebug() <<QString(u8"请求主题相同");
+        }
+        else
+        {
+            m_startpos = 1;//不同主题加载从0开始
+            qDebug() <<QString(u8"请求主题不同");
+        }
+        m_curTheme = theme;
     }
     else
-    {
-        m_startpos = 0;//不同主题加载从0开始
-        qDebug() <<QString(u8"请求主题不同");
+        {
+        qDebug() << QString(u8"广告界面接收到的当前视频用户信息为空！");
+        return;
     }
-    m_curTheme = theme;
 }
 
 void AdvDialog::slot_addItemTo_ContinueNextList(QList<QVariant> &medias)
 {
-    ui->listWidget_userlist->clear();
     for(int i = 0; i < medias.count(); i++)
     {
         MusicData advdata = medias.at(i).value<MusicData>();// 通用类型转为专用类型
@@ -222,16 +245,17 @@ void AdvDialog::slot_addItemTo_ContinueNextList(QList<QVariant> &medias)
 
         //信号与槽函数
         connect(itemWidget,&AdvterItem::sig_item_continue,[=](QString url){
-            slot_getCurUserInfo(advdata.id);//获取用户相关信息
+            slot_getCurUserInfo(advdata.id);//获取视频相关信息，并更新使用拥有者用户信息
             QUrlQuery query;
             query.addQueryItem(u8"id",QString::number(advdata.id));
             query.addQueryItem(u8"url",m_curMediaUrl);
             query.addQueryItem(u8"nick",m_curMedialias);
             query.addQueryItem(u8"pos",u8"0");
+            m_curQurlQuery.clear();
             m_curQurlQuery = query;
-            this->hide();
             emit sig_play_continue(666,QStringList{m_curMediaUrl},m_curQurlQuery);
             qDebug() << QString::fromLocal8Bit("已发送临时播放连接url:%1 ,NICK:%2").arg(m_curMediaUrl).arg(m_curMedialias);
+            this->hide();
         });
     }
 }

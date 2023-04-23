@@ -50,7 +50,7 @@ private slots:
 private:
     Ui::ShortVideo *ui;
     QStringList videoTypeList;//视频类型
-    int         m_curMediaId;
+    int         m_curMediaId = 1;
     QString     m_curMediaName;
     QString     m_curMediaUrl;
     QString     m_curTheme;

@@ -264,8 +264,6 @@ private slots:
 
     void    slot_hideFloatPlayCtl();
 
-    void    slot_showAdvCtl(bool show);
-
     void    searchMouseEnterLeaveShow(QObject *watched, QEvent *event);
 
     bool    videoDouleExit(QObject *watched, QEvent *event);
@@ -471,9 +469,13 @@ private:
     QMap<int,QString>           m_mapList_collect;
     QMap<int,QString>           m_mapList_history;
     QMediaPlayer::State         m_playerState;
-    int                         m_curMediaId = 0;
-    QString                     m_curMediaName;
+
+    //播放器播放媒体的具体信息
+    int                         m_curMediaId = 1;//媒体id 主要用于弹出广告传参
+    QString                     m_curUserId;
     QString                     m_curMediaUrl;
+    QString                     m_curMediaName;
+    QString                     m_curMediaHeader;//获得当前用户头像用
     QUrl                        m_anyFrameMediaUrl;
 
 /*以下为界面拉伸所用*/

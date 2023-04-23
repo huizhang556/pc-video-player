@@ -70,7 +70,7 @@ void ShortVideo::handleSignalsAndSLots()
             m_startpos = 0;
         }
         ui->listWidget_medialist->clear();
-        emit sig_sendTheme(ui->listWidget_type->currentItem()->text(),m_startpos,10);
+        emit sig_sendTheme(ui->listWidget_type->currentItem()->text(),m_startpos,10);//主题改变
     });
 
     //节目类型选择
@@ -80,9 +80,10 @@ void ShortVideo::handleSignalsAndSLots()
             ui->listWidget_medialist->clear();
             m_curTheme = item->text();
             m_startpos = 0;
-            emit sig_sendTheme(item->text(),m_startpos,10);
+            emit sig_sendTheme(item->text(),m_startpos,10);//主题改变
     });
 
+    //手动选择item转到播放器
     connect(ui->listWidget_medialist,&QListWidget::currentItemChanged,[=](QListWidgetItem *current,QListWidgetItem *previous)
     {
         if(previous != nullptr)
@@ -93,6 +94,7 @@ void ShortVideo::handleSignalsAndSLots()
         {
             getListWidgetItemButton(current,"pushButton_videoInfo")->setChecked(true);
             m_curMediaId = current->data(Qt::UserRole+1).toInt();//介绍
+            qDebug() << QString(u8"短视频----------当前播放视频id:") << m_curMediaId;
             m_curMediaUrl = current->text();//url
             m_curMediaName = current->data(Qt::UserRole).toString();//介绍
             ui->widget_player->slot_receivePlayMediaFile(m_curMediaUrl,m_curMediaName);//URL+介绍
@@ -129,6 +131,8 @@ void ShortVideo::handleSignalsAndSLots()
         qDebug() << QString(u8"反馈");
     });
 
+    //检测到媒体结束，自动播放下一首
+
     //播放器下一首
     connect(ui->widget_player,&MiniPlayer::sig_player_next,[=](){
         if(ui->listWidget_medialist->currentRow() == ui->listWidget_medialist->count()-1)
@@ -156,7 +160,7 @@ void ShortVideo::handleSignalsAndSLots()
     //非视频页播放视频
     connect(ui->label_novideo,&CusLabelItem::sig_sendPlayOn,[=](){
         ui->stackedWidget_player->setCurrentWidget(ui->stackPage_video);
-        ui->widget_player->slot_player_on();//播放视频
+        ui->widget_player->slot_player_on();//模拟点击播放视频
     });
 
     //播放器---右键--下载

@@ -1220,7 +1220,7 @@ bool dataBase::video_recDrama_of_theme(const QString &theme, int start, int coun
             musicData.uplove    =   uplove;
             QVariant musicdata;
             musicdata.setValue(musicData);
-            emit sig_sendRecThemeVideos(musicdata);//主播放器推荐视频+热点资讯推荐视频用
+            emit sig_sendRecThemeVideos(musicdata);
         }
     }
     else
@@ -1269,30 +1269,38 @@ QList<QVariant> &dataBase::adv_getNext4Medais(const QString& theme, const int st
 QUrlQuery dataBase::adv_getCurMediaUserInfo(const int media_id)
 {
     QSqlQuery query(getSqlDataBase());
-    QUrlQuery query_media;
+    QUrlQuery   query_media;
     bool isOK = query.exec(QString("select userid, url, alias,theme from dramalist where id = %1;").arg(media_id));
     if(isOK)
     {
         while (query.next())
         {
-
             int         m_id     = media_id;
             QString     m_userId = query.value(0).toString();
             QString     m_url    = query.value(1).toString();
             QString     m_alias  = query.value(2).toString();
             QString     m_theme  = query.value(3).toString();
-            QString     m_header = header_getUserHeader(m_userId);
-            QString     m_name   = header_getUserName(m_userId);
+            QString     username = adv_getMediaUserName(m_userId);
+            QString     userhead = adv_getMediaUserHeader(m_userId);
 
-            query_media.addQueryItem(u8"id",QString::number(m_id));
+            qDebug() << QString(u8"数据库查询到的关于视频：%1 的一些信息如下：").arg(media_id) << endl;
+            qDebug() << QString(u8"用户ID:") << m_userId;
+            qDebug() << QString(u8"用户名称:") << username;
+            qDebug() << QString(u8"用户头像:") << userhead;
+            qDebug() << QString(u8"视频ID:") << m_id;
+            qDebug() << QString(u8"视频URL:") << m_url;
+            qDebug() << QString(u8"视频介绍:") << m_alias;
+            qDebug() << QString(u8"视频主题:") << m_theme;
+
+
+
+            query_media.addQueryItem(u8"username",username);
+            query_media.addQueryItem(u8"userhead",userhead);
             query_media.addQueryItem(u8"userid",m_userId);
             query_media.addQueryItem(u8"url",m_url);
             query_media.addQueryItem(u8"alias",m_alias);
             query_media.addQueryItem(u8"theme",m_theme);
-            query_media.addQueryItem(u8"header",m_header);
-            query_media.addQueryItem(u8"nick",m_name);
 
-            qDebug() << QString(u8"查找到当前播放广告视频信息：[MEDIA_ID]:%1 [USE_ID]:%2 [URL]:%3 [ALIAS]:%4 [HEADER]:%5 [NICK]:%6 [THEME]:%7").arg(m_id).arg(m_userId).arg(m_url).arg(m_alias).arg(m_header).arg(m_name).arg(m_theme);
             return query_media;
         }
     }
@@ -1533,11 +1541,10 @@ bool dataBase::header_getGifHeaderList()
 }
 
 //获取某位用户的头像
-const QString dataBase::header_getUserHeader(const QString &user_id)
+QString dataBase::adv_getMediaUserHeader(const QString &user_id)
 {
     QSqlQuery query(getSqlDataBase());
-    //按某个字段统计效率高
-    bool isOK = query.exec(QString("select pix_url from user_header where user_id = '%1';").arg(user_id));
+    bool isOK = query.exec(QString("select headpic from userinfo where userid = '%1';").arg(user_id));
     if(isOK)
     {
         while (query.next())
@@ -1554,7 +1561,7 @@ const QString dataBase::header_getUserHeader(const QString &user_id)
     }
 }
 
-const QString dataBase::header_getUserName(const QString &user_id)
+QString dataBase::adv_getMediaUserName(const QString &user_id)
 {
     QSqlQuery query(getSqlDataBase());
     //按某个字段统计效率高
@@ -1571,6 +1578,27 @@ const QString dataBase::header_getUserName(const QString &user_id)
     else
     {
         qDebug() << QString(u8"在用户：%1 下查找用户姓名资源失败！").arg(user_id);
+        return "";
+    }
+}
+
+QString dataBase::adv_getMediaUserId(const int media_id)
+{
+    QSqlQuery query(getSqlDataBase());
+    //按某个字段统计效率高
+    bool isOK = query.exec(QString("select userid from dramalist where id = %1;").arg(media_id));
+    if(isOK)
+    {
+        while (query.next())
+        {
+            QString user_id   = query.value(0).toString();
+            qDebug() << QString(u8"根据媒体ID：%1 找到用户ID为：%2").arg(media_id).arg(user_id);
+            return user_id;
+        }
+    }
+    else
+    {
+        qDebug() << QString(u8"根据媒体ID：%1 找到用户ID失败！") << query.lastError();
         return "";
     }
 }

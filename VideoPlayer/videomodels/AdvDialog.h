@@ -8,6 +8,7 @@
 #include <QStringList>
 #include <QUrlQuery>
 #include <QDialog>
+#include <QTimer>
 #include <QDebug>
 
 #include <QNetworkReply>
@@ -48,14 +49,14 @@ private:
     static  AdvDialog* m_pInstance;
     QUrlQuery   m_curQurlQuery;
     QStringList m_curPlayList;
-    int         m_media_id = 0;
+    int         m_media_id = 1;
     QString     m_curUserId;
     QString     m_curUserName;
     QString     m_curMediaUrl;
     QString     m_curMedialias;
     QString     m_curHeader;
     QString     m_curTheme;
-    int         m_startpos = 0;//请求起始位置
+    int         m_startpos = 1;//请求起始位置1，要排除第一个是自己的情况
     QNetworkAccessManager   *m_manager  =   nullptr;
 
 private slots:
