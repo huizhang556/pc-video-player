@@ -94,7 +94,6 @@ bool RecomVideoTab::slot_addRecVideoItem(QVariant& musicVariant)
 
     //信号与槽函数
     connect(videoItem,&RecVideoItem::sig_sendVideoUrl,[=](){
-//        emit sig_sendVideoUrl(item->text());
         QUrlQuery query;
         query.addQueryItem(u8"id",QString::number(data.id));
         query.addQueryItem(u8"url",item->text());

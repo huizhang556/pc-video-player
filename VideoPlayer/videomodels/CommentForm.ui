@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>230</width>
-    <height>147</height>
+    <height>157</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -34,13 +34,13 @@ background-color:#26262b;
     <number>0</number>
    </property>
    <property name="topMargin">
-    <number>4</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
     <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>4</number>
+    <number>0</number>
    </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -101,6 +101,18 @@ border: 0px solid white;
           </property>
           <item>
            <widget class="QWidget" name="widget_user" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>45</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -263,7 +275,7 @@ color:#808082;
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>60</height>
+                 <height>80</height>
                 </size>
                </property>
                <property name="maximumSize">
@@ -276,6 +288,7 @@ color:#808082;
                 <string notr="true">QTextBrowser
 {
 border:none;
+font: 400 13px &quot;微软雅黑&quot;;
 background-color:#26262b;
 color: rgb(238, 238, 238);
 }
@@ -291,8 +304,8 @@ color: rgb(238, 238, 238);
                 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'微软雅黑'; font-size:13px; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
               </widget>
              </item>
@@ -301,6 +314,18 @@ p, li { white-space: pre-wrap; }
           </item>
           <item>
            <widget class="QWidget" name="widget_func" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>25</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">#widget_func
 {
@@ -319,7 +344,7 @@ color: rgb(98, 98, 98);
               <number>5</number>
              </property>
              <property name="bottomMargin">
-              <number>15</number>
+              <number>5</number>
              </property>
              <item>
               <spacer name="horizontalSpacer_3">
@@ -338,14 +363,14 @@ color: rgb(98, 98, 98);
               <widget class="QPushButton" name="pushButton_zan">
                <property name="minimumSize">
                 <size>
-                 <width>22</width>
-                 <height>22</height>
+                 <width>23</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>22</width>
-                 <height>22</height>
+                 <width>23</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -454,6 +479,7 @@ color: #ff5500;
                <property name="styleSheet">
                 <string notr="true">QPushButton
 {
+margin: 1px;
 background-color:transparent;
 border-image: url(:/images/icon/comment_more.png);
 }

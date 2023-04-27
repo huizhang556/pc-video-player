@@ -32,7 +32,58 @@
    <item>
     <widget class="QScrollArea" name="scrollArea">
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">QScrollBar:vertical 
+{
+border: 0px solid grey;
+background: #16161a;
+width: 8px;
+margin: 0px;
+}
+
+QScrollBar::handle:vertical 
+{
+background: rgba(64, 66, 68,0.7);
+min-height: 20px;
+width: 6px;
+border-radius: 3px;
+}
+
+QScrollBar::handle:vertical:hover
+{
+background: rgba(64, 66, 68,1.0);
+min-height: 20px;
+}
+
+QScrollBar::add-line:vertical 
+{
+border: 0px solid grey;
+background: #16161a;
+height: 0px;
+subcontrol-position: bottom;
+subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical 
+{
+border: 0px solid grey;
+background: #16161a;
+height: 0px;
+subcontrol-position: top;
+subcontrol-origin: margin;
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical 
+{
+border: 0px solid grey;
+width: 3px;
+height: 3px;
+background: #16161a;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical 
+{
+background: none;
+}</string>
      </property>
      <property name="widgetResizable">
       <bool>true</bool>

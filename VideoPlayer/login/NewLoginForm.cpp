@@ -20,6 +20,7 @@ NewLoginForm::NewLoginForm(QWidget *parent):
     setFixedSize(720,465);
     setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowStaysOnTopHint);
     setAttribute(Qt::WA_TranslucentBackground,true);
+    setAttribute(Qt::WA_Hover);
 //    setAttribute(Qt::WA_DeleteOnClose);//程序关闭或其父窗口关闭时，自己自动close
     initWorkUI();
     initAnimations();
@@ -70,6 +71,18 @@ NewLoginForm::~NewLoginForm()
 
 void NewLoginForm::initWorkUI()
 {
+    //登录---验证码倒计时
+    loginTimer = new QTimer(this);
+    loginTimer->setInterval(1000);//倒计时间隔
+
+    //注册---验证码倒计时
+    regisTimer = new QTimer(this);
+    regisTimer->setInterval(1000);//倒计时间隔
+
+    //找回密码---验证码倒计时
+    fpwdTimer = new QTimer(this);
+    fpwdTimer->setInterval(1000);//倒计时间隔
+
     ui->label_userHeader->setToolTip(QString(u8"单击修改头像"));
 //    this->setContentsMargins(15,15,15,15);//为阴影留出空间
 //    QGraphicsDropShadowEffect *shadow_effect = new QGraphicsDropShadowEffect(this);
@@ -144,7 +157,7 @@ void NewLoginForm::initWorkUI()
 
 
     //重置部分
-    ui->lineEdit_fpwd_account->setPlaceholderText(QString(u8"请输入账号"));
+    ui->lineEdit_fpwd_account->setPlaceholderText(QString(u8"请输入预留邮箱"));
     ui->lineEdit_fpwd_checkCode->setPlaceholderText(QString(u8"请输入验证码"));
     ui->lineEdit_firstpwd->setPlaceholderText(QString(u8"请输入新的密码"));
     ui->lineEdit_secondpwd->setPlaceholderText(QString(u8"再次输入新的密码"));
@@ -162,8 +175,10 @@ void NewLoginForm::initWorkUI()
     //combobox弹框问题
     ui->comboBox_area->installEventFilter(this);
     ui->comboBox_area->setFocusPolicy(Qt::NoFocus);
+    ui->comboBox_area->setView(new QListView());
     ui->comboBox_regis_area->installEventFilter(this);
     ui->comboBox_regis_area->setFocusPolicy(Qt::NoFocus);
+    ui->comboBox_regis_area->setView(new QListView());
 
     //勾选协议（默认勾选）
     ui->radioButton_check->setCheckable(true);
@@ -366,10 +381,66 @@ void NewLoginForm::handleSignalsAndSLots()
         ui->pushButton_register->setText(QString(u8"注册"));
         qDebug() << QString(u8"注册按钮");
     });
-    //获取验证码
+    //登录---获取验证码
     connect(ui->pushButton_checkCode,&QPushButton::clicked,[=](){
         qDebug() << QString(u8"获取验证码");
+        ui->pushButton_checkCode->setEnabled(false);
+        loginTimer->start();
     });
+
+    //登录验证码---倒计时
+    connect(loginTimer,&QTimer::timeout,[=](){
+        if(login_count-- == 1)
+        {
+            login_count = 60;
+            loginTimer->stop();
+            ui->pushButton_checkCode->setEnabled(true);
+            ui->lineEdit_checkCode->setPlaceholderText(QString(u8"请输入验证码"));
+            return;
+        }
+        ui->lineEdit_checkCode->setPlaceholderText(QString(u8"验证码已发送%1s").arg(login_count));
+    });
+
+    //注册---获取验证码
+    connect(ui->pushButton_regis_checkCode,&QPushButton::clicked,[=](){
+        qDebug() << QString(u8"获取验证码");
+        ui->pushButton_regis_checkCode->setEnabled(false);
+        regisTimer->start();
+    });
+
+    //注册---验证码倒计时
+    connect(regisTimer,&QTimer::timeout,[=](){
+        if(regis_count-- == 1)
+        {
+            regis_count = 60;
+            regisTimer->stop();
+            ui->pushButton_regis_checkCode->setEnabled(true);
+            ui->lineEdit_regis_checkCode->setPlaceholderText(QString(u8"请输入验证码"));
+            return;
+        }
+        ui->lineEdit_regis_checkCode->setPlaceholderText(QString(u8"验证码已发送%1s").arg(regis_count));
+    });
+
+    //找回密码---获取验证码
+    connect(ui->pushButton_fpwd_checkCode,&QPushButton::clicked,[=](){
+        qDebug() << QString(u8"获取验证码");
+        ui->pushButton_fpwd_checkCode->setEnabled(false);
+        fpwdTimer->start();
+    });
+
+    //找回密码---验证码倒计时
+    connect(fpwdTimer,&QTimer::timeout,[=](){
+        if(fpwd_count-- == 1)
+        {
+            fpwd_count = 60;
+            fpwdTimer->stop();
+            ui->pushButton_fpwd_checkCode->setEnabled(true);
+            ui->lineEdit_fpwd_checkCode->setPlaceholderText(QString(u8"请输入验证码"));
+            return;
+        }
+        ui->lineEdit_fpwd_checkCode->setPlaceholderText(QString(u8"验证码已发送%1s").arg(fpwd_count));
+    });
+
     //忘记密码
     connect(ui->pushButton_forgotPwd,&QPushButton::clicked,[=](){
         ui->stackedWidget_right->setCurrentWidget(ui->page_resetPwd);
@@ -768,20 +839,20 @@ void NewLoginForm::slot_switchWinType(ShowType type)
         this->exec();//最后显示
 }
 
-void NewLoginForm::paintEvent(QPaintEvent *event)
-{
-    Q_UNUSED(event)
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing,true);
-    painter.setPen(Qt::NoPen);
-    painter.setBrush(QColor(56, 67, 99,10));//rgba
+//void NewLoginForm::paintEvent(QPaintEvent *event)
+//{
+//    Q_UNUSED(event)
+//    QPainter painter(this);
+//    painter.setRenderHint(QPainter::Antialiasing,true);
+//    painter.setPen(Qt::NoPen);
+//    painter.setBrush(QColor(56, 67, 99,10));//rgba
 
-    QPainterPath drawPath;
-    drawPath.addRoundedRect(this->rect(),5,5);
-    drawPath.addRect(this->rect());
-//    painter.fillPath(drawPath,Qt::black);//先绘图片再填充外部边缘（准确来说叫颜色压住覆盖）
-    painter.setClipPath(drawPath);
-}
+//    QPainterPath drawPath;
+//    drawPath.addRoundedRect(this->rect(),5,5);
+//    drawPath.addRect(this->rect());
+////    painter.fillPath(drawPath,Qt::black);//先绘图片再填充外部边缘（准确来说叫颜色压住覆盖）
+//    painter.setClipPath(drawPath);
+//}
 
 
 bool NewLoginForm::eventFilter(QObject *obj, QEvent *ev)
@@ -999,8 +1070,7 @@ void NewLoginForm::setType(TipType type)
 //        QString st = "<b style=\"background:rgb(230, 92, 54);color:red;\">%1</b>";
 //        return st;
 //        QToolTip::setPalette(QPalette(QColor(Qt::red),QColor(Qt::blue)));
-        setStyleSheet("QWidget{background-color: #2c2d36;}"
-                      "QToolTip{min-height: 20px; background-color: #ffffbf; color: black;}");
+        setStyleSheet("QToolTip{min-height: 20px; background-color: #ffffbf; color: black;}");
     }
         break;
     case TipType::Error://错误提示
@@ -1008,8 +1078,7 @@ void NewLoginForm::setType(TipType type)
 //        QString st = "<b style=\"background:rgb(230, 92, 54);color:red;\">%1</b>";
 //        return st;
 //        QToolTip::setPalette(QPalette(QColor(Qt::red),QColor(Qt::blue)));
-        setStyleSheet("QWidget{background-color: #2c2d36;}"
-                      "QToolTip{min-height: 20px; background-color: #ffffbf; color: #00beff;}");
+        setStyleSheet("QToolTip{min-height: 20px; background-color: #ffffbf; color: #00beff;}");
     }
         break;
     case TipType::Correct://成功提示
@@ -1017,8 +1086,7 @@ void NewLoginForm::setType(TipType type)
 //        QString st = "<b style=\"background:rgb(246, 188, 63);color:green;\">%1</b>";
 //        return st;
 //        QToolTip::setPalette(QPalette(QColor(Qt::red),QColor(Qt::blue)));
-        setStyleSheet("QWidget{background-color: #2c2d36;}"
-                      "QToolTip{min-height: 20px; background-color: #ffffbf; color: #1c9734;}");
+        setStyleSheet("QToolTip{min-height: 20px; background-color: #ffffbf; color: #1c9734;}");
     }
         break;
     default:
@@ -1026,8 +1094,7 @@ void NewLoginForm::setType(TipType type)
 //        QString st = "<b style=\"background:rgb(255, 214, 22);color:white;\">%1</b>";
 //        return st;
 //        QToolTip::setPalette(QPalette(QColor(Qt::red),QColor(Qt::blue)));
-        setStyleSheet("QWidget{background-color: #2c2d36;}"
-                      "QToolTip{min-height: 20px; background-color: #ffffbf; color: black;}");
+        setStyleSheet("QToolTip{min-height: 20px; background-color: #ffffbf; color: black;}");
     }
         break;
     }

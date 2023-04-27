@@ -33,7 +33,8 @@ void VideoTitleBar::initUi()
     ui->pushButton_return->installEventFilter(this);
     ui->pushButton_return->setIcon(QIcon(":/images/icon/returnhome.png"));
     ui->pushButton_return->setText(QString::fromLocal8Bit("返回主界面"));
-    ui->label_title->initMoveText(MOVETYPE::FIFO,QString(u8""),QFont("微软雅黑",13,75),QColor(47, 228, 82,255),20);
+    //类型 + 文本 + 字体 + 字体颜色 + 间隔
+    ui->label_title->initMoveText(MOVETYPE::FIFO,QString(u8""),QFont("Microsoft YaHei UI",13,75),QColor(30, 222, 3, 255),20);
 }
 
 void VideoTitleBar::chandleSignalsAndSlots()

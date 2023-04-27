@@ -37,7 +37,7 @@
      <property name="styleSheet">
       <string notr="true">#frame_videobg
 {
-border-radius: 0px;
+border-radius: 6px;
 background-color: #2a2a31;
 }</string>
      </property>

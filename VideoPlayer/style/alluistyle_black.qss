@@ -30,6 +30,12 @@ background-color: #1a1a1b;
 /*border-image: url(://images/bgpic/cusvideoitem1.png);*/
 }
 
+/*播放器界面标题栏---内衬*/
+#stackedWidget_videoTitle
+{
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0, stop:0 #1a1a1a, stop:1  #141d2c);
+}
+
 MainWidget
 {
 /*整个主界面大背景，所有背景透明都继承此背景颜色*/
@@ -433,12 +439,6 @@ background-color: rgba(80, 80, 80,0.9);
 border: none;
 background-color: #16161a;
 margin: 0px 0px;
-}
-
-/*播放器界面标题栏---内衬*/
-#stackedWidget_videoTitle
-{
-background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0, stop:0 #1a1a1a, stop:1  #141d2c);
 }
 
 /*------------------------左侧节目侧边栏列表----start-----------------------------*/

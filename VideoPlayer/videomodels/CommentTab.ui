@@ -125,6 +125,39 @@ background-color: rgb(60, 56, 66);
            <property name="spacing">
             <number>0</number>
            </property>
+           <item row="1" column="2">
+            <widget class="QPushButton" name="pushButton_publish">
+             <property name="minimumSize">
+              <size>
+               <width>75</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>75</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+color: white;
+border-radius:3px;
+font: 23 10pt &quot;Microsoft YaHei&quot;;
+background-color: rgb(248, 6, 59);
+}
+QPushButton:hover
+{
+color: white;
+background-color: rgb(0, 194, 1);
+}</string>
+             </property>
+             <property name="text">
+              <string>发表评论</string>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="0" colspan="3">
             <widget class="QTextEdit" name="textEdit_comment">
              <property name="enabled">
@@ -179,37 +212,19 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="1" column="2">
-            <widget class="QPushButton" name="pushButton_publish">
-             <property name="minimumSize">
-              <size>
-               <width>75</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>75</width>
-               <height>32</height>
-              </size>
-             </property>
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_tips">
              <property name="styleSheet">
-              <string notr="true">QPushButton
+              <string notr="true">#label_tips
 {
-background-color: rgb(248, 6, 59);
-margin:3px;
-border-radius:6px;
-color: rgb(253, 253, 253);
-font: 23 10pt &quot;Microsoft YaHei&quot;;
-}
-QPushButton:hover
-{
-background-color: #ff0000;
-color: rgb(253, 253, 253);
+color: #46c2c8;
+font: 400 14px &quot;微软雅黑&quot;;
+padding-left: 6px;
+background-color: transparent;
 }</string>
              </property>
              <property name="text">
-              <string>发表评论</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -243,27 +258,11 @@ border-image: url(:/images/icon/comment_picture_hover.png);
              </property>
             </widget>
            </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="label_tips">
-             <property name="styleSheet">
-              <string notr="true">#label_tips
-{
-color: #46c2c8;
-font: 400 14px &quot;微软雅黑&quot;;
-padding-left: 6px;
-background-color: transparent;
-}</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
           </layout>
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="frame_2">
+         <widget class="QFrame" name="frame_sort">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -426,7 +425,7 @@ color: rgb(255, 85, 0);
         <item>
          <widget class="QStackedWidget" name="stackedWidget_comments">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page_comments">
            <layout class="QVBoxLayout" name="verticalLayout_4">

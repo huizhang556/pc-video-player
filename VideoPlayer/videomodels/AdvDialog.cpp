@@ -6,6 +6,7 @@ AdvDialog* AdvDialog::m_pInstance = nullptr;
 
 AdvDialog::AdvDialog(QWidget *parent) :
     QDialog(parent),
+    m_curTheme(u8"搞笑"),
     ui(new Ui::AdvDialog)
 {
     ui->setupUi(this);
@@ -133,10 +134,10 @@ void AdvDialog::exec_(POPTYPE type, const int media_id)
     //更新头像、名称、点赞数、等等
     slot_setUserHeader(m_curHeader);
     slot_setUserName(m_curUserName);
-    qDebug() << QString(u8"即将要请求的4个推荐视频的主题：%1 起始点：%2 ").arg(m_curTheme).arg(m_startpos);
-    QList<QVariant> medias = dataBase::getInstance()->adv_getNext4Medais(m_curTheme,m_startpos,4);
+    qDebug() << QString(u8"即将要请求的4个推荐视频的主题：%1 起始点：%2 ").arg(m_curTheme).arg(2*m_startpos - 1);
+    QList<QVariant> medias = dataBase::getInstance()->adv_getNext4Medais(m_curTheme,2*m_startpos - 1,4);
     qDebug() << QString(u8"广告请求到的数量：") << medias.count();
-    ui->listWidget_userlist->clear();//不管请求到没请求到，都清空推荐列表。
+
     if(medias.count() != 0)
     {
         slot_addItemTo_ContinueNextList(medias);
@@ -205,7 +206,7 @@ void AdvDialog::slot_getCurUserInfo(const int media_id)
 
         if(m_curTheme == theme)//本次请求主题相同
         {
-            m_startpos += 4;//同一主题加载下一个 4条
+            m_startpos++;
             qDebug() <<QString(u8"请求主题相同");
         }
         else
@@ -218,12 +219,12 @@ void AdvDialog::slot_getCurUserInfo(const int media_id)
     else
         {
         qDebug() << QString(u8"广告界面接收到的当前视频用户信息为空！");
-        return;
     }
 }
 
 void AdvDialog::slot_addItemTo_ContinueNextList(QList<QVariant> &medias)
 {
+    ui->listWidget_userlist->clear();//不管请求到没请求到，都清空推荐列表。
     for(int i = 0; i < medias.count(); i++)
     {
         MusicData advdata = medias.at(i).value<MusicData>();// 通用类型转为专用类型

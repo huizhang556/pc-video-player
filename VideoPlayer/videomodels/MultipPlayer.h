@@ -244,7 +244,7 @@ private slots:
 
     void    checkChandleMediaPlayerStatus(QMediaPlayer::State newState);//监测处理媒体播放状态
 
-    void    checkChandleMediaStatus();//监测处理媒体状态
+    void    checkChandleMediaStatus(QMediaPlayer::MediaStatus status);//监测处理媒体状态
 
     void    loadDefaultLogo();//加载默认图标
 

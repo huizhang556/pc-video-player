@@ -198,6 +198,9 @@ signals:
     //全局搜索
     void    sig_global_search(QString);
 
+    //侧边栏隐藏
+    void    sig_sendHideSlider(bool);
+
 
 private:
     //视频内容搜索

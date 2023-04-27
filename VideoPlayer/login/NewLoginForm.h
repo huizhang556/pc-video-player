@@ -73,7 +73,7 @@ public slots:
     void        slot_switchWinType(ShowType type);
 
 protected:
-    void        paintEvent(QPaintEvent* event) override;
+//    void        paintEvent(QPaintEvent* event) override;
     bool        eventFilter(QObject *obj, QEvent *ev) override;
 
 private slots:
@@ -103,15 +103,21 @@ private:
     static  NewLoginForm* m_pInstance;
 //    QPoint  m_mvPos;
 
-    bool    m_isEnabled = true;//刷新按钮状态(默认可以刷新)
-    QAction *m_actionShowPwd;//查看密码
-    QAction *m_act_pwd;//查看密码
+    bool        m_isEnabled = true;//刷新按钮状态(默认可以刷新)
+    QAction     *m_actionShowPwd;//查看密码
+    QAction     *m_act_pwd;//查看密码
     QPropertyAnimation *ani_opacity = nullptr;
 //    QPropertyAnimation *ani_show = nullptr;
 //    QPropertyAnimation *ani_top_hide   = nullptr;
 //    QPropertyAnimation *ani_bom_hide   = nullptr;
     QParallelAnimationGroup *aniGroup = nullptr;
-    UserList    *m_userLists    =   nullptr;
+    UserList   *m_userLists   =   nullptr;
+    QTimer      *loginTimer   =   nullptr;
+    int         login_count = 60;
+    QTimer      *regisTimer   =   nullptr;
+    int         regis_count = 60;
+    QTimer      *fpwdTimer    =   nullptr;
+    int         fpwd_count  = 60;
 
 signals:
     void    sig_sendClearTempRecords();

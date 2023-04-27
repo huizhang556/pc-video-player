@@ -1,6 +1,6 @@
 ﻿#ifndef COMMENTTAB_H
 #define COMMENTTAB_H
-#define MAX_SIZE 30
+#define MAX_SIZE 50
 #include <QWidget>
 #include <QButtonGroup>
 #include <QAction>

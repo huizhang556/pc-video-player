@@ -57,6 +57,11 @@ void TitleBar::initWorker()
     ui->stackedWidget_title->setCurrentIndex(0);
     ui->label_usermark->hide();
 
+    //侧边栏管理
+    ui->pushButton_flush->setCheckable(true);
+    ui->pushButton_flush->setChecked(false);
+    ui->pushButton_flush->hide();
+
     //tooltip
     ui->pushButton_resume->setToolTip(QString::fromLocal8Bit("恢复"));
     ui->pushButton_favorites->setToolTip(QString::fromLocal8Bit("收藏记录"));
@@ -458,6 +463,11 @@ void TitleBar::handleSignalAndSLots()
 
     //转到热搜界面
     connect(m_searchForm,&SearchForm::sig_SendToMoreHots,[=](){emit sig_SendToMoreHots();});
+
+    //隐藏侧边栏(参数checked为点击后的状态)
+    connect(ui->pushButton_flush,&QPushButton::clicked,[=](bool checked){
+        emit sig_sendHideSlider(checked);
+    });
 
 }
 

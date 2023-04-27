@@ -251,11 +251,11 @@ void SystemSetting::loadDefaultConfig()
     //所有设置完毕
     //左侧设置列表
     QStringList strList;
-    strList<<QString::fromLocal8Bit("基本设置")<<QString::fromLocal8Bit("播放设置")
-           <<QString::fromLocal8Bit("画面设置")<<QString::fromLocal8Bit("音频设置")
-           <<QString::fromLocal8Bit("网络设置")<<QString::fromLocal8Bit("下载设置")
-           <<QString::fromLocal8Bit("热键设置")<<QString::fromLocal8Bit("高级设置")
-           <<QString::fromLocal8Bit("自动关机");
+    strList<<QString(u8"基本设置")<<QString(u8"播放设置")
+           <<QString(u8"画面设置")<<QString(u8"音频设置")
+           <<QString(u8"网络设置")<<QString(u8"下载设置")
+           <<QString(u8"热键设置")<<QString(u8"高级设置")
+           <<QString(u8"自动关机");
     for(auto const item:strList)
     {
         QListWidgetItem *pitem = new QListWidgetItem(item);

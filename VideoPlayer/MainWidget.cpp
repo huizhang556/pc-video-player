@@ -582,6 +582,17 @@ void MainWidget::handleSignalAndSLots()
     //点击托盘的信号
     connect(m_tray,&QSystemTrayIcon::activated,[=](QSystemTrayIcon::ActivationReason reason){slot_activeTray(reason);});
 
+    //控制侧边栏显示
+    connect(m_titleBar,&TitleBar::sig_sendHideSlider,[=](bool showed){
+        if(showed)
+        {
+            m_stackWidget_left->hide();
+        }
+        else
+        {
+            m_stackWidget_left->show();
+        }
+    });
 
     //更换皮肤
     connect(m_leftSideBar,&LeftSideBar::sig_sendSkinMode,[=](bool day){
