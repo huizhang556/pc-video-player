@@ -703,7 +703,7 @@ color: #ff4536;
                <string notr="true">#widget_bottom
 {
 border: 0px solid #57e5ff;
-border-bottom-width: 1px;
+background-color: #282c34;
 }</string>
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_30">
@@ -1407,7 +1407,7 @@ border: 1px solid #57e5ff;
             <item>
              <widget class="QStackedWidget" name="stackedWidget_showType">
               <property name="currentIndex">
-               <number>0</number>
+               <number>3</number>
               </property>
               <widget class="QWidget" name="page_table">
                <layout class="QVBoxLayout" name="verticalLayout_56">
@@ -1429,34 +1429,36 @@ border: 1px solid #57e5ff;
                 <item>
                  <widget class="QTableWidget" name="tableWidget_records">
                   <property name="styleSheet">
-                   <string notr="true">QHeaderView
+                   <string notr="true">/*横向、垂直表头整体样式*/
+QHeaderView
 {
 font: 15px &quot;宋体&quot;;
 color:rgb(230, 230, 230);
-background-color: rgb(80, 80, 80);
 }
 
-QHeaderView::section:horizontal
-{/*横表头*/
-min-height:30px;
-border-bottom:1px solid rgb(0, 170, 255);
-background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(60, 60, 60, 255), stop:0.301136 rgba(40, 40, 40, 255), stop:0.909091 rgba(68, 68, 68, 255));
-}
-
-QHeaderView::section:vertical
-{/*竖表头*/
-min-width:60px;
-padding-left:15px;
-border:1px solid rgb(128, 128, 128);
-border-top:0;
-border-left:0;
-background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(60, 60, 60, 255), stop:0.301136 rgba(40, 40, 40, 255), stop:0.909091 rgba(68, 68, 68, 255));
-}
-
+/*横向、垂直表头section整体样式*/
 QHeaderView::section
 {
 font: 15px &quot;宋体&quot;;
 }
+
+/*横表头section*/
+QHeaderView::section:horizontal
+{
+min-height: 36px;
+border-bottom:0px solid rgb(0, 170, 255);
+background-color:#2f5f51;
+}
+
+/*竖表头section*/
+QHeaderView::section:vertical
+{
+min-width:60px;
+border:0px solid rgb(128, 128, 128);
+background-color:#2f5f51;
+}
+
+
 
 QHeaderView::section:hover
 {
@@ -1466,12 +1468,6 @@ color:white;
 
 QHeaderView::section:checked
 {/*不取消高亮*/
-font: 15px &quot;宋体&quot;;
-color: rgb(255, 170, 0);
-}
-
-QHeaderView::section:selected
-{
 font: 15px &quot;宋体&quot;;
 color: rgb(255, 170, 0);
 }
@@ -1491,49 +1487,66 @@ QHeaderView::down-arrow
 
 QHeaderView::up-arrow
 {
+
 }
 
+
 /*表格*/
-QTableWidget
+QTableView
 {/*对齐方式代码设置*/
 border:0px solid rgb(128, 128, 128);
+border-left-width: 1px;
+border-top-width: 1px;
 gridline-color: rgb(128, 128, 128);/*网格线颜色*/
 background-color: transparent;
 }
 
-QTableWidget QTableCornerButton::section
+QTableView QTableCornerButton::section
 {/*表头左上*/
 border:0;
 border-bottom:1px solid rgb(0, 170, 255);
 background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(60, 60, 60, 255), stop:0.301136 rgba(40, 40, 40, 255), stop:0.909091 rgba(68, 68, 68, 255));
 }
 
-QTableWidget::item
-{/*表内容*/
-font: 15px &quot;宋体&quot;;
-color: rgb(230, 230, 230);
-background-color: rgb(80, 80, 80);
+QTableView::verticalHeader
+{
+    border: 0;
 }
 
-QTableWidget::item:selected
+QTableView::horizontalHeader 
+{
+    border: 0;
+}
+
+QTableView::item
+{
+font: 15px &quot;宋体&quot;;
+border:0px solid rgb(128, 128, 128);
+border-bottom-width: 1px;
+border-right-width: 1px;
+color: rgb(230, 230, 230);
+background-color: #222640;
+}
+
+QTableView::item:selected
 {
 color: #03b2f5;
-background-color: rgba(61, 78, 102,0.5);
+background-color: #303951;
 }
 
-QTableWidget::indicator
+QTableView::indicator
 {
 width: 20px;
 height: 20px;
 }
 
-QTableWidget::indicator:enabled:checked
+QTableView::indicator:enabled:checked
 {
 image: ;
 }
 
 
-QTableWidget::indicator:enabled:unchecked
+QTableView::indicator:enabled:unchecked
 {
 image: ;
 }</string>
@@ -1604,7 +1617,9 @@ image: ;
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QCustomPlot" name="widget_piechart" native="true"/>
+                 <widget class="QWidget" name="widget_piechart" native="true">
+                  <layout class="QGridLayout" name="gridLayout_pie"/>
+                 </widget>
                 </item>
                </layout>
               </widget>

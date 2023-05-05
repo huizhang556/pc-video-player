@@ -42,6 +42,9 @@ public:
 public slots:
     void    slot_addItemTo_ContinueNextList(QList<QVariant>& medias);
 
+protected:
+    bool    eventFilter(QObject *watched, QEvent *event)override;
+
 private:
     explicit AdvDialog(QWidget *parent = nullptr);
     Ui::AdvDialog *ui;

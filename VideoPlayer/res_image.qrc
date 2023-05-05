@@ -696,5 +696,6 @@
         <file>images/advterise/adv-cache.png</file>
         <file>images/advterise/adv_play_hover.png</file>
         <file>images/bgpic/login_bg.png</file>
+        <file>images/skin/myskin_vip.png</file>
     </qresource>
 </RCC>

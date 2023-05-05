@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
 
 //            MultipPlayer::getInstance()->show();
 
-//            AdvDialog::getInstance()->exec_();
+//            AdvDialog::getInstance()->exec_(P_NEXTMEDIA,10);
 //        LeftSideBar lbar; lbar.show();
 //        ChangeHead::getInstance()->exec_(OPENTYPE::PER_HEAD);
 
@@ -163,7 +163,7 @@ int main(int argc, char *argv[])
 //            ShortVideo w1;
 //            w1.show();
 
-//            CusVideoBox7 w1;
+//            CusVideoBox4 w1;
 //            w1.show();
 
         //        CPolLabel w1(QSize(100,100),QString(":/images/bgpic/dieji3.png"),8);

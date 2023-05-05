@@ -16,12 +16,24 @@ QTabBar
 qproperty-usesScrollButtons: false;
 }
 
+/**视频归类**/
+SortDialog
+{
+background-color: rgb(57, 67, 87);
+}
+
 /*类选择器在代码里有效，样式表中无效，防止子控件继承样式*/
 MultipPlayer
 {
 /*包含5px的margin*/
 background-color: #1a1a1b;
 /*border-image: url(://images/bgpic/cusvideoitem1.png);*/
+}
+
+/*播放器界面标题栏---内衬*/
+#stackedWidget_videoTitle
+{
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0, stop:0 #1a1a1a, stop:1  #141d2c);
 }
 
 MainWidget
@@ -134,7 +146,6 @@ background-color: transparent;
 /**顶部标题栏**/
 QFrame#m_miniframeTitle
 {
-background-color: rgba(38, 40, 41,0.5);
 background-color: transparent;
 }
 
@@ -168,7 +179,6 @@ color: #c0ff02;
 /**底部控制栏**/
 QFrame#m_miniframeControl
 {
-background-color: rgba(38, 40, 41,0.5);
 background-color: transparent;
 }
 
@@ -431,12 +441,6 @@ background-color: #16161a;
 margin: 0px 0px;
 }
 
-/*播放器界面标题栏---内衬*/
-#stackedWidget_videoTitle
-{
-background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0, stop:0 #1a1a1a, stop:1  #141d2c);
-}
-
 /*------------------------左侧节目侧边栏列表----start-----------------------------*/
 
 #listWidget_playlist
@@ -488,14 +492,12 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #630f34, 
 color: #00d661;
 }
 
-/*侧边栏底部--展开按钮*/
+/*左侧边栏底部--控制按钮*/
 #m_moreBtn,#m_modeBtn,#m_setBtn,#m_msgBtn
 {
 background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #28405d, stop:1  #223a55);
 text-align: center;
-icon-size:20px;
 font-family:"微软雅黑";
-font-size:14px;
 color:#00e8f7;
 border:none;
 margin: 0px;
@@ -693,7 +695,8 @@ background-color: rgba(64, 66, 68,0.2);
 #m_rightListWidget::item:selected
 {
 color:  transparent;
-background-color: rgba(64, 66, 68,0.5);
+/*background-color: rgba(64, 66, 68,0.5);*/
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 rgba(64, 66, 68,0.3), stop:0.55 rgba(64, 66, 68,0.7), stop:1  rgba(64, 66, 68,0.3));
 }
 
 #m_rightListWidget::item:hover

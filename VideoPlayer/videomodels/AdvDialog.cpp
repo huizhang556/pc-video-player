@@ -56,31 +56,43 @@ void AdvDialog::initWorkUI()
 {
     m_manager = new QNetworkAccessManager(this);
     ui->stackedWidget_advswitch->setCurrentWidget(ui->page_next);
+    //重播
+    ui->toolButton_replay->installEventFilter(this);
     ui->toolButton_replay->setIcon(QIcon(":/images/advterise/adv_replay.png"));
     ui->toolButton_replay->setIconSize(QSize(26,26));
     ui->toolButton_replay->setText(QString(u8"重播"));
     ui->toolButton_replay->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
+    //点赞
+    ui->toolButton_like->installEventFilter(this);
     ui->toolButton_like->setIcon(QIcon(":/images/advterise/adv_like.png"));
     ui->toolButton_like->setIconSize(QSize(33,30));
     ui->toolButton_like->setText(QString(u8"点赞"));
     ui->toolButton_like->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
+    //投币
+    ui->toolButton_toubi->installEventFilter(this);
     ui->toolButton_toubi->setIcon(QIcon(":/images/advterise/adv_toubi.png"));
     ui->toolButton_toubi->setIconSize(QSize(30,30));
     ui->toolButton_toubi->setText(QString(u8"投币"));
     ui->toolButton_toubi->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
+    //收藏
+    ui->toolButton_collect->installEventFilter(this);
     ui->toolButton_collect->setIcon(QIcon(":/images/advterise/adv_collect.png"));
     ui->toolButton_collect->setIconSize(QSize(26,26));
     ui->toolButton_collect->setText(QString(u8"收藏"));
     ui->toolButton_collect->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
+    //缓存
+    ui->toolButton_cache->installEventFilter(this);
     ui->toolButton_cache->setIcon(QIcon(":/images/advterise/adv-cache.png"));
     ui->toolButton_cache->setIconSize(QSize(26,26));
     ui->toolButton_cache->setText(QString(u8"缓存"));
     ui->toolButton_cache->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
+    //转发
+    ui->toolButton_relay->installEventFilter(this);
     ui->toolButton_relay->setIcon(QIcon(":/images/advterise/adv_relay.png"));
     ui->toolButton_relay->setIconSize(QSize(26,26));
     ui->toolButton_relay->setText(QString(u8"转发"));
@@ -134,8 +146,8 @@ void AdvDialog::exec_(POPTYPE type, const int media_id)
     //更新头像、名称、点赞数、等等
     slot_setUserHeader(m_curHeader);
     slot_setUserName(m_curUserName);
-    qDebug() << QString(u8"即将要请求的4个推荐视频的主题：%1 起始点：%2 ").arg(m_curTheme).arg(2*m_startpos - 1);
-    QList<QVariant> medias = dataBase::getInstance()->adv_getNext4Medais(m_curTheme,2*m_startpos - 1,4);
+    qDebug() << QString(u8"即将要请求的4个推荐视频的主题：%1 起始点：%2 ").arg(m_curTheme).arg(m_startpos);
+    QList<QVariant> medias = dataBase::getInstance()->adv_getNext4Medais(m_curTheme,m_startpos,4);
     qDebug() << QString(u8"广告请求到的数量：") << medias.count();
 
     if(medias.count() != 0)
@@ -259,4 +271,92 @@ void AdvDialog::slot_addItemTo_ContinueNextList(QList<QVariant> &medias)
             this->hide();
         });
     }
+}
+
+bool AdvDialog::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == ui->toolButton_replay)
+    {
+        if(event->type() == QEvent::Enter)
+        {
+
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+
+        }
+    }
+
+    if(watched == ui->toolButton_replay)
+    {
+        if(event->type() == QEvent::Enter)
+        {
+            ui->toolButton_replay->setIconSize(QSize(30,30));
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+            ui->toolButton_replay->setIconSize(QSize(26,26));
+        }
+    }
+
+    if(watched == ui->toolButton_like)
+    {
+        if(event->type() == QEvent::Enter)
+        {
+            ui->toolButton_like->setIconSize(QSize(35,32));
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+            ui->toolButton_like->setIconSize(QSize(33,30));
+        }
+    }
+
+    if(watched == ui->toolButton_toubi)
+    {
+        if(event->type() == QEvent::Enter)
+        {
+            ui->toolButton_toubi->setIconSize(QSize(32,32));
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+            ui->toolButton_toubi->setIconSize(QSize(30,30));
+        }
+    }
+
+    if(watched == ui->toolButton_collect)
+    {
+        if(event->type() == QEvent::Enter)
+        {
+            ui->toolButton_collect->setIconSize(QSize(30,30));
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+            ui->toolButton_collect->setIconSize(QSize(26,26));
+        }
+    }
+
+    if(watched == ui->toolButton_cache)
+    {
+        if(event->type() == QEvent::Enter)
+        {
+            ui->toolButton_cache->setIconSize(QSize(30,30));
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+            ui->toolButton_cache->setIconSize(QSize(26,26));
+        }
+    }
+
+    if(watched == ui->toolButton_relay)
+    {
+        if(event->type() == QEvent::Enter)
+        {
+            ui->toolButton_relay->setIconSize(QSize(30,30));
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+            ui->toolButton_relay->setIconSize(QSize(26,26));
+        }
+    }
+    return QDialog::eventFilter(watched,event);
 }

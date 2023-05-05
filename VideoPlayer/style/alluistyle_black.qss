@@ -22,6 +22,14 @@ SortDialog
 background-color: rgb(57, 67, 87);
 }
 
+/*无效果*/
+VideoBlank
+{
+background-color: #ffffff;
+border-image: url(:/images/bgpic/login_bg.png);
+}
+
+
 /*类选择器在代码里有效，样式表中无效，防止子控件继承样式*/
 MultipPlayer
 {
@@ -35,6 +43,8 @@ background-color: #1a1a1b;
 {
 background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0, stop:0 #1a1a1a, stop:1  #141d2c);
 }
+
+
 
 MainWidget
 {
@@ -695,7 +705,8 @@ background-color: rgba(64, 66, 68,0.2);
 #m_rightListWidget::item:selected
 {
 color:  transparent;
-background-color: rgba(64, 66, 68,0.5);
+/*background-color: rgba(64, 66, 68,0.5);*/
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 rgba(64, 66, 68,0.3), stop:0.55 rgba(64, 66, 68,0.7), stop:1  rgba(64, 66, 68,0.3));
 }
 
 #m_rightListWidget::item:hover

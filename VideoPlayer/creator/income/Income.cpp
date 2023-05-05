@@ -21,15 +21,16 @@ Income::~Income()
 
 void Income::initWorkUI()
 {
-
     //tableWidget_records
     ui->tableWidget_records->setColumnCount(5);//先设置列数
     ui->tableWidget_records->setHorizontalHeaderLabels(m_header);
     ui->tableWidget_records->verticalHeader()->hide();
-    ui->tableWidget_records->verticalHeader()->setDefaultSectionSize(26);//垂直固定高度26
+    ui->tableWidget_records->verticalHeader()->setDefaultSectionSize(30);//垂直固定高度
     ui->tableWidget_records->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);//垂直表头固定高度
-    ui->tableWidget_records->setSelectionBehavior(QAbstractItemView::SelectRows);//只能行选择
+    ui->tableWidget_records->setSelectionBehavior(QAbstractItemView::SelectRows);//选择行为
+    ui->tableWidget_records->setSelectionMode(QAbstractItemView::SingleSelection);//选择模式
     ui->tableWidget_records->horizontalHeader()->setSectionsMovable(true);//表头section可以拖动
+    ui->tableWidget_records->horizontalHeader()->setHighlightSections(false);
     ui->tableWidget_records->setColumnWidth(0,200);
     ui->tableWidget_records->setColumnWidth(1,350);
     ui->tableWidget_records->setColumnWidth(2,150);
@@ -41,6 +42,7 @@ void Income::initWorkUI()
     ui->tableWidget_records->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
     ui->tableWidget_records->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
     ui->tableWidget_records->setEditTriggers(false);//禁止编辑
+    ui->tableWidget_records->setShowGrid(false);//不显示表格线
 
     ui->stackedWidget_showType->setCurrentIndex(0);
 
@@ -352,26 +354,54 @@ void Income::drawIncomeDataTo_barchart()
 void Income::drawIncomeDataTo_piechart()
 {
     qDebug() << QString(u8"绘制饼图");
-    // 创建QCPLayoutElement对象
-//    QCPLayoutElement *pie = new QCPLayoutElement(ui->widget_piechart);
-//    ui->widget_piechart->plotLayout()->addElement(0, 0, pie);
+    //饼状图
+        QPieSeries * my_pieSeries = new QPieSeries();
+        //中间圆与大圆的比例
+        my_pieSeries->setHoleSize(0.35);
+        //扇形及数据
+        QPieSlice *pieSlice_running = new QPieSlice();
+        pieSlice_running->setValue(25);//扇形占整个圆的百分比
+        pieSlice_running->setLabel("XXX");
+        pieSlice_running->setLabelVisible();
+        pieSlice_running->setColor(QColor("#4cb9cf"));
+        pieSlice_running->setLabelColor(QColor("#4cb9cf"));
+        pieSlice_running->setBorderColor(QColor("#4cb9cf"));
+        pieSlice_running->setBorderColor(QColor());
+        my_pieSeries->append(pieSlice_running);
 
-//    // 创建QPieChart对象
-//    QPieChart *pieChart = new QPieChart();
-//    pie->addElement(pieChart); // 将饼图添加到QCPLayoutElement对象中
+        QPieSlice *pieSlice_noconnect = new QPieSlice();
+        pieSlice_noconnect->setValue(25);
+        pieSlice_noconnect->setLabel("YYY");
+        pieSlice_noconnect->setColor(QColor("#53b666"));
+        pieSlice_noconnect->setLabelColor(QColor("#53b666"));
+        pieSlice_noconnect->setBorderColor(QColor("#53b666"));
+        pieSlice_noconnect->setLabelVisible();//设置标签可见,缺省不可见
+        my_pieSeries->append(pieSlice_noconnect);
 
-//    // 设置饼图数据
-//    QVector<double> dataValues; // 数据值
-//    QStringList dataLabels; // 数据标签
-//    dataValues << 10 << 20 << 30 << 40;
-//    dataLabels << "A" << "B" << "C" << "D";
-//    pieChart->setData(dataValues);
-//    pieChart->setLabels(dataLabels);
-
-//    // 设置饼图样式
-//    pieChart->setBrush(QColor(255, 0, 0)); // 饼图填充颜色
-//    pieChart->setPen(QColor(0, 0, 0)); // 饼图边框颜色
-    ui->widget_piechart->replot();
+        QPieSlice *pieSlice_idle = new QPieSlice();
+        pieSlice_idle->setValue(50);
+        pieSlice_idle->setLabel("WWW");
+        pieSlice_idle->setLabelVisible();
+        pieSlice_idle->setColor(QColor("#2f89cf"));
+        pieSlice_idle->setLabelColor(QColor("#2f89cf"));
+        pieSlice_idle->setBorderColor(QColor("#2f89cf"));
+        my_pieSeries->append(pieSlice_idle);
+    // 图表视图
+        QChart *chart = new QChart();
+        chart->setTitle("FFFFF");
+        chart->addSeries(my_pieSeries);
+        chart->setAnimationOptions(QChart::SeriesAnimations);
+        chart->legend()->setAlignment(Qt::AlignBottom);
+        chart->legend()->setBackgroundVisible(false);
+        chart->legend()->setFont(QFont("黑体", 8)) ; // 图例字体
+        chart->setTitleBrush(QColor("#808396"));
+        chart->legend()->setLabelColor(QColor("#808396"));
+        QChartView *chartView = new QChartView();
+        chartView = new QChartView(ui->widget_piechart);
+        chartView->setRenderHint(QPainter::Antialiasing);
+        chartView->setRenderHint(QPainter::NonCosmeticDefaultPen);
+        chartView->setChart(chart);
+        ui->gridLayout_pie->addWidget(chartView);
 }
 
 //更新游标内容

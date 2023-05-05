@@ -27,8 +27,8 @@ int      dataBase::m_splash_height = 500;//默认高度
 dataBase* dataBase::m_pInstance = nullptr;
 
 dataBase::dataBase():
-    m_online(false),
-    m_curUserID("0000000000"),
+    m_online(true),
+    m_curUserID("0000000001"),
     m_curUserHead(""),
     m_curUserName(""),
     m_curUserGrade(1)
@@ -131,6 +131,7 @@ bool dataBase::creatMysqlConnection()
     db_mysql.setPassword(m_userPawd);
     db_mysql.setPort(m_hostPort.toInt());
     db_mysql.setDatabaseName(m_dataName);//给数据库起名字
+//    db_mysql.setConnectOptions(QString(u8'MYSQL_OPT_RECONNECT=1;init_command="SET NAMES UTF8"'));
     if(!db_mysql.open())
     {
        qDebug()<<"mysql database is not open!"<<db_mysql.lastError();

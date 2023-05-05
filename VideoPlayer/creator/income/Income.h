@@ -6,10 +6,14 @@
 #include "creator/income/CusCalendar.h"
 
 #include <QtXlsx/xlsxdocument.h>
+#include <QtCharts>
+#include <QChartView>
+#include <QPieSlice>
+QT_CHARTS_USE_NAMESPACE
 
-#include <QWidget>
 #include <QMenu>
 #include <QTimer>
+#include <QWidget>
 #include <QMouseEvent>
 #include <QFileDialog>
 #include <QStringList>

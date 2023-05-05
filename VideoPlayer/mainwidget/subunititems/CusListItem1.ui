@@ -47,7 +47,7 @@ font-family:&quot;微软雅黑&quot;;
    <item>
     <widget class="QStackedWidget" name="stackedWidget_switch">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_1">
       <layout class="QVBoxLayout" name="verticalLayout_3">
