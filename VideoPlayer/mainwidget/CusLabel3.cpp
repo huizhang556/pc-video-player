@@ -17,8 +17,9 @@ CusLabel3::~CusLabel3()
 
 void CusLabel3::initWorkUI()
 {
-    ui->pushButton_play->setToolTip(QString(u8"播放"));
-    ui->pushButton_start->setToolTip(QString(u8"收藏"));
+//    ui->pushButton_play->setToolTip(QString(u8"播放"));
+//    ui->pushButton_start->setToolTip(QString(u8"收藏"));
+    ui->pushButton_start->hide();
 }
 
 void CusLabel3::handleSignalsAndSlots()

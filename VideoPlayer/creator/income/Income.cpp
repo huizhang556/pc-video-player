@@ -60,6 +60,7 @@ void Income::initWorkUI()
 
     ui->pushButton_exportrecords->setIcon(QIcon("://images/fileitem/record_export.png"));
     ui->pushButton_exportrecords->setIconSize(QSize(14,14));
+    ui->pushButton_exportrecords->setDisabled(true);
 
     //生成游标
     tracer = new QCPItemTracer(ui->widget_lines); //生成游标
@@ -126,9 +127,11 @@ void Income::handleSignalsAndSlots()
 
     });
 
+
     //查询记录
     connect(ui->pushButton_search,&QPushButton::clicked,[=](){
         getUserIncomeRecord();
+        updateExportBtnStatus();
     });
 
     //导出记录
@@ -190,9 +193,22 @@ void Income::clearTable()
 
 }
 
+void Income::updateExportBtnStatus()
+{
+  if(ui->tableWidget_records->rowCount() == 0)
+  {
+      ui->pushButton_exportrecords->setDisabled(true);
+  }
+  else
+  {
+      ui->pushButton_exportrecords->setDisabled(false);
+  }
+}
+
 //导出表记录
 void Income::exportTableRecords()
 {
+    if(ui->tableWidget_records->rowCount() == 0) return;
     qDebug() << QString(u8"导出表记录");
     QString filePath = QFileDialog::getSaveFileName(this, "Save File", "", "Excel Files (*.xlsx)");
 
@@ -311,97 +327,230 @@ void Income::drawIncomeDataTo_line()
 void Income::drawIncomeDataTo_barchart()
 {
     qDebug() << QString(u8"绘制柱状图");
+    QCPAxis *keyAxis = ui->widget_barchart->xAxis;
+    QCPAxis *valueAxis = ui->widget_barchart->yAxis;
+    QCPBars *fossil = new QCPBars(keyAxis, valueAxis);  // 使用xAxis作为柱状图的key轴，yAxis作为value轴
+    fossil->setAntialiased(false); // 为了更好的边框效果，关闭抗齿锯
+    fossil->setName("Fossil fuels"); // 设置柱状图的名字，可在图例中显示
+    fossil->setPen(QPen(QColor(0, 168, 140).lighter(130))); // 设置柱状图的边框颜色
+    fossil->setBrush(QColor(0, 168, 140));  // 设置柱状图的画刷颜色
 
-    //绘制柱状图
-    QCPAxis *xAxis = ui->widget_barchart->xAxis;//x轴
-    QCPAxis *yAxis = ui->widget_barchart->yAxis;//y轴
-    QCPBars *bars = new QCPBars(xAxis, yAxis);  // 使用xAxis作为柱状图的x轴，yAxis作为y轴
-
-    bars->setAntialiased(false); // 为了更好的边框效果，关闭抗齿锯
-    bars->setName("Bars"); // 设置图例
-    bars->setPen(QPen(QColor(0, 160, 140).lighter(130))); // 设置柱状图的边框颜色
-    bars->setBrush(QColor(20,68,106));  // 设置柱状图的画刷颜色
-
+    // 为柱状图设置一个文字类型的key轴，ticks决定了轴的范围，而labels决定了轴的刻度文字的显示
     QVector<double> ticks;
     QVector<QString> labels;
-    ticks << 1 << 2 << 3 << 4 << 5 << 6 << 7;//轴的范围
-    labels << "A" << "B" << "C" << "D" << "E" << "F" << "G";//轴的刻度文字显示
+    ticks << 1 << 2 << 3 << 4 << 5 << 6 << 7;
+    labels << "USA" << "Japan" << "Germany" << "France" << "UK" << "Italy" << "Canada";
     QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
     textTicker->addTicks(ticks, labels);
-    xAxis->setTicker(textTicker);        // 设置为文字轴
-    xAxis->setTickLabelRotation(60);     // 轴刻度文字旋转60度
-    xAxis->setSubTicks(false);           // 不显示子刻度
-    xAxis->setTickLength(0, 4);          // 轴内外刻度的长度分别是0,4,也就是轴内的刻度线不显示
-    xAxis->setRange(0, 8);               // 设置x轴范围
-    xAxis->setLabel("x");
-    xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+    keyAxis->setTicker(textTicker);        // 设置为文字轴
 
-    yAxis->setRange(0, 12.1);          //设置y轴范围
-    yAxis->setPadding(35);             // 轴的内边距
-    yAxis->setLabel("y");
-    yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+    keyAxis->setTickLabelRotation(60);     // 轴刻度文字旋转60度
+    keyAxis->setSubTicks(false);           // 不显示子刻度
+    keyAxis->setTickLength(0, 4);          // 轴内外刻度的长度分别是0,4,也就是轴内的刻度线不显示
+    keyAxis->setRange(0, 8);               // 设置范围
+    keyAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+
+    valueAxis->setRange(0, 12.1);
+    valueAxis->setPadding(35);             // 轴的内边距，可以到QCustomPlot之开始（一）看图解
+    valueAxis->setLabel("Power Consumption in\nKilowatts per Capita (2007)");
+    valueAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
     QVector<double> fossilData;
-    fossilData  << 10 << 9 << 2 << 5 << 7 << 4 << 1;//y轴坐标值
-    bars->setData(ticks, fossilData);
+    fossilData  << 0.86*10.5 << 0.83*5.5 << 0.84*5.5 << 0.52*5.8 << 0.89*5.2 << 0.90*4.2 << 0.67*11.2;
+    fossil->setData(ticks, fossilData);
 
-    // 支持鼠标拖拽轴的范围、滚动缩放轴的范围，左键点选图层（每条曲线独占一个图层）
-    ui->widget_barchart->setInteractions(QCP::iRangeDrag | QCP::iSelectPlottables);
-    // 更新绘图区
+    //横向柱状图
+//    QCPAxis *keyAxis = customPlot->yAxis;
+//    QCPAxis *valueAxis = customPlot->xAxis;
+
+//    //展示堆积图
+    QCPBars *regen = new QCPBars(keyAxis, valueAxis);
+    QCPBars *nuclear = new QCPBars(keyAxis, valueAxis);
+    QCPBars *fossil_2 = new QCPBars(keyAxis, valueAxis);  // 使用xAxis作为柱状图的key轴，yAxis作为value轴
+
+    //设置数据
+    QVector<double> fossilData_2, nuclearData, regenData;
+    fossilData_2  << 0.86*10.5 << 0.83*5.5 << 0.84*5.5 << 0.52*5.8 << 0.89*5.2 << 0.90*4.2 << 0.67*11.2;
+    nuclearData << 0.08*10.5 << 0.12*5.5 << 0.12*5.5 << 0.40*5.8 << 0.09*5.2 << 0.00*4.2 << 0.07*11.2;
+    regenData   << 0.06*10.5 << 0.05*5.5 << 0.04*5.5 << 0.06*5.8 << 0.02*5.2 << 0.07*4.2 << 0.25*11.2;
+    fossil_2->setData(ticks, fossilData_2);
+    nuclear->setData(ticks, nuclearData);
+    regen->setData(ticks, regenData);
+
+    //设置堆积方式
+//    regen->setStackingGap(1);    // 设置堆积在其它柱状图上时的间距(像素)
+//    nuclear->setStackingGap(1);
+
+//    nuclear->moveAbove(fossil);  // 将nuclear移到fossil之上
+//    regen->moveAbove(nuclear);
+
+    //柱状分组图
+    QCPBarsGroup *group = new QCPBarsGroup(ui->widget_barchart);
+
+    QList<QCPBars*> bars;
+    bars << fossil << nuclear << regen;
+
+    foreach (QCPBars *bar, bars) {
+      // 设置柱状图的宽度类型为以key坐标轴计算宽度的大小，其实默认就是这种方式
+      bar->setWidthType(QCPBars::wtPlotCoords);
+      bar->setWidth(bar->width() / bars.size()); // 设置柱状图的宽度大小
+      group->append(bar);  // 将柱状图加入柱状图分组中
+    }
+
+    group->setSpacingType(QCPBarsGroup::stAbsolute);  // 设置组内柱状图的间距，按像素
+    group->setSpacing(2);     // 设置较小的间距值，这样看起来更紧凑
+
+
     ui->widget_barchart->replot();
 }
 
 //绘制饼图
 void Income::drawIncomeDataTo_piechart()
 {
+
     qDebug() << QString(u8"绘制饼图");
     //饼状图
-        QPieSeries * my_pieSeries = new QPieSeries();
-        //中间圆与大圆的比例
-        my_pieSeries->setHoleSize(0.35);
-        //扇形及数据
-        QPieSlice *pieSlice_running = new QPieSlice();
-        pieSlice_running->setValue(25);//扇形占整个圆的百分比
-        pieSlice_running->setLabel("XXX");
-        pieSlice_running->setLabelVisible();
-        pieSlice_running->setColor(QColor("#4cb9cf"));
-        pieSlice_running->setLabelColor(QColor("#4cb9cf"));
-        pieSlice_running->setBorderColor(QColor("#4cb9cf"));
-        pieSlice_running->setBorderColor(QColor());
-        my_pieSeries->append(pieSlice_running);
+    QPieSeries * my_pieSeries_all = new QPieSeries();
+    //中间圆与大圆的比例
+    my_pieSeries_all->setHoleSize(0.35);
+    //扇形及数据
+    QPieSlice *pieSlice_running_all = new QPieSlice();
+    pieSlice_running_all->setValue(60);//扇形占整个圆的百分比
+    pieSlice_running_all->setLabel(u8"全部收益");
+    pieSlice_running_all->setLabelVisible();
+    pieSlice_running_all->setColor(QColor("#4cb9cf"));
+    pieSlice_running_all->setLabelColor(QColor("#4cb9cf"));
+    pieSlice_running_all->setBorderColor(QColor("#4cb9cf"));
+    my_pieSeries_all->append(pieSlice_running_all);
 
-        QPieSlice *pieSlice_noconnect = new QPieSlice();
-        pieSlice_noconnect->setValue(25);
-        pieSlice_noconnect->setLabel("YYY");
-        pieSlice_noconnect->setColor(QColor("#53b666"));
-        pieSlice_noconnect->setLabelColor(QColor("#53b666"));
-        pieSlice_noconnect->setBorderColor(QColor("#53b666"));
-        pieSlice_noconnect->setLabelVisible();//设置标签可见,缺省不可见
-        my_pieSeries->append(pieSlice_noconnect);
+    QPieSlice *pieSlice_noconnect_all = new QPieSlice();
+    pieSlice_noconnect_all->setValue(20);
+    pieSlice_noconnect_all->setLabel(u8"视频收益");
+    pieSlice_noconnect_all->setColor(QColor("#53b666"));
+    pieSlice_noconnect_all->setLabelColor(QColor("#53b666"));
+    pieSlice_noconnect_all->setBorderColor(QColor("#53b666"));
+    pieSlice_noconnect_all->setLabelVisible();//设置标签可见,缺省不可见
+    my_pieSeries_all->append(pieSlice_noconnect_all);
 
-        QPieSlice *pieSlice_idle = new QPieSlice();
-        pieSlice_idle->setValue(50);
-        pieSlice_idle->setLabel("WWW");
-        pieSlice_idle->setLabelVisible();
-        pieSlice_idle->setColor(QColor("#2f89cf"));
-        pieSlice_idle->setLabelColor(QColor("#2f89cf"));
-        pieSlice_idle->setBorderColor(QColor("#2f89cf"));
-        my_pieSeries->append(pieSlice_idle);
+    QPieSlice *pieSlice_idle_all = new QPieSlice();
+    pieSlice_idle_all->setValue(20);
+    pieSlice_idle_all->setLabel(u8"音乐收益");
+    pieSlice_idle_all->setLabelVisible();
+    pieSlice_idle_all->setColor(QColor("#2f89cf"));
+    pieSlice_idle_all->setLabelColor(QColor("#2f89cf"));
+    pieSlice_idle_all->setBorderColor(QColor("#2f89cf"));
+    my_pieSeries_all->append(pieSlice_idle_all);
     // 图表视图
-        QChart *chart = new QChart();
-        chart->setTitle("FFFFF");
-        chart->addSeries(my_pieSeries);
-        chart->setAnimationOptions(QChart::SeriesAnimations);
-        chart->legend()->setAlignment(Qt::AlignBottom);
-        chart->legend()->setBackgroundVisible(false);
-        chart->legend()->setFont(QFont("黑体", 8)) ; // 图例字体
-        chart->setTitleBrush(QColor("#808396"));
-        chart->legend()->setLabelColor(QColor("#808396"));
-        QChartView *chartView = new QChartView();
-        chartView = new QChartView(ui->widget_piechart);
-        chartView->setRenderHint(QPainter::Antialiasing);
-        chartView->setRenderHint(QPainter::NonCosmeticDefaultPen);
-        chartView->setChart(chart);
-        ui->gridLayout_pie->addWidget(chartView);
+    QChart *chart_all = new QChart();
+    chart_all->setTitle(u8"用户总收益占比");
+    chart_all->addSeries(my_pieSeries_all);
+    chart_all->setAnimationOptions(QChart::SeriesAnimations);
+    chart_all->legend()->setAlignment(Qt::AlignBottom);
+    chart_all->legend()->setBackgroundVisible(false);
+    chart_all->legend()->setFont(QFont(u8"黑体", 10)) ; // 图例字体
+    chart_all->setTitleBrush(QColor("#1195b8"));
+    chart_all->legend()->setLabelColor(QColor("#808396"));
+    QChartView *chartView_all = new QChartView();
+    chartView_all = new QChartView(ui->widget_piechart);
+    chartView_all->setRenderHint(QPainter::Antialiasing);
+    chartView_all->setRenderHint(QPainter::NonCosmeticDefaultPen);
+    chartView_all->setChart(chart_all);
+    ui->gridLayout_pie->addWidget(chartView_all);
+
+    //饼状图--周收益
+    QPieSeries * my_pieSeries_week = new QPieSeries();
+    //中间圆与大圆的比例
+    my_pieSeries_week->setHoleSize(0.35);
+    //扇形及数据
+    QPieSlice *pieSlice_running_week = new QPieSlice();
+    pieSlice_running_week->setValue(40);//扇形占整个圆的百分比
+    pieSlice_running_week->setLabel(u8"全部收益");
+    pieSlice_running_week->setLabelVisible();
+    pieSlice_running_week->setColor(QColor("#4cb9cf"));
+    pieSlice_running_week->setLabelColor(QColor("#4cb9cf"));
+    pieSlice_running_week->setBorderColor(QColor("#4cb9cf"));
+    my_pieSeries_week->append(pieSlice_running_week);
+
+    QPieSlice *pieSlice_noconnect_week = new QPieSlice();
+    pieSlice_noconnect_week->setValue(35);
+    pieSlice_noconnect_week->setLabel(u8"视频收益");
+    pieSlice_noconnect_week->setColor(QColor("#53b666"));
+    pieSlice_noconnect_week->setLabelColor(QColor("#53b666"));
+    pieSlice_noconnect_week->setBorderColor(QColor("#53b666"));
+    pieSlice_noconnect_week->setLabelVisible();//设置标签可见,缺省不可见
+    my_pieSeries_week->append(pieSlice_noconnect_week);
+
+    QPieSlice *pieSlice_idle_week = new QPieSlice();
+    pieSlice_idle_week->setValue(25);
+    pieSlice_idle_week->setLabel(u8"音乐收益");
+    pieSlice_idle_week->setLabelVisible();
+    pieSlice_idle_week->setColor(QColor("#2f89cf"));
+    pieSlice_idle_week->setLabelColor(QColor("#2f89cf"));
+    pieSlice_idle_week->setBorderColor(QColor("#2f89cf"));
+    my_pieSeries_week->append(pieSlice_idle_week);
+    // 图表视图
+    QChart *chart_week = new QChart();
+    chart_week->setTitle(u8"用户周收益占比");
+    chart_week->addSeries(my_pieSeries_week);
+    chart_week->setAnimationOptions(QChart::SeriesAnimations);
+    chart_week->legend()->setAlignment(Qt::AlignBottom);
+    chart_week->legend()->setBackgroundVisible(false);
+    chart_week->legend()->setFont(QFont(u8"黑体", 10)) ; // 图例字体
+    chart_week->setTitleBrush(QColor("#1195b8"));
+    chart_week->legend()->setLabelColor(QColor("#808396"));
+    QChartView *chartView_week = new QChartView();
+    chartView_week = new QChartView(ui->widget_pechart_week);
+    chartView_week->setRenderHint(QPainter::Antialiasing);
+    chartView_week->setRenderHint(QPainter::NonCosmeticDefaultPen);
+    chartView_week->setChart(chart_week);
+    ui->gridLayout_pie_week->addWidget(chartView_week);
+
+    //饼状图---月收益
+    QPieSeries * my_pieSeries_month = new QPieSeries();
+    //中间圆与大圆的比例
+    my_pieSeries_month->setHoleSize(0.35);
+    //扇形及数据
+    QPieSlice *pieSlice_running_month = new QPieSlice();
+    pieSlice_running_month->setValue(35);//扇形占整个圆的百分比
+    pieSlice_running_month->setLabel(u8"全部收益");
+    pieSlice_running_month->setLabelVisible();
+    pieSlice_running_month->setColor(QColor("#4cb9cf"));
+    pieSlice_running_month->setLabelColor(QColor("#4cb9cf"));
+    pieSlice_running_month->setBorderColor(QColor("#4cb9cf"));
+    my_pieSeries_month->append(pieSlice_running_month);
+
+    QPieSlice *pieSlice_noconnect_month = new QPieSlice();
+    pieSlice_noconnect_month->setValue(35);
+    pieSlice_noconnect_month->setLabel(u8"视频收益");
+    pieSlice_noconnect_month->setColor(QColor("#53b666"));
+    pieSlice_noconnect_month->setLabelColor(QColor("#53b666"));
+    pieSlice_noconnect_month->setBorderColor(QColor("#53b666"));
+    pieSlice_noconnect_month->setLabelVisible();//设置标签可见,缺省不可见
+    my_pieSeries_month->append(pieSlice_noconnect_month);
+
+    QPieSlice *pieSlice_idle_month = new QPieSlice();
+    pieSlice_idle_month->setValue(30);
+    pieSlice_idle_month->setLabel(u8"音乐收益");
+    pieSlice_idle_month->setLabelVisible();
+    pieSlice_idle_month->setColor(QColor("#2f89cf"));
+    pieSlice_idle_month->setLabelColor(QColor("#2f89cf"));
+    pieSlice_idle_month->setBorderColor(QColor("#2f89cf"));
+    my_pieSeries_month->append(pieSlice_idle_month);
+    // 图表视图
+    QChart *chart_month = new QChart();
+    chart_month->setTitle(u8"用户月收益占比");
+    chart_month->addSeries(my_pieSeries_month);
+    chart_month->setAnimationOptions(QChart::SeriesAnimations);
+    chart_month->legend()->setAlignment(Qt::AlignBottom);
+    chart_month->legend()->setBackgroundVisible(false);
+    chart_month->legend()->setFont(QFont(u8"黑体", 10)) ; // 图例字体
+    chart_month->setTitleBrush(QColor("#1195b8"));
+    chart_month->legend()->setLabelColor(QColor("#808396"));
+    QChartView *chartView_month = new QChartView();
+    chartView_month = new QChartView(ui->widget_piechart_month);
+    chartView_month->setRenderHint(QPainter::Antialiasing);
+    chartView_month->setRenderHint(QPainter::NonCosmeticDefaultPen);
+    chartView_month->setChart(chart_month);
+    ui->gridLayout_pie_month->addWidget(chartView_month);
 }
 
 //更新游标内容

@@ -43,6 +43,7 @@ public:
 private:
     void    addOneUserIncomeRecordTo_UI(QStringList &recordlist);
     void    clearTable();
+    void    updateExportBtnStatus();
     void    exportTableRecords();//导出表记录
     void    drawIncomeDataTo_line();//绘制折线图
     void    drawIncomeDataTo_barchart();//绘制柱状图

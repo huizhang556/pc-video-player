@@ -32,6 +32,7 @@ void MusicPlayShow::initWorkUI()
 
 void MusicPlayShow::handleSignalsAndSlots()
 {
+    //全局定时切换图片
     connect(Global::getInstance(),&Global::sig_sendGlobalTimeOut,[=]()
     {
         fileName = Global::appDirPath + switchSkin(m_skinPath).arg(i);
@@ -39,7 +40,7 @@ void MusicPlayShow::handleSignalsAndSlots()
         changeTimeCout();
     });
 
-    //切换皮肤
+    //选择切换皮肤
     connect(FontColor::getInstance(),&FontColor::sig_send_switchskin,[=](QString skin){
         m_skinPath = skin;
         qDebug() << QString(u8"当前设置路径：") << skin;
@@ -80,7 +81,7 @@ void MusicPlayShow::loadPictures(QString &path) const
 
 void MusicPlayShow::changeTimeCout()
 {
-    if(++i > 25)
+    if(++i > 30)
         i = 1;
 }
 
@@ -126,7 +127,7 @@ const QString MusicPlayShow::switchSkin(const QString &text)
     }
     else if(text == QString(u8"本地图片"))
     {
-        path_t = QString("/pictures/musicwall/%1.png");
+        path_t = QString("/pictures/musicwall/songer%1.jpg");
         ui->stackedWidget->setCurrentIndex(0);
     }
     return path_t;

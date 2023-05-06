@@ -27,8 +27,8 @@ int      dataBase::m_splash_height = 500;//默认高度
 dataBase* dataBase::m_pInstance = nullptr;
 
 dataBase::dataBase():
-    m_online(true),
-    m_curUserID("0000000001"),
+    m_online(false),
+    m_curUserID("0000000000"),
     m_curUserHead(""),
     m_curUserName(""),
     m_curUserGrade(1)

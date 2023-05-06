@@ -14,14 +14,17 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
-    <number>3</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>3</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
@@ -1600,7 +1603,7 @@ image: ;
                </layout>
               </widget>
               <widget class="QWidget" name="page_piechart">
-               <layout class="QVBoxLayout" name="verticalLayout_59">
+               <layout class="QHBoxLayout" name="horizontalLayout">
                 <property name="spacing">
                  <number>0</number>
                 </property>
@@ -1618,7 +1621,65 @@ image: ;
                 </property>
                 <item>
                  <widget class="QWidget" name="widget_piechart" native="true">
-                  <layout class="QGridLayout" name="gridLayout_pie"/>
+                  <layout class="QGridLayout" name="gridLayout_pie">
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QWidget" name="widget_pechart_week" native="true">
+                  <layout class="QGridLayout" name="gridLayout_pie_week">
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QWidget" name="widget_piechart_month" native="true">
+                  <layout class="QGridLayout" name="gridLayout_pie_month">
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                  </layout>
                  </widget>
                 </item>
                </layout>
