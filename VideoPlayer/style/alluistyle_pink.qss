@@ -16,13 +16,28 @@ QTabBar
 qproperty-usesScrollButtons: false;
 }
 
+/**视频归类**/
+SortDialog
+{
+background-color: rgb(57, 67, 87);
+}
+
+/*无效果*/
+VideoBlank
+{
+background-color: #ffffff;
+}
+
+
 /*类选择器在代码里有效，样式表中无效，防止子控件继承样式*/
 MultipPlayer
 {
 /*包含5px的margin*/
-background-color: #1a1a1b;
+background-color:  rgba(26, 26, 27,0.2);
 /*border-image: url(://images/bgpic/cusvideoitem1.png);*/
 }
+
+/*播放器界面标题栏---内衬*/
 
 MainWidget
 {
@@ -134,7 +149,6 @@ background-color: transparent;
 /**顶部标题栏**/
 QFrame#m_miniframeTitle
 {
-background-color: rgba(38, 40, 41,0.5);
 background-color: transparent;
 }
 
@@ -168,7 +182,6 @@ color: #c0ff02;
 /**底部控制栏**/
 QFrame#m_miniframeControl
 {
-background-color: rgba(38, 40, 41,0.5);
 background-color: transparent;
 }
 
@@ -431,12 +444,6 @@ background-color: #16161a;
 margin: 0px 0px;
 }
 
-/*播放器界面标题栏---内衬*/
-#stackedWidget_videoTitle
-{
-background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0, stop:0 #1a1a1a, stop:1  #141d2c);
-}
-
 /*------------------------左侧节目侧边栏列表----start-----------------------------*/
 
 #listWidget_playlist
@@ -488,14 +495,12 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #630f34, 
 color: #00d661;
 }
 
-/*侧边栏底部--展开按钮*/
+/*左侧边栏底部--控制按钮*/
 #m_moreBtn,#m_modeBtn,#m_setBtn,#m_msgBtn
 {
 background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #28405d, stop:1  #223a55);
 text-align: center;
-icon-size:20px;
 font-family:"微软雅黑";
-font-size:14px;
 color:#00e8f7;
 border:none;
 margin: 0px;
@@ -693,7 +698,8 @@ background-color: rgba(64, 66, 68,0.2);
 #m_rightListWidget::item:selected
 {
 color:  transparent;
-background-color: rgba(64, 66, 68,0.5);
+/*background-color: rgba(64, 66, 68,0.5);*/
+background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 rgba(64, 66, 68,0.3), stop:0.55 rgba(64, 66, 68,0.7), stop:1  rgba(64, 66, 68,0.3));
 }
 
 #m_rightListWidget::item:hover
@@ -1463,6 +1469,7 @@ border: 1px solid transparent;
 color: #37d5ff;
 border-radius: 3px;
 background: #3c4348;
+border: 1px solid #37d5ff;
 }
 
 /*一级菜单--图标*/
@@ -1686,12 +1693,21 @@ border:none;
 /*font:bold italic 18px "微软雅黑";*/
 }
 
-/********节目列表tabwidget----开始**********/
+/*---------------------整个右侧播放列表父亲m_widget1和搜索m_widget2-------------------------*/
+#m_widget1,#m_widget2
+{
+border: 0px solid #3f4042;
+background-color: transparent;
+}
+/*---------------------整个右侧播放列表父亲m_widget1-------------------------*/
+
+/*-------------------------整个右侧播放列表切换tab-----------------------------*/
 #m_tabWidget1
 {
-background-color: transparent;
 outline:none;
 color:black;
+border: 0px solid rgba(138, 138, 125,0.7);
+border-left-width: 1px;
 font: 75 13px "微软雅黑";
 }
 
@@ -1705,12 +1721,17 @@ left: 0px;
 width:140px;
 height:35px;
 color: white;
-background-color:#3f3f48;
+background-color: transparent;
 }
 
 #m_tabWidget1 QTabBar::tab:first
 {
-/*border-right:1px solid #ff5c38;*/
+background-color: transparent;
+}
+
+#m_tabWidget1 QTabBar::tab:last
+{
+background-color: transparent;
 }
 
 #m_tabWidget1 QTabBar::tab:!selected
@@ -1721,57 +1742,54 @@ color:  #8a8a8a;
 
 #m_tabWidget1 QTabBar::tab:selected
 {
-/*color:#ff5c38;*/
+color: #d3287c;
 font-size:14px;
 font-weight:bold;
-color: rgb(255, 211, 134);
 border-bottom:2px solid #ff5c38;
 }
+/*-------------------------整个右侧播放列表切换tab-----------------------------*/
 
-/*通过icon-size来撑大item的高度*/
+/*-------------------整个右侧播放列表toolbox承载区域控件----------------------*/
+/*toolbox通过icon-size来撑大item的高度*/
 #m_toolBox_list
 {
+ icon-size: 30px; 
 border-right:2px;
-background-color: #3d3d3d;
-background-color: #171c24;
- icon-size: 25px; 
+border: 0px solid gray;
+background-color: transparent;
 }
 
 /*抽屉控件,有效*/
 #m_toolBox_list::tab
 {
-border-bottom: 2px groove blue; 
-border-radius: 2px;
-background-color: #3d3d3d;
 color: yellow;
 text-align: center; 
+border-bottom: 1px dashed rgba(56, 60, 65,0.5);
+background-color: transparent;
 }
 
 /*tab样式-hover*/
 #m_toolBox_list::tab:hover
 {
-background-color:rgb(101,210,105);
 color: white;
+background-color: transparent;
 }
 
 /*tab样式-selected*/
 #m_toolBox_list::tab:selected
 {
-background-color: #36a5c1;
 color: white;
 font-weight: bold;
+background-color: transparent;
 }
 
-/*右侧整个播放列表父亲m_widget1*/
-#m_widget1
+/*每个抽屉item 的背景(重要)*/
+#m_toolBox_list::tab QWidget
 {
-background-color: #072957;
-border:1px solid transapent;
-border-left-color: #3f4042;
+background-color: transparent;
+background-color:  rgba(22, 42, 51,0.0);
 }
-
-/*toolbox承载区域控件*/
-
+/*-------------------整个右侧播放列表toolbox承载区域end----------------------*/
 
 /*搜索框(事件监视器控制)*/
 #m_lineEdit_player
@@ -1779,26 +1797,33 @@ border-left-color: #3f4042;
 color:#cccccc;
 font-family:"微软雅黑";
 font-size:14px;
-background-color: #162a33;
-selection-background-color: #eaeaea;
-padding-left:15px;
 border:none;
+border-radius: 3px;
+padding-left:15px;
+background-color:  transparent;
 }
+
+#m_lineEdit_player:focus
+{
+border-radius: 3px;
+border: 1px solid #00ffff;
+}
+
 
 /*搜索按钮(事件监视器控制)*/
 #m_searchBtn_player
 {
 border: none;
-background-color: #162a33;
 image: url(:/images/icon/file_open.png);
 padding:5px;
+background-color: transparent;
 }
 
 /*搜索按钮-按下*/
 #m_searchBtn_player:pressed
 {
 border-style: inset;
-background-color: #162a33;
+background-color: transparent;
 }
 
 /*搜索按钮-鼠标滑过*/
@@ -1806,76 +1831,75 @@ background-color: #162a33;
 {
 padding:5px;
 image: url(:/images/icon/file_open_hover.png);
-background-color: #162a33;
+background-color: transparent;
 }
 
 /**************************播放器右侧列表设置---开始****************************/
 /*QListWidget播放列表（四个表统一的样式）*/
-QToolBox QWidget  QListWidget
+#m_listWisget1,#m_listWisget2,#m_listWisget3,#m_listWisget4
 {
-font-family:"Mircrosoft YaHei";
 border:none;
-background-color: #333333;
+font-family:"Mircrosoft YaHei";
+background-color: rgba(60, 56, 66,0.1);
 }
 
-QToolBox QWidget  QListWidget::item
+#m_listWisget1::item,#m_listWisget2::item,#m_listWisget3::item,#m_listWisget4::item
 {
 color: transparent;
 min-height:30px;
 font-size:15px;
-border-radius: 5px;
-background-color: #333333;
+border-radius: 0px;
+background-color: rgba(60, 56, 66,0.2);
 }
 
-QToolBox QWidget  QListWidget::item:hover
+#m_listWisget1::item:hover,#m_listWisget2::item:hover,#m_listWisget3::item:hover,#m_listWisget4::item:hover
 {
-show-decoration-selected:5;
-background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #5104e4, stop:1  #8e2ce1);
+color: transparent;
 border-style:outset;	
-color: transparent;
-}
-
-
-QToolBox QWidget  QListWidget::item:selected
-{
-color: transparent;
-border-radius: 5px;
 background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #5104e4, stop:1  #8e2ce1);
 }
 
-/*上次选择后保留的状态，鼠标离开后显示,会影响selected*/
-QToolBox QWidget  QListWidget::item:selected:!active
+
+#m_listWisget1::item:selected,#m_listWisget2::item:selected,#m_listWisget3::item:selected,#m_listWisget4::item:selected
 {
 color: transparent;
-background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #c11432, stop:1  #730f33);
+border-radius: 0px;
+background-color: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #5104e4, stop:1  #8e2ce1);
 }
 
 /**************************播放器右侧列表设置---完毕****************************/
 
 /*四个列表的滚动条---单独的统一放在通用样式之前设置*/
+#list1_vertical_scrollBar:vertical,#list2_vertical_scrollBar:vertical,#list3_vertical_scrollBar:vertical,#list4_vertical_scrollBar:vertical
+{
+min-width: 8px;
+background-color: rgba(60, 56, 66,0.2);
+}
+
 #list1_vertical_scrollBar::handle:vertical,#list2_vertical_scrollBar::handle:vertical,#list3_vertical_scrollBar::handle:vertical,#list4_vertical_scrollBar::handle:vertical
 {
-background-color:#65d269;
-border-radius:4px;
+min-width: 6px;
+border-radius:3px;
+background-color: rgba(60, 56, 66,0.2);
 }
 
 /*鼠标放到滑块上面样式*/
 #list1_vertical_scrollBar::handle:vertical:hover,#list2_vertical_scrollBar::handle:vertical:hover,#list3_vertical_scrollBar::handle:vertical:hover,#list4_vertical_scrollBar::handle:vertical:hover
 {
-background-color:#c0ff02;
-border-radius:4px;
+background-color: rgba(60, 56, 66,0.5);
+border-radius:3px;
 }
 
 /*滚动条滚过部分样式*/
 #list1_vertical_scrollBar::sub-page:vertical,#list2_vertical_scrollBar::sub-page:vertical,#list3_vertical_scrollBar::sub-page:vertical,#list4_vertical_scrollBar::sub-page:vertical
 {
-background-color:#038387;
+background-color: transparent;;
 }
 
 /*滚动条未滚过部分样式*/
 #list1_vertical_scrollBar::add-page:vertical,#list2_vertical_scrollBar::add-page:vertical,#list3_vertical_scrollBar::add-page:vertical,#list4_vertical_scrollBar::add-page:vertical
 {
-background-color:#038387;
+background-color: transparent;
 }
 
 /*滚动条整体样式，需要单独设置的，在下面按照层次顺序指明，或者按照对象名设置 --start*/

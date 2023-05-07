@@ -10,6 +10,8 @@
 #include <QTextCharFormat>
 #include <QTextDocument>
 #include <QTextBlock>
+#include <QAudioBuffer>
+#include <QDebug>
 
 namespace Ui {
 class CusLabel;
@@ -28,6 +30,10 @@ public:
     void        setCurrentTextFontColor(const QString &color);
     void        getCurPostionLyricText(int pos);
 
+public  slots:
+    void        slot_setLyricShowed(bool showed);
+    void        slot_drawMediaAudioWave(const QAudioBuffer &buffer);
+    void        slot_setWaveStyle(const QString &style);
 
 private:
     Ui::CusLabel *ui;

@@ -5,7 +5,8 @@ SOURCES += \
     $$PWD/CusLabel.cpp \
     $$PWD/MusicLeftTip.cpp \
     $$PWD/FontColor.cpp \
-    $$PWD/PlayStateControl.cpp
+    $$PWD/PlayStateControl.cpp \
+    $$PWD/WaveLabel.cpp
 
 HEADERS += \
     $$PWD/MusicPlaylist.h \
@@ -14,7 +15,8 @@ HEADERS += \
     $$PWD/CusLabel.h \
     $$PWD/MusicLeftTip.h \
     $$PWD/FontColor.h \
-    $$PWD/PlayStateControl.h
+    $$PWD/PlayStateControl.h \
+    $$PWD/WaveLabel.h
 
 FORMS += \
     $$PWD/MusicPlaylist.ui \

@@ -7,6 +7,8 @@
 #include <QTimer>
 #include <QEvent>
 #include <QPixmap>
+#include <QAudioBuffer>
+#include <QDebug>
 
 namespace Ui {
 class MusicPlayShow;
@@ -29,6 +31,7 @@ public slots:
     //公共函数可以再类外访问，私有只能在类内
     void receiveMainWinData(QString name);
     void slot_controlPlayStatus(bool status);
+    void slot_drawAudioWave(const QAudioBuffer &audioBuf);
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;

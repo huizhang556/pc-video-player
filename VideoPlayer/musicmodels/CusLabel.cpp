@@ -68,6 +68,50 @@ void CusLabel::getCurPostionLyricText(int pos)
     }
 }
 
+void CusLabel::slot_setLyricShowed(bool showed)
+{
+    if(showed)
+        ui->plainTextEdit->show();
+    else
+        ui->plainTextEdit->hide();
+}
+
+void CusLabel::slot_drawMediaAudioWave(const QAudioBuffer &buffer)
+{
+    ui->label_wave_L->slot_drawAudioPxm(GraphicLayout::LAY_RightToLeft,buffer);
+    ui->label_wave_R->slot_drawAudioPxm(GraphicLayout::LAY_LeftToRight,buffer);
+}
+
+void CusLabel::slot_setWaveStyle(const QString &style)
+{
+    if(style == QString(u8"关闭频谱"))
+    {
+        ui->label_wave_L->hide();
+        ui->label_wave_R->hide();
+    }
+    else if(style == QString(u8"开启频谱"))
+    {
+        ui->label_wave_L->show();
+        ui->label_wave_R->show();
+    }
+    else if(style == QString(u8"折线频谱"))
+    {
+        ui->label_wave_L->setGraphicStyle(GraphicStyle::PingPu);
+        ui->label_wave_R->setGraphicStyle(GraphicStyle::PingPu);
+    }
+    else if(style == QString(u8"柱状频谱"))
+    {
+        ui->label_wave_L->setGraphicStyle(GraphicStyle::ZhuZhuangTu);
+        ui->label_wave_R->setGraphicStyle(GraphicStyle::ZhuZhuangTu);
+    }
+    else if(style == QString(u8"渐变频谱"))
+    {
+        ui->label_wave_L->setGraphicStyle(GraphicStyle::ZhengTi);
+        ui->label_wave_R->setGraphicStyle(GraphicStyle::ZhengTi);
+    }
+
+}
+
 void CusLabel::slot_setCurPosition(int pos)
 {
 //    m_textCursor.setPosition(pos);

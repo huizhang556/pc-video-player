@@ -37,13 +37,13 @@ void MusicLeftTip::initWorkUI()
     ui->listWidget_proSet->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_proSet->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_proSet->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);//像素滚动
-    for(int i = 0; i < 9; i++)
+    for(int i = 0; i < songList.count(); i++)
     {
 //        QPushButton *itemButton = new QPushButton(songList.at(i));
 //        itemButton->setFixedSize(QSize(196,36));
         QListWidgetItem *item = new QListWidgetItem(songList.at(i));
         item->setSizeHint(QSize(198,40));
-        item->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+        item->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);//居中显示
         ui->listWidget_proSet->addItem(item);
 //        ui->listWidget_proSet->setItemWidget(item,itemButton);
     }
@@ -59,15 +59,57 @@ void MusicLeftTip::handleSinalsAndSlots()
                            this->height());
         if(this && !rect.contains(mapFromGlobal(QCursor::pos())))//存在且不包含
         {
+            //保证子菜关闭
             if(FontColor::getInstance()->isHidden())
                 MusicLeftTip::getInstance()->hide();
         }
     });
 
+    //鼠标点击
+    connect(ui->listWidget_proSet,&QListWidget::itemClicked,[=](QListWidgetItem* item){
+        if(item->text() == QString(u8"关闭歌词"))
+        {
+            emit sig_lyric_show(false);
+            item->setText(u8"显示歌词");
+        }
+        else if(item->text() == QString(u8"显示歌词"))
+        {
+            emit sig_lyric_show(true);
+            item->setText(u8"关闭歌词");
+        }
+        else if(item->text() == QString(u8"推荐评论"))
+        {
+
+        }
+        else if(item->text() == QString(u8"MV"))
+        {
+
+        }
+        else if(item->text() == QString(u8"动态频谱"))
+        {
+
+        }
+        else if(item->text() == QString(u8"搜索歌词"))
+        {
+
+        }
+        else if(item->text() == QString(u8"歌词设置"))
+        {
+
+        }
+        else if(item->text() == QString(u8"固定底栏"))
+        {
+
+        }
+    });
+
+    //鼠标hover
     connect(ui->listWidget_proSet,&QListWidget::itemEntered,[=](QListWidgetItem* item){
 //        qDebug() << QString(u8"item 文字")<< item->text();
         int x = this->mapToGlobal(this->pos()).x();
         int y = this->mapToGlobal(this->pos()).y();
+
+
         if(item->text() == QString(u8"字体颜色"))
         {
             FontColor::getInstance()->setCurrentStackWdtIndex(0);
@@ -84,6 +126,16 @@ void MusicLeftTip::handleSinalsAndSlots()
             FontColor::getInstance()->setFixedSize(180,40*3);//3个item
             FontColor::getInstance()->setGeometry(x+width(),
                                                   y + FontColor::getInstance()->height()-40,
+                                                  FontColor::getInstance()->width(),
+                                                  FontColor::getInstance()->height());
+            FontColor::getInstance()->show();
+        }
+        else if(item->text() == QString(u8"动态频谱"))
+        {
+            FontColor::getInstance()->setCurrentStackWdtIndex(2);
+            FontColor::getInstance()->setFixedSize(180,40*4);//4个item
+            FontColor::getInstance()->setGeometry(x+width(),
+                                                  y + FontColor::getInstance()->height()-120,
                                                   FontColor::getInstance()->width(),
                                                   FontColor::getInstance()->height());
             FontColor::getInstance()->show();

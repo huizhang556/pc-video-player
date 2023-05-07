@@ -33,6 +33,13 @@ void FontColor::initWorkUI()
     m_buttonGroup->addButton(ui->pushButton_localpic,0);
     m_buttonGroup->addButton(ui->pushButton_skin,1);
     m_buttonGroup->addButton(ui->pushButton_songer,2);
+
+    m_buttonGroup_wave = new QButtonGroup(this);
+    m_buttonGroup_wave->setExclusive(true);
+    m_buttonGroup_wave->addButton(ui->pushButton_closewave,0);
+    m_buttonGroup_wave->addButton(ui->pushButton_wave1,1);
+    m_buttonGroup_wave->addButton(ui->pushButton_wave2,2);
+    m_buttonGroup_wave->addButton(ui->pushButton_wave3,3);
 }
 
 void FontColor::handleSinalsAndSlots()
@@ -40,6 +47,20 @@ void FontColor::handleSinalsAndSlots()
     connect(m_buttonGroup,QOverload<QAbstractButton*>::of(&QButtonGroup::buttonClicked),this,[&](QAbstractButton* button){
         if(button->text().isEmpty()) return;
         emit sig_send_switchskin(button->text());
+    });
+
+    connect(m_buttonGroup_wave,QOverload<QAbstractButton*>::of(&QButtonGroup::buttonClicked),this,[&](QAbstractButton* button){
+        if(button->text().isEmpty()) return;
+        emit sig_send_wave(button->text());
+        if(button->text() == QString(u8"关闭频谱"))
+        {
+            button->setText(QString(u8"开启频谱"));
+        }
+        else if(button->text() == QString(u8"开启频谱"))
+        {
+            button->setText(QString(u8"关闭频谱"));
+        }
+
     });
 
     //放大

@@ -57,6 +57,12 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QDockWidget>
+#include <QAudioProbe>
+#include <QAudioInput>
+#include <QAudioFormat>
+#include <QAudioRecorder>
+#include <QAudioDeviceInfo>
+#include <QAudioEncoderSettings>
 #include <QPushButton>
 #include <QMediaPlayer>
 #include <QVideoWidget>
@@ -232,6 +238,8 @@ public slots:
 
     void    slot_clearAllPopupUi();//清理所有弹出的界面
 
+    void    slot_receiveCurAudio(const QAudioBuffer& buffer);
+
 private slots:
 
     QMediaPlaylist *    slot_getCurrentPlayList();//获取当前正在播放的列表
@@ -351,11 +359,17 @@ private slots:
     void    slot_saveCapturePixmap(QVideoFrame& frame);
 
 private:
-    QString         Base64ToQStr(QString base64Str);
+    QString Base64ToQStr(QString base64Str);
 
-    QString         Base64UrlToString(QUrl base64Url);
+    QString Base64UrlToString(QUrl base64Url);
 
     void    setAnyFrameMediaUrl(const QUrl& url);//设置求取任意帧的资源路径
+
+    void    updateTitleAreaGeomotry();//更新标题栏位置
+
+    void    updateControlAreaGeomotry();//更新底部控制栏位置
+
+    void    updateRightSliderCtlList();//更新右侧播放列表位置
 
     //弹幕位置
     QRect    calUpdateDanmuGeometry();//计算更新弹幕显示位置
@@ -424,6 +438,7 @@ private:
     QVBoxLayout                 *m_vHlayout         = nullptr; //布局listwidget和m_hLayout
     QVBoxLayout                 *m_vHlayout_jianjie = nullptr; //视频简介布局
     QVBoxLayout                 *m_vHlayout_jieshao = nullptr; //视频介绍布局
+    QVBoxLayout                 *m_verticalLayout_main = nullptr;
     QPushButton                 *m_searchBtn        = nullptr;
     QPushButton                 *m_foldBtn          = nullptr;
     AdjustBright                *m_adjustBright     = nullptr;//参数调整界面
@@ -439,6 +454,9 @@ private:
     QMediaPlaylist              *playlist           = nullptr;//播放列表1 正式
     QMediaPlaylist              *playlist_t         = nullptr;//播放列表2 临时
     VideoSurface                *m_videoSurface     = nullptr;//获取视频任意帧
+    QAudioRecorder              *m_audioRecder      = nullptr;//获取音频数据探测器
+    QAudioProbe                 *m_audioProbe       = nullptr;//获取音频数据
+//    QAudioEncoderSettings       *m_audioSetting     = nullptr;//音频设置
 
     int                         m_voice;                        //静音之前的值
     bool                        m_winMax;                       //默认非最大化

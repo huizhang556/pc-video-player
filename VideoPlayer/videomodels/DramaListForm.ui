@@ -37,16 +37,32 @@
      <property name="styleSheet">
       <string notr="true">#frame_dramabg
 {
-background-color: #26262b;
+background-color: rgba(60, 56, 66,0.2);
 }
-
 
 QListWidget
 {
 border-radius: 5px;
 border: 1px solid #7d7e84;
-background-color: #26262b;
+background-color: transparent;
 }
+
+QListWidget::item
+{
+color: transparent;
+background-color: rgba(60, 56, 66,0.3);
+}
+
+QListWidget::item:selected
+{
+background-color: rgba(60, 56, 66,0.4);
+}
+
+QListWidget::item:hover
+{
+background-color: rgba(60, 56, 66,0.4);
+}
+
 </string>
      </property>
      <property name="frameShape">

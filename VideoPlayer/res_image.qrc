@@ -698,5 +698,8 @@
         <file>images/bgpic/login_bg.png</file>
         <file>images/skin/myskin_vip.png</file>
         <file>images/bgpic/flushing.webp</file>
+        <file>images/bgpic/music_gb_1.jpg</file>
+        <file>images/bgpic/music_gb_2.jpg</file>
+        <file>images/bgpic/music_gb_3.jpg</file>
     </qresource>
 </RCC>

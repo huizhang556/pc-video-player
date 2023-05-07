@@ -1067,18 +1067,7 @@ void MainWidget::createTrayMenu()
 
     QWidgetAction *wgtAction = new QWidgetAction(m_menuTray);//还可以子类化QWidgetAction，paintEvent()重绘
     wgtAction->setDefaultWidget(m_systemTray);//添加自定义的widget_menu
-//    m_menuTray->setStyleSheet("QMenu{"
-//                              "background-color:white;"
-//                              "color:#cdcdcd;"
-//                              "font:bold normal 15px '微软雅黑';"
-//                              "border:1px solid transparent;"
-//                              "}");//font:bold italic 18px "微软雅黑";
-//    m_playMode->setStyleSheet("QMenu{"
-//                              "background-color:white;"
-//                              "color:#cdcdcd;"
-//                              "font:bold normal 15px '微软雅黑';"
-//                              "border:1px solid transparent;"
-//                              "}");//font:bold italic 18px "微软雅黑";
+
     m_menuTray->addAction(wgtAction);
     m_menuTray->addAction(QIcon("://images/tray/tray_home.png"),QString::fromLocal8Bit("显示主界面"),this,SLOT(tray_showMainWidget()));
     m_menuTray->addMenu(m_playMode);//添加 子菜单 播放模式

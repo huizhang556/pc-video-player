@@ -13,6 +13,11 @@ VideoTitleBar::VideoTitleBar(QWidget *parent) :
     ui(new Ui::VideoTitleBar)
 {
     ui->setupUi(this);
+    setWindowFlags(Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_TranslucentBackground);
+    setAttribute(Qt::WA_Hover);
+    setAutoFillBackground(false);
+    setWindowOpacity(0);
     initUi();//初始化代码层面界面
     chandleSignalsAndSlots();//处理信号与槽函数
 }

@@ -32,12 +32,22 @@ void MusicPlayShow::initWorkUI()
 
 void MusicPlayShow::handleSignalsAndSlots()
 {
+    //关闭/开启歌词显示
+    connect(MusicLeftTip::getInstance(),&MusicLeftTip::sig_lyric_show,[=](bool showed){
+        ui->labelPicture->slot_setLyricShowed(showed);
+    });
+
     //全局定时切换图片
     connect(Global::getInstance(),&Global::sig_sendGlobalTimeOut,[=]()
     {
         fileName = Global::appDirPath + switchSkin(m_skinPath).arg(i);
         loadPictures(fileName);
         changeTimeCout();
+    });
+
+    //切换频谱
+    connect(FontColor::getInstance(),&FontColor::sig_send_wave,[=](QString wave){
+        ui->labelPicture->slot_setWaveStyle(wave);
     });
 
     //选择切换皮肤
@@ -96,6 +106,11 @@ void MusicPlayShow::receiveMainWinData(QString name)
 void MusicPlayShow::slot_controlPlayStatus(bool status)
 {
     ui->widget_deiji->slot_setPlayingStatus(status);
+}
+
+void MusicPlayShow::slot_drawAudioWave(const QAudioBuffer &audioBuf)
+{
+    ui->labelPicture->slot_drawMediaAudioWave(audioBuf);
 }
 
 bool MusicPlayShow::eventFilter(QObject *watched, QEvent *event)

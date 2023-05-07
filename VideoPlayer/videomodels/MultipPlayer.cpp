@@ -9,7 +9,6 @@
 //#endif
 
 #include <QFile>
-#include <QMenu>
 #include <QDebug>
 #include <QAction>
 #include <QCursor>
@@ -86,6 +85,7 @@ MultipPlayer::~MultipPlayer()
     delete m_videoTitleBar;
     delete m_hboxlayout_rlist;
     delete m_videoSurface;
+
     if(m_pInstance != nullptr)
         delete m_pInstance;
     m_pInstance = nullptr;
@@ -145,6 +145,27 @@ void MultipPlayer::initMainWindow()
     m_player2->setMuted(true);//静音
     m_player2->setVideoOutput(m_videoSurface);
 
+    //音频探测器
+    m_audioRecder = new QAudioRecorder(this);
+    m_audioRecder->setVolume(20);
+//    qDebug() << m_audioRecder->defaultAudioInput();//确保有采集器
+
+//    m_audioSetting = new QAudioEncoderSettings();
+    QAudioEncoderSettings m_audioSetting;
+//    m_audioSetting.setCodec("audio/pcm");
+    m_audioSetting.setChannelCount(1);
+    m_audioSetting.setSampleRate(48000);
+    m_audioSetting.setQuality(QMultimedia::NormalQuality);
+//    m_audioSetting.setEncodingMode(QMultimedia::AverageBitRateEncoding);
+
+//    m_audioRecder->setEncodingSettings(m_audioSetting);
+//    m_audioRecder->setOutputLocation(QUrl::fromLocalFile("test.amr"));
+
+
+    //获取音频数据
+    m_audioProbe = new QAudioProbe(this);
+    m_audioProbe->setSource(m_audioRecder);//关联探测器
+
     m_widget2 = new QWidget;//listwidget显示（暂时不用）
     m_widget2->setObjectName(QString::fromLocal8Bit("m_widget2"));
 
@@ -164,10 +185,6 @@ void MultipPlayer::initMainWindow()
     ui->stackedWidget->insertWidget(2,m_musicUi);
     ui->stackedWidget->setCurrentIndex(0);//默认显示空白界面
     ui->stackedWidget->setMinimumSize(700,555);//必须设置最小尺寸，否则播放控制栏位置不正确
-//    ui->stackedWidget->setAttribute(Qt::WA_TranslucentBackground,true);
-//    ui->stackedWidget->widget(0)->setAttribute(Qt::WA_TranslucentBackground);
-//    ui->stackedWidget->widget(1)->setAttribute(Qt::WA_TranslucentBackground);
-//    ui->stackedWidget->widget(2)->setAttribute(Qt::WA_TranslucentBackground);
 
     //我的歌单（暂时）
     m_listWisget1 = new QListWidget();
@@ -245,33 +262,33 @@ void MultipPlayer::initMainWindow()
 
     m_widget2->setLayout(m_vHlayout);
     //添加抽屉
-    m_toolBox = new QToolBox;
+    m_toolBox = new QToolBox(m_tabWidget1);
     m_toolBox->setFixedWidth(LISTWIDTH_R);
     m_toolBox->setObjectName(QString::fromLocal8Bit("m_toolBox_list"));
     m_toolBox->addItem(m_widget2,QIcon(":/images/icon/playerlist.png"),QString::fromLocal8Bit("播放列表"));
     m_toolBox->addItem(m_listManager,QIcon(":/images/icon/musiclist.png"),QString::fromLocal8Bit("我的歌单"));
     m_toolBox->addItem(m_listWisget3,QIcon(":/images/icon/play_collect_checked.png"),QString::fromLocal8Bit("我的收藏"));
     m_toolBox->addItem(m_listWisget4,QIcon(":/images/icon/playerinternet.png"),QString::fromLocal8Bit("播放记录"));
-    m_toolBox->layout()->setSpacing(3);//item之间的间距
+    m_toolBox->layout()->setSpacing(0);//item之间的间距
     m_toolBox->setCurrentIndex(3);
 
     //剧集列表
-    m_dramaList = new DramaListForm;//系列推荐
+    m_dramaList = new DramaListForm(m_tabWidget1);//系列推荐
     m_dramaList->setObjectName(QString::fromLocal8Bit("m_dramaList"));
     m_dramaList->setFixedWidth(LISTWIDTH_R);
 
     //推荐
-    m_recomTab = new RecomVideoTab;
+    m_recomTab = new RecomVideoTab(m_tabWidget1);
     m_recomTab->setObjectName(QString::fromLocal8Bit("m_recomTab"));
     m_recomTab->setFixedWidth(LISTWIDTH_R);
 
     //评论
-    m_commentTab = new CommentTab;
+    m_commentTab = new CommentTab(m_tabWidget1);
     m_commentTab->setObjectName(QString::fromLocal8Bit("m_commentTab"));
     m_commentTab->setFixedWidth(LISTWIDTH_R);
 
     //节目列表分块
-    m_tabWidget1 = new QTabWidget;//不用手动释放，有包含关系
+    m_tabWidget1 = new QTabWidget(m_widget1);//不用手动释放，有包含关系
     m_tabWidget1->setObjectName(QString::fromLocal8Bit("m_tabWidget1"));
     m_tabWidget1->setFixedWidth(LISTWIDTH_R);//固定宽度
     set_showTwoTabBar(m_tabWidget1,0,m_toolBox,QString::fromLocal8Bit("播放列表"),1,m_recomTab,QString::fromLocal8Bit("推荐视频"));
@@ -292,20 +309,21 @@ void MultipPlayer::initMainWindow()
 
     m_hboxlayout_rlist = new QHBoxLayout;
     m_hboxlayout_rlist->addWidget(ui->stackedWidget);//中心界面
-    m_hboxlayout_rlist->addWidget(m_widget1);//右侧列表整体父亲
+//    m_hboxlayout_rlist->addWidget(m_widget1);//右侧列表整体父亲
     m_hboxlayout_rlist->setSpacing(0);
-    m_hboxlayout_rlist->setStretch(0,7);
-    m_hboxlayout_rlist->setStretch(1,3);
+//    m_hboxlayout_rlist->setStretch(0,7);
+//    m_hboxlayout_rlist->setStretch(1,3);
 
-    ui->verticalLayout_main->insertWidget(0,m_videoTitleBar);//标题栏
-    ui->verticalLayout_main->insertLayout(1,m_hboxlayout_rlist);
-    ui->verticalLayout_main->insertWidget(2,ui->stackedWidget_player);
-    ui->verticalLayout_main->setSpacing(0);
-    ui->verticalLayout_main->setStretch(0,1);
-    ui->verticalLayout_main->setStretch(1,7);
-    ui->verticalLayout_main->setStretch(2,1);
-    ui->verticalLayout_main->setContentsMargins(0,0,0,0);
-    ui->verticalLayout_main->setSpacing(0);
+//    m_verticalLayout_main->insertWidget(0,m_videoTitleBar);//标题栏
+    m_verticalLayout_main = new QVBoxLayout(ui->frame_videobg);
+    m_verticalLayout_main->insertLayout(0,m_hboxlayout_rlist);
+//    m_verticalLayout_main->insertWidget(1,ui->stackedWidget_player);
+    m_verticalLayout_main->setSpacing(0);
+//    m_verticalLayout_main->setStretch(0,1);
+//    m_verticalLayout_main->setStretch(0,7);
+//    m_verticalLayout_main->setStretch(1,1);
+    m_verticalLayout_main->setSpacing(0);
+    m_verticalLayout_main->setContentsMargins(0,0,0,0);
 
     //这是一种布局实现方式
     this->setContentsMargins(0,0,0,0);
@@ -597,6 +615,9 @@ void MultipPlayer::handleSignalAndSLots()
     connect(ui->horizontalSlider,&CusHSlider::sig_anyValuePosition,[=](int pos){
         m_player2->setPosition(pos*1000);
     });
+
+    //接收音频图像
+    connect(m_audioProbe,&QAudioProbe::audioBufferProbed,this,&MultipPlayer::slot_receiveCurAudio);
 
     //接收回传的任意帧图像
     connect(m_videoSurface,&VideoSurface::frameAvailable,[=](QVideoFrame& frame){
@@ -1698,6 +1719,10 @@ void MultipPlayer::checkChandleMediaPlayerStatus(QMediaPlayer::State newState)
     {
         qDebug() << QString::fromLocal8Bit("设置后，当前状态是：QMediaPlayer::PausedState");
         emit sig_currentMediaPlayStatus(false);//false 代表暂停状态
+        if(ui->stackedWidget->currentWidget() == m_musicUi)
+        {
+            m_audioRecder->pause();
+        }
     }
     else if(newState == QMediaPlayer::PlayingState)
     {
@@ -1705,6 +1730,11 @@ void MultipPlayer::checkChandleMediaPlayerStatus(QMediaPlayer::State newState)
         emit sig_currentMediaPlayStatus(true);//true 代表播放状态
         AdvDialog::getInstance()->blockSignals(true);
         AdvDialog::getInstance()->hide();
+
+        if(ui->stackedWidget->currentWidget() == m_musicUi)
+        {
+            m_audioRecder->record();
+        }
     }
     else if(newState == QMediaPlayer::StoppedState)
     {
@@ -1714,7 +1744,10 @@ void MultipPlayer::checkChandleMediaPlayerStatus(QMediaPlayer::State newState)
         qDebug() << QString(u8"设置后，当前状态是：QMediaPlayer::StoppedState");
         emit sig_currentMediaPlayStatus(false);//false 代表暂停状态
         //弹出广告窗口时机：播放模式为：当前单次播放 且 进度到最后
-
+        if(ui->stackedWidget->currentWidget() == m_musicUi)
+        {
+            m_audioRecder->stop();
+        }
     }
     else
     {
@@ -1872,6 +1905,19 @@ void MultipPlayer::slot_clearAllPopupUi()
     if(!m_videoClarity->isHidden()) m_videoClarity->hide();
     if(!m_danmuSetting->isHidden()) m_danmuSetting->hide();
     if(!m_muteDlg->isHidden()) m_muteDlg->hide();
+}
+
+void MultipPlayer::slot_receiveCurAudio(const QAudioBuffer &buffer)
+{
+//    qDebug() << QString(u8"接收到音频数据！");
+    if(buffer.sampleCount() / 2 > 0)
+    {
+        m_musicUi->slot_drawAudioWave(buffer);
+//        qDebug() << QString(u8"音频数据已经发送！");
+//        qDebug() << buffer.format();
+//        qDebug() << buffer.sampleCount();
+//        qDebug() << buffer.byteCount();
+    }
 }
 
 QMediaPlaylist *MultipPlayer::slot_getCurrentPlayList()
@@ -3175,6 +3221,30 @@ void MultipPlayer::setAnyFrameMediaUrl(const QUrl &url)
     }
 }
 
+//更新标题栏位置
+void MultipPlayer::updateTitleAreaGeomotry()
+{
+    m_videoTitleBar->setGeometry(2,2,this->width()-4,m_videoTitleBar->height());
+    qDebug() << QString(u8"标题栏位置更新");
+}
+
+//更新底部控制栏位置
+void MultipPlayer::updateControlAreaGeomotry()
+{
+    ui->stackedWidget_player->setGeometry(0,this->height()-ui->stackedWidget_player->height()-2,
+                                          this->width()-4,ui->stackedWidget_player->height());
+    qDebug() << QString(u8"底部控制栏位置更新");
+}
+
+//更新右侧播放列表位置
+void MultipPlayer::updateRightSliderCtlList()
+{
+    m_widget1->setGeometry(this->width()- m_widget1->width()-2,
+                           m_videoTitleBar->height()+2,
+                           m_widget1->width(),
+                           this->height() - m_videoTitleBar->height() - ui->stackedWidget_player->height() -2);
+}
+
 
 void MultipPlayer::slot_sendDanmuTextToScreen(QString danmuText)
 {
@@ -3356,8 +3426,22 @@ void MultipPlayer::slot_clearUserInputSearchInfo()
 /*更新箭头的坐标*/
 void MultipPlayer::slot_updateFoldButtonGeometry()
 {
-        m_foldBtn->setGeometry(ui->stackedWidget->width()- m_foldBtn->width()+3,ui->stackedWidget->height()/2-m_foldBtn->height()/2,18,70);//固定的大小
-        m_foldBtn->raise();
+    updateRightSliderCtlList();//先更新位置
+    //根据m_widget1位置分情况判断
+    if(m_widget1->isHidden())
+    {
+        m_foldBtn->setGeometry(ui->stackedWidget->width()- m_foldBtn->width()+3,
+                               ui->stackedWidget->height()/2-m_foldBtn->height()/2,
+                               18,70);//固定的大小
+    }
+    else
+    {
+        m_foldBtn->setGeometry(ui->stackedWidget->width()- m_widget1->width()- m_foldBtn->width() + 6,
+                               ui->stackedWidget->height()/2-m_foldBtn->height()/2,
+                               18,70);//固定的大小
+    }
+
+    m_foldBtn->raise();
 }
 
 void MultipPlayer::slot_setCurrentMediaName(QString name)
@@ -3434,6 +3518,11 @@ void MultipPlayer::slot_judgeFoldBtnOfRightDockList()
 //        animation->setEndValue(QRect(slider_x + LISTWIDTH_R,slider_y,LISTWIDTH_R,m_widget1->geometry().height()));
 //        animation->setEasingCurve(QEasingCurve::InOutCubic);
 //        animation->start(QAbstractAnimation::DeleteWhenStopped);
+        m_widget1->setGeometry(this->width()-m_widget1->width(),
+                               m_videoTitleBar->height(),
+                               m_widget1->width(),
+                               ui->stackedWidget->height()-m_videoTitleBar->height()
+                               );
         m_widget1->show();//点击后则显示右侧界面
         slot_updateFoldButtonGeometry();
         slot_setFoldButtonStyle();
@@ -3619,6 +3708,13 @@ bool MultipPlayer::eventFilter(QObject *watched, QEvent *event)
     {
         slot_clearAllPopupUi();
     }
+    else if(event->type() == QEvent::Resize && watched == this)
+    {
+        updateTitleAreaGeomotry();
+        updateControlAreaGeomotry();
+        updateRightSliderCtlList();
+    }
+    //监听器
     QMouseEvent *mousevent = static_cast<QMouseEvent*>(event);
     volumeAdjustShowUi(watched,mousevent);//视频参数调节界面
     playlistMouseEnterLeave(watched,mousevent);//节目列表搜索框

@@ -37,16 +37,19 @@ private:
     static          MusicLeftTip* m_pInstance;
     QStringList     songList =
     {
-        QString(u8"歌词写真"),
+        QString(u8"关闭歌词"),
         QString(u8"推荐评论"),
         QString(u8"MV"),
-        QString(u8"桌面写真"),
+        QString(u8"动态频谱"),
         QString(u8"歌词背景"),
         QString(u8"字体颜色"),
         QString(u8"搜索歌词"),
         QString(u8"歌词设置"),
         QString(u8"固定底栏")
     };
+
+signals:
+    void    sig_lyric_show(bool);//歌词关闭/开启
 };
 
 #endif // MUSICLEFTTIP_H
