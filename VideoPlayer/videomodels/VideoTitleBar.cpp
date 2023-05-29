@@ -38,12 +38,21 @@ void VideoTitleBar::initUi()
     ui->pushButton_return->installEventFilter(this);
     ui->pushButton_return->setIcon(QIcon(":/images/icon/returnhome.png"));
     ui->pushButton_return->setText(QString::fromLocal8Bit("返回主界面"));
+
+    ui->pushButton_vfixed->setCheckable(true);
+    ui->pushButton_vfixed->setChecked(false);//标题栏默认不固定
+
     //类型 + 文本 + 字体 + 字体颜色 + 间隔
     ui->label_title->initMoveText(MOVETYPE::FIFO,QString(u8""),QFont("Microsoft YaHei UI",13,75),QColor(30, 222, 3, 255),20);
 }
 
 void VideoTitleBar::chandleSignalsAndSlots()
 {
+    //固定标题栏
+    connect(ui->pushButton_vfixed,&QPushButton::clicked,[=](bool checked){
+        emit sig_titlefix(checked);
+    });
+
     //关闭按钮
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){emit sig_winVClose();});
     //还原按钮
@@ -71,7 +80,6 @@ void VideoTitleBar::chandleSignalsAndSlots()
 /*设置标题栏*/
 void VideoTitleBar::setTitleStackWidgetPage(int index)
 {
-    qDebug() << "now is web url lineedit";
     if(index == 0)//显示媒体标题
     {
         ui->stackedWidget->setCurrentIndex(0);

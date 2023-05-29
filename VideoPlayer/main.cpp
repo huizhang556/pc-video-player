@@ -10,6 +10,7 @@
 #include "miniplayer/MiniPlayer.h"
 #include "messagebox/ExitDialog.h"
 #include "pernotice/ScrollToTop.h"
+#include "fileshandle/MyAllFile.h"
 #include "fileshandle/DownloadType.h"
 #include "videomodels/AdvDialog.h"
 #include "videomodels/MultipPlayer.h"
@@ -135,6 +136,8 @@ int main(int argc, char *argv[])
 
         //05--->显示主界面
 #if 0
+
+//        MyAllFile myfile; myfile.show();
         //    ScrollToTop::getInstance()->show();
         //    DesktopLyric::getInstance()->show();
 

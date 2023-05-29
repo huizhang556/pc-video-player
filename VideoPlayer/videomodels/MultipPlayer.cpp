@@ -134,7 +134,7 @@ void MultipPlayer::initMainWindow()
     playlist_t->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);//设置默认播放模式（播放一次）
     m_player->setPlaylist(playlist);
 
-    videoWidget = new MyVideoWidget(ui->stackedWidget);
+    videoWidget = new MyVideoWidget(this);
     videoWidget->setMouseTracking(true);
     m_player->setVideoOutput(videoWidget);
 
@@ -242,7 +242,11 @@ void MultipPlayer::initMainWindow()
     m_lineEdit->setFixedHeight(30);
     m_lineEdit->installEventFilter(this);
 
+    m_actOpenDir = new QAction(QIcon(":/images/icon/file_open.png"),"",this);
+    m_lineEdit->addAction(m_actOpenDir,QLineEdit::TrailingPosition);
+
     m_searchBtn = new QPushButton();//曲库列表搜索按钮
+    m_searchBtn->hide();
     m_searchBtn->setObjectName(QString::fromLocal8Bit("m_searchBtn_player"));
     m_searchBtn->setFixedSize(33,30);
     //搜索框+搜索按钮
@@ -257,7 +261,7 @@ void MultipPlayer::initMainWindow()
     m_vHlayout->insertWidget(1,m_listWisget2);
     m_vHlayout->setStretch(0,1);
     m_vHlayout->setStretch(1,4);
-    m_vHlayout->setSpacing(0);
+    m_vHlayout->setSpacing(2);//搜索框距离列表2px
     m_vHlayout->setContentsMargins(0,0,0,0);
 
     m_widget2->setLayout(m_vHlayout);
@@ -357,10 +361,8 @@ void MultipPlayer::initMainWindow()
     m_foldBtn = new QPushButton(ui->stackedWidget);//父亲必须指定，要不然显示不出来
     m_foldBtn->setObjectName(QString::fromLocal8Bit("m_foldBtn"));
     m_foldBtn->setFixedSize(18,70);
-//    m_foldBtn->setWindowFlags(Qt::FramelessWindowHint);//坐标错乱
     m_foldBtn->setAttribute(Qt::WA_TranslucentBackground,true);//没效果，得定制
     m_foldBtn->setHidden(true);//初始化隐藏按钮
-//    m_foldBtn->setWindowOpacity(0);
 
     m_actionBullet  = new QAction(QIcon("://images/icon/bullet_login_hover.png"),"");
     m_actionBullet->setObjectName(QString::fromUtf8("m_actionBullet"));
@@ -532,6 +534,8 @@ void MultipPlayer::handleSignalAndSLots()
     //当前播放媒体改变，设置求取任意帧的player2的媒体路径
     connect(m_player,&QMediaPlayer::currentMediaChanged,[=](const QMediaContent &media){
         qDebug() << QString(u8"正式列表当前媒体url:") <<  media.canonicalResource().url();
+        QUrlQuery query_url= dataBase::getInstance()->adv_getCurMediaUserInfo(m_curMediaId);
+        ui->widget_media_pic->setPicture(query_url.queryItemValue(u8"userhead"));
         setAnyFrameMediaUrl(media.canonicalResource().url());//辨别是否为video,是，设置player2的媒体路径，并开启显示图片
     });
 
@@ -713,11 +717,17 @@ void MultipPlayer::handleSignalAndSLots()
         ui->widget_media_pic->resetRoate(0);
     });
 
+    //标题栏--固定
+    connect(m_videoTitleBar,&VideoTitleBar::sig_titlefix,[=](bool checked){
+        qDebug() << QString(u8"标题栏固定标志：") << checked;
+        m_visible_title = checked;
+    });
+
     //标题栏--截图
     connect(m_videoTitleBar,&VideoTitleBar::sig_videoCapture,[=](){
         if(ui->stackedWidget->currentWidget() == videoWidget)
         {
-            QTimer::singleShot(1000,[=]()
+            QTimer::singleShot(500,[=]()
             {
                 QString filePath = QFileDialog::getSaveFileName(this, "Save File", "", "Image Files (*.png)");
                 if(!filePath.isEmpty())
@@ -726,7 +736,22 @@ void MultipPlayer::handleSignalAndSLots()
                        QList<QScreen*> screens = QGuiApplication::screens();
                        // 截取第一个屏幕
                        QScreen* screen = screens.at(0);
-                       QPixmap screenshot = screen->grabWindow(this->window()->winId(),0,m_videoTitleBar->height(),videoWidget->width(),videoWidget->height());
+                       QPixmap screenshot;
+                       //以下是分情况设置截图矩形区域
+                       if(m_widget1->isHidden())
+                       {
+                           screenshot = screen->grabWindow(this->window()->winId(),2,
+                                                           m_videoTitleBar->height()+2,
+                                                           videoWidget->width(),
+                                                           videoWidget->height()-ui->stackedWidget_player->height()-m_videoTitleBar->height());
+                       }
+                       else
+                       {
+                           screenshot = screen->grabWindow(this->window()->winId(),2,
+                                                           m_videoTitleBar->height()+2,
+                                                           videoWidget->width()-m_widget1->width(),
+                                                           videoWidget->height()-ui->stackedWidget_player->height()-m_videoTitleBar->height());
+                       }
                        // 保存截图到文件
                         screenshot.save(filePath,"png");
                 }
@@ -889,6 +914,10 @@ void MultipPlayer::handleSignalAndSLots()
             slot_secondOpen_clicked();
         }
     });
+
+    //打开文件
+    connect(m_actOpenDir,&QAction::triggered,[=](){m_searchBtn->click();});
+
     //打开文件
     connect(m_searchBtn,&QPushButton::clicked,[=]()
     {
@@ -983,6 +1012,7 @@ void MultipPlayer::handleSignalAndSLots()
 void MultipPlayer::setInstallEventFilter()
 {
     this->installEventFilter(this);
+    m_videoTitleBar->installEventFilter(this);
     ui->stackedWidget_player->installEventFilter(this);
     ui->pushButton_bulletSet->installEventFilter(this);//弹幕设置按钮
     ui->pushButton_sound->installEventFilter(this);//音量调节按钮设置监听
@@ -2232,6 +2262,7 @@ void MultipPlayer::volumeAdjustShowUi(QObject *watched, QEvent *event)
 
 void MultipPlayer::stackWidgetSliderButtonEventFilter(QObject *watched, QEvent *event)
 {
+    //非全屏的情况
     if(watched == ui->stackedWidget && !isFullScreen())
     {
         //01.注意区分界面隐藏和按钮隐藏是两个不同的状态,
@@ -2239,16 +2270,26 @@ void MultipPlayer::stackWidgetSliderButtonEventFilter(QObject *watched, QEvent *
         //03.进入的时候更新坐标和样式，点击以后也要更新坐标和样式
         if(event->type() == QEvent::Enter)//鼠标进入监视对象
         {
-            //            qDebug() << "stackwidget enter";
+            qDebug() << "stackwidget enter";
             slot_updateFoldButtonGeometry();
             slot_setFoldButtonStyle();
-            m_foldBtn->show();
             setCursor(Qt::ArrowCursor);
+            m_foldBtn->show();
+
+//            updateTitleAreaGeomotry();
+//            m_videoTitleBar->show();
+
+//            updateControlAreaGeomotry();
+//            ui->stackedWidget_player->show();
+
         }
         else if(event->type() == QEvent::Leave)//鼠标离开监视对象
         {
+            qDebug() << "stackwidget leave";
             m_foldBtn->hide();
-            //            qDebug() << "stackwidget leave";
+
+//            m_videoTitleBar->hide();
+//            ui->stackedWidget_player->hide();
         }
         else if(event->type() == QEvent::Resize)
         {
@@ -2361,11 +2402,40 @@ void MultipPlayer::playlistMouseEnterLeave(QObject *watched, QEvent *event)
     }
 }
 
+/*鼠标移入*/
 void MultipPlayer::stackWidget_player_enter(QObject *watched, QEvent *event)
 {
-    if(watched == ui->stackedWidget_player && event->type() == QEvent::Enter)
+//    qDebug() << QString(u8"鼠标进入主播放界面！");
+    if(watched == ui->stackedWidget && !isFullScreen() && event->type() == QEvent::Enter)
     {
         this->setCursor(Qt::ArrowCursor);
+    }
+    if(watched == this && !isFullScreen() && event->type() == QEvent::Enter)
+    {
+        updateTitleAreaGeomotry();
+        m_videoTitleBar->show();
+        updateControlAreaGeomotry();
+        ui->stackedWidget_player->show();
+    }
+}
+
+/*鼠标移出*/
+void MultipPlayer::stackWidget_player_leave(QObject *watched, QEvent *event)
+{
+//    qDebug() << QString(u8"鼠标离开主播放界面！");
+    if(watched == this && !isFullScreen() && event->type() == QEvent::Leave)
+    {
+        updateTitleAreaGeomotry();
+        updateControlAreaGeomotry();
+        if(!m_visible_title)
+        {
+            m_videoTitleBar->hide();
+            ui->stackedWidget_player->hide();
+            if(!m_isHide)
+            {
+                m_foldBtn->click();
+            }
+        }
     }
 }
 
@@ -3225,7 +3295,7 @@ void MultipPlayer::setAnyFrameMediaUrl(const QUrl &url)
 void MultipPlayer::updateTitleAreaGeomotry()
 {
     m_videoTitleBar->setGeometry(2,2,this->width()-4,m_videoTitleBar->height());
-    qDebug() << QString(u8"标题栏位置更新");
+//    qDebug() << QString(u8"标题栏位置更新");
 }
 
 //更新底部控制栏位置
@@ -3233,7 +3303,7 @@ void MultipPlayer::updateControlAreaGeomotry()
 {
     ui->stackedWidget_player->setGeometry(0,this->height()-ui->stackedWidget_player->height()-2,
                                           this->width()-4,ui->stackedWidget_player->height());
-    qDebug() << QString(u8"底部控制栏位置更新");
+//    qDebug() << QString(u8"底部控制栏位置更新");
 }
 
 //更新右侧播放列表位置
@@ -3506,7 +3576,7 @@ void MultipPlayer::slot_setFoldButtonStyle()
 /*判断右侧停靠栏指示按钮位置*/
 void MultipPlayer::slot_judgeFoldBtnOfRightDockList()
 {
-    if(!FloatPlayCtl::getInstance()->isHidden()) return;
+    if(!FloatPlayCtl::getInstance()->isHidden() || isFullScreen()) return;
 //    const int slider_x = m_widget1->parentWidget()->mapToGlobal(m_widget1->pos()).x();
 //    const int slider_y = m_widget1->parentWidget()->mapToGlobal(m_widget1->pos()).y();
     if(m_isHide)//点击按钮发现，界面处于隐藏状态
@@ -3716,12 +3786,13 @@ bool MultipPlayer::eventFilter(QObject *watched, QEvent *event)
     }
     //监听器
     QMouseEvent *mousevent = static_cast<QMouseEvent*>(event);
-    volumeAdjustShowUi(watched,mousevent);//视频参数调节界面
-    playlistMouseEnterLeave(watched,mousevent);//节目列表搜索框
+    volumeAdjustShowUi(watched,mousevent);//音量调节
+//    playlistMouseEnterLeave(watched,mousevent);//节目列表搜索框
     stackWidgetSliderButtonEventFilter(watched,mousevent);//箭头显示影藏动作
     floatPlayCtrlEnterLeave(watched,mousevent);//浮动播放
     slot_showDanmuSettingForm(watched,mousevent);//弹幕设置
 //    videoDouleExit(watched,mousevent);
+    stackWidget_player_leave(watched,mousevent);
     stackWidget_player_enter(watched,mousevent);
 
     if(watched == videoWidget && event->type() == QEvent::MouseButtonPress && mousevent->buttons() & Qt::LeftButton )

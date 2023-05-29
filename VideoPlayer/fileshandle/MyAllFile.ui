@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>767</width>
+    <width>983</width>
     <height>513</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_3">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -66,7 +66,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QWidget" name="widget_dir" native="true">
+       <widget class="QWidget" name="widget_pathdir" native="true">
         <property name="minimumSize">
          <size>
           <width>500</width>
@@ -499,7 +499,55 @@ image: url(:/images/fileitem/file-branch-open.png);
        </item>
       </item>
      </widget>
-     <widget class="QTableWidget" name="tableWidget_dirFiles"/>
+     <widget class="QStackedWidget" name="stackedWidget_mode">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="page_tree">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QTreeView" name="treeView_allfiles"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_list">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QListView" name="listView_list"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
     </widget>
    </item>
   </layout>

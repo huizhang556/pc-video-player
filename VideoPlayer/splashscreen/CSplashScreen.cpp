@@ -117,7 +117,7 @@ void CSplashScreen::drawContents(QPainter *painter)
 
     painter->setFont(QFont("Mircrosoft YaHei", 12,QFont::Bold));
     painter->setPen(QPen(QColor(83, 156, 178),20));
-    painter->drawText(QPointF(30, 140), QString(u8"Version: 1.5.0"));
+    painter->drawText(QPointF(30, 140), QString(u8"Version: 2.0.0"));
 
     painter->setFont(QFont("Mircrosoft YaHei", 12,QFont::Bold));
     painter->setPen(QPen(QColor(35, 171, 117),20));

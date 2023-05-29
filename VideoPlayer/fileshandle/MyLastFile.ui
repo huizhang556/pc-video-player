@@ -188,7 +188,21 @@ border-image: url(:/images/fileitem/file_iconMode.png);
     </widget>
    </item>
    <item>
-    <widget class="QListWidget" name="listWidget_last"/>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollArea_last">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>977</width>
+        <height>381</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
    </item>
   </layout>
  </widget>

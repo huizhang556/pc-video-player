@@ -87,7 +87,8 @@ FORMS += \
     $$PWD/CVideoWidget.ui \
     $$PWD/AdvDialog.ui \
     $$PWD/AdvterItem.ui \
-    $$PWD/AdvCoverLab.ui
+    $$PWD/AdvCoverLab.ui \
+    $$PWD/MyVideoWidget.ui
 
 #添加库文件
 #LIBS += -L ../lib/lib -luser32

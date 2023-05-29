@@ -65,7 +65,7 @@ void MusicLeftTip::handleSinalsAndSlots()
         }
     });
 
-    //鼠标点击
+    //鼠标点击(选择)
     connect(ui->listWidget_proSet,&QListWidget::itemClicked,[=](QListWidgetItem* item){
         if(item->text() == QString(u8"关闭歌词"))
         {
@@ -105,7 +105,7 @@ void MusicLeftTip::handleSinalsAndSlots()
 
     //鼠标hover
     connect(ui->listWidget_proSet,&QListWidget::itemEntered,[=](QListWidgetItem* item){
-//        qDebug() << QString(u8"item 文字")<< item->text();
+        ui->listWidget_proSet->setCurrentItem(item);
         int x = this->mapToGlobal(this->pos()).x();
         int y = this->mapToGlobal(this->pos()).y();
 
@@ -146,6 +146,12 @@ void MusicLeftTip::handleSinalsAndSlots()
                 FontColor::getInstance()->close();
         }
     });
+
+    //item改变
+    connect(ui->listWidget_proSet,&QListWidget::currentItemChanged,[=](QListWidgetItem *current, QListWidgetItem *previous){
+        if(!FontColor::getInstance()->isHidden())
+            FontColor::getInstance()->close();
+    });
 }
 
 MusicLeftTip *MusicLeftTip::getInstance()
@@ -159,6 +165,11 @@ MusicLeftTip *MusicLeftTip::getInstance()
 
 bool MusicLeftTip::eventFilter(QObject *watched, QEvent *event)
 {
+    if(watched == this &&event->type() == QEvent::HoverLeave)
+    {
+        if(!FontColor::getInstance()->isHidden())
+            FontColor::getInstance()->close();
+    }
     return QWidget::eventFilter(watched,event);
 }
 

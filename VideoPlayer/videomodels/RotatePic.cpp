@@ -6,6 +6,7 @@ RotatePic::RotatePic(QWidget *parent) :
     m_roate(0)
 {
     setWindowFlags(Qt::FramelessWindowHint);
+    m_manager = new QNetworkAccessManager(this);
     m_timer = new QTimer(this);
     m_labelpic = new QLabel();
     QVBoxLayout *vlayout = new QVBoxLayout(this);
@@ -21,11 +22,17 @@ RotatePic::RotatePic(QWidget *parent) :
         if(m_roate == 360)
             m_roate = 0;
     });
+
+    //默认加载
+    pix.load(":/images/bgpic/dieji3.png");
+
+    //信号与槽函数
+    connect(m_manager,&QNetworkAccessManager::finished,this,&RotatePic::slot_receivedUserHeader,Qt::UniqueConnection);
 }
 
 RotatePic::~RotatePic()
 {
-
+    delete m_labelpic;
 }
 
 int RotatePic::getRoate()
@@ -55,15 +62,17 @@ void RotatePic::setSize(int width, int height)
     this->setFixedSize(width,height);
 }
 
-void RotatePic::setPicture(QString path)
+void RotatePic::setPicture(const QString picpath)
 {
-    pix.load(path);
+    qDebug() << QString(u8"接收到的用户头像连接：") << picpath;
+    m_manager->get(QNetworkRequest(QUrl(picpath)));
+
 }
 
 void RotatePic::paintEvent(QPaintEvent *event)
 {
-    Q_UNUSED(event);
-    pix.load(":/images/bgpic/dieji3.png");
+    Q_UNUSED(event)
+//    pix.load(":/images/bgpic/dieji3.png");
 //    m_roate = m_roate >= 360 ? 0 : m_roate;
     int imageWidth = pix.width();
     int imageHeight = pix.height();
@@ -81,4 +90,28 @@ void RotatePic::paintEvent(QPaintEvent *event)
     painter.end();
     m_labelpic->setScaledContents(true);//图片自动调整大小
     m_labelpic->setPixmap(temp);
+}
+
+//接收图片数据
+void RotatePic::slot_receivedUserHeader(QNetworkReply *reply)
+{
+    if (reply->error() == QNetworkReply::NoError)
+    {
+        //获取字节流构造 QPixmap 对象
+        QPixmap pixmap;
+        pixmap.loadFromData(reply->readAll());
+        pix = pixmap.copy();
+        m_labelpic->setPixmap(pixmap);
+        m_labelpic->setScaledContents(true);
+        qDebug() <<QString::fromLocal8Bit("主播放器播当前媒体用户头网络图片设置成功！");
+    }
+    else//请求失败，加载默认图片
+    {
+        qDebug() <<  QString::fromLocal8Bit("主播放器播当前媒体用户头网络图片像请求错误：")<<reply->errorString();
+        QPixmap pixmap(":/images/bgpic/dieji3.png");//默认图标
+        pix = pixmap.copy();
+        m_labelpic->setPixmap(pixmap);
+        m_labelpic->setScaledContents(true);
+    }
+    this->update();//更新绘制
 }

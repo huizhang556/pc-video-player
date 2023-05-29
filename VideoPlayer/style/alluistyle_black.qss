@@ -1614,32 +1614,32 @@ image: url(://images/tray/tray_checked.png);
 /*播放列表，收藏列表，历史列表右键菜单---开始*/
 #playlist_playMenu,#playlist_collectMenu,#playlist_historytMenu,#listmanager_rMenu
 {
-background-color: white;
 width:120px;
 font: 400 14px "微软雅黑";
 border-radius:20px;
+background-color: #c9ced5;
 }
 
 #playlist_playMenu::item,#playlist_collectMenu::item,#playlist_historytMenu::item,#listmanager_rMenu::item
 {
-background-color: white;
 /*padding可修改item高度*/
 width:120px;
 min-height: 30px;
 padding: 0px 10px;
+background-color: #c9ced5;
 }
 
 #playlist_playMenu::icon,#playlist_collectMenu::icon,#playlist_historytMenu::icon,#listmanager_rMenu::icon
 {
 height: 26px;
 padding-left: 5px;
-background-color:white;
+background-color: transparent;
 }
 
 #playlist_playMenu::item:selected,#playlist_collectMenu::item:selected,#playlist_historytMenu::item:selected,#listmanager_rMenu::item:selected
 {
 color:#2ca5fc;
-background-color:#cccccc;
+background-color: rgba(60, 56, 66,0.5);
 }
 
 /*播放列表，收藏列表，历史列表右键菜单---结束*/
@@ -1647,24 +1647,24 @@ background-color:#cccccc;
 /*listmanager单个item----右键--开始*/
 #addlist_Menu
 {
-background-color: white;
 width:120px;
 font: 400 14px "微软雅黑";
+background-color: #c9ced5;
 }
 
 #addlist_Menu::item
 {
-background-color: white;
 /*padding可修改item高度*/
 width:120px;
 min-height: 30px;
 padding: 0px 10px;
+background-color: #c9ced5;
 }
 
 #addlist_Menu::item:selected
 {
 color:#2ca5fc;
-background-color:#cccccc;
+background-color: rgba(60, 56, 66,0.5);
 }
 
 /*listmanager单个item----右键--结束*/
@@ -1797,10 +1797,11 @@ background-color:  rgba(22, 42, 51,0.0);
 color:#cccccc;
 font-family:"微软雅黑";
 font-size:14px;
-border:none;
 border-radius: 3px;
-padding-left:15px;
-background-color:  transparent;
+padding-left: 2px;
+margin-right: 2px;
+border: 1px solid #737276;
+background-color:  rgba(2, 30, 41,0.3);
 }
 
 #m_lineEdit_player:focus

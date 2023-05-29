@@ -541,7 +541,17 @@ QPushButton:hover
 {
 border-image: url(:/images/icon/vtitle_fixed_hover.png);
 }
-</string>
+
+
+QPushButton:checked
+{
+border-image: url(:/images/icon/vtitle_fixed_hover.png);
+}
+
+QPushButton:unchecked
+{
+border-image: url(:/images/icon/vtitle_fixed.png);
+}</string>
                 </property>
                 <property name="text">
                  <string/>

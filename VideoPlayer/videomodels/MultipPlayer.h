@@ -240,6 +240,7 @@ public slots:
 
     void    slot_receiveCurAudio(const QAudioBuffer& buffer);
 
+
 private slots:
 
     QMediaPlaylist *    slot_getCurrentPlayList();//获取当前正在播放的列表
@@ -287,6 +288,8 @@ private slots:
     void    playlistMouseEnterLeave(QObject *watched, QEvent *event);
 
     void    stackWidget_player_enter(QObject *watched, QEvent *event);
+
+    void    stackWidget_player_leave(QObject *watched, QEvent *event);
 
 
     //帮助菜单槽函数
@@ -414,7 +417,7 @@ signals:
 
 private:
     Ui::MultipPlayer *ui;
-//    QRect                       m_oldScreen;
+    QAction                     *m_actOpenDir       = nullptr;//打开本地媒体
     QAction                     *m_actionBullet     = nullptr;//弹幕登录开关
     QTimer                      *m_pTimer           = nullptr; //进度滚动条更新
     QTimer                      *m_pTimer2          = nullptr; //延迟ui界面
@@ -466,10 +469,11 @@ private:
     bool                        m_isHide            = false;    //侧边栏显示/隐藏按钮，默认没隐藏
     bool                        m_newStart          = false;    //可以打开新文件按钮标识
     bool                        m_bPress            = false;
-    bool                        m_muteShow          = false;    //默认不显示
-    bool                        m_jiemuShow         = false;    //默认不显示
-    bool                        m_danmuStatus       = false;    //默认不显示
-    bool                        m_collectStatus     = false;    //默认不显示
+    bool                        m_visible_title     = false;    //标题栏默认不固定
+    bool                        m_muteShow          = false;
+    bool                        m_jiemuShow         = false;
+    bool                        m_danmuStatus       = false;
+    bool                        m_collectStatus     = false;
     bool                        m_selectAllStatus1  = false;    //全选状态 默认没有全选
     bool                        m_selectAllStatus2  = false;    //全选状态 默认没有全选
     qint64                      m_times;                        //文件长度

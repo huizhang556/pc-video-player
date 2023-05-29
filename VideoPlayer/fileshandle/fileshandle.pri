@@ -11,7 +11,8 @@ SOURCES += \
     $$PWD/MyPicFile.cpp \
     $$PWD/MyAllFile.cpp \
     $$PWD/MyLastFile.cpp \
-    $$PWD/CComboBox.cpp
+    $$PWD/CComboBox.cpp \
+    $$PWD/PathWidget.cpp
 
 
 HEADERS += \
@@ -27,7 +28,8 @@ HEADERS += \
     $$PWD/MyPicFile.h \
     $$PWD/MyAllFile.h \
     $$PWD/MyLastFile.h \
-    $$PWD/CComboBox.h
+    $$PWD/CComboBox.h \
+    $$PWD/PathWidget.h
 
 
 FORMS += \
@@ -42,4 +44,5 @@ FORMS += \
     $$PWD/MyDocFile.ui \
     $$PWD/MyPicFile.ui \
     $$PWD/MyAllFile.ui \
-    $$PWD/MyLastFile.ui
+    $$PWD/MyLastFile.ui \
+    $$PWD/PathWidget.ui

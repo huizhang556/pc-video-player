@@ -8,6 +8,12 @@
 #include <QLayout>
 #include <QTimer>
 #include <QLabel>
+#include <QDebug>
+
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QNetworkAccessManager>
+
 
 namespace Ui {
 class RotatePic;
@@ -26,10 +32,15 @@ public slots:
     void    start();
     void    pause();
     void    setSize(int width, int height);
-    void    setPicture(QString path);
+    void    setPicture(const QString picpath);
 protected:
     void    paintEvent(QPaintEvent *event) override;
+
+private slots:
+    void    slot_receivedUserHeader(QNetworkReply* reply);
+
 private:
+    QNetworkAccessManager   *m_manager  =   nullptr;
     QTimer      *m_timer    =   nullptr;
     QLabel      *m_labelpic =   nullptr;
     QPixmap     pix;

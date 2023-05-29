@@ -125,7 +125,7 @@ void WaveLabel::drawHistogram(QPainter &painter)
 //             this->setLayoutDirection(Qt::LeftToRight);
              for(int i = 0; i < vecData.count(); i++)
              {
-                 pen.setColor(QColor(244, 220, 0));
+                 pen.setColor(QColor(244, 220, 0,(255 - i*10)));
                  painter.setPen(pen);
                  painter.drawLine(
                              i * rectangleWidth + rectangleWidth* 0.5,
@@ -139,7 +139,7 @@ void WaveLabel::drawHistogram(QPainter &painter)
 //             this->setLayoutDirection(Qt::RightToLeft);
              for(int i = 0; i < vecData.count(); i++)
              {
-                 pen.setColor(QColor(244, 220, 0));//前面不够
+                 pen.setColor(QColor(244, 220, 0,(255 - i*10)));//前面不够
                  painter.setPen(pen);
                  painter.drawLine(
                              i * rectangleWidth + rectangleWidth* 0.5,

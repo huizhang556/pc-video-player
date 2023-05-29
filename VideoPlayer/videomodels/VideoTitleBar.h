@@ -35,14 +35,15 @@ private:
     Ui::VideoTitleBar *ui;
 
 signals:
-    void sig_winVClose();
-    void sig_winVMinimum();
-    void sig_winVRestore();
-    void sig_doubleClick();
-    void sig_returnMainUi();
-    void sig_videodownload();
-    void sig_videoCapture();//截图
-    void sig_inputSourceUrl(QString url);
+    void    sig_titlefix(bool);
+    void    sig_winVClose();
+    void    sig_winVMinimum();
+    void    sig_winVRestore();
+    void    sig_doubleClick();
+    void    sig_returnMainUi();
+    void    sig_videodownload();
+    void    sig_videoCapture();//截图
+    void    sig_inputSourceUrl(QString url);
 };
 
 #endif // VIDEOTITLEBAR_H
