@@ -656,6 +656,17 @@ void MainWidget::handleSignalAndSLots()
 
 
     /**********************热点资讯************************/
+    //热点资讯（显示用户信息）
+    connect(m_shortVideo,&ShortVideo::sig_sendToUserInfo,[=](const QString& userid){
+        m_stackWidget_center->setCurrentWidget(m_personForm);
+        m_personForm->slot_showOtherUserInfo(userid);
+    });
+
+    //个人主页返回
+    connect(m_personForm,&PersonFileForm::sig_sendReturnPage,[=](int numpage){
+        m_stackWidget_center->setCurrentWidget(m_shortVideo);
+    });
+
     //热点资讯查找主题视频
     connect(m_shortVideo,SIGNAL(sig_sendTheme(const QString&,int,int)),dataBase::getInstance(),SLOT(video_recDrama_of_theme(const QString&,int,int)));
     //热点视频(接收查找的主题视频)

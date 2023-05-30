@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
         //    ScrollToTop::getInstance()->show();
         //    DesktopLyric::getInstance()->show();
 
-            MultipPlayer::getInstance()->show();
+//            MultipPlayer::getInstance()->show();
 
 //            AdvDialog::getInstance()->exec_(P_NEXTMEDIA,10);
 //        LeftSideBar lbar; lbar.show();

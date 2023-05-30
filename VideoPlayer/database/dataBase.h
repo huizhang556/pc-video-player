@@ -106,6 +106,8 @@ public:
 
 public slots:
     //通用
+    //关于某一个用户信息
+    QUrlQuery               user_getCurMediaUserInfo(const QString& user_id);//查询用户信息
 
     //表通用查询
     int                     getTableRecordsCounts(const QString& tablename);//查询某张表记录总数

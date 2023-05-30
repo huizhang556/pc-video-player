@@ -169,6 +169,10 @@ protected:
 
     void    keyPressEvent(QKeyEvent *event) override;
 
+    void    enterEvent(QEvent *event) override;
+
+    void    leaveEvent(QEvent *event) override;
+
 public slots:
     void    slot_clearRecItemLists();
 
@@ -202,7 +206,7 @@ public slots:
 
     void    slot_setCurrentMediaName(QString name);//进度条上显示媒体名称
 
-    void    slot_setCurrentMediaNamePicture(const QPixmap &pix);//进度条上显示媒体图片
+    void    slot_setCurrentMediaHeader(const int curMedia_id);//进度条上显示媒体图片
 
     void    slot_updateFoldButtonGeometry();//更显显示/隐藏按钮的位置
 
@@ -277,9 +281,9 @@ private slots:
 
     bool    videoDouleExit(QObject *watched, QEvent *event);
 
-    void    volumeAdjustShowUi(QObject *watched, QEvent *event);
+    void    volumeAdjustShowUi(QObject *watched, QMouseEvent *event);
 
-    void    stackWidgetSliderButtonEventFilter(QObject *watched, QEvent *event);
+    void    stackWidgetSliderButtonEventFilter(QObject *watched, QMouseEvent *event);
 
     void    floatPlayCtrlEnterLeave(QObject *watched, QMouseEvent *mousevent);
 
@@ -287,9 +291,9 @@ private slots:
 
     void    playlistMouseEnterLeave(QObject *watched, QEvent *event);
 
-    void    stackWidget_player_enter(QObject *watched, QEvent *event);
+    void    stackWidget_player_enter(QObject *watched, QMouseEvent *event);
 
-    void    stackWidget_player_leave(QObject *watched, QEvent *event);
+    void    stackWidget_player_leave(QObject *watched, QMouseEvent *event);
 
 
     //帮助菜单槽函数
@@ -422,6 +426,7 @@ private:
     QTimer                      *m_pTimer           = nullptr; //进度滚动条更新
     QTimer                      *m_pTimer2          = nullptr; //延迟ui界面
     QTimer                      *m_showFloat        = nullptr;//定时显示浮动界面
+    QTimer                      *m_mainTimer        = nullptr;//离开主界面定时隐藏
     QWidget                     *m_widget1          = nullptr;
     QWidget                     *m_widget2          = nullptr;
     QToolBox                    *m_toolBox          = nullptr;

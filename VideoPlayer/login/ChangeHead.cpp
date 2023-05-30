@@ -54,10 +54,26 @@ void ChangeHead::exec_(OPENTYPE type)
         slot_setCurViewHeader(pix_user);
     }
 
+    //1.昵称
     setUserNick(dataBase::getInstance()->getCurrentUserName());
+    //2.用户等级
     setUserVip(dataBase::getInstance()->getCurrentUserGrade());
+    //3.账号创建时间
     setUserCreateTime(dataBase::getInstance()->getCurrentUserCreateTime());
+    //4.最近登陆时间
     setUserLoginTime(dataBase::getInstance()->getCurrentUserLoginTime());
+
+    QUrlQuery query_user = dataBase::getInstance()->user_getCurMediaUserInfo(dataBase::getInstance()->getCurrentUserID());
+    //5.所在地
+    ui->pushButton_address->setText(query_user.queryItemValue(u8"useradrs"));
+    //6.年龄
+    ui->spinBox_age->setValue(query_user.queryItemValue(u8"userage").toInt());
+    //7.家乡
+    ui->pushButton_hometown->setText(query_user.queryItemValue(u8"userhome"));
+    //8.职业
+    ui->comboBox_worktype->setCurrentText(query_user.queryItemValue(u8"userjob"));
+    //9.座右铭
+    ui->label_motto->setText(query_user.queryItemValue(u8"usermotto"));
 
     switch (type)
     {
@@ -104,10 +120,6 @@ void ChangeHead::initWorkUI()
     ui->pushButton_hometown->setLayoutDirection(Qt::RightToLeft);
     ui->pushButton_hometown->setIcon(QIcon(":/images/function/download_arrow_hover.png"));
     ui->pushButton_hometown->setIconSize(QSize(36,36));
-
-    ui->textBrowser->setContextMenuPolicy(Qt::NoContextMenu);//禁用右键菜单
-    ui->textBrowser->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->textBrowser->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     ui->pushButton_add->setToolTip(QString(u8"放大"));
     ui->pushButton_sub->setToolTip(QString(u8"缩小"));
@@ -644,5 +656,25 @@ void ChangeHead::setUserCreateTime(const QString &create)
 void ChangeHead::setUserLoginTime(const QString &login)
 {
     ui->pushButton_logintime->setText(login);
+}
+
+void ChangeHead::setUserAddress(const QString &address)
+{
+    ui->pushButton_address->setText(address);
+}
+
+void ChangeHead::setUserAge(const int age)
+{
+    ui->spinBox_age->setValue(age);
+}
+
+void ChangeHead::setUserHometown(const QString &hometown)
+{
+    ui->pushButton_hometown->setText(hometown);
+}
+
+void ChangeHead::setUserMotto(const QString &motto)
+{
+    ui->label_motto->setText(motto);
 }
 

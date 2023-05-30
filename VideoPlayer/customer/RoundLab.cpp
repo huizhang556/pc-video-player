@@ -32,22 +32,26 @@ void RoundLab::initRoundLabel(const QPixmap &path, const QColor &bordercolor, in
 void RoundLab::setPixmap_(const QPixmap &path)
 {
     m_picpath   = path;
+    this->update();
 }
 
 void RoundLab::setPadding(int padding)
 {
     m_padding = padding;
+    this->update();
 }
 
 void RoundLab::setBorderColor(const QColor &color)
 {
     m_borberColor = color;
+    this->update();
 }
 
 void RoundLab::setBorderWidth(bool open, int width)
 {
     m_openBorder = open;
     m_border = width;
+    this->update();
 }
 
 bool RoundLab::eventFilter(QObject *watched, QEvent *event)

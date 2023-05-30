@@ -147,7 +147,7 @@ bool dataBase::creatMysqlConnection()
         //建表---用户信息表
         QString table_user = R"(
                              CREATE TABLE IF NOT EXISTS `userinfo`  (
-                               `id` int(255) NOT NULL,
+                             `id` int(255) NOT NULL,
                                `userid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
                                `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
                                `passwd` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -157,8 +157,14 @@ bool dataBase::creatMysqlConnection()
                                `online` tinyint(1) NOT NULL,
                                `logintime` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
                                `createtime` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                               `watches` int(20) NULL DEFAULT NULL,
+                               `fans` int(20) NULL DEFAULT NULL,
+                               `upvote` int(20) NULL DEFAULT NULL,
+                               `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                               `hometown` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                               `motto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
                                PRIMARY KEY (`userid`) USING BTREE
-                             ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;)";
+                             ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;)";
         if(query_user.exec(table_user))
             qDebug() << "create table user successfull";
         else
@@ -705,6 +711,58 @@ QString dataBase::getSkin_splash()
 QSize dataBase::getSize_splash()
 {
     return QSize(m_splash_width,m_splash_height);
+}
+
+//查询某个用户信息
+QUrlQuery dataBase::user_getCurMediaUserInfo(const QString &user_id)
+{
+    QSqlQuery query(getSqlDataBase());
+    QUrlQuery   query_user;
+    bool isOK = query.exec(QString("select name, headpic, viptype, watches, fans, upvote, gender, age, address, hometown, motto, job from userinfo where userid = %1;").arg(user_id));
+    if(isOK)
+    {
+        while (query.next())
+        {
+            QString     m_userId        = user_id;
+            QString     m_usrName       = query.value(0).toString();
+            QString     m_usrHead       = query.value(1).toString();
+            QString     m_usrType       = QString::number(query.value(2).toInt());
+            QString     m_usrwatch      = QString::number(query.value(3).toInt());
+            QString     m_usrfans       = QString::number(query.value(4).toInt());
+            QString     m_usrlove       = QString::number(query.value(5).toInt());
+
+            QString     m_usrSex        = query.value(6).toString();
+            QString     m_usrAge        = QString::number(query.value(7).toInt());
+
+            QString     m_usrAdress     = query.value(8).toString();
+            QString     m_usrHome       = query.value(9).toString();
+            QString     m_usrMotto      = query.value(10).toString();
+            QString     m_usrJob        = query.value(11).toString();
+
+            //下面还有粉丝、点赞、关注等
+            query_user.addQueryItem(u8"userid",m_userId);
+            query_user.addQueryItem(u8"username",m_usrName);
+            query_user.addQueryItem(u8"userhead",m_usrHead);
+            query_user.addQueryItem(u8"usertype",m_usrType);
+            query_user.addQueryItem(u8"userwatch",m_usrwatch);
+            query_user.addQueryItem(u8"userfans",m_usrfans);
+            query_user.addQueryItem(u8"userlove",m_usrlove);
+
+            query_user.addQueryItem(u8"usersex",m_usrSex);
+            query_user.addQueryItem(u8"userage",m_usrAge);
+            query_user.addQueryItem(u8"useradrs",m_usrAdress);
+            query_user.addQueryItem(u8"userhome",m_usrHome);
+            query_user.addQueryItem(u8"usermotto",m_usrMotto);
+            query_user.addQueryItem(u8"userjob",m_usrJob);
+
+            return query_user;
+        }
+    }
+    else
+    {
+        qDebug()<< QString::fromLocal8Bit("查找当前视频拥有者信息错误：") << query.lastError();
+        return query_user;
+    }
 }
 
 //查询某表记录总数

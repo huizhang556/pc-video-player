@@ -96,6 +96,10 @@ private:
     void    setUserVip(const int grade);
     void    setUserCreateTime(const QString& create);
     void    setUserLoginTime(const QString& login);
+    void    setUserAddress(const QString& address);
+    void    setUserAge(const int age);
+    void    setUserHometown(const QString& hometown);
+    void    setUserMotto(const QString& motto);
 };
 
 #endif // CHANGEHEAD_H

@@ -17,13 +17,13 @@ ShortVideo::~ShortVideo()
 
 void ShortVideo::initWorkUI()
 {
-
+    m_manager = new QNetworkAccessManager(this);
     ui->pushButton_themeflush->setIcon(QIcon(":/images/home/vtitle_switch.png"));
     ui->pushButton_themeflush->setText(QString(u8"换一换"));
 //    ui->stackedWidget_player->installEventFilter(this);
     ui->label_novideo->constructItem(":/images/bgpic/cusvideoitem2.png","://images/user/itemmark_vyp.png",QString(u8"6.6"),false,true,false);
     ui->pushButton_title->setText(QString(u8"热点资讯"));
-    ui->pushButton_love->setIcon(QIcon("://images/user/default_woman00.png"));
+    ui->label_usrheader->setPixmap_(QPixmap(":/images/bgpic/dieji3.png"));
     ui->pushButton_toPlayer->setToolTip(QString(u8"转到主播放器"));
     ui->pushButton_collect->setToolTip(QString(u8"收藏"));
     ui->pushButton_download->setToolTip(QString(u8"下载"));
@@ -59,6 +59,8 @@ void ShortVideo::initWorkUI()
 
 void ShortVideo::handleSignalsAndSLots()
 {
+    connect(m_manager,&QNetworkAccessManager::finished,this,&ShortVideo::slot_receivedUserHeader,Qt::UniqueConnection);
+
     //换一换
     connect(ui->pushButton_themeflush,&QPushButton::clicked,[=](){
         if(m_curTheme == ui->listWidget_type->currentItem()->text())//主题未改变
@@ -94,10 +96,21 @@ void ShortVideo::handleSignalsAndSLots()
         {
             getListWidgetItemButton(current,"pushButton_videoInfo")->setChecked(true);
             m_curMediaId = current->data(Qt::UserRole+1).toInt();//介绍
+
+            //设置当前媒体所属用户头像
+            QUrlQuery query_url= dataBase::getInstance()->adv_getCurMediaUserInfo(m_curMediaId);
+            slot_setCurMediaHeader(query_url.queryItemValue(u8"userhead"));
+
+            m_curUserName = query_url.queryItemValue(u8"username");
+            slot_setCurMediaUsrName(QString(u8"用户：") + m_curUserName);
+
+            m_curUserId = query_url.queryItemValue(u8"userid");
+
             qDebug() << QString(u8"短视频----------当前播放视频id:") << m_curMediaId;
             m_curMediaUrl = current->text();//url
             m_curMediaName = current->data(Qt::UserRole).toString();//介绍
             ui->widget_player->slot_receivePlayMediaFile(m_curMediaUrl,m_curMediaName);//URL+介绍
+
         }
     });
 
@@ -181,6 +194,16 @@ void ShortVideo::handleSignalsAndSLots()
     //播放器---右键--视频设置
     connect(ui->widget_player,&MiniPlayer::sig_player_videoSetting,[=](){
         qDebug() << QString(u8"接收到视频设置请求！");
+    });
+
+    //关注用户
+    connect(ui->pushButton_love,&QPushButton::clicked,[=](){
+        qDebug() << QString(u8"已关注当前用户：%1").arg(m_curUserName);
+    });
+
+    //点击跳转
+    connect(ui->label_usrheader,&RoundLab::sig_clicked,[=](){
+        emit sig_sendToUserInfo(m_curUserId);
     });
 }
 
@@ -299,5 +322,34 @@ void ShortVideo::setContentTips(const QString &tips)
 {
     ui->pushButton_tips->setText(tips);
 
+}
+
+void ShortVideo::slot_setCurMediaHeader(const QString &headpic)
+{
+    qDebug() << QString(u8"mini接收到的用户头像连接：") << headpic;
+    m_manager->get(QNetworkRequest(QUrl(headpic)));
+}
+
+void ShortVideo::slot_setCurMediaUsrName(const QString &usrname)
+{
+    ui->label_usrheader->setToolTip(usrname);
+}
+
+void ShortVideo::slot_receivedUserHeader(QNetworkReply *reply)
+{
+    if (reply->error() == QNetworkReply::NoError)
+    {
+        //获取字节流构造 QPixmap 对象
+        QPixmap pixmap;
+        pixmap.loadFromData(reply->readAll());
+        ui->label_usrheader->setPixmap_(pixmap);
+        qDebug() <<QString::fromLocal8Bit("mini放器播当前媒体用户头网络图片设置成功！");
+    }
+    else//请求失败，加载默认图片
+    {
+        qDebug() <<  QString::fromLocal8Bit("mini播放器播当前媒体用户头网络图片像请求错误：")<<reply->errorString();
+        QPixmap pixmap(":/images/bgpic/dieji3.png");//默认图标
+        ui->label_usrheader->setPixmap_(pixmap);
+    }
 }
 

@@ -261,13 +261,13 @@ background-color: transparent;
 
 QTabWidget::tab-bar 
 {
-left: 20px; /* move to the right by 5px */
+left: 10px; /* move to the right by 5px */
 }
 
 QTabBar::tab 
 {
 height:26px;
-min-width: 90px;
+min-width:100px;
 margin: 0px 2px 6px 2px;
 font: 75 11pt &quot;Microsoft YaHei UI&quot;;
 background-color: transparent;
@@ -332,7 +332,7 @@ padding: 0 5px;
 </string>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab_perInfo">
            <attribute name="title">
@@ -946,70 +946,100 @@ border-bottom: 1px solid gray;
                      <number>20</number>
                     </property>
                     <item>
-                     <layout class="QVBoxLayout" name="verticalLayout_2">
-                      <item>
-                       <widget class="QLabel" name="label_14">
-                        <property name="minimumSize">
-                         <size>
-                          <width>60</width>
-                          <height>26</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>60</width>
-                          <height>26</height>
-                         </size>
-                        </property>
-                        <property name="text">
-                         <string>个人说明：</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <spacer name="verticalSpacer_3">
-                        <property name="orientation">
-                         <enum>Qt::Vertical</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>20</width>
-                          <height>40</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
-                     </layout>
-                    </item>
-                    <item>
-                     <widget class="QTextBrowser" name="textBrowser">
+                     <widget class="QFrame" name="frame_motto">
                       <property name="minimumSize">
                        <size>
-                        <width>0</width>
+                        <width>65</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>65</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_2">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QLabel" name="label_14">
+                         <property name="minimumSize">
+                          <size>
+                           <width>60</width>
+                           <height>26</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>60</width>
+                           <height>26</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>个人说明：</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <spacer name="verticalSpacer_3">
+                         <property name="orientation">
+                          <enum>Qt::Vertical</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>20</width>
+                           <height>40</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_motto">
+                      <property name="minimumSize">
+                       <size>
+                        <width>210</width>
                         <height>80</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>16777215</width>
+                        <width>210</width>
                         <height>80</height>
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">#textBrowser
+                       <string notr="true">#label_motto
 {
-border: 1px solid gray;
-border-radius:6px;
+border: 1px solid #8b98a0;
+border-radius: 6px;
+
 }</string>
                       </property>
-                      <property name="html">
-                       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#8b98a0;&quot;&gt;1.唯有不断努力，才能走向更远、更高！&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#8b98a0;&quot;&gt;2.世界是你们的，也是我们的，但终归还是你们的！&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#8b98a0;&quot;&gt;3.纸上得来终觉浅，绝知此事要躬行！&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      <property name="text">
+                       <string>万般皆下品，惟有读书高~！</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                      </property>
+                      <property name="wordWrap">
+                       <bool>true</bool>
                       </property>
                      </widget>
                     </item>
