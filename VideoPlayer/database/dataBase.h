@@ -18,6 +18,7 @@
 #include <QDesktopWidget>
 #include <QNetworkRequest>
 #include <QNetworkAccessManager>
+#include <QCryptographicHash>
 #include <QDebug>
 
 
@@ -84,6 +85,11 @@ public:
 
     //获取视频类型
     QStringList&            getVideoMediaType();
+
+    //加密部分
+    QString                 code_base64_To_QString(QString base_str);
+    QString                 code_qstring_To_Base64(QString qstring_str);
+    QString                 code_qstring_To_Hash(QString qstring_str);
 
     //读取cfg.xml信息
     static void             readXML(const QString& path);
@@ -170,6 +176,8 @@ public slots:
     bool                    header_inserUsrHeaderToDB(const QString &pix_url,const QString& pix_type);//插入头像图片数据
     bool                    header_updateUserHeader(const QString &user_id,const QString& pix_url);//更新用户头像
     bool                    header_deleteUserHisHeader(const QString &user_id, const QString& pix_id);//删除用户历史头像
+
+    //用户专辑
 
 
     //用户合集

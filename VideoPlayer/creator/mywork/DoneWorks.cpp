@@ -18,6 +18,14 @@ DoneWorks::~DoneWorks()
 
 void DoneWorks::initWorkUI()
 {
+    //专辑展示列表
+    ui->listWidget_albumitems->setViewMode(QListView::IconMode);
+    ui->listWidget_albumitems->setMovement(QListView::Static);//图标不可拖动
+    ui->listWidget_albumitems->setResizeMode(QListWidget::Adjust);
+    ui->listWidget_albumitems->setWrapping(true);//自动换行 所有itm在一行显示
+    ui->listWidget_albumitems->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->listWidget_albumitems->horizontalScrollBar()->setDisabled(true);
+
     //合集展示items列表
     ui->listWidget_medgroups->setViewMode(QListView::IconMode);
     ui->listWidget_medgroups->setMovement(QListView::Static);//图标不可拖动
@@ -69,6 +77,17 @@ void DoneWorks::initWorkUI()
     ui->listWidget_prod_pictures->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_prod_pictures->horizontalScrollBar()->setDisabled(true);
 
+    //专辑列表
+    ui->listWidget_albums->setViewMode(QListView::IconMode);
+    ui->listWidget_albums->setMovement(QListView::Static);
+    ui->listWidget_albums->setResizeMode(QListWidget::Adjust);
+    ui->listWidget_albums->setWrapping(true);//自动换行 所有itm在一行显示
+    ui->listWidget_albums->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->listWidget_albums->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_albums->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_albums->horizontalScrollBar()->setDisabled(true);
+    ui->listWidget_albums->hide();//默认隐藏
+
     //合集列表
     ui->listWidget_groups->setViewMode(QListView::IconMode);
     ui->listWidget_groups->setMovement(QListView::Static);
@@ -93,15 +112,30 @@ void DoneWorks::handleSignalsAndSlots()
     //显示作品
     connect(ui->pushButton_doneworks,&QPushButton::clicked,[=](){
         ui->listWidget_groups->setHidden(true);
+        ui->listWidget_albums->setHidden(true);
         ui->listWidget_producelist->setHidden(false);
+        ui->stackedWidget_produce->setCurrentIndex(0);
+    });
+
+    //显示专辑
+    connect(ui->pushButton_album,&QPushButton::clicked,[=](){
+        ui->listWidget_groups->setHidden(true);
+        ui->listWidget_producelist->setHidden(true);
+        ui->listWidget_albums->setHidden(false);
         ui->stackedWidget_produce->setCurrentIndex(0);
     });
 
     //显示合集
     connect(ui->pushButton_donegroup,&QPushButton::clicked,[=](){
         ui->listWidget_groups->setHidden(false);
+        ui->listWidget_albums->setHidden(true);
         ui->listWidget_producelist->setHidden(true);
         ui->stackedWidget_produce->setCurrentWidget(ui->page_groups);
+    });
+
+    //创建专辑
+    connect(ui->pushButton_menu_album,&QPushButton::clicked,[=](){
+
     });
 
     //创建合集

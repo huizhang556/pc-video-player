@@ -111,14 +111,13 @@ void RoundLab::paintEvent(QPaintEvent *event)
     QPixmap pixmap(m_picpath);
     if(m_openBorder)
     {
-
-    painter.setPen(m_pen);//设置边框
+        painter.setPen(m_pen);//设置边框
     }
     else
     {
-    painter.setPen(QPen(Qt::transparent,0,Qt::SolidLine,Qt::RoundCap,Qt::RoundJoin));//不设置边框
+        painter.setPen(QPen(Qt::transparent,0,Qt::SolidLine,Qt::RoundCap,Qt::RoundJoin));//不设置边框
     }
-    painter.setRenderHints(QPainter::Antialiasing,true);
+        painter.setRenderHints(QPainter::Antialiasing,true);
     QPainterPath path;
     path.addEllipse((m_padding-m_border),
                     (m_padding-m_border),

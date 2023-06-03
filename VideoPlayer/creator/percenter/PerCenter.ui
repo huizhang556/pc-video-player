@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>939</width>
+    <width>1071</width>
     <height>556</height>
    </rect>
   </property>
@@ -907,6 +907,7 @@ background-color: transparent;
 {
 color: white;
 font: 800 18px &quot;微软雅黑&quot;;
+background-color: transparent;
 }</string>
                           </property>
                           <property name="text">
@@ -1373,7 +1374,7 @@ background-color: transparent;
                          <rect>
                           <x>0</x>
                           <y>0</y>
-                          <width>348</width>
+                          <width>480</width>
                           <height>288</height>
                          </rect>
                         </property>

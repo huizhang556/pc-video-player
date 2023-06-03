@@ -4010,8 +4010,8 @@ background-color: transparent;
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>327</width>
-                 <height>343</height>
+                 <width>83</width>
+                 <height>16</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="addVerLayout">

@@ -151,9 +151,53 @@ void CreateCenter::handleSignalsAndSlots()
         ui->tabWidget_create->setCurrentWidget(m_perCenter);
     });
 
-
-    connect(m_perCenter,&PerCenter::sig_person_createguid,[=](){
-
+    //跳转页面
+    connect(m_perCenter,&PerCenter::sig_person_topage,[=](int numpage){
+        switch (numpage) {
+        case 0://我的首页
+        {
+            ui->tabWidget_create->setCurrentWidget(m_perCenter);
+        }
+            break;
+        case 1://账号数据
+        {
+            ui->tabWidget_create->setCurrentWidget(m_dataAnaly);
+        }
+            break;
+        case 2://等级权益
+        {
+            ui->tabWidget_create->setCurrentWidget(m_perCenter);
+        }
+            break;
+        case 3://视频管理
+        {
+            ui->tabWidget_create->setCurrentWidget(m_doneWorks);
+        }
+            break;
+        case 4://专辑管理
+        {
+            ui->tabWidget_create->setCurrentWidget(m_doneWorks);
+//            SortDialog::getInstance()->exec();
+        }
+            break;
+        case 5://合集管理
+        {
+            ui->tabWidget_create->setCurrentWidget(m_doneWorks);
+        }
+            break;
+        case 6://视频数据
+        {
+            ui->tabWidget_create->setCurrentWidget(m_perCenter);
+        }
+            break;
+        case 7://收益数据
+        {
+            ui->tabWidget_create->setCurrentWidget(m_income);
+        }
+            break;
+        default:
+            break;
+        }
     });
 
     connect(m_perCenter,&PerCenter::sig_person_polish,[=](){

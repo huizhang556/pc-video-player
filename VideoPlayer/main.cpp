@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
         //    MyEmotionWindow w1;
         //    w1.showNormalEmotion(QPoint(500 , 500));
         //    DownloadType::getInstance()->show();
-//            NewLoginForm::getInstance()->show();
+            NewLoginForm::getInstance()->show();
         //    AniStackWidget w1;
         //    w1.show();
         //    splashscream.finish(&w1);

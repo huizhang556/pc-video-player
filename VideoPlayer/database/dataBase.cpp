@@ -884,7 +884,7 @@ bool dataBase::login_checked_usernameAndPasswd(const QString &name, const QStrin
 //查询个人信息并保存
 bool dataBase::login_verification(const QString &name, const QString &pwd)
 {
-    qDebug() << QString::fromLocal8Bit("要查询的用户名为%1,用户密码为：%2").arg(name).arg(pwd);
+    qDebug() << QString(u8"要查询的用户名为%1,用户密码为：%2").arg(name).arg(pwd);
     //登录界面传过来的信息不会为空(已做过滤)
     QSqlQuery query(getSqlDataBase());
     //查询注意：所有的字符串在使用arg()方法的时候，都要加'',这个是sql一部分，除非字符串直接写死在sql中；数字不需要加
@@ -909,14 +909,14 @@ bool dataBase::login_verification(const QString &name, const QString &pwd)
             m_time_login    =   m_loginTime;
             m_time_create   =   m_createTime;
 
-            qDebug() << QString::fromLocal8Bit("用户：'%1'的信息如下：").arg(name)<<endl
-                     <<QString::fromLocal8Bit("唯一id:")<<m_userId<<endl
-                     <<QString::fromLocal8Bit("密码：")<<m_userPWD<<endl
-                     <<QString::fromLocal8Bit("邮箱：")<<m_userEmails<<endl
-                     <<QString::fromLocal8Bit("头像：")<<m_headPic<<endl
-                     <<QString::fromLocal8Bit("vip类型：")<<m_vipType<<endl
-                     <<QString::fromLocal8Bit("账号登录时间：")<<m_loginTime<<endl
-                     <<QString::fromLocal8Bit("账号创建时间：")<<m_createTime<<endl;
+            qDebug() <<QString(u8"用户：'%1'的信息如下：").arg(name)<<endl
+                     <<QString(u8"唯一id:")<<m_userId<<endl
+                     <<QString(u8"密码：")<<m_userPWD<<endl
+                     <<QString(u8"邮箱：")<<m_userEmails<<endl
+                     <<QString(u8"头像：")<<m_headPic<<endl
+                     <<QString(u8"vip类型：")<<m_vipType<<endl
+                     <<QString(u8"账号登录时间：")<<m_loginTime<<endl
+                     <<QString(u8"账号创建时间：")<<m_createTime<<endl;
 
     //        m_userDatda.m_userId        =   m_userId;
     //        m_userDatda.m_userName      =   name;
@@ -2060,6 +2060,31 @@ QList<QStringList>& dataBase::income_getUserIncomeRecords(const QString &user_id
     {
         qDebug() <<QString(u8"查询用户：%1 在时间段：%2 - %3 之间的记录失败！").arg(user_id).arg(data_start).arg(data_end);
     }
+}
+
+QString dataBase::code_base64_To_QString(QString base_str)
+{
+    QByteArray byteA;
+    std::string stdStr = base_str.toStdString();
+    byteA = QByteArray(stdStr.c_str());
+    byteA = byteA.fromBase64(byteA);
+    return  QString::fromUtf8(byteA);
+}
+
+QString dataBase::code_qstring_To_Hash(QString qstring_str)
+{
+    QByteArray codeBytes = qstring_str.toUtf8(); // 将字符串转换为字节数组
+    QByteArray hashBytes = QCryptographicHash::hash(codeBytes, QCryptographicHash::Md5); // 对字节数组进行MD5哈希计算
+    return QString(hashBytes.toHex());
+}
+
+QString dataBase::code_qstring_To_Base64(QString qstring_str)
+{
+    QByteArray byteA;
+    byteA = (qstring_str + QString(u8"@zhanghui")).toUtf8();//加盐值
+    byteA = byteA.toBase64();
+    char* cbyteA = byteA.data();
+    return QString(cbyteA);
 }
 
 //更新合集名称

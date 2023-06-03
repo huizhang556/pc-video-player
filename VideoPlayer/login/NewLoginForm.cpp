@@ -901,6 +901,8 @@ void NewLoginForm::setUser_login()
         account = ui->lineEdit_account->text().trimmed();
         passwd  = ui->lineEdit_userpwd->text().trimmed();
     }
+    //密码加密操作(string->base64->hash)
+    passwd = dataBase::getInstance()->code_qstring_To_Hash(dataBase::getInstance()->code_qstring_To_Base64(passwd));
     //查询数据库
     bool valiable = dataBase::getInstance()->login_checked_usernameAndPasswd(account,passwd);//核对账号是否存在
     if(valiable)//信息核对成功！
@@ -914,7 +916,7 @@ void NewLoginForm::setUser_login()
         QString head     =  dataBase::getInstance()->getCurrentUserHead();
         int     grade    =  dataBase::getInstance()->getCurrentUserGrade();
         emit sig_sendLoginOK(nickname,head,grade);//向外界发送用户信息
-        emit sig_sendToLoginedUser(nickname,pwd,head);
+        emit sig_sendToLoginedUser(nickname,pwd,head);//登陆列表写入用户信息
 //        slot_addLoginHisUsers(account);
         slot_clearTempInputText();//清除输入信息
         this->close();
@@ -949,6 +951,8 @@ void NewLoginForm::setUser_register()
         slot_clearTempInputText();
         return;//直接返回
     }
+    //密码加密操作(string->base64->hash)
+    pwd = dataBase::getInstance()->code_qstring_To_Hash(dataBase::getInstance()->code_qstring_To_Base64(pwd));
     //没有重命名
     bool isOK = dataBase::getInstance()->register_userInfo(name,pwd,email);//数据库插入用户信息
     if(isOK)//插入成功

@@ -286,6 +286,8 @@ void LoginPersonInfo::chandleSignalsAndSLots()
             slot_showWarning_login(QString::fromLocal8Bit("密码不能为空！"));
             return;
         }
+        //密码加密操作(string->base64->hash)
+        passwd = dataBase::getInstance()->code_qstring_To_Hash(dataBase::getInstance()->code_qstring_To_Base64(passwd));
         bool valiable = dataBase::getInstance()->login_checked_usernameAndPasswd(account,passwd);//核对账号是否存在
         if(valiable)//信息核对成功！
         {
@@ -420,6 +422,8 @@ void LoginPersonInfo::on_gis_BtnRegister_clicked()
     }
     else
     {
+       //密码加密操作(string->base64->hash)
+       pwd = dataBase::getInstance()->code_qstring_To_Hash(dataBase::getInstance()->code_qstring_To_Base64(pwd));
        bool isOK = dataBase::getInstance()->register_userInfo(name,pwd,email);
        if(isOK)//插入成功
        {
