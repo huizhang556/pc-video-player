@@ -9,6 +9,7 @@
 #include "creator/CreateCenter.h"
 #include "miniplayer/MiniPlayer.h"
 #include "messagebox/ExitDialog.h"
+#include "messagebox/SystemSetting.h"
 #include "pernotice/ScrollToTop.h"
 #include "fileshandle/MyAllFile.h"
 #include "fileshandle/DownloadType.h"
@@ -135,8 +136,8 @@ int main(int argc, char *argv[])
         }
 
         //05--->显示主界面
-#if 0
-
+#if 1
+//            SystemSetting s; s.show();
 //        MyAllFile myfile; myfile.show();
         //    ScrollToTop::getInstance()->show();
         //    DesktopLyric::getInstance()->show();
@@ -175,12 +176,12 @@ int main(int argc, char *argv[])
 //            MainNotice w1;
 //            w1.show();
 
-//            CreateCenter::getInstance()->exec_();
+            CreateCenter::getInstance()->exec_();
 
         //    MyEmotionWindow w1;
         //    w1.showNormalEmotion(QPoint(500 , 500));
         //    DownloadType::getInstance()->show();
-            NewLoginForm::getInstance()->show();
+//            NewLoginForm::getInstance()->show();
         //    AniStackWidget w1;
         //    w1.show();
         //    splashscream.finish(&w1);

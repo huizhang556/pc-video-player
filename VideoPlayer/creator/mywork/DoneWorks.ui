@@ -31,6 +31,9 @@
    </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_21">
+     <property name="spacing">
+      <number>5</number>
+     </property>
      <item>
       <widget class="QWidget" name="widget_leftlist" native="true">
        <property name="minimumSize">
@@ -136,11 +139,17 @@ background-color: #253c56;
                <property name="styleSheet">
                 <string notr="true">QPushButton
 {
-color: #2ee253;
+color: #c0ff02;
 text-align: center;
 font: 800 18px &quot;微软雅黑&quot;;
 background-color: transparent;
 }
+
+QPushButton:checked
+{
+color: red;
+}
+
 
 </string>
                </property>
@@ -166,17 +175,20 @@ background-color: transparent;
                <property name="styleSheet">
                 <string notr="true">QPushButton
 {
-border: none;
-margin:5px;
-/*background: url(:/images/player/player_itemlist_rmenu.png) no-repeat no-repeat center center;*/
-background-color: rgb(43, 59, 65,1.0);
-}
-QPushButton:hover
-{
-background-color: rgb(43, 59, 65,0.8);
+margin: 1px;
+/*border-image: url(:/images/icon/addTab.png);*/
+color: #fc011a;
+text-align: center;
+font: 400 15px &quot;微软雅黑&quot;;
+background-color: transparent;
 }
 
-</string>
+QPushButton:hover
+{
+color: white;
+/*border-image: url(:/images/icon/addTab_white.png);*/
+background-color: transparent;
+}</string>
                </property>
                <property name="text">
                 <string/>
@@ -204,6 +216,8 @@ background-color: transparent;
 
 QListWidget::item
 {
+margin: 1px 0px;
+border-radius: 6px;
 color: transparent;
 min-height:36px;
 background-color: transparent;
@@ -281,11 +295,18 @@ background-color: #253c56;
                <property name="styleSheet">
                 <string notr="true">QPushButton
 {
-color: #2ee253;
+color: #c0ff02;
 text-align: center;
 font: 800 18px &quot;微软雅黑&quot;;
 background-color: transparent;
 }
+
+QPushButton:checked
+{
+color: red;
+}
+
+
 </string>
                </property>
                <property name="text">
@@ -438,11 +459,18 @@ background-color: #253c56;
                <property name="styleSheet">
                 <string notr="true">QPushButton
 {
-color: #2ee253;
+color: #c0ff02;
 text-align: center;
 font: 800 18px &quot;微软雅黑&quot;;
 background-color: transparent;
 }
+
+QPushButton:checked
+{
+color: red;
+}
+
+
 </string>
                </property>
                <property name="text">
@@ -569,7 +597,7 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #ba87b6, 
 }</string>
        </property>
        <property name="currentIndex">
-        <number>7</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page_movies">
         <layout class="QVBoxLayout" name="verticalLayout_34">

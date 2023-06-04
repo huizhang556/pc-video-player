@@ -20,12 +20,15 @@ void PerCenter::initWorkUI()
 {
     ui->listWidget_manager->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listWidget_manager->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget_manager->setLayoutDirection(Qt::RightToLeft);//图标在右
+    ui->listWidget_manager->setIconSize(QSize(12,12));//图标大小
 
+    ui->pushButton_more->setIcon(QIcon(":/images/icon/web_funclist.png"));
     ui->label_header->setToolTip(QString(u8"单击修改头像"));
 
     for(int i = 0; i < manager.count(); i++)
     {
-        QListWidgetItem *item = new QListWidgetItem(manager.at(i));
+        QListWidgetItem *item = new QListWidgetItem(QIcon("://images/creator/indicator_right.png"),manager.at(i));
         item->setTextAlignment(Qt::AlignCenter);
         ui->listWidget_manager->addItem(item);
     }
@@ -62,15 +65,15 @@ void PerCenter::handleSignalsAndSlots()
         {
             emit sig_person_topage(2);
         }
-        else if(item->text() == QString(u8"账号管理"))
+        else if(item->text() == QString(u8"视频管理"))
         {
             emit sig_person_topage(3);
         }
-        else if(item->text() == QString(u8"合集管理"))
+        else if(item->text() == QString(u8"专辑管理"))
         {
             emit sig_person_topage(4);
         }
-        else if(item->text() == QString(u8"视频管理"))
+        else if(item->text() == QString(u8"合集管理"))
         {
             emit sig_person_topage(5);
         }

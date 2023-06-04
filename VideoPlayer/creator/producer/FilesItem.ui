@@ -218,7 +218,7 @@ background-color: transparent;
 }</string>
            </property>
            <property name="currentIndex">
-            <number>1</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="page_close">
             <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -260,6 +260,7 @@ background-color: transparent;
                <property name="styleSheet">
                 <string notr="true">QPushButton
 {
+border-radius: 3px;
 background-color: transparent;
 border-image: url(:/images/icon/close3.png);
 }

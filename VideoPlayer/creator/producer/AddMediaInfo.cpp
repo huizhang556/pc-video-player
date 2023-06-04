@@ -14,7 +14,7 @@ AddMediaInfo::AddMediaInfo(QWidget *parent) :
 
 AddMediaInfo::~AddMediaInfo()
 {
-    qDebug() << QString(u8"西沟了");
+    qDebug() << QString(u8"析构了");
     delete ui;
 }
 

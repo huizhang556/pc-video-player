@@ -701,5 +701,8 @@
         <file>images/bgpic/music_gb_1.jpg</file>
         <file>images/bgpic/music_gb_2.jpg</file>
         <file>images/bgpic/music_gb_3.jpg</file>
+        <file>images/creator/indicator_down.png</file>
+        <file>images/creator/indicator_right.png</file>
+        <file>images/creator/indicator_up.png</file>
     </qresource>
 </RCC>

@@ -99,6 +99,11 @@ void DoneWorks::initWorkUI()
     ui->listWidget_groups->horizontalScrollBar()->setDisabled(true);
     ui->listWidget_groups->hide();//默认隐藏
 
+    ui->pushButton_doneworks->setCheckable(true);
+    ui->pushButton_doneworks->setChecked(true);
+    ui->pushButton_donegroup->setCheckable(true);
+    ui->pushButton_album->setCheckable(true);
+
     //作品列表--左侧
     for(int i = 0; i<m_producelist.count();i++)
     {
@@ -114,6 +119,9 @@ void DoneWorks::handleSignalsAndSlots()
         ui->listWidget_groups->setHidden(true);
         ui->listWidget_albums->setHidden(true);
         ui->listWidget_producelist->setHidden(false);
+        ui->pushButton_album->setChecked(false);
+        ui->pushButton_donegroup->setChecked(false);
+        ui->pushButton_doneworks->setChecked(true);
         ui->stackedWidget_produce->setCurrentIndex(0);
     });
 
@@ -122,6 +130,9 @@ void DoneWorks::handleSignalsAndSlots()
         ui->listWidget_groups->setHidden(true);
         ui->listWidget_producelist->setHidden(true);
         ui->listWidget_albums->setHidden(false);
+        ui->pushButton_doneworks->setChecked(false);
+        ui->pushButton_donegroup->setChecked(false);
+        ui->pushButton_album->setChecked(true);
         ui->stackedWidget_produce->setCurrentIndex(0);
     });
 
@@ -130,6 +141,9 @@ void DoneWorks::handleSignalsAndSlots()
         ui->listWidget_groups->setHidden(false);
         ui->listWidget_albums->setHidden(true);
         ui->listWidget_producelist->setHidden(true);
+        ui->pushButton_doneworks->setChecked(false);
+        ui->pushButton_album->setChecked(false);
+        ui->pushButton_donegroup->setChecked(true);
         ui->stackedWidget_produce->setCurrentWidget(ui->page_groups);
     });
 
@@ -153,7 +167,7 @@ void DoneWorks::handleSignalsAndSlots()
         }
     });
 
-    //接收查询到的媒体信息
+    //接收查询到某个类型的媒体数量+信息
     connect(dataBase::getInstance(),&dataBase::sig_sendUserDoneWorks,this,&DoneWorks::slot_receivedData_findTypeResult);
 
     //媒体列表

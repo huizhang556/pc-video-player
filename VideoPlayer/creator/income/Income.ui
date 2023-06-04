@@ -70,7 +70,7 @@ background-color: #e5fafa;
          <number>0</number>
         </property>
         <item>
-         <widget class="QPushButton" name="pushButton_45">
+         <widget class="QPushButton" name="pushButton_certify">
           <property name="minimumSize">
            <size>
             <width>180</width>
@@ -115,7 +115,7 @@ color: #ff4536;
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_46">
+         <widget class="QPushButton" name="pushButton_go_certify">
           <property name="minimumSize">
            <size>
             <width>80</width>

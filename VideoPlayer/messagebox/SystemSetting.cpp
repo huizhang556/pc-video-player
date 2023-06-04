@@ -26,6 +26,35 @@ SystemSetting::~SystemSetting()
 
 void SystemSetting::initWorkUI()
 {
+    ui->lineEdit_savevideopath->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_watchedsavepath->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_cachespace->setContextMenuPolicy(Qt::NoContextMenu);
+
+    ui->lineEdit_savegamepath->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_savevideopath_3->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_watchedsavepath_3->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_cachespace_3->setContextMenuPolicy(Qt::NoContextMenu);
+
+    ui->lineEdit_pauseplayer->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_fullgreen->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_fastreverse->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_fastforward->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_next->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_volumeup->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_volumedown->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_oldkey->setContextMenuPolicy(Qt::NoContextMenu);
+
+    ui->comboBox_step->setView(new QListView());
+    ui->comboBox_shucushebei->setView(new QListView());
+    ui->comboBox_max_down_speed->setView(new QListView());
+    ui->comboBox_max_up_speed->setView(new QListView());
+    ui->comboBox_startcommon->setView(new QListView());
+    ui->comboBox_gamestartcounts->setView(new QListView());
+    ui->comboBox_startcommon_3->setView(new QListView());
+    ui->comboBox_hour->setView(new QListView());
+    ui->comboBox_minite->setView(new QListView());
+
+
     ui->stackedWidget->setCurrentIndex(0);//显示第一项
     ui->tabWidget->setCurrentIndex(0);//显示第一项
     //有些按钮需要设置互斥选择，有些事共同不需要互斥

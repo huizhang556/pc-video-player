@@ -79,6 +79,19 @@ void Income::initWorkUI()
 
 void Income::handleSignalsAndSlots()
 {
+    connect(ui->pushButton_certify,&QPushButton::clicked,[=](){
+        ui->pushButton_tipClose->click();
+    });
+
+    connect(ui->pushButton_go_certify,&QPushButton::clicked,[=](){
+        ui->pushButton_tipClose->click();
+    });
+
+    //关闭提示
+    connect(ui->pushButton_tipClose,&QPushButton::clicked,[=](){
+        ui->widget_tips->close();
+    });
+
     //显示日历
     connect(ui->pushButton_date1,&QPushButton::clicked,[=](){
         m_menuDataTime->exec(QCursor::pos());

@@ -49,7 +49,7 @@ background-color: transparent;
       <string notr="true">#frame_bgmask
 {
 color: white;
-background-color: rgb(36, 36, 60);
+background-color: rgb(2, 16, 25);
 }</string>
      </property>
      <property name="frameShape">
@@ -166,14 +166,14 @@ background-color: transparent;
 
 QTabBar::tab:selected
 {
-color: #00ad87;
+color: #70fffe;
 font: 800 17px &quot;微软雅黑&quot;;
-background-color: #3ed1fd;
+/*background-color: #3ed1fd;*/
 }
 
 QTabBar::tab:hover 
 {
-color: #00ad87;
+color: #70fffe;
 font: 800 17px &quot;微软雅黑&quot;;
 }
 

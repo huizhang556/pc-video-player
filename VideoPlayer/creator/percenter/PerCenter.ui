@@ -237,14 +237,23 @@ background-color: transparent;
 
 QListWidget::item
 {
+margin: 1px 0px;
+border-radius: 6px;
+padding-right:10px;
 color: #e1eeff;
 min-height: 50px;
 background-color: transparent;
 }
 
-QListWidget::item:hover,QListWidget::item:selected
+QListWidget::item:hover
 {
 color: #e1eeff;
+background-color: #253c56;
+}
+
+QListWidget::item:selected
+{
+color: #70fffe;
 background-color: #253c56;
 }</string>
             </property>

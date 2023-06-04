@@ -100,41 +100,37 @@ font-size:14px;
 
 QListWidget::item
 {
+margin: 1px 2px;
+text-align:center;
+border-radius: 4px;
 color: rgb(102, 102, 102);
 background-color: rgb(245, 245, 245);
 selection-background-color: rgb(255, 100, 0);
 min-height:40px;/*有效设置item高度*/
-text-align:center;
 }
 
 QListWidget::item:hover
 {
-show-decoration-selected:5;
-/*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
- stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
+color:#3ec1d3;
 border-style:outset;
-color: rgb(102, 102, 102);
-background-color: rgb(204, 204, 204);
+show-decoration-selected:5;
+background-color: #788b9a;
 }
 
 QListWidget::item:selected
 {
- /*border:0px;*/
-    /*border:1px solid #55ff00;*/
-	background-color: rgb(204, 204, 204);
-    padding:0px;
-    margin:0px;
-	color: rgb(255, 255, 255);
+margin: 1px 2px;
+background-color: #788b9a;
+color: rgb(255, 255, 255);
 }
 
 /*上次选择后保留的状态，鼠标离开后显示*/
 QListWidget::item:selected:!active
 {
-    border-width:0px;
-	background-color: rgb(204, 204, 204);
-    padding:0px;
-    margin:0px;	
-	color: rgb(255, 255, 255);
+margin: 1px 2px;
+border-width:0px;
+background-color: #788b9a;
+color: rgb(255, 255, 255);
 }</string>
            </property>
            <property name="textElideMode">
@@ -903,6 +899,44 @@ border-image: url(:/images/icon/uncheck_set.png);
                <height>25</height>
               </size>
              </property>
+             <property name="styleSheet">
+              <string notr="true">QComboBox
+{
+color: #03b2f5;
+border: 1px solid gray;
+border-radius: 3px;
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QComboBox::drop-down
+{
+border: 0px solid gray;
+border-left-width: 1px;
+}
+
+QComboBox::down-arrow 
+{
+border-image: url(:/images/fileitem/combobox_down.png);
+}
+
+QListView
+{
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item
+{
+color: gray;
+height: 26px;
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item:hover
+{
+color: #55ff00;
+background-color: rgb(64, 66, 68);
+}</string>
+             </property>
             </widget>
            </widget>
            <widget class="QWidget" name="page_2">
@@ -983,14 +1017,34 @@ border-image: url(:/images/icon/uncheck_set.png);
                <x>110</x>
                <y>240</y>
                <width>70</width>
-               <height>26</height>
+               <height>30</height>
               </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>70</width>
+               <height>30</height>
+              </size>
              </property>
              <property name="maximumSize">
               <size>
                <width>70</width>
-               <height>16777215</height>
+               <height>30</height>
               </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+border-radius: 6px;
+font: 400 13px &quot;微软雅黑&quot;;
+border: 1px solid #cccccc;
+}
+
+QPushButton:checked,QPushButton:hover
+{
+color: white;
+background-color: #26b7ef;
+}</string>
              </property>
              <property name="text">
               <string>柔和</string>
@@ -1002,14 +1056,34 @@ border-image: url(:/images/icon/uncheck_set.png);
                <x>210</x>
                <y>240</y>
                <width>70</width>
-               <height>26</height>
+               <height>30</height>
               </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>70</width>
+               <height>30</height>
+              </size>
              </property>
              <property name="maximumSize">
               <size>
                <width>70</width>
-               <height>16777215</height>
+               <height>30</height>
               </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+border-radius: 6px;
+font: 400 13px &quot;微软雅黑&quot;;
+border: 1px solid #cccccc;
+}
+
+QPushButton:checked,QPushButton:hover
+{
+color: white;
+background-color: #26b7ef;
+}</string>
              </property>
              <property name="text">
               <string>明亮</string>
@@ -1021,14 +1095,34 @@ border-image: url(:/images/icon/uncheck_set.png);
                <x>310</x>
                <y>240</y>
                <width>70</width>
-               <height>26</height>
+               <height>30</height>
               </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>70</width>
+               <height>30</height>
+              </size>
              </property>
              <property name="maximumSize">
               <size>
                <width>70</width>
-               <height>16777215</height>
+               <height>30</height>
               </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+border-radius: 6px;
+font: 400 13px &quot;微软雅黑&quot;;
+border: 1px solid #cccccc;
+}
+
+QPushButton:checked,QPushButton:hover
+{
+color: white;
+background-color: #26b7ef;
+}</string>
              </property>
              <property name="text">
               <string>恢复默认</string>
@@ -1357,6 +1451,44 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba
                <height>25</height>
               </rect>
              </property>
+             <property name="styleSheet">
+              <string notr="true">QComboBox
+{
+color: #03b2f5;
+border: 1px solid gray;
+border-radius: 3px;
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QComboBox::drop-down
+{
+border: 0px solid gray;
+border-left-width: 1px;
+}
+
+QComboBox::down-arrow 
+{
+border-image: url(:/images/fileitem/combobox_down.png);
+}
+
+QListView
+{
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item
+{
+color: gray;
+height: 26px;
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item:hover
+{
+color: #55ff00;
+background-color: rgb(64, 66, 68);
+}</string>
+             </property>
             </widget>
             <widget class="QLabel" name="label_31">
              <property name="geometry">
@@ -1621,6 +1753,44 @@ border-image: url(:/images/icon/radio_unchecked.png);
                <height>25</height>
               </rect>
              </property>
+             <property name="styleSheet">
+              <string notr="true">QComboBox
+{
+color: #03b2f5;
+border: 1px solid gray;
+border-radius: 3px;
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QComboBox::drop-down
+{
+border: 0px solid gray;
+border-left-width: 1px;
+}
+
+QComboBox::down-arrow 
+{
+border-image: url(:/images/fileitem/combobox_down.png);
+}
+
+QListView
+{
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item
+{
+color: gray;
+height: 26px;
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item:hover
+{
+color: #55ff00;
+background-color: rgb(64, 66, 68);
+}</string>
+             </property>
             </widget>
             <widget class="QComboBox" name="comboBox_max_up_speed">
              <property name="geometry">
@@ -1630,6 +1800,44 @@ border-image: url(:/images/icon/radio_unchecked.png);
                <width>80</width>
                <height>25</height>
               </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QComboBox
+{
+color: #03b2f5;
+border: 1px solid gray;
+border-radius: 3px;
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QComboBox::drop-down
+{
+border: 0px solid gray;
+border-left-width: 1px;
+}
+
+QComboBox::down-arrow 
+{
+border-image: url(:/images/fileitem/combobox_down.png);
+}
+
+QListView
+{
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item
+{
+color: gray;
+height: 26px;
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item:hover
+{
+color: #55ff00;
+background-color: rgb(64, 66, 68);
+}</string>
              </property>
             </widget>
             <widget class="QCheckBox" name="checkBox_tryopendns">
@@ -1668,6 +1876,14 @@ border-image: url(:/images/icon/uncheck_set.png);
                <width>75</width>
                <height>26</height>
               </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+border-radius: 6px;
+border: 1px solid #cccccc;
+background-color: rgb(85, 255, 0);
+}</string>
              </property>
              <property name="text">
               <string>网络诊断</string>
@@ -1766,9 +1982,59 @@ font-weight:bold;
                   <rect>
                    <x>90</x>
                    <y>80</y>
-                   <width>61</width>
+                   <width>60</width>
                    <height>25</height>
                   </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>60</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>60</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QComboBox
+{
+color: #03b2f5;
+border: 1px solid gray;
+border-radius: 3px;
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QComboBox::drop-down
+{
+border: 0px solid gray;
+border-left-width: 1px;
+}
+
+QComboBox::down-arrow 
+{
+border-image: url(:/images/fileitem/combobox_down.png);
+}
+
+QListView
+{
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item
+{
+color: gray;
+height: 26px;
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item:hover
+{
+color: #55ff00;
+background-color: rgb(64, 66, 68);
+}</string>
                  </property>
                 </widget>
                 <widget class="QLabel" name="label_83">
@@ -1920,13 +2186,26 @@ border-image: url(:/images/icon/uncheck_set.png);
                    <height>25</height>
                   </rect>
                  </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLineEdit
+{
+border-radius: 3px;
+border: 1px solid #919191;
+
+}
+
+QLineEdit:focus
+{
+border: 1px solid #2baffc;
+}</string>
+                 </property>
                 </widget>
                 <widget class="QWidget" name="layoutWidget">
                  <property name="geometry">
                   <rect>
                    <x>10</x>
                    <y>40</y>
-                   <width>381</width>
+                   <width>394</width>
                    <height>28</height>
                   </rect>
                  </property>
@@ -1938,9 +2217,28 @@ border-image: url(:/images/icon/uncheck_set.png);
                    <widget class="QLineEdit" name="lineEdit_savevideopath">
                     <property name="minimumSize">
                      <size>
-                      <width>0</width>
-                      <height>25</height>
+                      <width>360</width>
+                      <height>26</height>
                      </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>360</width>
+                      <height>26</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLineEdit
+{
+border-radius: 3px;
+border: 1px solid #919191;
+
+}
+
+QLineEdit:focus
+{
+border: 1px solid #2baffc;
+}</string>
                     </property>
                    </widget>
                   </item>
@@ -1954,7 +2252,7 @@ border-image: url(:/images/icon/uncheck_set.png);
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>32</width>
+                      <width>26</width>
                       <height>26</height>
                      </size>
                     </property>
@@ -1980,7 +2278,7 @@ border-image: url(:/images/icon/all_openfile_hover.png);
                   <rect>
                    <x>10</x>
                    <y>240</y>
-                   <width>381</width>
+                   <width>394</width>
                    <height>28</height>
                   </rect>
                  </property>
@@ -1992,9 +2290,28 @@ border-image: url(:/images/icon/all_openfile_hover.png);
                    <widget class="QLineEdit" name="lineEdit_watchedsavepath">
                     <property name="minimumSize">
                      <size>
-                      <width>0</width>
-                      <height>25</height>
+                      <width>360</width>
+                      <height>26</height>
                      </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>360</width>
+                      <height>26</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLineEdit
+{
+border-radius: 3px;
+border: 1px solid #919191;
+
+}
+
+QLineEdit:focus
+{
+border: 1px solid #2baffc;
+}</string>
                     </property>
                    </widget>
                   </item>
@@ -2008,7 +2325,7 @@ border-image: url(:/images/icon/all_openfile_hover.png);
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>32</width>
+                      <width>26</width>
                       <height>26</height>
                      </size>
                     </property>
@@ -2065,15 +2382,65 @@ border-image: url(:/images/icon/all_openfile_hover.png);
                   <rect>
                    <x>90</x>
                    <y>80</y>
-                   <width>50</width>
+                   <width>60</width>
                    <height>25</height>
                   </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>60</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>60</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QComboBox
+{
+color: #03b2f5;
+border: 1px solid gray;
+border-radius: 3px;
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QComboBox::drop-down
+{
+border: 0px solid gray;
+border-left-width: 1px;
+}
+
+QComboBox::down-arrow 
+{
+border-image: url(:/images/fileitem/combobox_down.png);
+}
+
+QListView
+{
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item
+{
+color: gray;
+height: 26px;
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item:hover
+{
+color: #55ff00;
+background-color: rgb(64, 66, 68);
+}</string>
                  </property>
                 </widget>
                 <widget class="QLabel" name="label_101">
                  <property name="geometry">
                   <rect>
-                   <x>140</x>
+                   <x>160</x>
                    <y>80</y>
                    <width>71</width>
                    <height>24</height>
@@ -2144,7 +2511,7 @@ border-image: url(:/images/icon/uncheck_set.png);
                   <rect>
                    <x>10</x>
                    <y>40</y>
-                   <width>390</width>
+                   <width>394</width>
                    <height>28</height>
                   </rect>
                  </property>
@@ -2156,9 +2523,28 @@ border-image: url(:/images/icon/uncheck_set.png);
                    <widget class="QLineEdit" name="lineEdit_savegamepath">
                     <property name="minimumSize">
                      <size>
-                      <width>0</width>
-                      <height>25</height>
+                      <width>360</width>
+                      <height>26</height>
                      </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>360</width>
+                      <height>26</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLineEdit
+{
+border-radius: 3px;
+border: 1px solid #919191;
+
+}
+
+QLineEdit:focus
+{
+border: 1px solid #2baffc;
+}</string>
                     </property>
                    </widget>
                   </item>
@@ -2172,7 +2558,7 @@ border-image: url(:/images/icon/uncheck_set.png);
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>32</width>
+                      <width>26</width>
                       <height>26</height>
                      </size>
                     </property>
@@ -2216,7 +2602,7 @@ border-image: url(:/images/icon/all_openfile_hover.png);
                   <rect>
                    <x>10</x>
                    <y>200</y>
-                   <width>381</width>
+                   <width>394</width>
                    <height>28</height>
                   </rect>
                  </property>
@@ -2228,9 +2614,28 @@ border-image: url(:/images/icon/all_openfile_hover.png);
                    <widget class="QLineEdit" name="lineEdit_watchedsavepath_3">
                     <property name="minimumSize">
                      <size>
-                      <width>0</width>
-                      <height>25</height>
+                      <width>360</width>
+                      <height>26</height>
                      </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>360</width>
+                      <height>26</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLineEdit
+{
+border-radius: 3px;
+border: 1px solid #919191;
+
+}
+
+QLineEdit:focus
+{
+border: 1px solid #2baffc;
+}</string>
                     </property>
                    </widget>
                   </item>
@@ -2244,7 +2649,7 @@ border-image: url(:/images/icon/all_openfile_hover.png);
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>32</width>
+                      <width>26</width>
                       <height>26</height>
                      </size>
                     </property>
@@ -2348,7 +2753,7 @@ border-image: url(:/images/icon/all_openfile_hover.png);
                   <rect>
                    <x>10</x>
                    <y>40</y>
-                   <width>381</width>
+                   <width>394</width>
                    <height>28</height>
                   </rect>
                  </property>
@@ -2360,9 +2765,28 @@ border-image: url(:/images/icon/all_openfile_hover.png);
                    <widget class="QLineEdit" name="lineEdit_savevideopath_3">
                     <property name="minimumSize">
                      <size>
-                      <width>0</width>
-                      <height>25</height>
+                      <width>360</width>
+                      <height>26</height>
                      </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>360</width>
+                      <height>26</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QLineEdit
+{
+border-radius: 3px;
+border: 1px solid #919191;
+
+}
+
+QLineEdit:focus
+{
+border: 1px solid #2baffc;
+}</string>
                     </property>
                    </widget>
                   </item>
@@ -2376,7 +2800,7 @@ border-image: url(:/images/icon/all_openfile_hover.png);
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>32</width>
+                      <width>26</width>
                       <height>26</height>
                      </size>
                     </property>
@@ -2434,6 +2858,19 @@ border-image: url(:/images/icon/uncheck_set.png);
                    <height>25</height>
                   </rect>
                  </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLineEdit
+{
+border-radius: 3px;
+border: 1px solid #919191;
+
+}
+
+QLineEdit:focus
+{
+border: 1px solid #2baffc;
+}</string>
+                 </property>
                 </widget>
                 <widget class="QLabel" name="label_111">
                  <property name="geometry">
@@ -2459,9 +2896,59 @@ border-image: url(:/images/icon/uncheck_set.png);
                   <rect>
                    <x>90</x>
                    <y>80</y>
-                   <width>61</width>
+                   <width>60</width>
                    <height>25</height>
                   </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>60</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>60</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QComboBox
+{
+color: #03b2f5;
+border: 1px solid gray;
+border-radius: 3px;
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QComboBox::drop-down
+{
+border: 0px solid gray;
+border-left-width: 1px;
+}
+
+QComboBox::down-arrow 
+{
+border-image: url(:/images/fileitem/combobox_down.png);
+}
+
+QListView
+{
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item
+{
+color: gray;
+height: 26px;
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item:hover
+{
+color: #55ff00;
+background-color: rgb(64, 66, 68);
+}</string>
                  </property>
                 </widget>
                </widget>
@@ -2470,6 +2957,19 @@ border-image: url(:/images/icon/uncheck_set.png);
             </layout>
            </widget>
            <widget class="QWidget" name="page_6">
+            <property name="styleSheet">
+             <string notr="true">QLineEdit
+{
+border-radius: 3px;
+border: 1px solid #919191;
+
+}
+
+QLineEdit:focus
+{
+border: 1px solid #2baffc;
+}</string>
+            </property>
             <widget class="QLabel" name="label_68">
              <property name="geometry">
               <rect>
@@ -2630,6 +3130,9 @@ border-image: url(:/images/icon/uncheck_set.png);
                <height>25</height>
               </rect>
              </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
             </widget>
             <widget class="QLabel" name="label_75">
              <property name="geometry">
@@ -2710,6 +3213,9 @@ border-image: url(:/images/icon/uncheck_set.png);
                <width>100</width>
                <height>25</height>
               </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
              </property>
              <property name="text">
               <string/>
@@ -3042,6 +3548,44 @@ border-image: url(:/images/icon/radio_unchecked.png);
                <height>25</height>
               </rect>
              </property>
+             <property name="styleSheet">
+              <string notr="true">QComboBox
+{
+color: #03b2f5;
+border: 1px solid gray;
+border-radius: 3px;
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QComboBox::drop-down
+{
+border: 0px solid gray;
+border-left-width: 1px;
+}
+
+QComboBox::down-arrow 
+{
+border-image: url(:/images/fileitem/combobox_down.png);
+}
+
+QListView
+{
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item
+{
+color: gray;
+height: 26px;
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item:hover
+{
+color: #55ff00;
+background-color: rgb(64, 66, 68);
+}</string>
+             </property>
             </widget>
             <widget class="QLabel" name="label_160">
              <property name="geometry">
@@ -3077,6 +3621,44 @@ border-image: url(:/images/icon/radio_unchecked.png);
                <width>50</width>
                <height>25</height>
               </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QComboBox
+{
+color: #03b2f5;
+border: 1px solid gray;
+border-radius: 3px;
+background-color: rgba(61, 78, 102,0.3);
+}
+
+QComboBox::drop-down
+{
+border: 0px solid gray;
+border-left-width: 1px;
+}
+
+QComboBox::down-arrow 
+{
+border-image: url(:/images/fileitem/combobox_down.png);
+}
+
+QListView
+{
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item
+{
+color: gray;
+height: 26px;
+background-color: rgb(64, 66, 68);
+}
+
+QListView::item:hover
+{
+color: #55ff00;
+background-color: rgb(64, 66, 68);
+}</string>
              </property>
             </widget>
            </widget>
