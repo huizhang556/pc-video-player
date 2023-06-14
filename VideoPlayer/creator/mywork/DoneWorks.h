@@ -45,6 +45,11 @@ public slots:
     void            slot_insertItemToList(int index, QString& text, const  QVariant& data, int counts);//特定位置加载左侧类型列表自定义刷新item
     void            slot_receivedData_findTypeResult(QVariant& media);//加载(更新)对应类型媒体下item
     void            slot_setUserTagsWorkCounts(QStringList& list_counts);//查询各个标签视频数量
+    //专辑部分
+    void            slot_initUserAlbums();//查询初始化当前用户下所有专集
+    void            slot_addItemToAlbumList(GROUPTYPE TYPE, const QString& name, const QString& pix_url, const QString &album_id);//添加专集
+    void            slot_addItmeToAlbumIDList(QVariant& media);//添加某个专集的item
+
     //合集部分
     void            slot_initUserGroups();//查询初始化当前用户下所有合集
     void            slot_addItemToGroupList(GROUPTYPE TYPE, const QString& name, const QString& pix_url, const QString &group_id);//添加合集

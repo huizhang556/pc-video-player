@@ -76,7 +76,7 @@
         <property name="styleSheet">
          <string notr="true">#frame_title
 {
-background-color: rgb(57, 67, 87);
+background-color: #1684d9;
 }</string>
         </property>
         <property name="frameShape">
@@ -87,13 +87,13 @@ background-color: rgb(57, 67, 87);
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="leftMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -102,13 +102,13 @@ background-color: rgb(57, 67, 87);
           <widget class="QPushButton" name="pushButton_icon">
            <property name="minimumSize">
             <size>
-             <width>88</width>
+             <width>100</width>
              <height>36</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>88</width>
+             <width>100</width>
              <height>36</height>
             </size>
            </property>
@@ -116,14 +116,14 @@ background-color: rgb(57, 67, 87);
             <string notr="true">QPushButton
 {
 border: none;
-color: pink;
+color: #fdfdfb;
 text-align: left;
 font: 800 18px &quot;微软雅黑&quot;;
 background-color: transparent;
 }</string>
            </property>
            <property name="text">
-            <string/>
+            <string>视频管理</string>
            </property>
           </widget>
          </item>
@@ -467,7 +467,7 @@ border: 1px solid #03b2f5;
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QLabel" name="label_5">
+                 <widget class="QLabel" name="label_curHJ">
                   <property name="minimumSize">
                    <size>
                     <width>60</width>
@@ -553,7 +553,7 @@ background-color: rgba(61, 78, 102,0.8);
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_6">
+                 <widget class="QLabel" name="label_searchHJ">
                   <property name="minimumSize">
                    <size>
                     <width>80</width>
@@ -691,7 +691,7 @@ border: 1px solid #03b2f5;
                    </size>
                   </property>
                   <property name="currentIndex">
-                   <number>0</number>
+                   <number>1</number>
                   </property>
                   <widget class="QWidget" name="page_operate_heji">
                    <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -1249,7 +1249,7 @@ border-radius: 4px;
                    </size>
                   </property>
                   <property name="text">
-                   <string>视频分类</string>
+                   <string>我的视频</string>
                   </property>
                  </widget>
                 </item>

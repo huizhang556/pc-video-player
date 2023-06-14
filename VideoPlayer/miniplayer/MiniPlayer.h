@@ -76,8 +76,8 @@ private:
     QActionGroup    *m_actionGroup1     =   nullptr;
     QActionGroup    *m_actionGroup2     =   nullptr;
     QMenu           *m_videoMenu        =   nullptr;
-    QMenu           *m_subMenu1         =   nullptr;
-    QMenu           *m_subMenu2         =   nullptr;
+    QMenu           *m_subMenu1         =   nullptr;//视频右键菜单
+    QMenu           *m_subMenu2         =   nullptr;//视频右键菜单子菜单
     qint64          m_times;//总时长
     qint64          m_position;//播放点
 

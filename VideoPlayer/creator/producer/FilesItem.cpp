@@ -156,6 +156,12 @@ void FilesItem::handleSignalsAndSlots()
             //只读状态下
             emit sig_sendItem_play();
         }
+        else if(m_canedit == FILEEDIT::DISPLAY)
+        {
+            //展示状态
+            emit sig_sendItem_play();
+        }
+
     });
 
     //下载
@@ -177,6 +183,10 @@ void FilesItem::handleSignalsAndSlots()
         else
         {
             if(m_canedit == FILEEDIT::CANEDIT)
+            {
+                ui->pushButton_editinfo->setText(QString(u8"详细"));
+            }
+            else if(m_canedit == FILEEDIT::DISPLAY)
             {
                 ui->pushButton_editinfo->setText(QString(u8"详细"));
             }
@@ -297,14 +307,30 @@ void FilesItem::slot_setItemEdit(const FILEEDIT edit)
 {
     switch (edit)
     {
-    case CANWRITE:
+    case CANWRITE://上传展示
     {
         ui->pushButton_pause->setCheckable(true);
         ui->pushButton_pause->setChecked( true);
         ui->stackedWidget_check->setCurrentWidget(ui->page_close);
     }
         break;
-    case CANEDIT:
+    case DISPLAY://对外展示
+    {
+        m_rmenu = true;//可以右键
+        ui->lineEdit_filename->setReadOnly(true);
+        ui->progressBar->setHidden(true);
+        ui->pushButton_editinfo->setText(QString(u8"详细"));
+        ui->pushButton_pause->setText(QString(u8"播放"));
+        ui->pushButton_pause->setCheckable(false);
+        ui->pushButton_finish->setText(QString(u8"下载"));
+        ui->pushButton_finish->setDisabled(false);
+        ui->pushButton_opencover->setDisabled(true);//封面不能更换
+        ui->stackedWidget_check->setCurrentWidget(ui->page_close);//显示关闭按钮
+        ui->pushButton_editinfo->hide();
+        ui->stackedWidget_check->hide();
+    }
+        break;
+    case CANEDIT://完成展示
     {
         m_rmenu = true;//可以右键
         ui->lineEdit_filename->setReadOnly(true);
@@ -398,7 +424,7 @@ void FilesItem::slot_setItemStart(bool start)
 //本地url和网络url作以区别
 void FilesItem::slot_setItemUrl(QUrl url)
 {
-    if(m_canedit == FILEEDIT::CANEDIT)
+    if(m_canedit == FILEEDIT::CANEDIT || m_canedit == FILEEDIT::DISPLAY)
         m_furl = url.toString();
         else
         m_furl = url.path().remove(0,1);
@@ -420,25 +446,29 @@ void FilesItem::slot_setItemName()
         ui->lineEdit_filename->setFocusPolicy(Qt::ClickFocus);
         ui->label_pic->setToolTip(m_name);
     }
-    else//需要解析
+    else//需要解析（CANEDIT情况 + DISPLAY情况）
     {
         ui->lineEdit_filename->setText(Base64ToQStr(m_name));//filename直接解析出来
+        ui->lineEdit_filename->setToolTip(nullptr);
         ui->lineEdit_displaytitle->setText(Base64ToQStr(m_name).split(".").first());//解析出来的文件名去后缀
     //    ui->lineEdit_filename->setCursorPosition(0);鼠标到达最左边
         ui->lineEdit_filename->setFocusPolicy(Qt::ClickFocus);
-        ui->label_pic->setToolTip(Base64ToQStr(m_name));
+        ui->label_pic->setToolTip(nullptr);
     }
 }
 
 //根据不同情况加载图片（视频截取或者自定义封面）
 void FilesItem::slot_setItemPicture()
 {
-    if(m_canedit == FILEEDIT::CANEDIT)//作品展示时，获取视频封面的方法（使用网络封面）
+    switch (m_canedit) {
+    case DISPLAY:
+    case CANEDIT:
     {
         manager->get(QNetworkRequest(QUrl(m_picpath)));//网络路径
         connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(slot_replyCoverFinished(QNetworkReply*)));
     }
-    else if(m_canedit == FILEEDIT::CANWRITE)//上传时获取视频封面的方法
+        break;
+    case CANWRITE://上传时获取视频封面的方法
     {
         QFileInfo info(m_furl);
         QString suffix = info.suffix();
@@ -474,30 +504,99 @@ void FilesItem::slot_setItemPicture()
         else if(suffix == "png")
         {
             ui->label_pic->setPixmap(QPixmap("://images/creator/fileitem_picture.png"));
-            if(m_canedit ==FILEEDIT::CANEDIT)
+            if(m_canedit ==FILEEDIT::CANEDIT || m_canedit ==FILEEDIT::DISPLAY)
                 ui->pushButton_pause->setHidden(true);
         }
         else if(suffix == "gif")
         {
             ui->label_pic->setPixmap(QPixmap("://images/creator/fileitem_picture.png"));
-            if(m_canedit ==FILEEDIT::CANEDIT)
+            if(m_canedit ==FILEEDIT::CANEDIT || m_canedit ==FILEEDIT::DISPLAY)
                 ui->pushButton_pause->setHidden(true);
         }
         else if(suffix == "jpg")
         {
             ui->label_pic->setPixmap(QPixmap("://images/creator/fileitem_picture.png"));
-            if(m_canedit ==FILEEDIT::CANEDIT)
+            if(m_canedit ==FILEEDIT::CANEDIT || m_canedit ==FILEEDIT::DISPLAY)
                 ui->pushButton_pause->setHidden(true);
         }
 
         else
         {
             ui->label_pic->setPixmap(QPixmap(":/images/creator/fileitem_videos.png"));
-            if(m_canedit ==FILEEDIT::CANEDIT)
+            if(m_canedit ==FILEEDIT::CANEDIT || m_canedit ==FILEEDIT::DISPLAY)
                 ui->pushButton_pause->setHidden(true);
         }
         ui->label_pic->setScaledContents(true);
     }
+        break;
+    default:
+        break;
+    }
+
+//    if(m_canedit == FILEEDIT::CANEDIT)//作品展示时，获取视频封面的方法（使用网络封面）
+//    {
+//        manager->get(QNetworkRequest(QUrl(m_picpath)));//网络路径
+//        connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(slot_replyCoverFinished(QNetworkReply*)));
+//    }
+//    else if(m_canedit == FILEEDIT::CANWRITE)//上传时获取视频封面的方法
+//    {
+//        QFileInfo info(m_furl);
+//        QString suffix = info.suffix();
+//        qDebug() << QString(u8"完成的item：url = %1, 后缀：%2").arg(m_furl).arg(suffix);
+//        if(suffix == "mp3")
+//        {
+//            ui->label_pic->setPixmap(QPixmap(":/images/creator/fileitem_music.png"));
+//        }
+//        else if(suffix == "aac")
+//        {
+//            ui->label_pic->setPixmap(QPixmap(":/images/creator/fileitem_music.png"));
+//        }
+//        else if(suffix == "mp4")
+//        {
+//            slot_getVideoPicure(m_furl.toStdString().c_str(),ui->label_pic);
+//        }
+//        else if(suffix == "flv")
+//        {
+//            slot_getVideoPicure(m_furl.toStdString().c_str(),ui->label_pic);
+//        }
+//        else if(suffix == "wav")
+//        {
+//            slot_getVideoPicure(m_furl.toStdString().c_str(),ui->label_pic);
+//        }
+//        else if(suffix == "3gp")
+//        {
+//            slot_getVideoPicure(m_furl.toStdString().c_str(),ui->label_pic);
+//        }
+//        else if(suffix == "avi")
+//        {
+//            slot_getVideoPicure(m_furl.toStdString().c_str(),ui->label_pic);
+//        }
+//        else if(suffix == "png")
+//        {
+//            ui->label_pic->setPixmap(QPixmap("://images/creator/fileitem_picture.png"));
+//            if(m_canedit ==FILEEDIT::CANEDIT)
+//                ui->pushButton_pause->setHidden(true);
+//        }
+//        else if(suffix == "gif")
+//        {
+//            ui->label_pic->setPixmap(QPixmap("://images/creator/fileitem_picture.png"));
+//            if(m_canedit ==FILEEDIT::CANEDIT)
+//                ui->pushButton_pause->setHidden(true);
+//        }
+//        else if(suffix == "jpg")
+//        {
+//            ui->label_pic->setPixmap(QPixmap("://images/creator/fileitem_picture.png"));
+//            if(m_canedit ==FILEEDIT::CANEDIT)
+//                ui->pushButton_pause->setHidden(true);
+//        }
+//        else
+//        {
+//            ui->label_pic->setPixmap(QPixmap(":/images/creator/fileitem_videos.png"));
+//            if(m_canedit ==FILEEDIT::CANEDIT)
+//                ui->pushButton_pause->setHidden(true);
+//        }
+//        ui->label_pic->setScaledContents(true);
+//    }
 }
 
 void FilesItem::slot_setItemDuration()

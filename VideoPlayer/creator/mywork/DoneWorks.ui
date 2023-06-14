@@ -597,7 +597,7 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #ba87b6, 
 }</string>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>8</number>
        </property>
        <widget class="QWidget" name="page_movies">
         <layout class="QVBoxLayout" name="verticalLayout_34">
@@ -838,21 +838,21 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #ba87b6, 
                </spacer>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_error">
+               <widget class="QToolButton" name="toolButton_error">
                 <property name="minimumSize">
                  <size>
                   <width>180</width>
-                  <height>60</height>
+                  <height>240</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>180</width>
-                  <height>60</height>
+                  <height>240</height>
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QPushButton
+                 <string notr="true">QToolButton
 {
 color: gray;
 font: 400 18px &quot;微软雅黑&quot;;
@@ -860,7 +860,7 @@ border: none;
 }</string>
                 </property>
                 <property name="text">
-                 <string>暂无该类型资源！</string>
+                 <string/>
                 </property>
                </widget>
               </item>

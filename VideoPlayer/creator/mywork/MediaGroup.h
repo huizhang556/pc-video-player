@@ -22,7 +22,8 @@
 enum   GROUPTYPE
 {
     G_NORMAL,
-    G_CUSTOM
+    G_CUSTOM,
+    G_DISPLAY
 };
 
 namespace Ui {

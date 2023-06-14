@@ -15,6 +15,7 @@
 #include "fileshandle/DownloadType.h"
 #include "videomodels/AdvDialog.h"
 #include "videomodels/MultipPlayer.h"
+#include "videomodels/PersonFileForm.h"
 #include "mainwidget/AniStackWidget.h"
 #include "splashscreen/CSplashScreen.h"
 //#include "facebread/myemotionwindow.h"
@@ -136,7 +137,7 @@ int main(int argc, char *argv[])
         }
 
         //05--->显示主界面
-#if 1
+#if 0
 //            SystemSetting s; s.show();
 //        MyAllFile myfile; myfile.show();
         //    ScrollToTop::getInstance()->show();
@@ -176,8 +177,9 @@ int main(int argc, char *argv[])
 //            MainNotice w1;
 //            w1.show();
 
-            CreateCenter::getInstance()->exec_();
+//            CreateCenter::getInstance()->exec_();
 
+              PersonFileForm p; p.show();
         //    MyEmotionWindow w1;
         //    w1.showNormalEmotion(QPoint(500 , 500));
         //    DownloadType::getInstance()->show();

@@ -30,7 +30,7 @@ void Income::initWorkUI()
     ui->tableWidget_records->setSelectionBehavior(QAbstractItemView::SelectRows);//选择行为
     ui->tableWidget_records->setSelectionMode(QAbstractItemView::SingleSelection);//选择模式
     ui->tableWidget_records->horizontalHeader()->setSectionsMovable(true);//表头section可以拖动
-    ui->tableWidget_records->horizontalHeader()->setHighlightSections(false);
+    ui->tableWidget_records->horizontalHeader()->setHighlightSections(false);//点击表时不对headerView(表头行)光亮（获取焦点），解决表头塌陷
     ui->tableWidget_records->setColumnWidth(0,200);
     ui->tableWidget_records->setColumnWidth(1,350);
     ui->tableWidget_records->setColumnWidth(2,150);

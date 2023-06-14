@@ -9,10 +9,10 @@ SortDialog::SortDialog(QWidget *parent) :
     ui(new Ui::SortDialog)
 {
     ui->setupUi(this);
-    resize(1225,680);
+    resize(1205,711);
     setTitleBarMoveArea(ui->frame_title,2);
     setContentsMargins(2,2,2,2);
-    setWindowTitle(QString(u8"视频归类"));
+    setWindowTitle(QString(u8"视频管理"));
     initWorkUI();
     handleSignalsAndSlots();
     setInstallEventFilter();
@@ -29,6 +29,9 @@ SortDialog::~SortDialog()
 
 void SortDialog::initWorkUI()
 {
+    ui->pushButton_icon->setIcon(QIcon("://images/creator/video_title.png"));
+    ui->pushButton_icon->setIconSize(QSize(28,26));
+
     ui->stackedWidget_heji_ctl->setCurrentWidget(ui->page_operate_heji);
     ui->stackedWidget_medias_ctl->setCurrentWidget(ui->page_operate_medias);
 
@@ -39,6 +42,8 @@ void SortDialog::initWorkUI()
 
     ui->comboBox_heji->setView(new QListView());
     ui->comboBox_medias->setView(new QListView());
+
+
 
     ui->comboBox_medias->addItem(QString(u8"电影"),QString(u8"movies"));
     ui->comboBox_medias->addItem(QString(u8"网络剧"),QString(u8"netdrama"));
@@ -76,9 +81,14 @@ void SortDialog::initWorkUI()
 
 void SortDialog::handleSignalsAndSlots()
 {
-    //初始化
-    connect(this,&SortDialog::sig_init,[=](){
+    //合集初始化
+    connect(this,&SortDialog::sig_init_HJ,[=](){
         slot_initCurUserGroups();
+    });
+
+    //专集初始化
+    connect(this,&SortDialog::sig_init_ZJ,[=](){
+        slot_initCurUserAlbums();
     });
 
     //最小化
@@ -143,15 +153,41 @@ void SortDialog::handleSignalsAndSlots()
 
     //合集--移除（部分选中移除）
     connect(ui->pushButton_heji_del,&QPushButton::clicked,[=](){
-        slot_removeItemsFromHJ_DB_UI();//遍历循环单个移除(部分选中的情况)
+        switch (m_type) {
+        case TYPE_HJ:
+        {
+         slot_removeItemsFromHJ_DB_UI();//遍历循环单个移除(部分选中的情况)
+        }
+            break;
+        case TYPE_ZJ:
+        {
+        slot_removeItemsFromZJ_DB_UI();//遍历循环单个移除(部分选中的情况)
+        }
+            break;
+        default:
+            break;
+        }
     });
 
     //合集--移除合集内所有item
     connect(ui->pushButton_clear_HJ,&QPushButton::clicked,[=](){
-        slot_removeItemsFromHJ_DB_UI();//遍历循环单个移除(全选中的情况)
+        switch (m_type) {
+        case TYPE_HJ:
+        {
+         slot_removeItemsFromHJ_DB_UI();//遍历循环单个移除(全选中的情况)
+        }
+            break;
+        case TYPE_ZJ:
+        {
+        slot_removeItemsFromZJ_DB_UI();//遍历循环单个移除(全选中的情况)
+        }
+            break;
+        default:
+            break;
+        }
     });
 
-    //分类--批量操作
+    //右侧分类--批量操作
     connect(ui->pushButton_medias_operate,&QPushButton::clicked,[=](){
         ui->stackedWidget_medias_ctl->setCurrentWidget(ui->page_operate_medias_all);
         ui->comboBox_medias->setEnabled(false);
@@ -161,7 +197,7 @@ void SortDialog::handleSignalsAndSlots()
         }
     });
 
-    //分类--退出批量操作
+    //右侧分类--退出批量操作
     connect(ui->pushButton_medias_exit,&QPushButton::clicked,[=](){
         ui->stackedWidget_medias_ctl->setCurrentWidget(ui->page_operate_medias);
         ui->comboBox_medias->setEnabled(true);
@@ -171,7 +207,7 @@ void SortDialog::handleSignalsAndSlots()
         }
     });
 
-    //分类--全选
+    //右侧分类--全选
     connect(ui->pushButton_medias_selall,&QPushButton::clicked,[=](){
         ui->comboBox_medias->setEnabled(false);
         for(int i = 0; i < ui->listWidget_content_R->count(); i++)
@@ -181,7 +217,7 @@ void SortDialog::handleSignalsAndSlots()
         }
     });
 
-    //分类--清除选中项
+    //右侧分类--清除选中项
     connect(ui->pushButton_medias_seldel,&QPushButton::clicked,[=](){
         for(int i = 0; i < ui->listWidget_content_R->count(); i++)
         {
@@ -193,30 +229,78 @@ void SortDialog::handleSignalsAndSlots()
         ui->comboBox_medias->setEnabled(true);
     });
 
-    //分类--移除(部分选中移除)
+    //右侧分类--移除(部分选中移除,不区别类型)
     connect(ui->pushButton_medias_del,&QPushButton::clicked,[=](){
         slot_removeItemsFromSort_DB_UI();//从对应分类数据库删除所有勾选的item并更新UI
     });
 
-    //分类--分类选中媒体添加到合集(部分选中)
+    //右侧分类--分类选中媒体添加到合集(部分选中)
     connect(ui->pushButton_addtoHJ,&QPushButton::clicked,[=](){
-        //数据库插入新的items数据
-        slot_addCheckedItemsFromSortToHJ_DB();
-        //右侧分类列表所有items添加完毕后，左侧合集列表进行更新（不管是否插入成功，都要进行更新）
-        slot_combobox_HJ_changed(ui->comboBox_heji->currentIndex());
+        switch (m_type) {
+        case TYPE_HJ:
+        {
+            //1.数据库插入新的items数据
+            slot_addCheckedItemsFromSortToHJ_DB();
+            //2.右侧分类列表所有items添加完毕后，左侧合集列表进行更新（不管是否插入成功，都要进行更新）
+            slot_combobox_HJ_changed(ui->comboBox_heji->currentIndex());
+        }
+            break;
+        case TYPE_ZJ:
+        {
+            //1.数据库插入新的items数据
+            slot_addCheckedItemsFromSortToZJ_DB();
+            //2.右侧分类列表所有items添加完毕后，左侧专辑列表进行更新（不管是否插入成功，都要进行更新）
+            slot_combobox_ZJ_changed(ui->comboBox_heji->currentIndex());
+        }
+            break;
+        default:
+            break;
+        }
+
     });
 
-    //分类--全部添加到对应合集(所有选中的items)
+    //右侧分类--全部添加到对应合集(所有选中的items)
     connect(ui->pushButton_addtoHJ_all,&QPushButton::clicked,[=](){
-        //数据库插入新的items数据
-        slot_addCheckedItemsFromSortToHJ_DB();
-        //右侧分类列表添加完毕，左侧合集列表进行更新（不管是否插入成功，都要进行更新）
-        slot_combobox_HJ_changed(ui->comboBox_heji->currentIndex());
+        switch (m_type) {
+        case TYPE_HJ:
+        {
+            //1.数据库插入新的items数据
+            slot_addCheckedItemsFromSortToHJ_DB();
+            //2.右侧分类列表添加完毕，左侧合集列表进行更新（不管是否插入成功，都要进行更新）
+            slot_combobox_HJ_changed(ui->comboBox_heji->currentIndex());
+        }
+            break;
+        case TYPE_ZJ:
+        {
+            //1.数据库插入新的items数据
+            slot_addCheckedItemsFromSortToZJ_DB();
+            //2.右侧分类列表添加完毕，左侧合集列表进行更新（不管是否插入成功，都要进行更新）
+            slot_combobox_ZJ_changed(ui->comboBox_heji->currentIndex());
+        }
+            break;
+        default:
+            break;
+        }
+
     });
 
-    //合集选择
+    //专辑/合集选择
     connect(ui->comboBox_heji,QOverload<int>::of(&QComboBox::activated),[=](int index){
+        switch (m_type) {
+        case TYPE_HJ:
+        {
         slot_combobox_HJ_changed(index);
+        }
+            break;
+        case TYPE_ZJ:
+        {
+        slot_combobox_ZJ_changed(index);
+        }
+            break;
+        default:
+            break;
+        }
+
     });
 
     //类型选择
@@ -251,10 +335,13 @@ SortDialog *SortDialog::getInstance()
     return m_pInstance;
 }
 
-void SortDialog::exec_(const QString &group_id)
+void SortDialog::exec_(SORTTYPE TYPE, const QString &sort_id)
 {
-    m_groupid = group_id;
-    emit sig_init();
+    m_type = TYPE;
+    setCurSortId(sort_id);
+    setSortType();//根据类型来进行初始化(标题和combobox内容)
+    switchTitle();//设置名称
+    resize(1205,711);
     this->exec();
 }
 
@@ -291,6 +378,74 @@ bool SortDialog::eventFilter(QObject *watched, QEvent *event)
     return QWidget::eventFilter(watched,event);
 }
 
+//根据类型设置不同的id
+void SortDialog::setCurSortId(const QString &sort_id)
+{
+    switch (m_type) {
+    case TYPE_ZJ:
+    {
+        m_albumid = sort_id;
+    }
+        break;
+    case TYPE_HJ:
+    {
+        m_groupid = sort_id;
+    }
+        break;
+    default:
+        break;
+    }
+}
+
+void SortDialog::setSortType()
+{
+    switch (m_type) {
+    case TYPE_ZJ:
+    {
+        emit sig_init_ZJ();//初始化专辑
+    }
+        break;
+    case TYPE_HJ:
+    {
+        emit sig_init_HJ();//初始化合集
+    }
+        break;
+    default:
+        break;
+    }
+}
+
+void SortDialog::switchTitle()
+{
+    switch (m_type) {
+    case TYPE_HJ://合集显示内容
+    {
+        ui->pushButton_heji_title->setText(QString(u8"合集管理"));
+        ui->label_curHJ->setText(QString(u8"当前合集："));
+        ui->label_searchHJ->setText(QString(u8"检索合集视频："));
+        ui->pushButton_clear_HJ->setText(QString(u8"清空当前合集"));
+        ui->pushButton_downloadall_HJ->setText(QString(u8"下载合集所有内容"));
+        ui->pushButton_addtoHJ->setText(QString(u8"加入合集"));
+        ui->pushButton_addtoHJ_all->setText(QString(u8"全部加入合集"));
+    }
+        break;
+    case TYPE_ZJ://专辑显示内容
+    {
+        ui->pushButton_heji_title->setText(QString(u8"专辑管理"));
+        ui->label_curHJ->setText(QString(u8"当前专辑："));
+        ui->label_searchHJ->setText(QString(u8"检索专辑视频："));
+        ui->pushButton_clear_HJ->setText(QString(u8"清空当前专辑"));
+        ui->pushButton_downloadall_HJ->setText(QString(u8"下载专辑所有内容"));
+        ui->pushButton_addtoHJ->setText(QString(u8"加入专辑"));
+        ui->pushButton_addtoHJ_all->setText(QString(u8"全部加入专辑"));
+    }
+        break;
+    default:
+        break;
+    }
+}
+
+//listwidget进行内容搜索
 void SortDialog::findKeyWordResult(QListWidget *listwidget, QString keyword)
 {
     if(listwidget->count() == 0) return;
@@ -359,6 +514,18 @@ FilesItem *SortDialog::getItemWidget(QListWidgetItem *item, const QString &objna
     }
 }
 
+//添加当前用户下用户专集
+void SortDialog::slot_initCurUserAlbums()
+{
+    //添加所有合集
+    QList<QUrlQuery> querys = dataBase::getInstance()->album_getCurUserAllAlbums(dataBase::getInstance()->getCurrentUserID());
+    qDebug() << QString(u8"当前用户下查找到专集的个数：%1").arg(querys.count());
+    if(!querys.isEmpty())
+    {
+        slot_addItemsTo_ZJ(querys,m_albumid);//combobox添加items，并跳转显示对应的album_id内容
+    }
+}
+
 //添加当前用户下用户合集
 void SortDialog::slot_initCurUserGroups()
 {
@@ -367,13 +534,31 @@ void SortDialog::slot_initCurUserGroups()
     qDebug() << QString(u8"当前用户下查找到合集的个数：%1").arg(querys.count());
     if(!querys.isEmpty())
     {
-        slot_addItemsTo_HJ(querys,m_groupid);
+        slot_addItemsTo_HJ(querys,m_groupid);//combobox添加items，并跳转显示对应的group_id内容
+    }
+}
+
+//添加某个用户下所有专集(combobox展示)
+void SortDialog::slot_addItemsTo_ZJ(QList<QUrlQuery> &querys, const QString &a_id)
+{
+    ui->comboBox_heji->clear();//先清除items
+    for(int i = 0; i < querys.count(); i++)
+    {
+        ui->comboBox_heji->addItem(querys.at(i).queryItemValue(u8"album_name"),querys.at(i).queryItemValue(u8"album_id"));
+    }
+    for(int i = 0; i < ui->comboBox_heji->count(); i++)
+    {
+        if(ui->comboBox_heji->itemData(i).toString() == a_id)
+        {
+            ui->comboBox_heji->setCurrentIndex(i);
+        }
     }
 }
 
 //添加某个用户下所有合集
 void SortDialog::slot_addItemsTo_HJ(QList<QUrlQuery>& querys, const QString& g_id)
 {
+    ui->comboBox_heji->clear();//先清除items
     for(int i = 0; i < querys.count(); i++)
     {
         ui->comboBox_heji->addItem(querys.at(i).queryItemValue(u8"group_name"),querys.at(i).queryItemValue(u8"group_id"));
@@ -536,6 +721,59 @@ void SortDialog::slot_removeItemsFromHJ_DB_UI()
     }
 }
 
+//分类往对应专辑数据库添加新的(已经勾选的)itmes，并刷新
+void SortDialog::slot_addCheckedItemsFromSortToZJ_DB()
+{
+    for(int i = 0; i < ui->listWidget_content_R->count(); i++)
+    {
+        if(!ui->listWidget_content_R->isRowHidden(i))
+        {
+            if(getItemCheckedButton(ui->listWidget_content_R->item(i),"checkBox_selall")->isChecked())
+            {
+                int f_id = getItemWidget(ui->listWidget_content_R->item(i),"FilesItem")->getItem_fid();
+                bool isOK = dataBase::getInstance()->album_insertOneToAlbums(m_albumid,f_id);
+                if(isOK)
+                {
+                    qDebug() <<QString(u8"文件ID为：%1 插入专辑ID为：%2 的专辑成功~！").arg(f_id).arg(m_albumid);
+                }
+                else
+                {
+                    qDebug() << QString(u8"文件ID:%1已存在或者数据插入失败！").arg(f_id);
+                }
+            }
+        }
+    }
+}
+
+//从对应专辑数据库删除所有勾选的item并更新UI
+void SortDialog::slot_removeItemsFromZJ_DB_UI()
+{
+    for(int i = 0; i < ui->listWidget_content_L->count(); i++)
+    {
+        if(!ui->listWidget_content_L->isRowHidden(i))
+        {
+            if(getItemCheckedButton(ui->listWidget_content_L->item(i),"checkBox_selall")->isChecked())
+            {
+                int f_id = getItemWidget(ui->listWidget_content_L->item(i),"FilesItem")->getItem_fid();
+                qDebug() << QString(u8"专辑：%1要删除的文件的ID:%2").arg(m_albumid).arg(f_id);
+                bool OK = dataBase::getInstance()->album_removeOneFromAlbums(m_albumid,f_id);
+                if(OK)
+                {
+                    //数据库删除成功后，列表显示再移除
+                    getItemWidget(ui->listWidget_content_L->item(i),"FilesItem")->disconnect();
+                    getItemWidget(ui->listWidget_content_L->item(i),"FilesItem")->deleteLater();
+                    delete ui->listWidget_content_L->takeItem(i);
+                    qDebug() <<QString(u8"文件ID为：%1 从专辑ID为：%2 的专辑删除成功~！").arg(f_id).arg(m_albumid);
+                }
+                else
+                {
+                    qDebug() <<QString(u8"从专辑：%1 中删除ID为：%2 的文件失败！").arg(m_albumid).arg(f_id);
+                }
+            }
+        }
+    }
+}
+
 //从对应分类数据库删除所有勾选的item并更新UI
 void SortDialog::slot_removeItemsFromSort_DB_UI()
 {
@@ -564,6 +802,7 @@ void SortDialog::slot_removeItemsFromSort_DB_UI()
         }
     }
 }
+
 
 //响应合集改变
 void SortDialog::slot_combobox_HJ_changed(int index)
@@ -606,6 +845,47 @@ void SortDialog::slot_combobox_HJ_changed(int index)
     }
 }
 
+//响应专辑改变
+void SortDialog::slot_combobox_ZJ_changed(int index)
+{
+    ui->listWidget_content_L->clear();
+    qDebug() << QString(u8"zhuanji索引改变了,index data:") << ui->comboBox_heji->itemData(index).toString();
+    if(index != -1)//索引有效
+    {
+        QString album_name = ui->comboBox_heji->itemText(index);
+        QString album_id   = ui->comboBox_heji->itemData(index).toString();
+        m_albumid = album_id;//随着item改变m_albumid也跟着改变
+        if(!album_name.isEmpty())
+        {
+            //如果数据量比较大，会产生阻塞，界面不能动（需改进）
+            QList<QVariant> medias = dataBase::getInstance()->album_getCurUserOneAlbumAllMedias(album_id);
+            qDebug() << QString(u8"当前用户下查找到专辑下面items的个数：%1").arg(medias.count());
+            if(medias.count() == 0)
+            {
+                ui->stackedWidget_context_L->setCurrentIndex(1);
+                ui->label_L_blank->setPixmap(QPixmap(":/images/bgpic/nothing.png"));
+                ui->label_L_blank->setScaledContents(true);
+                ui->pushButton_heji_blank->setText(QString(u8"该类型暂无资源！"));
+            }
+            else
+            {
+                ui->stackedWidget_context_L->setCurrentIndex(1);
+                ui->label_L_blank->setPixmap(QPixmap(":/images/bgpic/nothing.png"));
+                ui->label_L_blank->setScaledContents(true);
+                ui->pushButton_heji_blank->setText(QString(u8"资源加载中..."));
+                QTimer::singleShot(1500,0,[=](){
+                    ui->stackedWidget_context_L->setCurrentIndex(0);
+                });
+            }
+            //正式添加媒体
+            if(!medias.isEmpty())
+            {
+                slot_addItemsTo_MEDIA(medias);
+            }
+        }
+    }
+}
+
 //响应分类改变
 void SortDialog::slot_combobox_SORT_changed(int index)
 {
@@ -617,7 +897,7 @@ void SortDialog::slot_combobox_SORT_changed(int index)
         QString type_name   = ui->comboBox_medias->itemText(index);
         QString type_data   = ui->comboBox_medias->itemData(index).toString();
         //如果数据量比较大，会产生阻塞，界面不能动（需改进）
-        QList<QVariant> sort_medias = dataBase::getInstance()->group_getCurUserOneSortAllMedias(type_data);
+        QList<QVariant> sort_medias = dataBase::getInstance()->sort_getCurUserOneSortAllMedias(type_data);
         qDebug() << QString(u8"当前用户下查找到合集下面items的个数：%1").arg(sort_medias.count());
         if(sort_medias.count() == 0)
         {

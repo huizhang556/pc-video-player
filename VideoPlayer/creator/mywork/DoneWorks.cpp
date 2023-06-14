@@ -104,6 +104,11 @@ void DoneWorks::initWorkUI()
     ui->pushButton_donegroup->setCheckable(true);
     ui->pushButton_album->setCheckable(true);
 
+    //提示文字
+    ui->toolButton_error->setIcon(QIcon(":/images/bgpic/nothing.png"));
+    ui->toolButton_error->setIconSize(QSize(180,180));
+    ui->toolButton_error->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
     //作品列表--左侧
     for(int i = 0; i<m_producelist.count();i++)
     {
@@ -149,12 +154,20 @@ void DoneWorks::handleSignalsAndSlots()
 
     //创建专辑
     connect(ui->pushButton_menu_album,&QPushButton::clicked,[=](){
-
+        QString albumid = dataBase::getInstance()->album_insertAlbums(dataBase::getInstance()->getCurrentUserID(),QString(u8"自定义专辑"),QString(u8"http://43.143.226.251:8080/group1/header_pic/20230403180134795.png"));
+        if(!albumid.isEmpty())
+        {
+            slot_addItemToAlbumList(GROUPTYPE::G_CUSTOM,QString(u8"自定义专辑"), QString(""), albumid);
+        }
+        else
+        {
+            qDebug() << QString(u8"数据库返回albumid为空!");
+            return;
+        }
     });
 
     //创建合集
     connect(ui->pushButton_menu_hehi,&QPushButton::clicked,[=](){
-//        createHJ_ContextMenu();
         QString groupid = dataBase::getInstance()->group_insertGroups(dataBase::getInstance()->getCurrentUserID(),QString(u8"自定义合集"),QString(u8"http://43.143.226.251:8080/group1/header_pic/20230403180134795.png"));
         if(!groupid.isEmpty())
         {
@@ -238,9 +251,19 @@ void DoneWorks::handleSignalsAndSlots()
     });
 
 
+    //接收当前请用户下album集合
+    connect(dataBase::getInstance(),&dataBase::sig_album_allalbums,[=](QString g_name,QString g_pix,QString g_id){
+        slot_addItemToAlbumList(GROUPTYPE::G_NORMAL,g_name, g_pix, g_id);
+    });
+
     //接收当前请用户下group集合
     connect(dataBase::getInstance(),&dataBase::sig_group_allgroups,[=](QString g_name,QString g_pix,QString g_id){
         slot_addItemToGroupList(GROUPTYPE::G_NORMAL,g_name, g_pix, g_id);
+    });
+
+    //接收到对应的group传回来的items
+    connect(dataBase::getInstance(),&dataBase::sig_album_albumMedias,[=](QVariant& var){
+        slot_addItmeToAlbumIDList(var);
     });
 
     //接收到对应的group传回来的items
@@ -297,7 +320,7 @@ void DoneWorks::slot_addItemToGroupList(GROUPTYPE TYPE, const QString &name, con
     //关联信号与槽函数
     //添加媒体
     connect(itemWidget,&MediaGroup::sig_item_additem,[=](){
-        SortDialog::getInstance()->exec_(group_id);
+        SortDialog::getInstance()->exec_(SORTTYPE::TYPE_HJ,group_id);
     });
     //合集点击重新展示合集下的items
     connect(itemWidget,&MediaGroup::sig_item_clicked,[=](){
@@ -326,7 +349,7 @@ void DoneWorks::slot_addItemToGroupList(GROUPTYPE TYPE, const QString &name, con
     connect(itemWidget,&MediaGroup::sig_item_newCover,dataBase::getInstance(),&dataBase::group_updateGroupsCover);
 }
 
-//合集列表展示
+//合集items列表展示
 void DoneWorks::slot_addItmeToGroupIDList(QVariant& media)
 {
     fileBody body = media.value<fileBody>();//通用类型转为专用类型
@@ -538,7 +561,7 @@ LabLoading *DoneWorks::getProgresslable(QListWidgetItem *item, const QString &ob
 void DoneWorks::showErrorPageMessage(QWidget *page, const QString &message)
 {
     ui->stackedWidget_produce->setCurrentWidget(page);
-    ui->pushButton_error->setText(message);
+    ui->toolButton_error->setText(message);
 }
 
 void DoneWorks::createHJ_ContextMenu()
@@ -577,6 +600,98 @@ void DoneWorks::slot_setUserTagsWorkCounts(QStringList &list_counts)
             qDebug() << QString(u8"设置数量的item 没找到！");
         }
     }
+}
+
+//查询初始化当前用户下所有专集
+void DoneWorks::slot_initUserAlbums()
+{
+    ui->listWidget_albums->clear();
+    dataBase::getInstance()->album_getCurUserAlbums(dataBase::getInstance()->getCurrentUserID());//获取当前用户下专集
+}
+
+//添加专集
+void DoneWorks::slot_addItemToAlbumList(GROUPTYPE TYPE, const QString &name, const QString &pix_url, const QString &album_id)
+{
+    MediaGroup *itemWidget = new MediaGroup(TYPE,album_id,name,pix_url);
+    itemWidget->setFixedSize(200,120);
+    QListWidgetItem *item = new QListWidgetItem();
+    item->setData(Qt::UserRole,album_id);
+    item->setSizeHint(itemWidget->size() + QSize(10,10));
+    ui->listWidget_albums->addItem(item);
+    ui->listWidget_albums->setItemWidget(item,itemWidget);
+    ui->listWidget_albums->setCurrentItem(item);
+    //关联信号与槽函数
+    //添加媒体
+    connect(itemWidget,&MediaGroup::sig_item_additem,[=](){
+        SortDialog::getInstance()->exec_(SORTTYPE::TYPE_ZJ,album_id);
+    });
+    //专集点击重新展示专集下的items
+    connect(itemWidget,&MediaGroup::sig_item_clicked,[=](){
+        ui->listWidget_albumitems->clear();//先清除items
+        ui->stackedWidget_produce->setCurrentWidget(ui->page_album);
+        dataBase::getInstance()->album_getCurUserAlbumMedias(album_id);//加载对应group_id下的items
+    });
+    //专集重命名
+    connect(itemWidget,&MediaGroup::sig_item_rename,[=](const QString name){
+        dataBase::getInstance()->album_updateAlbumsName(album_id,name);//专集重命名
+    });
+    //专集删除
+    connect(itemWidget,&MediaGroup::sig_item_delete,[=](){
+        bool ok = dataBase::getInstance()->album_removeAlbums(album_id);
+        if(ok)
+        {
+            itemWidget->disconnect();
+            itemWidget->deleteLater();
+            ui->listWidget_albums->takeItem(ui->listWidget_albums->row(item));
+            delete item;
+            ui->listWidget_albumitems->clear();
+        }
+    });
+
+    //专集替换新封面，更新封面链接
+    connect(itemWidget,&MediaGroup::sig_item_newCover,dataBase::getInstance(),&dataBase::album_updateAlbumsCover);
+}
+
+//添加某个专集的item
+void DoneWorks::slot_addItmeToAlbumIDList(QVariant &media)
+{
+    fileBody body = media.value<fileBody>();//通用类型转为专用类型
+    qDebug() << QString(u8"[album_id]接收到数据库查询返回的信息，要被创建新的ITEM信息如下:") << endl;
+    qDebug() << "fid" << body.fid << endl;
+    qDebug() << "fnick" << body.fnick << endl;
+    qDebug() << "furl"  << body.furl << endl;
+    qDebug() << "fduration" << body.fduration << endl;
+    qDebug() << "fcover" << body.fcover << endl;
+    qDebug() << "fmedtype" << body.fmedtype << endl;
+    qDebug() << "fmedtheme" << body.fmedtheme << endl;
+    qDebug() << "fsize" << body.fsize << endl;
+
+    QListWidgetItem *item = new QListWidgetItem(body.fnick);//介绍
+    item->setData(Qt::UserRole,body.furl);
+    FilesItem *itemWidget = new FilesItem(FILEEDIT::CANEDIT,body.fid,body.furl,body.fsize,body.fcover);
+    itemWidget->initFileItem(body);
+    item->setSizeHint(DITEMSIZE);
+    item->setTextAlignment(Qt::AlignRight | Qt::AlignCenter);
+
+    ui->listWidget_albumitems->addItem(item);
+    ui->listWidget_albumitems->setItemWidget(item,itemWidget);
+
+    //信号与槽函数
+    //播放
+    connect(itemWidget,&FilesItem::sig_sendItem_play,[=](){
+    QUrlQuery query;
+    query.addQueryItem(u8"id",QString::number(body.fid));
+    query.addQueryItem(u8"url",item->data(Qt::UserRole).toString());
+    query.addQueryItem(u8"nick",body.fnick);
+    query.addQueryItem(u8"pos","0");
+    MultipPlayer::getInstance()->slot_addTempPlaylist(666,QStringList{item->data(Qt::UserRole).toString()},query);
+    });
+    //下载
+    connect(itemWidget,&FilesItem::sig_sendItem_download,[=](QUrlQuery query){
+        QString nick = query.queryItemValue(QString(u8"nick"));
+        QString url = query.queryItemValue(QString(u8"url"));
+        DownloadType::getInstance()->showDownloadForm(1,nick,url);
+    });
 }
 
 //查询初始化当前用户下合集组

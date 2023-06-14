@@ -99,6 +99,7 @@ void CreateCenter::handleSignalsAndSlots()
     connect(ui->tabWidget_create,&QTabWidget::currentChanged,[=](int index){
         if(ui->tabWidget_create->widget(index) == m_doneWorks)//已完成作品列表
         {
+           m_doneWorks->slot_initUserAlbums();//初始化对应用户的专辑组
            m_doneWorks->slot_initUserGroups();//初始化对应用户的合集组
            QStringList list_counts = dataBase::getInstance()->creator_getAllTagsWorkCounts();//获取各个类型的媒体数量
            m_doneWorks->slot_setUserTagsWorkCounts(list_counts);

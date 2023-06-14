@@ -55,7 +55,8 @@ Q_DECLARE_METATYPE(fileBody)
 enum FILEEDIT
 {
     CANWRITE,//可编辑
-    CANEDIT  //只读
+    CANEDIT, //只读
+    DISPLAY //展示
 };
 
 //ITEM状态

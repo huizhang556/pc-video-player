@@ -114,6 +114,9 @@ public slots:
     //通用
     //关于某一个用户信息
     QUrlQuery               user_getCurMediaUserInfo(const QString& user_id);//查询用户信息
+    bool                    user_operate_toWatch(const int media_id);//播放量+1（watches）
+    bool                    user_operate_toFollow(const QString& user_id,const QString& follow_id,const int media_id);//关注成为粉丝(fans)
+    bool                    user_operate_toUplove(const QString& user_id,const QString& follow_id,const int media_id);//收藏点赞（uplove）
 
     //表通用查询
     int                     getTableRecordsCounts(const QString& tablename);//查询某张表记录总数
@@ -162,6 +165,10 @@ public slots:
     bool                    video_getVideoMediaSortType();//获取视频分类
 
     //查询作品
+    QList<QVariant>&        creator_getCurUserAllDramas(const QString &user_id);//获取用户下的所有上传视频列表
+    QList<QUrlQuery>&       creator_getCurUserAllAlbums(const QString &user_id);//获取用户下的所有专辑列表
+    QList<QUrlQuery>&       creator_getCurUserAllGroups(const QString &user_id);//获取用户下的所有合集列表
+
     bool                    creator_getdoneWorks(const QString& tags);//按标签查询作品  
     int                     creator_getdoneWorkCounts(const QString& tags);//查询数量
     QStringList             creator_getAllTagsWorkCounts();//查询所有标签的媒体数量
@@ -178,20 +185,31 @@ public slots:
     bool                    header_deleteUserHisHeader(const QString &user_id, const QString& pix_id);//删除用户历史头像
 
     //用户专辑
-
+    bool                    album_getCurUserAlbums(const QString &user_id);//获取当前用户的所有专辑（信号槽发送）
+    QList<QUrlQuery>&       album_getCurUserAllAlbums(const QString &user_id);//获取某个用户所有的专辑
+    bool                    album_getCurUserAlbumMedias(const QString& album_id);//获取当前用户的某个专辑下所有媒体（信号槽发送）
+    QList<QVariant>&        album_getCurUserOneAlbumAllMedias(const QString& album_id);//获取某个用户某个专集所有的items
+    QString                 album_insertAlbums(const QString& user_id, const QString& album_name, const QString& album_pix);//添加某一个专集
+    bool                    album_removeAlbums(const QString& album_id);//删除某个专辑及其专辑下面的媒体
+    bool                    album_updateAlbumsName(const QString& album_id,const QString& albumName);//更新某个专集名称
+    bool                    album_updateAlbumsCover(const QString& album_id,const QString& albumCover);//更新某个专辑封面
+    bool                    album_insertOneToAlbums(const QString& album_id,const int media_id);//将某个媒体添加到专集当中
+    bool                    album_removeOneFromAlbums(const QString& album_id,const int media_id);//从某个专集中删除某个媒体
 
     //用户合集
-    bool                    group_getCurUserGroups(const QString &user_id);//获取当前用户的所有合集
-    QList<QUrlQuery>&       group_getCurUserAllGroups(const QString &user_id);
-    bool                    group_getCurUserGroupMedias(const QString& group_id);//获取当前用户的某个合集下所有媒体
-    QList<QVariant>&        group_getCurUserOneGroupAllMedias(const QString& group_id);
-    QList<QVariant>&        group_getCurUserOneSortAllMedias(const QString& tags);
+    bool                    group_getCurUserGroups(const QString &user_id);//获取当前用户的所有合集（信号槽发送）
+    QList<QUrlQuery>&       group_getCurUserAllGroups(const QString &user_id);//获取某个用户所有的合集
+    bool                    group_getCurUserGroupMedias(const QString& group_id);//获取当前用户的某个合集下所有媒体（信号槽发送）
+    QList<QVariant>&        group_getCurUserOneGroupAllMedias(const QString& group_id);//获取某个用户某个合集所有的items
     QString                 group_insertGroups(const QString& user_id, const QString& group_name, const QString& group_pix);//添加某个合集
-    bool                    group_removeGroups(const QString& group_id);//删除某个合集
+    bool                    group_removeGroups(const QString& group_id);//删除某个合集及其专辑下面的媒体
     bool                    group_updateGroupsName(const QString& group_id,const QString& groupName);//更新合集名称
     bool                    group_updateGroupsCover(const QString& group_id,const QString& groupCover);//更新合集封面
     bool                    group_insertOneToGroups(const QString& group_id,const int media_id);//将某个媒体添加到合集当中
     bool                    group_removeOneFromGroups(const QString& group_id,const int media_id);//从合集中删除某个媒体
+
+    //分类--媒体分类
+    QList<QVariant>&        sort_getCurUserOneSortAllMedias(const QString& tags);//查询某个分类下的所有媒体
 
     //用户收益数据
     QList<QStringList>&     income_getUserIncomeRecords(const QString& user_id,const QString& data_start,const QString& data_end);//获取用户收益
@@ -224,10 +242,20 @@ private:
     bool                    m_online;//是否在线
     QPixmap                 m_curHeadPix;//用户头像
 
+    //所有视频作品
+    QList<QVariant>        m_videos;
+
+    //专辑
+    QList<QUrlQuery>       m_albums;//所有合集
+    QList<QVariant>        m_albumItems;//某个合集所有item
+
     //合集
     QList<QUrlQuery>       m_groups;//所有合集
     QList<QVariant>        m_groupItems;//某个合集所有item
+
+    //媒体分类
     QList<QVariant>        m_sortItems;//某个分类类型下所有item
+    //广告
     QList<QVariant>        m_advItems;
 
     //收益
@@ -277,8 +305,13 @@ signals:
     void        sig_header_woman(QString);
     void        sig_header_gif(QString);
 
+    //合集
     void        sig_group_allgroups(QString,QString,QString);//name + pix + id
     void        sig_group_groupMedias(QVariant&);//返回媒体信息
+
+    //专辑
+    void        sig_album_allalbums(QString,QString,QString);//name + pix + id
+    void        sig_album_albumMedias(QVariant&);//返回媒体信息
 };
 
 #endif // DATABASE_H

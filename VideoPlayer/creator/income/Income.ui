@@ -1410,7 +1410,7 @@ border: 1px solid #57e5ff;
             <item>
              <widget class="QStackedWidget" name="stackedWidget_showType">
               <property name="currentIndex">
-               <number>3</number>
+               <number>0</number>
               </property>
               <widget class="QWidget" name="page_table">
                <layout class="QVBoxLayout" name="verticalLayout_56">
@@ -1448,6 +1448,7 @@ font: 15px &quot;宋体&quot;;
 /*横表头section*/
 QHeaderView::section:horizontal
 {
+border: none;
 min-height: 36px;
 border-bottom:0px solid rgb(0, 170, 255);
 background-color:#2f5f51;
@@ -1460,8 +1461,6 @@ min-width:60px;
 border:0px solid rgb(128, 128, 128);
 background-color:#2f5f51;
 }
-
-
 
 QHeaderView::section:hover
 {
@@ -1492,7 +1491,6 @@ QHeaderView::up-arrow
 {
 
 }
-
 
 /*表格*/
 QTableView

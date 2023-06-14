@@ -676,53 +676,54 @@ void MiniPlayer::slot_mediaLoadingStatus(QMediaPlayer::MediaStatus status)
     if(m_player->media().isNull()) return;
     if(m_player->mediaStatus() == QMediaPlayer::UnknownMediaStatus)//未知媒体状态
     {
-        qDebug() << QString::fromLocal8Bit("QMediaPlayer::UnknownMediaStatus");
+        qDebug() << QString("QMediaPlayer::UnknownMediaStatus");
     }
     else if(m_player->mediaStatus() == QMediaPlayer::NoMedia)//无媒体状态
     {
-        qDebug() << QString::fromLocal8Bit("QMediaPlayer::NoMedia");
+        qDebug() << QString("QMediaPlayer::NoMedia");
     }
     else if(m_player->mediaStatus() == QMediaPlayer::LoadingMedia)//加载媒体中
     {
-        qDebug() << QString::fromLocal8Bit("QMediaPlayer::LoadingMedia");
+        qDebug() << QString("QMediaPlayer::LoadingMedia");
         media_loading_start();
     }
     else if(m_player->mediaStatus() == QMediaPlayer::LoadedMedia)//媒体加载完毕
     {
-        qDebug() << QString::fromLocal8Bit("QMediaPlayer::LoadedMedia");
+        qDebug() << QString("QMediaPlayer::LoadedMedia");
         media_loading_end();
     }
     else if(m_player->mediaStatus() == QMediaPlayer::StalledMedia)//媒体停顿
     {
-        qDebug() << QString::fromLocal8Bit("QMediaPlayer::StalledMedia");
+        qDebug() << QString("QMediaPlayer::StalledMedia");
     }
     else if(m_player->mediaStatus() == QMediaPlayer::BufferingMedia)//媒体正在缓冲
     {
-        qDebug() << QString::fromLocal8Bit("QMediaPlayer::BufferingMedia");
+        qDebug() << QString("QMediaPlayer::BufferingMedia");
         media_loading_start();
     }
     else if(m_player->mediaStatus() == QMediaPlayer::BufferedMedia)//媒体缓冲完毕
     {
-        qDebug() << QString::fromLocal8Bit("QMediaPlayer::BufferedMedia");
+        qDebug() << QString("QMediaPlayer::BufferedMedia");
         media_loading_end();
     }
     else if(m_player->mediaStatus() == QMediaPlayer::EndOfMedia)//媒体结束
     {
         emit sig_player_next();//媒体结束的时候播放下一首
-        qDebug() << QString::fromLocal8Bit("QMediaPlayer::EndOfMedia，开始下一首");
+        qDebug() << QString("QMediaPlayer::EndOfMedia，开始下一首");
     }
     else if(m_player->mediaStatus() == QMediaPlayer::InvalidMedia)//媒体无效
     {
-        qDebug() << QString::fromLocal8Bit("QMediaPlayer::InvalidMedia");
+        qDebug() << QString("QMediaPlayer::InvalidMedia");
     }
     else
     {
-        qDebug() << QString::fromLocal8Bit("other unknow problem!");
+        qDebug() << QString("other unknow problem!");
     }
 }
 
 void MiniPlayer::media_loading_start()
 {
+    //在videooutput上放控件显示不出来，所以用全局坐标
 //    m_loadMovie->start();
 //    m_loadingLabel->move(this->width()/2-m_loadingLabel->width()/2,this->height()/2-m_loadingLabel->height()/2);
     const int g_x = this->parentWidget()->mapToGlobal(this->pos()).x();
@@ -731,7 +732,7 @@ void MiniPlayer::media_loading_start()
                                 g_y + (this->height()-m_loadingLabel->height())/2,
                                 m_loadingLabel->width(),
                                 m_loadingLabel->height());
-    m_loadingLabel->raise();
+//    m_loadingLabel->raise();
     m_loadingLabel->startRun();
     m_loadingLabel->show();
 }

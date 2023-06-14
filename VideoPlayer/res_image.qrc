@@ -704,5 +704,6 @@
         <file>images/creator/indicator_down.png</file>
         <file>images/creator/indicator_right.png</file>
         <file>images/creator/indicator_up.png</file>
+        <file>images/creator/video_title.png</file>
     </qresource>
 </RCC>

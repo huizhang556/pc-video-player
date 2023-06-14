@@ -87,7 +87,7 @@ void MediaGroup::handleSignalsAndSlots()
             m_cover.save(&buffer,"png");//QImage存进buffer转为QByteArray
             imageArray.append(buffer.data());
             buffer.close();
-            slot_uploadUserGroupCover(imageArray);
+            slot_uploadUserGroupCover(imageArray);//上传图片
         }
     });
 }
@@ -120,7 +120,7 @@ bool MediaGroup::eventFilter(QObject *watched, QEvent *event)
     }
     if(watched == ui->pushButton_intro)
     {
-        if(event->type() == QEvent::MouseButtonDblClick)
+        if(event->type() == QEvent::MouseButtonDblClick && m_type != G_DISPLAY)
         {
             ui->stackedWidget_changed->setCurrentWidget(ui->page_rename);
             ui->lineEdit_rename->setText(ui->pushButton_intro->text());
@@ -130,7 +130,7 @@ bool MediaGroup::eventFilter(QObject *watched, QEvent *event)
     }
     if(watched == ui->label_cover)
     {
-        if(event->type() == QEvent::MouseButtonPress && mevent->buttons() & Qt::RightButton)//右键单击
+        if(event->type() == QEvent::MouseButtonPress && mevent->buttons() & Qt::RightButton && m_type != G_DISPLAY)//右键单击
         {
             ui->stackedWidget_cover->setCurrentIndex(1);
 //            ui->pushButton_opencover->click();//模拟点击
@@ -155,6 +155,7 @@ void MediaGroup::setItemCover()
 {
     switch (m_type) {
     case G_NORMAL:
+    case G_DISPLAY:
     {
     //非新建item需要获取网络图片
      m_manager->get(QNetworkRequest(QUrl(m_pix_url)));
@@ -163,9 +164,9 @@ void MediaGroup::setItemCover()
     case G_CUSTOM:
     {
     //自定义暂时不需要
-        QPixmap pixmap("://images/bgpic/cusvideoitem4.png");//默认图标
-        ui->label_cover->setPixmap(pixmap);
-        ui->label_cover->setScaledContents(true);
+    QPixmap pixmap("://images/bgpic/cusvideoitem4.png");//默认图标
+    ui->label_cover->setPixmap(pixmap);
+    ui->label_cover->setScaledContents(true);
     }
         break;
     default:
@@ -182,6 +183,17 @@ void MediaGroup::setItemType()
         ui->stackedWidget_cover->setCurrentIndex(0);
         ui->stackedWidget_changed->setCurrentWidget(ui->page_name);
         ui->pushButton_intro->setText(m_name);
+    }
+        break;
+    case G_DISPLAY:
+    {
+    //保持默认
+        ui->stackedWidget_cover->setCurrentIndex(0);
+        ui->stackedWidget_changed->setCurrentWidget(ui->page_name);
+        ui->pushButton_intro->setText(m_name);
+        ui->label_cover->setToolTip(nullptr);
+        ui->frame_add->hide();
+        ui->frame_del->hide();
     }
         break;
     case G_CUSTOM:
@@ -226,7 +238,7 @@ bool MediaGroup::slot_uploadUserGroupCover(const QByteArray &pic_bytedata)
 {
     if(pic_bytedata.isNull() || pic_bytedata.isEmpty())
     {
-        qDebug() << QString(u8"图片数据为空有误！");
+        qDebug() << QString(u8"[封面]图片数据为空有误！");
         return false;
     }
     //创建工作对象
@@ -248,11 +260,11 @@ bool MediaGroup::slot_uploadUserGroupCover(const QByteArray &pic_bytedata)
         {
             m_pix_url = pix_url;
             emit sig_item_newCover(m_groupid,m_pix_url);
-            qDebug() <<QString(u8"服务器封面上传成功！新封面链接：%1").arg(pix_url);
+            qDebug() <<QString(u8"[封面]--服务器封面上传成功！新封面链接：%1").arg(pix_url);
         }
         else
         {
-            qDebug() <<QString(u8"服务器封面上传失败！");
+            qDebug() <<QString(u8"[封面]--服务器封面上传失败！");
         }
     });
 }

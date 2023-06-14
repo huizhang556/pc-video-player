@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1003</width>
+    <width>1128</width>
     <height>600</height>
    </rect>
   </property>
@@ -150,7 +150,7 @@ color: rgb(255, 85, 0);
           <number>0</number>
          </property>
          <item>
-          <widget class="QWidget" name="widget_usr" native="true">
+          <widget class="QFrame" name="frame_usr">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -164,7 +164,7 @@ color: rgb(255, 85, 0);
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">#widget_usr
+            <string notr="true">#frame_usr
 {
 background-color:#191919;
 }</string>
@@ -728,7 +728,7 @@ background-color: rgba(212, 78, 125,0.0);
 }</string>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>3</number>
            </property>
            <widget class="QWidget" name="tab_history">
             <attribute name="title">
@@ -2434,7 +2434,7 @@ QListWidget::item:hover
        <widget class="QWidget" name="page_otherusr">
         <layout class="QVBoxLayout" name="verticalLayout_19">
          <property name="spacing">
-          <number>10</number>
+          <number>0</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -2493,13 +2493,13 @@ background-color: rgb(25, 25, 25);
              <widget class="QFrame" name="frame_left">
               <property name="minimumSize">
                <size>
-                <width>340</width>
+                <width>360</width>
                 <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>340</width>
+                <width>400</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -2581,13 +2581,13 @@ background-color: rgb(25, 25, 25);
                 <widget class="QFrame" name="frame_left_right">
                  <property name="minimumSize">
                   <size>
-                   <width>0</width>
-                   <height>110</height>
+                   <width>300</width>
+                   <height>0</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>16777215</width>
+                   <width>300</width>
                    <height>110</height>
                   </size>
                  </property>
@@ -2733,6 +2733,22 @@ background-color: transparent;
                        </property>
                       </widget>
                      </item>
+                     <item>
+                      <spacer name="horizontalSpacer_32">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="sizeType">
+                        <enum>QSizePolicy::Fixed</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>50</width>
+                         <height>20</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
                     </layout>
                    </widget>
                   </item>
@@ -2762,6 +2778,12 @@ background-color: transparent;
                      </property>
                      <item>
                       <widget class="QLabel" name="label_motto">
+                       <property name="minimumSize">
+                        <size>
+                         <width>280</width>
+                         <height>0</height>
+                        </size>
+                       </property>
                        <property name="styleSheet">
                         <string notr="true">QLabel
 {
@@ -3285,157 +3307,448 @@ background-color: rgb(212, 78, 125);
           </widget>
          </item>
          <item>
-          <widget class="QTabWidget" name="tabWidget_head">
-           <property name="styleSheet">
-            <string notr="true">QTabWidget
+          <widget class="QWidget" name="widget_content" native="true">
+           <layout class="QVBoxLayout" name="verticalLayout_33">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>5</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QFrame" name="frame_stack">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>56</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>56</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#frame_stack
 {
-outline:none;
-}
-
-
-QTabBar::tab
-{
-min-width:100px;
-min-height: 20px;
-color: #ffffff;
-padding:5px;
-font: 400 14px &quot;微软雅黑&quot;;
-border-top-left-radius: 6px;
-border-top-right-radius: 6px;
-/*background-color:qlineargradient(x1: 0, y1: 0, x2: 0.7, y2: 0.7,stop: 0.3 rgb(40,150,200,160),stop: 0.6 rgb(40,150,200,220),stop:1 rgb(40,150,200,255));*/
+border: none;
 background-color: transparent;
 }
 
-QTabBar::tab:!selected
+#pushButton_produce,#pushButton_album,#pushButton_group,#pushButton_dongtai
 {
-margin-top: 0px;
+color: #ffffff;
+border: none;
+font: 400 14px &quot;微软雅黑&quot;;
+background-color: transparent;
+
 }
 
-QTabBar::tab:selected
+#pushButton_produce:hover,#pushButton_album:hover,#pushButton_group:hover,#pushButton_dongtai:hover
+{
+border-bottom:1px solid #f6a302; 
+}
+
+#pushButton_produce:checked,#pushButton_album:checked,#pushButton_group:checked,#pushButton_dongtai:checked
 {
 color: #00d1d1;
-font-size:14px;
 font-weight:bold;
-background-color: rgba(212, 78, 125,0.0);
+border-bottom:1px solid #f6a302; 
+}
+
+#pushButton_return
+{
+color: rgb(163, 64, 99);
+text-align: right;
+padding-right:5px;
+border-radius: 5px;
+font: 400 13px &quot;微软雅黑&quot;;
+border: 1px solid rgb(163, 64, 99);
+background-color: transparent;
+}
+
+#pushButton_return:hover
+{
+color: #00d1d1;
+border: 1px solid  #00d1d1;
 }</string>
-           </property>
-           <property name="currentIndex">
-            <number>0</number>
-           </property>
-           <widget class="QWidget" name="tab_produce" native="true">
-            <attribute name="title">
-             <string>作品</string>
-            </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_20">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QListWidget" name="listWidget_produce"/>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="tab_zhuanji">
-            <attribute name="title">
-             <string>专辑</string>
-            </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_21">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QListWidget" name="listWidget_zhuanji"/>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="tab_heji" native="true">
-            <attribute name="title">
-             <string>合集</string>
-            </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_22">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QListWidget" name="listWidget_heji"/>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="tab_dongtai">
-            <attribute name="title">
-             <string>动态</string>
-            </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_23">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QScrollArea" name="scrollArea">
-               <property name="widgetResizable">
-                <bool>true</bool>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_22">
+               <property name="spacing">
+                <number>50</number>
                </property>
-               <widget class="QWidget" name="scrollAreaWidgetContents">
-                <property name="geometry">
-                 <rect>
-                  <x>0</x>
-                  <y>0</y>
-                  <width>993</width>
-                  <height>393</height>
-                 </rect>
+               <property name="leftMargin">
+                <number>8</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>8</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QPushButton" name="pushButton_produce">
+                 <property name="minimumSize">
+                  <size>
+                   <width>32</width>
+                   <height>36</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>32</width>
+                   <height>36</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>作品</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_album">
+                 <property name="minimumSize">
+                  <size>
+                   <width>32</width>
+                   <height>36</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>32</width>
+                   <height>36</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>专辑</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_group">
+                 <property name="minimumSize">
+                  <size>
+                   <width>32</width>
+                   <height>36</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>32</width>
+                   <height>36</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>合集</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_dongtai">
+                 <property name="minimumSize">
+                  <size>
+                   <width>32</width>
+                   <height>36</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>32</width>
+                   <height>36</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>动态</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_29">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>514</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_return">
+                 <property name="minimumSize">
+                  <size>
+                   <width>90</width>
+                   <height>26</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>90</width>
+                   <height>26</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QStackedWidget" name="stackedWidget_display">
+              <property name="styleSheet">
+               <string notr="true">#stackedWidget_display
+{
+outline:none;
+border: none;
+background-color: transparent;
+}
+
+
+/*tabwidget里面的所有listwidget*/
+QListWidget
+{
+border: none;
+background-color: transparent;
+}
+
+QListWidget::item
+{
+background-color: transparent;
+}
+
+QListWidget::item:hover,QListWidget::item:selected,QListWidget::item:!selected
+{
+background-color: transparent;
+}</string>
+              </property>
+              <property name="currentIndex">
+               <number>0</number>
+              </property>
+              <widget class="QWidget" name="stack_produce">
+               <layout class="QVBoxLayout" name="verticalLayout_20">
+                <property name="spacing">
+                 <number>0</number>
                 </property>
-               </widget>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QListWidget" name="listWidget_produce"/>
+                </item>
+               </layout>
               </widget>
-             </item>
-            </layout>
-           </widget>
+              <widget class="QWidget" name="stack_zhuanji">
+               <layout class="QVBoxLayout" name="verticalLayout_21">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QListWidget" name="listWidget_zhuanji"/>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="stack_heji">
+               <layout class="QVBoxLayout" name="verticalLayout_22">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QListWidget" name="listWidget_heji"/>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="stack_dongtai">
+               <layout class="QVBoxLayout" name="verticalLayout_23">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QScrollArea" name="scrollArea">
+                  <property name="widgetResizable">
+                   <bool>true</bool>
+                  </property>
+                  <widget class="QWidget" name="scrollArea_activity">
+                   <property name="geometry">
+                    <rect>
+                     <x>0</x>
+                     <y>0</y>
+                     <width>98</width>
+                     <height>28</height>
+                    </rect>
+                   </property>
+                  </widget>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="stack_blank">
+               <layout class="QVBoxLayout" name="verticalLayout_32">
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_31">
+                  <item>
+                   <spacer name="verticalSpacer_9">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_23">
+                    <item>
+                     <spacer name="horizontalSpacer_30">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QToolButton" name="toolButton_blank">
+                      <property name="minimumSize">
+                       <size>
+                        <width>200</width>
+                        <height>240</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>200</width>
+                        <height>240</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QToolButton
+{
+color: gray;
+text-align: center;
+font: 400 18px &quot;微软雅黑&quot;;
+border: none;
+}
+
+</string>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="horizontalSpacer_31">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <spacer name="verticalSpacer_8">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
