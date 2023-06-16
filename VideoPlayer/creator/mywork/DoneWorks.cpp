@@ -109,6 +109,9 @@ void DoneWorks::initWorkUI()
     ui->toolButton_error->setIconSize(QSize(180,180));
     ui->toolButton_error->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
+    ui->pushButton_menu_album->setToolTip(QString(u8"添加专辑"));
+    ui->pushButton_menu_hehi->setToolTip(QString(u8"添加合集"));
+
     //作品列表--左侧
     for(int i = 0; i<m_producelist.count();i++)
     {
@@ -394,6 +397,18 @@ void DoneWorks::slot_addItmeToGroupIDList(QVariant& media)
 void DoneWorks::setInstallEventer()
 {
     ui->listWidget_producelist->installEventFilter(this);
+}
+
+void DoneWorks::clearOldContent()
+{
+    ui->listWidget_prod_movies->clear();
+    ui->listWidget_prod_netdrama->clear();
+    ui->listWidget_prod_shortvideos->clear();
+    ui->listWidget_prod_midvideos->clear();
+    ui->listWidget_prod_musics->clear();
+    ui->listWidget_prod_pictures->clear();
+    ui->listWidget_albumitems->clear();
+    ui->listWidget_medgroups->clear();
 }
 
 //加载对应类型媒体下item

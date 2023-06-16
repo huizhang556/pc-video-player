@@ -38,6 +38,7 @@ public:
     void            initWorkUI();
     void            handleSignalsAndSlots();
     void            setInstallEventer();
+    void            clearOldContent();
 
 public slots:
     //左侧列表部分

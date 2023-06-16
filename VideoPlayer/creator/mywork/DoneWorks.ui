@@ -227,6 +227,7 @@ QListWidget::item:hover,QListWidget::item:selected
 {
 color: transparent;
 background-color: #253c56;
+background-color: #d4237a;
 }</string>
             </property>
            </widget>
@@ -331,23 +332,18 @@ color: red;
                <property name="styleSheet">
                 <string notr="true">QPushButton
 {
-margin: 1px;
-/*border-image: url(:/images/icon/addTab.png);*/
-color: gray;
-text-align: center;
-font: 800 20px &quot;微软雅黑&quot;;
+margin: 7px;
+border-image: url(:/images/creator/group_add.png);
 background-color: transparent;
 }
 
 QPushButton:hover
 {
-color: white;
-/*border-image: url(:/images/icon/addTab_white.png);*/
-background-color: transparent;
+border-image: url(:/images/creator/group_addhover.png);
 }</string>
                </property>
                <property name="text">
-                <string>+</string>
+                <string/>
                </property>
               </widget>
              </item>
@@ -495,23 +491,18 @@ color: red;
                <property name="styleSheet">
                 <string notr="true">QPushButton
 {
-margin: 1px;
-/*border-image: url(:/images/icon/addTab.png);*/
-color: gray;
-text-align: center;
-font: 800 20px &quot;微软雅黑&quot;;
+margin: 7px;
+border-image: url(:/images/creator/group_add.png);
 background-color: transparent;
 }
 
 QPushButton:hover
 {
-color: white;
-/*border-image: url(:/images/icon/addTab_white.png);*/
-background-color: transparent;
+border-image: url(:/images/creator/group_addhover.png);
 }</string>
                </property>
                <property name="text">
-                <string>+</string>
+                <string/>
                </property>
               </widget>
              </item>

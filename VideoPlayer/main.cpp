@@ -177,9 +177,9 @@ int main(int argc, char *argv[])
 //            MainNotice w1;
 //            w1.show();
 
-//            CreateCenter::getInstance()->exec_();
+            CreateCenter::getInstance()->exec_();
 
-              PersonFileForm p; p.show();
+//              PersonFileForm p; p.show();
         //    MyEmotionWindow w1;
         //    w1.showNormalEmotion(QPoint(500 , 500));
         //    DownloadType::getInstance()->show();

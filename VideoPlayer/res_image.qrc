@@ -705,5 +705,11 @@
         <file>images/creator/indicator_right.png</file>
         <file>images/creator/indicator_up.png</file>
         <file>images/creator/video_title.png</file>
+        <file>images/creator/item_tags.png</file>
+        <file>images/creator/group_add.png</file>
+        <file>images/creator/group_addhover.png</file>
+        <file>images/creator/group_bg.jpg</file>
+        <file>images/creator/group_del.png</file>
+        <file>images/creator/group_delhover.png</file>
     </qresource>
 </RCC>

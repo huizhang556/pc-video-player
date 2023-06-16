@@ -162,14 +162,14 @@ font: 400 15px &quot;微软雅黑&quot;;
             <widget class="QLabel" name="label_medcounts">
              <property name="minimumSize">
               <size>
-               <width>36</width>
-               <height>36</height>
+               <width>26</width>
+               <height>26</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>36</width>
-               <height>36</height>
+               <width>26</width>
+               <height>26</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -177,23 +177,23 @@ font: 400 15px &quot;微软雅黑&quot;;
 {
 color: transparent;
 font: 800 11px &quot;微软雅黑&quot;;
-border-radius: 18px;
+border-radius: 13px;
 background-color: transparent;
 }
 
 QLabel[cirle = &quot;true&quot;]
 {
-color:rgb(245, 0, 0);
+color:rgb(255, 161, 2);
 font: 800 11px &quot;微软雅黑&quot;;
-border-radius: 18px;
-background-color: rgb(30, 200, 225);
+border-radius: 13px;
+background-color: rgba(44, 166, 250,0.75);
 }
 
 QLabel[cirle = &quot;false&quot;]
 {
 color:transparent;
 font: 800 11px &quot;微软雅黑&quot;;
-border-radius: 18px;
+border-radius: 13px;
 background-color: transparent;
 }
 </string>

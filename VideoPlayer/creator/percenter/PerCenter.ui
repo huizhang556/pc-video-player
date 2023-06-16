@@ -254,7 +254,7 @@ background-color: #253c56;
 QListWidget::item:selected
 {
 color: #70fffe;
-background-color: #253c56;
+background-color: #d4237a;
 }</string>
             </property>
            </widget>
