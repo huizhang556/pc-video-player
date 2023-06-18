@@ -43,7 +43,7 @@ public:
     void    setInstallEventFilter();
 
 public slots:
-
+    void    setCheckedStyle(bool checked);//设置选中样式
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event)override;

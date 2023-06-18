@@ -18,7 +18,8 @@ SOURCES += \
     $$PWD/CusHSlider.cpp \
     $$PWD/ValueToImage.cpp \
     $$PWD/RoundLab.cpp \
-    $$PWD/RefreshButton.cpp
+    $$PWD/RefreshButton.cpp \
+    $$PWD/AutoListWidget.cpp
 
 HEADERS += \
     $$PWD/CusTabWidget.h \
@@ -40,7 +41,8 @@ HEADERS += \
     $$PWD/CusHSlider.h \
     $$PWD/ValueToImage.h \
     $$PWD/RoundLab.h \
-    $$PWD/RefreshButton.h
+    $$PWD/RefreshButton.h \
+    $$PWD/AutoListWidget.h
 
 FORMS += \
     $$PWD/CusTabWidget.ui \

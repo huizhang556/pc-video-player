@@ -47,28 +47,29 @@ public slots:
     void            slot_receivedData_findTypeResult(QVariant& media);//加载(更新)对应类型媒体下item
     void            slot_setUserTagsWorkCounts(QStringList& list_counts);//查询各个标签视频数量
     //专辑部分
-    void            slot_initUserAlbums();//查询初始化当前用户下所有专集
+    void            slot_initUserAlbums();//查询初始化当前用户下所有专辑
     void            slot_addItemToAlbumList(GROUPTYPE TYPE, const QString& name, const QString& pix_url, const QString &album_id);//添加专集
-    void            slot_addItmeToAlbumIDList(QVariant& media);//添加某个专集的item
+    void            slot_addItmeToAlbumIDList(QVariant& media);//添加某个专辑的items
 
     //合集部分
     void            slot_initUserGroups();//查询初始化当前用户下所有合集
     void            slot_addItemToGroupList(GROUPTYPE TYPE, const QString& name, const QString& pix_url, const QString &group_id);//添加合集
-    void            slot_addItmeToGroupIDList(QVariant& media);//添加某个合集的item
+    void            slot_addItmeToGroupIDList(QVariant& media);//添加某个合集的items
 
 protected:
     bool            eventFilter(QObject *watched, QEvent *event)override;
 
+private slots:
+    void            slot_createNewHJ();
+
 private:
     QListWidget*    getConnectListWidget(const QString& type);
+    MediaGroup*     getItemMediaGroup(QListWidgetItem *item);//查找MediaGroup
     void            checkListItemsCounts(QListWidgetItem *item, int allcounts);
     QLabel*         getCurrentItem(QListWidgetItem *item, const QString &objname);
     LabLoading*     getProgresslable(QListWidgetItem *item, const QString &objname);
     void            showErrorPageMessage(QWidget* page, const QString& message);
     void            createHJ_ContextMenu();
-
-private slots:
-    void            slot_createNewHJ();
 
 private:
     Ui::DoneWorks *ui;

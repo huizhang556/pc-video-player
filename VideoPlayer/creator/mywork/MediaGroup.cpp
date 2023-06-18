@@ -25,6 +25,7 @@ MediaGroup::MediaGroup(GROUPTYPE type, const QString& g_id, const QString& g_nam
     setInstallEventFilter();
     setItemType();
     setItemCover();
+    setCheckedStyle(false);
 }
 
 MediaGroup::~MediaGroup()
@@ -97,6 +98,32 @@ void MediaGroup::setInstallEventFilter()
     this->installEventFilter(this);
     ui->pushButton_intro->installEventFilter(this);
     ui->label_cover->installEventFilter(this);
+}
+
+//设置选中样式
+void MediaGroup::setCheckedStyle(bool checked)
+{
+    //选中和非选中设置不同的样式
+    if(checked)
+    {
+        ui->frame_mask->setStyleSheet("#frame_mask{"
+                                      "border-radius: 4px;"
+                                      "background-color: rgba(203, 11, 70,1.0);"
+                                      "}"
+                                      "#frame_mask:hover{"
+                                      "background-color: rgba(203, 11, 70,1.0);"
+                                      "}");
+    }
+    else
+    {
+        ui->frame_mask->setStyleSheet("#frame_mask{"
+                                      "border-radius: 4px;"
+                                      "background-color: rgba(4, 222, 231,0.8);"
+                                      "}"
+                                      "#frame_mask:hover{"
+                                      "background-color: rgba(4, 222, 231,1.0);"
+                                      "}");
+    }
 }
 
 bool MediaGroup::eventFilter(QObject *watched, QEvent *event)

@@ -1486,7 +1486,7 @@ bool dataBase::creator_getdoneWorks(const QString &tags)
     }
     else
     {
-        qDebug()<< QString::fromLocal8Bit("查找 %1 用户拥有剧集信息记录错误").arg(m_curUserID)<< query.lastError();
+        qDebug()<< QString(u8"查找 %1 用户拥有剧集信息记录错误").arg(m_curUserID)<< query.lastError();
         return false;
     }
 }

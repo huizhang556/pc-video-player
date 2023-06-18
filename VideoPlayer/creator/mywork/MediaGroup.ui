@@ -32,7 +32,7 @@
    <item>
     <widget class="QFrame" name="frame_mask">
      <property name="styleSheet">
-      <string notr="true">#frame_mask
+      <string notr="true">/*(#frame_mask
 {
 border-radius: 4px;
 background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #5052c3, stop:1  #aeabec);
@@ -42,7 +42,8 @@ background-color: rgba(4, 222, 231,0.8);
 #frame_mask:hover
 {
 background-color: rgba(4, 222, 231,1.0);
-}</string>
+}
+*/</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>

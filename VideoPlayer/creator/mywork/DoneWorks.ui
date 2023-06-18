@@ -227,7 +227,7 @@ QListWidget::item:hover,QListWidget::item:selected
 {
 color: transparent;
 background-color: #253c56;
-background-color: #d4237a;
+/*background-color: #d4237a;*/
 }</string>
             </property>
            </widget>
@@ -588,7 +588,7 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #ba87b6, 
 }</string>
        </property>
        <property name="currentIndex">
-        <number>8</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="page_movies">
         <layout class="QVBoxLayout" name="verticalLayout_34">
@@ -608,121 +608,11 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #ba87b6, 
           <number>0</number>
          </property>
          <item>
-          <widget class="QListWidget" name="listWidget_prod_movies">
+          <widget class="AutoListWidget" name="listWidget_workitems">
            <property name="styleSheet">
             <string notr="true"/>
            </property>
           </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="page_netdrama">
-        <layout class="QVBoxLayout" name="verticalLayout_47">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QListWidget" name="listWidget_prod_netdrama"/>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="page_shortvideos">
-        <layout class="QVBoxLayout" name="verticalLayout_48">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QListWidget" name="listWidget_prod_shortvideos"/>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="page_midmovies">
-        <layout class="QVBoxLayout" name="verticalLayout_49">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QListWidget" name="listWidget_prod_midvideos"/>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="page_musics">
-        <layout class="QVBoxLayout" name="verticalLayout_50">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QListWidget" name="listWidget_prod_musics"/>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="page_pictures">
-        <layout class="QVBoxLayout" name="verticalLayout_51">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QListWidget" name="listWidget_prod_pictures"/>
          </item>
         </layout>
        </widget>
@@ -744,7 +634,7 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #ba87b6, 
           <number>0</number>
          </property>
          <item>
-          <widget class="QListWidget" name="listWidget_medgroups">
+          <widget class="AutoListWidget" name="listWidget_medgroups">
            <property name="styleSheet">
             <string notr="true"/>
            </property>
@@ -770,7 +660,7 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #ba87b6, 
           <number>0</number>
          </property>
          <item>
-          <widget class="QListWidget" name="listWidget_albumitems"/>
+          <widget class="AutoListWidget" name="listWidget_albumitems"/>
          </item>
         </layout>
        </widget>
@@ -894,6 +784,13 @@ border: none;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>AutoListWidget</class>
+   <extends>QListWidget</extends>
+   <header>customer/AutoListWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

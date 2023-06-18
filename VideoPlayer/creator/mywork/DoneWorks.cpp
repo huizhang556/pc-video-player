@@ -18,13 +18,14 @@ DoneWorks::~DoneWorks()
 
 void DoneWorks::initWorkUI()
 {
-    //专辑展示列表
+    //专辑展示items列表
     ui->listWidget_albumitems->setViewMode(QListView::IconMode);
     ui->listWidget_albumitems->setMovement(QListView::Static);//图标不可拖动
     ui->listWidget_albumitems->setResizeMode(QListWidget::Adjust);
     ui->listWidget_albumitems->setWrapping(true);//自动换行 所有itm在一行显示
     ui->listWidget_albumitems->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_albumitems->horizontalScrollBar()->setDisabled(true);
+    ui->listWidget_albumitems->initListWidget(true,DITEMSIZE.width(),1.50,0.60);
 
     //合集展示items列表
     ui->listWidget_medgroups->setViewMode(QListView::IconMode);
@@ -33,51 +34,18 @@ void DoneWorks::initWorkUI()
     ui->listWidget_medgroups->setWrapping(true);//自动换行 所有itm在一行显示
     ui->listWidget_medgroups->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_medgroups->horizontalScrollBar()->setDisabled(true);
+    ui->listWidget_medgroups->initListWidget(true,DITEMSIZE.width(),1.50,0.60);
 
-    //完成列表--电影
-    ui->listWidget_prod_movies->setViewMode(QListView::IconMode);
-    ui->listWidget_prod_movies->setMovement(QListView::Static);//图标不可拖动
-    ui->listWidget_prod_movies->setResizeMode(QListWidget::Adjust);
-    ui->listWidget_prod_movies->setWrapping(true);//自动换行 所有itm在一行显示
-    ui->listWidget_prod_movies->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-    ui->listWidget_prod_movies->horizontalScrollBar()->setDisabled(true);
-    //完成列表--网络剧
-    ui->listWidget_prod_netdrama->setViewMode(QListView::IconMode);
-    ui->listWidget_prod_netdrama->setMovement(QListView::Static);//图标不可拖动
-    ui->listWidget_prod_netdrama->setResizeMode(QListWidget::Adjust);
-    ui->listWidget_prod_netdrama->setWrapping(true);//自动换行 所有itm在一行显示
-    ui->listWidget_prod_netdrama->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-    ui->listWidget_prod_netdrama->horizontalScrollBar()->setDisabled(true);
-    //完成列表--短视频
-    ui->listWidget_prod_shortvideos->setViewMode(QListView::IconMode);
-    ui->listWidget_prod_shortvideos->setMovement(QListView::Static);//图标不可拖动
-    ui->listWidget_prod_shortvideos->setResizeMode(QListWidget::Adjust);
-    ui->listWidget_prod_shortvideos->setWrapping(true);//自动换行 所有itm在一行显示
-    ui->listWidget_prod_shortvideos->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-    ui->listWidget_prod_shortvideos->horizontalScrollBar()->setDisabled(true);
-    //完成列表--中视频
-    ui->listWidget_prod_midvideos->setViewMode(QListView::IconMode);
-    ui->listWidget_prod_midvideos->setMovement(QListView::Static);//图标不可拖动
-    ui->listWidget_prod_midvideos->setResizeMode(QListWidget::Adjust);
-    ui->listWidget_prod_midvideos->setWrapping(true);//自动换行 所有itm在一行显示
-    ui->listWidget_prod_midvideos->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-    ui->listWidget_prod_midvideos->horizontalScrollBar()->setDisabled(true);
-    //完成列表--音乐
-    ui->listWidget_prod_musics->setViewMode(QListView::IconMode);
-    ui->listWidget_prod_musics->setMovement(QListView::Static);//图标不可拖动
-    ui->listWidget_prod_musics->setResizeMode(QListWidget::Adjust);
-    ui->listWidget_prod_musics->setWrapping(true);//自动换行 所有itm在一行显示
-    ui->listWidget_prod_musics->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-    ui->listWidget_prod_musics->horizontalScrollBar()->setDisabled(true);
-    //完成列表--图片
-    ui->listWidget_prod_pictures->setViewMode(QListView::IconMode);
-    ui->listWidget_prod_pictures->setMovement(QListView::Static);//图标不可拖动
-    ui->listWidget_prod_pictures->setResizeMode(QListWidget::Adjust);
-    ui->listWidget_prod_pictures->setWrapping(true);//自动换行 所有itm在一行显示
-    ui->listWidget_prod_pictures->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-    ui->listWidget_prod_pictures->horizontalScrollBar()->setDisabled(true);
+    //完成列表类型items展示
+    ui->listWidget_workitems->setViewMode(QListView::IconMode);
+    ui->listWidget_workitems->setMovement(QListView::Static);//图标不可拖动
+    ui->listWidget_workitems->setResizeMode(QListWidget::Adjust);
+    ui->listWidget_workitems->setWrapping(true);//自动换行 所有itm在一行显示
+    ui->listWidget_workitems->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->listWidget_workitems->horizontalScrollBar()->setDisabled(true);
+    ui->listWidget_workitems->initListWidget(true,DITEMSIZE.width(),1.50,0.60);
 
-    //专辑列表
+    //左侧专辑列表
     ui->listWidget_albums->setViewMode(QListView::IconMode);
     ui->listWidget_albums->setMovement(QListView::Static);
     ui->listWidget_albums->setResizeMode(QListWidget::Adjust);
@@ -88,7 +56,7 @@ void DoneWorks::initWorkUI()
     ui->listWidget_albums->horizontalScrollBar()->setDisabled(true);
     ui->listWidget_albums->hide();//默认隐藏
 
-    //合集列表
+    //左侧合集列表
     ui->listWidget_groups->setViewMode(QListView::IconMode);
     ui->listWidget_groups->setMovement(QListView::Static);
     ui->listWidget_groups->setResizeMode(QListWidget::Adjust);
@@ -99,6 +67,7 @@ void DoneWorks::initWorkUI()
     ui->listWidget_groups->horizontalScrollBar()->setDisabled(true);
     ui->listWidget_groups->hide();//默认隐藏
 
+    //当前标题选中设置样式用
     ui->pushButton_doneworks->setCheckable(true);
     ui->pushButton_doneworks->setChecked(true);
     ui->pushButton_donegroup->setCheckable(true);
@@ -127,10 +96,12 @@ void DoneWorks::handleSignalsAndSlots()
         ui->listWidget_groups->setHidden(true);
         ui->listWidget_albums->setHidden(true);
         ui->listWidget_producelist->setHidden(false);
+        //文字样式用
         ui->pushButton_album->setChecked(false);
         ui->pushButton_donegroup->setChecked(false);
         ui->pushButton_doneworks->setChecked(true);
-        ui->stackedWidget_produce->setCurrentIndex(0);
+        //切换到对应page
+        ui->stackedWidget_produce->setCurrentWidget(ui->page_movies);
     });
 
     //显示专辑
@@ -138,10 +109,12 @@ void DoneWorks::handleSignalsAndSlots()
         ui->listWidget_groups->setHidden(true);
         ui->listWidget_producelist->setHidden(true);
         ui->listWidget_albums->setHidden(false);
+        //文字样式用
         ui->pushButton_doneworks->setChecked(false);
         ui->pushButton_donegroup->setChecked(false);
         ui->pushButton_album->setChecked(true);
-        ui->stackedWidget_produce->setCurrentIndex(0);
+        //切换到对应page
+        ui->stackedWidget_produce->setCurrentWidget(ui->page_album);
     });
 
     //显示合集
@@ -149,9 +122,11 @@ void DoneWorks::handleSignalsAndSlots()
         ui->listWidget_groups->setHidden(false);
         ui->listWidget_albums->setHidden(true);
         ui->listWidget_producelist->setHidden(true);
+        //文字样式用
         ui->pushButton_doneworks->setChecked(false);
         ui->pushButton_album->setChecked(false);
         ui->pushButton_donegroup->setChecked(true);
+        //切换到对应page
         ui->stackedWidget_produce->setCurrentWidget(ui->page_groups);
     });
 
@@ -192,38 +167,12 @@ void DoneWorks::handleSignalsAndSlots()
         {
             m_curItem = current;
             qDebug()<< QString(u8"当前点击的item信息：") << current->text() << current->data(Qt::UserRole).toString();
-            if(m_curItem->text() == QString(u8"电影"))
-            {
-                ui->stackedWidget_produce->setCurrentIndex(0);
-                ui->listWidget_prod_movies->clear();
-            }
-            else if(m_curItem->text() == QString(u8"网络剧"))
-            {
-                ui->stackedWidget_produce->setCurrentIndex(1);
-                ui->listWidget_prod_netdrama->clear();
-            }
-            else if(m_curItem->text() == QString(u8"短视频"))
-            {
-                ui->stackedWidget_produce->setCurrentIndex(2);
-                ui->listWidget_prod_shortvideos->clear();
-            }
-            else if(m_curItem->text() == QString(u8"中视频"))
-            {
-                ui->stackedWidget_produce->setCurrentIndex(3);
-                ui->listWidget_prod_midvideos->clear();
-            }
-            else if(m_curItem->text() == QString(u8"音乐"))
-            {
-                ui->stackedWidget_produce->setCurrentIndex(4);
-                ui->listWidget_prod_musics->clear();
-            }
-            else if(m_curItem->text() == QString(u8"图片"))
-            {
-                ui->stackedWidget_produce->setCurrentIndex(5);
-                ui->listWidget_prod_pictures->clear();
-            }
+            //切换到类型展示page并清空
+            ui->stackedWidget_produce->setCurrentWidget(ui->page_movies);
+            ui->listWidget_workitems->clear();
 
-            m_items = dataBase::getInstance()->creator_getdoneWorkCounts(current->data(Qt::UserRole).toString());//查询某个类型数量
+            //查询各个类型媒体数量
+            m_items = dataBase::getInstance()->creator_getdoneWorkCounts(current->data(Qt::UserRole).toString());
 
             if(m_items == -1)
             {
@@ -237,8 +186,10 @@ void DoneWorks::handleSignalsAndSlots()
             }
             else if(m_items > 0)
             {
-                dataBase::getInstance()->creator_getdoneWorks(current->data(Qt::UserRole).toString());//查询具体get信息,返回查询到的信息
-                qDebug() << QString(u8"找到个%1资源！").arg(m_items);
+                //查询某个具体类型的items集合，信号槽接收返回
+                dataBase::getInstance()->creator_getdoneWorks(current->data(Qt::UserRole).toString());
+                qDebug() << QString(u8"%1类型下，找到个%2资源！").arg(current->data(Qt::UserRole).toString()).arg(m_items);
+                //以下步骤或许多余（点击作品展示按钮，应该更新数量）
                 QLabel *lab_counts = getCurrentItem(current,"label_medcounts");
                 if(lab_counts != nullptr)
                 {
@@ -253,6 +204,29 @@ void DoneWorks::handleSignalsAndSlots()
         }
     });
 
+    //专辑列表选中
+    connect(ui->listWidget_albums,&QListWidget::currentItemChanged,[=](QListWidgetItem *current, QListWidgetItem *previous){
+        if(previous != nullptr)
+        {
+            getItemMediaGroup(previous)->setCheckedStyle(false);
+        }
+        if(current != nullptr)
+        {
+            getItemMediaGroup(current)->setCheckedStyle(true);
+        }
+    });
+
+    //合集列表选中
+    connect(ui->listWidget_groups,&QListWidget::currentItemChanged,[=](QListWidgetItem *current, QListWidgetItem *previous){
+        if(previous != nullptr)
+        {
+            getItemMediaGroup(previous)->setCheckedStyle(false);
+        }
+        if(current != nullptr)
+        {
+            getItemMediaGroup(current)->setCheckedStyle(true);
+        }
+    });
 
     //接收当前请用户下album集合
     connect(dataBase::getInstance(),&dataBase::sig_album_allalbums,[=](QString g_name,QString g_pix,QString g_id){
@@ -285,6 +259,7 @@ void DoneWorks::slot_addItemToList(const QString text, const QVariant &data, int
     item->setSizeHint(QSize(200,50));
     ui->listWidget_producelist->addItem(item);//添加列表
     ui->listWidget_producelist->setItemWidget(item,itemWgt);
+
 
     //信号与槽函数
     connect(itemWgt,&LeftItem::sig_item_selected,[=](){
@@ -319,7 +294,7 @@ void DoneWorks::slot_addItemToGroupList(GROUPTYPE TYPE, const QString &name, con
     item->setSizeHint(itemWidget->size() + QSize(10,10));
     ui->listWidget_groups->addItem(item);
     ui->listWidget_groups->setItemWidget(item,itemWidget);
-    ui->listWidget_groups->setCurrentItem(item);
+
     //关联信号与槽函数
     //添加媒体
     connect(itemWidget,&MediaGroup::sig_item_additem,[=](){
@@ -375,6 +350,7 @@ void DoneWorks::slot_addItmeToGroupIDList(QVariant& media)
 
     ui->listWidget_medgroups->addItem(item);
     ui->listWidget_medgroups->setItemWidget(item,itemWidget);
+    ui->listWidget_medgroups->resizeItemsSizeHint();
 
     //信号与槽函数
     //播放
@@ -401,12 +377,7 @@ void DoneWorks::setInstallEventer()
 
 void DoneWorks::clearOldContent()
 {
-    ui->listWidget_prod_movies->clear();
-    ui->listWidget_prod_netdrama->clear();
-    ui->listWidget_prod_shortvideos->clear();
-    ui->listWidget_prod_midvideos->clear();
-    ui->listWidget_prod_musics->clear();
-    ui->listWidget_prod_pictures->clear();
+    ui->listWidget_workitems->clear();
     ui->listWidget_albumitems->clear();
     ui->listWidget_medgroups->clear();
 }
@@ -431,38 +402,11 @@ void DoneWorks::slot_receivedData_findTypeResult(QVariant& media)
         itemWidget->initFileItem(body);
         item->setSizeHint(DITEMSIZE);
         item->setTextAlignment(Qt::AlignRight | Qt::AlignCenter);
-        if(body.fmedtype == QString("movies"))
-        {
-            ui->listWidget_prod_movies->addItem(item);
-            ui->listWidget_prod_movies->setItemWidget(item,itemWidget);
-        }
-        else if(body.fmedtype == QString("netdrama"))
-        {
-            ui->listWidget_prod_netdrama->addItem(item);
-            ui->listWidget_prod_netdrama->setItemWidget(item,itemWidget);
-        }
-        else if(body.fmedtype == QString("shortvideos"))
-        {
-            ui->listWidget_prod_shortvideos->addItem(item);
-            ui->listWidget_prod_shortvideos->setItemWidget(item,itemWidget);
-        }
-        else if(body.fmedtype == QString("midvideos"))
-        {
-            ui->listWidget_prod_midvideos->addItem(item);
-            ui->listWidget_prod_midvideos->setItemWidget(item,itemWidget);
-        }
-        else if(body.fmedtype == QString("musics"))
-        {
-            ui->listWidget_prod_musics->addItem(item);
-            ui->listWidget_prod_musics->setItemWidget(item,itemWidget);
-        }
-        else if(body.fmedtype == QString("pictures"))
-        {
-            ui->listWidget_prod_pictures->addItem(item);
-            ui->listWidget_prod_pictures->setItemWidget(item,itemWidget);
-        }
-//        checkListItemsCounts(m_curItem,m_items);//按照item数量加载情况，显示动画
 
+        //添加进类型展示列表
+        ui->listWidget_workitems->addItem(item);
+        ui->listWidget_workitems->setItemWidget(item,itemWidget);
+        ui->listWidget_workitems->resizeItemsSizeHint();
 
         //信号与槽函数
         //播放
@@ -494,29 +438,23 @@ bool DoneWorks::eventFilter(QObject *watched, QEvent *event)
 
 QListWidget *DoneWorks::getConnectListWidget(const QString &type)
 {
-    if(type == QString("movies"))
+
+    return ui->listWidget_workitems;
+}
+
+MediaGroup *DoneWorks::getItemMediaGroup(QListWidgetItem *item)
+{
+    //查找顶层的MediaGroup直接进行类型转换，不需要findchild()
+    QWidget* itemWidget = item->listWidget()->itemWidget(item);
+    if(nullptr != itemWidget)
     {
-       return ui->listWidget_prod_movies;
+        return qobject_cast<MediaGroup*>(itemWidget);
+        qDebug() <<QString(u8"找到了MediaGroup");
     }
-    else if(type == QString("netdrama"))
+    else
     {
-        return ui->listWidget_prod_netdrama;
-    }
-    else if(type == QString("shortvideos"))
-    {
-        return ui->listWidget_prod_shortvideos;
-    }
-    else if(type == QString("midvideos"))
-    {
-        return ui->listWidget_prod_midvideos;
-    }
-    else if(type == QString("musics"))
-    {
-        return ui->listWidget_prod_musics;
-    }
-    else if(type == QString("pictures"))
-    {
-        return ui->listWidget_prod_pictures;
+        qDebug() <<QString(u8"没找到itemWidget");
+        return nullptr;
     }
 }
 
@@ -634,7 +572,7 @@ void DoneWorks::slot_addItemToAlbumList(GROUPTYPE TYPE, const QString &name, con
     item->setSizeHint(itemWidget->size() + QSize(10,10));
     ui->listWidget_albums->addItem(item);
     ui->listWidget_albums->setItemWidget(item,itemWidget);
-    ui->listWidget_albums->setCurrentItem(item);
+
     //关联信号与槽函数
     //添加媒体
     connect(itemWidget,&MediaGroup::sig_item_additem,[=](){
@@ -690,6 +628,7 @@ void DoneWorks::slot_addItmeToAlbumIDList(QVariant &media)
 
     ui->listWidget_albumitems->addItem(item);
     ui->listWidget_albumitems->setItemWidget(item,itemWidget);
+    ui->listWidget_albumitems->resizeItemsSizeHint();
 
     //信号与槽函数
     //播放

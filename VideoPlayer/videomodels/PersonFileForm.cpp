@@ -38,6 +38,7 @@ void PersonFileForm::initWorkUI()
     ui->listWidget_produce->setWrapping(true);//自动换行 所有itm在一行显示
     ui->listWidget_produce->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_produce->horizontalScrollBar()->setDisabled(true);
+    ui->listWidget_produce->initListWidget(true,205,1.50,0.60);
     //专辑列表
     ui->listWidget_zhuanji->setViewMode(QListView::IconMode);
     ui->listWidget_zhuanji->setMovement(QListView::Static);//图标不可拖动
@@ -45,6 +46,7 @@ void PersonFileForm::initWorkUI()
     ui->listWidget_zhuanji->setWrapping(true);//自动换行 所有itm在一行显示
     ui->listWidget_zhuanji->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_zhuanji->horizontalScrollBar()->setDisabled(true);
+    ui->listWidget_zhuanji->initListWidget(true,205,1.50,0.60);
     //合集列表
     ui->listWidget_heji->setViewMode(QListView::IconMode);
     ui->listWidget_heji->setMovement(QListView::Static);//图标不可拖动
@@ -52,6 +54,7 @@ void PersonFileForm::initWorkUI()
     ui->listWidget_heji->setWrapping(true);//自动换行 所有itm在一行显示
     ui->listWidget_heji->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_heji->horizontalScrollBar()->setDisabled(true);
+    ui->listWidget_heji->initListWidget(true,205,1.50,0.60);
 
     ui->toolButton_blank->setIcon(QIcon(":/images/bgpic/nothing.png"));
     ui->toolButton_blank->setIconSize(QSize(200,200));
