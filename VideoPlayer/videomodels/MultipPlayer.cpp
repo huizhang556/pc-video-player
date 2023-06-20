@@ -1759,7 +1759,7 @@ void MultipPlayer::slot_setMediaPlayPosition(int value)
 /*著播放器player监测处理媒体播放状态*/
 void MultipPlayer::checkChandleMediaPlayerStatus(QMediaPlayer::State newState)
 {
-    qDebug() << QString::fromLocal8Bit("媒体状态改变，接收到将要设置到的新状态是：") <<newState ;
+    qDebug() << QString(u8"媒体状态改变，接收到将要设置到的新状态是：") <<newState ;
     if(m_player->media().isNull()) return;
     if(newState == QMediaPlayer::PausedState)
     {
@@ -1851,6 +1851,7 @@ void MultipPlayer::checkChandleMediaStatus(QMediaPlayer::MediaStatus status)
     {
         m_videoTitleBar->clearTitleText();
         ui->label_media_name->clear();
+        dataBase::getInstance()->user_operate_setToWatch(m_curMediaId);
         if(slot_getCurrentPlayList()->playbackMode() == QMediaPlaylist::CurrentItemOnce && m_player->position() == m_player->duration())
         {
             qDebug() << QString(u8"----------------主播放器当前结束播放的媒体ID：") << m_curMediaId;
@@ -1858,7 +1859,7 @@ void MultipPlayer::checkChandleMediaStatus(QMediaPlayer::MediaStatus status)
             AdvDialog::getInstance()->blockSignals(false);
             AdvDialog::getInstance()->exec_(POPTYPE::P_NEXTMEDIA,m_curMediaId);
         }
-        qDebug() << QString::fromLocal8Bit("QMediaPlayer::EndOfMedia");
+        qDebug() << QString("QMediaPlayer::EndOfMedia");
     }
         break;
     case QMediaPlayer::InvalidMedia:

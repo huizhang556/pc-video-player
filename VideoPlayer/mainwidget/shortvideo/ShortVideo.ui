@@ -353,6 +353,17 @@ QPushButton:hover
 {
 color:#ffffff;
 background-color: rgba(212, 78, 125,1.0);
+}
+QPushButton:checked
+{
+color:#ffffff;
+background-color: rgba(212, 78, 125,1.0);
+}
+
+QPushButton:unchecked
+{
+color:#999999;
+background-color: #292929;
 }</string>
             </property>
             <property name="text">
@@ -426,6 +437,11 @@ border-image: url(:/images/player/player_collect_hover.png);
 QPushButton:checked
 {
 border-image: url(:/images/player/player_collect.png);
+}
+
+QPushButton:unchecked
+{
+border-image: url(:/images/player/player_collect_hover.png);
 }
 
 QPushButton:hover
@@ -879,6 +895,11 @@ font: 400 15px &quot;微软雅黑&quot;;
  </widget>
  <customwidgets>
   <customwidget>
+   <class>RoundLab</class>
+   <extends>QLabel</extends>
+   <header>customer/RoundLab.h</header>
+  </customwidget>
+  <customwidget>
    <class>CusListWidget</class>
    <extends>QListWidget</extends>
    <header>mainwidget/CusListWidget.h</header>
@@ -893,11 +914,6 @@ font: 400 15px &quot;微软雅黑&quot;;
    <class>CusLabelItem</class>
    <extends>QLabel</extends>
    <header>mainwidget/CusLabelItem.h</header>
-  </customwidget>
-  <customwidget>
-   <class>RoundLab</class>
-   <extends>QLabel</extends>
-   <header>customer/RoundLab.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

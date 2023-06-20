@@ -36,7 +36,10 @@ MediaGroup::~MediaGroup()
 void MediaGroup::initWorkUI()
 {
     m_manager = new QNetworkAccessManager(this);
-
+    m_waitMove.setFileName(":/images/status/video_loading.gif");
+    m_waitMove.setScaledSize(QSize(195,88));
+    ui->label_cover->setMovie(&m_waitMove);
+    m_waitMove.start();
     ui->pushButton_intro->setToolTip(QString(u8"双击修改名称"));
     ui->pushButton_addnew->setToolTip(QString(u8"添加文件"));
     ui->pushButton_delete->setToolTip(QString(u8"删除合集"));
@@ -258,6 +261,11 @@ void MediaGroup::slot_receiveGroupCover(QNetworkReply *reply)
         QPixmap pixmap("://images/bgpic/cusvideoitem4.png");//默认图标
         ui->label_cover->setPixmap(pixmap);
         ui->label_cover->setScaledContents(true);
+    }
+
+    if(m_waitMove.state() == QMovie::Running)
+    {
+        m_waitMove.stop();
     }
 }
 

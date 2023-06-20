@@ -261,15 +261,15 @@ void FilesItem::handleSignalsAndSlots()
 
 
     //媒体类型选择
-    connect(ui->comboBox_mtype,QOverload<int>::of(&QComboBox::currentIndexChanged),[=](int index){
-         qDebug() << QString(u8"当前项发生改变：%1").arg(ui->comboBox_mtype->itemText(index));
-         qDebug() << QString(u8"当前项发生改变,item data：%1").arg(ui->comboBox_mtype->currentData().toString());
+    connect(ui->comboBox_mtype,QOverload<int>::of(&QComboBox::activated),[=](int index){
+//         qDebug() << QString(u8"当前项发生改变：%1").arg(ui->comboBox_mtype->itemText(index));
+//         qDebug() << QString(u8"当前项发生改变,item data：%1").arg(ui->comboBox_mtype->currentData().toString());
     });
 
     //媒体题材选
-    connect(ui->comboBox_mtheme,QOverload<int>::of(&QComboBox::currentIndexChanged),[=](int index){
-        qDebug() << QString(u8"当前项发生改变：%1").arg(ui->comboBox_mtheme->itemText(index));
-        qDebug() << QString(u8"当前项发生改变,item data：%1").arg(ui->comboBox_mtheme->currentData().toString());
+    connect(ui->comboBox_mtheme,QOverload<int>::of(&QComboBox::activated),[=](int index){
+//        qDebug() << QString(u8"当前项发生改变：%1").arg(ui->comboBox_mtheme->itemText(index));
+//        qDebug() << QString(u8"当前项发生改变,item data：%1").arg(ui->comboBox_mtheme->currentData().toString());
     });
 
 
@@ -442,7 +442,7 @@ void FilesItem::slot_setItemName()
     {
         ui->lineEdit_filename->setText(m_name);
         ui->lineEdit_displaytitle->setText(m_name.split(".").first());
-    //    ui->lineEdit_filename->setCursorPosition(0);鼠标到达最左边
+    //    ui->lineEdit_filename->setCursorPosition(0);鼠标到达最左边（默认显示最后面的文本）
         ui->lineEdit_filename->setFocusPolicy(Qt::ClickFocus);
         ui->label_pic->setToolTip(m_name);
     }
@@ -451,7 +451,7 @@ void FilesItem::slot_setItemName()
         ui->lineEdit_filename->setText(Base64ToQStr(m_name));//filename直接解析出来
         ui->lineEdit_filename->setToolTip(nullptr);
         ui->lineEdit_displaytitle->setText(Base64ToQStr(m_name).split(".").first());//解析出来的文件名去后缀
-    //    ui->lineEdit_filename->setCursorPosition(0);鼠标到达最左边
+        ui->lineEdit_filename->setCursorPosition(0);//鼠标到达最左边
         ui->lineEdit_filename->setFocusPolicy(Qt::ClickFocus);
         ui->label_pic->setToolTip(nullptr);
     }
@@ -813,7 +813,20 @@ void FilesItem::file_insertItemDataTodb(const fileBody &body)
     qDebug() << "type       = :" << body.fmedtype;
     qDebug() << "theme      = :" << body.fmedtheme;
     qDebug() << "size       = :" << body.fsize;
-    QStringList parma = {body.fnick.toUtf8(),body.furl.toUtf8(),body.fduration,m_picpath,QString(u8"8.8万"),body.fmedtype,body.fmedtheme,QString::number(body.fsize)};
+    qDebug() << "md5        = :" << body.fmd5;
+    QStringList parma = {
+        body.fnick.toUtf8(),            //视频介绍
+        body.furl.toUtf8(),             //视频地址url
+        body.fduration,                 //视频时长
+        m_picpath,                      //视频封面
+        QString(u8"0"),                 //播放量，默认0
+        QString(u8"0"),                 //收藏量，默认0
+        body.fmedtype,                  //视频类型
+        body.fmedtheme,                 //视频主题
+        QString::number(body.fsize),    //视频大小
+        body.fmd5,                      //文件md5值
+        QString(u8"0")                  //引用数，默认0
+    };
     bool success = dataBase::getInstance()->video_insertRecDramaListDB(parma);//插入数据
     if(success)
     {

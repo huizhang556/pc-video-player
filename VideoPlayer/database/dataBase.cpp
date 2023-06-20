@@ -221,18 +221,21 @@ bool dataBase::creatMysqlConnection()
         QSqlQuery query_dramalist(getSqlDataBase());
         QString table_dramalist = R"(
                               CREATE TABLE IF NOT EXISTS `dramalist`  (
-                              `id` int(20) NOT NULL AUTO_INCREMENT,
-                                `userid` int(20) NOT NULL,
-                                `alias` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-                                `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-                                `duration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-                                `cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-                                `uplove` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-                                `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-                                `theme` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-                                `size` int(20) NULL DEFAULT NULL,
-                                PRIMARY KEY (`id`) USING BTREE
-                              ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;)";
+                                  `id` int(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+                                    `userid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                    `alias` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                    `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                    `duration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                    `cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                    `playcount` int(20) UNSIGNED NULL DEFAULT NULL,
+                                    `likecount` int(20) UNSIGNED NULL DEFAULT NULL,
+                                    `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                    `theme` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                    `size` int(20) UNSIGNED NULL DEFAULT NULL,
+                                    `md5` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                    `reference` int(20) UNSIGNED NOT NULL,
+                                    PRIMARY KEY (`id`) USING BTREE
+                                  ) ENGINE = InnoDB AUTO_INCREMENT = 397 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;)";
         if(query_dramalist.exec(table_dramalist))
             qDebug() << "create table dramalist successfull!";
         else
@@ -765,28 +768,265 @@ QUrlQuery dataBase::user_getCurMediaUserInfo(const QString &user_id)
     }
 }
 
-bool dataBase::user_operate_toWatch(const int media_id)
+//播放量+1
+bool dataBase::user_operate_setToWatch(const int media_id)
 {
-    //1.user_watches表添加
-
-    //2.userinfo总播放数加1
-    return true;
+    QSqlQuery query1(getSqlDataBase());
+    bool ok1 = query1.exec(QString("select playcount from dramalist where id = %1;").arg(media_id));
+    if(ok1)//查询成功
+    {
+        if (query1.next())
+        {
+            int counts = query1.value(0).toInt();
+            //字符串一定要以单引号括起来，数字可以不用
+            bool ok2 = query1.exec(QString("update dramalist set playcount = %1 where id = %2;").arg(counts+1).arg(media_id));
+            if(ok2)
+            {
+                qDebug()<<QString(u8"当前媒体%1的浏览量设为：%2").arg(media_id).arg(counts+1);
+                return true;
+            }
+            else
+            {
+                qDebug()<< QString("当前媒体%1的浏览量增加1失败！") << query1.lastError();
+                return false;
+            }
+        }
+    }
+    else
+    {
+        return false;
+    }
 }
 
-bool dataBase::user_operate_toFollow(const QString &user_id, const QString &follow_id, const int media_id)
+//更新粉丝数
+bool dataBase::user_operate_updateFansCounts(bool up, const QString &user_id)
 {
-    //1.user_fans表添加
+    QSqlQuery query1(getSqlDataBase());
+    bool ok1 = query1.exec(QString("select fans from userinfo where userid = '%1';").arg(user_id));
+    if(ok1)//查询成功
+    {
+        if (query1.next())
+        {
+            int counts = query1.value(0).toInt();
+            if(up)//添加粉丝
+            {
+                bool ok2 = query1.exec(QString("update userinfo set fans = %1 where userid = '%2';").arg(counts+1).arg(user_id));
+                if(ok2)
+                {
+                    qDebug()<<QString(u8"当前用户：%1更新增加一枚粉丝成功！，粉丝总数：%2").arg(user_id).arg(counts+1);
+                    return true;
+                }
+                else
+                {
+                    qDebug()<<QString(u8"当前用户：%1更新增加一枚粉丝失败！，原因：").arg(user_id) << query1.lastError();
+                    return false;
+                }
+            }
+            else//删除粉丝
+            {
+                bool ok2 = query1.exec(QString("update userinfo set fans = %1 where userid = '%2';").arg(counts-1).arg(user_id));
+                if(ok2)
+                {
+                    qDebug()<<QString(u8"当前用户：%1更新减少一枚粉丝成功！，粉丝总数：%2").arg(user_id).arg(counts-1);
+                    return true;
+                }
+                else
+                {
+                    qDebug()<<QString(u8"当前用户：%1更新减少一枚粉丝失败！，原因：").arg(user_id)<<query1.lastError();
+                    return false;
+                }
+            }
 
-    //2.userinfo粉丝数加1
-    return true;
+        }
+    }
+    else
+    {
+        return false;
+    }
 }
 
-bool dataBase::user_operate_toUplove(const QString &user_id, const QString &follow_id, const int media_id)
+//更新收藏数
+bool dataBase::user_operate_updateLoveCounts(bool up, const QString &user_id)
 {
-    //1.user_uplove表添加
 
-    //2.userinfo点赞收藏数加1
-    return true;
+    QSqlQuery query1(getSqlDataBase());
+    bool ok1 = query1.exec(QString("select upvote from userinfo where userid = '%1';").arg(user_id));
+    if(ok1)//查询成功
+    {
+        if (query1.next())
+        {
+            int counts = query1.value(0).toInt();
+            if(up)//收藏量+1
+            {
+                bool ok2 = query1.exec(QString("update userinfo set upvote = %1 where userid = '%2';").arg(counts+1).arg(user_id));
+                if(ok2)
+                {
+                    qDebug()<<QString(u8"当前用户：%1更新增加一枚收藏记录成功！，收藏总数：%2").arg(user_id).arg(counts+1);
+                    return true;
+                }
+                else
+                {
+                    qDebug()<<QString(u8"当前用户：%1更新增加一枚收藏记录失败！，原因：").arg(user_id)<< query1.lastError();
+                    return false;
+                }
+            }
+            else//收藏量-1
+            {
+                bool ok2 = query1.exec(QString("update userinfo set upvote = %1 where userid = '%2';").arg(counts-1).arg(user_id));
+                if(ok2)
+                {
+                    qDebug()<<QString(u8"当前用户：%1更新减少一枚收藏记录成功！，收藏总数：%2").arg(user_id).arg(counts-1);
+                    return true;
+                }
+                else
+                {
+                    qDebug()<<QString(u8"当前用户：%1更新减少一枚收藏记录失败！，原因：").arg(user_id)<< query1.lastError();
+                    return false;
+                }
+            }
+
+        }
+    }
+    else
+    {
+        return false;
+    }
+}
+
+//关注成为粉丝
+bool dataBase::user_operate_setToFollow(bool add, const QString &user_id, const QString &follow_id)
+{
+    QSqlQuery query(getSqlDataBase());
+    if(add)//添加粉丝
+    {
+        //1.user_fans表添加
+        bool isOK = query.exec(QString("insert into user_fans values('%1','%2','%3')").arg(user_id).arg(follow_id).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd")));
+        if(isOK)
+        {
+            //2.userinfo粉丝数加1
+            user_operate_updateFansCounts(true,user_id);//没有强关联性
+            qDebug()<< QString(u8"用户：%1添加粉丝%2成功,且总粉丝+1!").arg(user_id).arg(follow_id);
+            return true;
+        }
+        else
+        {
+            qDebug()<< QString(u8"用户：%1添加粉丝%2失败!").arg(user_id).arg(follow_id) << query.lastError();
+            return false;
+        }
+    }
+    else//删除粉丝
+    {
+        //1.user_fans表删除
+        bool isOK = query.exec(QString("delete from user_fans where userid = '%1'and fansid = '%2';)").arg(user_id).arg(follow_id));
+        if(isOK)
+        {
+            //2.userinfo粉丝数减1
+            user_operate_updateFansCounts(false,user_id);//没有强关联性
+            qDebug()<< QString(u8"用户：%1删除粉丝%2成功,且总粉丝-1!").arg(user_id).arg(follow_id);
+            return true;
+        }
+        else
+        {
+            qDebug()<< QString(u8"用户：%1删除粉丝%2失败!").arg(user_id).arg(follow_id) << query.lastError();
+            return false;
+        }
+    }
+}
+
+//收藏点赞
+bool dataBase::user_operate_setToUplove(bool love, const QString &user_id, const int media_id)
+{
+    QSqlQuery query(getSqlDataBase());
+    if(love)//添加收藏
+    {
+        //1.user_upvote表添加
+        bool isOK = query.exec(QString("insert into user_upvote values('%1','%2',%3)").arg(user_id).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd")).arg(media_id));
+        if(isOK)
+        {
+            //2.userinfo收藏数加1
+            user_operate_updateLoveCounts(true,user_id);//没有强关联性
+            qDebug()<< QString(u8"用户：%1添加收藏视频记录%2成功,且总视频记录数+1!").arg(user_id).arg(media_id);
+            return true;
+        }
+        else
+        {
+            qDebug()<< QString(u8"用户：%1添加收藏视频记录%2失败!").arg(user_id).arg(media_id) << query.lastError();
+            return false;
+        }
+    }
+    else//删除收藏
+    {
+        //1.user_upvote表删除
+        bool isOK = query.exec(QString("delete from user_upvote where userid = '%1'and media_id = %2;)").arg(user_id).arg(media_id));
+        if(isOK)
+        {
+            //2.userinfo收藏数减1
+            user_operate_updateLoveCounts(false,user_id);//没有强关联性
+            qDebug()<< QString(u8"用户：%1删除收藏视频记录%2成功,且总视频收藏数-1!").arg(user_id).arg(media_id);
+            return true;
+        }
+        else
+        {
+            qDebug()<< QString(u8"用户：%1删除收藏视频记录%2失败!").arg(user_id).arg(media_id) << query.lastError();
+            return false;
+        }
+    }
+}
+
+//某个用户是否为粉丝
+bool dataBase::user_operate_getFollow(const QString& user_id, const QString& follow_id)
+{
+    QSqlQuery query1(getSqlDataBase());
+    bool ok1 = query1.exec(QString("select count(*) from user_fans where userid = '%1' and fansid = '%2';").arg(user_id).arg(follow_id));
+    if(ok1)//查询成功
+    {
+        if (query1.next())
+        {
+            int counts = query1.value(0).toInt();
+            if(counts > 0)//已经关注
+            {
+                qDebug()<<QString(u8"用户:%1已经是用户：%2的粉丝！").arg(follow_id).arg(user_id);
+                return true;
+            }
+            else//没有关注
+            {
+                qDebug()<<QString(u8"用户:%1不是用户：%2的粉丝！").arg(follow_id).arg(user_id)<<query1.lastError();
+                return false;
+            }
+        }
+    }
+    else
+    {
+        return false;
+    }
+}
+
+//某个用户是否关注某个视频
+bool dataBase::user_operate_getUplove(const QString &user_id, const int media_id)
+{
+    QSqlQuery query1(getSqlDataBase());
+    bool ok1 = query1.exec(QString("select count(*) from user_upvote where userid = '%1' and media_id = %2;").arg(user_id).arg(media_id));
+    if(ok1)//查询成功
+    {
+        if (query1.next())
+        {
+            int counts = query1.value(0).toInt();
+            if(counts > 0)//已经关注
+            {
+                qDebug()<<QString(u8"用户:%1已经收藏视频：%2！").arg(user_id).arg(media_id);
+                return true;
+            }
+            else//没有关注
+            {
+                qDebug()<<QString(u8"用户:%1暂未收藏视频：%2！").arg(user_id).arg(media_id)<< query1.lastError();
+                return false;
+            }
+        }
+    }
+    else
+    {
+        return false;
+    }
 }
 
 //查询某表记录总数
@@ -960,7 +1200,7 @@ bool dataBase::login_verification(const QString &name, const QString &pwd)
     }
     else
     {
-        qDebug()<< QString::fromLocal8Bit("查找用户个人所有错误：") << query.lastError();
+        qDebug()<< QString(u8"查找用户个人所有错误：") << query.lastError();
         return false;
     }
 
@@ -1027,7 +1267,6 @@ bool dataBase::login_setUserGrade(int grade)
         qDebug()<< QString::fromLocal8Bit("更新用户等级失败：") << query.lastError();
         return false;
     }
-
 }
 
 //找回个人密码
@@ -1054,14 +1293,13 @@ void dataBase::browser_loadAllRecordsToList()
             QString url     = query.value(1).toString();//url
             QString ctime   = query.value(2).toString();//time
             emit sig_sendRecordInfo(urlnick,url,ctime);//向外发送
-            qDebug() << "database finded data,urlnick =="<<urlnick<< "url =="<<url<<"createtime =="<<ctime;
+//            qDebug() << "database finded data,urlnick =="<<urlnick<< "url =="<<url<<"createtime =="<<ctime;
         }
     }
     else
     {
         qDebug()<< QString::fromLocal8Bit("查找所有收藏记录错误：") << query.lastError();
     }
-
 }
 
 //往数据库添加一条收藏记录
@@ -1144,14 +1382,13 @@ void dataBase::browser_loadAllHisRecordsToList()
             QString url     = query.value(0).toString();
             QString ctime   = query.value(1).toString();
             emit sig_sendHisRecordInfo(url,ctime);//向外发送
-            qDebug() << "database finded history data---->" << "url=="<<url << "createtime =="<<ctime;
+//            qDebug() << "database finded history data---->" << "url=="<<url << "createtime =="<<ctime;
         }
     }
     else
     {
         qDebug()<< QString::fromLocal8Bit("查找所有历史记录错误：") << query.lastError();
     }
-
 }
 
 //往数据库添加一条历史记录
@@ -1224,16 +1461,29 @@ bool dataBase::video_insertRecDramaListDB(const QStringList &parma)
 {
     QSqlQuery query(getSqlDataBase());
     //自增id插入时，id为0 参数：记录id 用户id 时长 介绍 url 封面 点赞数 类型 主题
-    QString  insert_sql = QString("insert into dramalist values (%1, '%2', '%3', '%4', '%5', '%6', '%7', '%8', '%9', '%10');").arg(0).arg(m_curUserID).arg(parma.at(0)).arg(parma.at(1)).arg(parma.at(2)).arg(parma.at(3)).arg(parma.at(4)).arg(parma.at(5)).arg(parma.at(6)).arg(parma.at(7));
+    QString  insert_sql = QString("insert into dramalist values (%1, '%2', '%3', '%4', '%5', '%6', %7, %8, '%9', '%10', %11, '%12', %13);")
+            .arg(0)                     //id
+            .arg(m_curUserID)           //userid
+            .arg(parma.at(0))           //alias
+            .arg(parma.at(1))           //url
+            .arg(parma.at(2))           //duration
+            .arg(parma.at(3))           //cover
+            .arg(parma.at(4).toInt())   //playcount
+            .arg(parma.at(5).toInt())   //likecount
+            .arg(parma.at(6))           //type
+            .arg(parma.at(7))           //theme
+            .arg(parma.at(8).toInt())   //size
+            .arg(parma.at(9))           //md5
+            .arg(parma.at(10).toInt()); //reference
     bool isOK = query.exec(insert_sql);
     if(isOK)
     {
-        qDebug()<< QString::fromLocal8Bit("插入剧集信息成功~");
+        qDebug()<< QString(u8"插入剧集信息成功~");
         return true;
     }
     else
     {
-        qDebug()<< QString::fromLocal8Bit("插入剧集信息错误：") << query.lastError();
+        qDebug()<< QString(u8"插入剧集信息错误：") << query.lastError();
         return false;
     }
 
@@ -1243,7 +1493,7 @@ bool dataBase::video_insertRecDramaListDB(const QStringList &parma)
 bool dataBase::video_recDramaInfo()
 {
     QSqlQuery query(getSqlDataBase());
-    bool isOK = query.exec(QString("select id, alias, url, duration, cover, uplove from dramalist limit 20;"));//限制在20条
+    bool isOK = query.exec(QString("select id, alias, url, duration, cover, playcount from dramalist limit 20;"));//限制在20条
     if(isOK)
     {
         while (query.next())
@@ -1253,7 +1503,7 @@ bool dataBase::video_recDramaInfo()
             QString url         =   query.value(2).toString();  //播放地址url
             QString duration    =   query.value(3).toString();  //时长
             QString cover       =   query.value(4).toString();  //封面url
-            QString uplove      =   query.value(5).toString();  //点赞
+            QString uplove      =   QString::number(query.value(5).toInt());  //播放量
             MusicData musicData;//结构体定义的头文件一定要添加进来
             musicData.id        =   id;
             musicData.alias     =   alias;
@@ -1271,7 +1521,7 @@ bool dataBase::video_recDramaInfo()
     }
     else
     {
-        qDebug()<< QString::fromLocal8Bit("查找所有剧集信息记录错误：") << query.lastError();
+        qDebug()<< QString(u8"查找所有剧集信息记录错误：") << query.lastError();
         return false;
     }
 
@@ -1281,7 +1531,7 @@ bool dataBase::video_recDramaInfo()
 bool dataBase::video_recDrama_of_theme(const QString &theme, int start, int counts)
 {
     QSqlQuery query(getSqlDataBase());
-    bool isOK = query.exec(QString("select id, alias, url, duration, cover, uplove from dramalist where theme = '%1' limit %2,%3;").arg(theme).arg(start).arg(counts));
+    bool isOK = query.exec(QString("select id, alias, url, duration, cover, playcount from dramalist where theme = '%1' limit %2,%3;").arg(theme).arg(start).arg(counts));
     if(isOK)
     {
         emit sig_sendRecThemeVideocounts(query.size());
@@ -1293,7 +1543,7 @@ bool dataBase::video_recDrama_of_theme(const QString &theme, int start, int coun
             QString url         =   query.value(2).toString();  //播放地址url
             QString duration    =   query.value(3).toString();  //时长
             QString cover       =   query.value(4).toString();  //封面url
-            QString uplove      =   query.value(5).toString();  //点赞
+            QString uplove      =   QString::number(query.value(5).toInt());  //播放量
             MusicData musicData;//结构体定义的头文件一定要添加进来
             musicData.id        =   id;
             musicData.alias     =   alias;
@@ -1308,7 +1558,7 @@ bool dataBase::video_recDrama_of_theme(const QString &theme, int start, int coun
     }
     else
     {
-        qDebug()<< QString::fromLocal8Bit("查找所有剧集信息记录错误：") << query.lastError();
+        qDebug()<< QString(u8"查找所有剧集信息记录错误：") << query.lastError();
         return false;
     }
 }
@@ -1318,7 +1568,7 @@ QList<QVariant> &dataBase::adv_getNext4Medais(const QString& theme, const int st
 {
     m_advItems.clear();
     QSqlQuery query(getSqlDataBase());
-    bool isOK = query.exec(QString("select id, alias, url, duration, cover, uplove from dramalist where theme = '%1' limit %2,%3;").arg(theme).arg(start).arg(counts));
+    bool isOK = query.exec(QString("select id, alias, url, duration, cover, playcount from dramalist where theme = '%1' limit %2,%3;").arg(theme).arg(start).arg(counts));
     if(isOK)
     {
         while (query.next())
@@ -1328,7 +1578,7 @@ QList<QVariant> &dataBase::adv_getNext4Medais(const QString& theme, const int st
             QString url         =   query.value(2).toString();  //播放地址url
             QString duration    =   query.value(3).toString();  //时长
             QString cover       =   query.value(4).toString();  //封面url
-            QString uplove      =   query.value(5).toString();  //点赞
+            QString uplove      =   QString::number(query.value(5).toInt());  //播放量
             MusicData musicData;//结构体定义的头文件一定要添加进来
             musicData.id        =   id;
             musicData.alias     =   alias;
@@ -1565,7 +1815,7 @@ bool dataBase::creator_removeOneMediaFromSort(const QString& tags, const int med
     }
     else
     {
-        qDebug()<< QString::fromLocal8Bit("delete one data from dramalist failed！because：") << query.lastError();
+        qDebug()<< QString("delete one data from dramalist failed！because：") << query.lastError();
         return false;
     }
 }

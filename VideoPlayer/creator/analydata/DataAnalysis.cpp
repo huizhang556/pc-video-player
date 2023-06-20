@@ -27,13 +27,25 @@ void DataAnalysis::initWorkUI()
     m_buttonGroup->addButton(ui->pushButton_likecount,1);
     m_buttonGroup->addButton(ui->pushButton_collectcount,2);
     m_buttonGroup->setExclusive(true);
+
+    ui->stackedWidget_contents->setCurrentWidget(ui->page_playcounts);
 }
 
 void DataAnalysis::handleSignalsAndSlots()
 {
     connect(m_buttonGroup,QOverload<QAbstractButton*>::of(&QButtonGroup::buttonClicked),this,[&](QAbstractButton *button){
-        qDebug() << button->text();
-        button->setChecked(true);
+        if(button->objectName() == QString(u8"pushButton_playcount"))
+        {
+            ui->stackedWidget_contents->setCurrentWidget(ui->page_playcounts);
+        }
+        else if(button->objectName() == QString(u8"pushButton_likecount"))
+        {
+            ui->stackedWidget_contents->setCurrentWidget(ui->page_likecounts);
+        }
+        else if(button->objectName() == QString(u8"pushButton_collectcount"))
+        {
+            ui->stackedWidget_contents->setCurrentWidget(ui->page_colcounts);
+        }
     });
 }
 

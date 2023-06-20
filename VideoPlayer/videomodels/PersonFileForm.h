@@ -1,5 +1,8 @@
 ﻿#ifndef PERSONFILEFORM_H
 #define PERSONFILEFORM_H
+
+#define DISITEMSIZE QSize(200,155)
+
 #include "database/dataBase.h"
 #include "videomodels/MultipPlayer.h"
 #include "creator/mywork/MediaGroup.h"

@@ -38,7 +38,8 @@ void PersonFileForm::initWorkUI()
     ui->listWidget_produce->setWrapping(true);//自动换行 所有itm在一行显示
     ui->listWidget_produce->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_produce->horizontalScrollBar()->setDisabled(true);
-    ui->listWidget_produce->initListWidget(true,205,1.50,0.60);
+    ui->listWidget_produce->initListWidget(true,215,160,1.025,1.035);
+
     //专辑列表
     ui->listWidget_zhuanji->setViewMode(QListView::IconMode);
     ui->listWidget_zhuanji->setMovement(QListView::Static);//图标不可拖动
@@ -46,7 +47,7 @@ void PersonFileForm::initWorkUI()
     ui->listWidget_zhuanji->setWrapping(true);//自动换行 所有itm在一行显示
     ui->listWidget_zhuanji->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_zhuanji->horizontalScrollBar()->setDisabled(true);
-    ui->listWidget_zhuanji->initListWidget(true,205,1.50,0.60);
+    ui->listWidget_zhuanji->initListWidget(true,215,160,1.025,1.035);
     //合集列表
     ui->listWidget_heji->setViewMode(QListView::IconMode);
     ui->listWidget_heji->setMovement(QListView::Static);//图标不可拖动
@@ -54,10 +55,10 @@ void PersonFileForm::initWorkUI()
     ui->listWidget_heji->setWrapping(true);//自动换行 所有itm在一行显示
     ui->listWidget_heji->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_heji->horizontalScrollBar()->setDisabled(true);
-    ui->listWidget_heji->initListWidget(true,205,1.50,0.60);
+    ui->listWidget_heji->initListWidget(true,215,160,1.025,1.035);
 
     ui->toolButton_blank->setIcon(QIcon(":/images/bgpic/nothing.png"));
-    ui->toolButton_blank->setIconSize(QSize(200,200));
+    ui->toolButton_blank->setIconSize(QSize(210,200));
     ui->toolButton_blank->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
     ui->pushButton_usrLevel->setIconSize(QSize(ui->pushButton_usrLevel->size()));
@@ -317,8 +318,8 @@ void PersonFileForm::slot_loading_produces(QList<QVariant> &produces)
         item->setData(Qt::UserRole,body.furl);
         FilesItem *itemWidget = new FilesItem(FILEEDIT::DISPLAY,body.fid,body.furl,body.fsize,body.fcover);
         itemWidget->initFileItem(body);
-        itemWidget->setFixedSize(QSize(200,150));//190,135
-        item->setSizeHint(QSize(205,155));
+        itemWidget->setFixedSize(QSize(DISITEMSIZE));
+        item->setSizeHint(QSize(DISITEMSIZE) + QSize(5,5));
         item->setTextAlignment(Qt::AlignRight | Qt::AlignCenter);
         ui->listWidget_produce->addItem(item);
         ui->listWidget_produce->setItemWidget(item,itemWidget);
@@ -333,6 +334,7 @@ void PersonFileForm::slot_loading_produces(QList<QVariant> &produces)
         MultipPlayer::getInstance()->slot_addTempPlaylist(666,QStringList{item->data(Qt::UserRole).toString()},query);
         });
     }
+    ui->listWidget_produce->resizeItemsSizeHint();
 }
 
 //加载所有专辑
@@ -375,8 +377,8 @@ void PersonFileForm::slot_loading_album_items(QList<QVariant> &albums)
         item->setData(Qt::UserRole,body.furl);
         FilesItem *itemWidget = new FilesItem(FILEEDIT::DISPLAY,body.fid,body.furl,body.fsize,body.fcover);
         itemWidget->initFileItem(body);
-        itemWidget->setFixedSize(QSize(200,150));
-        item->setSizeHint(QSize(205,155));
+        itemWidget->setFixedSize(QSize(DISITEMSIZE));
+        item->setSizeHint(QSize(DISITEMSIZE) + QSize(5,5));
         item->setTextAlignment(Qt::AlignRight | Qt::AlignCenter);
         ui->listWidget_zhuanji->addItem(item);
         ui->listWidget_zhuanji->setItemWidget(item,itemWidget);
@@ -391,6 +393,7 @@ void PersonFileForm::slot_loading_album_items(QList<QVariant> &albums)
         MultipPlayer::getInstance()->slot_addTempPlaylist(666,QStringList{item->data(Qt::UserRole).toString()},query);
         });
     }
+    ui->listWidget_zhuanji->resizeItemsSizeHint();
 }
 
 //加载所有合集
@@ -433,8 +436,8 @@ void PersonFileForm::slot_loading_collection_items(QList<QVariant> &collections)
         item->setData(Qt::UserRole,body.furl);
         FilesItem *itemWidget = new FilesItem(FILEEDIT::DISPLAY,body.fid,body.furl,body.fsize,body.fcover);
         itemWidget->initFileItem(body);
-        itemWidget->setFixedSize(QSize(200,150));
-        item->setSizeHint(QSize(205,155));
+        itemWidget->setFixedSize(QSize(DISITEMSIZE));
+        item->setSizeHint(QSize(DISITEMSIZE) + QSize(5,5));
         item->setTextAlignment(Qt::AlignRight | Qt::AlignCenter);
         ui->listWidget_heji->addItem(item);
         ui->listWidget_heji->setItemWidget(item,itemWidget);
@@ -449,6 +452,7 @@ void PersonFileForm::slot_loading_collection_items(QList<QVariant> &collections)
         MultipPlayer::getInstance()->slot_addTempPlaylist(666,QStringList{item->data(Qt::UserRole).toString()},query);
         });
     }
+    ui->listWidget_heji->resizeItemsSizeHint();
 }
 
 //加载所有动态

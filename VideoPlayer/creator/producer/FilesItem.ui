@@ -394,7 +394,7 @@ background-color: transparent;
               <property name="minimumSize">
                <size>
                 <width>50</width>
-                <height>70</height>
+                <height>50</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -416,7 +416,7 @@ background-color: transparent;
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>32</height>
+                <height>45</height>
                </size>
               </property>
               <property name="maximumSize">

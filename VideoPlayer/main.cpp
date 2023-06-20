@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
         //    ScrollToTop::getInstance()->show();
         //    DesktopLyric::getInstance()->show();
 
-//            MultipPlayer::getInstance()->show();
+            MultipPlayer::getInstance()->show();
 
 //            AdvDialog::getInstance()->exec_(P_NEXTMEDIA,10);
 //        LeftSideBar lbar; lbar.show();
@@ -177,7 +177,7 @@ int main(int argc, char *argv[])
 //            MainNotice w1;
 //            w1.show();
 
-            CreateCenter::getInstance()->exec_();
+//            CreateCenter::getInstance()->exec_();
 
 //              PersonFileForm p; p.show();
         //    MyEmotionWindow w1;

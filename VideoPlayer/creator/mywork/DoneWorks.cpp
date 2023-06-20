@@ -25,7 +25,7 @@ void DoneWorks::initWorkUI()
     ui->listWidget_albumitems->setWrapping(true);//自动换行 所有itm在一行显示
     ui->listWidget_albumitems->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_albumitems->horizontalScrollBar()->setDisabled(true);
-    ui->listWidget_albumitems->initListWidget(true,DITEMSIZE.width(),1.50,0.60);
+    ui->listWidget_albumitems->initListWidget(true,212,160,1.025,1.035);
 
     //合集展示items列表
     ui->listWidget_medgroups->setViewMode(QListView::IconMode);
@@ -34,7 +34,7 @@ void DoneWorks::initWorkUI()
     ui->listWidget_medgroups->setWrapping(true);//自动换行 所有itm在一行显示
     ui->listWidget_medgroups->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_medgroups->horizontalScrollBar()->setDisabled(true);
-    ui->listWidget_medgroups->initListWidget(true,DITEMSIZE.width(),1.50,0.60);
+    ui->listWidget_medgroups->initListWidget(true,212,160,1.025,1.035);
 
     //完成列表类型items展示
     ui->listWidget_workitems->setViewMode(QListView::IconMode);
@@ -43,7 +43,7 @@ void DoneWorks::initWorkUI()
     ui->listWidget_workitems->setWrapping(true);//自动换行 所有itm在一行显示
     ui->listWidget_workitems->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_workitems->horizontalScrollBar()->setDisabled(true);
-    ui->listWidget_workitems->initListWidget(true,DITEMSIZE.width(),1.50,0.60);
+    ui->listWidget_workitems->initListWidget(true,212,160,1.025,1.035);
 
     //左侧专辑列表
     ui->listWidget_albums->setViewMode(QListView::IconMode);
@@ -331,15 +331,15 @@ void DoneWorks::slot_addItemToGroupList(GROUPTYPE TYPE, const QString &name, con
 void DoneWorks::slot_addItmeToGroupIDList(QVariant& media)
 {
     fileBody body = media.value<fileBody>();//通用类型转为专用类型
-    qDebug() << QString(u8"[group_id]接收到数据库查询返回的信息，要被创建新的ITEM信息如下:") << endl;
-    qDebug() << "fid" << body.fid << endl;
-    qDebug() << "fnick" << body.fnick << endl;
-    qDebug() << "furl"  << body.furl << endl;
-    qDebug() << "fduration" << body.fduration << endl;
-    qDebug() << "fcover" << body.fcover << endl;
-    qDebug() << "fmedtype" << body.fmedtype << endl;
-    qDebug() << "fmedtheme" << body.fmedtheme << endl;
-    qDebug() << "fsize" << body.fsize << endl;
+//    qDebug() << QString(u8"[group_id]接收到数据库查询返回的信息，要被创建新的ITEM信息如下:") << endl;
+//    qDebug() << "fid" << body.fid << endl;
+//    qDebug() << "fnick" << body.fnick << endl;
+//    qDebug() << "furl"  << body.furl << endl;
+//    qDebug() << "fduration" << body.fduration << endl;
+//    qDebug() << "fcover" << body.fcover << endl;
+//    qDebug() << "fmedtype" << body.fmedtype << endl;
+//    qDebug() << "fmedtheme" << body.fmedtheme << endl;
+//    qDebug() << "fsize" << body.fsize << endl;
 
     QListWidgetItem *item = new QListWidgetItem(body.fnick);//介绍
     item->setData(Qt::UserRole,body.furl);
@@ -350,7 +350,6 @@ void DoneWorks::slot_addItmeToGroupIDList(QVariant& media)
 
     ui->listWidget_medgroups->addItem(item);
     ui->listWidget_medgroups->setItemWidget(item,itemWidget);
-    ui->listWidget_medgroups->resizeItemsSizeHint();
 
     //信号与槽函数
     //播放
@@ -386,15 +385,15 @@ void DoneWorks::clearOldContent()
 void DoneWorks::slot_receivedData_findTypeResult(QVariant& media)
 {
         fileBody body = media.value<fileBody>();//通用类型转为专用类型
-        qDebug() << QString(u8"接收到数据库查询返回的信息，要被创建新的ITEM信息如下:") << endl;
-        qDebug() << "fid" << body.fid << endl;
-        qDebug() << "fnick" << body.fnick << endl;
-        qDebug() << "furl"  << body.furl << endl;
-        qDebug() << "fduration" << body.fduration << endl;
-        qDebug() << "fcover" << body.fcover << endl;
-        qDebug() << "fmedtype" << body.fmedtype << endl;
-        qDebug() << "fmedtheme" << body.fmedtheme << endl;
-        qDebug() << "fsize" << body.fsize << endl;
+//        qDebug() << QString(u8"接收到数据库查询返回的信息，要被创建新的ITEM信息如下:") << endl;
+//        qDebug() << "fid" << body.fid << endl;
+//        qDebug() << "fnick" << body.fnick << endl;
+//        qDebug() << "furl"  << body.furl << endl;
+//        qDebug() << "fduration" << body.fduration << endl;
+//        qDebug() << "fcover" << body.fcover << endl;
+//        qDebug() << "fmedtype" << body.fmedtype << endl;
+//        qDebug() << "fmedtheme" << body.fmedtheme << endl;
+//        qDebug() << "fsize" << body.fsize << endl;
 
         QListWidgetItem *item = new QListWidgetItem(body.fnick);//介绍
         item->setData(Qt::UserRole,body.furl);
@@ -406,7 +405,6 @@ void DoneWorks::slot_receivedData_findTypeResult(QVariant& media)
         //添加进类型展示列表
         ui->listWidget_workitems->addItem(item);
         ui->listWidget_workitems->setItemWidget(item,itemWidget);
-        ui->listWidget_workitems->resizeItemsSizeHint();
 
         //信号与槽函数
         //播放
@@ -425,7 +423,6 @@ void DoneWorks::slot_receivedData_findTypeResult(QVariant& media)
             DownloadType::getInstance()->showDownloadForm(1,nick,url);
         });
 }
-
 
 bool DoneWorks::eventFilter(QObject *watched, QEvent *event)
 {
@@ -609,15 +606,15 @@ void DoneWorks::slot_addItemToAlbumList(GROUPTYPE TYPE, const QString &name, con
 void DoneWorks::slot_addItmeToAlbumIDList(QVariant &media)
 {
     fileBody body = media.value<fileBody>();//通用类型转为专用类型
-    qDebug() << QString(u8"[album_id]接收到数据库查询返回的信息，要被创建新的ITEM信息如下:") << endl;
-    qDebug() << "fid" << body.fid << endl;
-    qDebug() << "fnick" << body.fnick << endl;
-    qDebug() << "furl"  << body.furl << endl;
-    qDebug() << "fduration" << body.fduration << endl;
-    qDebug() << "fcover" << body.fcover << endl;
-    qDebug() << "fmedtype" << body.fmedtype << endl;
-    qDebug() << "fmedtheme" << body.fmedtheme << endl;
-    qDebug() << "fsize" << body.fsize << endl;
+//    qDebug() << QString(u8"[album_id]接收到数据库查询返回的信息，要被创建新的ITEM信息如下:") << endl;
+//    qDebug() << "fid" << body.fid << endl;
+//    qDebug() << "fnick" << body.fnick << endl;
+//    qDebug() << "furl"  << body.furl << endl;
+//    qDebug() << "fduration" << body.fduration << endl;
+//    qDebug() << "fcover" << body.fcover << endl;
+//    qDebug() << "fmedtype" << body.fmedtype << endl;
+//    qDebug() << "fmedtheme" << body.fmedtheme << endl;
+//    qDebug() << "fsize" << body.fsize << endl;
 
     QListWidgetItem *item = new QListWidgetItem(body.fnick);//介绍
     item->setData(Qt::UserRole,body.furl);
@@ -628,7 +625,6 @@ void DoneWorks::slot_addItmeToAlbumIDList(QVariant &media)
 
     ui->listWidget_albumitems->addItem(item);
     ui->listWidget_albumitems->setItemWidget(item,itemWidget);
-    ui->listWidget_albumitems->resizeItemsSizeHint();
 
     //信号与槽函数
     //播放

@@ -42,6 +42,8 @@ public  slots:
     void    slot_setVideoMediaType(const QStringList& list);
     void    slot_setCurMediaHeader(const QString& headpic);
     void    slot_setCurMediaUsrName(const QString &usrname);
+    void    slot_setCurUserFansStatus(const QString& user_id,const QString& follow_id);//设置粉丝关注情况
+    void    slot_setCurMediaColStatus(const QString& user_id, const int media_id);//设置视频收藏状态
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;

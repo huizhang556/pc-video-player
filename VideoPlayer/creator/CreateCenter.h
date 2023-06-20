@@ -32,8 +32,8 @@ public:
     void    initWorkUI();
     void    handleSignalsAndSlots();
     void    setInstallEventer();
-    static CreateCenter* getInstance();
     void    exec_();
+    static  CreateCenter* getInstance();
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;

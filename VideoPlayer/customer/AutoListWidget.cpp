@@ -4,6 +4,7 @@ AutoListWidget::AutoListWidget(QWidget *parent) :
     QListWidget(parent)
 {
     this->installEventFilter(this);
+    this->verticalScrollBar()->setFixedWidth(10);
 }
 
 AutoListWidget::~AutoListWidget()
@@ -22,12 +23,13 @@ void AutoListWidget::setOffset(const qreal offset_w)
 }
 
 //初始化参数
-void AutoListWidget::initListWidget(bool on, const int item_W,const qreal rate_W,const qreal rate_H)
+void AutoListWidget::initListWidget(bool on, const int item_W, const int item_H, const qreal rate_minW, const qreal rate_maxW)
 {
     m_on = on;
     m_item_W = item_W;
-    m_sizeRate_W = rate_W;
-    m_sizeRate_H = rate_H;
+    m_item_H = item_H;
+    m_minRate_W = rate_minW;
+    m_maxRate_W = rate_maxW;
 }
 
 bool AutoListWidget::eventFilter(QObject *object, QEvent *event)
@@ -43,81 +45,87 @@ bool AutoListWidget::eventFilter(QObject *object, QEvent *event)
 //自动调节
 void AutoListWidget::resizeItemsSizeHint()
 {
-    //不符合条件情况
+    //不符合条件情况1
     if(this->count() == 0) return;
+
     //符合条件
     if(this->count() > 0)
     {
-        int avgWidth = item_calAvg_W();//求当前平均宽度
-        if(avgWidth < m_item_W)//平均宽度不能小于默认的宽度
+        //宽度盛不下item才进行缩放
+        if(this->count()*this->item(0)->sizeHint().width() > this->width())
         {
-            avgWidth = m_item_W;
+            int avgWidth = item_calAvg_W();
+//            if(avgWidth < m_item_W)
+//            {
+//                avgWidth = m_item_W;
+//            }
+
+            for(int i = 0; i < this->count(); i++)
+            {
+                this->item(i)->setSizeHint(QSize(avgWidth,m_item_H));//只变化宽度，高度固定
+            }
         }
-        else if(avgWidth > (int)(m_item_W*m_sizeRate_W))//平均宽度不能大于宽度乘以缩放比例后的宽度
-        {
-            avgWidth = (int)(m_item_W*m_sizeRate_W);
-        }
-        for(int i = 0; i < this->count(); i++)
-        {
-            this->item(i)->setSizeHint(QSize(avgWidth,avgWidth*m_sizeRate_H));//高度 = 当前宽度*m_sizeRate_H
-        }
+        this->horizontalScrollBar()->setValue(0);//回到最顶端
     }
-    this->horizontalScrollBar()->setValue(0);//回到最顶端
 }
 
 int AutoListWidget::item_calAvg_W()
 {
-    int Width = (int)(this->width()-this->verticalScrollBar()->width() - m_widthOffset);
-//    qDebug() << QString(u8"第一个ITEM默认宽度：%1").arg(sizeHint_w);
-    int avgWidth = 0;
-    if(Width < m_item_W*2)//小于3个默认宽度，默认按2个宽度拉升
+    int avg_w = 0;
+    int Width = this->width() - this->verticalScrollBar()->width() - m_widthOffset;
+    if (Width <= m_item_W*m_maxRate_W*1) //1个item最小宽度 和 最大宽度之间
     {
-        avgWidth = Width;
-        m_colCount = 1;//显示两列
+        //(200 - 215]
+        m_colCount = 1;
     }
-    else if(Width < m_item_W*3)
+    else if(Width <= m_item_W*m_maxRate_W*2)
     {
-        avgWidth = (int)(Width/2);
+        //(215,430]
         m_colCount = 2;
     }
-    else if(Width < m_item_W*4)
+    else if(Width <= m_item_W*m_maxRate_W*3)
     {
-        avgWidth = (int)(Width/3);
+        //(430,645]
         m_colCount = 3;
     }
-    else if(Width < m_item_W*5)
+    else if(Width <= m_item_W*m_maxRate_W*4)
     {
-        avgWidth = (int)(Width/4);
         m_colCount = 4;
     }
-    else if(Width < m_item_W*6)
+    else if(Width <= m_item_W*m_maxRate_W*5)
     {
-        avgWidth = (int)(Width/5);
         m_colCount = 5;
     }
-    else if(Width < m_item_W*7)
+    else if(Width <= m_item_W*m_maxRate_W*6)
     {
-        avgWidth = (int)(Width/6);
         m_colCount = 6;
     }
-    else if(Width < m_item_W*8)
+    else if(Width <= m_item_W*m_maxRate_W*7)
     {
-        avgWidth = (int)(Width/7);
         m_colCount = 7;
     }
-    else if(Width < m_item_W*9)
+    else if(Width <= m_item_W*m_maxRate_W*8)
     {
-        avgWidth = (int)(Width/8);
         m_colCount = 8;
     }
-    else if(Width < m_item_W*10)
+    else if(Width <= m_item_W*m_maxRate_W*9)
     {
-        avgWidth = (int)(Width/9);
         m_colCount = 9;
     }
-    else
+    else if(Width <= m_item_W*m_maxRate_W*10)
     {
-        avgWidth = m_item_W;
+        m_colCount = 10;
     }
-    return avgWidth;
+    else if(Width <= m_item_W*m_maxRate_W*11)
+    {
+        m_colCount = 11;
+    }
+    else if(Width <= m_item_W*m_maxRate_W*12)
+    {
+        m_colCount = 12;
+    }
+
+    avg_w = (int)(Width/m_colCount);
+//    qDebug() << QString(u8"计算应该放列数:") << m_colCount << QString(u8"计算每列宽度:") << avg_w;
+    return avg_w;
 }

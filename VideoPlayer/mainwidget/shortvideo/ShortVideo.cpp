@@ -54,6 +54,10 @@ void ShortVideo::initWorkUI()
     ui->stackedWidget_player->setCurrentWidget(ui->stackPage_novideo);
     ui->stackedWidget_dramalist->setCurrentIndex(0);
 
+    //关注按钮
+    ui->pushButton_love->setCheckable(true);
+    //收藏按钮
+    ui->pushButton_collect->setCheckable(true);
 
 }
 
@@ -106,11 +110,17 @@ void ShortVideo::handleSignalsAndSLots()
 
             m_curUserId = query_url.queryItemValue(u8"userid");
 
+            //设置收藏状态
+            slot_setCurMediaColStatus(dataBase::getInstance()->getCurrentUserID(),m_curMediaId);
+
+            //设置粉丝关注状态
+            slot_setCurUserFansStatus(dataBase::getInstance()->getCurrentUserID(),m_curUserId);
+
             qDebug() << QString(u8"短视频----------当前播放视频id:") << m_curMediaId;
             m_curMediaUrl = current->text();//url
             m_curMediaName = current->data(Qt::UserRole).toString();//介绍
             ui->widget_player->slot_receivePlayMediaFile(m_curMediaUrl,m_curMediaName);//URL+介绍
-
+            dataBase::getInstance()->user_operate_setToWatch(m_curMediaId);//更新播放量
         }
     });
 
@@ -128,11 +138,7 @@ void ShortVideo::handleSignalsAndSLots()
         qDebug() << QString(u8"转到主播放器");
     });
 
-    //收藏
-    connect(ui->pushButton_collect,&QPushButton::clicked,[=](bool checked){
-//        qDebug() << QString(u8"收藏状态：")<<checked;
-        ui->pushButton_collect->setChecked(checked);
-    });
+
 
     //下载
     connect(ui->pushButton_download,&QPushButton::clicked,[=](){
@@ -197,8 +203,36 @@ void ShortVideo::handleSignalsAndSLots()
     });
 
     //关注用户
-    connect(ui->pushButton_love,&QPushButton::clicked,[=](){
-        qDebug() << QString(u8"已关注当前用户：%1").arg(m_curUserName);
+    connect(ui->pushButton_love,&QPushButton::clicked,[=](bool checked){
+        if(checked)
+        {
+            bool ok = dataBase::getInstance()->user_operate_setToFollow(true,dataBase::getInstance()->getCurrentUserID(),m_curUserId);
+            if(ok)
+            {
+                ui->pushButton_love->setText(QString(u8"已关注"));
+            }
+        }
+        else
+        {
+           bool ok = dataBase::getInstance()->user_operate_setToFollow(false,dataBase::getInstance()->getCurrentUserID(),m_curUserId);
+            if(ok)
+            {
+                ui->pushButton_love->setText(QString(u8"点赞关注+"));
+            }
+        }
+
+    });
+
+    //收藏
+    connect(ui->pushButton_collect,&QPushButton::clicked,[=](bool checked){
+        if(checked)
+        {
+            dataBase::getInstance()->user_operate_setToUplove(true,dataBase::getInstance()->getCurrentUserID(),m_curMediaId);
+        }
+        else
+        {
+            dataBase::getInstance()->user_operate_setToUplove(false,dataBase::getInstance()->getCurrentUserID(),m_curMediaId);
+        }
     });
 
     //点击跳转
@@ -333,6 +367,53 @@ void ShortVideo::slot_setCurMediaHeader(const QString &headpic)
 void ShortVideo::slot_setCurMediaUsrName(const QString &usrname)
 {
     ui->label_usrheader->setToolTip(usrname);
+}
+
+void ShortVideo::slot_setCurUserFansStatus(const QString &user_id, const QString &follow_id)
+{
+    if(!dataBase::getInstance()->getCurrentUserOnline())
+    {
+        ui->pushButton_love->setText(QString(u8"点赞关注+"));
+        ui->pushButton_love->setChecked(false);
+        ui->pushButton_love->setEnabled(false);
+    }
+    else
+    {
+        ui->pushButton_love->setEnabled(true);
+        bool isok = dataBase::getInstance()->user_operate_getFollow(user_id,follow_id);
+        if(isok)
+        {
+            ui->pushButton_love->setText(QString(u8"已关注"));
+            ui->pushButton_love->setChecked(true);
+        }
+        else
+        {
+            ui->pushButton_love->setText(QString(u8"点赞关注+"));
+            ui->pushButton_love->setChecked(false);
+        }
+    }
+}
+
+void ShortVideo::slot_setCurMediaColStatus(const QString &user_id, const int media_id)
+{
+    if(!dataBase::getInstance()->getCurrentUserOnline())
+    {
+        ui->pushButton_collect->setChecked(false);
+        ui->pushButton_collect->setEnabled(false);
+    }
+    else
+    {
+        ui->pushButton_collect->setEnabled(true);
+        bool isok = dataBase::getInstance()->user_operate_getUplove(user_id,media_id);
+        if(isok)
+        {
+            ui->pushButton_collect->setChecked(true);
+        }
+        else
+        {
+            ui->pushButton_collect->setChecked(false);
+        }
+    }
 }
 
 void ShortVideo::slot_receivedUserHeader(QNetworkReply *reply)

@@ -385,7 +385,7 @@ void DownloadType::addVideoQualityItem_1(QVector<QVariant> &videoBody)
     });
 
     //重载是，参数必须和声明时一模一样，包括：const限制，引用，指针
-    connect(m_comboBox,QOverload<int>::of(&QComboBox::currentIndexChanged),[=](int index){
+    connect(m_comboBox,QOverload<int>::of(&QComboBox::activated),[=](int index){
          m_quality = m_comboBox->itemText(index);
          qDebug() << QString(u8"当前项发生改变：%1").arg(m_comboBox->itemText(index));
 
@@ -407,7 +407,7 @@ void DownloadType::addVideoQualityItem_1(QVector<QVariant> &videoBody)
 const QString DownloadType::openLocalFileSystem()
 {
     QString fpath = QFileDialog::getExistingDirectory(this,
-                                                QString::fromLocal8Bit("选择路径"),
+                                                QString(u8"选择路径"),
                                                 m_curOpenPath);//默认打开软件路径(每次都会变)
     if(!fpath.isEmpty())//不为空
     {

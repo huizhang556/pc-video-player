@@ -3539,6 +3539,7 @@ background-color: transparent;
 
 QListWidget::item
 {
+color: transparent;
 background-color: transparent;
 }
 

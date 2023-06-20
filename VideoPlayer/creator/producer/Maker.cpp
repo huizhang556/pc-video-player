@@ -25,13 +25,14 @@ void Maker::initWorkUI()
     ui->listWidget_videopolish->setMovement(QListView::Static);//图标不可拖动
     ui->listWidget_videopolish->setResizeMode(QListWidget::Adjust);
     ui->listWidget_videopolish->setWrapping(true);//自动换行 所有itm在一行显示
-    ui->listWidget_videopolish->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_videopolish->horizontalScrollBar()->setDisabled(true);
+    ui->listWidget_videopolish->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget_videopolish->setSelectionMode(QAbstractItemView::SingleSelection);//设置选择模式为单选
     ui->listWidget_videopolish->setDragEnabled(true);//启用拖拽
     ui->listWidget_videopolish->viewport()->setAcceptDrops(true);//设置接受拖放
     ui->listWidget_videopolish->setDropIndicatorShown(true);//设置显示将要被放置的位置
     ui->listWidget_videopolish->setDragDropMode(QAbstractItemView::InternalMove);//设置拖放模式为移动项目，如果不设置，默认为复制项
+    ui->listWidget_videopolish->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     m_signalMapper = new QSignalMapper(this);
     m_signalMapper->setObjectName(QString::fromUtf8("m_signalMapper"));

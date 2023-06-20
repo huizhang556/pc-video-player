@@ -212,6 +212,7 @@ void CreateCenter::handleSignalsAndSlots()
 void CreateCenter::setInstallEventer()
 {
     m_ctitleBar->installEventFilter(this);
+    ui->tabWidget_create->installEventFilter(this);
 }
 
 
@@ -223,6 +224,10 @@ bool CreateCenter::eventFilter(QObject *watched, QEvent *event)
         {
             this->setCursor(Qt::ArrowCursor);
         }
+    }
+    if(watched == ui->tabWidget_create && event->type() == QEvent::Enter)
+    {
+        ui->tabWidget_create->setCursor(Qt::ArrowCursor);
     }
     return QWidget::eventFilter(watched,event);
 }

@@ -9,6 +9,7 @@
 #include <QFileDialog>
 #include <QMouseEvent>
 #include <QTimer>
+#include <QMovie>
 #include <QDebug>
 
 #include <QBuffer>
@@ -55,6 +56,7 @@ private:
     QString     m_pix_url;
     QString     m_groupid;
     QImage      m_cover;
+    QMovie      m_waitMove;
     QNetworkAccessManager   *m_manager;
 
 private:
