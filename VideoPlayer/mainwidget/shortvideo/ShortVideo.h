@@ -44,6 +44,7 @@ public  slots:
     void    slot_setCurMediaUsrName(const QString &usrname);
     void    slot_setCurUserFansStatus(const QString& user_id,const QString& follow_id);//设置粉丝关注情况
     void    slot_setCurMediaColStatus(const QString& user_id, const int media_id);//设置视频收藏状态
+    void    slot_updateFansStatus();
 
 protected:
     bool    eventFilter(QObject *watched, QEvent *event) override;
@@ -51,6 +52,7 @@ protected:
 private:
     QPushButton*    getListWidgetItemButton(QListWidgetItem* item, QString objname);//在item中查找指定按钮
     void            setContentTips(const QString& tips);
+    void            setErrorStatusTips(const QString& tips);
 
 
 private slots:

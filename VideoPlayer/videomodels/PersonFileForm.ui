@@ -3175,7 +3175,7 @@ background-color: transparent;
                <item>
                 <layout class="QVBoxLayout" name="verticalLayout_27">
                  <item>
-                  <widget class="QPushButton" name="pushButton">
+                  <widget class="QPushButton" name="pushButton_tofans">
                    <property name="minimumSize">
                     <size>
                      <width>90</width>

@@ -40,6 +40,7 @@ public:
 
 public slots:
     void    slot_showOtherUserInfo(const QString& userid);
+    void    slot_setUserFansStatus(const QString& user_id,const QString& follow_id);
     //处理各个界面  重载
     void    slot_setShowCurrentWidget(QObject *obj1,int index1, QObject *obj2,int index2);
     void    slot_setShowCurrentWidget(QObject *obj1,QWidget *wdgt1, QObject *obj2,QWidget *wdgt2);
@@ -59,7 +60,9 @@ public slots:
 
 private slots:
     void    slot_receivedUserHeader(QNetworkReply* reply);
-
+    void    slot_load_watches_counts(const QString &userid);//更新关注数量
+    void    slot_load_fans_counts(const QString &userid);//更新粉丝数量
+    void    slot_load_upvote_counts(const QString &userid);//更新收藏数量
 
 private:
     void        setBlankMessage(QWidget* page, const QString& message);

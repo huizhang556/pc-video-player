@@ -798,41 +798,42 @@ bool dataBase::user_operate_setToWatch(const int media_id)
     }
 }
 
-//更新粉丝数
-bool dataBase::user_operate_updateFansCounts(bool up, const QString &user_id)
+//被关注者更新粉丝数
+bool dataBase::user_operate_updateFansCounts(bool up, const QString &follow_id)
 {
     QSqlQuery query1(getSqlDataBase());
-    bool ok1 = query1.exec(QString("select fans from userinfo where userid = '%1';").arg(user_id));
+    bool ok1 = query1.exec(QString("select count(*) from user_fans where userid = '%1';").arg(follow_id));
     if(ok1)//查询成功
     {
         if (query1.next())
         {
             int counts = query1.value(0).toInt();
+            qDebug() << QString(u8"被关注者用户%1拥有粉丝：").arg(follow_id) << counts;
             if(up)//添加粉丝
             {
-                bool ok2 = query1.exec(QString("update userinfo set fans = %1 where userid = '%2';").arg(counts+1).arg(user_id));
+                bool ok2 = query1.exec(QString("update userinfo set fans = %1 where userid = '%2';").arg(counts).arg(follow_id));
                 if(ok2)
                 {
-                    qDebug()<<QString(u8"当前用户：%1更新增加一枚粉丝成功！，粉丝总数：%2").arg(user_id).arg(counts+1);
+                    qDebug()<<QString(u8"当前用户：%1更新增加一枚粉丝成功！，粉丝总数：%2").arg(follow_id).arg(counts);
                     return true;
                 }
                 else
                 {
-                    qDebug()<<QString(u8"当前用户：%1更新增加一枚粉丝失败！，原因：").arg(user_id) << query1.lastError();
+                    qDebug()<<QString(u8"当前用户：%1更新增加一枚粉丝失败！，原因：").arg(follow_id) << query1.lastError();
                     return false;
                 }
             }
             else//删除粉丝
             {
-                bool ok2 = query1.exec(QString("update userinfo set fans = %1 where userid = '%2';").arg(counts-1).arg(user_id));
+                bool ok2 = query1.exec(QString("update userinfo set fans = %1 where userid = '%2';").arg(counts).arg(follow_id));
                 if(ok2)
                 {
-                    qDebug()<<QString(u8"当前用户：%1更新减少一枚粉丝成功！，粉丝总数：%2").arg(user_id).arg(counts-1);
+                    qDebug()<<QString(u8"当前用户：%1更新减少一枚粉丝成功！，粉丝总数：%2").arg(follow_id).arg(counts);
                     return true;
                 }
                 else
                 {
-                    qDebug()<<QString(u8"当前用户：%1更新减少一枚粉丝失败！，原因：").arg(user_id)<<query1.lastError();
+                    qDebug()<<QString(u8"当前用户：%1更新减少一枚粉丝失败！，原因：").arg(follow_id)<<query1.lastError();
                     return false;
                 }
             }
@@ -893,48 +894,146 @@ bool dataBase::user_operate_updateLoveCounts(bool up, const QString &user_id)
     }
 }
 
+//更新某个视频的收藏数
+bool dataBase::user_operate_updateVideoLoveCounts(bool up, const int media_id)
+{
+    QSqlQuery query1(getSqlDataBase());
+    bool ok1 = query1.exec(QString("select likecount from dramalist where id = %1;").arg(media_id));
+    if(ok1)//查询成功
+    {
+        if (query1.next())
+        {
+            int counts = query1.value(0).toInt();
+            if(up)//视频的收藏量+1
+            {
+                bool ok2 = query1.exec(QString("update dramalist set likecount = %1 where id = '%2';").arg(counts+1).arg(media_id));
+                if(ok2)
+                {
+                    qDebug()<<QString(u8"当前视频：%1更新收藏量+1成功！，视频总收藏量：%2").arg(media_id).arg(counts+1);
+                    return true;
+                }
+                else
+                {
+                    qDebug()<<QString(u8"当前视频：%1更新收藏量+1失败！原因：").arg(media_id)<< query1.lastError();
+                    return false;
+                }
+            }
+            else//视频的收藏量-1
+            {
+                bool ok2 = query1.exec(QString("update dramalist set likecount = %1 where id = '%2';").arg(counts-1).arg(media_id));
+                if(ok2)
+                {
+                    qDebug()<<QString(u8"当前视频：%1更新收藏量-1成功！，视频总收藏量：%2").arg(media_id).arg(counts-1);
+                    return true;
+                }
+                else
+                {
+                    qDebug()<<QString(u8"当前视频：%1更新收藏量-1失败！，原因：").arg(media_id)<< query1.lastError();
+                    return false;
+                }
+            }
+
+        }
+    }
+    else
+    {
+        return false;
+    }
+}
+
+//关注者更新关注数
+bool dataBase::user_operate_updateCareCounts(bool up, const QString &user_id)
+{
+    QSqlQuery query1(getSqlDataBase());
+    bool ok1 = query1.exec(QString("select count(*) from user_fans where fansid = '%1';").arg(user_id));
+    if(ok1)//查询成功
+    {
+        if (query1.next())
+        {
+            int counts = query1.value(0).toInt();
+            qDebug() <<QString(u8"当前关注者用户%1拥有关注数：").arg(user_id) << counts;
+            if(up)//收藏量+1
+            {
+                bool ok2 = query1.exec(QString("update userinfo set watches = %1 where userid = '%2';").arg(counts).arg(user_id));
+                if(ok2)
+                {
+                    qDebug()<<QString(u8"当前用户：%1更新增加关注记录成功！，关注总数：%2").arg(user_id).arg(counts);
+                    return true;
+                }
+                else
+                {
+                    qDebug()<<QString(u8"当前用户：%1更新增加关注记录失败！，原因：").arg(user_id)<< query1.lastError();
+                    return false;
+                }
+            }
+            else//收藏量-1
+            {
+                bool ok2 = query1.exec(QString("update userinfo set watches = %1 where userid = '%2';").arg(counts).arg(user_id));
+                if(ok2)
+                {
+                    qDebug()<<QString(u8"当前用户：%1更新减少关注记录成功！，关注总数：%2").arg(user_id).arg(counts);
+                    return true;
+                }
+                else
+                {
+                    qDebug()<<QString(u8"当前用户：%1更新减少关注记录失败！，原因：").arg(user_id)<< query1.lastError();
+                    return false;
+                }
+            }
+
+        }
+    }
+    else
+    {
+        return false;
+    }
+}
+
 //关注成为粉丝
 bool dataBase::user_operate_setToFollow(bool add, const QString &user_id, const QString &follow_id)
 {
+    //搞清楚：谁成为谁的粉丝？
     QSqlQuery query(getSqlDataBase());
     if(add)//添加粉丝
     {
         //1.user_fans表添加
-        bool isOK = query.exec(QString("insert into user_fans values('%1','%2','%3')").arg(user_id).arg(follow_id).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd")));
+        bool isOK = query.exec(QString("insert into user_fans values('%1','%2','%3')").arg(follow_id).arg(user_id).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd")));
         if(isOK)
         {
             //2.userinfo粉丝数加1
-            user_operate_updateFansCounts(true,user_id);//没有强关联性
-            qDebug()<< QString(u8"用户：%1添加粉丝%2成功,且总粉丝+1!").arg(user_id).arg(follow_id);
+            user_operate_updateFansCounts(true,follow_id);//被关注者粉丝数+1
+            user_operate_updateCareCounts(true,user_id);//关注者本身关注数+1
+            qDebug()<< QString(u8"用户：%1添加粉丝%2成功,且总粉丝+1!").arg(follow_id).arg(user_id);
             return true;
         }
         else
         {
-            qDebug()<< QString(u8"用户：%1添加粉丝%2失败!").arg(user_id).arg(follow_id) << query.lastError();
+            qDebug()<< QString(u8"用户：%1添加粉丝%2失败!").arg(follow_id).arg(user_id) << query.lastError();
             return false;
         }
     }
     else//删除粉丝
     {
         //1.user_fans表删除
-        bool isOK = query.exec(QString("delete from user_fans where userid = '%1'and fansid = '%2';)").arg(user_id).arg(follow_id));
+        bool isOK = query.exec(QString("delete from user_fans where userid = '%1'and fansid = '%2';)").arg(follow_id).arg(user_id));
         if(isOK)
         {
             //2.userinfo粉丝数减1
-            user_operate_updateFansCounts(false,user_id);//没有强关联性
-            qDebug()<< QString(u8"用户：%1删除粉丝%2成功,且总粉丝-1!").arg(user_id).arg(follow_id);
+            user_operate_updateFansCounts(false,follow_id);//被关注者粉丝数-1
+            user_operate_updateCareCounts(false,user_id);//关注者本身关注数-1
+            qDebug()<< QString(u8"用户：%1删除粉丝%2成功,且总粉丝-1!").arg(follow_id).arg(user_id);
             return true;
         }
         else
         {
-            qDebug()<< QString(u8"用户：%1删除粉丝%2失败!").arg(user_id).arg(follow_id) << query.lastError();
+            qDebug()<< QString(u8"用户：%1删除粉丝%2失败!").arg(follow_id).arg(user_id) << query.lastError();
             return false;
         }
     }
 }
 
 //收藏点赞
-bool dataBase::user_operate_setToUplove(bool love, const QString &user_id, const int media_id)
+bool dataBase::user_operate_setToUplove(bool love, const QString &user_id, const QString &love_id, const int media_id)
 {
     QSqlQuery query(getSqlDataBase());
     if(love)//添加收藏
@@ -944,7 +1043,7 @@ bool dataBase::user_operate_setToUplove(bool love, const QString &user_id, const
         if(isOK)
         {
             //2.userinfo收藏数加1
-            user_operate_updateLoveCounts(true,user_id);//没有强关联性
+            user_operate_updateLoveCounts(true,love_id);//视频拥有者收藏数+1
             qDebug()<< QString(u8"用户：%1添加收藏视频记录%2成功,且总视频记录数+1!").arg(user_id).arg(media_id);
             return true;
         }
@@ -961,7 +1060,7 @@ bool dataBase::user_operate_setToUplove(bool love, const QString &user_id, const
         if(isOK)
         {
             //2.userinfo收藏数减1
-            user_operate_updateLoveCounts(false,user_id);//没有强关联性
+            user_operate_updateLoveCounts(false,love_id);//视频拥有者收藏数-1
             qDebug()<< QString(u8"用户：%1删除收藏视频记录%2成功,且总视频收藏数-1!").arg(user_id).arg(media_id);
             return true;
         }
@@ -990,7 +1089,7 @@ bool dataBase::user_operate_getFollow(const QString& user_id, const QString& fol
             }
             else//没有关注
             {
-                qDebug()<<QString(u8"用户:%1不是用户：%2的粉丝！").arg(follow_id).arg(user_id)<<query1.lastError();
+                qDebug()<<QString(u8"用户:%1不是用户：%2的粉丝！").arg(follow_id).arg(user_id);
                 return false;
             }
         }
@@ -1018,7 +1117,7 @@ bool dataBase::user_operate_getUplove(const QString &user_id, const int media_id
             }
             else//没有关注
             {
-                qDebug()<<QString(u8"用户:%1暂未收藏视频：%2！").arg(user_id).arg(media_id)<< query1.lastError();
+                qDebug()<<QString(u8"用户:%1暂未收藏视频：%2！").arg(user_id);
                 return false;
             }
         }

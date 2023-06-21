@@ -62,6 +62,7 @@ void PersonFileForm::initWorkUI()
     ui->toolButton_blank->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
     ui->pushButton_usrLevel->setIconSize(QSize(ui->pushButton_usrLevel->size()));
+    ui->pushButton_tofans->setCheckable(true);
 
     m_stackBtnGroup = new QButtonGroup(this);
     m_stackBtnGroup->setExclusive(true);
@@ -86,6 +87,29 @@ void PersonFileForm::chandleSignalsAndSLots()
     connect(m_stackBtnGroup,QOverload<QAbstractButton*>::of(&QButtonGroup::buttonClicked),this,[&](QAbstractButton *button){
         qDebug() << button->text();
         ui->pushButton_return->hide();
+    });
+
+    //关注当前用户
+    connect(ui->pushButton_tofans,&QPushButton::clicked,[=](bool checked){
+        if(checked)
+        {
+            qDebug(u8"成为粉丝");
+            bool ok = dataBase::getInstance()->user_operate_setToFollow(true,dataBase::getInstance()->getCurrentUserID(),m_userId);
+            if(ok)
+            {
+                ui->pushButton_tofans->setText(QString(u8"已关注"));
+            }
+        }
+        else
+        {
+            qDebug(u8"取消粉丝");
+           bool ok = dataBase::getInstance()->user_operate_setToFollow(false,dataBase::getInstance()->getCurrentUserID(),m_userId);
+            if(ok)
+            {
+                ui->pushButton_tofans->setText(QString(u8"+ 关注"));
+            }
+        }
+        slot_load_fans_counts(m_userId);//更新粉丝数量
     });
 
     //获取所有作品
@@ -299,6 +323,27 @@ void PersonFileForm::slot_receivedUserHeader(QNetworkReply *reply)
         QPixmap pixmap(":/images/bgpic/dieji3.png");//默认图标
         ui->label_otherUsrHead->setPixmap_(pixmap);
     }
+}
+
+//更新关注数量
+void PersonFileForm::slot_load_watches_counts(const QString &userid)
+{
+    QUrlQuery quer_user = dataBase::getInstance()->user_getCurMediaUserInfo(userid);
+    ui->toolButton_watch_counts->setText(quer_user.queryItemValue(u8"userwatch"));
+}
+
+//更新粉丝数量
+void PersonFileForm::slot_load_fans_counts(const QString &userid)
+{
+    QUrlQuery quer_user = dataBase::getInstance()->user_getCurMediaUserInfo(userid);
+    ui->toolButton_fans_counts->setText(quer_user.queryItemValue(u8"userfans"));
+}
+
+//更新收藏数量
+void PersonFileForm::slot_load_upvote_counts(const QString &userid)
+{
+    QUrlQuery quer_user = dataBase::getInstance()->user_getCurMediaUserInfo(userid);
+    ui->toolButton_love_counts->setText(quer_user.queryItemValue(u8"userlove"));
 }
 
 void PersonFileForm::setBlankMessage(QWidget *page, const QString &message)
@@ -568,14 +613,40 @@ void PersonFileForm::slot_showOtherUserInfo(const QString &userid)
     ui->pushButton_usrName->setText(m_usrName);
     setOtherUser_grade(m_usrType.toInt());//图标+等级
     ui->label_motto->setText(m_usrmotto);
-    ui->toolButton_watch_counts->setText(m_usrwatch);
-    ui->toolButton_fans_counts->setText(m_usrfans);
-    ui->toolButton_love_counts->setText(m_usrlove);
-
+    slot_load_watches_counts(m_userId);
+    slot_load_fans_counts(m_userId);
+    slot_load_upvote_counts(m_userId);
     m_manager->get(QNetworkRequest(QUrl(m_usrHead)));
     ui->stackedWidget_display->setCurrentWidget(ui->stack_produce);
+    slot_setUserFansStatus(m_userId,dataBase::getInstance()->getCurrentUserID());
     ui->pushButton_produce->click();//默认加载所有作品
     qDebug() <<QString(u8"当前用id户为：") << userid;
 }
 
-
+//设置粉丝关注状态
+void PersonFileForm::slot_setUserFansStatus(const QString &user_id, const QString &follow_id)
+{
+    if(!dataBase::getInstance()->getCurrentUserOnline() || dataBase::getInstance()->getCurrentUserID() ==  user_id)
+    {
+        ui->pushButton_tofans->setText(QString(u8"+ 关注"));
+        ui->pushButton_tofans->setChecked(false);
+        ui->pushButton_tofans->setEnabled(false);
+        return;
+    }
+    else
+    {
+        ui->pushButton_tofans->setEnabled(true);
+        bool isok = dataBase::getInstance()->user_operate_getFollow(user_id,follow_id);
+        if(isok)
+        {
+            ui->pushButton_tofans->setText(QString(u8"已关注"));
+            ui->pushButton_tofans->setChecked(true);
+        }
+        else
+        {
+            ui->pushButton_tofans->setText(QString(u8"+ 关注"));
+            ui->pushButton_tofans->setChecked(false);
+        }
+        slot_load_watches_counts(m_userId);//重新加载粉丝数
+    }
+}

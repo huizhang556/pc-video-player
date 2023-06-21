@@ -665,6 +665,7 @@ void MainWidget::handleSignalAndSLots()
     //个人主页返回
     connect(m_personForm,&PersonFileForm::sig_sendReturnPage,[=](int numpage){
         m_stackWidget_center->setCurrentWidget(m_shortVideo);
+        m_shortVideo->slot_updateFansStatus();
     });
 
     //热点资讯查找主题视频

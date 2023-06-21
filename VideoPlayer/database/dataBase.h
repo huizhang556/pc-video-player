@@ -115,10 +115,12 @@ public slots:
     //关于某一个用户信息
     QUrlQuery               user_getCurMediaUserInfo(const QString& user_id);//查询用户信息
     bool                    user_operate_setToWatch(const int media_id);//播放量+1（watches）
-    bool                    user_operate_updateFansCounts(bool up, const QString& user_id);//更新粉丝数
+    bool                    user_operate_updateFansCounts(bool up, const QString& follow_id);//更新粉丝数
     bool                    user_operate_updateLoveCounts(bool up, const QString& user_id);//更新收藏数
+    bool                    user_operate_updateCareCounts(bool up, const QString& user_id);//更新关注数
+    bool                    user_operate_updateVideoLoveCounts(bool up, const int media_id);//更新某个视频的收藏数
     bool                    user_operate_setToFollow(bool add, const QString& user_id,const QString& follow_id);//关注成为粉丝(fans)
-    bool                    user_operate_setToUplove(bool love, const QString& user_id,const int media_id);//收藏点赞（uplove）
+    bool                    user_operate_setToUplove(bool love, const QString& user_id, const QString& love_id, const int media_id);//收藏点赞（uplove）
     bool                    user_operate_getFollow(const QString& user_id,const QString& follow_id);//某个用户是否为粉丝
     bool                    user_operate_getUplove(const QString& user_id, const int media_id);//某个用户是否关注某个视频
 

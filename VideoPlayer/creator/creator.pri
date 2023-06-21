@@ -15,7 +15,8 @@ FORMS += \
     $$PWD/producer/DragListWidget.ui \
     $$PWD/mywork/MediaGroup.ui \
     $$PWD/analydata/DataAnalysis.ui \
-    $$PWD/mywork/SortDialog.ui
+    $$PWD/mywork/SortDialog.ui \
+    $$PWD/analydata/UserDataItem.ui
 
 
 HEADERS += \
@@ -37,7 +38,8 @@ HEADERS += \
     $$PWD/producer/DragListWidget.h \
     $$PWD/mywork/MediaGroup.h \
     $$PWD/analydata/DataAnalysis.h \
-    $$PWD/mywork/SortDialog.h
+    $$PWD/mywork/SortDialog.h \
+    $$PWD/analydata/UserDataItem.h
 
 
 SOURCES += \
@@ -59,7 +61,8 @@ SOURCES += \
     $$PWD/producer/DragListWidget.cpp \
     $$PWD/mywork/MediaGroup.cpp \
     $$PWD/analydata/DataAnalysis.cpp \
-    $$PWD/mywork/SortDialog.cpp
+    $$PWD/mywork/SortDialog.cpp \
+    $$PWD/analydata/UserDataItem.cpp
 
 
 
