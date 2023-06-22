@@ -711,5 +711,7 @@
         <file>images/creator/group_bg.jpg</file>
         <file>images/creator/group_del.png</file>
         <file>images/creator/group_delhover.png</file>
+        <file>images/bgpic/create_bg_1.jpg</file>
+        <file>images/bgpic/create_bg_2.jpg</file>
     </qresource>
 </RCC>

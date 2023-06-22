@@ -588,7 +588,7 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:1,stop:0 #ba87b6, 
 }</string>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>3</number>
        </property>
        <widget class="QWidget" name="page_movies">
         <layout class="QVBoxLayout" name="verticalLayout_34">

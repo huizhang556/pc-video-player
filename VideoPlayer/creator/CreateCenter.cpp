@@ -86,7 +86,7 @@ void CreateCenter::initWorkUI()
     ui->tabWidget_create->addTab(m_maker,QString(u8"创作中心"));
     ui->tabWidget_create->addTab(m_doneWorks,QString(u8"我的作品"));
     ui->tabWidget_create->addTab(m_income,QString(u8"创作收益"));
-    ui->tabWidget_create->addTab(m_dataAnaly,QString(u8"数据分析"));
+    ui->tabWidget_create->addTab(m_dataAnaly,QString(u8"我的数据"));
 
     m_ctitleBar = new CreTitleBar(this);
     m_ctitleBar->setObjectName(QString::fromUtf8("m_ctitleBar"));

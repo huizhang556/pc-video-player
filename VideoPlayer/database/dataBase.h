@@ -124,6 +124,10 @@ public slots:
     bool                    user_operate_getFollow(const QString& user_id,const QString& follow_id);//某个用户是否为粉丝
     bool                    user_operate_getUplove(const QString& user_id, const int media_id);//某个用户是否关注某个视频
 
+    QList<QUrlQuery>&       user_getCurUserAllFans(const QString &user_id);//获取用户下的所有粉丝用户
+    QList<QUrlQuery>&       user_getCurUserAllWatches(const QString &user_id);//获取用户下的所有关注用户
+    QList<QUrlQuery>&       user_getCurUserAllCollections(const QString &user_id);//获取用户下的所有收藏视频
+    QList<QUrlQuery>&       user_getCurUserAllComments(const QString &user_id);//获取用户下的所有评论
 
     //表通用查询
     int                     getTableRecordsCounts(const QString& tablename);//查询某张表记录总数
@@ -266,7 +270,13 @@ private:
     QList<QVariant>        m_advItems;
 
     //收益
-    QList<QStringList>      m_incomeRecords;
+    QList<QStringList>     m_incomeRecords;
+
+    //数据分析
+    QList<QUrlQuery>       m_fans;//所有粉丝
+    QList<QUrlQuery>       m_watches;//所有关注
+    QList<QUrlQuery>       m_collections;//所有收藏视频
+    QList<QUrlQuery>       m_commits;//所有评论
 
     //数据库连接
     static      QString     m_hostName;//主机ip

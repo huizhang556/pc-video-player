@@ -3762,14 +3762,14 @@ border: none;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>AutoListWidget</class>
-   <extends>QListWidget</extends>
-   <header>customer/AutoListWidget.h</header>
-  </customwidget>
-  <customwidget>
    <class>RoundLab</class>
    <extends>QLabel</extends>
    <header>customer/RoundLab.h</header>
+  </customwidget>
+  <customwidget>
+   <class>AutoListWidget</class>
+   <extends>QListWidget</extends>
+   <header>customer/AutoListWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

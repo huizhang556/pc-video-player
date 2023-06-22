@@ -1128,6 +1128,122 @@ bool dataBase::user_operate_getUplove(const QString &user_id, const int media_id
     }
 }
 
+//获取用户下的所有粉丝用户（别人是用户粉丝）
+QList<QUrlQuery> &dataBase::user_getCurUserAllFans(const QString &user_id)
+{
+    m_fans.clear();
+    QSqlQuery query1(getSqlDataBase());
+
+    bool isOK = query1.exec(QString("select fansid, ctime from user_fans where userid = '%1' order by ctime asc;").arg(user_id));
+    if(isOK)
+    {
+        qDebug() << QString(u8"在用户：%1 下找到 %2 个粉丝。").arg(user_id).arg(query1.size());
+        while (query1.next())
+        {
+            QString fans_id = query1.value(0).toString();
+            QString ctime   = query1.value(1).toString();
+
+            QUrlQuery query_info;
+            QUrlQuery query_user = user_getCurMediaUserInfo(fans_id);
+            query_info.addQueryItem(QString(u8"userid"),query_user.queryItemValue(u8"userid"));
+            query_info.addQueryItem(QString(u8"username"),query_user.queryItemValue(u8"username"));
+            query_info.addQueryItem(QString(u8"userhead"),query_user.queryItemValue(u8"userhead"));
+            query_info.addQueryItem(QString(u8"usertype"),query_user.queryItemValue(u8"usertype"));
+            query_info.addQueryItem(QString(u8"usermotto"),query_user.queryItemValue(u8"usermotto"));
+            query_info.addQueryItem(QString(u8"usertime"),ctime);
+            query_info.addQueryItem(QString(u8"userstatus"),QString(u8"0"));
+            m_fans.append(query_info);
+        }
+        qDebug() << QString(u8"用户：%1 下查找到的粉丝已发出！").arg(user_id);
+        return m_fans;
+    }
+    else
+    {
+        qDebug() << QString(u8"用户：%1 下查找粉丝失败！").arg(user_id);
+        return m_fans;
+    }
+}
+
+//获取用户下的所有关注用户(用户是别人粉丝)
+QList<QUrlQuery> &dataBase::user_getCurUserAllWatches(const QString &user_id)
+{
+    m_watches.clear();
+    QSqlQuery query1(getSqlDataBase());
+
+    bool isOK = query1.exec(QString("select userid, ctime from user_fans where fansid = '%1' order by ctime asc;").arg(user_id));
+    if(isOK)
+    {
+        qDebug() << QString(u8"在用户：%1 下找到 %2 个用户关注。").arg(user_id).arg(query1.size());
+        while (query1.next())
+        {
+            QString watch_id = query1.value(0).toString();
+            QString ctime    = query1.value(1).toString();
+
+            QUrlQuery query_info;
+            QUrlQuery query_user = user_getCurMediaUserInfo(watch_id);
+            query_info.addQueryItem(QString(u8"userid"),query_user.queryItemValue(u8"userid"));
+            query_info.addQueryItem(QString(u8"username"),query_user.queryItemValue(u8"username"));
+            query_info.addQueryItem(QString(u8"userhead"),query_user.queryItemValue(u8"userhead"));
+            query_info.addQueryItem(QString(u8"usertype"),query_user.queryItemValue(u8"usertype"));
+            query_info.addQueryItem(QString(u8"usermotto"),query_user.queryItemValue(u8"usermotto"));
+            query_info.addQueryItem(QString(u8"usertime"),ctime);
+            query_info.addQueryItem(QString(u8"userstatus"),QString(u8"1"));
+            m_watches.append(query_info);
+        }
+        qDebug() << QString(u8"用户：%1 下查找到的用户关注已发出！").arg(user_id);
+        return m_watches;
+    }
+    else
+    {
+        qDebug() << QString(u8"用户：%1 下查找用户关注失败！").arg(user_id);
+        return m_watches;
+    }
+}
+
+//获取用户下的所有收藏视频
+QList<QUrlQuery> &dataBase::user_getCurUserAllCollections(const QString &user_id)
+{
+    m_collections.clear();
+    QSqlQuery query1(getSqlDataBase());
+
+    bool isOK = query1.exec(QString("select media_id, time from user_upvote where userid = '%1' order by time asc;").arg(user_id));
+    if(isOK)
+    {
+        qDebug() << QString(u8"在用户：%1 下找到 %2 个用户收藏视频。").arg(user_id).arg(query1.size());
+        while (query1.next())
+        {
+            int media_id    = query1.value(0).toInt();
+            QString ctime   = query1.value(1).toString();
+
+            QUrlQuery query_info;
+            QUrlQuery query_video = adv_getCurMediaUserInfo(media_id);
+            query_info.addQueryItem(QString(u8"userid"),query_video.queryItemValue(u8"userid"));
+            query_info.addQueryItem(QString(u8"url"),query_video.queryItemValue(u8"url"));
+            query_info.addQueryItem(QString(u8"alias"),query_video.queryItemValue(u8"alias"));
+            query_info.addQueryItem(QString(u8"cover"),query_video.queryItemValue(u8"cover"));
+            query_info.addQueryItem(QString(u8"username"),query_video.queryItemValue(u8"username"));
+            query_info.addQueryItem(QString(u8"likecount"),query_video.queryItemValue(u8"likecount"));
+            query_info.addQueryItem(QString(u8"playcount"),query_video.queryItemValue(u8"playcount"));
+            query_info.addQueryItem(QString(u8"usertime"),ctime);
+            query_info.addQueryItem(QString(u8"userstatus"),QString(u8"1"));
+            m_collections.append(query_info);
+        }
+        qDebug() << QString(u8"用户：%1 下查找到的用户收藏视频已发出！").arg(user_id);
+        return m_collections;
+    }
+    else
+    {
+        qDebug() << QString(u8"用户：%1 下查用户收藏视频丝失败！").arg(user_id);
+        return m_collections;
+    }
+}
+
+//获取用户下的所有评论
+QList<QUrlQuery> &dataBase::user_getCurUserAllComments(const QString &user_id)
+{
+    return m_commits;
+}
+
 //查询某表记录总数
 int dataBase::getTableRecordsCounts(const QString &tablename)
 {
@@ -1702,27 +1818,31 @@ QUrlQuery dataBase::adv_getCurMediaUserInfo(const int media_id)
 {
     QSqlQuery query(getSqlDataBase());
     QUrlQuery   query_media;
-    bool isOK = query.exec(QString("select userid, url, alias,theme from dramalist where id = %1;").arg(media_id));
+    bool isOK = query.exec(QString("select userid, url, alias, theme, playcount, likecount, cover from dramalist where id = %1;").arg(media_id));
     if(isOK)
     {
         while (query.next())
         {
-            int         m_id     = media_id;
-            QString     m_userId = query.value(0).toString();
-            QString     m_url    = query.value(1).toString();
-            QString     m_alias  = query.value(2).toString();
-            QString     m_theme  = query.value(3).toString();
-            QString     username = adv_getMediaUserName(m_userId);
-            QString     userhead = adv_getMediaUserHeader(m_userId);
+            int         m_id            = media_id;
+            QString     m_userId        = query.value(0).toString();
+            QString     m_url           = query.value(1).toString();
+            QString     m_alias         = query.value(2).toString();
+            QString     m_theme         = query.value(3).toString();
+            QString     m_playcount     = QString::number(query.value(4).toInt());
+            QString     m_likecount     = QString::number(query.value(5).toInt());
+            QString     m_cover         = query.value(6).toString();
+            QString     username        = adv_getMediaUserName(m_userId);
+            QString     userhead        = adv_getMediaUserHeader(m_userId);
 
-            qDebug() << QString(u8"数据库查询到的关于视频：%1 的一些信息如下：").arg(media_id) << endl;
-            qDebug() << QString(u8"用户ID:") << m_userId;
-            qDebug() << QString(u8"用户名称:") << username;
-            qDebug() << QString(u8"用户头像:") << userhead;
-            qDebug() << QString(u8"视频ID:") << m_id;
-            qDebug() << QString(u8"视频URL:") << m_url;
-            qDebug() << QString(u8"视频介绍:") << m_alias;
-            qDebug() << QString(u8"视频主题:") << m_theme;
+
+//            qDebug() << QString(u8"数据库查询到的关于视频：%1 的一些信息如下：").arg(media_id) << endl;
+//            qDebug() << QString(u8"用户ID:") << m_userId;
+//            qDebug() << QString(u8"用户名称:") << username;
+//            qDebug() << QString(u8"用户头像:") << userhead;
+//            qDebug() << QString(u8"视频ID:") << m_id;
+//            qDebug() << QString(u8"视频URL:") << m_url;
+//            qDebug() << QString(u8"视频介绍:") << m_alias;
+//            qDebug() << QString(u8"视频主题:") << m_theme;
 
 
 
@@ -1732,7 +1852,10 @@ QUrlQuery dataBase::adv_getCurMediaUserInfo(const int media_id)
             query_media.addQueryItem(u8"url",m_url);
             query_media.addQueryItem(u8"alias",m_alias);
             query_media.addQueryItem(u8"theme",m_theme);
-
+            //后加
+            query_media.addQueryItem(u8"playcount",m_playcount);
+            query_media.addQueryItem(u8"likecount",m_likecount);
+            query_media.addQueryItem(u8"cover",m_cover);
             return query_media;
         }
     }
