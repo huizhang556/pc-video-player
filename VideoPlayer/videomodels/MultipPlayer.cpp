@@ -36,7 +36,7 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
     m_isHide(false)//侧边栏默认没有隐藏
 {
     ui->setupUi(this);
-    this->setMinimumSize(1028,670);//1320,800
+    this->setMinimumSize(340,215);//1028,670
     this->resize(QSize(1240,775));
     this->setMouseTracking(true);//开启鼠标跟踪
     this->setAttribute(Qt::WA_StyledBackground);//使背景生效
@@ -49,21 +49,21 @@ MultipPlayer::MultipPlayer(QWidget *parent) :
 
   //测试功能
   list_temp
-          <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/movies/let_the_bullets_fly.flv")
-   <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/mp3/最美情侣-白小白-23534035.mp3")
-  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/mp3/Monody-Laura_Brehm_TheFatRat-7185892.mp3")
-  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/mp3/红昭愿-音阙诗听-16644260.mp3")
-  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/mp3/追梦人-古筝-280886.mp3")
-  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp001.flv")
-  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp002.flv")
-  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp003.flv")
-  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp004.flv")
-  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp005.flv")
-  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp006.flv")
-  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp007.flv")
-  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp008.flv")
-  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp009.flv")
-  <<QString::fromLocal8Bit("http://82.156.175.81:8080/group1/tempvideo/temp010.flv");
+  <<QString(u8"http://82.156.175.81:8080/group1/movies/let_the_bullets_fly.flv")
+  <<QString(u8"http://82.156.175.81:8080/group1/mp3/最美情侣-白小白-23534035.mp3")
+  <<QString(u8"http://82.156.175.81:8080/group1/mp3/Monody-Laura_Brehm_TheFatRat-7185892.mp3")
+  <<QString(u8"http://82.156.175.81:8080/group1/mp3/红昭愿-音阙诗听-16644260.mp3")
+  <<QString(u8"http://82.156.175.81:8080/group1/mp3/追梦人-古筝-280886.mp3")
+  <<QString(u8"http://82.156.175.81:8080/group1/tempvideo/temp001.flv")
+  <<QString(u8"http://82.156.175.81:8080/group1/tempvideo/temp002.flv")
+  <<QString(u8"http://82.156.175.81:8080/group1/tempvideo/temp003.flv")
+  <<QString(u8"http://82.156.175.81:8080/group1/tempvideo/temp004.flv")
+  <<QString(u8"http://82.156.175.81:8080/group1/tempvideo/temp005.flv")
+  <<QString(u8"http://82.156.175.81:8080/group1/tempvideo/temp006.flv")
+  <<QString(u8"http://82.156.175.81:8080/group1/tempvideo/temp007.flv")
+  <<QString(u8"http://82.156.175.81:8080/group1/tempvideo/temp008.flv")
+  <<QString(u8"http://82.156.175.81:8080/group1/tempvideo/temp009.flv")
+  <<QString(u8"http://82.156.175.81:8080/group1/tempvideo/temp010.flv");
 }
 
 MultipPlayer::~MultipPlayer()
@@ -106,16 +106,16 @@ void MultipPlayer::initMainWindow()
 {
 //    ui->label_media_name->initMoveText(MOVETYPE::FILO,QString(u8""),QFont("微软雅黑",10,75),QColor(0, 170, 127,255),50);
     m_cusDialog = new CustomFileDialog;
-    m_cusDialog->setObjectName(QString::fromLocal8Bit("m_cusDialog"));
+    m_cusDialog->setObjectName(QString(u8"m_cusDialog"));
     m_cusDialog->setFileMode(QFileDialog::ExistingFiles);//多选
-    m_cusDialog->setTitleName(QString::fromLocal8Bit("选择文件"));
+    m_cusDialog->setTitleName(QString(u8"选择文件"));
     m_cusDialog->setDirectory(Global::appDirPath);
 //    QStringList strList = {QString::fromLocal8Bit("所有文件(*)"),
 //                           QString::fromLocal8Bit("视频文件(*avi *mp4 *flv *mov *wmv *rmvb *asf *3gp *mpg *vob)"),
 //                           QString::fromLocal8Bit("音频文件(*.mp3 *.wma *.wave *acc *ogg *arm *aac"),
 //                           QString::fromLocal8Bit("图像文件(*.jpg *.png *bmp *gif *jpeg *psd *svg *ico)")};
-    QStringList strList = {QString::fromLocal8Bit("视频文件(*avi *mp4 *flv *mov *wmv *rmvb *asf *3gp *mpg *vob)"),
-                          QString::fromLocal8Bit("音频文件(*.mp3 *.wma *.wave *acc *ogg *arm *aac")};
+    QStringList strList = {QString(u8"视频文件(*avi *mp4 *flv *mov *wmv *rmvb *asf *3gp *mpg *vob)"),
+                          QString(u8"音频文件(*.mp3 *.wma *.wave *acc *ogg *arm *aac")};
     m_cusDialog->setNameFilters(strList);
 
     m_player    = new QMediaPlayer(this);
@@ -339,7 +339,7 @@ void MultipPlayer::initMainWindow()
     AdvDialog::getInstance()->setParent(ui->stackedWidget);
     AdvDialog::getInstance()->hide();
 
-    m_pTimer  = new QTimer(this);//进度更新
+    m_pTimer  = new QTimer(this);//播放进度更新
     m_pTimer2 = new QTimer(this);
     m_showFloat = new QTimer(this);//浮动窗口隐藏定时
 
@@ -1954,6 +1954,22 @@ void MultipPlayer::slot_clearAllPopupUi()
     if(!m_muteDlg->isHidden()) m_muteDlg->hide();
 }
 
+//更新窗口是否为迷你状态
+void MultipPlayer::slot_updateMiniWinStatus()
+{
+    if(m_wmini)//迷你状态
+    {
+        m_widget1->setHidden(true);
+        ui->stackedWidget_player->setCurrentWidget(ui->stackedWidget_playerPage2);
+    }
+    else//非迷你状态
+    {
+        m_widget1->setHidden(false);
+        ui->stackedWidget_player->setCurrentWidget(ui->stackedWidget_playerPage1);
+    }
+    m_videoTitleBar->slot_updateMiniWinStatus(m_wmini);
+}
+
 void MultipPlayer::slot_receiveCurAudio(const QAudioBuffer &buffer)
 {
 //    qDebug() << QString(u8"接收到音频数据！");
@@ -2071,9 +2087,20 @@ void MultipPlayer::resizeEvent(QResizeEvent *event)
 //    m_widget1->show();
     Q_UNUSED(event)
 //    updatePlayAdustForm();
+    if(this->width() <= 550 || this->height() <= 330)
+    {
+        m_wmini = true;
+//        qDebug(u8"迷你模式");
+    }
+    else
+    {
+        m_wmini = false;
+//        qDebug(u8"非迷你模式");
+    }
     slot_clearAllPopupUi();
     slot_updateFoldButtonGeometry();
     slot_setFoldButtonStyle();
+    slot_updateMiniWinStatus();
 }
 
 /*键盘事件*/
@@ -2119,7 +2146,7 @@ void MultipPlayer::leaveEvent(QEvent *event)
                 ui->stackedWidget_player->hide();
                 if(!m_isHide)
                 {
-                    m_foldBtn->click();
+                    m_foldBtn->click();//模拟右侧点击事件
                 }
             }
         });
@@ -3545,17 +3572,20 @@ void MultipPlayer::slot_updateFoldButtonGeometry()
 {
     updateRightSliderCtlList();//先更新位置
     //根据m_widget1位置分情况判断
-    if(m_widget1->isHidden())
+    if(!m_wmini)
     {
-        m_foldBtn->setGeometry(ui->stackedWidget->width()- m_foldBtn->width()+3,
-                               ui->stackedWidget->height()/2-m_foldBtn->height()/2,
-                               18,70);//固定的大小
-    }
-    else
-    {
-        m_foldBtn->setGeometry(ui->stackedWidget->width()- m_widget1->width()- m_foldBtn->width() + 6,
-                               ui->stackedWidget->height()/2-m_foldBtn->height()/2,
-                               18,70);//固定的大小
+        if(m_widget1->isHidden())
+        {
+            m_foldBtn->setGeometry(ui->stackedWidget->width()- m_foldBtn->width()+3,
+                                   ui->stackedWidget->height()/2-m_foldBtn->height()/2,
+                                   18,70);//固定的大小
+        }
+        else
+        {
+            m_foldBtn->setGeometry(ui->stackedWidget->width()- m_widget1->width()- m_foldBtn->width() + 6,
+                                   ui->stackedWidget->height()/2-m_foldBtn->height()/2,
+                                   18,70);//固定的大小
+        }
     }
 
     m_foldBtn->raise();
@@ -3832,9 +3862,9 @@ bool MultipPlayer::eventFilter(QObject *watched, QEvent *event)
     }
     else if(event->type() == QEvent::Resize && watched == this)
     {
-        updateTitleAreaGeomotry();
-        updateControlAreaGeomotry();
-        updateRightSliderCtlList();
+        updateTitleAreaGeomotry();//更新标题栏坐标
+        updateControlAreaGeomotry();//更新底部控制区域坐标
+        updateRightSliderCtlList();//更新右侧播放列表坐标
     }
     //监听器
     QMouseEvent *mousevent = static_cast<QMouseEvent*>(event);

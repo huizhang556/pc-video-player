@@ -27,8 +27,8 @@ int      dataBase::m_splash_height = 500;//默认高度
 dataBase* dataBase::m_pInstance = nullptr;
 
 dataBase::dataBase():
-    m_online(false),
-    m_curUserID("0000000000"),
+    m_online(true),
+    m_curUserID("0000000002"),
     m_curUserHead(""),
     m_curUserName(""),
     m_curUserGrade(1)
@@ -1224,6 +1224,7 @@ QList<QUrlQuery> &dataBase::user_getCurUserAllCollections(const QString &user_id
             query_info.addQueryItem(QString(u8"username"),query_video.queryItemValue(u8"username"));
             query_info.addQueryItem(QString(u8"likecount"),query_video.queryItemValue(u8"likecount"));
             query_info.addQueryItem(QString(u8"playcount"),query_video.queryItemValue(u8"playcount"));
+            query_info.addQueryItem(QString(u8"theme"),query_video.queryItemValue(u8"theme"));
             query_info.addQueryItem(QString(u8"usertime"),ctime);
             query_info.addQueryItem(QString(u8"userstatus"),QString(u8"1"));
             m_collections.append(query_info);
@@ -1776,6 +1777,13 @@ bool dataBase::video_recDrama_of_theme(const QString &theme, int start, int coun
         qDebug()<< QString(u8"查找所有剧集信息记录错误：") << query.lastError();
         return false;
     }
+}
+
+//获取视频的所有评论,并以JSon文档形式返回
+QJsonDocument dataBase::comment_get_videoAllComments(const int media_id)
+{
+    QJsonDocument document;
+    return document;
 }
 
 //获取接下来播放的4个视频

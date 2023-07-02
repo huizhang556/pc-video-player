@@ -23,6 +23,7 @@ public slots:
     void        chandleVMainWinStatus(bool status);
     void        clearTitleText();
     void        setTitleText(const QString & text);
+    void        slot_updateMiniWinStatus(bool mini);
 
 protected:
     void        mouseDoubleClickEvent(QMouseEvent *event) override;

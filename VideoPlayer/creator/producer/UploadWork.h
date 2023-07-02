@@ -1,9 +1,12 @@
-﻿#ifndef UPLOADWORK_H
+﻿/********************************
+ * 文件上传                       *
+ * ******************************/
+#ifndef UPLOADWORK_H
 #define UPLOADWORK_H
 
-#include <QObject>
 #include <QFile>
 #include <QDir>
+#include <QObject>
 #include <QUrlQuery>
 #include <QDateTime>
 #include <QByteArray>
@@ -31,7 +34,7 @@ public slots:
     void    slot_receiveData_accept(const QString& media_url);//建立下载请求，创建文件，并向外返回下载进度
     void    slot_receiveData_accept(const QUrlQuery &media_url);//建立下载请求，创建文件，并向外返回下载进度
     void    slot_uploadFileData(QFile *file, const QString& suf, const QString& dirName);
-    void    slot_receiveData_pause();//暂停
+    void    slot_receiveData_pause(bool pause);//暂停
     void    slot_receiveData_close();//关闭
 
 signals:

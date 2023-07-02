@@ -12,6 +12,7 @@ UploadWork::~UploadWork()
     delete m_manager;
 }
 
+//
 void UploadWork::slot_receiveData_accept(const QByteArray &media_data, const QString& cus_dir)
 {
     //00---打开文件
@@ -257,14 +258,30 @@ void UploadWork::finshedSlot(QNetworkReply *reply)
     }
 }
 
-void UploadWork::slot_receiveData_pause()
+void UploadWork::slot_receiveData_pause(bool pause)
 {
+    if(pause)//中断上传
+    {
+        m_reply->abort();//打断上传
+    }
+    else    //继续上传
+    {
+        //1.根据中断前记录的位置，重新发起请求
+        //request.setRawHeader("Content-Range", range.toLatin1());
+        //request.setRawHeader("Content-Length", QString::number(bytes.size()).toLatin1());
 
+        //2.文件指针seek到指定位置（前提是缓存文件要存在，没有则重新开始下载）
+
+    }
 }
 
 void UploadWork::slot_receiveData_close()
 {
+    //1.终端文件上传
+    m_reply->abort();
+    //2.disconnect
 
+    //3.删除下载已经缓存的文件
 }
 
 QString UploadWork::getContentTypeHeader(const QString &suffix)

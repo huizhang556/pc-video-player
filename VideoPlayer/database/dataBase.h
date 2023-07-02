@@ -21,6 +21,11 @@
 #include <QCryptographicHash>
 #include <QDebug>
 
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonValue>
+
 
 //用户信息结构体
 struct UserInfo
@@ -164,6 +169,9 @@ public slots:
     bool                    video_insertRecDramaListDB(const QStringList& parma);//插入视频
     bool                    video_recDramaInfo();//查询推荐列表
     bool                    video_recDrama_of_theme(const QString& theme,int start, int counts);//查询某个主题下的视频
+
+    //评论部分
+    QJsonDocument           comment_get_videoAllComments(const int media_id);//获取视频的所有评论,并以JSon文档形式返回
 
     //广告推荐
     QList<QVariant>&        adv_getNext4Medais(const QString &theme,const int start,int counts);//获取接下来播放的4个视频

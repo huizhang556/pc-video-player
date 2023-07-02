@@ -902,6 +902,7 @@ void FilesItem::slot_replyCoverFinished(QNetworkReply *reply)
 void FilesItem::slot_pauseButtonClick()
 {
     ui->pushButton_pause->click();
+    //此处改为循环遍历所有items，再暂停
 }
 
 //上传完成

@@ -19,6 +19,7 @@ public:
     ~RoundLab();
     void    initRoundLabel(const QPixmap& path, const QColor& bordercolor, int border, int padding);
     void    setPixmap_(const QPixmap& path);
+    void    setZoom(bool zoom, const int radius = 3);
     void    setPadding(int padding);
     void    setBorderColor(const QColor& color);
     void    setBorderWidth(bool open = false,int width = 0);
@@ -33,6 +34,8 @@ private:
     QPen    m_pen;
     QColor  m_borberColor   = QColor(192, 255, 2);
     bool    m_openBorder    = false;
+    bool    m_zoom          = false;
+    int     m_radius        = 3;
     int     m_border        = 10;
     int     m_border_t      = 0;
     int     m_padding       = 10;

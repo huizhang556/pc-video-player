@@ -79,14 +79,10 @@
 
 /**唯一的播放器对象--单例**/
 
-struct mediaBody
+enum FILE_TYPE
 {
-    MEDTYPE type;
-    QString url;
-    QString icon;
-    QString name;
-    QString duration;
-    bool    isLove;//是否收藏
+    LOCAL_FILE,//本地文件
+    NET_FILE//网络文件
 };
 
 namespace Ui {
@@ -241,6 +237,8 @@ public slots:
     void    slot_showPlayerErrot(QMediaPlayer::Error error);//播放错误提示
 
     void    slot_clearAllPopupUi();//清理所有弹出的界面
+
+    void    slot_updateMiniWinStatus();//更新窗口是否为迷你状态
 
     void    slot_receiveCurAudio(const QAudioBuffer& buffer);
 
@@ -468,6 +466,7 @@ private:
 
     int                         m_voice;                        //静音之前的值
     bool                        m_winMax;                       //默认非最大化
+    bool                        m_wmini             = false;    //默认非迷你状态
     bool                        m_extraFlag         = false;    //是否为外部拖动文件打开的播放器（默认不是）
     bool                        m_isClose;
     bool                        m_orderStatus       = false;

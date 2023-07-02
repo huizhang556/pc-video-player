@@ -50,21 +50,25 @@ void DataAnalysis::handleSignalsAndSlots()
         data_clearScrollAreaContents();
         if(button->objectName() == QString(u8"pushButton_myfans"))
         {
+            ui->lineEdit_search->setPlaceholderText(QString(u8"请输入用户名称关键字~"));
             data_setTypeTag(QString(u8"我的粉丝"));
             data_addUserData_myfans();
         }
         else if(button->objectName() == QString(u8"pushButton_myattention"))
         {
+            ui->lineEdit_search->setPlaceholderText(QString(u8"请输入用户名称关键字~"));
             data_setTypeTag(QString(u8"我的关注"));
             data_addUserData_myattention();
         }
         else if(button->objectName() == QString(u8"pushButton_mycollect"))
         {
+            ui->lineEdit_search->setPlaceholderText(QString(u8"请输入视频标题关键字~"));
             data_setTypeTag(QString(u8"我的收藏"));
             data_addUserData_mycollect();
         }
         else if(button->objectName() == QString(u8"pushButton_mycommit"))
         {
+            ui->lineEdit_search->setPlaceholderText(QString(u8"请输入评论内容关键字~"));
             data_setTypeTag(QString(u8"我的评论"));
             data_addUserData_mycommit();
 
@@ -106,7 +110,7 @@ void DataAnalysis::data_addUserData_myfans()
     for(int i = 0; i < list_fans.count(); ++i)
     {
         UserDataItem *dataItem = new UserDataItem(UserDataType::FANS,list_fans.at(i));
-        dataItem->setFixedSize(800,110);
+        dataItem->setFixedSize(800,100);
         ui->m_itemVerticalLayout->insertWidget(0,dataItem);
         ui->m_itemVerticalLayout->setAlignment(dataItem,Qt::AlignCenter);//一个ITEM设置一个布局
     }
@@ -118,7 +122,7 @@ void DataAnalysis::data_addUserData_myattention()
     for(int i = 0; i < list_attentions.count(); ++i)
     {
         UserDataItem *dataItem = new UserDataItem(UserDataType::WATCHES,list_attentions.at(i));
-        dataItem->setFixedSize(800,110);
+        dataItem->setFixedSize(800,100);
         ui->m_itemVerticalLayout->insertWidget(0,dataItem);
         ui->m_itemVerticalLayout->setAlignment(dataItem,Qt::AlignCenter);//一个ITEM设置一个布局
     }
@@ -130,7 +134,7 @@ void DataAnalysis::data_addUserData_mycollect()
     for(int i = 0; i < list_collections.count(); ++i)
     {
         UserDataItem *dataItem = new UserDataItem(UserDataType::VIDEO,list_collections.at(i));
-        dataItem->setFixedSize(800,110);
+        dataItem->setFixedSize(800,120);
         ui->m_itemVerticalLayout->insertWidget(0,dataItem);
         ui->m_itemVerticalLayout->setAlignment(dataItem,Qt::AlignCenter);//一个ITEM设置一个布局
     }
@@ -138,10 +142,11 @@ void DataAnalysis::data_addUserData_mycollect()
 
 void DataAnalysis::data_addUserData_mycommit()
 {
-    for(int i = 0; i < 20; ++i)
+    QList<QUrlQuery> list_collections = dataBase::getInstance()->user_getCurUserAllCollections(dataBase::getInstance()->getCurrentUserID());
+    for(int i = 0; i < list_collections.count(); ++i)
     {
-        UserDataItem *dataItem = new UserDataItem();
-        dataItem->setFixedSize(800,110);
+        UserDataItem *dataItem = new UserDataItem(UserDataType::COMMIT,list_collections.at(i));
+        dataItem->setFixedSize(800,120);
         ui->m_itemVerticalLayout->insertWidget(0,dataItem);
         ui->m_itemVerticalLayout->setAlignment(dataItem,Qt::AlignCenter);//一个ITEM设置一个布局
     }
@@ -176,7 +181,7 @@ void DataAnalysis::data_findKeyWordsResults(QString keywords)
         if(itemWgt != nullptr)//除了自己以外的全部折叠
         {
             UserDataItem *userItem = static_cast<UserDataItem*>(itemWgt);
-            if(userItem->get_user_nick().contains(keywords,Qt::CaseInsensitive))
+            if(userItem->get_user_keywords().contains(keywords,Qt::CaseInsensitive))
             {
                 userItem->show();
             }

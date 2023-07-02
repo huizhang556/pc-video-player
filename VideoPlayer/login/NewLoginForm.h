@@ -32,7 +32,7 @@ using namespace qrcodegen;//注意加上命名空间
 #include <QGraphicsDropShadowEffect>
 #include <QDebug>
 
-
+//消息提示类型
 enum TipType
 {
     Normal = 0,
@@ -40,6 +40,8 @@ enum TipType
     Correct = 2
 };
 
+
+//窗口显示类型
 enum ShowType
 {
     LoginWin_0,//扫码登录

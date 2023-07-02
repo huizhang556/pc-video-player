@@ -713,5 +713,22 @@
         <file>images/creator/group_delhover.png</file>
         <file>images/bgpic/create_bg_1.jpg</file>
         <file>images/bgpic/create_bg_2.jpg</file>
+        <file>images/player/player_mini_close.png</file>
+        <file>images/player/player_mini_close_hover.png</file>
+        <file>images/player/player_mini_max.png</file>
+        <file>images/player/player_mini_max_hover.png</file>
+        <file>images/player/player_mini_min.png</file>
+        <file>images/player/player_mini_min_hover.png</file>
+        <file>images/player/player_mini_minum.png</file>
+        <file>images/player/player_minum_hover.png</file>
+        <file>images/player/player_mini_back.png</file>
+        <file>images/player/player_mini_back_hover.png</file>
+        <file>images/player/player_mini_next.png</file>
+        <file>images/player/player_mini_next_hover.png</file>
+        <file>images/player/player_mini_pause.png</file>
+        <file>images/player/player_mini_pause_hover.png</file>
+        <file>images/player/player_mini_play.png</file>
+        <file>images/player/player_mini_play_hover.png</file>
+        <file>images/user/default_header.png</file>
     </qresource>
 </RCC>

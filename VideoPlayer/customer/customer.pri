@@ -19,7 +19,9 @@ SOURCES += \
     $$PWD/ValueToImage.cpp \
     $$PWD/RoundLab.cpp \
     $$PWD/RefreshButton.cpp \
-    $$PWD/AutoListWidget.cpp
+    $$PWD/AutoListWidget.cpp \
+    $$PWD/suspendedscrollbar.cpp \
+    $$PWD/w_customlistwidget.cpp
 
 HEADERS += \
     $$PWD/CusTabWidget.h \
@@ -42,7 +44,9 @@ HEADERS += \
     $$PWD/ValueToImage.h \
     $$PWD/RoundLab.h \
     $$PWD/RefreshButton.h \
-    $$PWD/AutoListWidget.h
+    $$PWD/AutoListWidget.h \
+    $$PWD/suspendedscrollbar.h \
+    $$PWD/w_customlistwidget.h
 
 FORMS += \
     $$PWD/CusTabWidget.ui \

@@ -2,17 +2,16 @@
  1. @ProjName:   04_20SubVideoPlayer
  2. @Author:     ZhangHui
  3. @Date:       2023-01-27
- 4. @Brief:      继承QComboBox实现了一个计算磁盘剩余空间的功能
+ 4. @Brief:      继承QComboBox实现了一个显示磁盘剩余空间的功能
 *********************************************/
 #ifndef CCOMBOBOX_H
 #define CCOMBOBOX_H
 
-#include <QWidget>
-#include <QComboBox>
 #include <QLabel>
-#include <QLine>
-#include <QFontMetrics>
+#include <QWidget>
 #include <QLayout>
+#include <QComboBox>
+#include <QFontMetrics>
 #include <QStorageInfo>
 #include <QDebug>
 

@@ -2,6 +2,7 @@
 #define USERDATAITEM_H
 #include "database/dataBase.h"
 
+#include <QMovie>
 #include <QWidget>
 #include <QUrlQuery>
 #include <QDebug>
@@ -32,6 +33,7 @@ public:
     ~UserDataItem();
     void        initworkUI();
     void        handleSignalsAndSlots();
+    QString     get_user_keywords();
     QString     get_user_nick();
     QString     get_user_vurl();
 
@@ -40,12 +42,14 @@ public slots:
 
 private:
     void        set_user_id();
+    void        set_user_page();
     void        set_user_grade();
     void        set_user_level();
     void        set_user_header();
     void        set_user_nick();
     void        set_user_ctime();
     void        set_user_motto();
+    void        set_user_theme();
     void        set_user_likeStatus();
     void        set_video_url();
 
@@ -67,6 +71,10 @@ private:
     QString         m_motto;
 
     //视频追加
+    QMovie          m_movie;
+    QString         m_cover;
+    QString         m_vtheme;
+    QString         m_intro;
     QString         m_videourl;
     QString         m_playcount;
     QString         m_likecount;

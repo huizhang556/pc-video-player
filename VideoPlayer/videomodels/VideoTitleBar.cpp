@@ -55,10 +55,13 @@ void VideoTitleBar::chandleSignalsAndSlots()
 
     //关闭按钮
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){emit sig_winVClose();});
+    connect(ui->pushButton_mini_close,&QPushButton::clicked,[=](){emit sig_winVClose();});
     //还原按钮
     connect(ui->pushButton_normal,&QPushButton::clicked,[=](){emit sig_winVRestore();});
+//    connect(ui->pushButton_mini_max,&QPushButton::clicked,[=](){emit sig_winVRestore();});
     //最小化按钮
     connect(ui->pushButton_min,&QPushButton::clicked,[=](){emit sig_winVMinimum();});
+    connect(ui->pushButton_mini_min,&QPushButton::clicked,[=](){emit sig_winVMinimum();});
     //返回主界面按钮
     connect(ui->pushButton_return,&QPushButton::clicked,[=](){emit sig_returnMainUi();});
     //清除标题文字
@@ -96,6 +99,18 @@ void VideoTitleBar::setTitleText(const QString &text)
     if(text.isEmpty())
         return;
     ui->label_title->setText(QString::fromLocal8Bit("正在播放：")+text);
+}
+
+void VideoTitleBar::slot_updateMiniWinStatus(bool mini)
+{
+    if(mini)
+    {
+        ui->stackedWidget_videoTitle->setCurrentWidget(ui->page_minivideo);
+    }
+    else
+    {
+        ui->stackedWidget_videoTitle->setCurrentWidget(ui->page_videoTitle);
+    }
 }
 
 

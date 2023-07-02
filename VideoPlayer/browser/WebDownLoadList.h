@@ -1,4 +1,8 @@
-﻿#ifndef WEBDOWNLOADLIST_H
+﻿/*****************************************
+*此部分实现文件下载功能                      *
+******************************************/
+
+#ifndef WEBDOWNLOADLIST_H
 #define WEBDOWNLOADLIST_H
 #include "mythread/Worker.h"
 #include "browser/DownLoadItem.h"

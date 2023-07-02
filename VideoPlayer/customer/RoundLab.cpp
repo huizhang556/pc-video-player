@@ -35,6 +35,12 @@ void RoundLab::setPixmap_(const QPixmap &path)
     this->update();
 }
 
+void RoundLab::setZoom(bool zoom, const int radius)
+{
+    m_zoom = zoom;
+    m_radius = radius;
+}
+
 void RoundLab::setPadding(int padding)
 {
     m_padding = padding;
@@ -65,6 +71,7 @@ bool RoundLab::eventFilter(QObject *watched, QEvent *event)
         }
         else if(event->type() == QEvent::Enter)
         {
+            m_zoom = true;
             if(m_openBorder)
             {
                 QRadialGradient gradient(0, 0, 200);  // 创建线性渐变，从左上到右下
@@ -78,11 +85,12 @@ bool RoundLab::eventFilter(QObject *watched, QEvent *event)
                 m_pen.setStyle(Qt::SolidLine);
                 m_pen.setCapStyle(Qt::RoundCap);
                 m_pen.setJoinStyle(Qt::RoundJoin);
-                this->update();
+//                this->update();
             }
         }
         else if(event->type() == QEvent::Leave)
         {
+            m_zoom = false;
             if(m_openBorder)
             {
                 m_border_t = m_border;
@@ -96,10 +104,11 @@ bool RoundLab::eventFilter(QObject *watched, QEvent *event)
                 m_pen.setStyle(Qt::SolidLine);
                 m_pen.setCapStyle(Qt::RoundCap);
                 m_pen.setJoinStyle(Qt::RoundJoin);
-                this->update();
+//                this->update();
             }
 
         }
+        this->update();//刷新一下
     }
     return QLabel::eventFilter(watched,event);
 }
@@ -124,12 +133,21 @@ void RoundLab::paintEvent(QPaintEvent *event)
                     qMin(width()-2*(m_padding-m_border),height()-2*(m_padding-m_border)),
                     qMin(width()-2*(m_padding-m_border),height()-2*(m_padding-m_border)));
     painter.setClipPath(path);
-
-    painter.drawPixmap((m_padding-m_border),
-                       (m_padding-m_border),
-                       qMin(width()-2*(m_padding-m_border),height()-2*(m_padding-m_border)),
-                       qMin(width()-2*(m_padding-m_border),height()-2*(m_padding-m_border)),pixmap);
-
+    if(m_zoom)
+    {
+        //缩放半径左右5px
+        painter.drawPixmap((-m_radius + m_padding-m_border),
+                           (-m_radius + m_padding-m_border),
+                           qMin(width()-2*(m_padding-m_border),height()-2*(m_padding-m_border))+2*m_radius,
+                           qMin(width()-2*(m_padding-m_border),height()-2*(m_padding-m_border))+2*m_radius,pixmap);
+    }
+    else
+    {
+        painter.drawPixmap((m_padding-m_border),
+                           (m_padding-m_border),
+                           qMin(width()-2*(m_padding-m_border),height()-2*(m_padding-m_border)),
+                           qMin(width()-2*(m_padding-m_border),height()-2*(m_padding-m_border)),pixmap);
+    }
     painter.drawArc(QRect((m_padding-m_border),
                           (m_padding-m_border),
                           qMin(width()-2*(m_padding-m_border),height()-2*(m_padding-m_border)),

@@ -332,7 +332,7 @@ padding: 0 5px;
 </string>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab_perInfo">
            <attribute name="title">
@@ -1920,7 +1920,7 @@ background-color:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #2fd6f9, 
           </widget>
           <widget class="QWidget" name="tab_general">
            <attribute name="title">
-            <string>通用头像</string>
+            <string>推荐头像</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_9">
             <item>
