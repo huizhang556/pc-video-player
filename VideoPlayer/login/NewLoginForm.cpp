@@ -354,7 +354,7 @@ void NewLoginForm::handleSignalsAndSLots()
 
     //修改头像
     connect(ui->label_userHeader,&RoundLab::sig_clicked,[=](){
-        ChangeHead::getInstance()->exec_(OPENTYPE::PER_HEAD);
+//        ChangeHead::getInstance()->exec_(OPENTYPE::PER_HEAD);
     });
 
     //退出登录

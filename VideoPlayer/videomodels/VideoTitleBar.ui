@@ -49,7 +49,7 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>40</height>
+       <height>20</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -60,7 +60,7 @@ background-color: rgba(255,255,255,0.0);
 }</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_videoTitle">
       <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -399,13 +399,14 @@ border:1px solid #ff5c38;
                 <property name="styleSheet">
                  <string notr="true">QPushButton
 {
+margin: -3px 2px -3px -3px;
 background-color: transparent;
-border-image: url(://images/icon/vtitle_grub.png);
+border-image: url(:/images/player/player_mini_min.png);
 }
 
 QPushButton:hover
 {
-border-image: url(://images/icon/vtitle_grub_hover.png);
+border-image: url(:/images/player/player_mini_min_hover.png);
 }
 
 
@@ -801,14 +802,14 @@ border: 1px solid #3C80B1;
         <widget class="QFrame" name="frame_mini_L">
          <property name="minimumSize">
           <size>
-           <width>40</width>
-           <height>0</height>
+           <width>26</width>
+           <height>26</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>40</width>
-           <height>16777215</height>
+           <width>26</width>
+           <height>26</height>
           </size>
          </property>
          <property name="frameShape">
@@ -818,24 +819,46 @@ border: 1px solid #3C80B1;
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QPushButton" name="pushButton_mini_home">
             <property name="minimumSize">
              <size>
-              <width>26</width>
-              <height>26</height>
+              <width>24</width>
+              <height>24</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>26</width>
-              <height>26</height>
+              <width>24</width>
+              <height>24</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
+margin: 4px;
 border: none;
+border-image: url(:/images/icon/returnhome.png);
+}
+
+QPushButton:hover
+{
+border-image: url(:/images/icon/returnhome_hover.png);
 }</string>
             </property>
             <property name="text">
@@ -844,6 +867,37 @@ border: none;
            </widget>
           </item>
          </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_media_title">
+         <property name="minimumSize">
+          <size>
+           <width>245</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel
+{
+color: gray;
+font: 400 12px &quot;微软雅黑&quot;;
+}
+
+QLabel:hover
+{
+color: #41cd52;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
         </widget>
        </item>
        <item>
@@ -863,14 +917,14 @@ border: none;
         <widget class="QFrame" name="frame_mini_R">
          <property name="minimumSize">
           <size>
-           <width>100</width>
-           <height>0</height>
+           <width>80</width>
+           <height>26</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>300</width>
-           <height>16777215</height>
+           <width>80</width>
+           <height>26</height>
           </size>
          </property>
          <property name="frameShape">
@@ -899,14 +953,14 @@ border: none;
            <widget class="QPushButton" name="pushButton_mini_min">
             <property name="minimumSize">
              <size>
-              <width>26</width>
-              <height>26</height>
+              <width>24</width>
+              <height>24</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>26</width>
-              <height>26</height>
+              <width>24</width>
+              <height>24</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -932,20 +986,21 @@ border-image: url(:/images/player/player_minum_hover.png);
            <widget class="QPushButton" name="pushButton_mini_max">
             <property name="minimumSize">
              <size>
-              <width>26</width>
-              <height>26</height>
+              <width>24</width>
+              <height>24</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>26</width>
-              <height>26</height>
+              <width>24</width>
+              <height>24</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton
 {
 border: none;
+margin: 2px;
 border-image: url(:/images/player/player_mini_min.png);
 background-color: transparent;
 }
@@ -964,14 +1019,14 @@ border-image: url(:/images/player/player_mini_min_hover.png);
            <widget class="QPushButton" name="pushButton_mini_close">
             <property name="minimumSize">
              <size>
-              <width>26</width>
-              <height>26</height>
+              <width>24</width>
+              <height>24</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>26</width>
-              <height>26</height>
+              <width>24</width>
+              <height>24</height>
              </size>
             </property>
             <property name="styleSheet">

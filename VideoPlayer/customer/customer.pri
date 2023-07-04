@@ -20,8 +20,7 @@ SOURCES += \
     $$PWD/RoundLab.cpp \
     $$PWD/RefreshButton.cpp \
     $$PWD/AutoListWidget.cpp \
-    $$PWD/suspendedscrollbar.cpp \
-    $$PWD/w_customlistwidget.cpp
+    $$PWD/SuspendedScrollbar.cpp
 
 HEADERS += \
     $$PWD/CusTabWidget.h \
@@ -45,8 +44,7 @@ HEADERS += \
     $$PWD/RoundLab.h \
     $$PWD/RefreshButton.h \
     $$PWD/AutoListWidget.h \
-    $$PWD/suspendedscrollbar.h \
-    $$PWD/w_customlistwidget.h
+    $$PWD/SuspendedScrollbar.h
 
 FORMS += \
     $$PWD/CusTabWidget.ui \

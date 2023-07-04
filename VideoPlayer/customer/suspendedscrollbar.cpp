@@ -1,4 +1,4 @@
-﻿#include "suspendedscrollbar.h"
+﻿#include "SuspendedScrollbar.h"
 #include <QScrollBar>
 #include <QFile>
 
@@ -21,14 +21,14 @@ SuspendedScrollBar::SuspendedScrollBar(Qt::Orientation t ,  QWidget *parent) :
                      QScrollBar::handle:vertical
                      {
                          width:8px;
-                         background:rgba(0,0,0,10%);
+                         background:rgba(65, 65, 65,80%);
                          border-radius:4px;
                          min-height:60;
                      }
                      QScrollBar::handle:vertical:hover
                      {
                          width:8px;
-                         background:rgba(0,0,0,20%);
+                         background:rgba(65, 65, 65,100%);
                          border-radius:4px;
                          min-height:60;
                      }
@@ -61,12 +61,7 @@ SuspendedScrollBar::SuspendedScrollBar(Qt::Orientation t ,  QWidget *parent) :
                      }
 )";
 
-//    QFile styleFile(style_file);//路径名
-//    if(styleFile.open( QFile::ReadOnly )){
-//        QString style( styleFile.readAll());
-        this->setStyleSheet(style_file);
-//    }
-
+    this->setStyleSheet(style_file);
     this->setRange(0 , 0);
     this->hide();
 }

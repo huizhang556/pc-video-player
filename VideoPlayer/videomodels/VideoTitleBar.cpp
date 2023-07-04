@@ -37,13 +37,16 @@ void VideoTitleBar::initUi()
     ui->lineEdit_url->setPlaceholderText(QString::fromLocal8Bit("请输入网络资源地址"));
     ui->pushButton_return->installEventFilter(this);
     ui->pushButton_return->setIcon(QIcon(":/images/icon/returnhome.png"));
-    ui->pushButton_return->setText(QString::fromLocal8Bit("返回主界面"));
-
+    ui->pushButton_return->setText(QString(u8"返回主界面"));
+    ui->pushButton_miniwin->setToolTip(QString(u8"迷你窗口"));
+    ui->pushButton_mini_max->setToolTip(QString(u8"正常窗口"));
     ui->pushButton_vfixed->setCheckable(true);
     ui->pushButton_vfixed->setChecked(false);//标题栏默认不固定
 
     //类型 + 文本 + 字体 + 字体颜色 + 间隔
     ui->label_title->initMoveText(MOVETYPE::FIFO,QString(u8""),QFont("Microsoft YaHei UI",13,75),QColor(30, 222, 3, 255),20);
+    //默认显示
+    ui->stackedWidget_videoTitle->setCurrentWidget(ui->page_videoTitle);
 }
 
 void VideoTitleBar::chandleSignalsAndSlots()
@@ -52,6 +55,22 @@ void VideoTitleBar::chandleSignalsAndSlots()
     connect(ui->pushButton_vfixed,&QPushButton::clicked,[=](bool checked){
         emit sig_titlefix(checked);
     });
+
+    //迷你窗口--关闭
+    connect(ui->pushButton_mini_close,&QPushButton::clicked,[=](){
+        ui->pushButton_close->click();
+    });
+
+    //迷你窗口--还原
+    connect(ui->pushButton_mini_max,&QPushButton::clicked,[=](){
+        ui->pushButton_normal->click();
+    });
+
+    //迷你窗口--迷你显示
+    connect(ui->pushButton_miniwin,&QPushButton::clicked,[=](){
+        emit sig_win_mini();
+    });
+
 
     //关闭按钮
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){emit sig_winVClose();});
@@ -64,6 +83,8 @@ void VideoTitleBar::chandleSignalsAndSlots()
     connect(ui->pushButton_mini_min,&QPushButton::clicked,[=](){emit sig_winVMinimum();});
     //返回主界面按钮
     connect(ui->pushButton_return,&QPushButton::clicked,[=](){emit sig_returnMainUi();});
+    //迷你返回主界面
+    connect(ui->pushButton_mini_home,&QPushButton::clicked,[=](){emit sig_returnMainUi();});
     //清除标题文字
     connect(this,&VideoTitleBar::sig_winVClose,this,&VideoTitleBar::clearTitleText);
     //发送输入的视频地址
@@ -98,7 +119,8 @@ void VideoTitleBar::setTitleText(const QString &text)
 {
     if(text.isEmpty())
         return;
-    ui->label_title->setText(QString::fromLocal8Bit("正在播放：")+text);
+    ui->label_title->setText(QString(u8"正在播放：")+text);
+    ui->label_media_title->setText(QString(u8"正在播放：")+text);
 }
 
 void VideoTitleBar::slot_updateMiniWinStatus(bool mini)
@@ -106,11 +128,14 @@ void VideoTitleBar::slot_updateMiniWinStatus(bool mini)
     if(mini)
     {
         ui->stackedWidget_videoTitle->setCurrentWidget(ui->page_minivideo);
+        this->setFixedHeight(26);
     }
     else
     {
         ui->stackedWidget_videoTitle->setCurrentWidget(ui->page_videoTitle);
+        this->setFixedHeight(40);
     }
+    this->update();
 }
 
 
@@ -119,6 +144,10 @@ void VideoTitleBar::clearTitleText()
 {
     ui->label_title->clear();
     ui->label_title->setText("");
+
+    ui->label_media_title->clear();
+    ui->label_media_title->setText("");
+
 }
 
 void VideoTitleBar::mouseDoubleClickEvent(QMouseEvent *event)

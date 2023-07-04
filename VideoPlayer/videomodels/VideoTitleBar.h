@@ -36,6 +36,7 @@ private:
     Ui::VideoTitleBar *ui;
 
 signals:
+    void    sig_win_mini();
     void    sig_titlefix(bool);
     void    sig_winVClose();
     void    sig_winVMinimum();

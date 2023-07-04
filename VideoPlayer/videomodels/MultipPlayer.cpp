@@ -185,7 +185,7 @@ void MultipPlayer::initMainWindow()
     ui->stackedWidget->insertWidget(1,videoWidget);
     ui->stackedWidget->insertWidget(2,m_musicUi);
     ui->stackedWidget->setCurrentIndex(0);//默认显示空白界面
-    ui->stackedWidget->setMinimumSize(700,555);//必须设置最小尺寸，否则播放控制栏位置不正确
+    ui->stackedWidget->setMinimumSize(335,140);//必须设置最小尺寸，否则播放控制栏位置不正确700,555
 
     //我的歌单（暂时）
     m_listWisget1 = new QListWidget();
@@ -378,6 +378,12 @@ void MultipPlayer::initMainWindow()
     ui->pushButton_pauseStart->setShortcut(QKeySequence(tr("space")));//空格键
     ui->pushButton_next->setShortcut(QKeySequence(tr("right")));//->键
     m_searchBtn->setShortcut(QKeySequence(tr("Ctrl+O")));//Ctrl + O 组合键
+
+    //迷你界面默认设置
+    ui->pushButton_mini_pause->hide();
+
+    //默认显示
+    ui->stackedWidget_player->setCurrentWidget(ui->stackedWidget_playerPage1);
 }
 
 /*处理信号与槽函数*/
@@ -667,6 +673,11 @@ void MultipPlayer::handleSignalAndSLots()
         slot_setCurrentMediaMuted();
     });
 
+    //静音--迷你
+    connect(ui->pushButton_mini_mute,&QPushButton::clicked,[=](){
+        ui->pushButton_sound->click();
+    });
+
     //递增，递减音量值(步进：10)
     connect(this,SIGNAL(sig_currentMediaSoundChanged(bool)),m_muteDlg,SLOT(slot_setSoundValue(bool)));
 
@@ -686,12 +697,10 @@ void MultipPlayer::handleSignalAndSLots()
         m_player->setVolume(value);
         if(value != 0)
         {
-//            qDebug() << "value != 0";
             ui->pushButton_sound->setIcon(QIcon(":/images/icon/yingling.png"));
         }
         else
         {
-//            qDebug() << "value == 0";
             ui->pushButton_sound->setIcon(QIcon(":/images/icon/jingyin.png"));
         }
     });
@@ -731,6 +740,27 @@ void MultipPlayer::handleSignalAndSLots()
     //旋转时钟改变
     connect(this,&MultipPlayer::sig_sendSwitchToMusicPage,[this](){
         ui->widget_media_pic->resetRoate(0);
+    });
+
+    //迷你窗口--上一首
+    connect(ui->pushButton_mini_back,&QPushButton::clicked,[=](){
+        on_pushButton_previous_clicked();
+    });
+
+    //迷你窗口下一首
+    connect(ui->pushButton_mini_next,&QPushButton::clicked,[=](){
+        on_pushButton_next_clicked();
+    });
+
+    //迷你窗口--暂停
+    connect(ui->pushButton_mini_pause,&QPushButton::clicked,[=](){
+        on_pushButton_pauseStart_clicked();
+    });
+
+    //标题栏--迷你显示
+    connect(m_videoTitleBar,&VideoTitleBar::sig_win_mini,[=](){
+        if(!fileType(m_curMediaUrl))//视频文件
+        this->resize(340,215);//resizeevent自动调用更新
     });
 
     //标题栏--固定
@@ -1052,6 +1082,8 @@ void MultipPlayer::loadDefaultLogo()
 
     ui->Btn_adjust->setToolTip(QString::fromLocal8Bit("设置"));
     ui->pushButton_sound->setToolTip(QString::fromLocal8Bit("音量"));
+    ui->pushButton_mini_mute->setCheckable(true);
+    ui->pushButton_mini_mute->setChecked(false);
     ui->pushButton_collect->setToolTip(QString::fromLocal8Bit("收藏"));
     ui->pushButton_collect->setIconSize(QSize(18,18));
     ui->pushButton_curlist->setToolTip(QString::fromLocal8Bit("全屏"));
@@ -1728,6 +1760,7 @@ void MultipPlayer::on_time()
     if (sec.length() == 1) sec = "0" + sec;
     QString qTime = hour + ":" + min + ":" + sec;
     ui->label_time->setText(qTime+ "/" +qTZ);
+    ui->label_mini_position->setText(qTime+ "/" +qTZ);
     FloatPlayCtl::getInstance()->slot_setMediaPlayTime(qTime+ "/" +qTZ);
     //方法3
 //    int ss = 1000;
@@ -1852,7 +1885,7 @@ void MultipPlayer::checkChandleMediaStatus(QMediaPlayer::MediaStatus status)
         m_videoTitleBar->clearTitleText();
         ui->label_media_name->clear();
         dataBase::getInstance()->user_operate_setToWatch(m_curMediaId);
-        if(slot_getCurrentPlayList()->playbackMode() == QMediaPlaylist::CurrentItemOnce && m_player->position() == m_player->duration())
+        if(slot_getCurrentPlayList()->playbackMode() == QMediaPlaylist::CurrentItemOnce && !m_wmini && m_player->position() == m_player->duration())
         {
             qDebug() << QString(u8"----------------主播放器当前结束播放的媒体ID：") << m_curMediaId;
             updateADVGeomotry();//先更新位置
@@ -1896,11 +1929,12 @@ void MultipPlayer::slot_setCurrentMediaSoundSatus(bool status)
     if(status)//静音
     {
        ui->pushButton_sound->setIcon(QIcon(":/images/icon/jingyin.png"));
+       ui->pushButton_mini_mute->setChecked(true);
     }
     else//非静音
     {
-
         ui->pushButton_sound->setIcon(QIcon(":/images/icon/yingling.png"));
+        ui->pushButton_mini_mute->setChecked(false);
     }
 }
 
@@ -1961,13 +1995,16 @@ void MultipPlayer::slot_updateMiniWinStatus()
     {
         m_widget1->setHidden(true);
         ui->stackedWidget_player->setCurrentWidget(ui->stackedWidget_playerPage2);
+        ui->stackedWidget_player->setFixedHeight(26);
     }
     else//非迷你状态
     {
         m_widget1->setHidden(false);
         ui->stackedWidget_player->setCurrentWidget(ui->stackedWidget_playerPage1);
+        ui->stackedWidget_player->setFixedHeight(77);
     }
     m_videoTitleBar->slot_updateMiniWinStatus(m_wmini);
+    this->update();
 }
 
 void MultipPlayer::slot_receiveCurAudio(const QAudioBuffer &buffer)
@@ -2087,20 +2124,18 @@ void MultipPlayer::resizeEvent(QResizeEvent *event)
 //    m_widget1->show();
     Q_UNUSED(event)
 //    updatePlayAdustForm();
-    if(this->width() <= 550 || this->height() <= 330)
+    if(this->width() <= 1040 || this->height() <= 666)
     {
         m_wmini = true;
-//        qDebug(u8"迷你模式");
     }
     else
     {
         m_wmini = false;
-//        qDebug(u8"非迷你模式");
     }
     slot_clearAllPopupUi();
     slot_updateFoldButtonGeometry();
     slot_setFoldButtonStyle();
-    slot_updateMiniWinStatus();
+    slot_updateMiniWinStatus();//迷你模式/正常模式切换
 }
 
 /*键盘事件*/

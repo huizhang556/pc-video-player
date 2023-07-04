@@ -33,7 +33,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QScrollArea" name="scrollArea">
+    <widget class="SuspendedScrollBar_Area" name="scrollArea">
      <property name="styleSheet">
       <string notr="true">*
 {
@@ -90,6 +90,14 @@ background-color:  rgba(22, 42, 51,0.1);
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SuspendedScrollBar_Area</class>
+   <extends>QScrollArea</extends>
+   <header>customer/SuspendedScrollbar.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
