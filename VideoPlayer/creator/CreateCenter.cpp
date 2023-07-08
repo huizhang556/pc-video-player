@@ -46,8 +46,9 @@ void CreateCenter::exec_()
 {
     ui->stackedWidget_switch->setCurrentWidget(ui->page_login);
     ui->tabWidget_create->setCurrentWidget(m_perCenter);
-    //清空上一次内容
+    //清空上一次用户下旧内容
     m_doneWorks->clearOldContent();
+    m_dataAnaly->clearContents();
 
     bool isOnline = dataBase::getInstance()->getCurrentUserOnline();
     if(isOnline)//在线

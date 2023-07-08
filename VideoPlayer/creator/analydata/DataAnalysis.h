@@ -25,6 +25,7 @@ public:
     void    initWorkUI();
     void    handleSignalsAndSlots();
     void    setInstallEventer();
+    void    clearContents();
 
 public slots:
     void    slot_addUserData(const QVariant& userData);

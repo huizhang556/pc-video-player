@@ -873,7 +873,7 @@ border-image: url(:/images/icon/returnhome_hover.png);
         <widget class="QLabel" name="label_media_title">
          <property name="minimumSize">
           <size>
-           <width>245</width>
+           <width>225</width>
            <height>26</height>
           </size>
          </property>

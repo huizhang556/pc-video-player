@@ -38,6 +38,7 @@ HEADERS += \
         MainWidget.h
 
 #此处添加模块
+include($$PWD/smtp/smtp.pri)                #邮件模块
 include($$PWD/skin/skin.pri)                #皮肤管理模块
 include($$PWD/style/style.pri)              #全局样式
 include($$PWD/login/login.pri)              #登录注册模块

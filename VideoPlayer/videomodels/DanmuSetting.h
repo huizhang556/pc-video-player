@@ -52,6 +52,7 @@ private:
 
 private:
     void    setDefaultCfg();//设置为默认配置
+    void    updateStopWordCounts();
 
 
 };

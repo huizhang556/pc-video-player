@@ -1291,6 +1291,30 @@ bool dataBase::getUserExists(const QString &tablename, const QString &username)
     }
 }
 
+bool dataBase::getUserEmailsExists(const QString &tablename, const QString &emails)
+{
+    QSqlQuery query(getSqlDataBase());
+    bool isOK = query.exec(QString("select count(emalis) from %1 where emalis = '%2';").arg(tablename).arg(emails));
+    if(isOK)
+    {
+        showResult(query);
+        if (query.next())
+        {
+            int counts = query.value(0).toInt();
+            qDebug() << "[FIND_DB] user_emalis_counts = " << counts;
+            if(counts > 0)
+                return true;//找到用户
+            else
+                return  false;
+        }
+    }
+    else
+    {
+        qDebug()<< QString(u8"查找表'%1'总数错误：").arg(tablename) << query.lastError();
+        return false;//没有找到用户
+    }
+}
+
 //注册个人信息
 bool dataBase::register_userInfo(const QString &name, const QString &pwd, const QString &emails)
 {
@@ -1485,10 +1509,21 @@ bool dataBase::login_setUserGrade(int grade)
     }
 }
 
-//找回个人密码
-QString dataBase::getback_userPasswd(const QString &name, const QString &emails)
+//重置个人密码
+bool dataBase::fpwd_reset_userPasswd(const QString &emails, const QString &passwd)
 {
-    return "";
+    QSqlQuery query(getSqlDataBase());
+    bool isOK = query.exec(QString("update userinfo set passwd = '%1' where emalis = '%2';").arg(passwd).arg(emails));
+    if(isOK)
+    {
+        qDebug()<<QString(u8"注册邮箱为：%1的用户重置密码成功！").arg(emails);
+        return true;
+    }
+    else
+    {
+        qDebug()<< QString(u8"更新注册邮箱为：%1的用户的密码发生错误：").arg(emails) << query.lastError();
+        return false;
+    }
 }
 
 //获取数据库全部收藏记录
@@ -1496,7 +1531,7 @@ void dataBase::browser_loadAllRecordsToList()
 {
     if(!m_online)
     {
-        qDebug() << QString::fromLocal8Bit("不是在线状态！用户ID:")<< m_curUserID;
+        qDebug() << QString(u8"不是在线状态！用户ID:")<< m_curUserID;
         return;
     }
     QSqlQuery query(getSqlDataBase());

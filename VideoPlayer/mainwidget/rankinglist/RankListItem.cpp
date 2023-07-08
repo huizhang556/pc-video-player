@@ -117,7 +117,7 @@ int RankListItem::calculateItemWidth(int width)
     }
     else if(width < MINSIZE.width()*8)//显示8个
     {
-        return  (int)(width/7);;
+        return  (int)(width/7);
     }
     else if(width < MINSIZE.width()*9)//显示9个
     {

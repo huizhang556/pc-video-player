@@ -99,6 +99,11 @@ void DataAnalysis::setInstallEventer()
 
 }
 
+void DataAnalysis::clearContents()
+{
+    data_clearScrollAreaContents();
+}
+
 void DataAnalysis::slot_addUserData(const QVariant &userData)
 {
 

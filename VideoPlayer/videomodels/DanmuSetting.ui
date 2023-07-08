@@ -142,7 +142,7 @@ QTabBar::tab:only-one
 }</string>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="tab_style">
            <attribute name="title">
@@ -1553,7 +1553,7 @@ color: white;
                </layout>
               </item>
               <item>
-               <widget class="QListWidget" name="listWidget_maskList">
+               <widget class="SuspendedScrollBar_ListWidget" name="listWidget_maskList">
                 <property name="styleSheet">
                  <string notr="true">QListWidget
 {
@@ -1612,6 +1612,13 @@ color: transparent;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SuspendedScrollBar_ListWidget</class>
+   <extends>QListWidget</extends>
+   <header>customer/SuspendedScrollbar.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

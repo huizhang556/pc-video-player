@@ -52,6 +52,7 @@ private:
     void        set_user_theme();
     void        set_user_likeStatus();
     void        set_video_url();
+    void        set_user_gradeName(const int grade);
 
 
 private slots:
@@ -63,8 +64,8 @@ private:
     UserDataType    m_type;
     QUrlQuery       m_query;
     QString         m_usrid;
-    QString         m_grade;
-    QString         m_level;
+    int             m_grade;
+    int             m_level;
     QString         m_nick;
     QString         m_header;
     QString         m_ctime;

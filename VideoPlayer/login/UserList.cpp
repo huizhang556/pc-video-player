@@ -66,6 +66,54 @@ void UserList::slot_findUserListResult(const QString &name)
     getItemNameButton("pushButton_name",name);
 }
 
+const QString UserList::config_getUserPwd(const QString &user_nick)
+{
+    QFile file(Global::appDirPath + "/config/users_list.json");
+    if(!file.open(QFile::ReadOnly | QFile::Truncate))
+    {
+        qDebug() <<QString(u8"打开文件失败！");
+        return "";
+    }
+    //打开成功
+    QTextStream stream(&file);
+    stream.setCodec("UTF-8");
+    QString json = stream.readAll();
+    file.close();
+
+    //报错类
+    QJsonParseError jsonError;
+    // 将json解析为UTF-8编码的json文档，并从中创建一个QJsonDocument。
+    // 如果解析成功，返回QJsonDocument对象，否则返回null
+    QJsonDocument doc = QJsonDocument::fromJson(json.toUtf8(),&jsonError);
+    //首先确保文档不为null,然后报错类型不为：NoError 说明有错误！
+    if(jsonError.error != QJsonParseError::NoError && !doc.isNull())
+    {
+        qDebug() << "Json格式错误！" << jsonError.error;
+        return "";
+    }
+
+    //获取根对象{ }
+    QJsonObject rootObj = doc.object();
+    //获取对象数组
+    QJsonValue loginValue = rootObj.value(u8"login");
+    if(loginValue.type() == QJsonValue::Array)//是数组
+    {
+        QJsonArray login_array = loginValue.toArray();//QJsonValue 转换为对象数组
+        //先查找数组中对应的key的index
+        for(int i = 0; i < login_array.count(); i++)
+        {
+            if(login_array.at(i).toObject().value(u8"user_nick").toString() == user_nick)
+            {
+                QString user_pwd = login_array.at(i).toObject().value(u8"user_pwd").toString();
+                qDebug() << QString(u8"找到了用户：%1 的加密密码为：%2").arg(user_nick).arg(user_pwd);
+                return user_pwd;
+            }
+        }
+        //能走到这一步，说明遍历完以后也没找到对应用户密码
+        qDebug() << QString(u8"没有找到用户：%1 的加密密码！").arg(user_nick);
+    }
+}
+
 bool UserList::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == this && event->type() == QEvent::Leave)
@@ -220,6 +268,7 @@ bool UserList::config_addNewUser(const QString user_nick, const QString user_pwd
 
 }
 
+//判断类型（原有还是新添加）
 const UITEMACT UserList::config_addUserToJson(QJsonDocument &doc, const QString user_nick, const QString user_pwd, const QString user_header)
 {
     //获取根对象{ }

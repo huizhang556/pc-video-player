@@ -6,6 +6,7 @@
 #include "database/dataBase.h"
 #include "qrcode/QrCode.hpp"
 #include "login/ChangeHead.h"
+#include "smtp/Smtp.h"
 
 #include <string>
 #include <vector>
@@ -20,11 +21,13 @@ using namespace qrcodegen;//注意加上命名空间
 #include <QColor>
 #include <QToolTip>
 #include <QTimer>
+#include <QChar>
 #include <QRegExp>
 #include <QHeaderView>
 #include <QScrollBar>
 #include <QPlainTextEdit>
 #include <QTreeWidgetItem>
+#include <QRandomGenerator>
 #include <QRegExpValidator>
 #include <QAbstractItemView>
 #include <QPropertyAnimation>
@@ -35,9 +38,9 @@ using namespace qrcodegen;//注意加上命名空间
 //消息提示类型
 enum TipType
 {
-    Normal = 0,
-    Error = 1,
-    Correct = 2
+    SUCCESS = 0,
+    FAILED = 1,
+    UNKMOW = 2
 };
 
 
@@ -64,10 +67,8 @@ public:
     void        initWorkUI();
     void        handleSignalsAndSLots();
     void        setInstallEventFilter();
-    void        setType(TipType type);
     void        show_c();
 
-    static void showCText(TipType type, const QPoint &pos, const QString& text, QWidget *w, const QRect &rect, int msecShowTime);
     static      NewLoginForm* getInstance();
 
 public slots:
@@ -81,15 +82,18 @@ protected:
 private slots:
     void        setUser_login();
     void        setUser_register();
-    void        setUser_reSet();
-    void        setUser_findPwd();
+    void        setUser_resetPwd();
 
     void        slot_clearTempInputText();
 
 private:
+    void        setType(TipType type);//设置报错信息显示样式
+    void        showCText(ShowType stype,TipType type, const QPoint &pos, const QString& text, QWidget *w, const QRect &rect, int msecShowTime);//设置tooltip提示信息
+    void        setStatusTips(ShowType stype,TipType type,const QString& text);//设置提示信息
+    QString     generateRandomCode(int length);//生成随机字符串（字母+数字）
     bool        checkCurUserLoginStatus();//检查登录状态
     void        setCurUserLoginedInfo(int grade,const QString &nick);//设置当前登录用户信息
-    void        showTipContentLenRule(const QString& ruleText);//显示账号规则
+    void        showTipContentLenRule(const ShowType type, const QString& ruleText);//显示账号规则
     void        initAnimations();
     void        update_QRcode();//刷新二维码
     void        set_QRcode(const QString& content);//根据内容生成二维码
@@ -98,6 +102,8 @@ private:
     void        addUserToLoginLists(int id_index);
     void        removeUserToLoginLists(int id_index);
     void        updateUserListGeomotry();
+    bool        updateRemPwdStatus();//更新记住密码状态
+    bool        sendCheckCode(ShowType type, const QString &receiver_email);//发送验证码
 
 private:
     explicit NewLoginForm(QWidget *parent = nullptr);
@@ -113,13 +119,18 @@ private:
 //    QPropertyAnimation *ani_top_hide   = nullptr;
 //    QPropertyAnimation *ani_bom_hide   = nullptr;
     QParallelAnimationGroup *aniGroup = nullptr;
-    UserList   *m_userLists   =   nullptr;
+    UserList    *m_userLists   =   nullptr;
     QTimer      *loginTimer   =   nullptr;
     int         login_count = 60;
+    QString     m_login_Random;
+
     QTimer      *regisTimer   =   nullptr;
     int         regis_count = 60;
+    QString     m_regis_Random;
+
     QTimer      *fpwdTimer    =   nullptr;
     int         fpwd_count  = 60;
+    QString     m_reset_Random;
 
 signals:
     void    sig_sendClearTempRecords();

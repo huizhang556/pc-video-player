@@ -113,11 +113,16 @@ void DanmuSetting::handSignalsAndSlots()
             ui->listWidget_maskList->addItem(item);
             ui->listWidget_maskList->setItemWidget(item,forbideWgt);
             ui->lineEdit_mask->clear();
+            //屏蔽词数量更新
+            updateStopWordCounts();
+
             //关联信号与槽
             connect(forbideWgt,&ForbiddenItem::sig_send_remove,[=](){
                 forbideWgt->disconnect();
                 forbideWgt->deleteLater();
                 delete item;
+                //屏蔽词数量更新
+                updateStopWordCounts();
             });
         }
         else
@@ -126,6 +131,8 @@ void DanmuSetting::handSignalsAndSlots()
             ui->lineEdit_mask->clear();
         }
     });
+
+
 
     //恢复默认配置
     connect(ui->pushButton_default,&QPushButton::clicked,[=](){setDefaultCfg();});
@@ -189,6 +196,19 @@ void DanmuSetting::setDefaultCfg()
     ui->horizontalSlider_speed->setValue(50);
     ui->label_speed->setText(QString(u8"50%"));
     m_runTime = 15000;
+}
+
+void DanmuSetting::updateStopWordCounts()
+{
+    ui->label->setText(QString(u8"屏蔽词（%1/10）").arg(ui->listWidget_maskList->count()));
+    if(ui->listWidget_maskList->count() >= 10)
+    {
+        ui->lineEdit_mask->setEnabled(false);
+    }
+    else
+    {
+        ui->lineEdit_mask->setEnabled(true);
+    }
 }
 
 bool DanmuSetting::findMask(const QString &text)

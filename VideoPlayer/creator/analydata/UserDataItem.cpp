@@ -177,26 +177,17 @@ void UserDataItem::set_user_grade()
     switch (m_type)
     {
     case FANS:
-    {
-        m_grade = m_query.queryItemValue(u8"usertype");
-        ui->pushButton_grade->setText(QString(u8"等级：") + m_grade);
-    }
-        break;
     case WATCHES:
+    case COMMIT:
     {
-        m_grade = m_query.queryItemValue(u8"usertype");
-        ui->pushButton_grade->setText(QString(u8"等级：") + m_grade);
+        m_grade = m_query.queryItemValue(u8"usertype").toInt();
+        set_user_gradeName(m_grade);
     }
         break;
     case VIDEO:
     {
         m_playcount = m_query.queryItemValue(u8"playcount");
         ui->pushButton_vplaycount->setText(m_playcount);
-    }
-        break;
-    case COMMIT:
-    {
-
     }
         break;
     default:
@@ -211,14 +202,12 @@ void UserDataItem::set_user_level()
     {
     case FANS:
     {
-        m_level = m_query.queryItemValue(u8"usertype");
-        ui->pushButton_ulevel->setText(QString(u8"积分：") + m_level);
+
     }
         break;
     case WATCHES:
     {
-        m_level = m_query.queryItemValue(u8"usertype");
-        ui->pushButton_ulevel->setText(QString(u8"积分：") + m_level);
+
     }
         break;
     case VIDEO:
@@ -423,6 +412,42 @@ void UserDataItem::set_video_url()
     default:
         break;
     }
+}
+
+void UserDataItem::set_user_gradeName(const int grade)
+{
+    QString pixpath = "";
+    QString gradeName = "";
+    switch (grade) {
+    case 0://游客
+    {
+        pixpath = QString("://images/user/user_visitor.png");
+        gradeName = QString(u8"普通游客");
+    }
+        break;
+    case 1://普通
+    {
+        pixpath = QString("://images/user/user_vip.png");
+        gradeName = QString(u8"注册用户");
+    }
+        break;
+    case 2://会员
+    {
+        pixpath = QString("://images/user/user_suvip.png");
+        gradeName = QString(u8"普通会员");
+    }
+        break;
+    case 3://超级会员
+    {
+        pixpath = QString("://images/user/user_ssvip.png");
+        gradeName = QString(u8"超级会员");
+    }
+        break;
+    default:
+        break;
+    }
+    ui->pushButton_grade->setText(gradeName);
+    ui->pushButton_ulevel->setIcon(QIcon(pixpath));
 }
 
 void UserDataItem::set_user_likeStatus()

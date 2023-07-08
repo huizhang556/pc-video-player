@@ -44,7 +44,7 @@ border-bottom: 1px dashed gray;
 }</string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_dianzan">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -310,13 +310,13 @@ text-decoration: underline;
                  <widget class="QPushButton" name="pushButton_ulevel">
                   <property name="minimumSize">
                    <size>
-                    <width>70</width>
+                    <width>36</width>
                     <height>36</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>16777215</width>
+                    <width>36</width>
                     <height>36</height>
                    </size>
                   </property>
@@ -353,7 +353,7 @@ padding-right: 10px;
 {
 color:gray;
 font-size: 13px;
-text-align: right;
+text-align: left;
 padding-right: 10px;
 }</string>
                   </property>
@@ -1393,7 +1393,7 @@ text-decoration: underline;
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="pushButton">
+                 <widget class="QPushButton" name="pushButton_interval">
                   <property name="minimumSize">
                    <size>
                     <width>60</width>

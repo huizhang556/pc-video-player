@@ -137,6 +137,8 @@ public slots:
     //表通用查询
     int                     getTableRecordsCounts(const QString& tablename);//查询某张表记录总数
     bool                    getUserExists(const QString& tablename,const QString& username);//查询用户是否存在
+    bool                    getUserEmailsExists(const QString& tablename,const QString& emails);//查询用户邮箱是否存在
+
     //关于个人信息部分
     //登录部分
     bool                    login_checked_usernameAndPasswd(const QString& name, const QString& pwd);//核查名称以及密码
@@ -148,7 +150,7 @@ public slots:
     bool                    register_userInfo(const QString& name, const QString& pwd,const QString& emails);//注册个人信息
 
     //找回密码部分
-    QString                 getback_userPasswd(const QString& name,const QString& emails);//找回个人密码
+    bool                    fpwd_reset_userPasswd(const QString& emails,const QString& passwd);//找回个人密码
 
     //测试部分
 
