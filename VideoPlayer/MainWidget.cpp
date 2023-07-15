@@ -27,7 +27,7 @@ MainWidget::MainWidget(QWidget *parent) :
     setMinimumSize(1160,680);//1320,800 1500,950
     this->resize(QSize(1500,920));
 
-    setWindowTitle(QString::fromLocal8Bit("主界面"));
+    setWindowTitle(QString(u8"主界面"));
     initOtherWidgetUi();//初始化界面
     setInstallEventFilter();
     setLeftSliderCurrentIndex(0);//主界面左侧列表内容

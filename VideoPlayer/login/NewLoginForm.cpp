@@ -200,7 +200,7 @@ void NewLoginForm::initWorkUI()
     ui->radioButton_check->setCheckable(true);
     ui->radioButton_check->setChecked(true);
     ui->radioButton_regis_check->setCheckable(true);
-    ui->radioButton_regis_check->setChecked(true);
+    ui->radioButton_regis_check->setChecked(false);
 
     ui->tabWidget_login->setCurrentIndex(0);
 
@@ -601,6 +601,16 @@ void NewLoginForm::handleSignalsAndSLots()
          m_userLists->config_addNewUser(name,pwd,header);
     });
 
+    //登录--协议勾选
+    connect(ui->radioButton_check,&QRadioButton::clicked,[=](){
+
+    });
+
+    //注册--协议勾选
+    connect(ui->radioButton_regis_check,&QRadioButton::clicked,[=](){
+
+    });
+
     //用户登录
     connect(ui->pushButton_login,&QPushButton::clicked,[=](){
         //短信登录
@@ -621,6 +631,11 @@ void NewLoginForm::handleSignalsAndSLots()
                 setType(TipType::FAILED);
                 showCText(ShowType::LoginWin_1,TipType::FAILED,ui->pushButton_login->mapToGlobal(ui->pushButton_login->pos())- QPoint(-240,100),QString(u8"验证码错误！"),ui->pushButton_login,ui->lineEdit_telNumber->rect(),2000);
             }
+            else if(!ui->radioButton_check->isChecked())
+            {
+                setType(TipType::FAILED);
+                showCText(ShowType::LoginWin_1,TipType::FAILED,ui->pushButton_login->mapToGlobal(ui->pushButton_login->pos())- QPoint(-240,100),QString(u8"协议未勾选！"),ui->pushButton_login,ui->lineEdit_telNumber->rect(),2000);
+            }
             else
             {
                 setUser_login();
@@ -637,6 +652,11 @@ void NewLoginForm::handleSignalsAndSLots()
             {
                 setType(TipType::FAILED);
                 showCText(ShowType::LoginWin_2,TipType::FAILED,ui->pushButton_login->mapToGlobal(ui->pushButton_login->pos())- QPoint(-225,100),QString(u8"登录密码不能为空"),ui->pushButton_login,ui->lineEdit_userpwd->rect(),2000);
+            }
+            else if(!ui->radioButton_check->isChecked())
+            {
+                setType(TipType::FAILED);
+                showCText(ShowType::LoginWin_1,TipType::FAILED,ui->pushButton_login->mapToGlobal(ui->pushButton_login->pos())- QPoint(-240,100),QString(u8"协议未勾选！"),ui->pushButton_login,ui->lineEdit_telNumber->rect(),2000);
             }
             else
             {
@@ -676,6 +696,11 @@ void NewLoginForm::handleSignalsAndSLots()
             {
                 setType(TipType::FAILED);
                 showCText(ShowType::RegisWin,TipType::FAILED,ui->pushButton_regis->mapToGlobal(ui->pushButton_regis->pos())- QPoint(-240,61),QString(u8"验证码错误！"),ui->lineEdit_regis_checkCode,ui->lineEdit_regis_checkCode->rect(),2000);
+            }
+            else if(!ui->radioButton_regis_check->isChecked())
+            {
+                setType(TipType::FAILED);
+                showCText(ShowType::RegisWin,TipType::FAILED,ui->pushButton_regis->mapToGlobal(ui->pushButton_regis->pos())- QPoint(-240,61),QString(u8"协议未勾选！"),ui->lineEdit_regis_checkCode,ui->lineEdit_regis_checkCode->rect(),2000);
             }
             else
             {

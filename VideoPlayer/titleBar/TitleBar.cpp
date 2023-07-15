@@ -57,6 +57,13 @@ void TitleBar::initWorker()
     ui->stackedWidget_title->setCurrentIndex(0);
     ui->label_usermark->hide();
 
+    //天气显示图标
+    ui->toolButton_weather->setIcon(QIcon(":/images/bgpic/dieji.png"));
+    ui->toolButton_weather->setIconSize(QSize(46,46));
+//    ui->toolButton_weather->setText(QString(u8"[宝鸡]"));
+    ui->toolButton_weather->setFixedSize(50,50);
+    ui->toolButton_weather->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
     //侧边栏管理
     ui->pushButton_flush->setCheckable(true);
     ui->pushButton_flush->setChecked(false);
@@ -84,6 +91,8 @@ void TitleBar::initWorker()
     QPalette lcdpat = ui->lcdNumber->palette();
     lcdpat.setColor(QPalette::Normal,QPalette::WindowText,Qt::green);
     ui->lcdNumber->setPalette(lcdpat);
+    ui->lcdNumber->hide();
+
     //初始化定时器
     m_timer3 = new QTimer(this);
     m_timer3->start(1000);//0.1s更新发送一次时间,放在下面合适

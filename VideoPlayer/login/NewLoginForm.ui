@@ -1107,7 +1107,19 @@ background-color: rgba(53, 84, 135,0.9);
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_3">
                     <property name="spacing">
+                     <number>10</number>
+                    </property>
+                    <property name="leftMargin">
                      <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>6</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>6</number>
                     </property>
                     <item>
                      <widget class="QRadioButton" name="radioButton_check">
@@ -1155,13 +1167,13 @@ border-image: url(:/images/icon/checked_set.png);
                      <widget class="QPushButton" name="pushButton_login_argeement1">
                       <property name="minimumSize">
                        <size>
-                        <width>0</width>
+                        <width>65</width>
                         <height>26</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>16777215</width>
+                        <width>65</width>
                         <height>26</height>
                        </size>
                       </property>
@@ -1180,6 +1192,7 @@ QPushButton:hover
 color: #2589d1;
 border: 0px solid #2589d1;
 border-bottom-width: 0px;
+text-decoration: underline;
 }</string>
                       </property>
                       <property name="text">
@@ -1191,13 +1204,13 @@ border-bottom-width: 0px;
                      <widget class="QPushButton" name="pushButton_login_argeement2">
                       <property name="minimumSize">
                        <size>
-                        <width>0</width>
+                        <width>65</width>
                         <height>26</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>16777215</width>
+                        <width>65</width>
                         <height>26</height>
                        </size>
                       </property>
@@ -1216,6 +1229,7 @@ QPushButton:hover
 color: #2589d1;
 border: 0px solid #2589d1;
 border-bottom-width: 0px;
+text-decoration: underline;
 }</string>
                       </property>
                       <property name="text">
@@ -1915,7 +1929,7 @@ background-color: rgba(58, 58, 65,0.7);
         <item>
          <widget class="QStackedWidget" name="stackedWidget_right">
           <property name="currentIndex">
-           <number>2</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page_login">
            <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -3051,7 +3065,7 @@ background-color: rgba(53, 84, 135,0.9);
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_12">
                   <property name="spacing">
-                   <number>0</number>
+                   <number>10</number>
                   </property>
                   <property name="leftMargin">
                    <number>0</number>
@@ -3111,13 +3125,13 @@ border-image: url(:/images/icon/checked_set.png);
                    <widget class="QPushButton" name="pushButton_regis_argeement1">
                     <property name="minimumSize">
                      <size>
-                      <width>0</width>
+                      <width>65</width>
                       <height>26</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>16777215</width>
+                      <width>65</width>
                       <height>26</height>
                      </size>
                     </property>
@@ -3136,6 +3150,7 @@ QPushButton:hover
 color: #2589d1;
 border: 0px solid #2589d1;
 border-bottom-width: 0px;
+text-decoration: underline;
 }</string>
                     </property>
                     <property name="text">
@@ -3147,13 +3162,13 @@ border-bottom-width: 0px;
                    <widget class="QPushButton" name="pushButton_regis_argeement2">
                     <property name="minimumSize">
                      <size>
-                      <width>0</width>
+                      <width>65</width>
                       <height>26</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>16777215</width>
+                      <width>65</width>
                       <height>26</height>
                      </size>
                     </property>
@@ -3172,6 +3187,7 @@ QPushButton:hover
 color: #2589d1;
 border: 0px solid #2589d1;
 border-bottom-width: 0px;
+text-decoration: underline;
 }</string>
                     </property>
                     <property name="text">
@@ -4294,8 +4310,8 @@ background-color: transparent;
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>100</width>
-                 <height>30</height>
+                 <width>327</width>
+                 <height>343</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="addVerLayout">

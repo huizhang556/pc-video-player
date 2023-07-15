@@ -62,6 +62,7 @@ void MyAllFile::handleSignalsAndSlots()
             ui->treeView_allfiles->setSortingEnabled(true);
     });
 
+    //注意：监视和显示是两回事，treeview要想显示最新的目录下的文件，就要使用setRootIndex，而非对QFileSystemModel进行setRootPath设置
     connect(m_fileSysModel,&QFileSystemModel::directoryLoaded,[=](const QString &newPath){
         qDebug() << "new dir path:" << newPath;
 //        ui->widget_pathdir->setPath(newPath);

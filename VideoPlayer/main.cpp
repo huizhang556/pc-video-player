@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
         }
 
         //05--->显示主界面
-#if 0
+#if 1
 //            SystemSetting s; s.show();
 //        MyAllFile myfile; myfile.show();
         //    ScrollToTop::getInstance()->show();
@@ -159,8 +159,8 @@ int main(int argc, char *argv[])
 
         //    ExitDialog w; w.show();
 
-        //    TitleBar w1;
-        //    w1.show();
+            TitleBar w1;
+            w1.show();
 
         //    RankList w1(QString(u8"动画热播榜"),10);
         //    w1.show();
@@ -183,7 +183,7 @@ int main(int argc, char *argv[])
         //    MyEmotionWindow w1;
         //    w1.showNormalEmotion(QPoint(500 , 500));
         //    DownloadType::getInstance()->show();
-            NewLoginForm::getInstance()->show();
+//            NewLoginForm::getInstance()->show();
         //    AniStackWidget w1;
         //    w1.show();
         //    splashscream.finish(&w1);
