@@ -28,11 +28,13 @@ public:
     ~RotatePic();
     int     getRoate();
     void    resetRoate(int roate);
+
 public slots:
     void    start();
     void    pause();
     void    setSize(int width, int height);
     void    setPicture(const QString picpath);
+
 protected:
     void    paintEvent(QPaintEvent *event) override;
 

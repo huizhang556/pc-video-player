@@ -60,6 +60,7 @@ void ListManager::initWorkUI()
 
     m_searchEdit = new QLineEdit(m_findFrame);
     m_searchEdit->setMinimumSize(230,24);
+    m_searchEdit->setContextMenuPolicy(Qt::NoContextMenu);
     m_searchEdit->setPlaceholderText(QString(u8"请输入查找的内容^_^"));
     m_searchEdit->setObjectName(QString::fromUtf8("m_searchEdit"));
     m_searchEdit->setStyleSheet("#m_searchEdit{"

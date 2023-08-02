@@ -29,7 +29,20 @@ CONFIG += warn_off
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-#DESTDIR  = $$PWD/bin
+# 设置应用程序版本号
+#VERSION = 2.0.0
+
+# 设置应用程序名称
+#TARGET = YourAppName
+
+# 设置应用程序作者
+#AUTHOR = YourName
+
+# 设置应用程序版权信息
+#COPYRIGHT = Copyright (C) 2023 YourCompany
+
+# 设置应用程序公司名称
+#COMPANY = YourCompany
 
 SOURCES += \
         main.cpp \

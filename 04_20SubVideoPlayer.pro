@@ -2,8 +2,7 @@ TEMPLATE = subdirs\
 
 #子目录默认运行第一个项目，选择性运行某一个项目，右键该项目-->运行
 SUBDIRS += \
-    VideoPlayer \    #主程序
-    Weather
+    VideoPlayer    #主程序
 
 
 #2022-02-07  allcount = 11424 rows

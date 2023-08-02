@@ -242,6 +242,7 @@ void MultipPlayer::initMainWindow()
     m_lineEdit->setMinimumWidth(200);
     m_lineEdit->setFixedHeight(30);
     m_lineEdit->installEventFilter(this);
+    m_lineEdit->setContextMenuPolicy(Qt::CustomContextMenu);
 
     m_actOpenDir = new QAction(QIcon(":/images/icon/file_open.png"),"",this);
     m_lineEdit->addAction(m_actOpenDir,QLineEdit::TrailingPosition);
@@ -323,7 +324,6 @@ void MultipPlayer::initMainWindow()
     m_verticalLayout_main = new QVBoxLayout(ui->frame_videobg);
     m_verticalLayout_main->insertLayout(0,m_hboxlayout_rlist);
 //    m_verticalLayout_main->insertWidget(1,ui->stackedWidget_player);
-    m_verticalLayout_main->setSpacing(0);
 //    m_verticalLayout_main->setStretch(0,1);
 //    m_verticalLayout_main->setStretch(0,7);
 //    m_verticalLayout_main->setStretch(1,1);
@@ -516,7 +516,7 @@ void MultipPlayer::handleSignalAndSLots()
 
     //监测媒体本身状态,所带参数为新的媒体状态，比如缓冲状态 BufferingMedia BufferedMedia
     connect(m_player,&QMediaPlayer::mediaStatusChanged,this,&MultipPlayer::checkChandleMediaStatus);
-    //计算媒体播放数值范围
+    //更新计算媒体播放数值范围
     connect(m_player,&QMediaPlayer::durationChanged,[=](){
         m_times = m_player->duration()/1000;//持续时间,毫秒为单位，转化为秒为单位
         ui->horizontalSlider->setRange(0,m_times);//播放器主界面设置本次播放长度
@@ -1059,6 +1059,7 @@ void MultipPlayer::setInstallEventFilter()
 {
     this->installEventFilter(this);
     m_videoTitleBar->installEventFilter(this);
+    ui->widget_media_pic->installEventFilter(this);
     ui->stackedWidget_player->installEventFilter(this);
     ui->pushButton_bulletSet->installEventFilter(this);//弹幕设置按钮
     ui->pushButton_sound->installEventFilter(this);//音量调节按钮设置监听
@@ -1884,7 +1885,7 @@ void MultipPlayer::checkChandleMediaStatus(QMediaPlayer::MediaStatus status)
     {
         m_videoTitleBar->clearTitleText();
         ui->label_media_name->clear();
-        dataBase::getInstance()->user_operate_setToWatch(m_curMediaId);
+        dataBase::getInstance()->user_operate_setToWatch(m_curMediaId);//观看数+1
         if(slot_getCurrentPlayList()->playbackMode() == QMediaPlaylist::CurrentItemOnce && !m_wmini && m_player->position() == m_player->duration())
         {
             qDebug() << QString(u8"----------------主播放器当前结束播放的媒体ID：") << m_curMediaId;
@@ -2173,17 +2174,24 @@ void MultipPlayer::leaveEvent(QEvent *event)
     {
         m_mainTimer->start();
         connect(m_mainTimer,&QTimer::timeout,[=](){
+            if(!m_danmuSetting->isHidden() || !m_adjustBright->isHidden() || !UsrDisplay::getInstance()->isHidden() || !m_muteDlg->isHidden() || !m_videoClarity->isHidden())
+            {
+                return;
+            }
             updateTitleAreaGeomotry();
             updateControlAreaGeomotry();
             if(!m_visible_title)
             {
-//                m_videoTitleBar->hide();
-                ui->stackedWidget_player->hide();
+                if(!ui->stackedWidget_player->isHidden())
+                {
+                    ui->stackedWidget_player->hide();
+                }
                 if(!m_isHide)
                 {
-                    m_foldBtn->click();//模拟右侧点击事件
+                    m_foldBtn->click();
                 }
             }
+
         });
     }
 }
@@ -2545,6 +2553,37 @@ void MultipPlayer::stackWidget_player_leave(QObject *watched, QMouseEvent *event
                 }
             }
         });
+    }
+}
+
+void MultipPlayer::userHeader_Leave_Enter(QObject *watched, QMouseEvent *event)
+{
+    if(watched == ui->widget_media_pic)
+    {
+        if(event->type() == QEvent::Enter)
+        {
+            UsrDisplay::getInstance()->move(ui->widget_media_pic->mapToGlobal(ui->widget_media_pic->pos()) - QPoint(155,285));
+            UsrDisplay::getInstance()->show();
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+            int x = ui->widget_media_pic->parentWidget()->mapToGlobal(ui->widget_media_pic->pos()).x();
+            int y = ui->widget_media_pic->parentWidget()->mapToGlobal(ui->widget_media_pic->pos()).y();
+            QRect rect = QRect(x,
+                               y - UsrDisplay::getInstance()->height(),
+                               ui->widget_media_pic->width(),
+                               ui->widget_media_pic->height() + UsrDisplay::getInstance()->height());
+//            qDebug() <<QString(u8"处理后的矩形：") << rect;
+            if(!rect.contains(QCursor::pos()))
+            {
+                UsrDisplay::getInstance()->hide();
+//                qDebug() <<QString(u8"弹幕鼠标不在矩形内");
+            }
+            else
+            {
+//                qDebug() <<QString(u8"弹幕鼠标在矩形内");
+            }
+        }
     }
 }
 
@@ -3550,6 +3589,9 @@ void MultipPlayer::slot_showNormalWindows()
     //设置还原按钮样式&&改变窗口大小标志
     m_winMax = false;
     m_videoTitleBar->chandleVMainWinStatus(true);
+    //右侧列表还原宽度
+    m_widget1->setFixedWidth(LISTWIDTH_R);
+    m_isHide = false;
     //标题栏、播放控制栏等显示出来
     this->layout()->setContentsMargins(MARWIDTH,MARWIDTH,MARWIDTH,MARWIDTH);
     if(m_videoTitleBar->isHidden()) m_videoTitleBar->show();
@@ -3648,14 +3690,20 @@ void MultipPlayer::slot_setCurrentMediaName(QString name)
     }
 }
 
-/*当前媒体的图片*/
+/*更新当前视频所属用户头像图片，以及用户信息*/
 void MultipPlayer::slot_setCurrentMediaHeader(const int curMedia_id)
 {
+    //根据媒体信息查询所属用户信息
     QUrlQuery query_url= dataBase::getInstance()->adv_getCurMediaUserInfo(curMedia_id);
+    //设置用户头像
     m_curMediaHeader = query_url.queryItemValue(u8"userhead");
     ui->widget_media_pic->setPicture(query_url.queryItemValue(u8"userhead"));
-    QString  tips = QString(u8"<font color='#d3287c'>%1</font>").arg(QString(u8"用户：") + query_url.queryItemValue(u8"username"));
-    ui->widget_media_pic->setToolTip(tips);
+    //更新用户显示信息
+    m_curUserId = query_url.queryItemValue(u8"userid");
+    UsrDisplay::getInstance()->updateUsrUiInfo(dataBase::getInstance()->user_getCurMediaUserInfo(m_curUserId));
+    // 自定义字体颜色tooltip
+//    QString  tips = QString(u8"<font color='#d3287c'>%1</font>").arg(QString(u8"用户：") + query_url.queryItemValue(u8"username"));
+//    ui->widget_media_pic->setToolTip(tips);
 }
 
 void MultipPlayer::slot_setFoldButtonStyle()
@@ -3739,9 +3787,12 @@ void MultipPlayer::slot_setMainWindowShowFullgreen()
     this->layout()->setContentsMargins(0,0,0,0);
     m_videoTitleBar->hide();//头部标题栏隐藏
     ui->stackedWidget_player->hide();//底部控制栏隐藏
-    m_widget1->hide();//侧边栏隐藏
-    m_isHide = true;//侧边栏隐藏标志
+
+    m_widget1->setFixedWidth(0);
+    m_isHide = true;
+
     showFullScreen();
+    //全屏时，计算浮动控制栏位置以及显示
     if(isFullScreen() && FloatPlayCtl::getInstance())
     {
 //        int x = ui->stackedWidget->parentWidget()->mapToGlobal(this->pos()).x();
@@ -3908,6 +3959,7 @@ bool MultipPlayer::eventFilter(QObject *watched, QEvent *event)
     stackWidgetSliderButtonEventFilter(watched,mousevent);//箭头显示影藏动作
     floatPlayCtrlEnterLeave(watched,mousevent);//浮动播放
     slot_showDanmuSettingForm(watched,mousevent);//弹幕设置
+    userHeader_Leave_Enter(watched,mousevent);//用户详细信息显示
 //    videoDouleExit(watched,mousevent);
 //    stackWidget_player_leave(watched,mousevent);
 //    stackWidget_player_enter(watched,mousevent);

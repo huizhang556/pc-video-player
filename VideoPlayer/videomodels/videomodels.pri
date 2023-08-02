@@ -27,7 +27,8 @@ SOURCES += \
     $$PWD/CVideoWidget.cpp \
     $$PWD/AdvDialog.cpp \
     $$PWD/AdvterItem.cpp \
-    $$PWD/AdvCoverLab.cpp
+    $$PWD/AdvCoverLab.cpp \
+    $$PWD/UsrDisplay.cpp
 
 
 HEADERS += \
@@ -59,7 +60,8 @@ HEADERS += \
     $$PWD/CVideoWidget.h \
     $$PWD/AdvDialog.h \
     $$PWD/AdvterItem.h \
-    $$PWD/AdvCoverLab.h
+    $$PWD/AdvCoverLab.h \
+    $$PWD/UsrDisplay.h
 
 
 FORMS += \
@@ -88,7 +90,8 @@ FORMS += \
     $$PWD/AdvDialog.ui \
     $$PWD/AdvterItem.ui \
     $$PWD/AdvCoverLab.ui \
-    $$PWD/MyVideoWidget.ui
+    $$PWD/MyVideoWidget.ui \
+    $$PWD/UsrDisplay.ui
 
 #添加库文件
 #LIBS += -L ../lib/lib -luser32

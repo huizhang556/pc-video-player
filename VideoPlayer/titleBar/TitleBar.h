@@ -111,6 +111,8 @@ private slots:
     void    slot_setCanGoBack(bool status);
     void    slot_resetWebProgressBarValue();
     void    slot_replyFinished(QNetworkReply *reply);//设置头像
+    void    slot_replyWeatherFinished(QNetworkReply *reply);//接受天气信息
+
 
     //浏览器设置---右键菜单
     void    slot_browser_setMenu_createTab();               //新建窗口
@@ -136,6 +138,8 @@ private:
     void    createRightMenu();//浏览器网页右键
     void    setShowToolTip();
     void    setUserHeadPicture(const QString & path);
+    void    updateWeather(const QString& location);
+    void    paraWeatherJson(QByteArray &data);//解析天气信息
 
 signals:
     //窗口大小调节按钮
@@ -226,9 +230,9 @@ private:
     QPixmap         m_headPixmap;
     bool            m_signStatus;//登录状态，默认未未登录
     bool            m_netStatus[2] = {false,false};//（前一刻）网络状态
-    QNetworkAccessManager           *manager;
+    QNetworkAccessManager           *manager = nullptr;
     QNetworkConfigurationManager    *m_ncmgr = nullptr;
-    QNetworkReply                   *reply;
+    QNetworkReply                   *reply   = nullptr;
     Ui::TitleBar                    *ui;
 };
 

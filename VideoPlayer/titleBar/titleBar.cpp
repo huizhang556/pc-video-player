@@ -44,6 +44,19 @@ TitleBar::~TitleBar()
 /*初始化工作*/
 void TitleBar::initWorker()
 {
+    //天气显示图标
+    ui->toolButton_weather->setIconSize(QSize(50,50));
+    ui->toolButton_weather->setFixedSize(50,50);
+    ui->toolButton_weather->setToolButtonStyle(Qt::ToolButtonIconOnly);
+
+    //定位图标
+    ui->pushButton_location->setIcon(QIcon("://images/icon/location_hover.png"));
+    ui->pushButton_location->setIconSize(QSize(16,18));
+
+    ui->stackWidget_changeTemp->setCurrentWidget(ui->page_tempswitch);
+
+    ui->frame_weather->hide();
+
     //网络请求
     manager = new QNetworkAccessManager(this);
     m_ncmgr = new QNetworkConfigurationManager();//网络连接用
@@ -57,12 +70,11 @@ void TitleBar::initWorker()
     ui->stackedWidget_title->setCurrentIndex(0);
     ui->label_usermark->hide();
 
-    //天气显示图标
-    ui->toolButton_weather->setIcon(QIcon(":/images/bgpic/dieji.png"));
-    ui->toolButton_weather->setIconSize(QSize(46,46));
-//    ui->toolButton_weather->setText(QString(u8"[宝鸡]"));
-    ui->toolButton_weather->setFixedSize(50,50);
-    ui->toolButton_weather->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    ui->lineEditSearch->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_simpSearch->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_webSearch->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->lineEdit_temp_location->setContextMenuPolicy(Qt::NoContextMenu);
+
 
     //侧边栏管理
     ui->pushButton_flush->setCheckable(true);
@@ -85,13 +97,20 @@ void TitleBar::initWorker()
 
     ui->webProgressBar->setHidden(true);
     //LCD数字显示
+
     ui->lcdNumber->setDigitCount(20);//显示数量（个数）
     ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);//设置数字字体
+    //设置字体粗细
+    QFont font = ui->lcdNumber->font();
+    font.setPointSize(20);
+    font.setWeight(75);
+    ui->lcdNumber->setFont(font);
 //    ui->lcdNumber->setPalette(Qt::red);//显示文字颜色，不怎么生效
     QPalette lcdpat = ui->lcdNumber->palette();
-    lcdpat.setColor(QPalette::Normal,QPalette::WindowText,Qt::green);
+    lcdpat.setColor(QPalette::All,QPalette::WindowText,Qt::cyan);//生效
     ui->lcdNumber->setPalette(lcdpat);
-    ui->lcdNumber->hide();
+
+//    ui->lcdNumber->hide();
 
     //初始化定时器
     m_timer3 = new QTimer(this);
@@ -192,15 +211,36 @@ void TitleBar::initWorker()
     m_engineSetBtn->setObjectName(QString::fromLocal8Bit("m_engineSetBtn"));
     m_engineSetBtn->setFixedHeight(26);
     slot_addWebEngine();
-
+    updateWeather(u8"宝鸡");//更新天气
     slot_switchToLoginPage(0,QString::fromLocal8Bit(""));//0 注册 1登录
     checkCurrentNetworkStatus_method0();//首次检测网络状态
+
 }
 
 
 /*处理信号与槽函数*/
 void TitleBar::handleSignalAndSLots()
 {
+    //天气定位修改
+    connect(ui->pushButton_location_switch,&QPushButton::clicked,[=](){
+        ui->stackWidget_changeTemp->setCurrentWidget(ui->page_tempsearch);
+    });
+
+    //天气定位确定修改
+    connect(ui->pushButton_temp_search,&QPushButton::clicked,[=](){
+        ui->stackWidget_changeTemp->setCurrentWidget(ui->page_tempswitch);
+        if(!ui->lineEdit_temp_location->text().isEmpty())
+        {
+            ui->pushButton_location->setText(ui->lineEdit_temp_location->text());
+            ui->lineEdit_temp_location->clear();
+        }
+    });
+
+    //回车
+    connect(ui->lineEdit_temp_location,&QLineEdit::returnPressed,[=](){
+        ui->pushButton_temp_search->clicked();
+    });
+
     //网络连接状态（与之前状态不一样时时发送状态,首次状态不报，如果首次就是断网，很麻烦）
 //    connect(m_ncmgr,&QNetworkConfigurationManager::onlineStateChanged,[=](bool isOnline){
 //        if(isOnline)
@@ -988,6 +1028,26 @@ void TitleBar::setUserHeadPicture(const QString &path)
     //获取网络图片(注意：使用的是manager的finished信号)
 }
 
+void TitleBar::updateWeather(const QString &location)
+{
+    //0.获取当天信息
+
+    //1.组织当天天气信息
+    //类型 + 文本 + 字体 + 字体颜色 + 间隔
+    ui->label_temp->initMoveText(MOVETYPE::FILO,QString(u8"19~34℃/优 雷阵雨转小雨 二级大风 注意出行安全！"),QFont("Microsoft YaHei UI",9,75),QColor(79, 186, 207, 255),20);
+
+    //2.设置地址
+    ui->pushButton_location->setText(location);
+
+    //3.设置天气图标
+    ui->toolButton_weather->setIcon(QIcon("://images/weather/weather_qintian.png"));
+}
+
+void TitleBar::paraWeatherJson(QByteArray& data)
+{
+
+}
+
 /*重写鼠标双击事件*/
 void TitleBar::mouseDoubleClickEvent(QMouseEvent *event)
 {
@@ -1421,6 +1481,11 @@ void TitleBar::slot_replyFinished(QNetworkReply *reply)
         ui->label_userHead->setPixmap_(pixmap);
         ui->label_userHead->setScaledContents(true);
     }
+}
+
+void TitleBar::slot_replyWeatherFinished(QNetworkReply *reply)
+{
+
 }
 
 //接收tabbar添加一个空白网页的请求

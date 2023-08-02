@@ -730,5 +730,29 @@
         <file>images/player/player_mini_play.png</file>
         <file>images/player/player_mini_play_hover.png</file>
         <file>images/user/default_header.png</file>
+        <file>images/icon/location.png</file>
+        <file>images/icon/location_hover.png</file>
+        <file>images/weather/weather_dafeng.png</file>
+        <file>images/weather/weather_duoyun.png</file>
+        <file>images/weather/weather_fuchen.png</file>
+        <file>images/weather/weather_leidian.png</file>
+        <file>images/weather/weather_qintian.png</file>
+        <file>images/weather/weather_qinye.png</file>
+        <file>images/weather/weather_shachen.png</file>
+        <file>images/weather/weather_wu.png</file>
+        <file>images/weather/weather_wumai_qingdu.png</file>
+        <file>images/weather/weather_wumai_zhongdu.png</file>
+        <file>images/weather/weather_wumai_zhongduwumai.png</file>
+        <file>images/weather/weather_xue_baoxue.png</file>
+        <file>images/weather/weather_xue_daxue.png</file>
+        <file>images/weather/weather_xue_xiaoxue.png</file>
+        <file>images/weather/weather_xue_zhongxue.png</file>
+        <file>images/weather/weather_yintian.png</file>
+        <file>images/weather/weather_yu_baoyu.png</file>
+        <file>images/weather/weather_yu_dayu.png</file>
+        <file>images/weather/weather_yu_xiaoyu.png</file>
+        <file>images/weather/weather_yu_zhongyu.png</file>
+        <file>images/user/user_famale.png</file>
+        <file>images/user/user_male.png</file>
     </qresource>
 </RCC>

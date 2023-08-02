@@ -132,7 +132,7 @@ void Login::handleSignalsAndSlots()
 
 void Login::leaveEvent(QEvent *event)
 {
-    Q_UNUSED(event);
+    Q_UNUSED(event)
     this->close();
 }
 

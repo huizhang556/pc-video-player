@@ -14,6 +14,7 @@
 #include "fileshandle/MyAllFile.h"
 #include "fileshandle/DownloadType.h"
 #include "videomodels/AdvDialog.h"
+#include "videomodels/UsrDisplay.h"
 #include "videomodels/MultipPlayer.h"
 #include "videomodels/PersonFileForm.h"
 #include "mainwidget/AniStackWidget.h"
@@ -137,13 +138,17 @@ int main(int argc, char *argv[])
         }
 
         //05--->显示主界面
-#if 1
+#if 0
 //            SystemSetting s; s.show();
 //        MyAllFile myfile; myfile.show();
         //    ScrollToTop::getInstance()->show();
         //    DesktopLyric::getInstance()->show();
 
-//            MultipPlayer::getInstance()->show();
+            MultipPlayer::getInstance()->show();
+
+
+//        UsrDisplay u; u.show();
+
 
 //            AdvDialog::getInstance()->exec_(P_NEXTMEDIA,10);
 //        LeftSideBar lbar; lbar.show();
@@ -159,8 +164,8 @@ int main(int argc, char *argv[])
 
         //    ExitDialog w; w.show();
 
-            TitleBar w1;
-            w1.show();
+//            TitleBar w1;
+//            w1.show();
 
         //    RankList w1(QString(u8"动画热播榜"),10);
         //    w1.show();

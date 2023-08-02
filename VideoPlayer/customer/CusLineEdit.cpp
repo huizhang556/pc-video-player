@@ -54,6 +54,7 @@ void CusLineEdit::handleSignalsAndSLots()
 void CusLineEdit::leaveEvent(QEvent *event)
 {
     Q_UNUSED(event)
+    //此处可以动画改变宽度进过度
     m_pBtn->setFixedWidth(32);
     m_pBtn->leaveStyle();
     this->setTextMargins(10, 0, 32,0);
@@ -62,6 +63,7 @@ void CusLineEdit::leaveEvent(QEvent *event)
 void CusLineEdit::enterEvent(QEvent *event)
 {
     Q_UNUSED(event)
+    //此处可以动画改变宽度进过度
     m_pBtn->setFixedWidth(95);
     m_pBtn->enterStyle();
     this->setTextMargins(10, 0, 95,0);

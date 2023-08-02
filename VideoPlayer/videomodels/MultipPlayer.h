@@ -14,6 +14,7 @@
 #include "videomodels/VideoBlank.h"
 #include "videomodels/muteDialog.h"
 #include "videomodels/CommentTab.h"
+#include "videomodels/UsrDisplay.h"
 #include "videomodels/VideoSurface.h"
 #include "videomodels/ListManager.h"
 #include "videomodels/FloatPlayCtl.h"
@@ -245,7 +246,7 @@ public slots:
 
 private slots:
 
-    QMediaPlaylist *    slot_getCurrentPlayList();//获取当前正在播放的列表
+    QMediaPlaylist *  slot_getCurrentPlayList();//获取当前正在播放的列表
 
     void    slot_switchPlayerList(QMediaPlaylist *list);//切换播放列表
 
@@ -285,7 +286,7 @@ private slots:
 
     void    floatPlayCtrlEnterLeave(QObject *watched, QMouseEvent *mousevent);
 
-    void   slot_showDanmuSettingForm(QObject *watched, QMouseEvent *mousevent);
+    void    slot_showDanmuSettingForm(QObject *watched, QMouseEvent *mousevent);
 
     void    playlistMouseEnterLeave(QObject *watched, QEvent *event);
 
@@ -293,6 +294,7 @@ private slots:
 
     void    stackWidget_player_leave(QObject *watched, QMouseEvent *event);
 
+    void    userHeader_Leave_Enter(QObject *watched, QMouseEvent *event);
 
     //帮助菜单槽函数
     void    help_aboutLocalFile();//本地文件

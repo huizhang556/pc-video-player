@@ -85,7 +85,7 @@ background-color: rgb(0, 253, 255);</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="main.qrc">
+         <iconset>
           <normaloff>:/res/search.png</normaloff>:/res/search.png</iconset>
         </property>
        </widget>
@@ -194,7 +194,7 @@ border-radius: 15px</string>
               <string/>
              </property>
              <property name="pixmap">
-              <pixmap resource="main.qrc">:/res/aqi.png</pixmap>
+              <pixmap>:/res/aqi.png</pixmap>
              </property>
              <property name="scaledContents">
               <bool>true</bool>
@@ -262,7 +262,7 @@ border-radius: 15px</string>
               <string/>
              </property>
              <property name="pixmap">
-              <pixmap resource="main.qrc">:/res/pm25.png</pixmap>
+              <pixmap>:/res/pm25.png</pixmap>
              </property>
              <property name="scaledContents">
               <bool>true</bool>
@@ -330,7 +330,7 @@ border-radius: 15px</string>
               <string/>
              </property>
              <property name="pixmap">
-              <pixmap resource="main.qrc">:/res/wind.png</pixmap>
+              <pixmap>:/res/wind.png</pixmap>
              </property>
              <property name="scaledContents">
               <bool>true</bool>
@@ -398,7 +398,7 @@ border-radius: 15px</string>
               <string/>
              </property>
              <property name="pixmap">
-              <pixmap resource="main.qrc">:/res/humidity.png</pixmap>
+              <pixmap>:/res/humidity.png</pixmap>
              </property>
              <property name="scaledContents">
               <bool>true</bool>
@@ -468,7 +468,7 @@ border-radius: 15px</string>
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="main.qrc">:/res/type/Qing.png</pixmap>
+       <pixmap>:/res/type/Qing.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -770,7 +770,7 @@ border-bottom-right-radius: 0px;</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="main.qrc">:/res/type/Qing.png</pixmap>
+            <pixmap>:/res/type/Qing.png</pixmap>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -787,7 +787,7 @@ border-bottom-right-radius: 0px;</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="main.qrc">:/res/type/ZhongYu.png</pixmap>
+            <pixmap>:/res/type/ZhongYu.png</pixmap>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -804,7 +804,7 @@ border-bottom-right-radius: 0px;</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="main.qrc">:/res/type/DuoYun.png</pixmap>
+            <pixmap>:/res/type/DuoYun.png</pixmap>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -821,7 +821,7 @@ border-bottom-right-radius: 0px;</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="main.qrc">:/res/type/XiaoYu.png</pixmap>
+            <pixmap>:/res/type/XiaoYu.png</pixmap>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -838,7 +838,7 @@ border-bottom-right-radius: 0px;</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="main.qrc">:/res/type/DuoYun.png</pixmap>
+            <pixmap>:/res/type/DuoYun.png</pixmap>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -925,7 +925,7 @@ border-bottom-right-radius: 0px;</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="main.qrc">:/res/type/BaoYu.png</pixmap>
+            <pixmap>:/res/type/BaoYu.png</pixmap>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
