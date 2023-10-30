@@ -36,6 +36,7 @@ private:
 signals:
     void    sig_item_selected(QString);
     void    sig_item_addtolist();
+
 };
 
 

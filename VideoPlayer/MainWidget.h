@@ -294,14 +294,14 @@ private:
     QMenu               *m_playMode                = nullptr;
     QMenu               *pmenu2                    = nullptr;
     QMenu               *pmenu3                    = nullptr;
-    bool                 m_isHide;        //左侧显示隐藏按钮
-    bool                 m_winMax;        //默认非最大化
+    bool                 m_isHide;                           //左侧显示隐藏按钮
+    bool                 m_winMax;                           //默认非最大化
     bool                 m_isClose = false;
-    bool                 m_firstOpen;     //第一次打开文件
+    bool                 m_firstOpen;                        //第一次打开文件
     //界面拉伸私有成员变量
-    bool                _isleftpressed             = false;      //判断是否是左键点击
-    int                 _curpos = 0;                             //鼠标左键按下时光标所在区域
-    QPoint              _plast;                                  //获取鼠标左键按下时光标在全局(屏幕而非窗口)的位置
+    bool                _isleftpressed             = false;  //判断是否是左键点击
+    int                 _curpos = 0;                         //鼠标左键按下时光标所在区域
+    QPoint              _plast;                              //获取鼠标左键按下时光标在全局(屏幕而非窗口)的位置
 };
 
 #endif // MAINWIDGET_H

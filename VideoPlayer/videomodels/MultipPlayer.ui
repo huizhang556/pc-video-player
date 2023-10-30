@@ -917,6 +917,7 @@ color: #00f9e5;
                          <string notr="true">QPushButton
 {
 color: #8a8a8a;
+color: #61f6ff;
 font: 75 9pt &quot;Microsoft YaHei UI&quot;;
 font-weight: 800;
 border-radius: 12px;
@@ -951,7 +952,7 @@ color: #d4237a;
                         <property name="styleSheet">
                          <string notr="true">QPushButton
 {
-color: #676767;
+color: #61f6ff;
 font-weight: 800;
 font-size: 13px;
 background-color: transparent;
@@ -959,7 +960,17 @@ background-color: transparent;
 
 QPushButton:hover
 {
-color: white;
+color: #d4237a;
+}
+
+QPushButton:ckecked
+{
+color: #61f6ff;
+}
+
+QPushButton:unckecked
+{
+color: #676767;
 }</string>
                         </property>
                         <property name="text">
@@ -985,6 +996,7 @@ color: white;
                          <string notr="true">QPushButton
 {
 color: #676767;
+color: #61f6ff;
 font-weight: 800;
 font-size: 13px;
 background-color: transparent;
@@ -992,7 +1004,17 @@ background-color: transparent;
 
 QPushButton:hover
 {
-color: white;
+color: #d4237a;
+}
+
+QPushButton:ckecked
+{
+color: #61f6ff;
+}
+
+QPushButton:unckecked
+{
+color: #676767;
 }</string>
                         </property>
                         <property name="text">
@@ -1018,6 +1040,7 @@ color: white;
                          <string notr="true">QPushButton
 {
 color: #676767;
+color: #61f6ff;
 font-weight: 800;
 font-size: 13px;
 background-color: transparent;
@@ -1025,7 +1048,17 @@ background-color: transparent;
 
 QPushButton:hover
 {
-color: white;
+color: #d4237a;
+}
+
+QPushButton:ckecked
+{
+color: #61f6ff;
+}
+
+QPushButton:unckecked
+{
+color: #676767;
 }</string>
                         </property>
                         <property name="text">
@@ -1051,6 +1084,7 @@ color: white;
                          <string notr="true">QPushButton
 {
 color: #676767;
+color: #61f6ff;
 font-weight: 800;
 font-size: 13px;
 background-color: transparent;
@@ -1058,7 +1092,17 @@ background-color: transparent;
 
 QPushButton:hover
 {
-color: white;
+color: #d4237a;
+}
+
+QPushButton:ckecked
+{
+color: #61f6ff;
+}
+
+QPushButton:unckecked
+{
+color: #676767;
 }</string>
                         </property>
                         <property name="text">

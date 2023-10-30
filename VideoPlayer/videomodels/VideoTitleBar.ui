@@ -60,7 +60,7 @@ background-color: rgba(255,255,255,0.0);
 }</string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_videoTitle">
       <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -647,13 +647,13 @@ border-image: url(:/images/icon/vtitle_fixed.png);
 {
 background-color: transparent;
 border-image: url(:/images/icon/min2.png);
+border-radius: 3px;
 }
 
-QPushButton:hover{
-/*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
-	stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
-	border-image: url(:/images/icon/minhover.png);
-border: 1px solid #3C80B1;
+QPushButton:hover
+{
+border-image: url(:/images/icon/minhover.png);
+background-color: rgb(0, 249, 229);
 }</string>
                 </property>
                 <property name="text">
@@ -695,13 +695,14 @@ border: 1px solid #3C80B1;
                  <string notr="true">QPushButton
 {
 border-image: url(:/images/icon/normalmax.png);
-background-color: transparent;;
+background-color: transparent;
+border-radius:3px;
 }
 
 QPushButton:hover
 {
 border-image: url(:/images/icon/normalmaxhover.png);
-border: 1px solid #3C80B1;
+background-color: rgb(0, 249, 229);
 }</string>
                 </property>
                 <property name="text">
@@ -743,15 +744,14 @@ border: 1px solid #3C80B1;
                  <string notr="true">QPushButton
 {
 background-color: transparent;
-	border-image: url(:/images/icon/close3.png);
+border-image: url(:/images/icon/close3.png);
+border-radius: 3px;
 }
 
-QPushButton:hover{
-/*background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, 
-	stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));*/
-	border-image: url(:/images/icon/closehover.png);
-border: 1px solid #3C80B1;
-
+QPushButton:hover
+{
+background-color: rgb(0, 249, 229);
+border-image: url(:/images/icon/closehover.png);
 }</string>
                 </property>
                 <property name="text">

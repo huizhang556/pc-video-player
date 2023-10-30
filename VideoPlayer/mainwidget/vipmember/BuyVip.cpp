@@ -77,8 +77,9 @@ void BuyVip::initWorkUI()
         connect(buyItem,&BuyVipItem::sig_sendMouseClicked,[=](){
 //            qDebug() << QString(u8"设置item");
             ui->listWidget_musicvip->setCurrentItem(item);
-            ui->label_payprice->setText(QString(u8"实付： ")+m_strList.at(i).at(2));
-            setPrice_QRcode(ui->label_payprice->text());
+//            ui->label_payprice->setText(QString(u8"实付： ")+m_strList.at(i).at(2));
+            ui->label_payamount->setText(m_strList.at(i).at(2) + QString(u8"元"));
+            setPrice_QRcode(ui->label_paymothed->text() + QString(u8":") + ui->label_payamount->text());
         });
     }
     ui->listWidget_musicvip->setCurrentRow(0);
@@ -93,8 +94,8 @@ void BuyVip::initWorkUI()
         connect(buyItem,&BuyVipItem::sig_sendMouseClicked,[=](){
 //            qDebug() << QString(u8"设置item");
             ui->listWidget_rightmusic->setCurrentItem(item);
-            ui->label_payprice->setText(QString(u8"实付： ")+m_strList.at(i).at(2));
-            setPrice_QRcode(ui->label_payprice->text());
+            ui->label_payamount->setText(m_strList.at(i).at(2) + QString(u8"元"));
+            setPrice_QRcode(ui->label_paymothed->text() + QString(u8":") + ui->label_payamount->text());
         });
     }
     ui->listWidget_rightmusic->setCurrentRow(0);
@@ -110,18 +111,34 @@ void BuyVip::initWorkUI()
         connect(buyItem,&BuyVipItem::sig_sendMouseClicked,[=](){
 //            qDebug() << QString(u8"设置item");
             ui->listWidget_videovip->setCurrentItem(item);
-            ui->label_payprice->setText(QString(u8"实付： ")+m_strList.at(i).at(2));
-            setPrice_QRcode(ui->label_payprice->text());
+//            ui->label_payprice->setText(QString(u8"实付： ")+m_strList.at(i).at(2));
+            ui->label_payamount->setText(m_strList.at(i).at(2) + QString(u8"元"));
+            setPrice_QRcode(ui->label_paymothed->text() + QString(u8":") + ui->label_payamount->text());
         });
     }
     ui->listWidget_videovip->setCurrentRow(0);
-    ui->label_payprice->setText(QString(u8"实付： ")+m_strList.at(0).at(2));
+    ui->label_payprice->setText(QString(u8"支持以下支付方式"));
 }
 
 void BuyVip::handleSignalsAndSlots()
 {
     connect(ui->pushButton_close,&QPushButton::clicked,[=](){
         this->close();
+    });
+
+    connect(ui->pushButton_link_wechat,&QPushButton::clicked,[=](){
+        ui->label_paymothed->setText(QString(u8"微信支付"));
+        setPrice_QRcode(ui->label_paymothed->text() + QString(u8":") + ui->label_payamount->text());
+    });
+
+    connect(ui->pushButton_link_pay,&QPushButton::clicked,[=](){
+        ui->label_paymothed->setText(QString(u8"支付宝支付"));
+        setPrice_QRcode(ui->label_paymothed->text() + QString(u8":") + ui->label_payamount->text());
+    });
+
+    connect(ui->pushButton_link_qq,&QPushButton::clicked,[=](){
+        ui->label_paymothed->setText(QString(u8"QQ支付"));
+        setPrice_QRcode(ui->label_paymothed->text() + QString(u8":") + ui->label_payamount->text());
     });
 }
 

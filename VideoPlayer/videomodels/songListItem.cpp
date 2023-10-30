@@ -58,6 +58,10 @@ void songListItem::handleSignalsAndSlots()
         emit sig_item_addtolist();
     });
 
+    connect(ui->pushButton_details,&QPushButton::clicked,[=](){
+        ui->pushButton_sname->clicked();
+    });
+
 }
 
 void songListItem::setInstallEventFilter()
