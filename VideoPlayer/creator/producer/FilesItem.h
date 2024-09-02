@@ -28,7 +28,7 @@
 #include <QNetworkAccessManager>
 #include <QDebug>
 
-//以下ffmpeg获取视频信息使用
+//以下引入ffmpeg的C库，获取视频信息使用
 extern "C" {
 #include <libavformat/avformat.h>
 #include <libavcodec/avcodec.h>

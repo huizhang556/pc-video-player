@@ -96,23 +96,27 @@ void LeftSideBar::initWidgetUi()
     m_msgBtn->setObjectName(QString::fromLatin1("m_msgBtn"));
     m_msgBtn->setFixedHeight(BTN_HEIGHT);
     m_msgBtn->setCheckable(true);
+    m_msgBtn->setToolTip(QString(u8"查看消息"));
 
     //设置
     m_setBtn = new QPushButton(QIcon("://images/icon/leftbar_set.png"),QString(u8""), this);
     m_setBtn->setObjectName(QString::fromLatin1("m_setBtn"));
     m_setBtn->setFixedHeight(BTN_HEIGHT);
     m_setBtn->setCheckable(true);
+    m_setBtn->setToolTip(QString(u8"更多设置"));
 
     //模式（白天/夜晚）
     m_modeBtn = new QPushButton(QIcon("://images/icon/leftbar_day.png"),QString(u8""), this);
     m_modeBtn->setObjectName(QString::fromLatin1("m_modeBtn"));
     m_modeBtn->setFixedHeight(BTN_HEIGHT);
     m_modeBtn->setCheckable(true);
+    m_modeBtn->setToolTip(QString(u8"模式转换"));
     //更多
     m_moreBtn = new QPushButton(QIcon("://images/icon/leftbar_more.png"),QString(u8""),this);
     m_moreBtn->setObjectName(QString::fromLatin1("m_moreBtn"));
     m_moreBtn->setFixedHeight(BTN_HEIGHT);
     m_moreBtn->setCheckable(true);
+    m_moreBtn->setToolTip(QString(u8"选择更多"));
 
     QVBoxLayout *m_vbayout1 = new QVBoxLayout(this);
     QVBoxLayout *m_vbayout2 = new QVBoxLayout();

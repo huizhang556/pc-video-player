@@ -33,6 +33,7 @@
 #include <QPixmap>
 #include <QLabel>
 #include <QMovie>
+#include <QDesktopWidget>
 #include <QDebug>
 //QFileOpenEvent只支持只支持MacOS X和Symbian
 #include <QFileOpenEvent>
@@ -108,7 +109,9 @@ int main(int argc, char *argv[])
         query.addQueryItem(u8"pos",u8"0");
         MultipPlayer::getInstance()->slot_addTempPlaylist(999,QStringList{QString::fromLocal8Bit(argv[1])},query);
         MainWidget w1;
-        w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
+//        w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
+        QScreen *mScreen = QGuiApplication::screens().first();//根据主屏的位置居中显示（防止多屏显示位置不正确）
+        w1.move((mScreen->geometry().width() - w1.width())/2,(mScreen->geometry().height() - w1.height())/2);
         w1.hide();
 
         //数据恢复初始化
@@ -195,7 +198,8 @@ int main(int argc, char *argv[])
 
 #else
         MainWidget w1;
-        w1.move((QApplication::desktop()->width() - w1.width())/2,(QApplication::desktop()->height() - w1.height())/2);//居中显示
+        QScreen *mScreen = QGuiApplication::screens().first();//根据主屏的位置居中显示（防止多屏显示位置不正确）
+        w1.move((mScreen->geometry().width() - w1.width())/2,(mScreen->geometry().height() - w1.height())/2);
         w1.show();
         splashscream.finish(&w1);
 #endif

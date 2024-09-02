@@ -18,12 +18,12 @@
 #include <QDateTime>
 #include <QScrollBar>
 #include <QWheelEvent>
+#include <QFileDialog>
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QListWidgetItem>
 #include <QGraphicsEllipseItem>
 #include <QGraphicsPixmapItem>
-#include <QFileDialog>
 #include <QDebug>
 
 //打开类型

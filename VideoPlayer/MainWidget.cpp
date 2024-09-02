@@ -1442,72 +1442,72 @@ void MainWidget::slot_updateStackWidgetPageData()
     //以下添加一些数据更新操作
     if(page == m_cusVideoBox)
     {
-        qDebug(u8"当前及显示界面：m_cusVideoBox");
+        qDebug() << m_cusVideoBox->objectName();
     }
     else if(page == m_cusVideoBox2)
     {
-        qDebug(u8"当前及显示界面：m_cusVideoBox2");
+        qDebug() << m_cusVideoBox2->objectName();
     }
     else if(page == m_cusVideoBox3)
     {
-        qDebug(u8"当前及显示界面：m_cusVideoBox3");
+        qDebug() << m_cusVideoBox3->objectName();
     }
     else if(page == m_cusVideoBox4)
     {
-        qDebug(u8"当前及显示界面：m_cusVideoBox4");
+        qDebug() << m_cusVideoBox4->objectName();
     }
     else if(page == m_cusVideoBox5)
     {
-        qDebug(u8"当前及显示界面：m_cusVideoBox5");
+        qDebug() << m_cusVideoBox5->objectName();
     }
     else if(page == videoFindResult)
     {
-        qDebug(u8"当前及显示界面：videoFindResult");
+        qDebug() << videoFindResult->objectName();
     }
     else if(page == m_videoMember)
     {
-        qDebug(u8"当前及显示界面：m_videoMember");
+        qDebug() << m_videoMember->objectName();
     }
     else if(page == m_webStackWgt)
     {
-        qDebug(u8"当前及显示界面：m_webStackWgt");
+        qDebug() << m_webStackWgt->objectName();
     }
     else if(page == m_hotSearch)
     {
-        qDebug(u8"当前及显示界面：m_hotSearch");
+        qDebug() << m_hotSearch->objectName();
     }
     else if(page == m_songlistSort)
     {
-        qDebug(u8"当前及显示界面：m_songlistSort");
+        qDebug() << m_songlistSort->objectName();
     }
     else if(page == m_shortVideo)
     {
         m_shortVideo->slot_setVideoMediaType(dataBase::getInstance()->getVideoMediaType());//获取视频类型
-        qDebug(u8"当前及显示界面：m_shortVideo");
+        qDebug() << m_shortVideo->objectName();
     }
     else if(page == m_musicList)
     {
-        qDebug(u8"当前及显示界面：m_musicList");
+        qDebug() << m_musicList->objectName();
     }
     else if(page == m_personForm)
     {
-        qDebug(u8"当前及显示界面：m_personForm");
+        qDebug() << m_personForm->objectName();
     }
     else if(page == m_fileTrans)
     {
-        qDebug(u8"当前及显示界面：m_fileTrans");
+        qDebug() << m_fileTrans->objectName();
     }
     else if(page == m_cusVideoBox6)
     {
-        qDebug(u8"当前及显示界面：m_cusVideoBox6");
+        qDebug() << m_cusVideoBox6->objectName();
     }
     else if(page == m_cusVideoBox7)
     {
-        qDebug(u8"当前及显示界面：m_cusVideoBox7");
+        qDebug() << m_cusVideoBox7->objectName();
     }
     else if(page == globalFindRlt)
     {
-        qDebug(u8"当前及显示界面：globalFindRlt");
+        qDebug() << globalFindRlt->objectName();
     }
 }
 
