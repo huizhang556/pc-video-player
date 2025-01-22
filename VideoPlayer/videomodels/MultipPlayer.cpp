@@ -78,7 +78,7 @@ MultipPlayer::~MultipPlayer()
     delete m_widget1;
     delete m_musicUi;
     delete m_muteDlg;
-    delete m_cusDialog;
+//    delete m_cusDialog;
     delete videoWidget;
     delete m_videoBlank;
     delete m_videoClarity;
@@ -105,18 +105,18 @@ MultipPlayer *MultipPlayer::getInstance()
 void MultipPlayer::initMainWindow()
 {
 //    ui->label_media_name->initMoveText(MOVETYPE::FILO,QString(u8""),QFont("微软雅黑",10,75),QColor(0, 170, 127,255),50);
-    m_cusDialog = new CustomFileDialog;
-    m_cusDialog->setObjectName(QString(u8"m_cusDialog"));
-    m_cusDialog->setFileMode(QFileDialog::ExistingFiles);//多选
-    m_cusDialog->setTitleName(QString(u8"选择文件"));
-    m_cusDialog->setDirectory(Global::appDirPath);
+//    m_cusDialog = new CustomFileDialog;
+//    m_cusDialog->setObjectName(QString(u8"m_cusDialog"));
+//    m_cusDialog->setFileMode(QFileDialog::ExistingFiles);//多选
+//    m_cusDialog->setTitleName(QString(u8"选择文件"));
+//    m_cusDialog->setDirectory(Global::appDirPath);
 //    QStringList strList = {QString::fromLocal8Bit("所有文件(*)"),
 //                           QString::fromLocal8Bit("视频文件(*avi *mp4 *flv *mov *wmv *rmvb *asf *3gp *mpg *vob)"),
 //                           QString::fromLocal8Bit("音频文件(*.mp3 *.wma *.wave *acc *ogg *arm *aac"),
 //                           QString::fromLocal8Bit("图像文件(*.jpg *.png *bmp *gif *jpeg *psd *svg *ico)")};
-    QStringList strList = {QString(u8"视频文件(*avi *mp4 *flv *mov *wmv *rmvb *asf *3gp *mpg *vob)"),
-                          QString(u8"音频文件(*.mp3 *.wma *.wave *acc *ogg *arm *aac")};
-    m_cusDialog->setNameFilters(strList);
+//    QStringList strList = {QString(u8"视频文件(*avi *mp4 *flv *mov *wmv *rmvb *asf *3gp *mpg *vob)"),
+//                          QString(u8"音频文件(*.mp3 *.wma *.wave *acc *ogg *arm *aac")};
+//    m_cusDialog->setNameFilters(strList);
 
     m_player    = new QMediaPlayer(this);
     playlist    = new QMediaPlaylist(this);

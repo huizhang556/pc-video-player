@@ -73,7 +73,7 @@ void DesktopTip1::showTip(const QStringList &texts, int timeout)
 
 void DesktopTip1::showTip(const QStringList &texts, const QStringList &urls, int timeout)
 {
-    QSoundEffect    *effect = new QSoundEffect();
+    QSoundEffect *effect = new QSoundEffect();
     effect->setSource(QUrl::fromLocalFile(":/audio/player/tooltips.wav"));
     effect->setLoopCount(1);  //循环次数
     effect->setVolume(0.30f); //音量  0~1之间

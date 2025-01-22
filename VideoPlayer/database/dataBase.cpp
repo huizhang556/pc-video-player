@@ -121,11 +121,64 @@ QSqlDatabase dataBase::getSqlDataBase()
     return QSqlDatabase::database("connect_mysql");//根据连接名获取
 }
 
+//重连数据库
+bool dataBase::reConnectDB()
+{
+    QSqlDatabase db_mysql = QSqlDatabase::addDatabase("QMYSQL","connect_mysql");
+
+    db_mysql.setConnectOptions("MYSQL_OPT_RECONNECT=1");//断开自动重连
+    db_mysql.setHostName(m_hostName);
+    db_mysql.setUserName(m_userName);
+    db_mysql.setPassword(m_userPawd);
+    db_mysql.setPort(m_hostPort.toInt());
+    db_mysql.setDatabaseName(m_dataName);//给数据库起名字
+    if (!db_mysql.isOpen())
+    {
+        qDebug() << "Database connection lost. Attempting to reconnect...";
+        if (db_mysql.open())
+        {
+            qDebug() << "Database reconnected!";
+            return true;
+        }
+        else
+        {
+            qDebug() << "Failed to reconnect to the database.";
+            return false;
+        }
+    }
+}
+
+//检查数据库连接是否正常
+bool dataBase::checkDatabaseConnection()
+{
+    QSqlQuery query(getSqlDataBase());
+
+    if (!query.exec(QString("SELECT 1;")))
+    {
+        QSqlError error = query.lastError();
+        qDebug() << "Database query failed: " << error.text();
+
+        // 根据具体的错误信息判断连接是否丢失
+        if (error.text().contains("server has gone away"))
+        {
+            qDebug() << "Connection lost.";
+            return false;
+        }
+        else
+        {
+            qDebug() << "Some other error occurred.";
+            return false;
+        }
+    }
+    return true;
+}
+
 /*连接mysql数据库，创建数据库表*/
 bool dataBase::creatMysqlConnection()
 {
     qDebug() << QString::fromLocal8Bit("Qt现在支持的驱动：")<<QSqlDatabase::drivers();
     QSqlDatabase db_mysql = QSqlDatabase::addDatabase("QMYSQL","connect_mysql");//连接数据库类型
+    db_mysql.setConnectOptions("MYSQL_OPT_RECONNECT=1");//断开自动重连
     db_mysql.setHostName(m_hostName);
     db_mysql.setUserName(m_userName);
     db_mysql.setPassword(m_userPawd);

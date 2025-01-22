@@ -68,6 +68,8 @@ public:
     ~dataBase();
     static  dataBase*       getInstance();
     static  QSqlDatabase    getSqlDataBase();
+    static  bool            reConnectDB();
+    static  bool            checkDatabaseConnection();//检查数据库是否连接
     static  bool            creatSqliteConnection();//创建sqlite连接
     static  bool            removeSqliteConnection();//移除sqlite连接
     static  bool            creatMysqlConnection();//创建mysql连接

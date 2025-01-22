@@ -89,6 +89,7 @@ private slots:
     void    checkCurrentNetworkStatus_method0();//首次初始化网络状态
     void    checkCurrentNetworkStatus_method1();//检查当前网络状态 方法1
     void    checkCurrentNetworkStatus_method2();//检查当前网络状态 方法2（不好使，检测结果比较慢，不及时）
+    void    checkDBConnectStatus();//检查数据库连接
     void    setLineEditAddress(const QUrl url);
     void    showMySkin();//皮肤设置
     void    createHelpMenu();//帮助菜单
@@ -229,7 +230,9 @@ private:
     QString         m_headUrl;
     QPixmap         m_headPixmap;
     bool            m_signStatus;//登录状态，默认未未登录
+    bool            m_bOnline = false;//网络是否在线
     bool            m_netStatus[2] = {false,false};//（前一刻）网络状态
+    bool            m_dbStatus[2] = {false,false};//（前一刻）数据库连接状态
     QNetworkAccessManager           *manager = nullptr;
     QNetworkConfigurationManager    *m_ncmgr = nullptr;
     QNetworkReply                   *reply   = nullptr;

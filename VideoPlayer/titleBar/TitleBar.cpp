@@ -114,7 +114,7 @@ void TitleBar::initWorker()
 
     //初始化定时器
     m_timer3 = new QTimer(this);
-    m_timer3->start(1000);//0.1s更新发送一次时间,放在下面合适
+    m_timer3->start(1000);//1s更新发送一次时间
     ui->Btnhelp->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->pushButton_close->setFlat(true);
     ui->stackedWidget->setCurrentIndex(0);//默认显示第一个page
@@ -339,10 +339,12 @@ void TitleBar::handleSignalAndSLots()
     connect(this,&TitleBar::sig_winNormal,m_loginForm,&Login::close);
     //更新时间
     connect(m_timer3,&QTimer::timeout,this,&TitleBar::getSystemTimeShow);
-    //检测网络状态 方法1，（使用）
+    //检测网络状态 方法1，（正在使用）
     connect(m_timer3,&QTimer::timeout,this,&TitleBar::checkCurrentNetworkStatus_method1);
     //检测网络状态 方法2
 //    connect(m_timer3,&QTimer::timeout,this,&TitleBar::checkCurrentNetworkStatus_method2);
+    //检测数据库连接状态(1s检测一次）
+    connect(m_timer3,&QTimer::timeout,this,&TitleBar::checkDBConnectStatus);
     /*关于标题栏功能性按钮*/
     //帮助
     connect(ui->Btnhelp,&QPushButton::clicked,[=](){createHelpMenu();});//帮助菜单
@@ -1581,7 +1583,49 @@ void TitleBar::checkCurrentNetworkStatus_method0()
         m_netStatus[0] = true;
         m_netStatus[1] = false;
     }
+}
 
+//不间断检查网络联通状态1(有效果)
+void TitleBar::checkCurrentNetworkStatus_method1()
+{
+    QLibrary lib("Wininet.dll");//windows库
+    if (lib.load())
+    {
+        int  flags;
+
+        //获取dll库中的函数InternetGetConnectedState函数地址
+        ConnectFun  myConnectFun = (ConnectFun)lib.resolve("InternetGetConnectedState");
+
+        //判断是否连网
+        m_bOnline = myConnectFun(&flags, 0);
+        if(m_bOnline)//在线
+        {
+//            qDebug() << QString(u8"网络连接正常");
+            if(!m_netStatus[0])//避免重复提示，设置一个标志位
+            {
+                DesktopTip1::showTip(QStringList(u8"网络连接已恢复！"),5);
+                m_netStatus[0] = true;
+                m_netStatus[1] = false;
+                bool isCon = dataBase::checkDatabaseConnection();
+                if(!isCon)
+                {
+                   bool open = dataBase::reConnectDB();
+                   qDebug() << "打开状态" << open;
+                }
+            }
+        }
+        else//不在线
+        {
+//            qDebug() << QString(u8"网络连接异常");
+            if(!m_netStatus[1])
+            {
+                DesktopTip1::showTip(QStringList(u8"网络连接异常，请检查网络!"),5);
+                m_netStatus[0] = false;
+                m_netStatus[1] = true;
+                dataBase::removeMysqlConnection();
+            }
+        }
+    }
 }
 
 //检查网络联通状态2
@@ -1589,6 +1633,32 @@ void TitleBar::checkCurrentNetworkStatus_method2()
 {
     //通过ping一个稳定的服务来判断是否有网
     QHostInfo::lookupHost("www.baidu.com",this,SLOT(onLookupHost(QHostInfo)));
+}
+
+//检查数据库连接状态
+void TitleBar::checkDBConnectStatus()
+{
+    bool isCon = dataBase::checkDatabaseConnection();
+    if(!isCon)//数据库未连接状态
+    {
+        if(!m_dbStatus[0])
+        {
+            DesktopTip1::showTip(QStringList(u8"数据库连接已断开！"),3);
+            m_dbStatus[0] = true;
+            m_dbStatus[1] = false;
+        }
+        qDebug() << u8"数据库连接断开！";
+    }
+    else //数据库已连接状态
+    {
+       if(!m_dbStatus[1])
+       {
+           DesktopTip1::showTip(QStringList(u8"数据库已连接！"),3);
+           m_dbStatus[0] = false;
+           m_dbStatus[1] = true;
+       }
+       qDebug() << u8"数据库重新连接成功！";
+    }
 }
 
 
@@ -1605,42 +1675,7 @@ void TitleBar::onLookupHost(QHostInfo host)
         }
 }
 
-//检查网络联通状态1(有效果)
-void TitleBar::checkCurrentNetworkStatus_method1()
-{
-    QLibrary lib("Wininet.dll");//windows库
-    if (lib.load())
-    {
-        bool bOnline = false;//是否在线
-        int  flags;
 
-        //获取dll库中的函数InternetGetConnectedState函数地址
-        ConnectFun  myConnectFun = (ConnectFun)lib.resolve("InternetGetConnectedState");
-
-        //判断是否连网
-        bOnline = myConnectFun(&flags, 0);
-        if(bOnline)//在线
-        {
-//            qDebug() << QString(u8"网络连接正常");
-            if(!m_netStatus[0])//避免重复提示，设置一个标志位
-            {
-                DesktopTip1::showTip(QStringList(u8"网络连接已恢复！"),5);
-                m_netStatus[0] = true;
-                m_netStatus[1] = false;
-            }
-        }
-        else//不在线
-        {
-//            qDebug() << QString(u8"网络连接异常");
-            if(!m_netStatus[1])
-            {
-                DesktopTip1::showTip(QStringList(u8"网络连接异常，请检查网络!"),5);
-                m_netStatus[1] = true;
-                m_netStatus[0] = false;
-            }
-        }
-    }
-}
 
 /*槽函数 --- 地址栏显示当前url*/
 void TitleBar::setLineEditAddress(const QUrl url)
@@ -1684,8 +1719,6 @@ void TitleBar::showMySkin()
 {
     MySkin::getInstance()->exec();
 }
-
-
 
 void TitleBar::receiveMainFormClose()
 {

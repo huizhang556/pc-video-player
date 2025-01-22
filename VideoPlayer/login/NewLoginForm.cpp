@@ -1172,7 +1172,7 @@ void NewLoginForm::setUser_login()
 //        setType(TipType::SUCCESS);
 //        showCText(LoginWin_2,TipType::SUCCESS,ui->pushButton_login->mapToGlobal(ui->pushButton_login->pos())- QPoint(-240,100),QString(u8"恭喜您，登陆成功！"),ui->pushButton_login,ui->lineEdit_telNumber->rect(),2000);
         setStatusTips(LoginWin_2,TipType::SUCCESS,QString(u8"恭喜您，登陆成功！"));
-        QTimer::singleShot(3000,0,[=](){
+        QTimer::singleShot(1000,0,[=](){
             slot_clearTempInputText();//清除输入信息
             this->close();
         });
@@ -1223,7 +1223,7 @@ void NewLoginForm::setUser_register()
     if(isOK)//插入成功
     {
         setStatusTips(ShowType::RegisWin,TipType::SUCCESS,QString(u8"恭喜您，注册成功！"));
-        QTimer::singleShot(3000,0,[=](){
+        QTimer::singleShot(1000,0,[=](){
             slot_clearTempInputText();
             ui->stackedWidget_right->setCurrentWidget(ui->page_login);//右侧变为扫码登录界面
             ui->pushButton_updateQR->click();//模拟点击刷新二维码
@@ -1263,7 +1263,7 @@ void NewLoginForm::setUser_resetPwd()
     if(isOK)//密码重置成功
     {
         setStatusTips(ShowType::ReSetWin,TipType::SUCCESS,QString(u8"恭喜您，密码重置成功！"));
-        QTimer::singleShot(3000,0,[=](){
+        QTimer::singleShot(1000,0,[=](){
             slot_clearTempInputText();
             ui->stackedWidget_right->setCurrentWidget(ui->page_login);//右侧变为扫码登录界面
             ui->pushButton_updateQR->click();//模拟点击刷新二维码
